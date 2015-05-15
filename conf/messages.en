@@ -1,0 +1,129 @@
+## common
+--.site.name=My project
+--.account.fusion.description=There is an account with the email {0}. If it's you, you can add your Facebook account to this My project account and keep your information. Otherwise, you cannot use this email to create an account.
+
+##generic
+#--.generic.back=Back
+#--.generic.category=Category
+--.generic.close=Close
+#--.generic.date=Date
+#--.generic.description=Description
+--.generic.firstname=First name
+--.generic.lastname=Last name
+#--.generic.name=Name
+##--.generic.nameAbrv=Acronym
+#--.generic.navigation=Navigation
+--.generic.oldPassword=Old password
+#--.generic.price=Price
+--.generic.repeatPassword=Repeat your password
+--.generic.save=Save
+--.generic.submit=Submit
+#--.generic.total=Total
+#--.generic.value=Value
+#--.generic.valid=Valid
+--.generic.validation.size=Between {0} and {1} characters
+##--.generic.validation.date=Select a date
+##--.generic.validation.notNull=This field is required
+--.generic.validation.password=Between 6 and 18 letters or number or _-%
+--.generic.validation.repeatPassword=The both password are not the same
+--.generic.validation.email=Please get a correct email
+#--.generic.yourName=Your name
+##--.generic.yourNameAbrv=Your acronym
+#--.generic.creator=Creator
+--.generic.yourLanguage=Your language
+--.generic.email=Email
+--.generic.or=Or
+--.generic.yourPassword=Your password
+--.generic.gender=Gender
+--.generic.male=Male
+--.generic.female=Female
+--.generic.logout=Log out
+--.welcome.myProfile=My profile
+--.generic.password=Password
+
+## login modal
+--.loginModal.title=Login you
+
+## welcome
+--.welcome.login=Log you
+--.welcome.signIn=Sign in
+#--.welcome.editProfile=Edit my profile
+
+## registration
+#--.registration.form.title=Registration
+--.registration.form.yourEmail=Your email address
+--.registration.form.password=Choose a password
+--.registration.form.password.help=Between 6 and 18 letters, numbers or -_%
+--.registration.form.repeatPassword=Repeat your password
+#--.registration.form.validation.repeatPassword=Passwords are different
+#--.registration.form.email.alreadyExists=This email address is already used
+--.registration.form.keepSessionOpen=Keep my session open
+#--.registration.form.nameAbrv.help=Choose a acronym for your name (maximum 3 letters)
+
+## login
+#--.login.form.title=Login you
+#--.login.form.submit=Login
+#--.login.form.button.forgotPassword=Forgot your password ?
+#--.login.form.wrongCredential=Wrong email and / or password
+
+## form
+#--.error.required=This field is required
+#--.error.minLength=Minimum %s characters
+#--.error.maxLength=Maximum %s characters
+
+## menu
+--.menu.home=Home
+
+## forgot password
+--.forgotPassword.title=Forgot password ?
+#--.forgotPassword.desc=Get your email address and an email will be send with a new password
+--.forgotPassword.success=An email was send with your new password
+
+## changePasswordModal
+--.changePasswordModal.newPassword=New password
+--.changePasswordModal.title=Change your password
+
+## changeEmailModal
+--.changeEmailModal.title=Change your email
+--.changeEmailModal.email=Your new email
+
+## field doc
+--.field.document.inTreatment=Treatment ...
+--.field.document.download=Download
+--.field.document.success=The file was downloaded successfully
+
+##  be/flo/project/util/ErrorMessageEnum.java
+--.error.fatal_error=A fatal error was throwed : {0}
+--.error.validation.email=Email expected
+--.error.validation.password=Please use between 6 and 18 letters, numbers or -_%
+--.error.validation.pattern=The field {0} expects the pattern {1}
+--.error.email_already_used=This email is already used.
+--.error.validation.not_null=The field {0} cannot be empty
+--.error.validation.size=The field {0} must be have between {1} and {2} characters
+--.error.wrong_old_password=This is not your old password
+--.error.facebook.authentication_fail=Facebook authentication failed
+--.error.not_connected=You are not connected
+--.error.wrong_password_or_login=Wrong password or email
+--.error.json_conversion_error=Json conversion error
+
+##  be/flo/project/dto/ChangePasswordDTO.java
+--.validation.dto.password=Between 6 and 18 letters, numbers or -_%
+
+##  modal/LoginModal/LoginModal.js (//logout facebook in case)
+--.login.flash.success=You are now logged \!
+
+##  modal/HelpModal/view.html
+--.helpModal.title=Help
+
+##  be/flo/project/dto/AccountDTO.java
+--.validation.dto.size=Between {0} and {1} charaters
+--.validation.dto.notNull=Cannot be empty
+--.validation.dto.email=Email expected
+
+##  be/flo/project/util/message/ErrorMessageEnum.java
+--.error.wrong_authorization=You doesn't have the authorization for this action
+
+##  modal/AccountFusionFacebookModal/view.html
+--.account.fusion.modal.title=Account fusion
+
+

@@ -1,0 +1,20 @@
+<div class="input-text field_text row" ng-class="{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}">
+    <div class="form-group">
+        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">{{getInfo().fieldTitle | translateText}}</label>
+        <div class="col-md-6">
+            <div ng-class="{'input-group':!!getInfo().money}">
+                <button class="calculator btn btn-sm btn-default fa fa-calculator" ng-click="openCalculator()"></button>
+
+                <input type="checkbox"
+                       ng-disabled="getInfo().disabled()"
+                       ng-model="getInfo().field"
+                       ng-class="{input_number: getInfo().numbersOnly === 'integer' || getInfo().numbersOnly === 'double',
+                       'money':!!getInfo().money}"
+                       dir-focus-me="getInfo().focus()"
+                        class="form-control-check">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs"></div>
+    <div class="col-md-6 help" ng-show="getInfo().details!=null">{{getInfo().details | translateText}}</div>
+</div>

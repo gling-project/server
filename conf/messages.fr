@@ -1,0 +1,97 @@
+--.account.fusion.description=Il y a déjà un compte avec l'email {0}. Si c'est votre compte, vous pouvez ajouter votre compte Facebbok à votre compte Mon projet. Sinon, vous ne pouvez pas utiliser cette adresse email
+
+##  be/flo/project/dto/ChangePasswordDTO.java
+--.validation.dto.password=Entre 6 et 18 lettre, chiffres ou _-%
+
+##  generic
+--.generic.yourLanguage=Votre langue
+--.generic.firstname=Prénom
+--.generic.save=Sauver
+--.generic.submit=Soumettre
+--.generic.password=Mot de passe
+--.generic.lastname=Nom
+--.generic.or=Ou
+--.generic.male=Homme
+--.generic.validation.repeatPassword=Les deux mots de passe ne sont pas les mêmes
+--.generic.validation.email=Merci d'entrer une adresse email correcte
+--.generic.gender=Sexe
+--.generic.female=Femme
+--.generic.validation.size=Entre {0} et {1} caractères
+--.generic.oldPassword=Ancien mot de passe
+--.generic.yourPassword=Votre mot de passe
+--.generic.logout=Déconnexion
+--.generic.close=Fermer
+--.generic.validation.password=Entre 6 et 18 lettre, chiffres ou _-%
+--.generic.repeatPassword=Répétez le mot de passe
+--.generic.email=Email
+
+##  modal/RegistrationModal/RegistrationModal.js
+--.registration.form.keepSessionOpen=Garder ma session ouverte
+--.registration.form.repeatPassword=Répétez votre mot de passe
+--.registration.form.password=Choisissez un mot de passe
+--.registration.form.password.help=Entre 6 et 18 lettres, chiffres ou -_%
+
+##  modal/ForgotPassword/ForgotPasswordModal.js
+--.changeEmailModal.email=Votre nouvelle adresse email
+--.forgotPassword.success=Un email vous a été envoyé avec un nouveau mot de passe
+
+##  modal/LoginModal/LoginModal.js (//logout facebook in case)
+--.login.flash.success=Vous êtes maintenant connecté \!
+--.registration.form.yourEmail=Votre adresse email
+
+##  modal/RegistrationModal/view.html
+--.loginModal.title=Connection
+
+##  modal/DownloadFieldModal/view.html
+--.changeEmailModal.title=Changez votre adresse email
+
+##  modal/HelpModal/view.html
+--.helpModal.title=Aide
+
+##  modal/ChangePassword/ChangePasswordModal.js
+--.changePasswordModal.newPassword=Nouveau mot de passe
+
+##  be/flo/project/dto/AccountDTO.java
+--.validation.dto.size=Entre {0} et {1} caractères
+--.validation.dto.notNull=Ne peut pas être vide
+--.validation.dto.email=Adresse email attendue
+
+##  modal/ForgotPassword/view.html
+--.forgotPassword.title=Mot de passe perdu ?
+
+##  be/flo/project/views/template.scala.html (load data )
+--.welcome.myProfile=Mon profile
+--.menu.home=Home
+--.welcome.signIn=Enregistrement
+--.site.name=Mon projet
+--.welcome.login=Connection
+
+##  directive/dirFieldDocument/template.html
+--.field.document.download=Téléchargement
+--.field.document.success=Le fichier a été correctement téléchargé
+--.field.document.inTreatment=En cours de traîtement...
+
+##  modal/ChangePassword/view.html
+--.changePasswordModal.title=Changez votre mot de passe
+
+##  be/flo/project/util/message/ErrorMessageEnum.java
+--.error.fatal_error=Une erreur fatale est survenue \: {0}
+--.error.validation.email=Adresse email attendue
+--.error.validation.password=Entre 6 et 18 lettres, chiffres ou -_%
+--.error.validation.pattern=Le champs {0} attend le pattern {1}
+--.error.json_conversion_error=Json conversion error
+--.error.email_already_used=Cette adresse email est déjà utilisée.
+--.error.wrong_authorization=Vous n'avez pas l'autorisation pour cette action
+--.error.validation.not_null=Le champs {0} ne peut pas être vide
+--.error.validation.size=Le champs {0} doit faire entre {1} et {2} caractères
+--.error.wrong_old_password=Ce n'est pas votre ancien mot de passe
+--.error.validation.string_expected=A type string is expected for the pattern annotation, but the field {0} is a {1}
+--.error.facebook.authentication_fail=L'authentification Facebook a échoué
+--.error.not_connected=Vous n'êtes pas connecté
+--.error.wrong_password_or_login=Mauvais email ou mot de passe
+
+##  modal/AccountFusionFacebookModal/view.html
+--.account.fusion.modal.title=Fusion de compte
+
+
+

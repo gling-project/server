@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
+    <h4 class="modal-title">{{'--.loginModal.title' | translateText}}</h4>
+</div>
+<div class="modal-body modal-login" dir-enter="save()">
+
+    <dir-field-text ng-info="fields.login"></dir-field-text>
+
+    <dir-field-text ng-info="fields.password"></dir-field-text>
+
+    <dir-field-check ng-info="fields.openSession"></dir-field-check>
+
+    <div class="modal-login-or">
+        <div></div>
+        <div>{{'--.generic.or' | translateText}}</div>
+        <div></div>
+    </div>
+
+    <div class="row">
+        <div class="col-ls-1"></div>
+        <div class="col-ls-5">
+
+            <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+                <img src="/assets/images/facebook/login_icon.png"/>
+                <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
+            </button>
+        </div>
+        <div class="col-ls-5">
+            <!-- add the google+ button here -->
+        </div>
+        <div class="col-ls-1"></div>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' |
+        translateText}}
+    </button>
+    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' |
+        translateText}}
+    </button>
+    <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
+</div>

@@ -1,0 +1,16 @@
+validation :
+    - tester champs enfants
+    - controller message d'erreur avec param
+Lang
+ok    - tjrs en fr ?
+ok - mettre en place le debugger
+ok- spring ?
+...- email : dégraisser.
+...- resteasy
+ok - securité
+
+----------------- connection -------------------------
+ok=> recover the interface language to insert it into registrationDTO / facebookLoginDTO
+ok=> display the new language after registration (for facebook)
+ok=> facebook : auto connect with the facebook account of the user
+

@@ -1,0 +1,28 @@
+
+
+<div class="input-text field_text row" ng-class="{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}">
+    <div class="form-group">
+        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">{{getInfo().fieldTitle | translateText}}</label>
+        <div class="col-md-6">
+            <div ng-class="{'input-group':!!getInfo().money}">
+                <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="document-question-progress-bar">
+                    <div ng-style="style">
+                        <spa></spa>
+                    </div>
+                </div>
+                <div ng-show="inDownload=== true && percent != 100" class="document-question-progress-percentage">{{percent}} %</div>
+                <div ng-show="inDownload=== true && percent == 100" >{{'--.field.document.inTreatment' | translateText}}</div>
+                <input
+                        name="{{ id }}"
+                        type="file"
+                        ng-file-select="onFileSelect($files)"
+                        ng-hide="inDownload === true || getInfo().disabled()"/>
+                <div ng-show="getInfo().field!=null">{{'--.field.document.success' | translateText}}</div>
+                <button type="button" ng-show="getInfo().field!=null" ng-click="download()" class="button">{{'--.field.document.download' | translateText}} {{getInfo().field.name}}</button>
+            </div>
+        </div>
+        <div class="col-md-3 errors" ng-show="displayError()===true">{{getInfo().validationMessage | translateText}}</div>
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs"></div>
+    <div class="col-md-6 help" ng-show="getInfo().details!=null">{{getInfo().details | translateText}}</div>
+</div>

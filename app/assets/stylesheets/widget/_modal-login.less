@@ -1,0 +1,31 @@
+.modal-login {
+
+    .modal-login-or {
+        & > div{
+            display: inline-block;
+        }
+        & > div:first-child,
+        & > div:last-child {
+            width: ~'calc(50% - 30px)';
+            height: 1px;
+            background: #bbbbbb;
+            vertical-align: middle;
+        }
+        & > div:nth-child(2){
+            width: 50px;
+            text-align: center;
+        }
+    }
+
+    .facebook-login-btn{
+        text-align: center;
+        & > img {
+            width: 15px;
+            height: 15px;
+        }
+        & > span{
+            margin-left: 4px;
+        }
+    }
+
+}

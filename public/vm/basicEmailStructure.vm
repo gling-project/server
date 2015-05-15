@@ -1,0 +1,23 @@
+<!DOCTYPE html><!--\"Multipart/Alternative MIME\" format-->
+<header>
+
+</header>
+<body>
+
+<!-- header -->
+<div>
+</div>
+
+<!-- body -->
+<div style="min-height: 100px;padding:10px;">
+
+    $content
+
+</div>
+
+<!-- footer -->
+<div>
+    <a href="$project.url">$project.name</a>
+</div>
+
+</body>
