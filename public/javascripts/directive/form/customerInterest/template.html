@@ -1,0 +1,18 @@
+<div class="customer_interest_form">
+
+
+    <div class="row">
+
+        <div ng-repeat="interest in interests">
+
+            <div class="col-xs-6 col-md-4 col-lg-3">
+                <button class="interest btn" ng-class="{interest_selected:interest.selected}" ng-click="select(interest)">
+                    <input type="checkbox" ng-model="interest.selected"/>
+                    {{interest.translationName | translateText}}
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

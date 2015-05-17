@@ -1,12 +1,11 @@
-import be.flo.project.controller.technical.security.CommonSecurityController;
-import be.flo.project.dto.technical.ExceptionDTO;
+import be.lynk.server.controller.technical.security.CommonSecurityController;
+import be.lynk.server.dto.technical.ExceptionDTO;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -23,9 +22,8 @@ import play.mvc.Http;
 import play.mvc.Results;
 import play.mvc.SimpleResult;
 import scala.concurrent.duration.Duration;
-import be.flo.project.service.TranslationService;
-import be.flo.project.service.impl.TranslationServiceImpl;
-import be.flo.project.util.exception.MyRuntimeException;
+import be.lynk.server.service.TranslationService;
+import be.lynk.server.util.exception.MyRuntimeException;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

@@ -10,23 +10,27 @@ GET         /assets/*file                controllers.Assets.at(path="/public", f
 #
 
 ## account
-POST        /login                       @be.flo.project.controller.rest.LoginRestController.login()
-POST        /login/facebook              @be.flo.project.controller.rest.LoginRestController.loginFacebook()
-POST        /account/fusion              @be.flo.project.controller.rest.LoginRestController.fusion()
-POST        /registration                @be.flo.project.controller.rest.LoginRestController.registration()
-GET         /logout                      @be.flo.project.controller.rest.LoginRestController.logout()
+POST        /login                       @be.lynk.server.controller.rest.LoginRestController.login()
+POST        /login/facebook              @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
+POST        /account/fusion              @be.lynk.server.controller.rest.LoginRestController.fusion()
+POST        /registration                @be.lynk.server.controller.rest.LoginRestController.registration()
+GET         /logout                      @be.lynk.server.controller.rest.LoginRestController.logout()
+GET         /email/test/:email           @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
+
+## customer interest
+GET         /customerInterest            @be.lynk.server.controller.rest.CustomerRestController.getAllCustomerInterest()
 
 ##account
-GET         /myself                      @be.flo.project.controller.rest.AccountRestController.myself()
-PUT         /account/:id                 @be.flo.project.controller.rest.AccountRestController.editAccount(id:Long)
-PUT         /account/password/:id        @be.flo.project.controller.rest.AccountRestController.changePassword(id:Long)
+GET         /myself                      @be.lynk.server.controller.rest.AccountRestController.myself()
+PUT         /account/:id                 @be.lynk.server.controller.rest.AccountRestController.editAccount(id:Long)
+PUT         /account/password/:id        @be.lynk.server.controller.rest.AccountRestController.changePassword(id:Long)
 #session
-GET         /session                     @be.flo.project.controller.rest.AccountRestController.mySession()
+GET         /session                     @be.lynk.server.controller.rest.AccountRestController.mySession()
 
 #file
-POST        /file/                       @be.flo.project.controller.rest.FilesController.upload()
-GET         /file/:storedFileId          @be.flo.project.controller.rest.FilesController.download(storedFileId: Long)
+POST        /file/                       @be.lynk.server.controller.rest.FilesController.upload()
+GET         /file/:storedFileId          @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 
 ##welcome
-GET         /                            @be.flo.project.controller.MainController.mainPage()
-GET         /mobile                      @be.flo.project.controller.MainController.mobile()
+GET         /                            @be.lynk.server.controller.MainController.mainPage()
+GET         /mobile                      @be.lynk.server.controller.MainController.mobile()

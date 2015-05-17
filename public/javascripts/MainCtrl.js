@@ -12,7 +12,11 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($scope,$locale,translationService,$modal,$window,facebookService,modelService,languageService) {
+myApp.controller('MainCtrl', function ($scope,$locale,translationService,$modal,$window,facebookService,modelService,languageService,$location) {
+
+    $scope.navigateTo = function(target){
+        $location.path(target);
+    };
 
     //
     // initialize translations

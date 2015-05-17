@@ -19,6 +19,29 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
         return isConnected;
     };
 
+
+    //
+    // registration
+    //
+    this.registration = function (successCallback, failCallback) {
+        // From now on you can use the  service just as Facebook api says
+        FB.login(function (response) {
+            console.log(response);
+
+            if (response.status === 'connected') {
+
+                console.log('connected !! ');
+
+                me(successCallback,failCallback);
+            }
+            else{
+                failCallback();
+            }
+        }, {
+            scope: 'public_profile, email'
+        });
+    };
+
     //
     // login
     //
@@ -36,6 +59,24 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
             }
         }, {
             scope: 'public_profile, email'
+        });
+    };
+
+    //
+    // login
+    //
+    me = function (successCallback, failCallback) {
+        console.log('me 1');
+        // From now on you can use the  service just as Facebook api says
+        FB.api('/me', {
+            fields: 'first_name,last_name,email,gender,locale'
+        }, function(response) {
+            console.log('me 2');
+            if (!response || response.error) {
+                failCallback(response.status,response.error);
+            } else {
+                successCallback(response);
+            }
         });
     };
 

@@ -22,13 +22,13 @@
 #--.generic.value=Value
 #--.generic.valid=Valid
 --.generic.validation.size=Between {0} and {1} characters
-##--.generic.validation.date=Select a date
-##--.generic.validation.notNull=This field is required
+#--.generic.validation.date=Select a date
+#--.generic.validation.notNull=This field is required
 --.generic.validation.password=Between 6 and 18 letters or number or _-%
 --.generic.validation.repeatPassword=The both password are not the same
 --.generic.validation.email=Please get a correct email
 #--.generic.yourName=Your name
-##--.generic.yourNameAbrv=Your acronym
+#--.generic.yourNameAbrv=Your acronym
 #--.generic.creator=Creator
 --.generic.yourLanguage=Your language
 --.generic.email=Email
@@ -125,5 +125,27 @@
 
 ##  modal/AccountFusionFacebookModal/view.html
 --.account.fusion.modal.title=Account fusion
+
+
+
+##  modal/RegistrationModal/view.html
+--.registrationModal.title=Sign up
+
+##  modal/DownloadFieldModal/view.html
+--.downloadModal.title=Download file
+
+##  view/business_registration.html
+--.business.registration.newBusiness=I want to join the Lynk community !
+--.business.registration.title=You want to join the Lynk community? Sign up your shop now !
+--.business.registration.oldBusiness=I already have an account and I want to log in me
+
+##  view/business_welcome.html
+--.business.welcome.title=welcome to your business page
+
+##  modal/LoginModal/view.html (add the google+ button here )
+--.loginModal.facebook.btn=Sign in with Facebook
+
+##  modal/EditProfileModal/view.html (edit your personal information )
+--.editProfileModal.title=Edit your personal information
 
 
