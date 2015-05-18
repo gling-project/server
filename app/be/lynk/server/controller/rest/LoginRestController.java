@@ -2,21 +2,19 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.EmailController;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.AccountFusionDTO;
-import be.lynk.server.dto.BooleanDTO;
-import be.lynk.server.dto.FacebookAuthenticationDTO;
-import be.lynk.server.dto.MyselfDTO;
+import be.lynk.server.dto.*;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
+import be.lynk.server.dto.post.AccountRegistrationDTO;
+import be.lynk.server.dto.post.BusinessRegistrationDTO;
 import be.lynk.server.dto.post.LoginDTO;
-import be.lynk.server.dto.post.RegistrationDTO;
+import be.lynk.server.dto.post.CustomerRegistrationDTO;
 import be.lynk.server.model.entities.*;
-import be.lynk.server.service.AccountService;
-import be.lynk.server.service.FacebookCredentialService;
-import be.lynk.server.service.LoginCredentialService;
-import be.lynk.server.service.SessionService;
+import be.lynk.server.service.*;
+import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Controller;
@@ -41,10 +39,21 @@ public class LoginRestController extends AbstractRestController {
     private FacebookCredentialService facebookCredentialService;
     @Autowired
     private LoginCredentialService loginCredentialService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
+
 
     @Transactional
     public Result testEmail(String email) {
-        return ok(new BooleanDTO(accountService.findByEmail(email)!=null));
+        return ok(new BooleanDTO(accountService.findByEmail(email) != null));
+    }
+
+    @Transactional
+    public Result testFacebookAccount() {
+
+        FacebookAuthenticationDTO dto = extractDTOFromRequest(FacebookAuthenticationDTO.class);
+
+        return ok(testFacebookAccount(dto));
     }
 
 
@@ -56,7 +65,7 @@ public class LoginRestController extends AbstractRestController {
 
         //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getToken());
-        if (/*!facebookTokenAccessControlDTO.isVerified() || */!facebookTokenAccessControlDTO.getId().equals(dto.getUserId())) {
+        if (!facebookTokenAccessControlDTO.getId().equals(dto.getUserId())) {
             throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
         }
 
@@ -64,65 +73,12 @@ public class LoginRestController extends AbstractRestController {
         FacebookCredential facebookCredential = facebookCredentialService.findByUserId(dto.getUserId());
         Account account;
 
-        if (facebookCredential != null) {
-
-            account = facebookCredential.getAccount();
-        } else {
-
-            //test email
-            account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
-            if (account != null) {
-                //an existing account with same email
-                AccountFusionDTO accountFusion = new AccountFusionDTO();
-                accountFusion.setFacebookToken(dto.getToken());
-                accountFusion.setEmail(account.getEmail());
-                accountFusion.setFacebookUserId(dto.getUserId());
-                return Results.status(410, accountFusion);
-            }
-
-            //create a new account
-            //account
-            account = new Account();
-            account.setId(null);
-            account.setEmail(facebookTokenAccessControlDTO.getEmail());
-            account.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
-            account.setLastname(facebookTokenAccessControlDTO.getLast_name());
-            account.setMale(facebookTokenAccessControlDTO.getGender().equals("male"));
-
-            //lang
-            //priority to the facebook language
-            for (Lang lang : Lang.availables()) {
-                if (facebookTokenAccessControlDTO.getLocale().equals(lang.code())) {
-                    account.setLang(lang);
-                    break;
-                }
-            }
-            //choose the current interface lang
-            if (account.getLang() != null) {
-                if (dto.getLang() != null) {
-                    Controller.changeLang(dto.getLang().getCode());
-                    account.setLang(dozerService.map(dto.getLang(), Lang.class));
-                }
-                if (account.getLang() != null) {
-                    account.setLang(Controller.lang());
-                }
-            }
-
-            //roles
-            account.setRole(new Role(account, RoleEnum.USER));
-
-            //create facebook credential
-            facebookCredential = new FacebookCredential(account, dto.getUserId());
-            account.setFacebookCredential(facebookCredential);
-
-            //send email
-            emailController.sendApplicationRegistrationEmail(account);
-
-            //save credential + account
-            facebookCredentialService.saveOrUpdate(facebookCredential);
+        if (facebookCredential == null) {
+            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
         }
+        account = facebookCredential.getAccount();
 
-        return finalizeConnection(account);
+        return ok(finalizeConnection(account));
     }
 
     @Transactional
@@ -162,7 +118,7 @@ public class LoginRestController extends AbstractRestController {
         }
 
         //connection
-        return finalizeConnection(account);
+        return ok(finalizeConnection(account));
     }
 
     /**
@@ -192,7 +148,28 @@ public class LoginRestController extends AbstractRestController {
             accountService.saveOrUpdate(account);
         }
 
-        return finalizeConnection(account);
+        return ok(finalizeConnection(account));
+    }
+
+    @Transactional
+    public Result businessRegistration() {
+        BusinessRegistrationDTO dto = extractDTOFromRequest(BusinessRegistrationDTO.class);
+
+        BusinessAccount account = (BusinessAccount) createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), false);
+
+        //business
+        Business business = dozerService.map(dto.getBusiness(), Business.class);
+        //TODO temp
+        business.getAddress().setCountry("BELGIUM");
+
+
+        account.setBusiness(business);
+        business.setAccount(account);
+
+        accountService.saveOrUpdate(account);
+
+        //return
+        return ok(finalizeConnection(account));
     }
 
     /**
@@ -202,38 +179,34 @@ public class LoginRestController extends AbstractRestController {
      * Create a account, session, store the account into the session and return a LoginSuccess if already is ok
      */
     @Transactional
-    public Result registration() {
+    public Result customerRegistration() {
 
-        RegistrationDTO dto = extractDTOFromRequest(RegistrationDTO.class);
+        CustomerRegistrationDTO dto = extractDTOFromRequest(CustomerRegistrationDTO.class);
 
-        //Control email
-        if (accountService.findByEmail(dto.getEmail()) != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.EMAIL_ALREADY_USED);
+        CustomerAccount account = (CustomerAccount) createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), true);
+
+        //address ?
+        if (dto.getAddress() != null) {
+            Address address = dozerService.map(dto.getAddress(), Address.class);
+            //TODO temp
+            address.setCountry("BELGIUM");
+
+            account.getAddresses().add(address);
         }
 
-        //account
-        Account account = dozerService.map(dto, Account.class);
-        account.setId(null);
-        if (account.getLang() == null) {
-            account.setLang(Controller.lang());
+        //interest  ?
+        if (dto.getCustomerInterests() != null) {
+            for (CustomerInterestDTO customerInterestDTO : dto.getCustomerInterests()) {
+                account.getCustomerInterests().add(customerInterestService.findByName(customerInterestDTO.getName()));
+            }
         }
-        account.setRole(new Role(account, RoleEnum.USER));
-
-
-        if (dto.getLang() != null) {
-            Controller.changeLang(dto.getLang().getCode());
-        }
-
-        //login credential
-        LoginCredential loginCredential = new LoginCredential(account, dto.getKeepSessionOpen(), dto.getPassword());
-        account.setLoginCredential(loginCredential);
 
         //send email
-        emailController.sendApplicationRegistrationEmail(account);
+        //TODO ? emailController.sendApplicationRegistrationEmail(account);
 
         accountService.saveOrUpdate(account);
 
-        return finalizeConnection(account);
+        return ok(finalizeConnection(account));
 
     }
 
@@ -248,7 +221,7 @@ public class LoginRestController extends AbstractRestController {
         return Results.redirect("/");
     }
 
-    private Result finalizeConnection(Account account) {
+    private MyselfDTO finalizeConnection(Account account) {
 
         sessionService.saveOrUpdate(new Session(account, securityController.getSource(Controller.ctx())));
 
@@ -261,8 +234,118 @@ public class LoginRestController extends AbstractRestController {
         //storage
         securityController.storeAccount(Controller.ctx(), account);
 
-        return ok(myselfDTO);
+        return myselfDTO;
     }
 
+    private TestFacebookDTO testFacebookAccount(FacebookAuthenticationDTO facebookAuthenticationDTO) {
+
+        TestFacebookDTO testFacebookDTO = new TestFacebookDTO();
+
+        //authentication
+        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookAuthenticationDTO.getToken());
+        if (!facebookTokenAccessControlDTO.getId().equals(facebookAuthenticationDTO.getUserId())) {
+            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
+        }
+
+        testFacebookDTO.setFacebookTokenAccessControl(facebookTokenAccessControlDTO);
+
+        //control
+        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookAuthenticationDTO.getUserId());
+
+        if (facebookCredential != null) {
+            Account account = facebookCredential.getAccount();
+            testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED);
+            testFacebookDTO.setMyselfDTO(finalizeConnection(account));
+        } else if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
+            //an existing account with same email
+            //fusion
+            Account account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
+            if (((account instanceof BusinessAccount) && facebookAuthenticationDTO.getAccountType().equals(AccountTypeEnum.BUSINESS)) ||
+                    ((account instanceof CustomerAccount) && facebookAuthenticationDTO.getAccountType().equals(AccountTypeEnum.CUSTOMER))) {
+
+                AccountFusionDTO accountFusion = new AccountFusionDTO();
+                accountFusion.setFacebookToken(facebookAuthenticationDTO.getToken());
+                accountFusion.setEmail(facebookTokenAccessControlDTO.getEmail());
+                accountFusion.setFacebookUserId(facebookAuthenticationDTO.getUserId());
+                testFacebookDTO.setAccountFusion(accountFusion);
+                testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ACCOUNT_WITH_SAME_EMAIL);
+            }
+            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_FUSION_DIFFERENT_ACCOUNT_TYPE);
+        } else {
+            testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.OK);
+        }
+
+
+        return testFacebookDTO;
+
+    }
+
+    private Account createNewAccount(AccountRegistrationDTO accountRegistrationDTO, FacebookAuthenticationDTO facebookAuthentication, boolean isCustomer) {
+        //Control email
+        if (accountService.findByEmail(accountRegistrationDTO.getEmail()) != null) {
+            throw new MyRuntimeException(ErrorMessageEnum.EMAIL_ALREADY_USED);
+        }
+
+        //account
+        Account account;
+        if (isCustomer) {
+            CustomerAccount customerAccount = dozerService.map(accountRegistrationDTO, CustomerAccount.class);
+            account = customerAccount;
+        } else {
+            account = dozerService.map(accountRegistrationDTO, BusinessAccount.class);
+        }
+        account.setId(null);
+        if (account.getLang() == null) {
+            account.setLang(Controller.lang());
+        }
+        account.setRole(new Role(account, RoleEnum.USER));
+
+
+        if (accountRegistrationDTO.getLang() != null) {
+            Controller.changeLang(accountRegistrationDTO.getLang().getCode());
+        }
+
+        //credential
+        if (facebookAuthentication != null) {
+            TestFacebookDTO result = testFacebookAccount(facebookAuthentication);
+            if (result.getStatus().equals(TestFacebookDTO.TestFacebookStatusEnum.ACCOUNT_WITH_SAME_EMAIL)) {
+                //TODO test fusion
+            } else if (result.getStatus().equals(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED)) {
+                //TODO ??
+            } else {
+                //continue
+                account.setFacebookCredential(new FacebookCredential(account, facebookAuthentication.getUserId()));
+
+                account.setEmail(result.getFacebookTokenAccessControl().getEmail());
+                account.setFirstname(result.getFacebookTokenAccessControl().getFirst_name());
+                account.setLastname(result.getFacebookTokenAccessControl().getLast_name());
+                account.setMale(result.getFacebookTokenAccessControl().getGender().equals("male"));
+
+                //lang
+                //priority to the facebook language
+                for (Lang lang : Lang.availables()) {
+                    if (result.getFacebookTokenAccessControl().getLocale().equals(lang.code())) {
+                        account.setLang(lang);
+                        break;
+                    }
+                }
+                //choose the current interface lang
+                if (account.getLang() != null) {
+                    if (accountRegistrationDTO.getLang() != null) {
+                        changeLang(accountRegistrationDTO.getLang().getCode());
+                        account.setLang(dozerService.map(accountRegistrationDTO.getLang(), Lang.class));
+                    }
+                    if (account.getLang() != null) {
+                        account.setLang(lang());
+                    }
+                }
+            }
+        } else {
+            Logger.info("----------------------"+accountRegistrationDTO+"");
+            account.setLoginCredential(new LoginCredential(account, accountRegistrationDTO.getKeepSessionOpen(), accountRegistrationDTO.getPassword()));
+        }
+
+        return account;
+    }
 
 }

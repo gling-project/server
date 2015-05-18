@@ -32,7 +32,9 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
 
                 console.log('connected !! ');
 
-                me(successCallback,failCallback);
+                successCallback(response.authResponse);
+
+                //me(successCallback,failCallback);
             }
             else{
                 failCallback();

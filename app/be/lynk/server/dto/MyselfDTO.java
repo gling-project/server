@@ -11,6 +11,16 @@ public class MyselfDTO extends AccountDTO {
 
     private String authenticationKey;
 
+    private BusinessDTO business;
+
+    public BusinessDTO getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(BusinessDTO business) {
+        this.business = business;
+    }
+
     public String getAuthenticationKey() {
         return authenticationKey;
     }

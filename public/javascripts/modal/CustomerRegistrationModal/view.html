@@ -8,7 +8,7 @@
         <div ng-class="{'current':badgeSelected==1}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==1}">1</span>
             {{'--.customer.registrationModal.personal.title' | translateText}}
         </div>
-        <div ng-class="{'current':badgeSelected==2}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==2}">3</span>
+        <div ng-class="{'current':badgeSelected==2}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==2}">2</span>
             {{'--.customer.registrationModal.interest.title' | translateText}}
         </div>
         <div ng-class="{'current':badgeSelected==3}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==3}">3</span>
@@ -17,7 +17,7 @@
     </div>
 
     <div ng-show="badgeSelected==1">
-        {{'--.customer.registrationModal.personal.desc' | translateText}}
+        <div class="modal-description">{{'--.customer.registrationModal.personal.desc' | translateText}}</div>
         <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
         <div class="modal-login-or">
@@ -35,11 +35,11 @@
 
     </div>
     <div ng-show="badgeSelected==2">
-        {{'--.customer.registrationModal.interest.desc' | translateText}}
+        <div class="modal-description">{{'--.customer.registrationModal.interest.desc' | translateText}}</div>
         <address-form-ctrl ng-info="addressFormParam"></address-form-ctrl>
     </div>
     <div ng-show="badgeSelected==3">
-        {{'--.customer.registrationModal.address.desc' | translateText}}
+        <div class="modal-description">{{'--.customer.registrationModal.address.desc' | translateText}}</div>
         <customer-interest-form-ctrl ng-info="customerInterestParam"></customer-interest-form-ctrl>
     </div>
 
@@ -49,7 +49,6 @@
 </div>
 <div class="modal-footer">
     <button ng-show="badgeSelected!=1" style="float:left" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="previous()">{{'--.generic.previous' | translateText}}</button>
-    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.cancel' | translateText}}</button>
     <button ng-show="badgeSelected!=3" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="next()">{{'--.generic.next' | translateText}}</button>
     <button ng-show="badgeSelected==3"ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' | translateText}}</button>
     <img src="/assets/images/modal-loading.gif" ng-show="loading" />

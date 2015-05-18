@@ -3,11 +3,8 @@ var test = function (modelService) {
     if (myself == null) {
         return 'NOT_CONNECTED';
     }
-    else if (myself.role == 'BUSINESS') {
-        return 'BUSINESS';
-    }
     else {
-        return 'CUSTOMER';
+        return myself.type;
     }
 };
 
@@ -34,10 +31,24 @@ var initializeCommonRoutes = function () {
                 }
             }).when('/business', {
                 templateUrl: '/assets/javascripts/view/business_welcome.html',
-                controller: 'BusinessWelcomeCtrl'
+                controller: 'BusinessWelcomeCtrl',
+                resolve: {
+                    a:function(modelService,$location){
+                        if(test(modelService) != 'BUSINESS'){
+                            $location.path('/');
+                        }
+                    }
+                }
             }).when('/business_registration', {
                 templateUrl: '/assets/javascripts/view/business_registration.html',
-                controller: 'BusinessRegistrationCtrl'
+                controller: 'BusinessRegistrationCtrl',
+                resolve: {
+                    a: function (modelService, $location) {
+                        if (test(modelService) == 'BUSINESS') {
+                            $location.path('/business');
+                        }
+                    }
+                }
             }).otherwise({
                 redirectTo: '/'
             });

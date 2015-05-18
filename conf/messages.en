@@ -10,7 +10,7 @@
 #--.generic.description=Description
 --.generic.firstname=First name
 --.generic.lastname=Last name
-#--.generic.name=Name
+--.generic.name=Name
 ##--.generic.nameAbrv=Acronym
 #--.generic.navigation=Navigation
 --.generic.oldPassword=Old password
@@ -40,6 +40,11 @@
 --.generic.logout=Log out
 --.welcome.myProfile=My profile
 --.generic.password=Password
+--.generic.previous=Previous
+--.generic.phone=Phone
+--.generic.next=Next
+--.generic.desc=Description
+--.generic.stepNotValid=Please finish to complete data before continue to the newt step
 
 ## login modal
 --.loginModal.title=Login you
@@ -84,7 +89,7 @@
 --.changePasswordModal.title=Change your password
 
 ## changeEmailModal
---.changeEmailModal.title=Change your email
+#--.changeEmailModal.title=Change your email
 --.changeEmailModal.email=Your new email
 
 ## field doc
@@ -148,4 +153,46 @@
 ##  modal/EditProfileModal/view.html (edit your personal information )
 --.editProfileModal.title=Edit your personal information
 
+
+
+##  modal/CustomerRegistrationModal/view.html
+--.customer.registrationModal.interest.title=Interests
+--.customer.registrationModal.interest.desc=Select your interest. This interest can help us to propose you promotion and message adapted to you needs. You can skip this step to click on 'next' and select you interest later.
+--.customer.registrationModal.address.desc=Create a new address. You can use this address to find shop around it. You can skip this step to click on 'next' and select you interest later.
+--.customer.registrationModal.title=Create a new account
+--.customer.registrationModal.personal.desc=Create a account
+--.customer.registrationModal.personal.address=Your address
+--.customer.registrationModal.personal.title=Personal
+
+##  view/home.html
+--.home.toBusiness.btn=I am a business
+--.home.main.description=Welcome to Lynk !! ....
+
+##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
+--.customer.registrationModal.alredyRegistred.success=This facebook account is already registered. You are now connected!
+
+##  be/lynk/server/dto/BusinessDTO.java
+--.validation.dto.phone=Phone number expected
+
+##  be/lynk/server/util/message/ErrorMessageEnum.java
+--.error.facebookFusion.differentAccountType=This Facebook account is alredy registered but for an other type of account. You cannot used the same Face account to create a customer account and a business account.
+
+
+##  modal/BusinessRegistrationModal/view.html
+--.business.registrationModal.category.title=Business category
+--.business.registrationModal.business.desc=Get your shop information
+--.business.registrationModal.title=Create your business
+--.business.registrationModal.business.title=Shop information
+--.business.registrationModal.category.desc=Select the category of your business
+--.business.registrationModal.address.subtitle=Address of your shop
+
+##  directive/form/address/AddressFormCtrl.js
+--.form.address.field.name=Name
+--.form.address.field.street=Street
+--.form.address.field.zip=Zip code
+--.form.address.field.city=City
+
+##  directive/form/businessCategory/template.html
+--.businessCategory.column.subcategory=Sub category
+--.businessCategory.column.category=Category
 

@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
+    <h4 class="modal-title">{{'--.business.registrationModal.title' | translateText}}</h4>
+</div>
+<div class="modal-body modal-login" dir-enter="save()">
+
+    <div class="wizard">
+        <div ng-class="{'current':badgeSelected==1}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==1}">1</span>
+            {{'--.customer.registrationModal.personal.title' | translateText}}
+        </div>
+        <div ng-class="{'current':badgeSelected==2}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==2}">2</span>
+            {{'--.business.registrationModal.business.title' | translateText}}
+        </div>
+        <div ng-class="{'current':badgeSelected==3}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==3}">3</span>
+            {{'--.business.registrationModal.category.title' | translateText}}
+        </div>
+    </div>
+
+    <div ng-show="badgeSelected==1">
+        <div class="modal-description">{{'--.customer.registrationModal.personal.desc' | translateText}}</div>
+        <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+
+        <div class="modal-login-or">
+            <div></div>
+            <div>{{'--.generic.or' | translateText}}</div>
+            <div></div>
+        </div>
+
+        <div class="facebook-login-btn-container">
+            <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+                <img src="/assets/images/facebook/login_icon.png"/>
+                <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
+            </button>
+        </div>
+
+    </div>
+    <div ng-show="badgeSelected==2">
+        <div class="modal-description">{{'--.business.registrationModal.business.desc' | translateText}}</div>
+        <business-form-ctrl ng-info="businessFormParam"></business-form-ctrl>
+        <div class="modal-subtitle">{{'--.business.registrationModal.address.subtitle' | translateText}}</div>
+        <address-form-ctrl ng-info="addressFormParam"></address-form-ctrl>
+    </div>
+    <div ng-show="badgeSelected==3">
+        <div class="modal-description">{{'--.business.registrationModal.category.desc' | translateText}}</div>
+        <business-category-form-ctrl ng-info="businessCategoryFormParam"></business-category-form-ctrl>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button ng-show="badgeSelected!=1" style="float:left" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="previous()">{{'--.generic.previous' | translateText}}</button>
+    <button ng-show="badgeSelected!=3" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="next()">{{'--.generic.next' | translateText}}</button>
+    <button ng-show="badgeSelected==3"ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' | translateText}}</button>
+    <img src="/assets/images/modal-loading.gif" ng-show="loading" />
+</div>

@@ -2,6 +2,7 @@ package be.lynk.server.dto;
 
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.constants.ValidationRegex;
 
 import javax.validation.constraints.NotNull;
@@ -35,7 +36,17 @@ public class AccountDTO extends DTO {
 
     private LangDTO lang;
 
+    private AccountTypeEnum type;
+
     public AccountDTO() {
+    }
+
+    public AccountTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(AccountTypeEnum type) {
+        this.type = type;
     }
 
     public Boolean getMale() {

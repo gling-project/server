@@ -1,6 +1,7 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.util.AccountTypeEnum;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,9 +15,20 @@ public class FacebookAuthenticationDTO extends DTO {
 
     @NotNull(message = "--.validation.dto.notNull")
     private String token;
+
     private LangDTO lang;
 
+    private AccountTypeEnum accountType;
+
     public FacebookAuthenticationDTO() {
+    }
+
+    public AccountTypeEnum getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountTypeEnum accountType) {
+        this.accountType = accountType;
     }
 
     public String getUserId() {

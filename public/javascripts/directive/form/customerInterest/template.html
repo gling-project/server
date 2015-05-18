@@ -1,7 +1,10 @@
-<div class="customer_interest_form">
+<div class="form">
 
+    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
+        <img src="/assets/images/form_loading.gif"/>
+    </div>
 
-    <div class="row">
+    <div ng-class="{'hidden':loadingFinish!=true}">
 
         <div ng-repeat="interest in interests">
 

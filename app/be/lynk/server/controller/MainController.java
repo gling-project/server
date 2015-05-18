@@ -3,6 +3,7 @@ package be.lynk.server.controller;
 import be.lynk.server.controller.technical.AbstractController;
 import be.lynk.server.dto.InterfaceDataDTO;
 import be.lynk.server.dto.MyselfDTO;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.util.AppUtil;
 import be.lynk.server.dto.LangDTO;
 import be.lynk.server.dto.ListDTO;
@@ -40,11 +41,12 @@ public class MainController extends AbstractController {
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
         if (securityController.isAuthenticated(ctx())) {
-            MyselfDTO accountDTO = dozerService.map(securityController.getCurrentUser(), MyselfDTO.class);
-            accountDTO.setFacebookAccount(securityController.getCurrentUser().getFacebookCredential() != null);
-            accountDTO.setLoginAccount(securityController.getCurrentUser().getLoginCredential() != null);
+            Account currentUser = securityController.getCurrentUser();
+            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
+            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
+            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
             interfaceDataDTO.setMySelf(accountDTO);
-            Logger.info(securityController.getCurrentUser() + "<=>" + accountDTO);
+            Logger.info(currentUser + "<=>" + accountDTO);
         }
 
 

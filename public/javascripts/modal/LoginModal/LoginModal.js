@@ -1,4 +1,4 @@
-myApp.controller('LoginModalCtrl', function ($scope, $http, $flash,  facebookService, translationService,$modal) {
+myApp.controller('LoginModalCtrl', function ($scope, $http, $flash,  facebookService, translationService,$modal,$modalInstance,modelService,$location) {
 
     $scope.loading = false;
 
@@ -74,6 +74,9 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash,  facebookSer
                 $scope.close();
                 //logout facebook in case
                 facebookService.logout();
+                if(data.type == 'BUSINESS'){
+                    $location.path('/business');
+                }
             })
                 .error(function (data, status) {
                     $scope.loading = false;
@@ -91,6 +94,9 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash,  facebookSer
                 modelService.set(modelService.MY_SELF, data);
                 $scope.loading = false;
                 $flash.success(translationService.get("--.login.flash.success"));
+                if(data.type == 'BUSINESS'){
+                    $location.path('/business');
+                }
                 $scope.close();
 
             },

@@ -3,34 +3,39 @@
 # ~~~~
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                controllers.Assets.at(path="/public", file)
+GET         /assets/*file                 controllers.Assets.at(path="/public", file)
 
 #
 # REST routes
 #
 
 ## account
-POST        /login                       @be.lynk.server.controller.rest.LoginRestController.login()
-POST        /login/facebook              @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
-POST        /account/fusion              @be.lynk.server.controller.rest.LoginRestController.fusion()
-POST        /registration                @be.lynk.server.controller.rest.LoginRestController.registration()
-GET         /logout                      @be.lynk.server.controller.rest.LoginRestController.logout()
-GET         /email/test/:email           @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
+POST        /login                        @be.lynk.server.controller.rest.LoginRestController.login()
+POST        /login/facebook               @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
+POST        /account/fusion               @be.lynk.server.controller.rest.LoginRestController.fusion()
+POST        /registration/customer        @be.lynk.server.controller.rest.LoginRestController.customerRegistration()
+POST        /registration/business        @be.lynk.server.controller.rest.LoginRestController.businessRegistration()
+GET         /logout                       @be.lynk.server.controller.rest.LoginRestController.logout()
+GET         /email/test/:email            @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
+POST        /facebook/test                @be.lynk.server.controller.rest.LoginRestController.testFacebookAccount()
 
 ## customer interest
-GET         /customerInterest            @be.lynk.server.controller.rest.CustomerRestController.getAllCustomerInterest()
+GET         /customerInterest             @be.lynk.server.controller.rest.CustomerRestController.getAllCustomerInterest()
+
+##businessCategory
+GET         /businessCategory             @be.lynk.server.controller.rest.BusinessRestController.getAllBusinessCategory()
 
 ##account
-GET         /myself                      @be.lynk.server.controller.rest.AccountRestController.myself()
-PUT         /account/:id                 @be.lynk.server.controller.rest.AccountRestController.editAccount(id:Long)
-PUT         /account/password/:id        @be.lynk.server.controller.rest.AccountRestController.changePassword(id:Long)
+GET         /myself                       @be.lynk.server.controller.rest.AccountRestController.myself()
+PUT         /account/:id                  @be.lynk.server.controller.rest.AccountRestController.editAccount(id:Long)
+PUT         /account/password/:id         @be.lynk.server.controller.rest.AccountRestController.changePassword(id:Long)
 #session
-GET         /session                     @be.lynk.server.controller.rest.AccountRestController.mySession()
+GET         /session                      @be.lynk.server.controller.rest.AccountRestController.mySession()
 
 #file
-POST        /file/                       @be.lynk.server.controller.rest.FilesController.upload()
-GET         /file/:storedFileId          @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
+POST        /file/                        @be.lynk.server.controller.rest.FilesController.upload()
+GET         /file/:storedFileId           @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 
 ##welcome
-GET         /                            @be.lynk.server.controller.MainController.mainPage()
-GET         /mobile                      @be.lynk.server.controller.MainController.mobile()
+GET         /                             @be.lynk.server.controller.MainController.mainPage()
+GET         /mobile                       @be.lynk.server.controller.MainController.mobile()

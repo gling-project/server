@@ -1,17 +1,24 @@
-<div>
+<div class="form">
 
-    <dir-field-select ng-info="fields.gender"></dir-field-select>
+    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
+        <img src="/assets/images/form_loading.gif"/>
+    </div>
 
-    <dir-field-text ng-info="fields.firstname"></dir-field-text>
+    <div ng-class="{'hidden':loadingFinish!=true}">
 
-    <dir-field-text ng-info="fields.lastname"></dir-field-text>
+        <dir-field-select ng-info="fields.gender"></dir-field-select>
 
-    <dir-field-text ng-info="fields.login"></dir-field-text>
+        <dir-field-text ng-info="fields.firstname"></dir-field-text>
 
-    <dir-field-text ng-info="fields.password"></dir-field-text>
+        <dir-field-text ng-info="fields.lastname"></dir-field-text>
 
-    <dir-field-text ng-info="fields.repeatPassword"></dir-field-text>
+        <dir-field-text ng-info="fields.email"></dir-field-text>
 
-    <dir-field-check ng-info="fields.openSession"></dir-field-check>
+        <dir-field-text ng-info="fields.password"></dir-field-text>
 
+        <dir-field-text ng-info="fields.repeatPassword"></dir-field-text>
+
+        <dir-field-check ng-info="fields.keepSessionOpen"></dir-field-check>
+
+    </div>
 </div>

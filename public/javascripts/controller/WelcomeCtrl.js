@@ -1,4 +1,4 @@
-myApp.controller('WelcomeCtrl', function ($scope, $modal, $window, $flash, $http, facebookService, modelService,languageService) {
+myApp.controller('WelcomeCtrl', function ($scope, $modal, $window, $flash, $http, facebookService, modelService,languageService,$location) {
 
 
     //use the model
@@ -19,9 +19,9 @@ myApp.controller('WelcomeCtrl', function ($scope, $modal, $window, $flash, $http
     $scope.registration = function () {
 
         $modal.open({
-            templateUrl: "/assets/javascripts/modal/RegistrationModal/view.html",
-            controller: "RegistrationModalCtrl",
-            size: "l"
+            templateUrl: "/assets/javascripts/modal/CustomerRegistrationModal/view.html",
+            controller: "CustomerRegistrationModalCtrl",
+            size: "lg"
         });
     };
 
@@ -42,6 +42,7 @@ myApp.controller('WelcomeCtrl', function ($scope, $modal, $window, $flash, $http
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             modelService.remove(modelService.MY_SELF);
+            $location.path('/');
         })
             .error(function (data, status) {
                 $flash.error(data.message);

@@ -24,6 +24,11 @@
 --.generic.validation.password=Entre 6 et 18 lettre, chiffres ou _-%
 --.generic.repeatPassword=Répétez le mot de passe
 --.generic.email=Email
+--.generic.previous=generic.previous
+--.generic.phone=generic.phone
+--.generic.next=generic.next
+--.generic.desc=generic.desc
+--.generic.name=generic.name
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -41,9 +46,11 @@
 
 ##  modal/RegistrationModal/view.html
 --.loginModal.title=Connection
+--.registrationModal.title=registrationModal.title
 
 ##  modal/DownloadFieldModal/view.html
---.changeEmailModal.title=Changez votre adresse email
+#--.changeEmailModal.title=Changez votre adresse email
+--.downloadModal.title=downloadModal.title
 
 ##  modal/HelpModal/view.html
 --.helpModal.title=Aide
@@ -85,7 +92,7 @@
 --.error.validation.not_null=Le champs {0} ne peut pas être vide
 --.error.validation.size=Le champs {0} doit faire entre {1} et {2} caractères
 --.error.wrong_old_password=Ce n'est pas votre ancien mot de passe
---.error.validation.string_expected=A type string is expected for the pattern annotation, but the field {0} is a {1}
+#--.error.validation.string_expected=A type string is expected for the pattern annotation, but the field {0} is a {1}
 --.error.facebook.authentication_fail=L'authentification Facebook a échoué
 --.error.not_connected=Vous n'êtes pas connecté
 --.error.wrong_password_or_login=Mauvais email ou mot de passe
@@ -94,4 +101,60 @@
 --.account.fusion.modal.title=Fusion de compte
 
 
+
+
+##  modal/CustomerRegistrationModal/view.html
+--.customer.registrationModal.interest.title=customer.registrationModal.interest.title
+--.customer.registrationModal.interest.desc=customer.registrationModal.interest.desc
+--.loginModal.facebook.btn=loginModal.facebook.btn
+--.customer.registrationModal.address.desc=customer.registrationModal.address.desc
+--.customer.registrationModal.title=customer.registrationModal.title
+--.customer.registrationModal.personal.desc=customer.registrationModal.personal.desc
+--.customer.registrationModal.personal.address=customer.registrationModal.personal.address
+--.customer.registrationModal.personal.title=customer.registrationModal.personal.title
+
+##  view/home.html
+--.home.toBusiness.btn=home.toBusiness.btn
+--.home.main.description=home.main.description
+
+##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
+--.customer.registrationModal.account.notValid=customer.registrationModal.account.notValid
+--.customer.registrationModal.alredyRegistred.success=customer.registrationModal.alredyRegistred.success
+
+##  modal/EditProfileModal/view.html (edit your personal information )
+--.editProfileModal.title=editProfileModal.title
+
+##  be/lynk/server/dto/BusinessDTO.java
+--.validation.dto.phone=validation.dto.phone
+
+##  be/lynk/server/util/message/ErrorMessageEnum.java
+--.error.facebookFusion.differentAccountType=error.facebookFusion.differentAccountType
+
+##  view/business_registration.html
+--.business.registration.newBusiness=business.registration.newBusiness
+--.business.registration.title=business.registration.title
+--.business.registration.oldBusiness=business.registration.oldBusiness
+
+##  directive/form/business/BusinessFormCtrl.js
+--.validation.dto.notNul=validation.dto.notNul
+
+##  view/business_welcome.html
+--.business.welcome.title=business.welcome.title
+
+##  modal/BusinessRegistrationModal/view.html
+--.business.registrationModal.category.title=business.registrationModal.category.title
+--.business.registrationModal.business.desc=business.registrationModal.business.desc
+--.business.registrationModal.title=business.registrationModal.title
+--.business.registrationModal.business.title=business.registrationModal.business.title
+--.business.registrationModal.category.desc=business.registrationModal.category.desc
+
+##  directive/form/address/AddressFormCtrl.js
+--.form.address.field.name=form.address.field.name
+--.form.address.field.street=form.address.field.street
+--.form.address.field.zip=form.address.field.zip
+--.form.address.field.city=form.address.field.city
+
+##  directive/form/businessCategory/template.html
+--.businessCategory.column.subcategory=businessCategory.column.subcategory
+--.businessCategory.column.category=businessCategory.column.category
 

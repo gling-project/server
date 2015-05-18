@@ -11,11 +11,6 @@
     <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <non-jta-data-source>DefaultDS</non-jta-data-source>
-        <class>be.lynk.server.model.entities.Account</class>
-        <class>be.lynk.server.model.entities.Role</class>
-        <class>be.lynk.server.model.entities.Session</class>
-        <class>be.lynk.server.model.entities.FacebookCredential</class>
-        <class>be.lynk.server.model.entities.LoginCredential</class>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>

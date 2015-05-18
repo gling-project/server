@@ -2,11 +2,34 @@
 
     <div>{{'--.home.main.description' | translateText}}</div>
 
-    <button ng-click="navigateTo('/business')">{{'--.home.toBusiness.btn'}}</button>
+
+    <div style="vertical-align: top">
+
+        <div style="display: inline-block;width:35%;vertical-align: top">
+            <h4 style="text-align: center;">Last promotion in your neighborhood</h4>
+            <div style="  height: 400px; background-color: orange;  border: 2px solid red;  margin: 5px;"></div>
+        </div>
 
 
+        <div style="display: inline-block;width:35%;vertical-align: top">
+            <h4 style="text-align: center;">Last news in your neighborhood</h4>
+            <div style="  height: 400px; background-color: orange;  border: 2px solid red;  margin: 5px;"></div>
+        </div>
 
-   <button ng-click="customerRegistration()">REGISTRATION</button>
-
+        <div style="display: inline-block;width:28%;vertical-align: top">
+            <div style="  background-color: green;  color: white;  padding: 10px;  margin-bottom: 20px;">
+                <div>Sign up to follow you favorite shops, benefit to awesome promotion</div>
+                <button style="color: #000000" ng-click="customerRegistration()">Sign up now !</button>
+            </div>
+            <div style="  background-color: green;  color: white;  padding: 10px;  margin-bottom: 20px;">
+                <div>You have a business and you want to communique directly with your customer ? Start now for free,
+                    and
+                    discover you pricing !
+                </div>
+                <button style="color: #000000" ng-click="navigateTo('/business_registration')">{{'--.home.toBusiness.btn' | translateText}}
+                </button>
+            </div>
+        </div>
+    </div>
 
 </div>

@@ -1,4 +1,4 @@
-myApp.directive('accountFormCtrl', function ($http, $flash, directiveService) {
+myApp.directive('accountFormCtrl', function ($http, $flash, directiveService,$timeout) {
 
     return {
         restrict: "E",
@@ -21,6 +21,8 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService) {
                         scope.getInfo().dto = {};
                     }
 
+
+
                     scope.fields = {
                         gender: {
                             name: 'gender',
@@ -29,7 +31,7 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService) {
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field:(scope.getInfo().male)?'male':'female'
+                            field:(scope.getInfo().male==null)?null:(scope.getInfo().male)?'male':'female'
                         },
                         firstname: {
                             name: 'firstname',
@@ -51,7 +53,7 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService) {
                             },
                             field: scope.getInfo().dto.lastname
                         },
-                        login: {
+                        email: {
                             fieldType: "email",
                             name: 'email',
                             fieldTitle: "--.generic.email",
@@ -87,9 +89,8 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService) {
                                 return scope.fields.password === scope.fields.repeatPassword;
                             }
                         },
-                        openSession: {
+                        keepSessionOpen: {
                             fieldTitle: "--.registration.form.keepSessionOpen",
-                            field: false,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -98,12 +99,13 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService) {
                     };
 
                     scope.$watch('fields', function () {
+                        console.log("open : "+scope.fields.keepSessionOpen.field);
                         var validation = true;
 
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];
                             if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                                obj.firstAttempt = scope.getInfo().displayErrorMessage;
+                                obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                                 validation = false;
                             }
                             else {
@@ -117,6 +119,18 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService) {
                         }
                         scope.getInfo().isValid = validation;
                     }, true);
+
+                    scope.$watch('getInfo().displayErrorMessage', function () {
+                        console.log("!!!!!!!!!!!");
+                        for (var key in scope.fields) {
+                            var obj = scope.fields[key];
+                                obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                            }
+                    });
+
+                    $timeout(function() {
+                        scope.loadingFinish = true;
+                    },800);
                 }
             }
         }

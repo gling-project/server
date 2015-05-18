@@ -10,7 +10,18 @@
 
     <dir-field-check ng-info="fields.openSession"></dir-field-check>
 
+    <div class="modal-login-or">
+        <div></div>
+        <div>{{'--.generic.or' | translateText}}</div>
+        <div></div>
+    </div>
 
+    <div class="facebook-login-btn-container">
+        <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+            <img src="/assets/images/facebook/login_icon.png"/>
+            <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
+        </button>
+    </div>
 
 
 </div>

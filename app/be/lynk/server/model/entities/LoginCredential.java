@@ -32,9 +32,9 @@ public class LoginCredential  extends AbstractEntity {
     public LoginCredential() {
     }
 
-    public LoginCredential(Account account, boolean keepSessionOpen, String password) {
+    public LoginCredential(Account account, Boolean keepSessionOpen, String password) {
         this.account = account;
-        this.keepSessionOpen = keepSessionOpen;
+        this.keepSessionOpen = (keepSessionOpen!=null)?keepSessionOpen:false;
         this.password = password;
     }
 

@@ -15,7 +15,8 @@ import java.util.Set;
  * Created by florian on 10/11/14.
  */
 @Entity
-public class Account extends AbstractEntity {
+public abstract  class Account extends AbstractEntity {
+
 
     @Basic(optional = false)
     private Boolean male;

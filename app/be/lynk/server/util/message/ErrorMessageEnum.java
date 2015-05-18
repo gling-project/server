@@ -17,7 +17,8 @@ public enum ErrorMessageEnum {
     VALIDATION_PASSWORD("--.error.validation.password"),
     NOT_YOUR_OLD_PASSWORD("--.error.wrong_old_password"),
     FACEBOOK_AUTHENTICATION_FAIL("--.error.facebook.authentication_fail"),
-    WRONG_PASSWORD_OR_LOGIN("--.error.wrong_password_or_login");
+    WRONG_PASSWORD_OR_LOGIN("--.error.wrong_password_or_login"),
+    FACEBOOK_FUSION_DIFFERENT_ACCOUNT_TYPE("--.error.facebookFusion.differentAccountType");
 
     private final String key;
 

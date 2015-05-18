@@ -11,9 +11,6 @@ import javax.persistence.*;
 @Entity
 public class Role extends AbstractEntity{
 
-    @ManyToOne(optional = false)
-    private Account account;
-
     @Enumerated(value = EnumType.STRING)
     private RoleEnum roleEnum;
 
@@ -21,20 +18,11 @@ public class Role extends AbstractEntity{
     }
 
     public Role(Account account, RoleEnum roleEnum) {
-        this.account = account;
         this.roleEnum = roleEnum;
     }
 
     public Role(RoleEnum roleEnum) {
         this.roleEnum = roleEnum;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public RoleEnum getRoleEnum() {

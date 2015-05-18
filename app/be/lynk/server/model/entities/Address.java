@@ -26,22 +26,11 @@ public class Address extends AbstractEntity {
     @Basic(optional = false)
     private String country;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Account account;
-
     private Double localisationX;
 
     private Double localisationY;
 
     public Address() {
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public String getStreet() {
@@ -108,7 +97,6 @@ public class Address extends AbstractEntity {
                 ", zip='" + zip + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
-                ", account=" + account +
                 ", localisationX=" + localisationX +
                 ", localisationY=" + localisationY +
                 '}';

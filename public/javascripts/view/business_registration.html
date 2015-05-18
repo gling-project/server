@@ -1,15 +1,20 @@
 <div class="content-block" ng-controller="BusinessRegistrationCtrl">
 
 
-    <div class="row">
+    <div>
         {{'--.business.registration.title' | translateText}}
     </div>
-
-    <div class="row">
-        <button class="btn btn-primary">{{'--.business.registration.newBusiness' | translateText}}</button>
+    <div>
+        <button class="btn btn-primary" ng-click="businessRegistration()">{{'--.business.registration.newBusiness' |
+            translateText}}
+        </button>
     </div>
-    <div class="row">
-        <button class="btn btn-primary">{{'--.business.registration.oldBusiness' | translateText}}</button>
+    <div>
+        <button class="btn btn-primary" ng-click="login()">{{'--.business.registration.oldBusiness' | translateText}}
+        </button>
+    </div>
+    <div>
+        <button class="btn btn-primary" ng-click="navigateTo('/')">{{'--.generic.back' | translateText}}</button>
     </div>
 
 

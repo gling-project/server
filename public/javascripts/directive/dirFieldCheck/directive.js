@@ -21,8 +21,8 @@ myApp.directive("dirFieldCheck", function (directiveService, $timeout,$modal) {
                     if (scope.getInfo().field == null) {
                         scope.getInfo().field = "";
                     }
-                    scope.isValid = function () {
 
+                    scope.isValid = function () {
                         scope.getInfo().isValid = true;
                     };
 

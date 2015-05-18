@@ -1,4 +1,6 @@
-myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $http, $flash, $modalInstance, translationService, accountService,facebookService) {
+myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $http, $flash, $modal,$modalInstance, translationService, accountService, facebookService) {
+
+    var facebookAuthentication = null;
 
     $scope.badgeSelected = 1;
 
@@ -14,12 +16,16 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $http, $flas
         $modalInstance.close();
     };
 
+    $scope.skip = function () {
+        $scope.badgeSelected++;
+    };
+
     $scope.next = function () {
         var notValid = false;
         if ($scope.badgeSelected == 1) {
             if (!$scope.accountParam.isValid) {
                 $scope.accountParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.customer.registrationModal.account.notValid"));
+                $flash.error(translationService.get("--.generic.stepNotValid"));
             }
             else {
                 $scope.accountParam.disabled = true;
@@ -50,15 +56,43 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $http, $flas
         $scope.accountParam.disabled = true;
         $scope.loading = true;
         facebookService.registration(function (data) {
-                //TODO test fusion
-                //TODO binding with form
-                $scope.loading = false;
-                $scope.accountParam.disabled = false;
-                $scope.accountParam.dto.firstname = data.first_name;
-                $scope.accountParam.dto.lastname = data.last_name;
-                $scope.accountParam.dto.email= data.email;
-                $scope.accountParam.dto.male= data.gender=='male';
-                $scope.accountParam.dto.password= '*********';
+
+                var access_token = data.accessToken;
+                var user_id = data.userID;
+
+                //send request
+                var dto = {
+                    userId: user_id,
+                    token: access_token,
+                    accountType:'CUSTOMER'
+                };
+
+                accountService.testFacebook(dto, function (data2) {
+
+                    console.log('data2');
+                    console.log(data2);
+                    $scope.loading = false;
+
+                    if (data2.status == 'ALREADY_REGISTRERED') {
+                        $flash.success('--.customer.registrationModal.alredyRegistred.success');
+                        $scope.close();
+                    }
+                    else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
+                        $scope.fusion(data2.accountFusion);
+                    }
+                    else if (data2.status == 'OK') {
+                        //TODO
+                        //$scope.loading = false;
+                        //$scope.accountParam.disabled = false;
+                        //$scope.accountParam.dto.firstname = data.first_name;
+                        //$scope.accountParam.dto.lastname = data.last_name;
+                        //$scope.accountParam.dto.email= data.email;
+                        //$scope.accountParam.dto.male= data.gender=='male';
+                        //$scope.accountParam.dto.password= '*********';
+                        facebookAuthentication = dto;
+                        $scope.skip();
+                    }
+                });
             },
             function (data, status) {
                 $flash.error(data.message);
@@ -80,6 +114,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $http, $flas
             size: "l",
             resolve: resolve
         });
+        $scope.close();
     }
 
     $scope.previous = function () {
@@ -87,8 +122,24 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $http, $flas
     };
 
     $scope.save = function () {
+        var dto = {
+            accountRegistration: $scope.accountParam.dto,
+            customerInterests: $scope.customerInterestParam.result,
+            facebookAuthentication: facebookAuthentication
+        };
+        if ($scope.addressFormParam.isValid) {
+            dto.address = $scope.addressFormParam.dto;
+        }
 
+        $scope.loading = true;
+        accountService.registration(dto, function () {
+                $scope.loading = false;
+                $flash.success(translationService.get("--.login.flash.success"));
+                $scope.close();
+            },
+            function () {
+                $scope.loading = false;
+            });
     }
-
 
 });

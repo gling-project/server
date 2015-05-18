@@ -16,8 +16,22 @@
                        placeholder="{{getInfo().placeholder}}"
                        dir-focus-me="getInfo().focus()"
                         class="form-control"
+                       ng-show="getInfo().fieldType != 'textarea'"
                         typeahead="c as c for c in getInfo().autoCompleteValue | filter:$viewValue | limitTo:10"
-                        typeahead-min-length='1'>
+                        typeahead-min-length='1'/>
+
+                <textarea
+                       name="{{getInfo().name}}"
+                       ng-disabled="getInfo().disabled()"
+                       ng-model="getInfo().field"
+                       ng-class="{input_number: getInfo().numbersOnly === 'integer' || getInfo().numbersOnly === 'double',
+                       'money':!!getInfo().money}"
+                       placeholder="{{getInfo().placeholder}}"
+                       dir-focus-me="getInfo().focus()"
+                       class="form-control"
+                        ng-show="getInfo().fieldType == 'textarea'"
+                        ></textarea>
+
                 <span ng-show="!!getInfo().money" class="input-group-addon">{{getInfo().money}}</span>
             </div>
         </div>

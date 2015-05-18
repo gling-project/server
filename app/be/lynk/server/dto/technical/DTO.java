@@ -24,6 +24,9 @@ public class DTO implements Content {
 
     public static <T extends DTO> T getDTO(JsonNode data, Class<T> type) {
 
+        Logger.info("data");
+        Logger.info(data+"");
+
         if (data != null) {
             ObjectMapper mapper = new ObjectMapper();
             JsonParser jp = data.traverse();

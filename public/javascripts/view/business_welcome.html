@@ -5,4 +5,20 @@
         {{'--.business.welcome.title' | translateText}}
     </div>
 
+
+    <div style="padding: 5px;border: 1px solid #000000;display: inline-block;width: 250px">
+        <h4>Business information</h4>
+        <div><span style="width: 100px;display: inline-block">Name</span>{{business.name}}</div>
+        <div><span style="width: 100px;display: inline-block">Description</span>{{business.description}}</div>
+        <div><span style="width: 100px;display: inline-block">Phone</span>{{business.phone}}</div>
+        <div style="padding: 5px;border: 1px solid #000000">
+            <h5>Address</h5>
+            <div><span style="width: 100px;display: inline-block">Street</span>{{business.address.street}}</div>
+            <div><span style="width: 100px;display: inline-block">zip</span>{{business.address.zip}}</div>
+            <div><span style="width: 100px;display: inline-block">City</span>{{business.address.city}}</div>
+            <div><span style="width: 100px;display: inline-block">Country</span>{{business.address.country}}</div>
+        </div>
+    </div>
+
+
 </div>

@@ -1,4 +1,4 @@
-myApp.directive("dirFieldText", function (directiveService, $timeout,$modal) {
+myApp.directive("dirFieldText", function (directiveService, $timeout,$modal,$timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -14,6 +14,7 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,$modal) {
                 },
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
+
 
                     if(scope.getInfo().autoCompleteValue==undefined){
                         scope.getInfo().autoCompleteValue=[];
@@ -100,7 +101,6 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,$modal) {
                             resolve: resolve
                         });
                     };
-
                 }
             };
         }

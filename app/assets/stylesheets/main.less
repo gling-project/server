@@ -9,7 +9,11 @@
 @import 'widget/_mobile';
 @import 'widget/_customer_interest_form';
 @import 'widget/_wizard';
+@import 'widget/_business-category';
 
+.container{
+    width: 970px !important;
+}
 //
 // color
 //
@@ -57,6 +61,7 @@ html, body {
 }
 
 body {
+    min-width: 1000px;
   color: @color-body-text;
   background-color: @color-body-bg;
 }
@@ -125,24 +130,14 @@ header {
     font-size: 30px;
   }
 
-  @media (max-width: 768px) {
     h1 {
       font-size: 24px;
     }
-  }
-
-  @media (max-width: 480px) {
-    h1 {
-      font-size: 18px;
-    }
-  }
 }
 
-@media (min-width: 768px) and (max-width: 992px) {
   .modal-lg {
-    width: 750px;
+    width: 898px !important;
   }
-}
 
 input {
   &.money {
@@ -230,6 +225,10 @@ button {
   border: 1px solid #999999;
   margin: 10px;
   padding: 5px;
+}
+
+.mask{
+    display: none;
 }
 
 

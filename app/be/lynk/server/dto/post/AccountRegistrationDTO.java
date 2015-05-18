@@ -1,5 +1,7 @@
 package be.lynk.server.dto.post;
 
+import be.lynk.server.dto.AddressDTO;
+import be.lynk.server.dto.FacebookAuthenticationDTO;
 import be.lynk.server.dto.LangDTO;
 import be.lynk.server.dto.technical.DTO;
 
@@ -10,7 +12,7 @@ import javax.validation.constraints.Pattern;
 /**
  * Created by florian on 11/11/14.
  */
-public class RegistrationDTO extends DTO {
+public class AccountRegistrationDTO extends DTO {
 
     @NotNull
     private Boolean male;
@@ -83,23 +85,23 @@ public class RegistrationDTO extends DTO {
         this.lang = lang;
     }
 
-    public void setKeepSessionOpen(Boolean keepSessionOpen) {
-        this.keepSessionOpen = keepSessionOpen;
-    }
-
     public Boolean getKeepSessionOpen() {
         return keepSessionOpen;
     }
 
+    public void setKeepSessionOpen(Boolean keepSessionOpen) {
+        this.keepSessionOpen = keepSessionOpen;
+    }
+
     @Override
     public String toString() {
-        return "RegistrationDTO{" +
+        return "AccountRegistrationDTO{" +
                 "male=" + male +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", lang='" + lang + '\'' +
+                ", lang=" + lang +
                 ", keepSessionOpen=" + keepSessionOpen +
                 '}';
     }

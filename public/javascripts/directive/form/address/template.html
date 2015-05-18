@@ -1,9 +1,16 @@
-<div>
-    <dir-field-text ng-info="fields.name" ng-show="getInfo().addName" ></dir-field-text>
+<div class="form">
 
-    <dir-field-text ng-info="fields.street"></dir-field-text>
+    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
+        <img src="/assets/images/form_loading.gif"/>
+    </div>
 
-    <dir-field-text ng-info="fields.zip"></dir-field-text>
+    <div ng-class="{'hidden':loadingFinish!=true}">
+        <dir-field-text ng-info="fields.name" ng-show="getInfo().addName"></dir-field-text>
 
-    <dir-field-text ng-info="fields.city"></dir-field-text>
+        <dir-field-text ng-info="fields.street"></dir-field-text>
+
+        <dir-field-text ng-info="fields.zip"></dir-field-text>
+
+        <dir-field-text ng-info="fields.city"></dir-field-text>
+    </div>
 </div>

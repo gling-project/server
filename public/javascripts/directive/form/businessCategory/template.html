@@ -1,0 +1,35 @@
+<div class="form">
+
+    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
+        <img src="/assets/images/form_loading.gif"/>
+    </div>
+
+    <div ng-class="{'hidden':loadingFinish!=true}" class="business-category">
+
+        <li>
+            <h4 class="business-category-column-title">{{'--.businessCategory.column.category' | translateText}}</h4>
+
+            <div>
+                <div ng-repeat="category in categories"
+                     class="category-box"
+                     ng-class="{'category-selected':selectedCategory == category}"
+                     ng-click="select(category)">
+                    {{category.translationName | translateText}}
+                </div>
+            </div>
+        </li>
+        <li>
+            <h4 class="business-category-column-title">{{'--.businessCategory.column.subcategory' | translateText}}</h4>
+
+            <div>
+                <div
+                        ng-repeat="subcategory in subcategories"
+                        class="category-box"
+                        ng-class="{'subcategory-selected':subselectedCategory == subcategory}"
+                        ng-click="selectSubcategory(subcategory)">
+                    {{subcategory.translationName | translateText}}
+                </div>
+            </div>
+        </li>
+    </div>
+</div>

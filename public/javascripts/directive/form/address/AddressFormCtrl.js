@@ -1,4 +1,4 @@
-myApp.directive('addressFormCtrl', function ($http, $flash, directiveService) {
+myApp.directive('addressFormCtrl', function ($http, $flash, directiveService,$timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -79,7 +79,7 @@ myApp.directive('addressFormCtrl', function ($http, $flash, directiveService) {
                             var obj = scope.fields[key];
                             if (key != 'name' || scope.getInfo().addName) {
                                 if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                                    obj.firstAttempt = scope.getInfo().displayErrorMessage;
+                                    obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                                     validation = false;
                                 }
                                 else{
@@ -89,6 +89,17 @@ myApp.directive('addressFormCtrl', function ($http, $flash, directiveService) {
                         }
                         scope.getInfo().isValid = validation;
                     }, true);
+
+                    scope.$watch('getInfo().displayErrorMessage', function () {
+                        for (var key in scope.fields) {
+                            var obj = scope.fields[key];
+                            obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                        }
+                    });
+
+                    $timeout(function() {
+                        scope.loadingFinish = true;
+                    },800);
                 }
             }
         }
