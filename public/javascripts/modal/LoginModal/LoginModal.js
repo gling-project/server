@@ -1,9 +1,9 @@
-myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location,modalService) {
+myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService) {
 
     $scope.loading = false;
 
     $scope.loginFormParam = {
-        facebookSuccess:function(data){
+        facebookSuccess: function (data) {
             $scope.close();
         }
     };
@@ -21,35 +21,30 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookServ
 
             $scope.loading = true;
 
-            $http({
-                'method': "POST",
-                'url': "/login",
-                'headers': "Content-Type:application/json",
-                'data': $scope.loginFormParam.dto
-            }).success(function (data, status) {
-                accountService.setMyself(data);
-                $flash.success(translationService.get("--.login.flash.success"));
-                $scope.loading = false;
-                $scope.close();
-                //logout facebook in case
-                facebookService.logout();
-                if (data.type == 'BUSINESS') {
-                    $location.path('/business');
-                }
-            })
-                .error(function (data, status) {
+            accountService.login($scope.loginFormParam.dto,
+                function () {
+
+                    $flash.success(translationService.get("--.login.flash.success"));
                     $scope.loading = false;
-                    $flash.error(data.message);
+                    $scope.close();
+                    //logout facebook in case
+                    facebookService.logout();
+                    if (accountService.getMyself().type == 'BUSINESS') {
+                        $location.path('/business');
+                    }
+                },
+                function () {
+                    $scope.loading = false;
                 });
         }
     };
 
-    $scope.toBusinessRegistration = function(){
+    $scope.toBusinessRegistration = function () {
         $scope.close();
         modalService.openBusinessRegistrationModal();
     };
 
-    $scope.toCustomerRegistration = function(){
+    $scope.toCustomerRegistration = function () {
         $scope.close();
         modalService.openCustomerRegistrationModal();
     };

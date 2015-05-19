@@ -7,7 +7,6 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
     // initialization
     //
     this.ini = function () {
-        console.log("===<" + this.facebookAppId);
         FB.init({
             appId: this.facebookAppId,
             cookie: true,
@@ -65,6 +64,14 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
         });
     };
 
+    this.recover = function (successCallback, failCallback) {
+        // From now on you can use the  service just as Facebook api says
+        FB.login(function (response) {
+
+            }
+        )
+    };
+
     //
     // login
     //
@@ -114,8 +121,12 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
     this.logout = function () {
 
+        console.log('Facebook logout');
+
         //if (this.isConnected()) {
         FB.logout(function (response) {
+            console.log('Facebook logout : ');
+            console.log(response);
         });
         //
     };

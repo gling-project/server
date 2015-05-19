@@ -31,6 +31,11 @@
 --.generic.name=Nom
 --.generic.back=Retour
 --.generic.stepNotValid=Merci de complèter cette étape avant de passer à la suivant
+--.generic.home=Maison
+--.generic.skip=Passer
+--.generic.numberOnly=Uniquement une valeur numérique
+--.generic.stepNotValidOrSkip=Merci de complèter cette étape avant ou de passer à la suivante
+--.generic.validation.wrongRepeatPassword=generic.validation.wrongRepeatPassword
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -43,7 +48,7 @@
 --.forgotPassword.success=Un email vous a été envoyé avec un nouveau mot de passe
 
 ##  modal/LoginModal/LoginModal.js (//logout facebook in case)
---.login.flash.success=Vous êtes maintenant connecté \!
+--.login.flash.success=Vous êtes maintenant connecté !
 --.registration.form.yourEmail=Votre adresse email
 
 ##  modal/RegistrationModal/view.html
@@ -106,26 +111,26 @@
 
 
 ##  modal/CustomerRegistrationModal/view.html
---.customer.registrationModal.interest.title=customer.registrationModal.interest.title
---.customer.registrationModal.interest.desc=customer.registrationModal.interest.desc
---.loginModal.facebook.btn=Connection avec Facebook
---.customer.registrationModal.address.desc=customer.registrationModal.address.desc
---.customer.registrationModal.title=customer.registrationModal.title
---.customer.registrationModal.personal.desc=customer.registrationModal.personal.desc
---.customer.registrationModal.personal.address=customer.registrationModal.personal.address
---.customer.registrationModal.personal.title=customer.registrationModal.personal.title
---.registrationModal.facebook.btn=registrationModal.facebook.btn
+--.customer.registrationModal.interest.title=Intérêts
+--.customer.registrationModal.interest.desc=Sélectionnez votre cente d'intérêt. Ceci nous permettre de vous proposez des promotions et informations adaptés à vos envies. Vous pouvez également cliquer sur 'passer' et sélectionner vos intérêts plus tard.
+#--.loginModal.facebook.btn=Connection avec Facebook
+--.customer.registrationModal.address.desc=Créer une adresse. Vous pouvez utiliser cette adresse pour trouver des magasins au alentour. Vous pouvez passer cette étape en cliquant sur 'passer' et y revenir plus tard.
+--.customer.registrationModal.title=Créer un nouveau compte
+--.customer.registrationModal.personal.desc=Créer un compte
+--.customer.registrationModal.personal.address=Votre adresse
+--.customer.registrationModal.personal.title=Personnelle
+--.registrationModal.facebook.btn=Enregistrez-vous avec Facebook
 
 ##  view/home.html
---.home.toBusiness.btn=home.toBusiness.btn
---.home.main.description=home.main.description
+--.home.toBusiness.btn=Je suis un commerçant
+--.home.main.description=Bienvenu dans Lÿnk ! ...
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 #--.customer.registrationModal.account.notValid=customer.registrationModal.account.notValid
---.customer.registrationModal.alredyRegistred.success=customer.registrationModal.alredyRegistred.success
+--.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté !
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
---.editProfileModal.title=editProfileModal.title
+--.editProfileModal.title=Editez vos informations personnelles
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Numéro de téléphone attendu
@@ -135,8 +140,8 @@
 --.error.facebook.notAccountFound=Ce compte Facebook n'est pas enregistré. Pour vous enregistrer, suivez un des deux liens ci-dessous
 
 ##  view/business_registration.html
---.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk \!
---.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat\!
+--.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk !
+--.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat!
 --.business.registration.oldBusiness=J'ai déjà un compte et je veux me connecter
 
 ##  directive/form/business/BusinessFormCtrl.js
@@ -146,22 +151,23 @@
 --.business.welcome.title=Bienvenue sur la page de votre magasin
 
 ##  modal/BusinessRegistrationModal/view.html
---.business.registrationModal.category.title=Catégori
---.business.registrationModal.business.desc=business.registrationModal.business.desc
---.business.registrationModal.title=business.registrationModal.title
---.business.registrationModal.business.title=business.registrationModal.business.title
---.business.registrationModal.category.desc=business.registrationModal.category.desc
---.business.registrationModal.address.subtitle=business.registrationModal.address.subtitle
+--.business.registrationModal.category.title=Catégorie de commerce
+--.business.registrationModal.business.desc=Rentrez les informations de votre magasin
+--.business.registrationModal.title=Créer votre magasin
+--.business.registrationModal.business.title=Information du magasin
+--.business.registrationModal.category.desc=Sélectionner la categorie de votre commerce
+--.business.registrationModal.address.subtitle=Addresse de votre magasin
 
 ##  directive/form/address/AddressFormCtrl.js
---.form.address.field.name=form.address.field.name
---.form.address.field.street=form.address.field.street
---.form.address.field.zip=form.address.field.zip
---.form.address.field.city=form.address.field.city
+--.form.address.field.name=Type
+--.form.address.field.street=Rue / numéro
+--.form.address.field.zip=Code postal
+--.form.address.field.city=Ville
+--.address.form.name.help=address.form.name.help
 
 ##  directive/form/businessCategory/template.html
---.businessCategory.column.subcategory=businessCategory.column.subcategory
---.businessCategory.column.category=businessCategory.column.category
+--.businessCategory.column.subcategory=Sous catégorie
+--.businessCategory.column.category=Categorie
 
 
 ##  modal/LoginModal/view.html
@@ -169,4 +175,6 @@
 --.loginModal.toCustomerRegistration=S'enregistrer en tant que client
 --.loginModal.notRegisterYet=Pas encore enregistré?
 --.validation.dto.notNull=Ne peut pas être vide
+#--.validation.dto.notNull=Ne peut pas être vide
+
 

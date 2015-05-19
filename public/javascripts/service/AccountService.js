@@ -1,7 +1,7 @@
 myApp.service("accountService", function ($flash, $http) {
 
-    var self=this;
-    
+    var self = this;
+
     this.model = {
         myself: null
     };
@@ -61,7 +61,7 @@ myApp.service("accountService", function ($flash, $http) {
                 }
                 $flash.error(data.message);
             });
-    }
+    };
 
     this.logout = function (callbackSuccess, callbackError) {
 
@@ -103,6 +103,71 @@ myApp.service("accountService", function ($flash, $http) {
                 $flash.error(data.message);
             });
     };
+
+    this.changePassword = function (oldPassword, newPassword, callbackSuccess, callbackError) {
+        var dto = {
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        };
+
+        $http({
+            'method': "PUT",
+            'url': "/account/password/" + self.getMyself().id,
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+                $flash.error(data.message);
+            });
+    };
+
+    this.editAccount = function (dto, callbackSuccess, callbackError) {
+
+        $http({
+            'method': "PUT",
+            'url': "/account/" + self.getMyself().id,
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+            self.setMyself(data);
+        })
+            .error(function (data, status) {
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+                $flash.error(data.message);
+            });
+    };
+
+    this.login = function(dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "POST",
+            'url': "/login",
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+            self.setMyself(data);
+        })
+            .error(function (data, status) {
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+                $flash.error(data.message);
+            });
+    }
 
     this.getMyself = function () {
         return this.model.myself;

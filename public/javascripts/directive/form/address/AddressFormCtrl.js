@@ -29,7 +29,6 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
                         name: {
                             fieldType: "text",
                             fieldTitle: "--.form.address.field.name",
-                            details: '--.address.form.name.help',
                             validationRegex: "^.{2,50}$",
                             validationMessage: ['--.generic.validation.size', '2', '50'],
                             disabled: function () {

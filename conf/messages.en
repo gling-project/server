@@ -45,6 +45,11 @@
 --.generic.next=Next
 --.generic.desc=Description
 --.generic.stepNotValid=Please finish to complete data before continue to the newt step
+--.generic.home=Home
+--.generic.skip=Skip
+--.generic.numberOnly=Only number
+--.generic.stepNotValidOrSkip=Please finish to complete data or continue to the newt step
+--.generic.validation.wrongRepeatPassword=generic.validation.wrongRepeatPassword
 
 ## login modal
 --.loginModal.title=Login you
@@ -98,7 +103,7 @@
 --.field.document.success=The file was downloaded successfully
 
 ##  be/flo/project/util/ErrorMessageEnum.java
---.error.fatal_error=A fatal error was throwed : {0}
+--.error.fatal_error=A fatal error was throwed \: {0}
 --.error.validation.email=Email expected
 --.error.validation.password=Please use between 6 and 18 letters, numbers or -_%
 --.error.validation.pattern=The field {0} expects the pattern {1}
@@ -115,7 +120,7 @@
 --.validation.dto.password=Between 6 and 18 letters, numbers or -_%
 
 ##  modal/LoginModal/LoginModal.js (//logout facebook in case)
---.login.flash.success=You are now logged \!
+--.login.flash.success=You are now logged !
 
 ##  modal/HelpModal/view.html
 --.helpModal.title=Help
@@ -140,15 +145,15 @@
 --.downloadModal.title=Download file
 
 ##  view/business_registration.html
---.business.registration.newBusiness=I want to join the Lÿnk community \!
---.business.registration.title=You want to join the Lÿnk community? Sign up your shop now \!
+--.business.registration.newBusiness=I want to join the Lÿnk community !
+--.business.registration.title=You want to join the Lÿnk community? Sign up your shop now !
 --.business.registration.oldBusiness=I already have an account and I want to log in me
 
 ##  view/business_welcome.html
 --.business.welcome.title=Welcome to your business page
 
 ##  modal/LoginModal/view.html (add the google+ button here )
---.loginModal.facebook.btn=Log in with Facebook
+#--.loginModal.facebook.btn=Log in with Facebook
 --.loginModal.notRegisterYet=Not register yet ?
 --.loginModal.toCustomerRegistration=Sign up as customer
 --.loginModal.toBusinessRegistration=Sign up as business
@@ -160,17 +165,17 @@
 
 ##  modal/CustomerRegistrationModal/view.html
 --.customer.registrationModal.interest.title=Interests
---.customer.registrationModal.interest.desc=Select your interest. This interest can help us to propose you promotion and message adapted to you needs. You can skip this step to click on 'next' and select you interest later.
---.customer.registrationModal.address.desc=Create a new address. You can use this address to find shop around it. You can skip this step to click on 'next' and select you interest later.
+--.customer.registrationModal.interest.desc=Select your interest. This interest can help us to propose you promotion and message adapted to you needs. You can skip this step to click on 'skip' and select you interest later.
+--.customer.registrationModal.address.desc=Create a new address. You can use this address to find shop around it. You can skip this step to click on 'skip' and select you interest later.
 --.customer.registrationModal.title=Create a new account
 --.customer.registrationModal.personal.desc=Create a account
 --.customer.registrationModal.personal.address=Your address
 --.customer.registrationModal.personal.title=Personal
-#--.registrationModal.facebook.btn=Sign up with Facebook
+--.registrationModal.facebook.btn=Sign up with Facebook
 
 ##  view/home.html
 --.home.toBusiness.btn=I am a business
---.home.main.description=Welcome to Lynk !! ....
+--.home.main.description=Welcome to Lÿnk !! ....
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 --.customer.registrationModal.alredyRegistred.success=This facebook account is already registered. You are now connected!
@@ -192,13 +197,15 @@
 --.business.registrationModal.address.subtitle=Address of your shop
 
 ##  directive/form/address/AddressFormCtrl.js
---.form.address.field.name=Name
---.form.address.field.street=Street
+--.form.address.field.name=Type
+--.form.address.field.street=Street / number
 --.form.address.field.zip=Zip code
 --.form.address.field.city=City
+--.address.form.name.help=Lÿnk
 
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sub category
 --.businessCategory.column.category=Category
+
 
 

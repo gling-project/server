@@ -42,6 +42,9 @@ myApp.controller('MainCtrl', function ($scope,$locale,translationService,$window
     if(accountService.getMyself() == null){
         facebookService.getLoginStatus();
     }
+    else{
+        facebookService.recover();
+    }
 
     //
     // help functionalities

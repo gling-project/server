@@ -1,4 +1,4 @@
-myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $modalInstance,accountService,$timeout) {
+myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
     $scope.loading=false;
 
@@ -63,25 +63,17 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $mo
 
         if ($scope.allFieldValid()) {
 
-            var dto = {
-                oldPassword: $scope.fields.oldPassword.field,
-                newPassword: $scope.fields.newPassword.field
-            };
-
             $scope.loading=true;
 
-            $http({
-                'method': "PUT",
-                'url': "/account/password/" + accountService.getMyself().id,
-                'headers': "Content-Type:application/json",
-                'data': dto
-            }).success(function (data, status) {
+            accountService.changePassword(
+                $scope.fields.oldPassword.field,
+                $scope.fields.newPassword.field,
+            function(){
                 $scope.loading=false;
                 $scope.close();
-            })
-            .error(function (data, status) {
+            },
+            function(){
                 $scope.loading=false;
-                $flash.error(data.message);
             });
         }
     };
