@@ -27,7 +27,7 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
                             validationRegex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                             validationMessage: "--.generic.validation.email",
                             disabled: function () {
-                                return scope.loading;
+                                return scope.getInfo().disabled;
                             },
                             field: scope.getInfo().dto.email
                         },
@@ -38,7 +38,7 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
                             validationMessage: "--.generic.validation.password",
                             fieldType: 'password',
                             disabled: function () {
-                                return scope.loading;
+                                return scope.getInfo().disabled;
                             },
                             field: scope.getInfo().dto.password
                         },
@@ -46,7 +46,7 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
                             fieldTitle: "--.registration.form.keepSessionOpen",
                             field: false,
                             disabled: function () {
-                                return scope.loading;
+                                return scope.getInfo().disabled;
                             },
                             field: scope.getInfo().dto.keepSessionOpen
                         }
@@ -79,7 +79,6 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
                     // facebook connection
                     //
                     scope.fb_login = function () {
-                        scope.loading = true;
                         facebookService.login(function (data) {
                                 modelService.set(modelService.MY_SELF, data);
                                 $flash.success(translationService.get("--.login.flash.success"));

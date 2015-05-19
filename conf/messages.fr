@@ -24,11 +24,13 @@
 --.generic.validation.password=Entre 6 et 18 lettre, chiffres ou _-%
 --.generic.repeatPassword=Répétez le mot de passe
 --.generic.email=Email
---.generic.previous=generic.previous
---.generic.phone=generic.phone
---.generic.next=generic.next
---.generic.desc=generic.desc
---.generic.name=generic.name
+--.generic.previous=Précédent
+--.generic.phone=Téléphone
+--.generic.next=Suivant
+--.generic.desc=Description
+--.generic.name=Nom
+--.generic.back=Retour
+--.generic.stepNotValid=Merci de complèter cette étape avant de passer à la suivant
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -46,11 +48,11 @@
 
 ##  modal/RegistrationModal/view.html
 --.loginModal.title=Connection
---.registrationModal.title=registrationModal.title
+#--.registrationModal.title=registrationModal.title
 
 ##  modal/DownloadFieldModal/view.html
 #--.changeEmailModal.title=Changez votre adresse email
---.downloadModal.title=downloadModal.title
+--.downloadModal.title=Télécharger un fichier
 
 ##  modal/HelpModal/view.html
 --.helpModal.title=Aide
@@ -60,7 +62,7 @@
 
 ##  be/flo/project/dto/AccountDTO.java
 --.validation.dto.size=Entre {0} et {1} caractères
---.validation.dto.notNull=Ne peut pas être vide
+#--.validation.dto.notNull=Ne peut pas être vide
 --.validation.dto.email=Adresse email attendue
 
 ##  modal/ForgotPassword/view.html
@@ -68,9 +70,9 @@
 
 ##  be/flo/project/views/template.scala.html (load data )
 --.welcome.myProfile=Mon profile
---.menu.home=Home
+#--.menu.home=Home
 --.welcome.signIn=Enregistrement
---.site.name=Mon projet
+--.site.name=Lÿnk
 --.welcome.login=Connection
 
 ##  directive/dirFieldDocument/template.html
@@ -106,47 +108,50 @@
 ##  modal/CustomerRegistrationModal/view.html
 --.customer.registrationModal.interest.title=customer.registrationModal.interest.title
 --.customer.registrationModal.interest.desc=customer.registrationModal.interest.desc
---.loginModal.facebook.btn=loginModal.facebook.btn
+--.loginModal.facebook.btn=Connection avec Facebook
 --.customer.registrationModal.address.desc=customer.registrationModal.address.desc
 --.customer.registrationModal.title=customer.registrationModal.title
 --.customer.registrationModal.personal.desc=customer.registrationModal.personal.desc
 --.customer.registrationModal.personal.address=customer.registrationModal.personal.address
 --.customer.registrationModal.personal.title=customer.registrationModal.personal.title
+--.registrationModal.facebook.btn=registrationModal.facebook.btn
 
 ##  view/home.html
 --.home.toBusiness.btn=home.toBusiness.btn
 --.home.main.description=home.main.description
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
---.customer.registrationModal.account.notValid=customer.registrationModal.account.notValid
+#--.customer.registrationModal.account.notValid=customer.registrationModal.account.notValid
 --.customer.registrationModal.alredyRegistred.success=customer.registrationModal.alredyRegistred.success
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
 --.editProfileModal.title=editProfileModal.title
 
 ##  be/lynk/server/dto/BusinessDTO.java
---.validation.dto.phone=validation.dto.phone
+--.validation.dto.phone=Numéro de téléphone attendu
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
---.error.facebookFusion.differentAccountType=error.facebookFusion.differentAccountType
+--.error.facebookFusion.differentAccountType=Ce compte Facebook est déjà enregistré pour un autre type de compte. Vous ne pouvez pas utilisez le même compte Facebook pour créer un compte client et un compte commerçant.
+--.error.facebook.notAccountFound=Ce compte Facebook n'est pas enregistré. Pour vous enregistrer, suivez un des deux liens ci-dessous
 
 ##  view/business_registration.html
---.business.registration.newBusiness=business.registration.newBusiness
---.business.registration.title=business.registration.title
---.business.registration.oldBusiness=business.registration.oldBusiness
+--.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk \!
+--.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat\!
+--.business.registration.oldBusiness=J'ai déjà un compte et je veux me connecter
 
 ##  directive/form/business/BusinessFormCtrl.js
---.validation.dto.notNul=validation.dto.notNul
+#--.validation.dto.notNul=validation.dto.notNul
 
 ##  view/business_welcome.html
---.business.welcome.title=business.welcome.title
+--.business.welcome.title=Bienvenue sur la page de votre magasin
 
 ##  modal/BusinessRegistrationModal/view.html
---.business.registrationModal.category.title=business.registrationModal.category.title
+--.business.registrationModal.category.title=Catégori
 --.business.registrationModal.business.desc=business.registrationModal.business.desc
 --.business.registrationModal.title=business.registrationModal.title
 --.business.registrationModal.business.title=business.registrationModal.business.title
 --.business.registrationModal.category.desc=business.registrationModal.category.desc
+--.business.registrationModal.address.subtitle=business.registrationModal.address.subtitle
 
 ##  directive/form/address/AddressFormCtrl.js
 --.form.address.field.name=form.address.field.name
@@ -157,4 +162,11 @@
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=businessCategory.column.subcategory
 --.businessCategory.column.category=businessCategory.column.category
+
+
+##  modal/LoginModal/view.html
+--.loginModal.toBusinessRegistration=S'enregistrer en tant de commerçant
+--.loginModal.toCustomerRegistration=S'enregistrer en tant que client
+--.loginModal.notRegisterYet=Pas encore enregistré?
+--.validation.dto.notNull=Ne peut pas être vide
 

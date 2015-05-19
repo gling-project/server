@@ -1,9 +1,9 @@
 ## common
---.site.name=My project
+--.site.name=Lÿnk
 --.account.fusion.description=There is an account with the email {0}. If it's you, you can add your Facebook account to this My project account and keep your information. Otherwise, you cannot use this email to create an account.
 
 ##generic
-#--.generic.back=Back
+--.generic.back=Back
 #--.generic.category=Category
 --.generic.close=Close
 #--.generic.date=Date
@@ -77,7 +77,7 @@
 #--.error.maxLength=Maximum %s characters
 
 ## menu
---.menu.home=Home
+#--.menu.home=Home
 
 ## forgot password
 --.forgotPassword.title=Forgot password ?
@@ -134,21 +134,24 @@
 
 
 ##  modal/RegistrationModal/view.html
---.registrationModal.title=Sign up
+#--.registrationModal.title=Sign up
 
 ##  modal/DownloadFieldModal/view.html
 --.downloadModal.title=Download file
 
 ##  view/business_registration.html
---.business.registration.newBusiness=I want to join the Lynk community !
---.business.registration.title=You want to join the Lynk community? Sign up your shop now !
+--.business.registration.newBusiness=I want to join the Lÿnk community \!
+--.business.registration.title=You want to join the Lÿnk community? Sign up your shop now \!
 --.business.registration.oldBusiness=I already have an account and I want to log in me
 
 ##  view/business_welcome.html
---.business.welcome.title=welcome to your business page
+--.business.welcome.title=Welcome to your business page
 
 ##  modal/LoginModal/view.html (add the google+ button here )
 --.loginModal.facebook.btn=Log in with Facebook
+--.loginModal.notRegisterYet=Not register yet ?
+--.loginModal.toCustomerRegistration=Sign up as customer
+--.loginModal.toBusinessRegistration=Sign up as business
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
 --.editProfileModal.title=Edit your personal information
@@ -163,6 +166,7 @@
 --.customer.registrationModal.personal.desc=Create a account
 --.customer.registrationModal.personal.address=Your address
 --.customer.registrationModal.personal.title=Personal
+#--.registrationModal.facebook.btn=Sign up with Facebook
 
 ##  view/home.html
 --.home.toBusiness.btn=I am a business
@@ -175,7 +179,8 @@
 --.validation.dto.phone=Phone number expected
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
---.error.facebookFusion.differentAccountType=This Facebook account is alredy registered but for an other type of account. You cannot used the same Face account to create a customer account and a business account.
+--.error.facebookFusion.differentAccountType=This Facebook account is alredy registered but for an other type of account. You cannot used the same Facebook account to create a customer account and a business account.
+--.error.facebook.notAccountFound=This Facebook account is not registered. To register you, follow one of the links below.
 
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -185,7 +190,6 @@
 --.business.registrationModal.business.title=Shop information
 --.business.registrationModal.category.desc=Select the category of your business
 --.business.registrationModal.address.subtitle=Address of your shop
---.registrationModal.facebook.btn=Sign up with Facebook
 
 ##  directive/form/address/AddressFormCtrl.js
 --.form.address.field.name=Name
@@ -196,4 +200,5 @@
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sub category
 --.businessCategory.column.category=Category
+
 

@@ -56,26 +56,4 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookServ
         modalService.openCustomerRegistrationModal();
     };
 
-    ////
-    //// facebook connection
-    ////
-    //$scope.fb_login = function () {
-    //    $scope.loading = true;
-    //    facebookService.login(function (data) {
-    //            modelService.set(modelService.MY_SELF, data);
-    //            $scope.loading = false;
-    //            $flash.success(translationService.get("--.login.flash.success"));
-    //            if (data.type == 'BUSINESS') {
-    //                $location.path('/business');
-    //            }
-    //            $scope.close();
-    //
-    //        },
-    //        function (data, status) {
-    //            $flash.error(data.message);
-    //            $scope.loading = false;
-    //            $scope.close();
-    //        });
-    //};
-
 });
