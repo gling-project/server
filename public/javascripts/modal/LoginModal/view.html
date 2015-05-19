@@ -4,28 +4,11 @@
 </div>
 <div class="modal-body modal-login" dir-enter="save()">
 
-    <div>{{'--.loginModal.notRegisterYet' | translateText}}</div>
-    <div class="modal-login-link link" ng-click="toBusinessRegistration()">{{'--.loginModal.toBusinessRegistration' | translateText}}</div>
-    <div class="modal-login-link link" ng-click="toCustomerRegistration()">{{'--.loginModal.toCustomerRegistration' | translateText}}</div>
-
-    <!--<dir-field-text ng-info="fields.login"></dir-field-text>-->
-
-    <!--<dir-field-text ng-info="fields.password"></dir-field-text>-->
-
-    <!--<dir-field-check ng-info="fields.openSession"></dir-field-check>-->
-
-    <!--<div class="modal-login-or">-->
-        <!--<div></div>-->
-        <!--<div>{{'--.generic.or' | translateText}}</div>-->
-        <!--<div></div>-->
-    <!--</div>-->
-
-    <!--<div class="facebook-login-btn-container">-->
-        <!--<button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">-->
-            <!--<img src="/assets/images/facebook/login_icon.png"/>-->
-            <!--<span>{{'--.loginModal.facebook.btn' |translateText}}</span>-->
-        <!--</button>-->
-    <!--</div>-->
+    <div class="modal-login-link-box modal-description">
+        <div>{{'--.loginModal.notRegisterYet' | translateText}}</div>
+        <span class="modal-login-link link" ng-click="toCustomerRegistration()">{{'--.loginModal.toCustomerRegistration' | translateText}}</span>
+        <span class="modal-login-link link" ng-click="toBusinessRegistration()">{{'--.loginModal.toBusinessRegistration' | translateText}}</span>
+    </div>
 
 
     <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>

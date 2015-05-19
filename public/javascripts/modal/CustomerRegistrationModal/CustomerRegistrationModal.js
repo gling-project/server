@@ -1,4 +1,4 @@
-myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal,$modalInstance, translationService, accountService, facebookService,modalService) {
+myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
 
     var facebookAuthentication = null;
 
@@ -17,7 +17,13 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
     };
 
     $scope.skip = function () {
-        $scope.badgeSelected++;
+        if ($scope.badgeSelected == 3) {
+            $scope.save(true);
+        }
+        else {
+            $scope.badgeSelected++;
+        }
+
     };
 
     $scope.next = function () {
@@ -44,6 +50,20 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
             //control email
             notValid = true;
         }
+        else if ($scope.badgeSelected == 2) {
+            if (!$scope.customerInterestParam.isValid) {
+                $scope.customerInterestParam.displayErrorMessage = true;
+                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
+                notValid = true;
+            }
+        }
+        else {
+            if (!$scope.addressFormParam.isValid) {
+                $scope.addressFormParam.displayErrorMessage = true;
+                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
+                notValid = true;
+            }
+        }
         if (!notValid) {
             $scope.badgeSelected++;
         }
@@ -64,7 +84,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                 var dto = {
                     userId: user_id,
                     token: access_token,
-                    accountType:'CUSTOMER'
+                    accountType: 'CUSTOMER'
                 };
 
                 accountService.testFacebook(dto, function (data2) {
@@ -110,7 +130,15 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         $scope.badgeSelected--;
     };
 
-    $scope.save = function () {
+    $scope.save = function (skipStep3) {
+
+        if(!skipStep3){
+            if(!$scope.addressFormParam.isValid){
+                $scope.addressFormParam.displayErrorMessage = true;
+                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
+                return;
+            }
+        }
         var dto = {
             accountRegistration: $scope.accountParam.dto,
             customerInterests: $scope.customerInterestParam.result,

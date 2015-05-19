@@ -38,8 +38,8 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                         description: {
                             fieldTitle: "--.generic.desc",
                             fieldType:'textarea',
-                            validationRegex: "^.{2,1500}$",
-                            validationMessage: ['--.generic.validation.size', '2', '1500'],
+                            validationRegex: "^.{0,1500}$",
+                            validationMessage: ['--.generic.validation.size', '0', '1500'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

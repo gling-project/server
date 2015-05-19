@@ -1,5 +1,6 @@
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.dto.technical.ExceptionDTO;
+import be.lynk.server.service.impl.TranslationServiceImpl;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -34,13 +35,14 @@ import java.util.concurrent.TimeUnit;
 public class Global extends GlobalSettings {
 
     //services
-    @Autowired
-    private TranslationService translationService;
+    private TranslationService translationService = new TranslationServiceImpl();
 
     private ApplicationContext ctx;
 
     @Override
     public void onStart(Application app) {
+
+
         final String configLocation = Play.application().configuration().getString("spring.context.location");
         ctx = new ClassPathXmlApplicationContext(configLocation);
         play.Logger.info("Spring Startup @" + new Date(ctx.getStartupDate()));
@@ -112,10 +114,10 @@ public class Global extends GlobalSettings {
             MyRuntimeException exception = ((MyRuntimeException) t.getCause());
             String message;
 
-            if (exception.getMessage() != null) {
-                message = exception.getMessage();
-            } else {
+            if (exception.getErrorMessage() != null) {
                 message = translationService.getTranslation(exception.getErrorMessage(), language, exception.getParams());
+            } else {
+                message = exception.getMessage();
             }
             exceptionsDTO = new ExceptionDTO(message);
         } else {

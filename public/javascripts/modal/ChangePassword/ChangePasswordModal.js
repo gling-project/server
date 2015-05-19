@@ -1,4 +1,4 @@
-myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $modalInstance,accountService) {
+myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $modalInstance,accountService,$timeout) {
 
     $scope.loading=false;
 
@@ -84,7 +84,11 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $mo
                 $flash.error(data.message);
             });
         }
-    }
+    };
+
+    $timeout(function() {
+        $scope.loadingFinish = true;
+    },800);
 
 
 });

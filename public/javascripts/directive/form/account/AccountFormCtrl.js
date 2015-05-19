@@ -79,14 +79,13 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService,$timeout) 
                         repeatPassword: {
                             name: 'password',
                             fieldTitle: "--.registration.form.repeatPassword",
-                            validationRegex: "^[a-zA-Z0-9-_%]{6,18}$",
-                            validationMessage: "--.generic.validation.password",
+                            validationMessage: "--.generic.validation.wrongRepeatPassword",
                             fieldType: 'password',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            validation: function () {
-                                return scope.fields.password === scope.fields.repeatPassword;
+                            validationFct: function () {
+                                return scope.fields.password.field === scope.fields.repeatPassword.field;
                             }
                         },
                         keepSessionOpen: {
@@ -99,7 +98,6 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService,$timeout) 
                     };
 
                     scope.$watch('fields', function () {
-                        console.log("open : "+scope.fields.keepSessionOpen.field);
                         var validation = true;
 
                         for (var key in scope.fields) {

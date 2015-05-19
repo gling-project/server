@@ -1,4 +1,4 @@
-myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modalInstance,$modal,languageService,accountService,modalService) {
+myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modalInstance,$modal,languageService,accountService,modalService,$timeout) {
 
     $scope.loading = false;
 
@@ -116,6 +116,10 @@ myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modal
 
     $scope.editPassword = function(){
         modalService.openEditPasswordModal();
-    }
+    };
+
+    $timeout(function() {
+        $scope.loadingFinish = true;
+    },800);
 
 });

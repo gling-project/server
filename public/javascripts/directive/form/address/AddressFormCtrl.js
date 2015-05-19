@@ -1,4 +1,4 @@
-myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout) {
+myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,$filter) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -20,10 +20,16 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout)
                         };
                     }
 
+                    if(scope.getInfo().dto.name== undefined ||
+                        scope.getInfo().dto.name == null){
+                        scope.getInfo().dto.name = $filter('translateText')('--.generic.home');
+                    }
+
                     scope.fields = {
                         name: {
                             fieldType: "text",
                             fieldTitle: "--.form.address.field.name",
+                            details: '--.address.form.name.help',
                             validationRegex: "^.{2,50}$",
                             validationMessage: ['--.generic.validation.size', '2', '50'],
                             disabled: function () {

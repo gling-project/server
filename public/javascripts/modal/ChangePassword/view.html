@@ -2,16 +2,27 @@
     <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
     <h4 class="modal-title">{{'--.changePasswordModal.title' | translateText}}</h4>
 </div>
-<div class="modal-body"  dir-enter="save()">
+<div class="modal-body form" dir-enter="save()">
 
-    <dir-field-text ng-info="fields.oldPassword"></dir-field-text>
+    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
+        <img src="/assets/images/form_loading.gif"/>
+    </div>
 
-    <dir-field-text ng-info="fields.newPassword"></dir-field-text>
+    <div ng-class="{'hidden':loadingFinish!=true}">
 
-    <dir-field-text ng-info="fields.repeatPassword"></dir-field-text>
+        <dir-field-text ng-info="fields.oldPassword"></dir-field-text>
+
+        <dir-field-text ng-info="fields.newPassword"></dir-field-text>
+
+        <dir-field-text ng-info="fields.repeatPassword"></dir-field-text>
+    </div>
 </div>
 <div class="modal-footer">
-    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' | translateText}}</button>
-    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' | translateText}}</button>
-    <img src="/assets/images/modal-loading.gif" ng-show="loading" />
+    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' |
+        translateText}}
+    </button>
+    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' |
+        translateText}}
+    </button>
+    <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
 </div>

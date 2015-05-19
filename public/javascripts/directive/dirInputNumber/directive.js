@@ -9,10 +9,10 @@ myApp.directive("numbersOnly", function($filter, translationService, $locale) {
                 if (attrs.numbersOnly === "integer" || attrs.numbersOnly === "double" || attrs.numbersOnly === "percent") {
                     scope.lastValidValue = 0;
                     if (attrs.numbersOnly === "integer") {
-                        errorMessage = $filter('translateText')('ONLY_INTEGER');
+                        errorMessage = $filter('translateText')('--.generic.numberOnly');
                         nbDecimal = 0;
                     } else {
-                        errorMessage = $filter('translateText')('ONLY_NUMBER');
+                        errorMessage = $filter('translateText')('--.generic.numberOnly');
                         nbDecimal = 2;
                     }
                     scope.$root.$on('$localeChangeSuccess', function(event, current, previous) {
