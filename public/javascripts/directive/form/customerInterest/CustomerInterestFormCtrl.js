@@ -45,7 +45,7 @@ myApp.directive('customerInterestFormCtrl', function ($http, $flash, directiveSe
 
                     $timeout(function() {
                         scope.loadingFinish = true;
-                    },800);
+                    },500);
                 }
             }
         }

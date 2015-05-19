@@ -1,4 +1,4 @@
-myApp.directive("dirFieldCheck", function (directiveService, $timeout,$modal) {
+myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({

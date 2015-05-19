@@ -74,7 +74,7 @@ public class LoginRestController extends AbstractRestController {
         Account account;
 
         if (facebookCredential == null) {
-            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
+            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NOT_ACCOUNT_FOUND);
         }
         account = facebookCredential.getAccount();
 

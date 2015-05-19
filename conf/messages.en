@@ -148,7 +148,7 @@
 --.business.welcome.title=welcome to your business page
 
 ##  modal/LoginModal/view.html (add the google+ button here )
---.loginModal.facebook.btn=Sign in with Facebook
+--.loginModal.facebook.btn=Log in with Facebook
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
 --.editProfileModal.title=Edit your personal information
@@ -185,6 +185,7 @@
 --.business.registrationModal.business.title=Shop information
 --.business.registrationModal.category.desc=Select the category of your business
 --.business.registrationModal.address.subtitle=Address of your shop
+--.registrationModal.facebook.btn=Sign up with Facebook
 
 ##  directive/form/address/AddressFormCtrl.js
 --.form.address.field.name=Name

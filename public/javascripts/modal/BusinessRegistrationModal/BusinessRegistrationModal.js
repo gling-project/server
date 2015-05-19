@@ -1,4 +1,4 @@
-myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $http, $flash, $modal,$modalInstance, translationService, accountService, facebookService,businessService) {
+myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $http, $flash, $modal,$modalInstance, translationService, accountService, facebookService,businessService,modalService) {
 
     var facebookAuthentication = null;
 
@@ -114,18 +114,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $http, $flas
 
     $scope.fusion = function (accountFusion) {
 
-        var resolve = {
-            accountFusion: function () {
-                return accountFusion;
-            }
-        };
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/AccountFusionFacebookModal/view.html",
-            controller: "AccountFusionFacebookModalCtrl",
-            size: "l",
-            resolve: resolve
-        });
-        $scope.close();
+        modalService.openFacebookFusionModal(accountFusion);
     };
 
     $scope.previous = function () {

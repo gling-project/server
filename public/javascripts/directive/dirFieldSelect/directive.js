@@ -1,4 +1,4 @@
-myApp.directive("dirFieldSelect", function (directiveService, $timeout,$modal) {
+myApp.directive("dirFieldSelect", function (directiveService, $timeout,modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -91,19 +91,8 @@ myApp.directive("dirFieldSelect", function (directiveService, $timeout,$modal) {
 
 
                     scope.openCalculator= function(){
-                        var resolve = {
-                            setResult: function () {
-                                return function(result){
-                                    scope.getInfo().field=result;
-                                };
-                            }
-                        };
-
-                        $modal.open({
-                            templateUrl: "/assets/javascripts/modal/Calculator/view.html",
-                            controller: "CalculatorModalCtrl",
-                            size:"sm",
-                            resolve: resolve
+                        modalService.openCalculatorModal(new function(result){
+                            scope.getInfo().field=result;
                         });
                     };
 

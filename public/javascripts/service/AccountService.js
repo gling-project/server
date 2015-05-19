@@ -45,7 +45,9 @@ myApp.service("accountService", function ($flash, $http,modelService) {
 
         })
             .error(function (data, status) {
-                callbackFail(data);
+                if(!angular.isUndefined(callbackFail) && callbackFail != null ){
+                    callbackFail(data);
+                }
                 $flash.error(data.message);
             });
     }

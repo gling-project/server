@@ -1,21 +1,13 @@
-myApp.controller('BusinessRegistrationCtrl', function ($scope, $modal) {
+myApp.controller('BusinessRegistrationCtrl', function ($scope, modalService) {
 
 
     $scope.businessRegistration = function(){
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/BusinessRegistrationModal/view.html",
-            controller: "BusinessRegistrationModalCtrl",
-            size: "lg"
-        });
-    }
+        modalService.openBusinessRegistrationModal();
+    };
 
     //login open modal
     $scope.login = function () {
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/LoginModal/view.html",
-            controller: "LoginModalCtrl",
-            size: "l"
-        });
+        modalService.openLoginModal();
     };
 
 });

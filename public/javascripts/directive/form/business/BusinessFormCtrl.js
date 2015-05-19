@@ -81,7 +81,7 @@ myApp.directive('businessFormCtrl', function ($http, $flash, directiveService,$t
 
                     $timeout(function() {
                         scope.loadingFinish = true;
-                    },800);
+                    },500);
                 }
             }
         }

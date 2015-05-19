@@ -1,4 +1,4 @@
-myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modalInstance,$modal,languageService,modelService) {
+myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modalInstance,$modal,languageService,modelService,modalService) {
 
     $scope.loading = false;
 
@@ -115,12 +115,7 @@ myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modal
     };
 
     $scope.editPassword = function(){
-
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/ChangePassword/view.html",
-            controller: "ChangePasswordModalCtrl",
-            size:"l"
-        });
+        modalService.openEditPasswordModal();
     }
 
 });

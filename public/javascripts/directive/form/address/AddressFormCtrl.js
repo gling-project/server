@@ -99,7 +99,7 @@ myApp.directive('addressFormCtrl', function ($http, $flash, directiveService,$ti
 
                     $timeout(function() {
                         scope.loadingFinish = true;
-                    },800);
+                    },500);
                 }
             }
         }

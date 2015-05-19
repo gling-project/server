@@ -12,7 +12,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($scope,$locale,translationService,$modal,$window,facebookService,modelService,languageService,$location) {
+myApp.controller('MainCtrl', function ($scope,$locale,translationService,$window,facebookService,modelService,languageService,$location,modalService) {
 
     $scope.navigateTo = function(target){
         $location.path(target);
@@ -54,18 +54,6 @@ myApp.controller('MainCtrl', function ($scope,$locale,translationService,$modal,
     };
 
     $scope.openHelp = function(message){
-
-        var resolve = {
-            message: function () {
-                return message;
-            }
-        };
-
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/HelpModal/view.html",
-            controller: "HelpModalCtrl",
-            size: 'sm',
-            resolve: resolve
-        });
+        modalService.openHelpModal(message);
     };
 });

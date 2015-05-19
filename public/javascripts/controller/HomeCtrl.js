@@ -1,13 +1,9 @@
-myApp.controller('HomeCtrl', function ($scope, $modal) {
+myApp.controller('HomeCtrl', function ($scope, modalService) {
 
 
 //login open modal
     $scope.customerRegistration = function () {
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/CustomerRegistrationModal/view.html",
-            controller: "CustomerRegistrationModalCtrl",
-            size: "lg"
-        });
+        modalService.openCustomerRegistrationModal();
     };
 
 

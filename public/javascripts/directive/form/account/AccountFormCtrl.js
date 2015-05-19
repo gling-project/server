@@ -27,7 +27,7 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService,$ti
                         gender: {
                             name: 'gender',
                             fieldTitle: "--.generic.gender",
-                            options: [{key: 'male', value: 'generic.male'}, {key: 'female', value: 'generic.female'}],
+                            options: [{key: 'male', value: '--.generic.male'}, {key: 'female', value: '--.generic.female'}],
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -130,7 +130,7 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService,$ti
 
                     $timeout(function() {
                         scope.loadingFinish = true;
-                    },800);
+                    },500);
                 }
             }
         }

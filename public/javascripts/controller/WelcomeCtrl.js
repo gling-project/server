@@ -1,4 +1,4 @@
-myApp.controller('WelcomeCtrl', function ($scope, $modal, $window, $flash, $http, facebookService, modelService,languageService,$location) {
+myApp.controller('WelcomeCtrl', function ($scope, $flash, $http, facebookService, modelService,languageService,$location,modalService) {
 
 
     //use the model
@@ -8,30 +8,18 @@ myApp.controller('WelcomeCtrl', function ($scope, $modal, $window, $flash, $http
 
     //login open modal
     $scope.login = function () {
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/LoginModal/view.html",
-            controller: "LoginModalCtrl",
-            size: "l"
-        });
+        modalService.openLoginModal();
     };
 
     //registration open modal
     $scope.registration = function () {
-
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/CustomerRegistrationModal/view.html",
-            controller: "CustomerRegistrationModalCtrl",
-            size: "lg"
-        });
+        modalService.openCustomerRegistrationModal();
     };
 
     //edit profile
     $scope.editProfile = function () {
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/EditProfileModal/view.html",
-            controller: "EditProfileModalCtrl",
-            size: "l"
-        });
+        modalService.openEditProfileModal();
+
     };
 
     //log out

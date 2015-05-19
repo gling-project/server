@@ -1,54 +1,15 @@
-myApp.controller('LoginModalCtrl', function ($scope, $http, $flash,  facebookService, translationService,$modal,$modalInstance,modelService,$location) {
+myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookService, translationService, $modal, $modalInstance, modelService, $location,modalService) {
 
     $scope.loading = false;
 
-    $scope.fields = {
-        login: {
-            fieldType: "email",
-            name: 'email',
-            fieldTitle: "--.registration.form.yourEmail",
-            validationRegex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            validationMessage: "--.generic.validation.email",
-            disabled: function () {
-                return $scope.loading;
-            }
-        },
-        password: {
-            name: 'password',
-            fieldTitle: "--.generic.yourPassword",
-            validationRegex: "^[a-zA-Z0-9-_%]{6,18}$",
-            validationMessage: "--.generic.validation.password",
-            fieldType: 'password',
-            disabled: function () {
-                return $scope.loading;
-            }
-        },
-        openSession: {
-            fieldTitle: "--.registration.form.keepSessionOpen",
-            field: false,
-            disabled: function () {
-                return $scope.loading;
-            }
+    $scope.loginFormParam = {
+        facebookSuccess:function(data){
+            $scope.close();
         }
     };
 
     $scope.close = function () {
         $modalInstance.close();
-    };
-
-    $scope.allFieldValid = function () {
-
-        var validation = true;
-
-        for (var key in $scope.fields) {
-            var obj = $scope.fields[key];
-            console.log(obj);
-            if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                obj.firstAttempt = false;
-                validation = false;
-            }
-        }
-        return validation;
     };
 
     $scope.save = function () {
@@ -74,7 +35,7 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash,  facebookSer
                 $scope.close();
                 //logout facebook in case
                 facebookService.logout();
-                if(data.type == 'BUSINESS'){
+                if (data.type == 'BUSINESS') {
                     $location.path('/business');
                 }
             })
@@ -83,48 +44,38 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash,  facebookSer
                     $flash.error(data.message);
                 });
         }
-    }
-
-    //
-    // facebook connection
-    //
-    $scope.fb_login = function () {
-        $scope.loading = true;
-        facebookService.login(function (data) {
-                modelService.set(modelService.MY_SELF, data);
-                $scope.loading = false;
-                $flash.success(translationService.get("--.login.flash.success"));
-                if(data.type == 'BUSINESS'){
-                    $location.path('/business');
-                }
-                $scope.close();
-
-            },
-            function (data,status) {
-                if (status == 410) {
-                    $scope.fusion(data);
-                }
-                else {
-                    $flash.error(data.message);
-                }
-                $scope.loading = false;
-                $scope.close();
-            });
     };
 
-    $scope.fusion = function (accountFusion) {
+    $scope.toBusinessRegistration = function(){
+        $scope.close();
+        modalService.openBusinessRegistrationModal();
+    };
 
-        var resolve = {
-            accountFusion: function () {
-                return accountFusion;
-            }
-        };
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/AccountFusionFacebookModal/view.html",
-            controller: "AccountFusionFacebookModalCtrl",
-            size: "l",
-            resolve: resolve
-        });
-    }
+    $scope.toCustomerRegistration = function(){
+        $scope.close();
+        modalService.openCustomerRegistrationModal();
+    };
+
+    ////
+    //// facebook connection
+    ////
+    //$scope.fb_login = function () {
+    //    $scope.loading = true;
+    //    facebookService.login(function (data) {
+    //            modelService.set(modelService.MY_SELF, data);
+    //            $scope.loading = false;
+    //            $flash.success(translationService.get("--.login.flash.success"));
+    //            if (data.type == 'BUSINESS') {
+    //                $location.path('/business');
+    //            }
+    //            $scope.close();
+    //
+    //        },
+    //        function (data, status) {
+    //            $flash.error(data.message);
+    //            $scope.loading = false;
+    //            $scope.close();
+    //        });
+    //};
 
 });
