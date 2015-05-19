@@ -1,4 +1,4 @@
-myApp.directive('customerInterestFormCtrl', function ($http, $flash, directiveService,customerInterestService,$timeout) {
+myApp.directive('customerInterestFormCtrl', function ($flash, directiveService,customerInterestService,$timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -45,7 +45,7 @@ myApp.directive('customerInterestFormCtrl', function ($http, $flash, directiveSe
 
                     $timeout(function() {
                         scope.loadingFinish = true;
-                    },500);
+                    },800);
                 }
             }
         }

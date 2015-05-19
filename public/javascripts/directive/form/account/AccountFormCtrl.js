@@ -1,4 +1,4 @@
-myApp.directive('accountFormCtrl', function ($http, $flash, directiveService,$timeout) {
+myApp.directive('accountFormCtrl', function ($flash, directiveService,$timeout) {
 
     return {
         restrict: "E",
@@ -130,7 +130,7 @@ myApp.directive('accountFormCtrl', function ($http, $flash, directiveService,$ti
 
                     $timeout(function() {
                         scope.loadingFinish = true;
-                    },500);
+                    },800);
                 }
             }
         }

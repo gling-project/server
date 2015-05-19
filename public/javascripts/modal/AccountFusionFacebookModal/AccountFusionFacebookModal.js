@@ -1,4 +1,4 @@
-myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $http, $flash, $modalInstance,modelService,accountFusion,accountService) {
+myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $flash, $modalInstance,accountFusion,accountService) {
 
     $scope.loading=false;
 
@@ -48,22 +48,12 @@ myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $http, $fla
 
             $scope.loading=true;
 
-            $http({
-                'method': "POST",
-                'url': "/account/fusion",
-                'headers': "Content-Type:application/json",
-                'data': accountFusion
-            }).success(function (data, status) {
-                $flash.success(translationService.get("--.login.flash.success"));
-                accountService.myself = data;
-                //TODO temp
-                modelService.set(modelService.MY_SELF, data);
+            accountService.accountFusion(accountFusion,function(){
                 $scope.loading=false;
                 $scope.close();
-            })
-            .error(function (data, status) {
+            },
+            function(){
                 $scope.loading=false;
-                $flash.error(data.message);
             });
         }
     }

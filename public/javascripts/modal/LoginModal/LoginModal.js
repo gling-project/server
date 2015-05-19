@@ -1,4 +1,4 @@
-myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookService, translationService, $modal, $modalInstance, modelService, $location,modalService) {
+myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location,modalService) {
 
     $scope.loading = false;
 
@@ -14,12 +14,10 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookServ
 
     $scope.save = function () {
 
-        if ($scope.allFieldValid()) {
-            var dto = {
-                email: $scope.fields.login.field,
-                password: $scope.fields.password.field,
-                keepSessionOpen: $scope.fields.openSession.field
-            }
+        if ($scope.loginFormParam.isValid) {
+
+            console.log("$scope.loginFormParam.dto");
+            console.log($scope.loginFormParam.dto);
 
             $scope.loading = true;
 
@@ -27,9 +25,9 @@ myApp.controller('LoginModalCtrl', function ($scope, $http, $flash, facebookServ
                 'method': "POST",
                 'url': "/login",
                 'headers': "Content-Type:application/json",
-                'data': dto
+                'data': $scope.loginFormParam.dto
             }).success(function (data, status) {
-                modelService.set(modelService.MY_SELF, data);
+                accountService.setMyself(data);
                 $flash.success(translationService.get("--.login.flash.success"));
                 $scope.loading = false;
                 $scope.close();

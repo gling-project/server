@@ -12,7 +12,10 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($scope,$locale,translationService,$window,facebookService,modelService,languageService,$location,modalService) {
+myApp.controller('MainCtrl', function ($scope,$locale,translationService,$window,facebookService,languageService,$location,modalService,accountService) {
+
+
+    $scope.mm='en';
 
     $scope.navigateTo = function(target){
         $location.path(target);
@@ -28,15 +31,15 @@ myApp.controller('MainCtrl', function ($scope,$locale,translationService,$window
 
     //import data
     //store the current user into the model
-    modelService.set(modelService.MY_SELF, data.mySelf);
-    modelService.set(modelService.APP_ID, data.appId);
+    accountService.setMyself(data.mySelf);
+    facebookService.facebookAppId = data.appId;
     languageService.setLanguages(lang,languages);
 
     //
     //facebook initialization
     //
     facebookService.ini();
-    if(modelService.get(modelService.MY_SELF)==null){
+    if(accountService.getMyself() == null){
         facebookService.getLoginStatus();
     }
 

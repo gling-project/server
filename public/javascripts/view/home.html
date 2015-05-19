@@ -20,13 +20,13 @@
 
         <div style="display: inline-block;width:28%;vertical-align: top">
             <div style="  background-color: green;  color: white;  padding: 10px;  margin-bottom: 20px;"
-                 ng-show="model.MYSELF==null">
+                 ng-show="accountService.getMyself()==null">
                 <div>Sign up to follow you favorite shops, benefit to awesome promotion</div>
                 <button class="btn btn-default" style="color: #000000" ng-click="customerRegistration()">Sign up now !
                 </button>
             </div>
             <div style="  background-color: green;  color: white;  padding: 10px;  margin-bottom: 20px;"
-                 ng-show="model.MYSELF==null">
+                 ng-show="accountService.getMyself()==null">
                 <div>You have a business and you want to communique directly with your customer ? Start now for free,
                     and
                     discover you pricing !
@@ -36,7 +36,7 @@
                 </button>
             </div>
             <div style="  background-color: green;  color: white;  padding: 10px;  margin-bottom: 20px;"
-                 ng-show="model.MYSELF!=null && model.MYSELF.type == 'BUSINESS'">
+                 ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'">
                 <div>You are a business !</div>
                 <button class="btn btn-default" style="color: #000000" ng-click="navigateTo('/business')">Access to my
                     business

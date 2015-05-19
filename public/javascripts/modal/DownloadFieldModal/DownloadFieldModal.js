@@ -1,4 +1,4 @@
-myApp.controller('DownloadFieldModalCtrl', function ($scope, $http, $flash, $modalInstance) {
+myApp.controller('DownloadFieldModalCtrl', function ($scope, $flash, $modalInstance) {
 
     $scope.loading=false;
 

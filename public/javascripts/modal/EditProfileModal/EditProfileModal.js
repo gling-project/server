@@ -1,8 +1,8 @@
-myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modalInstance,$modal,languageService,modelService,modalService) {
+myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modalInstance,$modal,languageService,accountService,modalService) {
 
     $scope.loading = false;
 
-    $scope.account = angular.copy(modelService.get(modelService.MY_SELF));
+    $scope.account = angular.copy(accountService.getMyself());
 
     $scope.fields = {
         gender:{
@@ -105,7 +105,7 @@ myApp.controller('EditProfileModalCtrl', function ($scope, $http, $flash, $modal
             }).success(function (data, status) {
                 $scope.loading = false;
                 $scope.close();
-                modelService.set(modelService.MY_SELF,data);
+                accountService.setMyself(data);
             })
             .error(function (data, status) {
                 $scope.loading = false;

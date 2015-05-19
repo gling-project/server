@@ -1,21 +1,23 @@
-myApp.service("businessService", function ($flash, $http,modelService) {
+myApp.service("businessService", function ($flash, $http, accountService) {
 
-    this.registration = function (dto, callbackSuccess, callbackFail) {
+    this.registration = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
             'url': "registration/business",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
-            this.myself = data;
-            //TODO temp
-            modelService.set(modelService.MY_SELF, data);
-            callbackSuccess(data);
+            accountService.setMyself(data);
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
         })
-        .error(function (data, status) {
-            callbackFail(data);
-            $flash.error(data.message);
-        });
+            .error(function (data, status) {
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+                $flash.error(data.message);
+            });
     };
 
 });

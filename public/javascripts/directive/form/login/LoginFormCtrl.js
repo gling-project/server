@@ -1,4 +1,4 @@
-myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, translationService, directiveService, $timeout, modelService) {
+myApp.directive('loginFormCtrl', function ($flash, facebookService, translationService, directiveService, $timeout, accountService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -20,7 +20,7 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
                     }
 
                     scope.fields = {
-                        login: {
+                        email: {
                             fieldType: "email",
                             name: 'email',
                             fieldTitle: "--.registration.form.yourEmail",
@@ -42,7 +42,7 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
                             },
                             field: scope.getInfo().dto.password
                         },
-                        openSession: {
+                        keepSessionOpen: {
                             fieldTitle: "--.registration.form.keepSessionOpen",
                             field: false,
                             disabled: function () {
@@ -80,7 +80,7 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
                     //
                     scope.fb_login = function () {
                         facebookService.login(function (data) {
-                                modelService.set(modelService.MY_SELF, data);
+                                accountService.setMyself(data);
                                 $flash.success(translationService.get("--.login.flash.success"));
                                 scope.getInfo().facebookSuccess(data);
 
@@ -92,7 +92,7 @@ myApp.directive('loginFormCtrl', function ($http, $flash, facebookService, trans
 
                     $timeout(function () {
                         scope.loadingFinish = true;
-                    }, 500);
+                    }, 800);
                 }
             }
         }

@@ -1,4 +1,4 @@
-myApp.controller('BusinessWelcomeCtrl', function ($scope, modelService) {
+myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService) {
 
-    $scope.business = modelService.get(modelService.MY_SELF).business;
+    $scope.business = accountService.getMyself().business;
 });

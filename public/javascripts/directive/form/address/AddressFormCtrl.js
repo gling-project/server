@@ -1,4 +1,4 @@
-myApp.directive('addressFormCtrl', function ($http, $flash, directiveService,$timeout) {
+myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -99,7 +99,7 @@ myApp.directive('addressFormCtrl', function ($http, $flash, directiveService,$ti
 
                     $timeout(function() {
                         scope.loadingFinish = true;
-                    },500);
+                    },800);
                 }
             }
         }

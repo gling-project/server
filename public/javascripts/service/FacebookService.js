@@ -1,21 +1,24 @@
-myApp.service("facebookService", function ($http,modelService,$locale,languageService) {
+myApp.service("facebookService", function ($http, accountService, $locale, languageService) {
+
+
+    this.facebookAppId;
 
     //
     // initialization
     //
-    this.ini = function(){
-        var appId = modelService.get(modelService.APP_ID);
+    this.ini = function () {
+        console.log("===<" + this.facebookAppId);
         FB.init({
-            appId: appId,
+            appId: this.facebookAppId,
             cookie: true,
             xfbml: true,
             version: 'v2.3'
         });
     }
 
-    var isConnected=false;
+    var isConnected = false;
 
-    this.isConnected = function(){
+    this.isConnected = function () {
         return isConnected;
     };
 
@@ -26,17 +29,15 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
     this.registration = function (successCallback, failCallback) {
         // From now on you can use the  service just as Facebook api says
         FB.login(function (response) {
-            console.log(response);
 
             if (response.status === 'connected') {
 
                 console.log('connected !! ');
 
                 successCallback(response.authResponse);
-
-                //me(successCallback,failCallback);
+                isConnected = true;
             }
-            else{
+            else {
                 failCallback();
             }
         }, {
@@ -50,13 +51,13 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
     this.login = function (successCallback, failCallback) {
         // From now on you can use the  service just as Facebook api says
         FB.login(function (response) {
-            console.log(response);
 
             if (response.status === 'connected') {
 
                 loginToServer(response.authResponse, successCallback, failCallback);
+                isConnected = true;
             }
-            else{
+            else {
                 failCallback();
             }
         }, {
@@ -68,14 +69,12 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
     // login
     //
     me = function (successCallback, failCallback) {
-        console.log('me 1');
         // From now on you can use the  service just as Facebook api says
         FB.api('/me', {
             fields: 'first_name,last_name,email,gender,locale'
-        }, function(response) {
-            console.log('me 2');
+        }, function (response) {
             if (!response || response.error) {
-                failCallback(response.status,response.error);
+                failCallback(response.status, response.error);
             } else {
                 successCallback(response);
             }
@@ -95,30 +94,33 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
                 isConnected = true;
 
                 loginToServer(response.authResponse, function (data) {
-                            //success
-                            //store connected user
-                            modelService.set(modelService.MY_SELF, data);
+                        //success
+                        //store connected user
+                        accountService.setMyself(data);
 
-                            //test lang
-                            languageService.changeLanguage(data.lang.code);
+                        //test lang
+                        languageService.changeLanguage(data.lang.code);
 
-                            console.log("connected by facebook");
-                        },
-                        function () {
-                            //connection failed
-                        });
-                } else {
-                    //connection failed
-                }
+                        console.log("connected by facebook");
+                    },
+                    function () {
+                        //connection failed
+                    });
+            } else {
+                //connection failed
+            }
         });
     };
 
-    this.logout = function(){
-        FB.logout(function(response) {
-        });
-    }
+    this.logout = function () {
 
-    loginToServer = function (authResponse, successCallback, failCallback) {
+        //if (this.isConnected()) {
+        FB.logout(function (response) {
+        });
+        //
+    };
+
+    loginToServer = function (authResponse, callbackSuccess, callbackError) {
 
         var access_token = authResponse.accessToken;
         var user_id = authResponse.userID;
@@ -134,12 +136,16 @@ myApp.service("facebookService", function ($http,modelService,$locale,languageSe
             'url': "/login/facebook",
             'headers': "Content-Type:application/json",
             'data': dto
-        }).success(function (data, status) {
-
-            successCallback(data);
+        }).success(function (data) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+            ;
         })
             .error(function (data, status) {
-                failCallback(data, status);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
             });
     };
 

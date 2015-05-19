@@ -1,4 +1,4 @@
-myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $modalInstance,modelService) {
+myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $modalInstance,accountService) {
 
     $scope.loading=false;
 
@@ -72,7 +72,7 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope, $http, $flash, $mo
 
             $http({
                 'method': "PUT",
-                'url': "/account/password/" + modelService.get(modelService.MY_SELF).id,
+                'url': "/account/password/" + accountService.getMyself().id,
                 'headers': "Content-Type:application/json",
                 'data': dto
             }).success(function (data, status) {

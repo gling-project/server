@@ -8,6 +8,7 @@ import be.lynk.server.dto.post.AccountRegistrationDTO;
 import be.lynk.server.dto.post.BusinessRegistrationDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.post.CustomerRegistrationDTO;
+import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
@@ -143,6 +144,10 @@ public class LoginRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
         }
 
+        if(dto.getKeepSessionOpen()==null){
+            dto.setKeepSessionOpen(false);
+        }
+
         if (!dto.getKeepSessionOpen().equals(account.getLoginCredential().isKeepSessionOpen())) {
             account.getLoginCredential().setKeepSessionOpen(dto.getKeepSessionOpen());
             accountService.saveOrUpdate(account);
@@ -219,6 +224,19 @@ public class LoginRestController extends AbstractRestController {
     public Result logout() {
         securityController.logout(Controller.ctx());
         return Results.redirect("/");
+    }
+
+    @Transactional
+    public Result changeLanguage(String code) {
+
+
+        Lang lang = Lang.forCode(code);
+        if (lang != null) {
+            changeLang(lang.code());
+        }
+
+
+        return ok(new ResultDTO());
     }
 
     private MyselfDTO finalizeConnection(Account account) {

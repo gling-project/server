@@ -1,5 +1,5 @@
-var test = function (modelService) {
-    var myself = modelService.get(modelService.MY_SELF);
+var test = function (accountService) {
+    var myself = accountService.getMyself();
     if (myself == null) {
         return 'NOT_CONNECTED';
     }
@@ -24,8 +24,8 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
-                    a:function(modelService){
-                        var status = test(modelService);
+                    a:function(accountService){
+                        var status = test(accountService);
                         console.log("status : "+status);
                     }
                 }
@@ -33,8 +33,8 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/business_welcome.html',
                 controller: 'BusinessWelcomeCtrl',
                 resolve: {
-                    a:function(modelService,$location){
-                        if(test(modelService) != 'BUSINESS'){
+                    a:function(accountService,$location){
+                        if(test(accountService) != 'BUSINESS'){
                             $location.path('/');
                         }
                     }
@@ -43,8 +43,8 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/business_registration.html',
                 controller: 'BusinessRegistrationCtrl',
                 resolve: {
-                    a: function (modelService, $location) {
-                        if (test(modelService) == 'BUSINESS') {
+                    a: function (accountService, $location) {
+                        if (test(accountService) == 'BUSINESS') {
                             $location.path('/business');
                         }
                     }

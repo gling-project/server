@@ -4,6 +4,7 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.AccountDTO;
 import be.lynk.server.dto.ListDTO;
+import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Session;
 import be.lynk.server.service.LoginCredentialService;
@@ -31,6 +32,7 @@ public class
     private AccountService accountService;
     @Autowired
     private LoginCredentialService loginCredentialService;
+
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
@@ -95,7 +97,7 @@ public class
         Account account = securityController.getCurrentUser();
 
         //control last password
-        if (account.getLoginCredential()==null || !loginCredentialService.controlPassword(changePasswordDTO.getOldPassword(), account.getLoginCredential())) {
+        if (account.getLoginCredential() == null || !loginCredentialService.controlPassword(changePasswordDTO.getOldPassword(), account.getLoginCredential())) {
             throw new MyRuntimeException(ErrorMessageEnum.VALIDATION_PASSWORD);
         }
 
@@ -106,4 +108,6 @@ public class
 
         return ok(dozerService.map(account, AccountDTO.class));
     }
+
+
 }

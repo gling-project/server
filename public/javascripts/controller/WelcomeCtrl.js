@@ -1,9 +1,9 @@
-myApp.controller('WelcomeCtrl', function ($scope, $flash, $http, facebookService, modelService,languageService,$location,modalService) {
+myApp.controller('WelcomeCtrl', function ($scope,  languageService,$location,accountService,facebookService,modalService) {
 
 
     //use the model
-    $scope.model = modelService.model;
-    $scope.myself = modelService.get(modelService.MY_SELF);
+    $scope.myself = accountService.getMyself();
+    $scope.accountService = accountService;
 
 
     //login open modal
@@ -24,20 +24,10 @@ myApp.controller('WelcomeCtrl', function ($scope, $flash, $http, facebookService
 
     //log out
     $scope.logout = function () {
-        $http({
-            'method': "GET",
-            'url': "logout",
-            'headers': "Content-Type:application/json"
-        }).success(function (data, status) {
-            modelService.remove(modelService.MY_SELF);
+        facebookService.logout();
+        accountService.logout(function(){
             $location.path('/');
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-            });
-        if (facebookService.isConnected()) {
-            facebookService.logout();
-        }
+        });
     };
 
     //
@@ -48,5 +38,7 @@ myApp.controller('WelcomeCtrl', function ($scope, $flash, $http, facebookService
             languageService.changeLanguage($scope.lang);
         }
     });
+
+    $scope.languageService = languageService;
 
 });

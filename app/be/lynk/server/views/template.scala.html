@@ -87,7 +87,7 @@
                 <script>
                 var data = @Html(new ObjectMapper().writeValueAsString(data)) ;
                 var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;
-                var lang = " @ctx().lang().code ";
+                var lang = "@ctx().lang().code";
                 </script>
 
 
@@ -106,15 +106,18 @@
                                     <h1 style="cursor : pointer" ng-click="navigateTo('/')">{{'--.site.name' | translateText}}</h1>
 
                                         <!-- not connected menu -->
-                                    <div class="profile-buttons-container" ng-show="model.MYSELF==null">
+                                    <div class="profile-buttons-container" ng-show="accountService.getMyself()==null">
+                                        <!-- lang -->
+                                        <select class="form-control" ng-model="languageService.currentLanguage" ng-options="lang.code as lang.language for lang in languageService.languages">
+                                        </select>
                                         <button type="button" class="btn btn-primary" ng-click="login()">{{'--.welcome.login' | translateText}}</button>
                                         {{'--.generic.or' | translateText}}
                                         <button type="button" class="btn btn-primary" ng-click="registration()">{{'--.welcome.signIn' | translateText}}</button>
                                     </div>
 
                                         <!-- connected menu -->
-                                    <div class="profile-buttons-container" ng-show="model.MYSELF!=null" style="display : inline-block">
-                                    {{model.MYSELF.firstname}} {{model.MYSELF.lastname}}
+                                    <div class="profile-buttons-container" ng-show="accountService.getMyself()!=null" style="display : inline-block">
+                                    {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
                                         <button type="button" class="btn btn-primary" ng-click="editProfile()">{{'--.welcome.myProfile' | translateText}}</button>
                                         <button type="button" class="btn btn-primary" ng-click="logout()">{{'--.generic.logout' | translateText}}</button>
                                     </div>

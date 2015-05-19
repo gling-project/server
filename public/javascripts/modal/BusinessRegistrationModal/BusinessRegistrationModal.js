@@ -1,4 +1,4 @@
-myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $http, $flash, $modal,$modalInstance, translationService, accountService, facebookService,businessService,modalService) {
+myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal,$modalInstance, translationService, accountService, facebookService,businessService,modalService) {
 
     var facebookAuthentication = null;
 
