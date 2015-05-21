@@ -43,7 +43,7 @@ myApp.controller('MainCtrl', function ($scope,$locale,translationService,$window
         facebookService.getLoginStatus();
     }
     else{
-        facebookService.recover();
+        //facebookService.recover();
     }
 
     //

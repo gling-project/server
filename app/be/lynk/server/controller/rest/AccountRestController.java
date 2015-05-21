@@ -91,8 +91,7 @@ public class
     }
 
     @Transactional
-    //TODO only customer !!
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result editCustomerInterest(long id) {
 
         CustomerRegistrationDTO dto = extractDTOFromRequest(CustomerRegistrationDTO.class);
@@ -144,8 +143,7 @@ public class
     }
 
     @Transactional
-    //TODO only customer !!
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result addAddress() {
         AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
 
@@ -211,8 +209,7 @@ public class
     }
 
     @Transactional
-    //TODO only customer !!
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result deleteAddress(long id) {
 
         Account currentUser = securityController.getCurrentUser();

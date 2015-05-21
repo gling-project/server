@@ -24,7 +24,7 @@ public class HttpRequest {
 
 
     public enum RequestMethod {
-        GET, POST;
+        GET, POST
     }
 
     public <T extends DTO> T sendRequest(RequestMethod requestMethod, String site, Map<String, String> params, Class<T> returnExcepted) throws HttpRequestException {

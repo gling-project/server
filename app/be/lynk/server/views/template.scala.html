@@ -86,8 +86,8 @@
 
                     <!-- load data -->
                 <script>
-                var data = @Html(new ObjectMapper().writeValueAsString(data)) ;
-                var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;
+                var data =; @Html(new ObjectMapper().writeValueAsString(data))
+                var languages =; @Html(new ObjectMapper().writeValueAsString(languages.getList))
                 var lang = "@ctx().lang().code";
                 </script>
 

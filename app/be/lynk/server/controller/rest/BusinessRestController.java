@@ -45,8 +45,7 @@ public class BusinessRestController extends AbstractController {
     }
 
     @Transactional
-    //TODO only customer !!
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result update() {
         BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 
@@ -65,8 +64,7 @@ public class BusinessRestController extends AbstractController {
     }
 
     @Transactional
-    //TODO only customer !!
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result editBusinessCategory() {
         BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 

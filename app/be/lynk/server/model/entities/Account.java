@@ -1,5 +1,6 @@
 package be.lynk.server.model.entities;
 
+import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.model.entities.converter.I18NLangConverter;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.util.AccountTypeEnum;
@@ -39,8 +40,8 @@ public abstract  class Account extends AbstractEntity {
     @Basic
     protected String authenticationKey;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected Role role;
+    @Enumerated(value = EnumType.STRING)
+    protected RoleEnum role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account", orphanRemoval = true)
     protected Set<Session> sessions;
@@ -92,11 +93,11 @@ public abstract  class Account extends AbstractEntity {
         this.sessions = sessions;
     }
 
-    public Role getRole() {
+    public RoleEnum getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleEnum role) {
         this.role = role;
     }
 

@@ -1,8 +1,8 @@
 package be.lynk.server.controller.technical.security.annotation;
 //
+
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.model.entities.Role;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.service.impl.TranslationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,9 @@ public class SecurityAnnotationAction extends Action<SecurityAnnotation> {
     public F.Promise<SimpleResult> call(final Http.Context context) throws Throwable {
 
         if (securityController.isAuthenticated(context)) {
-            Role role = securityController.getCurrentUser().getRole();
-            if (role.getRoleEnum().equals(configuration.role()) ||
-                    role.getRoleEnum().getChildren().contains(configuration.role())) {
+            RoleEnum role = securityController.getCurrentUser().getRole();
+            if (role.equals(configuration.role()) ||
+                    role.getChildren().contains(configuration.role())) {
                 return delegate.call(context);
 
             }

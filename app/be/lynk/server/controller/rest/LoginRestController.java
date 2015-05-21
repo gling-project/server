@@ -47,7 +47,6 @@ public class LoginRestController extends AbstractRestController {
     @Autowired
     private BusinessCategoryService businessCategoryService;
 
-
     @Transactional
     public Result testEmail(String email) {
         return ok(new BooleanDTO(accountService.findByEmail(email) != null));
@@ -165,6 +164,7 @@ public class LoginRestController extends AbstractRestController {
         BusinessRegistrationDTO dto = extractDTOFromRequest(BusinessRegistrationDTO.class);
 
         BusinessAccount account = (BusinessAccount) createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), false);
+        account.setRole(RoleEnum.BUSINESS);
 
         //business
         Business business = dozerService.map(dto.getBusiness(), Business.class);
@@ -199,6 +199,7 @@ public class LoginRestController extends AbstractRestController {
         CustomerRegistrationDTO dto = extractDTOFromRequest(CustomerRegistrationDTO.class);
 
         CustomerAccount account = (CustomerAccount) createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), true);
+        account.setRole(RoleEnum.CUSTOMER);
 
         //address ?
         if (dto.getAddress() != null) {
@@ -326,7 +327,6 @@ public class LoginRestController extends AbstractRestController {
         if (account.getLang() == null) {
             account.setLang(Controller.lang());
         }
-        account.setRole(new Role(account, RoleEnum.USER));
 
 
         if (accountRegistrationDTO.getLang() != null) {
