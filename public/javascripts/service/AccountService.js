@@ -214,6 +214,31 @@ myApp.service("accountService", function ($flash, $http) {
             });
     };
 
+    this.deleteAddress = function (dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "DELETE",
+            'url': "/address/"+dto.id,
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+
+            for(var key in self.getMyself().addresses){
+                if(self.getMyself().addresses[key].id == dto.id){
+                    self.getMyself().addresses.splice(key,1);
+                }
+            }
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
     this.editCustomerInterest = function(dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",

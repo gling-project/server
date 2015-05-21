@@ -24,27 +24,27 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
-                    a:function(accountService){
+                    a: function (accountService) {
                         var status = test(accountService);
-                        console.log("status : "+status);
+                        console.log("status : " + status);
                     }
                 }
             }).when('/business', {
                 templateUrl: '/assets/javascripts/view/business_welcome.html',
                 controller: 'BusinessWelcomeCtrl',
                 resolve: {
-                    a:function(accountService,$location){
-                        if(test(accountService) != 'BUSINESS'){
+                    a: function (accountService, $location) {
+                        if (test(accountService) != 'BUSINESS') {
                             $location.path('/');
                         }
                     }
                 }
-            }).when('/customer_profile', {
-                templateUrl: '/assets/javascripts/view/customer_profile.html',
-                controller: 'CustomerProfileCtrl',
+            }).when('/profile', {
+                templateUrl: '/assets/javascripts/view/profile.html',
+                controller: 'ProfileCtrl',
                 resolve: {
-                    a:function(accountService,$location){
-                        if(test(accountService) != 'CUSTOMER'){
+                    a: function (accountService, $location) {
+                        if (test(accountService) == 'NOT_CONNECTED') {
                             $location.path('/');
                         }
                     }

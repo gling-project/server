@@ -22,6 +22,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import java.util.HashSet;
+
 /**
  * Created by florian on 25/03/15.
  * This class is used to connect / register / logout an account.
@@ -42,6 +44,8 @@ public class LoginRestController extends AbstractRestController {
     private LoginCredentialService loginCredentialService;
     @Autowired
     private CustomerInterestService customerInterestService;
+    @Autowired
+    private BusinessCategoryService businessCategoryService;
 
 
     @Transactional
@@ -166,6 +170,12 @@ public class LoginRestController extends AbstractRestController {
         Business business = dozerService.map(dto.getBusiness(), Business.class);
         //TODO temp
         business.getAddress().setCountry("BELGIUM");
+
+        //add categories
+        business.setBusinessCategories(new HashSet<>());
+        for (BusinessCategoryDTO businessCategoryDTO : dto.getBusiness().getBusinessCategories()) {
+            business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
+        }
 
 
         account.setBusiness(business);

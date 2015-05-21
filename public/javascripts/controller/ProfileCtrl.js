@@ -1,5 +1,6 @@
-myApp.controller('CustomerProfileCtrl', function ($scope, modalService, accountService, accountService) {
+myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, accountService) {
 
+    $scope.model = accountService.model;
 
     $scope.accountParam = {
         updateMode: true,
@@ -31,7 +32,7 @@ myApp.controller('CustomerProfileCtrl', function ($scope, modalService, accountS
     };
 
 
-    $scope.model = accountService.model;
+
 
     $scope.addAddress = function () {
         modalService.addressModal(true, null);
@@ -39,6 +40,10 @@ myApp.controller('CustomerProfileCtrl', function ($scope, modalService, accountS
 
     $scope.editAddress = function (address) {
         modalService.addressModal(true, address);
+    };
+
+    $scope.deleteAddress = function (address) {
+        accountService.deleteAddress(address);
     };
 
 });

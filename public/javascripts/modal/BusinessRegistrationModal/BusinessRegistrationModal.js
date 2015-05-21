@@ -1,4 +1,4 @@
-myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal,$modalInstance, translationService, accountService, facebookService,businessService,modalService) {
+myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal,$modalInstance, translationService, accountService, facebookService,businessService,modalService,$location) {
 
     var facebookAuthentication = null;
 
@@ -49,6 +49,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
         else if($scope.badgeSelected == 2) {
             if (!$scope.addressFormParam.isValid ||
                 !$scope.businessFormParam.isValid) {
+                console.log($scope.addressFormParam.isValid +"/"+$scope.businessFormParam.isValid);
                 $scope.addressFormParam.displayErrorMessage = true;
                 $scope.businessFormParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValid"));
@@ -137,21 +138,20 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
 
             var businessDTO = $scope.businessFormParam.dto;
             businessDTO.address = $scope.addressFormParam.dto;
-            businessDTO.category = $scope.businessCategoryFormParam.value;
+            businessDTO.businessCategories = $scope.businessCategoryFormParam.value;
 
             var dto = {
                 accountRegistration: $scope.accountParam.dto,
                 facebookAuthentication: facebookAuthentication,
                 business:businessDTO
             };
-            console.log('------------------------------------');
-            console.log(dto);
 
             $scope.loading = true;
             businessService.registration(dto, function () {
                     $scope.loading = false;
                     $flash.success(translationService.get("--.login.flash.success"));
                     $scope.close();
+                    $location.path("/business");
                 },
                 function () {
                     $scope.loading = false;

@@ -17,6 +17,7 @@ import java.util.List;
  */
 @Service
 public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategory> implements BusinessCategoryService {
+
     @Override
     public List<BusinessCategory> findAllParent() {
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
@@ -26,5 +27,15 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
         cq.where(cb.isNull(from.get("parent")));
         List<BusinessCategory> resultList = JPA.em().createQuery(cq).getResultList();
         return resultList;
+    }
+
+    @Override
+    public BusinessCategory findByName(String name) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<BusinessCategory> cq = cb.createQuery(BusinessCategory.class);
+        Root<BusinessCategory> from = cq.from(BusinessCategory.class);
+        cq.select(from);
+        cq.where(cb.equal(from.get("name"), name));
+        return getSingleResultOrNull(cq);
     }
 }

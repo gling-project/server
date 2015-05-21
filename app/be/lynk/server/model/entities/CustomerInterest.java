@@ -3,6 +3,7 @@ package be.lynk.server.model.entities;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -10,10 +11,14 @@ import javax.persistence.Entity;
  */
 @Entity
 public class CustomerInterest extends AbstractEntity{
+
     @Basic(optional = false)
+    @Column(unique = true)
     private String name;
 
+    @Basic
     private String translationName;
+
 
     public String getName() {
         return name;

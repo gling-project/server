@@ -81,6 +81,9 @@ public class
             }
         }
 
+        //storage
+        securityController.storeAccount(ctx(),account);
+
         //save
         accountService.saveOrUpdate(account);
 
@@ -88,6 +91,7 @@ public class
     }
 
     @Transactional
+    //TODO only customer !!
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result editCustomerInterest(long id) {
 
@@ -140,6 +144,7 @@ public class
     }
 
     @Transactional
+    //TODO only customer !!
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result addAddress() {
         AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
@@ -203,6 +208,36 @@ public class
         addressService.saveOrUpdate(address);
 
         return ok(dozerService.map(address, AddressDTO.class));
+    }
+
+    @Transactional
+    //TODO only customer !!
+    @SecurityAnnotation(role = RoleEnum.USER)
+    public Result deleteAddress(long id) {
+
+        Account currentUser = securityController.getCurrentUser();
+
+        Address addressToDelete = null;
+
+        for (Address address : ((CustomerAccount) currentUser).getAddresses()) {
+            if (address.getId().equals(id)) {
+                addressToDelete = address;
+                break;
+            }
+        }
+
+        if (addressToDelete == null) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        ((CustomerAccount) currentUser).getAddresses().remove(addressToDelete);
+
+
+        //delete
+        accountService.saveOrUpdate(currentUser);
+        addressService.remove(addressToDelete);
+
+        return ok(new ResultDTO());
     }
 
 

@@ -17,7 +17,9 @@
     </div>
 
     <div ng-show="badgeSelected==1">
-        <div class="modal-description">{{'--.customer.registrationModal.personal.desc' | translateText}}</div>
+        <div class="modal-description">{{'--.customer.registrationModal.personal.desc' | translateText}}<br/>
+            <span class="modal-login-link link" ng-click="toBusinessRegistration()">{{'--.registrationModal.toBusinessRegistration' | translateText}}</span>
+        </div>
         <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
         <div class="modal-login-or">

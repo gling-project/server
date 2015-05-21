@@ -39,7 +39,7 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
 
     @Override
     public void remove(T entity) {
-        JPA.em().remove(JPA.em().merge(entity));
+        JPA.em().remove(entity);
     }
     
     @Override

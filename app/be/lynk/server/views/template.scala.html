@@ -59,7 +59,7 @@
             <script src="@routes.Assets.at("javascripts/controller/HomeCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/controller/BusinessRegistrationCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/controller/BusinessWelcomeCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/controller/CustomerProfileCtrl.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.at("javascripts/controller/ProfileCtrl.js")" type="text/javascript"></script>
 
 
             @header.header()
@@ -124,8 +124,9 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="editProfile()">{{'--.welcome.myProfile' | translateText}}</a></li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="logout()">{{'--.generic.logout' | translateText}}</a></li>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">{{'--.welcome.myProfile' | translateText}}</a></li>
+                                                <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business')">{{'--.welcome.myBusiness' | translateText}}</a></li>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="logout()">{{'--.generic.logout' | translateText}}</a></li>
                                             </ul>
                                         </div>
                                         @*{{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}*@

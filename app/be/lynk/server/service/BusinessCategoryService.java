@@ -10,4 +10,5 @@ import java.util.List;
 public interface BusinessCategoryService extends CrudService<BusinessCategory>{
     List<BusinessCategory> findAllParent();
 
+    BusinessCategory findByName(String name);
 }

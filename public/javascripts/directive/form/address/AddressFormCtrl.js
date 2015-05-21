@@ -82,12 +82,14 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
 
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];
-                            if ((scope.fields.hasOwnProperty(key) && obj.isActive != false  && (obj.isValid == null || obj.isValid === false))) {
-                                obj.firstAttempt = !scope.getInfo().displayErrorMessage;
-                                validation = false;
-                            }
-                            else {
-                                scope.getInfo().dto[key] = scope.fields[key].field;
+                            if (scope.fields.hasOwnProperty(key) && obj.isActive != false) {
+                                if (obj.isValid == null || obj.isValid === false) {
+                                    obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                                    validation = false;
+                                }
+                                else {
+                                    scope.getInfo().dto[key] = scope.fields[key].field;
+                                }
                             }
                         }
                         scope.getInfo().isValid = validation;

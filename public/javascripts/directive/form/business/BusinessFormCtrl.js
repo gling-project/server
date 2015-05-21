@@ -22,6 +22,13 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                     }
 
 
+                    scope.$watch('getInfo().dto',function(){
+                        console.log("binding !! ");
+                        scope.fields.name.field =scope.getInfo().dto.name;
+                        scope.fields.description.field =scope.getInfo().dto.description;
+                        scope.fields.phone.field =scope.getInfo().dto.phone;
+                    });
+
                     scope.fields = {
                         name: {
                             fieldTitle: "--.generic.name",
@@ -33,7 +40,7 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                             focus: function () {
                                 return true;
                             },
-                            field: scope.getInfo().dto.name
+                            isActive: !scope.getInfo().updateMode
                         },
                         description: {
                             fieldTitle: "--.generic.desc",
@@ -42,7 +49,7 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field: scope.getInfo().dto.description
+                            isActive: !scope.getInfo().updateMode
                         },
                         phone: {
                             fieldTitle: "--.generic.phone",
@@ -51,7 +58,7 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field: scope.getInfo().dto.phone
+                            isActive: !scope.getInfo().updateMode
                         }
                     };
 
@@ -65,7 +72,12 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                                 validation = false;
                             }
                             else {
-                                scope.getInfo().dto[key] = scope.fields[key].field;
+                                if (key == 'gender') {
+                                    scope.getInfo().dto.male = (scope.fields[key].field == 'male');
+                                }
+                                else {
+                                    scope.getInfo().dto[key] = scope.fields[key].field;
+                                }
                             }
                         }
                         scope.getInfo().isValid = validation;

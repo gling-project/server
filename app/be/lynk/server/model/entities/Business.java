@@ -3,6 +3,7 @@ package be.lynk.server.model.entities;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by florian on 10/11/14.
@@ -24,6 +25,21 @@ public class Business extends AbstractEntity {
 
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Address address;
+
+    @ManyToMany
+    @JoinTable(
+            name = "business_category",
+            joinColumns = {@JoinColumn(name = "business")},
+            inverseJoinColumns = {@JoinColumn(name = "category")})
+    private Set<BusinessCategory> businessCategories;
+
+    public Set<BusinessCategory> getBusinessCategories() {
+        return businessCategories;
+    }
+
+    public void setBusinessCategories(Set<BusinessCategory> businessCategories) {
+        this.businessCategories = businessCategories;
+    }
 
     public Account getAccount() {
         return account;

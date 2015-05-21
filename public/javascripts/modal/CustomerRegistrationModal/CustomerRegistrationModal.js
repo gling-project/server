@@ -16,6 +16,11 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         $modalInstance.close();
     };
 
+    $scope.toBusinessRegistration = function () {
+        $scope.close();
+        modalService.openBusinessRegistrationModal();
+    };
+
     $scope.skip = function () {
         if ($scope.badgeSelected == 3) {
             $scope.save(true);

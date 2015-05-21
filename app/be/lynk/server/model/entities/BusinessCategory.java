@@ -12,6 +12,7 @@ import java.util.Set;
 public class BusinessCategory extends AbstractEntity{
 
     @Basic(optional = false)
+    @Column(unique = true)
     private String name;
 
     @Basic(optional = false)
@@ -22,6 +23,21 @@ public class BusinessCategory extends AbstractEntity{
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private BusinessCategory parent;
+
+    @ManyToMany
+    @JoinTable(
+            name = "business_category",
+            joinColumns = {@JoinColumn(name = "category")},
+            inverseJoinColumns = {@JoinColumn(name = "business")})
+    private Set<Business> businesses;
+
+    public Set<Business> getBusinesses() {
+        return businesses;
+    }
+
+    public void setBusinesses(Set<Business> businesses) {
+        this.businesses = businesses;
+    }
 
     public String getName() {
         return name;
