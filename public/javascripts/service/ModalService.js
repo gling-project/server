@@ -76,13 +76,38 @@ myApp.service("modalService", function ($modal) {
             size: "l",
             resolve: resolve
         });
-    }
+    };
 
     this.openEditPasswordModal = function(){
         $modal.open({
             templateUrl: "/assets/javascripts/modal/ChangePassword/view.html",
             controller: "ChangePasswordModalCtrl",
             size:"l"
+        });
+    };
+
+    this.openEditCustomerInterest = function(){
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/EditCustomerInterestModal/view.html",
+            controller: "EditCustomerInterestModalCtrl",
+            size:"lg"
+        });
+    };
+
+    this.addressModal = function(addName,address){
+        var resolve = {
+            dto: function () {
+                return address;
+            }
+            ,addName : function(){
+                return addName;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/AddressModal/view.html",
+            controller: "AddressModalCtrl",
+            size:"l",
+            resolve: resolve
         });
     }
 

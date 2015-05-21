@@ -37,7 +37,6 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                         },
                         description: {
                             fieldTitle: "--.generic.desc",
-                            fieldType:'textarea',
                             validationRegex: "^.{0,1500}$",
                             validationMessage: ['--.generic.validation.size', '0', '1500'],
                             disabled: function () {
@@ -78,10 +77,6 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
                             obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                         }
                     });
-
-                    $timeout(function() {
-                        scope.loadingFinish = true;
-                    },800);
                 }
             }
         }

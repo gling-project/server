@@ -37,10 +37,6 @@ myApp.directive('businessCategoryFormCtrl', function ( $flash, directiveService,
                         scope.subselectedCategory = subCategory;
                         scope.getInfo().isValid = true;
                     };
-
-                    $timeout(function() {
-                        scope.loadingFinish = true;
-                    },800);
                 }
 
             }

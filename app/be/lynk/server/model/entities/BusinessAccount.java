@@ -13,8 +13,9 @@ public class BusinessAccount extends Account {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false, mappedBy = "account")
     private Business business;
 
-    @Basic
-    private AccountTypeEnum type = AccountTypeEnum.BUSINESS;
+    public BusinessAccount() {
+        type = AccountTypeEnum.BUSINESS;
+    }
 
     public Business getBusiness() {
         return business;
@@ -25,15 +26,10 @@ public class BusinessAccount extends Account {
     }
 
 
-    public AccountTypeEnum getType() {
-        return type;
-    }
-
     @Override
     public String toString() {
         return "BusinessAccount{" +
-                super.toString()+
-                ", type=" + type +
+                super.toString() +
                 '}';
     }
 }

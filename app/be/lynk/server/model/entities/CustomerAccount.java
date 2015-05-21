@@ -21,8 +21,10 @@ public class CustomerAccount extends Account {
     @ManyToMany()
     private Set<CustomerInterest> customerInterests = new HashSet<>();
 
-    private AccountTypeEnum type = AccountTypeEnum.CUSTOMER;
 
+    public CustomerAccount() {
+        type = AccountTypeEnum.CUSTOMER;
+    }
 
     public Set<Address> getAddresses() {
         return addresses;
@@ -40,21 +42,12 @@ public class CustomerAccount extends Account {
         this.customerInterests = customerInterests;
     }
 
-    public void setType(AccountTypeEnum type) {
-        this.type = type;
-    }
-
-    public AccountTypeEnum getType() {
-        return type;
-    }
-
     @Override
     public String toString() {
         return "CustomerAccount{" +
-                super.toString()+
+                super.toString() +
                 "addresses=" + addresses +
                 ", customerInterests=" + customerInterests +
-                ", type=" + type +
                 '}';
     }
 }

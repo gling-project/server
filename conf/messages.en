@@ -50,6 +50,10 @@
 --.generic.numberOnly=Only number
 --.generic.stepNotValidOrSkip=Please finish to complete data or continue to the newt step
 --.generic.validation.wrongRepeatPassword=generic.validation.wrongRepeatPassword
+--.generic.street=Street
+--.generic.zip=Zip
+--.generic.city=City
+--.generic.country=Country
 
 ## login modal
 --.loginModal.title=Login you

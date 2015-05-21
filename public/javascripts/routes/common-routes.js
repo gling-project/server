@@ -39,6 +39,16 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 }
+            }).when('/customer_profile', {
+                templateUrl: '/assets/javascripts/view/customer_profile.html',
+                controller: 'CustomerProfileCtrl',
+                resolve: {
+                    a:function(accountService,$location){
+                        if(test(accountService) != 'CUSTOMER'){
+                            $location.path('/');
+                        }
+                    }
+                }
             }).when('/business_registration', {
                 templateUrl: '/assets/javascripts/view/business_registration.html',
                 controller: 'BusinessRegistrationCtrl',

@@ -92,6 +92,7 @@ public class Address extends AbstractEntity {
     @Override
     public String toString() {
         return "Address{" +
+                super.toString()+
                 "name='" + name + '\'' +
                 ", street='" + street + '\'' +
                 ", zip='" + zip + '\'' +

@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
+    <h4 class="modal-title">{{'--.customer.editInterestModal.title' | translateText}}</h4>
+</div>
+<div class="modal-body modal-login" dir-enter="save()">
+
+    <customer-interest-form-ctrl ng-info="customerInterestParam"></customer-interest-form-ctrl>
+
+
+</div>
+<div class="modal-footer">
+    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="close()">
+        {{'--.generic.cancel' | translateText}}
+    </button>
+    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">
+        {{'--.generic.save' | translateText}}
+    </button>
+    <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
+</div>

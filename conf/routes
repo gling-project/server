@@ -30,6 +30,10 @@ GET         /businessCategory             @be.lynk.server.controller.rest.Busine
 GET         /myself                       @be.lynk.server.controller.rest.AccountRestController.myself()
 PUT         /account/:id                  @be.lynk.server.controller.rest.AccountRestController.editAccount(id:Long)
 PUT         /account/password/:id         @be.lynk.server.controller.rest.AccountRestController.changePassword(id:Long)
+POST        /address                      @be.lynk.server.controller.rest.AccountRestController.addAddress()
+PUT         /address/:id                  @be.lynk.server.controller.rest.AccountRestController.editAddress(id:Long)
+PUT         /customer/interest/:id        @be.lynk.server.controller.rest.AccountRestController.editCustomerInterest(id:Long)
+
 #session
 GET         /session                      @be.lynk.server.controller.rest.AccountRestController.mySession()
 

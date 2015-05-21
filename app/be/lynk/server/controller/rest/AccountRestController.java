@@ -2,16 +2,16 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.AccountDTO;
-import be.lynk.server.dto.ListDTO;
+import be.lynk.server.dto.*;
+import be.lynk.server.dto.post.CustomerRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
-import be.lynk.server.model.entities.Account;
-import be.lynk.server.model.entities.Session;
+import be.lynk.server.model.entities.*;
+import be.lynk.server.service.AddressService;
+import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.LoginCredentialService;
-import be.lynk.server.dto.ChangePasswordDTO;
-import be.lynk.server.dto.SessionDTO;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
@@ -32,6 +32,10 @@ public class
     private AccountService accountService;
     @Autowired
     private LoginCredentialService loginCredentialService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
 
     @Transactional
@@ -54,7 +58,7 @@ public class
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result editAccount(long id) {
 
-        AccountDTO dto = extractDTOFromRequest(AccountDTO.class);
+        MyselfDTO dto = extractDTOFromRequest(MyselfDTO.class);
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {
@@ -85,6 +89,32 @@ public class
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
+    public Result editCustomerInterest(long id) {
+
+        CustomerRegistrationDTO dto = extractDTOFromRequest(CustomerRegistrationDTO.class);
+
+        //contorl it's myself'
+        if (!securityController.getCurrentUser().getId().equals(id)) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
+        }
+
+        CustomerAccount account = (CustomerAccount) securityController.getCurrentUser();
+
+        account.setCustomerInterests(new HashSet<>());
+
+        if (dto.getCustomerInterests() != null) {
+            for (CustomerInterestDTO customerInterestDTO : dto.getCustomerInterests()) {
+                account.getCustomerInterests().add(customerInterestService.findByName(customerInterestDTO.getName()));
+            }
+        }
+
+        accountService.saveOrUpdate(account);
+
+        return ok(new ListDTO<>(dozerService.map(account.getCustomerInterests(), CustomerInterestDTO.class)));
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
     public Result changePassword(long id) {
 
         //contorl it's myself'
@@ -107,6 +137,72 @@ public class
         accountService.saveOrUpdate(account);
 
         return ok(dozerService.map(account, AccountDTO.class));
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
+    public Result addAddress() {
+        AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
+
+        Address map = dozerService.map(dto, Address.class);
+
+        //TODO control address
+        //TODO temp
+        map.setCountry("BELGIUM");
+
+        CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
+        currentUser.getAddresses().add(map);
+
+        accountService.saveOrUpdate(currentUser);
+
+        Logger.info("my new address : " + map);
+
+        return ok(dozerService.map(map, AddressDTO.class));
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
+    public Result editAddress(long id) {
+
+        //test id
+        Account currentUser = securityController.getCurrentUser();
+
+        boolean founded = false;
+
+        if (currentUser instanceof CustomerAccount) {
+            for (Address address : ((CustomerAccount) currentUser).getAddresses()) {
+                if (address.getId().equals(id)) {
+                    founded = true;
+                    break;
+                }
+            }
+        } else {
+            if (((BusinessAccount) currentUser).getBusiness().getAddress().getId().equals(id)) {
+                founded = true;
+            }
+        }
+
+        if (!founded) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+
+        AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
+
+        //TODO control address
+
+        Address address = addressService.findById(id);
+        address.setCity(dto.getCity());
+        address.setStreet(dto.getStreet());
+        address.setName(dto.getName());
+        address.setZip(dto.getZip());
+
+        //TODO edit country
+
+
+        addressService.saveOrUpdate(address);
+
+        return ok(dozerService.map(address, AddressDTO.class));
     }
 
 

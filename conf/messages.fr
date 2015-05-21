@@ -36,6 +36,10 @@
 --.generic.numberOnly=Uniquement une valeur numérique
 --.generic.stepNotValidOrSkip=Merci de complèter cette étape avant ou de passer à la suivante
 --.generic.validation.wrongRepeatPassword=generic.validation.wrongRepeatPassword
+--.generic.street=Rue
+--.generic.zip=Zip
+--.generic.city=Ville
+--.generic.country=Pays
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte

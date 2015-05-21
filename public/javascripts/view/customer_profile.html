@@ -1,0 +1,62 @@
+<div>
+
+    <div style="display: inline-block;vertical-align: top;width:600px">
+
+        <h4>{{'--.customer.profile.personalInformation' | translateText}}</h4>
+
+        <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="accountParam.disabled" ng-click="personalEdit()">{{'--.generic.edit' |
+            translateText}}
+        </button>
+        <button class="btn btn-primary" ng-hide="accountParam.disabled" ng-click="personalSave()">{{'--.generic.save' |
+            translateText}}
+        </button>
+        <button class="btn btn-primary" ng-hide="accountParam.disabled" ng-click="personalCancel()">
+            {{'--.generic.cancel' | translateText}}
+        </button>
+
+        <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+
+        <div ng-show="account.loginAccount==true" class="col-md-3" ng-show="account.loginAccount==true"></div>
+        <button type="button" class="btn btn-primary" ng-click="editPassword()">{{'--.changePasswordModal.title'
+            |translateText}}
+        </button>
+
+    </div>
+    <div style="display: inline-block;vertical-align: top;">
+        <h4>{{'--.customer.profile.myAddresses' | translateText}}</h4>
+        <accordion>
+            <accordion-group
+                    class="address-container"
+                    ng-repeat="address in model.myself.addresses"
+                    heading="{{address.name}}"
+                    is-open="address.isOpen">
+                <div class="address-box">
+                    <div><span>{{'--.generic.street' | translateText}}</span>{{address.street}}</div>
+                    <div><span>{{'--.generic.zip' | translateText}}</span>{{address.zip}}</div>
+                    <div><span>{{'--.generic.city' | translateText}}</span>{{address.city}}</div>
+                    <div><span>{{'--.generic.country' | translateText}}</span>{{address.country}}</div>
+                </div>
+                <button class="btn btn-primary glyphicon glyphicon-edit" ng-click="editAddress(address)">{{'--.generic.edit' |
+                    translateText}}</button>
+            </accordion-group>
+        </accordion>
+        <button class="btn btn-default" ng-click="addAddress()">{{'--.customer.profile.create' | translateText}}
+        </button>
+    </div>
+
+    <div style="display: inline-block;vertical-align: top;width:600px" class="customer_interest_form">
+
+        <h4>{{'--.customer.profile.interest' | translateText}}</h4>
+
+        <div ng-repeat="interest in model.myself.customerInterests" class="interest">
+            {{interest.translationName |translateText}}
+        </div>
+
+        <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="accountParam.disabled" ng-click="interestEdit()">{{'--.generic.edit' |
+            translateText}}
+        </button>
+
+    </div>
+
+
+</div>

@@ -1,14 +1,7 @@
 <div class="form">
-
-    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
-        <img src="/assets/images/form_loading.gif"/>
-    </div>
-
-    <div ng-class="{'hidden':loadingFinish!=true}">
         <dir-field-text ng-info="fields.name"></dir-field-text>
 
-        <dir-field-text ng-info="fields.description"></dir-field-text>
+        <dir-field-text-area ng-info="fields.description"></dir-field-text-area>
 
         <dir-field-text ng-info="fields.phone"></dir-field-text>
     </div>
-</div>

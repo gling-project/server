@@ -71,7 +71,7 @@ public class CommonSecurityController extends Security.Authenticator {
     }
 
     public SourceEnum getSource(Http.Context ctx){
-        return SourceEnum.getByKey(ctx.request().getHeader(REQUEST_HEADER_SOURCE));
+        return SourceEnum.ANDROID;//SourceEnum.getByKey(ctx.request().getHeader(REQUEST_HEADER_SOURCE));
     }
 
     @Override

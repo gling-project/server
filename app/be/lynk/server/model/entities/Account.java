@@ -2,6 +2,7 @@ package be.lynk.server.model.entities;
 
 import be.lynk.server.model.entities.converter.I18NLangConverter;
 import be.lynk.server.model.entities.technical.AbstractEntity;
+import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.Encrypter;
 import be.lynk.server.util.KeyGenerator;
 import play.i18n.Lang;
@@ -19,41 +20,52 @@ public abstract  class Account extends AbstractEntity {
 
 
     @Basic(optional = false)
-    private Boolean male;
+    protected Boolean male;
 
     @Basic(optional = false)
-    private String firstname;
+    protected String firstname;
 
     @Basic(optional = false)
-    private String lastname;
+    protected String lastname;
 
     @Basic(optional = false)
     @Column(unique = true)
-    private String email;
+    protected String email;
 
     @Column(nullable = false, columnDefinition = "character varying(255) NOT NULL DEFAULT 'en'")
     @Convert(converter = I18NLangConverter.class)
-    private Lang lang = Lang.forCode("en");
+    protected Lang lang = Lang.forCode("en");
 
     @Basic
-    private String authenticationKey;
+    protected String authenticationKey;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Role role;
+    protected Role role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account", orphanRemoval = true)
-    private Set<Session> sessions;
+    protected Set<Session> sessions;
 
 
     @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL)
-    private LoginCredential loginCredential;
+    protected LoginCredential loginCredential;
 
 
     @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL)
-    private FacebookCredential facebookCredential;
+    protected FacebookCredential facebookCredential;
+
+    @Enumerated(value = EnumType.STRING)
+    protected AccountTypeEnum type;
 
 
     public Account() {
+    }
+
+    public AccountTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(AccountTypeEnum type) {
+        this.type = type;
     }
 
     public FacebookCredential getFacebookCredential() {

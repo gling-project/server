@@ -1,5 +1,12 @@
 package be.lynk.server.dto;
 
+import be.lynk.server.model.entities.Address;
+import be.lynk.server.model.entities.CustomerInterest;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by florian on 11/11/14.
  */
@@ -12,6 +19,29 @@ public class MyselfDTO extends AccountDTO {
     private String authenticationKey;
 
     private BusinessDTO business;
+
+    private List<AddressDTO> addresses;
+
+    private Set<CustomerInterestDTO> customerInterests = new HashSet<>();
+
+    public MyselfDTO() {
+    }
+
+    public Set<CustomerInterestDTO> getCustomerInterests() {
+        return customerInterests;
+    }
+
+    public void setCustomerInterests(Set<CustomerInterestDTO> customerInterests) {
+        this.customerInterests = customerInterests;
+    }
+
+    public List<AddressDTO> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressDTO> addresses) {
+        this.addresses = addresses;
+    }
 
     public BusinessDTO getBusiness() {
         return business;

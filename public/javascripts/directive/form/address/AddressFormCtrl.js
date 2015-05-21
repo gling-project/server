@@ -1,4 +1,4 @@
-myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,$filter) {
+myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout, $filter) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -15,13 +15,12 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    if(scope.getInfo().dto ==null){
-                        scope.getInfo().dto = {
-                        };
+                    if (scope.getInfo().dto == null) {
+                        scope.getInfo().dto = {};
                     }
 
-                    if(scope.getInfo().dto.name== undefined ||
-                        scope.getInfo().dto.name == null){
+                    if (scope.getInfo().dto.name == undefined ||
+                        scope.getInfo().dto.name == null) {
                         scope.getInfo().dto.name = $filter('translateText')('--.generic.home');
                     }
 
@@ -37,7 +36,8 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
                             focus: function () {
                                 return scope.getInfo().addName;
                             },
-                            field:scope.getInfo().dto.name
+                            field: scope.getInfo().dto.name,
+                            isActive: scope.getInfo().addName
                         },
                         street: {
                             fieldType: "text",
@@ -51,7 +51,7 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
                             focus: function () {
                                 return !scope.getInfo().addName;
                             },
-                            field:scope.getInfo().dto.street
+                            field: scope.getInfo().dto.street
                         },
                         zip: {
                             fieldType: "text",
@@ -62,7 +62,7 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field:scope.getInfo().dto.zip
+                            field: scope.getInfo().dto.zip
                         },
                         city: {
                             fieldType: "text",
@@ -73,7 +73,7 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field:scope.getInfo().dto.city
+                            field: scope.getInfo().dto.city
                         }
                     };
 
@@ -82,14 +82,12 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
 
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];
-                            if (key != 'name' || scope.getInfo().addName) {
-                                if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                                    obj.firstAttempt = !scope.getInfo().displayErrorMessage;
-                                    validation = false;
-                                }
-                                else{
-                                    scope.getInfo().dto[key] = scope.fields[key].field;
-                                }
+                            if ((scope.fields.hasOwnProperty(key) && obj.isActive != false  && (obj.isValid == null || obj.isValid === false))) {
+                                obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                                validation = false;
+                            }
+                            else {
+                                scope.getInfo().dto[key] = scope.fields[key].field;
                             }
                         }
                         scope.getInfo().isValid = validation;
@@ -101,10 +99,6 @@ myApp.directive('addressFormCtrl', function ( $flash, directiveService,$timeout,
                             obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                         }
                     });
-
-                    $timeout(function() {
-                        scope.loadingFinish = true;
-                    },800);
                 }
             }
         }

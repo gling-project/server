@@ -1,10 +1,4 @@
 <div class="form">
-
-    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
-        <img src="/assets/images/form_loading.gif"/>
-    </div>
-
-    <div ng-class="{'hidden':loadingFinish!=true}">
         <dir-field-text ng-info="fields.email"></dir-field-text>
 
         <dir-field-text ng-info="fields.password"></dir-field-text>
@@ -23,6 +17,4 @@
                 <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
             </button>
         </div>
-
-    </div>
 </div>

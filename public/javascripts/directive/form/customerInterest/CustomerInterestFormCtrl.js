@@ -1,53 +1,59 @@
-myApp.directive('customerInterestFormCtrl', function ($flash, directiveService,customerInterestService,$timeout) {
-    return {
-        restrict: "E",
-        scope: directiveService.autoScope({
-            ngInfo: '='
-        }),
-        templateUrl: "/assets/javascripts/directive/form/customerInterest/template.html",
-        replace: true,
-        transclude: true,
-        compile: function () {
-            return {
-                pre: function (scope) {
-                    return directiveService.autoScopeImpl(scope);
-                },
-                post: function (scope) {
-                    directiveService.autoScopeImpl(scope);
+myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, customerInterestService, $timeout) {
+        return {
+            restrict: "E",
+            scope: directiveService.autoScope({
+                ngInfo: '='
+            }),
+            templateUrl: "/assets/javascripts/directive/form/customerInterest/template.html",
+            replace: true,
+            transclude: true,
+            compile: function () {
+                return {
+                    pre: function (scope) {
+                        return directiveService.autoScopeImpl(scope);
+                    },
+                    post: function (scope) {
+                        directiveService.autoScopeImpl(scope);
 
 
-
-                    scope.interests = {};
-                    customerInterestService.getAll(function (result){
-                        console.log(result);
-                        scope.interests = result.list;
-                    });
-
-                    scope.select = function(interest){
-                        console.log("jjjj");
-                        interest.selected = !interest.selected;//true;//!scope.interests[interest].selected;
-                    };
-
-                    scope.$watch('interests', function () {
-                        scope.getInfo().isValid = true;
-
-
-                        scope.getInfo().result = [];
-
-                        for(var key in scope.interests){
-                            var interest = scope.interests[key];
-                            if(interest.selected){
-                                scope.getInfo().result.push(interest);
+                        scope.interests = {};
+                        customerInterestService.getAll(function (result) {
+                                scope.interests = result.list;
+                                for (var j in scope.interests) {
+                                    for (var i in scope.getInfo().result) {
+                                        if (scope.getInfo().result[i].name == scope.interests[j].name) {
+                                            scope.interests[j].selected = true;
+                                        }
+                                    }
+                                }
                             }
-                        }
+                        );
 
-                    }, true);
+                        scope.select = function (interest) {
+                            interest.selected = !interest.selected;//true;//!scope.interests[interest].selected;
+                        };
 
-                    $timeout(function() {
-                        scope.loadingFinish = true;
-                    },800);
+                        scope.$watch('interests', function (o, n) {
+                            if (o != n) {
+
+                                scope.getInfo().isValid = true;
+
+
+                                scope.getInfo().result = [];
+
+                                for (var key in scope.interests) {
+                                    var interest = scope.interests[key];
+                                    if (interest.selected) {
+                                        scope.getInfo().result.push(interest);
+                                    }
+                                }
+                            }
+
+                        }, true);
+                    }
                 }
             }
         }
     }
-});
+)
+;

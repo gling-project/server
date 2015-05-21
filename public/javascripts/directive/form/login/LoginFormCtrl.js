@@ -89,10 +89,6 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                                 $flash.error(data.message);
                             });
                     };
-
-                    $timeout(function () {
-                        scope.loadingFinish = true;
-                    }, 800);
                 }
             }
         }

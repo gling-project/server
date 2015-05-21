@@ -11,6 +11,8 @@ import javax.validation.constraints.Pattern;
  */
 public class AddressDTO extends DTO{
 
+    private Long id;
+
     private String name;
 
     @NotNull
@@ -26,6 +28,17 @@ public class AddressDTO extends DTO{
     private String city;
 
     private String country;
+
+    public AddressDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

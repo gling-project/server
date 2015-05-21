@@ -17,10 +17,10 @@ myApp.service("accountService", function ($flash, $http) {
             }
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
     };
 
@@ -37,10 +37,10 @@ myApp.service("accountService", function ($flash, $http) {
             }
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
     };
 
@@ -56,10 +56,10 @@ myApp.service("accountService", function ($flash, $http) {
             }
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
     };
 
@@ -76,10 +76,10 @@ myApp.service("accountService", function ($flash, $http) {
             }
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
     };
 
@@ -97,10 +97,10 @@ myApp.service("accountService", function ($flash, $http) {
             }
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
     };
 
@@ -121,10 +121,10 @@ myApp.service("accountService", function ($flash, $http) {
             }
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
     };
 
@@ -136,38 +136,104 @@ myApp.service("accountService", function ($flash, $http) {
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
+            self.setMyself(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
-            self.setMyself(data);
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
     };
 
-    this.login = function(dto, callbackSuccess, callbackError) {
+    this.login = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
             'url': "/login",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
+            self.setMyself(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
-            self.setMyself(data);
         })
             .error(function (data, status) {
+                $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
             });
-    }
+    };
+
+    this.addAddress = function (dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "POST",
+            'url': "/address",
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            self.getMyself().addresses.push(data);
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.editAddress = function (dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "PUT",
+            'url': "/address/"+dto.id,
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+
+            for(var key in self.getMyself().addresses){
+                if(self.getMyself().addresses[key].id == dto.id){
+                    self.getMyself().addresses.splice(key,1,data);
+                }
+            }
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.editCustomerInterest = function(dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "PUT",
+            'url': "/customer/interest/"+self.getMyself().id,
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+
+            self.getMyself().customerInterests = data.list;
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
 
     this.getMyself = function () {
         return this.model.myself;

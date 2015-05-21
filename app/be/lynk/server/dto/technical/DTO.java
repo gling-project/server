@@ -42,6 +42,7 @@ public class DTO implements Content {
                 return dto;
 
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
             }
         }
