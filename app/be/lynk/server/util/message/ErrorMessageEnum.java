@@ -19,7 +19,9 @@ public enum ErrorMessageEnum {
     FACEBOOK_AUTHENTICATION_FAIL("--.error.facebook.authentication_fail"),
     WRONG_PASSWORD_OR_LOGIN("--.error.wrong_password_or_login"),
     FACEBOOK_FUSION_DIFFERENT_ACCOUNT_TYPE("--.error.facebookFusion.differentAccountType"),
-    FACEBOOK_NOT_ACCOUNT_FOUND("--.error.facebook.notAccountFound");
+    FACEBOOK_NOT_ACCOUNT_FOUND("--.error.facebook.notAccountFound"),
+    EMAIL_UNKNOWN("--.error.account.emailUnknown"),
+    ACCOUNT_WITHOUT_LOGIN_CREDENTIAL("--.error.account.withoutLoginCredential");
 
     private final String key;
 

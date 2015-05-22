@@ -109,6 +109,20 @@ myApp.service("modalService", function ($modal) {
             size:"l",
             resolve: resolve
         });
-    }
+    };
+
+    this.openForgotPasswordModal = function(email){
+        var resolve = {
+            email: function () {
+                return email;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/ForgotPasswordModal/view.html",
+            controller: "ForgotPasswordModalCtrl",
+            size:"l",
+            resolve: resolve
+        });
+    };
 
 });

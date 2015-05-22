@@ -40,6 +40,11 @@
 --.generic.zip=Zip
 --.generic.city=Ville
 --.generic.country=Pays
+--.generic.address=Addresse
+--.generic.business=Commerce
+--.generic.edit=Editer
+--.generic.cancel=Annuler
+--.generic.remove=Supprimer
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -52,7 +57,7 @@
 --.forgotPassword.success=Un email vous a été envoyé avec un nouveau mot de passe
 
 ##  modal/LoginModal/LoginModal.js (//logout facebook in case)
---.login.flash.success=Vous êtes maintenant connecté !
+--.login.flash.success=Vous êtes maintenant connecté \!
 --.registration.form.yourEmail=Votre adresse email
 
 ##  modal/RegistrationModal/view.html
@@ -117,21 +122,22 @@
 ##  modal/CustomerRegistrationModal/view.html
 --.customer.registrationModal.interest.title=Intérêts
 --.customer.registrationModal.interest.desc=Sélectionnez votre cente d'intérêt. Ceci nous permettre de vous proposez des promotions et informations adaptés à vos envies. Vous pouvez également cliquer sur 'passer' et sélectionner vos intérêts plus tard.
-#--.loginModal.facebook.btn=Connection avec Facebook
+--.loginModal.facebook.btn=Connection avec Facebook
 --.customer.registrationModal.address.desc=Créer une adresse. Vous pouvez utiliser cette adresse pour trouver des magasins au alentour. Vous pouvez passer cette étape en cliquant sur 'passer' et y revenir plus tard.
 --.customer.registrationModal.title=Créer un nouveau compte
 --.customer.registrationModal.personal.desc=Créer un compte
 --.customer.registrationModal.personal.address=Votre adresse
 --.customer.registrationModal.personal.title=Personnelle
 --.registrationModal.facebook.btn=Enregistrez-vous avec Facebook
+--.registrationModal.toBusinessRegistration=Vous voulez enregistrer un commerce ? Suivez ce lien \!
 
 ##  view/home.html
 --.home.toBusiness.btn=Je suis un commerçant
---.home.main.description=Bienvenu dans Lÿnk ! ...
+--.home.main.description=Bienvenu dans Lÿnk \! ...
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 #--.customer.registrationModal.account.notValid=customer.registrationModal.account.notValid
---.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté !
+--.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté \!
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
 --.editProfileModal.title=Editez vos informations personnelles
@@ -142,10 +148,12 @@
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=Ce compte Facebook est déjà enregistré pour un autre type de compte. Vous ne pouvez pas utilisez le même compte Facebook pour créer un compte client et un compte commerçant.
 --.error.facebook.notAccountFound=Ce compte Facebook n'est pas enregistré. Pour vous enregistrer, suivez un des deux liens ci-dessous
+--.error.account.withoutLoginCredential=Ce compte utilise le système de connection de Facebook et n'utilise aucun mot de passe
+--.error.account.emailUnknown=cet adresse email est inconnue
 
 ##  view/business_registration.html
---.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk !
---.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat!
+--.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk \!
+--.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat\!
 --.business.registration.oldBusiness=J'ai déjà un compte et je veux me connecter
 
 ##  directive/form/business/BusinessFormCtrl.js
@@ -153,6 +161,7 @@
 
 ##  view/business_welcome.html
 --.business.welcome.title=Bienvenue sur la page de votre magasin
+--.business.profile.businessCategory=Type de commerce
 
 ##  modal/BusinessRegistrationModal/view.html
 --.business.registrationModal.category.title=Catégorie de commerce
@@ -167,7 +176,7 @@
 --.form.address.field.street=Rue / numéro
 --.form.address.field.zip=Code postal
 --.form.address.field.city=Ville
---.address.form.name.help=address.form.name.help
+#--.address.form.name.help=address.form.name.help
 
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sous catégorie
@@ -178,7 +187,26 @@
 --.loginModal.toBusinessRegistration=S'enregistrer en tant de commerçant
 --.loginModal.toCustomerRegistration=S'enregistrer en tant que client
 --.loginModal.notRegisterYet=Pas encore enregistré?
---.validation.dto.notNull=Ne peut pas être vide
+#--.validation.dto.notNull=Ne peut pas être vide
 #--.validation.dto.notNull=Ne peut pas être vide
 
+
+
+##  be/lynk/server/views/template.scala.html (javascript library )
+--.welcome.myBusiness=Mon commerce
+
+##  view/profile.html
+--.customer.profile.myAddresses=Mon addresse
+--.customer.profile.personalInformation=Information personnelle
+--.customer.profile.interest=Intérêts
+--.customer.profile.create=Créer
+
+##  modal/EditCustomerInterestModal/view.html
+--.customer.editInterestModal.title=Modifier mes intérêts
+#--.validation.dto.notNull=Ne peut pas être vide
+
+
+##  directive/form/login/template.html
+--.login.form.button.forgotPassword=login.form.button.forgotPassword
+--.validation.dto.notNull=
 

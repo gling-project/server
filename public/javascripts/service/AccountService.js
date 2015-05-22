@@ -192,14 +192,14 @@ myApp.service("accountService", function ($flash, $http) {
     this.editAddress = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/address/"+dto.id,
+            'url': "/address/" + dto.id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
 
-            for(var key in self.getMyself().addresses){
-                if(self.getMyself().addresses[key].id == dto.id){
-                    self.getMyself().addresses.splice(key,1,data);
+            for (var key in self.getMyself().addresses) {
+                if (self.getMyself().addresses[key].id == dto.id) {
+                    self.getMyself().addresses.splice(key, 1, data);
                 }
             }
             if (callbackSuccess != null) {
@@ -217,14 +217,14 @@ myApp.service("accountService", function ($flash, $http) {
     this.deleteAddress = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",
-            'url': "/address/"+dto.id,
+            'url': "/address/" + dto.id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
 
-            for(var key in self.getMyself().addresses){
-                if(self.getMyself().addresses[key].id == dto.id){
-                    self.getMyself().addresses.splice(key,1);
+            for (var key in self.getMyself().addresses) {
+                if (self.getMyself().addresses[key].id == dto.id) {
+                    self.getMyself().addresses.splice(key, 1);
                 }
             }
             if (callbackSuccess != null) {
@@ -239,15 +239,34 @@ myApp.service("accountService", function ($flash, $http) {
             });
     };
 
-    this.editCustomerInterest = function(dto, callbackSuccess, callbackError) {
+    this.editCustomerInterest = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/customer/interest/"+self.getMyself().id,
+            'url': "/customer/interest/" + self.getMyself().id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
 
             self.getMyself().customerInterests = data.list;
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.forgotPassword = function (dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "PUT",
+            'url': "/password",
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }

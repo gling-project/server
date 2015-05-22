@@ -1,20 +1,21 @@
-myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $modalInstance,$filter) {
+myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
 
-    $scope.loading=false;
+    $scope.loading = false;
 
     $scope.fields = {
         email: {
-            fieldType:"email",
-            name:'email',
+            fieldType: "email",
+            name: 'email',
             fieldTitle: "--.changeEmailModal.email",
             validationRegex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             validationMessage: "--.generic.validation.email",
-            focus: function(){
+            focus: function () {
                 return true;
             },
-            disabled:function(){
+            disabled: function () {
                 return $scope.loading;
-            }
+            },
+            field: email
         }
     };
 
@@ -48,22 +49,17 @@ myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $mo
                 email: $scope.fields.email.field
             };
 
-            $scope.loading=true;
+            $scope.loading = true;
 
-            $http({
-                'method': "PUT",
-                'url': "/password",
-                'headers': "Content-Type:application/json",
-                'data': dto
-            }).success(function (data, status) {
-                $scope.loading=false;
-                $scope.close();
-                $flash.success($filter('translateText')('--.forgotPassword.success'));
-            })
-            .error(function (data, status) {
-                $scope.loading=false;
-                $flash.error(data.message);
-            });
+
+            accountService.forgotPassword(dto, function () {
+                    $flash.success($filter('translateText')('--.forgotPassword.success'));
+                    $scope.loading = false;
+                    $scope.close();
+                },
+                function () {
+                    $scope.loading = false;
+                });
         }
     }
 

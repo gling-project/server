@@ -5,6 +5,10 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
     $scope.loginFormParam = {
         facebookSuccess: function (data) {
             $scope.close();
+        },
+        forgotPassword: function(email){
+            modalService.openForgotPasswordModal(email);
+            $scope.close();
         }
     };
 

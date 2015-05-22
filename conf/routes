@@ -19,6 +19,7 @@ GET           /logout                       @be.lynk.server.controller.rest.Logi
 GET           /email/test/:email            @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
 POST          /facebook/test                @be.lynk.server.controller.rest.LoginRestController.testFacebookAccount()
 PUT           /language/:code               @be.lynk.server.controller.rest.LoginRestController.changeLanguage(code:String)
+PUT           /password                     @be.lynk.server.controller.rest.LoginRestController.forgotPassword()
 
 ## customer interest
 GET           /customerInterest             @be.lynk.server.controller.rest.CustomerRestController.getAllCustomerInterest()

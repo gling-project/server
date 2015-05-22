@@ -4,14 +4,12 @@ import be.lynk.server.controller.EmailController;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
-import be.lynk.server.dto.post.AccountRegistrationDTO;
-import be.lynk.server.dto.post.BusinessRegistrationDTO;
-import be.lynk.server.dto.post.LoginDTO;
-import be.lynk.server.dto.post.CustomerRegistrationDTO;
+import be.lynk.server.dto.post.*;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
+import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +44,30 @@ public class LoginRestController extends AbstractRestController {
     private CustomerInterestService customerInterestService;
     @Autowired
     private BusinessCategoryService businessCategoryService;
+
+    @Transactional
+    public Result forgotPassword(){
+
+        ForgotPasswordDTO dto = extractDTOFromRequest(ForgotPasswordDTO.class);
+
+        Account byEmail = accountService.findByEmail(dto.getEmail());
+
+        if(byEmail==null){
+            throw new MyRuntimeException(ErrorMessageEnum.EMAIL_UNKNOWN);
+        }
+        if(byEmail.getLoginCredential()==null){
+            throw new MyRuntimeException(ErrorMessageEnum.ACCOUNT_WITHOUT_LOGIN_CREDENTIAL);
+        }
+
+        byEmail.getLoginCredential().setPassword(KeyGenerator.generateRandomPassword());
+
+        //send email
+        emailController.sendNewPasswordEmail(byEmail);
+
+        accountService.saveOrUpdate(byEmail);
+
+        return ok(new ResultDTO());
+    }
 
     @Transactional
     public Result testEmail(String email) {
@@ -218,7 +240,7 @@ public class LoginRestController extends AbstractRestController {
         }
 
         //send email
-        //TODO ? emailController.sendApplicationRegistrationEmail(account);
+        emailController.sendApplicationRegistrationEmail(account);
 
         accountService.saveOrUpdate(account);
 
@@ -369,7 +391,6 @@ public class LoginRestController extends AbstractRestController {
                 }
             }
         } else {
-            Logger.info("----------------------"+accountRegistrationDTO+"");
             account.setLoginCredential(new LoginCredential(account, accountRegistrationDTO.getKeepSessionOpen(), accountRegistrationDTO.getPassword()));
         }
 

@@ -54,6 +54,11 @@
 --.generic.zip=Zip
 --.generic.city=City
 --.generic.country=Country
+--.generic.address=Address
+--.generic.business=Business
+--.generic.edit=Edit
+--.generic.cancel=Cancel
+--.generic.remove=Remove
 
 ## login modal
 --.loginModal.title=Login you
@@ -77,7 +82,7 @@
 ## login
 #--.login.form.title=Login you
 #--.login.form.submit=Login
-#--.login.form.button.forgotPassword=Forgot your password ?
+--.login.form.button.forgotPassword=Forgot your password ?
 #--.login.form.wrongCredential=Wrong email and / or password
 
 ## form
@@ -155,9 +160,10 @@
 
 ##  view/business_welcome.html
 --.business.welcome.title=Welcome to your business page
+--.business.profile.businessCategory=Business category
 
 ##  modal/LoginModal/view.html (add the google+ button here )
-#--.loginModal.facebook.btn=Log in with Facebook
+--.loginModal.facebook.btn=Log in with Facebook
 --.loginModal.notRegisterYet=Not register yet ?
 --.loginModal.toCustomerRegistration=Sign up as customer
 --.loginModal.toBusinessRegistration=Sign up as business
@@ -176,6 +182,7 @@
 --.customer.registrationModal.personal.address=Your address
 --.customer.registrationModal.personal.title=Personal
 --.registrationModal.facebook.btn=Sign up with Facebook
+--.registrationModal.toBusinessRegistration=You want register a business? Follow this link \!
 
 ##  view/home.html
 --.home.toBusiness.btn=I am a business
@@ -190,6 +197,8 @@
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=This Facebook account is alredy registered but for an other type of account. You cannot used the same Facebook account to create a customer account and a business account.
 --.error.facebook.notAccountFound=This Facebook account is not registered. To register you, follow one of the links below.
+--.error.account.withoutLoginCredential=This accompt uses the Facebook connection system and doesn't use any password.
+--.error.account.emailUnknown=This email is unkown
 
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -205,11 +214,25 @@
 --.form.address.field.street=Street / number
 --.form.address.field.zip=Zip code
 --.form.address.field.city=City
---.address.form.name.help=Lÿnk
+#--.address.form.name.help=Lÿnk
 
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sub category
 --.businessCategory.column.category=Category
 
+
+
+
+##  be/lynk/server/views/template.scala.html (javascript library )
+--.welcome.myBusiness=My business
+
+##  view/profile.html
+--.customer.profile.myAddresses=My address
+--.customer.profile.personalInformation=Personal information
+--.customer.profile.interest=Interests
+--.customer.profile.create=Create
+
+##  modal/EditCustomerInterestModal/view.html
+--.customer.editInterestModal.title=Edit my interests
 
 

@@ -5,6 +5,8 @@
 
         <dir-field-check ng-info="fields.keepSessionOpen"></dir-field-check>
 
+        <div class="link" ng-click="toForgotPassword()">{{'--.login.form.button.forgotPassword' | translateText}}</div>
+
         <div class="modal-login-or">
             <div></div>
             <div>{{'--.generic.or' | translateText}}</div>
@@ -14,7 +16,7 @@
         <div class="facebook-login-btn-container">
             <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
                 <img src="/assets/images/facebook/login_icon.png"/>
-                <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
+                <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
             </button>
         </div>
 </div>

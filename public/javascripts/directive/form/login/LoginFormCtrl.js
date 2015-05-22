@@ -89,6 +89,10 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                                 $flash.error(data.message);
                             });
                     };
+
+                    scope.toForgotPassword = function(){
+                        scope.getInfo().forgotPassword(scope.fields.email.field);
+                    }
                 }
             }
         }
