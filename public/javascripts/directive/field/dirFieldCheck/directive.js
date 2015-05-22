@@ -4,7 +4,7 @@ myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/dirFieldCheck/template.html",
+        templateUrl: "/assets/javascripts/directive/field/dirFieldCheck/template.html",
         replace: true,
         transclude: true,
         compile: function () {

@@ -1,4 +1,4 @@
-myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal,$modalInstance, translationService, accountService, facebookService,businessService,modalService,$location) {
+myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, modalService, $location) {
 
     var facebookAuthentication = null;
 
@@ -9,8 +9,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
     $scope.addressFormParam = {
         addName: false
     };
-    $scope.businessCategoryFormParam = {
-    };
+    $scope.businessCategoryFormParam = {};
 
     $scope.businessFormParam = {};
 
@@ -46,10 +45,9 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
             //control email
             notValid = true;
         }
-        else if($scope.badgeSelected == 2) {
-            if (!$scope.addressFormParam.isValid ||
-                !$scope.businessFormParam.isValid) {
-                console.log($scope.addressFormParam.isValid +"/"+$scope.businessFormParam.isValid);
+        else if ($scope.badgeSelected == 2) {
+            if (!$scope.addressFormParam.isValid || !$scope.businessFormParam.isValid) {
+                console.log($scope.addressFormParam.isValid + "/" + $scope.businessFormParam.isValid);
                 $scope.addressFormParam.displayErrorMessage = true;
                 $scope.businessFormParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValid"));
@@ -76,7 +74,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                 var dto = {
                     userId: user_id,
                     token: access_token,
-                    accountType:'BUSINESS'
+                    accountType: 'BUSINESS'
                 };
 
                 accountService.testFacebook(dto, function (data2) {
@@ -87,6 +85,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
 
                     if (data2.status == 'ALREADY_REGISTRERED') {
                         $flash.success('--.customer.registrationModal.alredyRegistred.success');
+                        accountService.setMyself(data2.myself);
                         $scope.close();
                     }
                     else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
@@ -125,13 +124,11 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
     $scope.save = function () {
 
         //todo control address and business
-        if(!$scope.businessFormParam.isValid ||
-            !$scope.addressFormParam.isValid ||
-            !$scope.businessCategoryFormParam.isValid){
-            $scope.businessFormParam.displayErrorMessage=true;
-            $scope.addressFormParam.displayErrorMessage=true;
-            $scope.accountParam.displayErrorMessage=true;
-            $scope.businessCategoryFormParam.displayErrorMessage=true;
+        if (!$scope.businessFormParam.isValid || !$scope.addressFormParam.isValid || !$scope.businessCategoryFormParam.isValid) {
+            $scope.businessFormParam.displayErrorMessage = true;
+            $scope.addressFormParam.displayErrorMessage = true;
+            $scope.accountParam.displayErrorMessage = true;
+            $scope.businessCategoryFormParam.displayErrorMessage = true;
             $flash.error(translationService.get("--.generic.stepNotValid"));
         }
         else {
@@ -143,7 +140,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
             var dto = {
                 accountRegistration: $scope.accountParam.dto,
                 facebookAuthentication: facebookAuthentication,
-                business:businessDTO
+                business: businessDTO
             };
 
             $scope.loading = true;

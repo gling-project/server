@@ -1,10 +1,10 @@
-myApp.directive("dirFieldText", function (directiveService, $timeout,modalService,$timeout) {
+myApp.directive("dirFieldSelect", function (directiveService, $timeout,modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/dirFieldText/template.html",
+        templateUrl: "/assets/javascripts/directive/field/dirFieldSelect/template.html",
         replace: true,
         transclude: true,
         compile: function () {
@@ -13,8 +13,13 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                     return directiveService.autoScopeImpl(scope);
                 },
                 post: function (scope) {
-                    directiveService.autoScopeImpl(scope);
 
+
+                    console.log(scope.getInfo().options);
+
+
+
+                    directiveService.autoScopeImpl(scope);
 
                     if(scope.getInfo().autoCompleteValue==undefined){
                         scope.getInfo().autoCompleteValue=[];
@@ -90,6 +95,7 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                             scope.getInfo().field=result;
                         });
                     };
+
                 }
             };
         }

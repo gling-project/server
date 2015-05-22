@@ -10,7 +10,7 @@ public class TestFacebookDTO extends DTO{
 
     private TestFacebookStatusEnum status;
 
-    private MyselfDTO myselfDTO;
+    private MyselfDTO myself;
 
     private AccountFusionDTO accountFusion;
     private FacebookTokenAccessControlDTO facebookTokenAccessControl;
@@ -24,12 +24,12 @@ public class TestFacebookDTO extends DTO{
         this.status = status;
     }
 
-    public MyselfDTO getMyselfDTO() {
-        return myselfDTO;
+    public MyselfDTO getMyself() {
+        return myself;
     }
 
-    public void setMyselfDTO(MyselfDTO myselfDTO) {
-        this.myselfDTO = myselfDTO;
+    public void setMyself(MyselfDTO myself) {
+        this.myself = myself;
     }
 
     public void setAccountFusion(AccountFusionDTO accountFusion) {

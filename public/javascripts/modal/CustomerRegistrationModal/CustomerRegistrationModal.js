@@ -100,6 +100,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
 
                     if (data2.status == 'ALREADY_REGISTRERED') {
                         $flash.success('--.customer.registrationModal.alredyRegistred.success');
+                        accountService.setMyself(data2.myself);
                         $scope.close();
                     }
                     else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {

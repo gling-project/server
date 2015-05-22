@@ -4,7 +4,7 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/dirFieldDocument/template.html",
+        templateUrl: "/assets/javascripts/directive/field/dirFieldDocument/template.html",
         replace: true,
         transclude: true,
         compile: function () {

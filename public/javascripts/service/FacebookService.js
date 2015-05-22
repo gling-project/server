@@ -64,13 +64,12 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
         });
     };
 
-    //this.recover = function (successCallback, failCallback) {
-    //    //From now on you can use the  service just as Facebook api says
-    //    FB.login(function (response) {
-    //
-    //        }
-    //    )
-    //};
+    this.recover = function (successCallback, failCallback) {
+        //From now on you can use the  service just as Facebook api says
+        FB.getLoginStatus(function (response) {
+
+        });
+    };
 
     //
     // login

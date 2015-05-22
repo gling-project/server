@@ -4,7 +4,7 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/dirFieldTextArea/template.html",
+        templateUrl: "/assets/javascripts/directive/field/dirFieldTextArea/template.html",
         replace: true,
         transclude: true,
         compile: function () {

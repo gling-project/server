@@ -4,7 +4,7 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/dirFieldDate/template.html",
+        templateUrl: "/assets/javascripts/directive/field/dirFieldDate/template.html",
         replace: true,
         transclude: true,
         compile: function () {

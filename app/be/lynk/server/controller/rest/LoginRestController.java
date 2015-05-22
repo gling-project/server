@@ -306,7 +306,7 @@ public class LoginRestController extends AbstractRestController {
         if (facebookCredential != null) {
             Account account = facebookCredential.getAccount();
             testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED);
-            testFacebookDTO.setMyselfDTO(finalizeConnection(account));
+            testFacebookDTO.setMyself(finalizeConnection(account));
         } else if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
             //an existing account with same email
             //fusion
