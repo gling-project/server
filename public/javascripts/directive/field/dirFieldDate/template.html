@@ -8,7 +8,7 @@
                 <input ng-disabled="getInfo().disabled()" type="text" ng-model="resultFormated" class="form-control"/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
             </div>
             <ul role="menu" aria-labelledby="dLabel" class="dropdown-menu date_input">
-                <datetimepicker data-ng-model="result" data-datetimepicker-config="{ dropdownSelector: '{{idHtag}}',minView:'day' }"></datetimepicker>
+                <datetimepicker data-ng-model="result" data-datetimepicker-config="{ dropdownSelector: '{{idHtag}}',minView:'{{getInfo().minimalDelay}}' }"></datetimepicker>
             </ul></a>
         </div>
         <div ng-transclude></div>

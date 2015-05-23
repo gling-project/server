@@ -10,6 +10,7 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
         compile: function () {
             return {
                 pre: function (scope) {
+                    directiveService.autoScopeImpl(scope);
                     scope.id = generateId.generate();
                     return scope.idHtag = '#' + scope.id;
                 },
@@ -18,8 +19,15 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                     scope.result = null;
 
                     scope.$watch('result', function () {
-                        return scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd');
+                        if(scope.getInfo().minimalDelay=='day') {
+                            return scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd');
+                        }
+                        else{
+                            return scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd HH:mm');
+                        }
                     });
+
+
 
                     scope.$watch('getInfo().field', function () {
                         if (scope.getInfo().field != null) {

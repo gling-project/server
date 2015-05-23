@@ -42,6 +42,11 @@ PUT           /business/category            @be.lynk.server.controller.rest.Busi
 PUT           /business/image               @be.lynk.server.controller.rest.BusinessRestController.editImage()
 GET           /business/promotions          @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
+## promotion
+GET            /promotion                   @be.lynk.server.controller.rest.PromotionRestController.getAll()
+POST           /promotion                   @be.lynk.server.controller.rest.PromotionRestController.create()
+PUT            /promotion/:id               @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
+
 #session
 GET           /session                      @be.lynk.server.controller.rest.AccountRestController.mySession()
 

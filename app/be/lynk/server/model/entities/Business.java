@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 public class Business extends AbstractEntity {
 
+
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true,optional = false)
     private Account account;
 
@@ -35,6 +36,17 @@ public class Business extends AbstractEntity {
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private StoredFile image;
+
+    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
+    private Set<Promotion> promotions;
+
+    public Set<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(Set<Promotion> promotions) {
+        this.promotions = promotions;
+    }
 
     public StoredFile getImage() {
         return image;

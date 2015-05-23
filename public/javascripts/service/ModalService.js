@@ -125,4 +125,20 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
+
+
+    this.openPromotionModal = function(promotion){
+        var resolve = {
+            dto: function () {
+                return promotion;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/PromotionModal/view.html",
+            controller: "PromotionModalCtrl",
+            size:"l",
+            resolve: resolve
+        });
+    };
+
 });
