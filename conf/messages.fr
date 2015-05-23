@@ -208,5 +208,8 @@
 
 ##  directive/form/login/template.html
 --.login.form.button.forgotPassword=login.form.button.forgotPassword
---.validation.dto.notNull=
+
+
+--.email.forgotPassword.subject=Votre nouveau mot de passe
+--.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe : {1}
 

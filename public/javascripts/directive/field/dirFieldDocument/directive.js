@@ -45,13 +45,6 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                         };
                     });
 
-                    scope.download = function(){
-                      if(scope.getInfo().field!=null){
-                          var url = "/file/"+scope.getInfo().field.id;
-                          $window.open(url);
-                      }
-                    };
-
                     scope.onFileSelect = function($files) {
                         var file, i;
                         scope.inDownload = true;

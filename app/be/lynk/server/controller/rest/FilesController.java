@@ -2,14 +2,13 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.FilesUploadedDTO;
+import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.StoredFileService;
-import be.lynk.server.util.message.ErrorMessageEnum;
 import be.lynk.server.util.KeyGenerator;
-import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.file.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
@@ -22,6 +21,9 @@ import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class FilesController extends AbstractRestController {
+
+
+    public static final String[] IMAGE_POST = new String[]{"jpeg","jpg","png"};
 
     @Autowired
     private StoredFileService storedFileService;
@@ -36,12 +38,25 @@ public class FilesController extends AbstractRestController {
         MultipartFormData body = Controller.request().body().asMultipartFormData();
         List<MultipartFormData.FilePart> files = body.getFiles();
 
-        FilesUploadedDTO filesUploadedDTO = null;
+        StoredFileDTO filesUploadedDTO = null;
 
         if (files != null) {
 
             File file = files.get(0).getFile();
             String fileName = files.get(0).getFilename();
+
+
+            String[] split = fileName.split("\\.");
+            String type = split[split.length-1];
+            boolean isImage=false;
+            for (String s : IMAGE_POST) {
+                if(s.equals(type)){
+                    isImage=true;
+                }
+            }
+
+            //Treatment
+
 
             //generate the key => test if the key is already used
             String storageKey = null;
@@ -51,7 +66,7 @@ public class FilesController extends AbstractRestController {
             }
 
             //create the entity
-            StoredFile storedFile = new StoredFile(fileName, storageKey, 0, securityController.getCurrentUser());
+            StoredFile storedFile = new StoredFile(fileName, storageKey, 0, securityController.getCurrentUser(),isImage);
 
             //and save
             storedFileService.saveOrUpdate(storedFile);
@@ -60,7 +75,7 @@ public class FilesController extends AbstractRestController {
             FileUtil.save(file, storageKey);
 
             //complete the result
-            filesUploadedDTO = new FilesUploadedDTO(storedFile.getId(), storedFile.getOriginalName());
+            filesUploadedDTO = dozerService.map(storedFile,StoredFileDTO.class);
         }
         return Results.ok(filesUploadedDTO);
     }
@@ -68,21 +83,25 @@ public class FilesController extends AbstractRestController {
     /*
       download a file by is storedFileId
      */
+//    @SecurityAnnotation(role = RoleEnum.USER)
     @Transactional(readOnly = true)
-    @SecurityAnnotation(role = RoleEnum.USER)
     public Result download(long storedFileId) {
 
         //get the storedFile
         StoredFile storedFile = storedFileService.findById(storedFileId);
 
+        Logger.info(storedFile+"");
+
         if (storedFile == null) {
             throw new RuntimeException("File " + storedFileId + " was not found");
         }
 
-        //control
-        if (!storedFile.getAccount().equals(securityController.getCurrentUser())) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, storedFileId+"");
-        }
+        //TODO control
+
+//        //control
+//        if (!storedFile.getAccount().equals(securityController.getCurrentUser())) {
+//            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, storedFileId + "");
+//        }
 
         //create an inputStream
         InputStream inputStream = FileUtil.getFileInputStream(storedFile.getStoredName());
@@ -93,6 +112,5 @@ public class FilesController extends AbstractRestController {
 
         return Results.ok(inputStream);
     }
-
 
 }

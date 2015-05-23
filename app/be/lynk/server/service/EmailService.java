@@ -1,13 +1,12 @@
 package be.lynk.server.service;
 
-import be.lynk.server.model.entities.Account;
+import be.lynk.server.model.email.EmailMessage;
+import play.i18n.Lang;
 
 /**
- * Created by florian on 6/12/14.
+ * Created by florian on 23/05/15.
  */
 public interface EmailService {
 
-    void sendEmail(Account account, String title, String body);
-
-    void sendEmail(String email, String title, String body);
+    public void sendEmail(EmailMessage emailMessage,Lang lang);
 }

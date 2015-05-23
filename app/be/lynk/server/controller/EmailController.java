@@ -1,9 +1,12 @@
 package be.lynk.server.controller;
 
 import be.lynk.server.controller.technical.AbstractController;
+import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.Account;
+import be.lynk.server.service.EmailSenderService;
 import be.lynk.server.service.EmailService;
 import be.lynk.server.service.TranslationService;
+import be.lynk.server.util.message.EmailMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
 
@@ -20,41 +23,57 @@ public class EmailController extends AbstractController {
     private TranslationService translationService;
 
     @Transactional
-    public void sendApplicationRegistrationEmail(Account account){
+    public void sendApplicationRegistrationBusinessEmail(Account account) {
 
-//        String title = translationService.getTranslation(EmailMessageEnum.REGISTRATION_APP_EMAIL_TITLE,lang());
-//TODO
-//        // 0 => account.name
-//        // 1 => password
-//        String body = translationService.getTranslation(EmailMessage.REGISTRATION_APP_EMAIL_BODY,lang(),
-//                account.getFirstname()+" "+account.getLastname(),
-//                account.getPassword());
+        String title = translationService.getTranslation(
+                EmailMessageEnum.REGISTRATION_BUSINESS_SUBJECT,
+                account.getLang());
 
-//        try {
-//            emailService.sendEmail(account, title, body);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+        String body = translationService.getTranslation(
+                EmailMessageEnum.REGISTRATION_BUSINESS_BODY,
+                account.getLang(),
+                account.getFirstname() + " " + account.getLastname());
+
+        EmailMessage.Recipient recipient = new EmailMessage.Recipient(account.getEmail(), account.getFirstname() + " " + account.getLastname());
+        EmailMessage emailMessage = new EmailMessage(recipient, title, body);
+
+        emailService.sendEmail(emailMessage, account.getLang());
+    }
+
+    @Transactional
+    public void sendApplicationRegistrationCustomerEmail(Account account) {
+
+        String title = translationService.getTranslation(
+                EmailMessageEnum.REGISTRATION_CUSTOMER_SUBJECT,
+                account.getLang());
+
+        String body = translationService.getTranslation(
+                EmailMessageEnum.REGISTRATION_CUSTOMER_BODY,
+                account.getLang(),
+                account.getFirstname() + " " + account.getLastname());
+
+        EmailMessage.Recipient recipient = new EmailMessage.Recipient(account.getEmail(), account.getFirstname() + " " + account.getLastname());
+        EmailMessage emailMessage = new EmailMessage(recipient, title, body);
+
+        emailService.sendEmail(emailMessage, account.getLang());
     }
 
     @Transactional
     public void sendNewPasswordEmail(Account account) {
 
-//        String title = translationService.getTranslation(
-//                EmailMessageEnum.NEW_PASSWORD_EMAIL_TITLE,
-//                account.getLang());
+        String title = translationService.getTranslation(
+                EmailMessageEnum.FORGOT_PASSWORD_SUBJECT,
+                account.getLang());
 
-        //TODO
-//        String body = translationService.getTranslation(
-//                EmailMessage.NEW_PASSWORD_EMAIL_BODY,
-//                account.getLang(),
-//                account.getFirstname()+" "+account.getLastname(),
-//                account.getPassword());
+        String body = translationService.getTranslation(
+                EmailMessageEnum.FORGOT_PASSWORD_BODY,
+                account.getLang(),
+                account.getFirstname() + " " + account.getLastname(),
+                account.getLoginCredential().getPassword());
 
-//        try {
-//            emailService.sendEmail(account,title,body);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+        EmailMessage.Recipient recipient = new EmailMessage.Recipient(account.getEmail(), account.getFirstname() + " " + account.getLastname());
+        EmailMessage emailMessage = new EmailMessage(recipient, title, body);
+
+        emailService.sendEmail(emailMessage, account.getLang());
     }
 }

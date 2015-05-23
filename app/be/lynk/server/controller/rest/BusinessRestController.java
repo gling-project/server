@@ -3,15 +3,12 @@ package be.lynk.server.controller.rest;
 import be.lynk.server.controller.technical.AbstractController;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.BusinessCategoryDTO;
-import be.lynk.server.dto.BusinessDTO;
-import be.lynk.server.dto.CustomerInterestDTO;
-import be.lynk.server.dto.ListDTO;
+import be.lynk.server.dto.*;
+import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.*;
-import be.lynk.server.service.BusinessCategoryService;
-import be.lynk.server.service.BusinessService;
-import be.lynk.server.service.CustomerInterestService;
-import be.lynk.server.service.DozerService;
+import be.lynk.server.service.*;
+import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import play.db.jpa.Transactional;
@@ -35,6 +32,30 @@ public class BusinessRestController extends AbstractController {
 
     @Autowired
     private BusinessService businessService;
+
+    @Autowired
+    private StoredFileService storedFileService;
+
+
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result editImage() {
+        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
+
+        StoredFile byId = storedFileService.findById(dto.getId());
+
+        if (!byId.getIsImage() ||
+                !byId.getAccount().equals(securityController.getCurrentUser())) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
+        Business business = businessAccount.getBusiness();
+        business.setImage(byId);
+
+        return ok(new ResultDTO());
+    }
 
     @Transactional
     public Result getAllBusinessCategory() {

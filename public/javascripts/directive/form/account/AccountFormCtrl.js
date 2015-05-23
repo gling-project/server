@@ -1,4 +1,4 @@
-myApp.directive('accountFormCtrl', function ($flash, directiveService, $timeout) {
+myApp.directive('accountFormCtrl', function ($flash, directiveService) {
 
     return {
         restrict: "E",

@@ -235,4 +235,12 @@
 ##  modal/EditCustomerInterestModal/view.html
 --.customer.editInterestModal.title=Edit my interests
 
+--.email.forgotPassword.subject=Your new password
+--.email.forgotPassword.body=Hello {0}<br/><br/>This is your new password : {1}
+--.email.registration.business.subject=Welcome to Lynk !
+--.email.registration.business.body=Welcome {0} ! ...
+--.email.registration.customer.subject=Welcome to Lynk !
+--.email.registration.customer.body=Welcome {0} ! ...
+
+
 

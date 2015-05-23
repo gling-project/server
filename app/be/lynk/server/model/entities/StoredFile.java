@@ -10,6 +10,9 @@ public class StoredFile extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @Basic(optional = false)
+    private Boolean isImage;
+
+    @Basic(optional = false)
     private String originalName;
 
     @Basic(optional = false)
@@ -25,11 +28,21 @@ public class StoredFile extends AbstractEntity {
     public StoredFile() {
     }
 
-    public StoredFile(String originalName, String storedName, Integer size, Account account) {
+    public StoredFile(String originalName, String storedName, Integer size, Account account, Boolean isImage) {
         this.originalName = originalName;
         this.storedName = storedName;
         this.size = size;
         this.account = account;
+        this.isImage=isImage;
+    }
+
+
+    public Boolean getIsImage() {
+        return isImage;
+    }
+
+    public void setIsImage(Boolean isImage) {
+        this.isImage = isImage;
     }
 
     public String getOriginalName() {

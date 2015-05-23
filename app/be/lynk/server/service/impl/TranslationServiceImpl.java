@@ -65,7 +65,7 @@ public class TranslationServiceImpl implements TranslationService {
 
     @Override
     public String getTranslation(EmailMessageEnum emailMessage, Lang language, Object... params) {
-        return Messages.get(language, emailMessage.name(), params);
+        return Messages.get(language, emailMessage.getKey(), params);
     }
 
     @Override

@@ -1,12 +1,15 @@
 package be.lynk.server.service.impl;
 
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.service.CrudService;
 import play.db.jpa.JPA;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -34,7 +37,16 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
 
     @Override
     public T findById(Long id) {
-        return JPA.em().find(entityClass, id);
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(entityClass);
+        Root<T> from = cq.from(entityClass);
+        cq.select(from);
+        cq.where(cb.equal(from.get("id"), id));
+        return getSingleResultOrNull(cq);
+
+//        return JPA.em().createQuery("select p from " + entityClass.getName() + " p where p.id = :id")
+//                .getParameter("id", id);
     }
 
     @Override

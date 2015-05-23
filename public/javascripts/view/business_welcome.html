@@ -52,4 +52,26 @@
         <business-category-form-ctrl ng-info="businessCategoryParam"></business-category-form-ctrl>
     </div>
 
+
+    <div class="custom-panel">
+        <h4>{{'--.business.profile.image' | translateText}}</h4>
+
+        <download-form-ctrl ng-info="imageParam"></download-form-ctrl>
+
+        <div>
+
+            <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="imageParam.disabled"
+                    ng-click="imageEdit()">{{'--.generic.edit' |
+                translateText}}
+            </button>
+            <button class="btn btn-primary" ng-hide="imageParam.disabled" ng-click="imageSave()">
+                {{'--.generic.save' |
+                translateText}}
+            </button>
+            <button class="btn btn-primary" ng-hide="imageParam.disabled" ng-click="imageCancel()">
+                {{'--.generic.cancel' | translateText}}
+            </button>
+        </div>
+    </div>
+
 </div>

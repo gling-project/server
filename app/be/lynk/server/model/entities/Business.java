@@ -33,6 +33,17 @@ public class Business extends AbstractEntity {
             inverseJoinColumns = {@JoinColumn(name = "category")})
     private Set<BusinessCategory> businessCategories;
 
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private StoredFile image;
+
+    public StoredFile getImage() {
+        return image;
+    }
+
+    public void setImage(StoredFile businessImage) {
+        this.image = businessImage;
+    }
+
     public Set<BusinessCategory> getBusinessCategories() {
         return businessCategories;
     }

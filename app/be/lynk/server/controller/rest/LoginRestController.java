@@ -13,7 +13,6 @@ import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Controller;
@@ -44,6 +43,8 @@ public class LoginRestController extends AbstractRestController {
     private CustomerInterestService customerInterestService;
     @Autowired
     private BusinessCategoryService businessCategoryService;
+    @Autowired
+    private StoredFileService storedFileService;
 
     @Transactional
     public Result forgotPassword(){
@@ -199,9 +200,11 @@ public class LoginRestController extends AbstractRestController {
             business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
         }
 
-
         account.setBusiness(business);
         business.setAccount(account);
+
+        //send email
+        emailController.sendApplicationRegistrationBusinessEmail(account);
 
         accountService.saveOrUpdate(account);
 
@@ -240,7 +243,7 @@ public class LoginRestController extends AbstractRestController {
         }
 
         //send email
-        emailController.sendApplicationRegistrationEmail(account);
+        emailController.sendApplicationRegistrationCustomerEmail(account);
 
         accountService.saveOrUpdate(account);
 

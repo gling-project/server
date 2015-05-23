@@ -1,0 +1,15 @@
+<div class="form">
+
+    <dir-field-document ng-info="fields.file"></dir-field-document>
+
+    <button
+
+            type="button"
+            ng-show="fields.file.field!=null && fields.file.field.isImage!=true"
+            ng-click="download()"
+            class="button">{{'--.field.document.download' | translateText}} {{getInfo().field.name}}
+    </button>
+
+    <img ng-show="fields.file.field!=null && fields.file.field.isImage==true" src="{{fileCall}}"/>
+
+</div>

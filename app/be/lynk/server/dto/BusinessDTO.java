@@ -1,19 +1,13 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.entities.Account;
-import be.lynk.server.model.entities.Address;
-import be.lynk.server.model.entities.BusinessCategory;
-import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.util.constants.ValidationRegex;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by florian on 10/11/14.
@@ -33,6 +27,16 @@ public class BusinessDTO extends DTO {
     private String phone;
 
     private AddressDTO address;
+
+    private StoredFileDTO image;
+
+    public StoredFileDTO getImage() {
+        return image;
+    }
+
+    public void setImage(StoredFileDTO image) {
+        this.image = image;
+    }
 
     private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
 

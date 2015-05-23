@@ -8,6 +8,4 @@ import java.util.Map;
 public interface VelocityGeneratorService {
 
     public String generate(String templateName, Map values);
-
-    public String getTemplateNameByMethodName();
 }

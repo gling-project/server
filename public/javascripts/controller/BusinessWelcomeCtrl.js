@@ -12,6 +12,11 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
         value : angular.copy($scope.model.myself.business.businessCategories)
     };
 
+    $scope.imageParam = {
+        disabled: true,
+        dto : angular.copy(accountService.getMyself().business.image)
+    };
+
     $scope.editAddress = function (address) {
         modalService.addressModal(true, address);
     };
@@ -28,5 +33,19 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     $scope.businessCancel = function () {
         $scope.businessParam.dto=angular.copy(accountService.getMyself().business);
         $scope.businessParam.disabled = true;
+    };
+
+    $scope.imageEdit = function () {
+        $scope.imageParam.disabled = false;
+    };
+
+    $scope.imageSave = function () {
+        $scope.imageParam.disabled = true;
+        businessService.editImage($scope.imageParam.dto);
+    };
+
+    $scope.imageCancel = function () {
+        $scope.imageParam.dto=angular.copy(accountService.getMyself().business.image);
+        $scope.imageParam.disabled = true;
     };
 });
