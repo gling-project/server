@@ -7,5 +7,6 @@ var myApp = angular.module('app', [
         'angularFileUpload',
         'ngRoute',
         'ngTable',
-        'geolocation']
+        'geolocation',
+        'timer']
 );

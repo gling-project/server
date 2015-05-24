@@ -15,7 +15,11 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -55,8 +59,16 @@ public class FilesController extends AbstractRestController {
                 }
             }
 
-            //Treatment
+//            //Treatment
+//            try {
+//                BufferedImage originalImage = ImageIO.read(file);
+//                originalImage = resizeImage(originalImage,originalImage.getType(),60,60);
+//                ImageIO.write(originalImage, type, file);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
+            //int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
 
             //generate the key => test if the key is already used
             String storageKey = null;
@@ -111,6 +123,15 @@ public class FilesController extends AbstractRestController {
         Controller.response().setHeader("Content-disposition", "attachment; filename=" + storedFile.getOriginalName());
 
         return Results.ok(inputStream);
+    }
+
+    private static BufferedImage resizeImage(BufferedImage originalImage, int type,int width,int height){
+        BufferedImage resizedImage = new BufferedImage(width,height, type);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, width,height, null);
+        g.dispose();
+
+        return resizedImage;
     }
 
 }

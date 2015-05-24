@@ -81,4 +81,5 @@ insert into storedfile (isimage,originalname,storedname,account_id) VALUES
 (true,'poulet-6-1.jpg','poulet-6-1.jpg',(select id from address where street = 'rue des sables 12'));
 
 insert into promotion (description,quantity,minimalquantity,unit,price,startdate,enddate,business_id,storedfile_id) values
-('poulets rotis',12,1,null,5.5,'2015-05-22 12:00','2015-06-22 12:00',(select id from business where name = 'Boucherie sansot'),(select id from storedfile where storedname = 'poulet-6-1.jpg'));
+('poulets rotis',12,1,null,5.5,'2015-05-22 12:00','2015-06-22 12:00',(select id from business where name = 'Boucherie sansot'),(select id from storedfile where storedname = 'poulet-6-1.jpg')),
+('Chaussures neuves',100,1,null,134,'2015-05-22 12:00','2015-05-25 14:00',(select id from business where name = 'Vêtements pour petits et grands'),null);

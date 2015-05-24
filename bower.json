@@ -33,7 +33,9 @@
     "ng-table": "0.3.3",
     "jquery-ui": "~1.11.2",
     "mobile-angular-ui": "~1.2.0-beta.11",
-    "angularjs-geolocation":"*"
+    "angularjs-geolocation":"*",
+    "angular-timer":"*",
+    "humanize-duration":"*"
   },
   "overrides": {
     "bootstrap-sass": {

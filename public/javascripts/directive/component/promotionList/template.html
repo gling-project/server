@@ -5,6 +5,7 @@
         <img src="{{promotion.storedFile.link}}"/>
         <div class="promotion-box-name">{{promotion.description}}</div><br/>
         <div>Distance : {{promotion.distance}} m</div><br/>
-        <div>End date : {{promotion.endDate | date:medium}}</div>
+        <div>End date : {{promotion.endDate | date:medium}}</div><br/>
+        <timer ng-show="promotion.interval < (24 * 60 * 60)" style="color: red;font-weight: bold" countdown="promotion.interval" language="en" interval="1000" finish-callback="callbackTimer.finished()">{{hours|zeropad}}:{{minutes|zeropad}}:{{seconds|zeropad}}</timer>
     </div>
 </div>

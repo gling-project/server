@@ -1,4 +1,4 @@
-myApp.controller('HomeCtrl', function ($scope, modalService,$http) {
+myApp.controller('HomeCtrl', function ($scope, modalService) {
 
 
 //login open modal

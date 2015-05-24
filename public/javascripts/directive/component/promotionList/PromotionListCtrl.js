@@ -20,6 +20,7 @@ myApp.directive('promotionListCtrl', function ($rootScope, businessService, geol
                                     if (data[i].storedFile != null) {
                                         data[i].storedFile.link = "/file/" + data[i].storedFile.id;
                                     }
+                                    data[i].interval = (data[i].endDate - new Date()) / 1000;
                                 }
                                 console.log(data);
                                 scope.promotions = data;
