@@ -11,7 +11,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService) {
+myApp.controller('MainCtrl', function ($scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService,geolocationService) {
 
 
     //$scope.mm='en';

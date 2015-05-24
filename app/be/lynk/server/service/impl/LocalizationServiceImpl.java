@@ -1,5 +1,6 @@
 package be.lynk.server.service.impl;
 
+import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Address;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.util.exception.MyRuntimeException;
@@ -32,11 +33,18 @@ public class LocalizationServiceImpl implements LocalizationService {
 
     @Override
     public Map<Address, Long> distanceBetweenAddresses(Address origin, List<Address> destinations) {
+        return distanceBetweenAddresses(addressToString(origin), destinations);
+    }
+
+    @Override
+    public Map<Address, Long> distanceBetweenAddresses(Position origin, List<Address> destinations) {
+        return distanceBetweenAddresses(positionToString(origin), destinations);
+    }
+
+    private Map<Address, Long> distanceBetweenAddresses(String originString, List<Address> destinations) {
 
         Map<Address, Long> map = new HashMap<>();
 
-
-        String originString = addressToString(origin);
 
         String[] destinationsString = new String[destinations.size()];
         for (int i = 0; i < destinations.size(); i++) {
@@ -71,5 +79,9 @@ public class LocalizationServiceImpl implements LocalizationService {
 
     private String addressToString(Address address) {
         return address.getStreet() + "," + address.getZip() + "," + address.getCity() + "," + address.getCountry();
+    }
+
+    private String positionToString(Position position) {
+        return position.getX() + "," + position.getY();
     }
 }

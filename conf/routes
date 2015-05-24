@@ -40,7 +40,7 @@ PUT           /customer/interest/:id        @be.lynk.server.controller.rest.Acco
 PUT           /business                     @be.lynk.server.controller.rest.BusinessRestController.update()
 PUT           /business/category            @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory()
 PUT           /business/image               @be.lynk.server.controller.rest.BusinessRestController.editImage()
-GET           /business/promotions          @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
+POST          /business/promotions          @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
 ## promotion
 GET           /promotion                    @be.lynk.server.controller.rest.PromotionRestController.getAll()

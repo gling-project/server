@@ -1,4 +1,4 @@
-myApp.directive('promotionListCtrl', function (businessService) {
+myApp.directive('promotionListCtrl', function ($rootScope, businessService, geolocationService) {
 
     return {
         restrict: "E",
@@ -9,16 +9,23 @@ myApp.directive('promotionListCtrl', function (businessService) {
             return {
                 post: function (scope) {
 
-                    businessService.findByPromotion({},function(data){
-                        for(var i in data){
-                            if(data[i].storedFile!=null){
-                                data[i].storedFile.link = "/file/"+data[i].storedFile.id;
-                            }
-                        }
-                        console.log(data);
-                        scope.promotions = data;
-                    });
+                    $rootScope.$watch(function () {
+                        return geolocationService.position;
+                    }, function watchCallback(newValue, oldValue) {
 
+                        if (geolocationService.position != null) {
+
+                            businessService.findByPromotion(geolocationService.position, function (data) {
+                                for (var i in data) {
+                                    if (data[i].storedFile != null) {
+                                        data[i].storedFile.link = "/file/" + data[i].storedFile.id;
+                                    }
+                                }
+                                console.log(data);
+                                scope.promotions = data;
+                            });
+                        }
+                    });
                 }
             }
         }

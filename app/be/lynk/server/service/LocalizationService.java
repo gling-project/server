@@ -1,5 +1,6 @@
 package be.lynk.server.service;
 
+import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Address;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface LocalizationService {
     boolean validAddress(Address address);
 
     Map<Address, Long> distanceBetweenAddresses(Address origin, List<Address> destinations);
+
+    Map<Address, Long> distanceBetweenAddresses(Position origin, List<Address> destinations);
 }

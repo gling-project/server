@@ -1,9 +1,7 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.dto.AddressDTO;
-import be.lynk.server.dto.BusinessDTO;
-import be.lynk.server.dto.ListDTO;
-import be.lynk.server.dto.PromotionDTO;
+import be.lynk.server.dto.*;
+import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.LocalizationService;
@@ -32,11 +30,13 @@ public class SearchRestController extends AbstractRestController {
 
     @Autowired
     private PromotionService promotionService;
-    
+
     @Transactional
     public Result getByPromotion() {
 
-        List<Promotion> promotions =promotionService.findActivePromotion();
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        List<Promotion> promotions = promotionService.findActivePromotion();
         List<PromotionDTO> promotionDTOs = new ArrayList<>();
 
         //compute distance
@@ -47,15 +47,15 @@ public class SearchRestController extends AbstractRestController {
         }
 
         //origin
-        CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
-        Address origin = currentUser.getAddresses().iterator().next();
+        //CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
+        //Address origin = currentUser.getAddresses().iterator().next();
 
-        Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(origin, addresses);
+        Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
 
         for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
             for (Promotion promotion : promotions) {
-                if(addressLongEntry.getKey().equals(promotion.getBusiness().getAddress())){
-                    PromotionDTO promotionDTO = dozerService.map(promotion,PromotionDTO.class);
+                if (addressLongEntry.getKey().equals(promotion.getBusiness().getAddress())) {
+                    PromotionDTO promotionDTO = dozerService.map(promotion, PromotionDTO.class);
                     promotionDTO.setDistance(addressLongEntry.getValue());
                     promotionDTOs.add(promotionDTO);
                 }
@@ -66,7 +66,7 @@ public class SearchRestController extends AbstractRestController {
     }
 
     @Transactional
-    public Result test(){
+    public Result test() {
 
 
         Address origin = new Address();
@@ -74,7 +74,7 @@ public class SearchRestController extends AbstractRestController {
         origin.setZip("1030");
         origin.setCity("Bruxelles");
         origin.setCountry("Belgique");
-        
+
         List<Address> address = new ArrayList<>();
 
         Address address1 = new Address();
@@ -102,14 +102,14 @@ public class SearchRestController extends AbstractRestController {
         Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(origin, address);
 
         for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
-            Logger.info(addressLongEntry.getKey()+"=>"+addressLongEntry.getValue());
+            Logger.info(addressLongEntry.getKey() + "=>" + addressLongEntry.getValue());
         }
 
 
         return ok();
     }
 
-    private boolean compareAddress(Address address, AddressDTO addressDTO){
+    private boolean compareAddress(Address address, AddressDTO addressDTO) {
         Address map = dozerService.map(addressDTO, Address.class);
         return map.equals(address);
     }
