@@ -11,11 +11,12 @@ myApp.directive('promotionListCtrl', function (businessService) {
 
                     businessService.findByPromotion({},function(data){
                         for(var i in data){
-                            if(data[i].image!=null){
-                                data[i].image.link = "/file/"+data[i].image.id;
+                            if(data[i].storedFile!=null){
+                                data[i].storedFile.link = "/file/"+data[i].storedFile.id;
                             }
                         }
-                        scope.businesses = data;
+                        console.log(data);
+                        scope.promotions = data;
                     });
 
                 }

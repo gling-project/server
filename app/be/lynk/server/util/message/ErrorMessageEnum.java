@@ -21,7 +21,8 @@ public enum ErrorMessageEnum {
     FACEBOOK_FUSION_DIFFERENT_ACCOUNT_TYPE("--.error.facebookFusion.differentAccountType"),
     FACEBOOK_NOT_ACCOUNT_FOUND("--.error.facebook.notAccountFound"),
     EMAIL_UNKNOWN("--.error.account.emailUnknown"),
-    ACCOUNT_WITHOUT_LOGIN_CREDENTIAL("--.error.account.withoutLoginCredential");
+    ACCOUNT_WITHOUT_LOGIN_CREDENTIAL("--.error.account.withoutLoginCredential"),
+    GOOGLE_MAP_ERROR("--.error.googleMap");
 
     private final String key;
 

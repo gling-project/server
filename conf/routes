@@ -43,9 +43,9 @@ PUT           /business/image               @be.lynk.server.controller.rest.Busi
 GET           /business/promotions          @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
 ## promotion
-GET            /promotion                   @be.lynk.server.controller.rest.PromotionRestController.getAll()
-POST           /promotion                   @be.lynk.server.controller.rest.PromotionRestController.create()
-PUT            /promotion/:id               @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
+GET           /promotion                    @be.lynk.server.controller.rest.PromotionRestController.getAll()
+POST          /promotion                    @be.lynk.server.controller.rest.PromotionRestController.create()
+PUT           /promotion/:id                @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
 
 #session
 GET           /session                      @be.lynk.server.controller.rest.AccountRestController.mySession()
@@ -57,3 +57,6 @@ GET           /file/:storedFileId           @be.lynk.server.controller.rest.File
 ##welcome
 GET           /                             @be.lynk.server.controller.MainController.mainPage()
 GET           /mobile                       @be.lynk.server.controller.MainController.mobile()
+
+
+GET           /test                         @be.lynk.server.controller.rest.SearchRestController.test()

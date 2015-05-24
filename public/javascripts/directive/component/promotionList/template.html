@@ -1,8 +1,10 @@
 <div class="promotion-list">
     PROMOTION LIST
 
-    <div ng-repeat="business in businesses" class="promotion-box">
-        <img src="{{business.image.link}}"/>
-        <div class="promotion-box-name">{{business.name}}</div>
+    <div ng-repeat="promotion in promotions" class="promotion-box">
+        <img src="{{promotion.storedFile.link}}"/>
+        <div class="promotion-box-name">{{promotion.description}}</div><br/>
+        <div>Distance : {{promotion.distance}} m</div><br/>
+        <div>End date : {{promotion.endDate | date:medium}}</div>
     </div>
 </div>

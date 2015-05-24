@@ -34,7 +34,8 @@ object ApplicationBuild extends Build {
     "com.amazonaws" % "aws-java-sdk" % "1.8.5",
     "net.sf.dozer" % "dozer" % "5.5.1",
     "com.jayway.facebooktestjavaapi" % "facebook-test-java-api" % "1.1.5",
-    "com.mandrillapp.wrapper.lutung" % "lutung" % "0.0.5"
+    "com.mandrillapp.wrapper.lutung" % "lutung" % "0.0.5",
+    "com.google.maps" % "google-maps-services" % "0.1.7"
   )
 
   val main = play.Project(name, version, appDependencies)

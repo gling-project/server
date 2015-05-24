@@ -43,11 +43,21 @@ public class PromotionDTO extends DTO {
     @NotNull
     protected Date endDate;
 
+    private Long distance;
+
     public PromotionDTO() {
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
     }
 
     public void setId(Long id) {

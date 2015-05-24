@@ -26,10 +26,6 @@ public class Address extends AbstractEntity {
     @Basic(optional = false)
     private String country;
 
-    private Double localisationX;
-
-    private Double localisationY;
-
     public Address() {
     }
 
@@ -73,22 +69,6 @@ public class Address extends AbstractEntity {
         this.name = name;
     }
 
-    public Double getLocalisationX() {
-        return localisationX;
-    }
-
-    public void setLocalisationX(Double localisationX) {
-        this.localisationX = localisationX;
-    }
-
-    public Double getLocalisationY() {
-        return localisationY;
-    }
-
-    public void setLocalisationY(Double localisationY) {
-        this.localisationY = localisationY;
-    }
-
     @Override
     public String toString() {
         return "Address{" +
@@ -98,8 +78,31 @@ public class Address extends AbstractEntity {
                 ", zip='" + zip + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
-                ", localisationX=" + localisationX +
-                ", localisationY=" + localisationY +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Address address = (Address) o;
+
+        if (city != null ? !city.equals(address.city) : address.city != null) return false;
+        if (country != null ? !country.equals(address.country) : address.country != null) return false;
+        if (street != null ? !street.equals(address.street) : address.street != null) return false;
+        if (zip != null ? !zip.equals(address.zip) : address.zip != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = street != null ? street.hashCode() : 0;
+        result = 31 * result + (zip != null ? zip.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        return result;
     }
 }
