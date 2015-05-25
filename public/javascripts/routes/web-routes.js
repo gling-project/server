@@ -21,7 +21,7 @@ var initializeCommonRoutes = function () {
     myApp
         .config(function ($routeProvider) {
             $routeProvider.when('/', {
-                templateUrl: '/assets/javascripts/view/home.html',
+                templateUrl: '/assets/javascripts/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
                     a: function (accountService) {
@@ -30,7 +30,7 @@ var initializeCommonRoutes = function () {
                     }
                 }
             }).when('/business', {
-                templateUrl: '/assets/javascripts/view/business_welcome.html',
+                templateUrl: '/assets/javascripts/view/web/business_welcome.html',
                 controller: 'BusinessWelcomeCtrl',
                 resolve: {
                     a: function (accountService, $location) {
@@ -40,7 +40,7 @@ var initializeCommonRoutes = function () {
                     }
                 }
             }).when('/profile', {
-                templateUrl: '/assets/javascripts/view/profile.html',
+                templateUrl: '/assets/javascripts/view/web/profile.html',
                 controller: 'ProfileCtrl',
                 resolve: {
                     a: function (accountService, $location) {
@@ -50,7 +50,7 @@ var initializeCommonRoutes = function () {
                     }
                 }
             }).when('/business_registration', {
-                templateUrl: '/assets/javascripts/view/business_registration.html',
+                templateUrl: '/assets/javascripts/view/web/business_registration.html',
                 controller: 'BusinessRegistrationCtrl',
                 resolve: {
                     a: function (accountService, $location) {

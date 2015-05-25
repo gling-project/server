@@ -21,7 +21,7 @@ insert into customerinterest (name,translationname) values
 
 
 insert into address (name,street,zip,city,country) VALUES
-(null,'rue royale 73','1000','Bruxelles','BELGIUM'),
+('My office','rue royale 73','1000','Bruxelles','BELGIUM'),
 (null,'rue des sables 12','1000','Bruxelles','BELGIUM'),
 (null,'rue charle legrelle 19','1040','Bruxelles','BELGIUM'),
 (null,'place des bienfaiteurs 5','1030','Bruxelles','BELGIUM'),

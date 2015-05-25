@@ -1,0 +1,105 @@
+<mobile-title-ctrl title="'--.page.customer_registration.title'" display-menu="false"></mobile-title-ctrl>
+<div class='app-body'>
+    <div class='app-content modal-login'>
+
+        <div class="scrollable">
+            <div class="section customer-registration scrollable-content">
+
+
+                <div class="wizard-little">
+                    <div ng-class="{'current':badgeSelected==1}">
+                        <div>{{'--.customer.registrationModal.personal.title' | translateText}}</div>
+                    </div>
+                    <div ng-class="{'current':badgeSelected==2}">
+                        <div>{{'--.customer.registrationModal.interest.title' | translateText}}</div>
+                    </div>
+                    <div ng-class="{'current':badgeSelected==3}">
+                        <div>{{'--.customer.registrationModal.personal.address' | translateText}}</div>
+                    </div>
+                </div>
+
+                <div ng-show="badgeSelected==1">
+
+                    <div class="modal-description">
+                        {{'--.customer.registrationModal.personal.desc' |translateText}}<br/>
+                    </div>
+
+                    <div class="facebook-login-btn-container">
+                        <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+                            <img src="/assets/images/facebook/login_icon.png"/>
+                            <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-login-or">
+                        <div></div>
+                        <div>{{'--.generic.or' | translateText}}</div>
+                        <div></div>
+                    </div>
+                    <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+
+                </div>
+                <div ng-show="badgeSelected==2">
+                    <div class="modal-description">{{'--.customer.registrationModal.interest.desc' | translateText}}
+                    </div>
+                    <customer-interest-form-ctrl ng-info="customerInterestParam"></customer-interest-form-ctrl>
+                </div>
+                <div ng-show="badgeSelected==3">
+                    <div class="modal-description">{{'--.customer.registrationModal.address.desc' | translateText}}
+                    </div>
+                    <address-form-ctrl ng-info="addressFormParam"></address-form-ctrl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="navbar navbar-app navbar-absolute-bottom">
+
+    <div class="btn-group navbar-brand-center">
+        <div style="text-align: center;width: 100%;">
+            <div
+                class="btn btn-navbar"
+                ng-click="navigateTo('/')">
+                {{'--.generic.home'| translateText}}
+            </div>
+
+        </div>
+    </div>
+    <div class="btn-group pull-left">
+        <div class="btn btn-navbar"
+             ng-click="previous()"
+             ng-disabled="loading"
+             type="button"
+             class="btn btn-primary"
+             ng-show="badgeSelected!=1">
+            <span class="fa fa-angle-left"></span>
+            {{'--.generic.previous' | translateText}}
+        </div>
+    </div>
+    <div class="btn-group pull-right">
+        <div class="btn btn-navbar"
+             ng-click="skip()"
+             ng-disabled="loading"
+             type="button"
+             ng-show="badgeSelected!=1">
+            {{'--.generic.skip' | translateText}}
+            <span class="fa fa-angle-right"></span>
+        </div>
+        <div class="btn btn-navbar"
+             ng-click="next()"
+             ng-disabled="loading"
+             type="button"
+             ng-show="badgeSelected!=3">
+            {{'--.generic.next' | translateText}}
+            <span class="fa fa-angle-right"></span>
+        </div>
+        <div class="btn btn-navbar"
+             ng-disabled="loading"
+             type="button"
+             ng-click="save()"
+             ng-show="badgeSelected==3">
+            {{'--.generic.save' |translateText}}
+        </div>
+    </div>
+</div>
+</div>

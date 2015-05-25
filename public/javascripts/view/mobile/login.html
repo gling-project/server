@@ -1,0 +1,36 @@
+<mobile-title-ctrl title="'--.page.login.title'" display-menu="false"></mobile-title-ctrl>
+<div class='app-body'>
+    <div class='app-content modal-login'>
+
+        <div class="scrollable">
+            <div class="section customer-registration scrollable-content">
+
+                <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="navbar navbar-app navbar-absolute-bottom">
+
+    <div class="btn-group navbar-brand-center">
+        <div style="text-align: center;width: 100%;">
+            <div
+                    class="btn btn-navbar"
+                    ng-click="navigateTo('/')">
+                {{'--.generic.home'| translateText}}
+            </div>
+
+        </div>
+    </div>
+    <div class="btn-group pull-right">
+        <div class="btn btn-navbar"
+             ng-click="save()"
+             ng-disabled="loading"
+             type="button"
+             ng-click="save()">
+            {{'--.generic.login.btn' |translateText}}
+        </div>
+    </div>
+</div>
+</div>

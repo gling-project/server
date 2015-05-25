@@ -1,22 +1,23 @@
 <div class="form">
-        <dir-field-text ng-info="fields.email"></dir-field-text>
 
-        <dir-field-text ng-info="fields.password"></dir-field-text>
+    <div class="facebook-login-btn-container">
+        <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+            <img src="/assets/images/facebook/login_icon.png"/>
+            <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
+        </button>
+    </div>
+    <div class="modal-login-or">
+        <div></div>
+        <div>{{'--.generic.or' | translateText}}</div>
+        <div></div>
+    </div>
 
-        <dir-field-check ng-info="fields.keepSessionOpen"></dir-field-check>
+    <dir-field-text ng-info="fields.email"></dir-field-text>
 
-        <div class="link" ng-click="toForgotPassword()">{{'--.login.form.button.forgotPassword' | translateText}}</div>
+    <dir-field-text ng-info="fields.password"></dir-field-text>
 
-        <div class="modal-login-or">
-            <div></div>
-            <div>{{'--.generic.or' | translateText}}</div>
-            <div></div>
-        </div>
+    <dir-field-check ng-info="fields.keepSessionOpen"></dir-field-check>
 
-        <div class="facebook-login-btn-container">
-            <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
-                <img src="/assets/images/facebook/login_icon.png"/>
-                <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
-            </button>
-        </div>
+    <div class="link" ng-click="toForgotPassword()">{{'--.login.form.button.forgotPassword' | translateText}}</div>
+
 </div>

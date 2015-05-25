@@ -1,19 +1,14 @@
-myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService) {
+myApp.controller('LoginCtrl', function ($scope,accountService,facebookService,$location,$flash,translationService) {
 
     $scope.loading = false;
 
     $scope.loginFormParam = {
         facebookSuccess: function (data) {
-            $scope.close();
+            $location.path('/');
         },
-        forgotPassword: function(email){
+        forgotPassword: function (email) {
             modalService.openForgotPasswordModal(email);
-            $scope.close();
         }
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
     };
 
     $scope.save = function () {
@@ -27,12 +22,9 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
 
                     $flash.success(translationService.get("--.login.flash.success"));
                     $scope.loading = false;
-                    $scope.close();
                     //logout facebook in case
                     facebookService.logout();
-                    if (accountService.getMyself().type == 'BUSINESS') {
-                        $location.path('/business');
-                    }
+                    $location.path('/');
                 },
                 function () {
                     $scope.loading = false;
@@ -43,14 +35,5 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
         }
     };
 
-    $scope.toBusinessRegistration = function () {
-        $scope.close();
-        modalService.openBusinessRegistrationModal();
-    };
-
-    $scope.toCustomerRegistration = function () {
-        $scope.close();
-        modalService.openCustomerRegistrationModal();
-    };
 
 });

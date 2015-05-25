@@ -20,47 +20,63 @@ var initializeCommonRoutes = function () {
     //});
     myApp
         .config(function ($routeProvider) {
-            $routeProvider.when('/', {
-                templateUrl: '/assets/javascripts/view/home.html',
-                controller: 'HomeCtrl',
-                resolve: {
-                    a: function (accountService) {
-                        var status = test(accountService);
-                        console.log("status : " + status);
-                    }
-                }
-            }).when('/business', {
-                templateUrl: '/assets/javascripts/view/business_welcome.html',
-                controller: 'BusinessWelcomeCtrl',
-                resolve: {
-                    a: function (accountService, $location) {
-                        if (test(accountService) != 'BUSINESS') {
-                            $location.path('/');
+            $routeProvider
+                .when('/', {
+                    templateUrl: '/assets/javascripts/view/mobile/welcome.html',
+                    controller: 'WelcomeCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) != 'NOT_CONNECTED') {
+                                $location.path('/home');
+                            }
                         }
                     }
-                }
-            }).when('/profile', {
-                templateUrl: '/assets/javascripts/view/profile.html',
-                controller: 'ProfileCtrl',
-                resolve: {
-                    a: function (accountService, $location) {
-                        if (test(accountService) == 'NOT_CONNECTED') {
-                            $location.path('/');
+                })
+                .when('/home', {
+                    templateUrl: '/assets/javascripts/view/mobile/home.html',
+                    controller: 'HomeCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
                         }
                     }
-                }
-            }).when('/business_registration', {
-                templateUrl: '/assets/javascripts/view/business_registration.html',
-                controller: 'BusinessRegistrationCtrl',
-                resolve: {
-                    a: function (accountService, $location) {
-                        if (test(accountService) == 'BUSINESS') {
-                            $location.path('/business');
+                })
+                .when('/customer_registration', {
+                    templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
+                    controller: 'CustomerRegistrationCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) != 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
                         }
                     }
-                }
-            }).otherwise({
-                redirectTo: '/'
-            });
+                })
+                .when('/business_registration', {
+                    templateUrl: '/assets/javascripts/view/mobile/business_registration.html',
+                    controller: 'BusinessRegistrationCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) != 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                })
+                .when('/login', {
+                    templateUrl: '/assets/javascripts/view/mobile/login.html',
+                    controller: 'LoginCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) != 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                }).otherwise({
+                    redirectTo: '/'
+                });
         });
 };

@@ -20,12 +20,15 @@ public class PromotionServiceImpl extends CrudServiceImpl<Promotion> implements 
     @Override
     public List<Promotion> findActivePromotion() {
 
+        LocalDateTime now = LocalDateTime.now();
+
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Promotion> cq = cb.createQuery(Promotion.class);
         Root<Promotion> from = cq.from(Promotion.class);
         cq.select(from);
-        cq.where(cb.greaterThan(from.get("endDate"), LocalDateTime.now()));
-        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now()));
-        return JPA.em().createQuery(cq).getResultList();
+        cq.where(cb.lessThan(from.get("startDate"), now));
+        cq.where(cb.greaterThan(from.get("endDate"), now));
+        List<Promotion> resultList = JPA.em().createQuery(cq).getResultList();
+        return resultList ;
     }
 }

@@ -1,4 +1,4 @@
-myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, modalService, $location) {
+myApp.controller('BusinessRegistrationCtrl', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location,businessService) {
 
     var facebookAuthentication = null;
 
@@ -12,10 +12,6 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
     $scope.businessCategoryFormParam = {};
 
     $scope.businessFormParam = {};
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
 
     $scope.next = function () {
         var notValid = false;
@@ -82,7 +78,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                     if (data2.status == 'ALREADY_REGISTRERED') {
                         $flash.success('--.customer.registrationModal.alredyRegistred.success');
                         accountService.setMyself(data2.myself);
-                        $scope.close();
+                        $location.path('/');
                     }
                     else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
                         $scope.fusion(data2.accountFusion);
@@ -143,7 +139,6 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
             businessService.registration(dto, function () {
                     $scope.loading = false;
                     $flash.success(translationService.get("--.login.flash.success"));
-                    $scope.close();
                     $location.path("/business");
                 },
                 function () {
@@ -151,5 +146,6 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                 });
         }
     }
+
 
 });

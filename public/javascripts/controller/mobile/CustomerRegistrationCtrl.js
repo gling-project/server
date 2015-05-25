@@ -1,20 +1,24 @@
-myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, modalService, $location) {
+myApp.controller('CustomerRegistrationCtrl', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location) {
 
     var facebookAuthentication = null;
 
     $scope.badgeSelected = 1;
 
+    $scope.addressFormParam = {
+        addName: true
+    };
+
+    $scope.customerInterestParam = {};
+
     $scope.accountParam = {};
 
-    $scope.addressFormParam = {
-        addName: false
-    };
-    $scope.businessCategoryFormParam = {};
-
-    $scope.businessFormParam = {};
-
-    $scope.close = function () {
-        $modalInstance.close();
+    $scope.skip = function () {
+        if ($scope.badgeSelected == 3) {
+            $scope.save(true);
+        }
+        else {
+            $scope.badgeSelected++;
+        }
     };
 
     $scope.next = function () {
@@ -42,11 +46,16 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
             notValid = true;
         }
         else if ($scope.badgeSelected == 2) {
-            if (!$scope.addressFormParam.isValid || !$scope.businessFormParam.isValid) {
-                console.log($scope.addressFormParam.isValid + "/" + $scope.businessFormParam.isValid);
+            if (!$scope.customerInterestParam.isValid) {
+                $scope.customerInterestParam.displayErrorMessage = true;
+                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
+                notValid = true;
+            }
+        }
+        else {
+            if (!$scope.addressFormParam.isValid) {
                 $scope.addressFormParam.displayErrorMessage = true;
-                $scope.businessFormParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValid"));
+                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
                 notValid = true;
             }
         }
@@ -70,19 +79,17 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                 var dto = {
                     userId: user_id,
                     token: access_token,
-                    accountType: 'BUSINESS'
+                    accountType: 'CUSTOMER'
                 };
 
                 accountService.testFacebook(dto, function (data2) {
 
-                    console.log('data2');
-                    console.log(data2);
                     $scope.loading = false;
 
                     if (data2.status == 'ALREADY_REGISTRERED') {
                         $flash.success('--.customer.registrationModal.alredyRegistred.success');
                         accountService.setMyself(data2.myself);
-                        $scope.close();
+                        $location.path('/');
                     }
                     else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
                         $scope.fusion(data2.accountFusion);
@@ -117,39 +124,34 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
         $scope.badgeSelected--;
     };
 
-    $scope.save = function () {
+    $scope.save = function (skipStep3) {
 
-        //todo control address and business
-        if (!$scope.businessFormParam.isValid || !$scope.addressFormParam.isValid || !$scope.businessCategoryFormParam.isValid) {
-            $scope.businessFormParam.displayErrorMessage = true;
-            $scope.addressFormParam.displayErrorMessage = true;
-            $scope.accountParam.displayErrorMessage = true;
-            $scope.businessCategoryFormParam.displayErrorMessage = true;
-            $flash.error(translationService.get("--.generic.stepNotValid"));
+        if(!skipStep3){
+            if(!$scope.addressFormParam.isValid){
+                $scope.addressFormParam.displayErrorMessage = true;
+                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
+                return;
+            }
         }
-        else {
-
-            var businessDTO = $scope.businessFormParam.dto;
-            businessDTO.address = $scope.addressFormParam.dto;
-            businessDTO.businessCategories = $scope.businessCategoryFormParam.value;
-
-            var dto = {
-                accountRegistration: $scope.accountParam.dto,
-                facebookAuthentication: facebookAuthentication,
-                business: businessDTO
-            };
-
-            $scope.loading = true;
-            businessService.registration(dto, function () {
-                    $scope.loading = false;
-                    $flash.success(translationService.get("--.login.flash.success"));
-                    $scope.close();
-                    $location.path("/business");
-                },
-                function () {
-                    $scope.loading = false;
-                });
+        var dto = {
+            accountRegistration: $scope.accountParam.dto,
+            customerInterests: $scope.customerInterestParam.result,
+            facebookAuthentication: facebookAuthentication
+        };
+        if ($scope.addressFormParam.isValid) {
+            dto.address = $scope.addressFormParam.dto;
         }
+
+        $scope.loading = true;
+        accountService.registration(dto, function () {
+                $scope.loading = false;
+                $flash.success(translationService.get("--.login.flash.success"));
+                $location.path('/');
+            },
+            function () {
+                $scope.loading = false;
+            });
     }
+
 
 });

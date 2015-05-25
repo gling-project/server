@@ -1,0 +1,27 @@
+<mobile-title-ctrl title="'--.page.welcome.title'" display-menu="false"></mobile-title-ctrl>
+<div class='app-body'>
+    <div class='app-content'>
+        <div class="section">
+
+            <h2>Welcome to Lynk</h2>
+
+            <div>{{'--.mobile.welcome.toCustomerRegistration.desc' | translateText}}</div>
+            <button class="btn btn-default" ng-click="navigateTo('/customer_registration')">
+                {{'--.mobile.welcome.toCustomerRegistration.btn' | translateText}}
+            </button>
+
+            <div>{{'--.mobile.welcome.toLogin.desc' | translateText}}</div>
+            <button class="btn btn-default" ng-click="navigateTo('/login')">
+                {{'--.mobile.welcome.toLogin.btn' |translateText}}
+            </button>
+
+
+            <div>{{'--.mobile.welcome.toBusinessRegistration.desc' | translateText}}</div>
+            <button class="btn btn-default" ng-click="navigateTo('/business_registration')">
+                {{'--.mobile.welcome.toBusinessRegistration.btn' |translateText}}
+            </button>
+
+
+        </div>
+    </div>
+</div>
