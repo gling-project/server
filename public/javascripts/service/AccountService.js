@@ -263,7 +263,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.forgotPassword = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/password",
+            'url': "/forgot/password",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -285,6 +285,5 @@ myApp.service("accountService", function ($flash, $http) {
 
     this.setMyself = function (dto) {
         this.model.myself = dto;
-        console.log(this.model.myself);
     };
 });

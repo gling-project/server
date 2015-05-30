@@ -21,7 +21,6 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
     };
 
     $scope.personalSave = function () {
-        console.log($scope.accountParam.dto);
         $scope.accountParam.disabled = true;
         accountService.editAccount($scope.accountParam.dto);
     };

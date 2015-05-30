@@ -87,19 +87,26 @@
                                         <!-- connected menu -->
                                     <div class="profile-buttons-container" ng-show="accountService.getMyself()!=null" style="display : inline-block">
                                         <div class="dropdown" ng-show="accountService.getMyself()!=null" style="display : inline-block">
+                                                <!-- lang -->
+                                            <select
+                                                class="form-control"
+                                                ng-model="languageService.currentLanguage"
+                                                ng-options="lang.code as lang.language for lang in languageService.languages"
+                                                style="display: inline-block;width:80px">
+                                            </select>
                                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                                                 {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
                                                 <span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">{{'--.welcome.myProfile' | translateText}}</a></li>
                                                 <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business')">{{'--.welcome.myBusiness' | translateText}}</a></li>
                                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="logout()">{{'--.generic.logout' | translateText}}</a></li>
+                                                <li>
+                                                    <ul></ul>
+                                                </li>
                                             </ul>
                                         </div>
-                                        @*{{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}*@
-                                            @*<button type="button" class="btn btn-primary" ng-click="editProfile()">{{'--.welcome.myProfile' | translateText}}</button>*@
-                                            @*<button type="button" class="btn btn-primary" ng-click="logout()">{{'--.generic.logout' | translateText}}</button>*@
                                     </div>
 
                                 </div>

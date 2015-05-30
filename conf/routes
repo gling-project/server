@@ -9,7 +9,7 @@ GET           /assets/*file                 controllers.Assets.at(path="/public"
 # REST routes
 #
 
-## account
+## registration and login
 POST          /login                        @be.lynk.server.controller.rest.LoginRestController.login()
 POST          /login/facebook               @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
 POST          /account/fusion               @be.lynk.server.controller.rest.LoginRestController.fusion()
@@ -19,7 +19,7 @@ GET           /logout                       @be.lynk.server.controller.rest.Logi
 GET           /email/test/:email            @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
 POST          /facebook/test                @be.lynk.server.controller.rest.LoginRestController.testFacebookAccount()
 PUT           /language/:code               @be.lynk.server.controller.rest.LoginRestController.changeLanguage(code:String)
-PUT           /password                     @be.lynk.server.controller.rest.LoginRestController.forgotPassword()
+PUT           /forgot/password              @be.lynk.server.controller.rest.LoginRestController.forgotPassword()
 
 ## customer interest
 GET           /customerInterest             @be.lynk.server.controller.rest.CustomerRestController.getAllCustomerInterest()

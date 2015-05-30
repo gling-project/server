@@ -23,7 +23,6 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout
 
 
                     scope.$watch('getInfo().dto',function(){
-                        console.log("binding !! ");
                         scope.fields.name.field =scope.getInfo().dto.name;
                         scope.fields.description.field =scope.getInfo().dto.description;
                         scope.fields.phone.field =scope.getInfo().dto.phone;

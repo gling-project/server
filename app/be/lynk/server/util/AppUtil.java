@@ -14,7 +14,8 @@ public class AppUtil {
         if(appId!=null){
             return appId;
         }
-        return "1446672245627002";
+        //id of lynk dev
+        return "1047308001965929";
 
     }
 

@@ -24,12 +24,8 @@ myApp.directive('businessCategoryFormCtrl', function ( $flash, directiveService,
                     businessCategoryService.getAll(function (data) {
                         scope.categories = data.list;
 
-                        //TODO multiple ?
-                        console.log(scope.getInfo().value);
                         if(scope.getInfo().value!=null && scope.getInfo().value.length>0){
                             var catSelected = scope.getInfo().value[0];
-                            console.log('----------------------'+catSelected.name);
-                            console.log(scope.categories);
                             for(var cat in scope.categories){
                                 for(var subcat in scope.categories[cat].children){
                                     if(scope.categories[cat].children[subcat].name == catSelected.name){

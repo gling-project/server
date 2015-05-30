@@ -50,7 +50,8 @@ public class
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result myself() {
-        return ok(dozerService.map(securityController.getCurrentUser(), AccountDTO.class));
+        Logger.info("myself="+securityController.getCurrentUser());
+        return ok(dozerService.map(securityController.getCurrentUser(), MyselfDTO.class));
     }
 
 
@@ -58,7 +59,7 @@ public class
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result editAccount(long id) {
 
-        MyselfDTO dto = extractDTOFromRequest(MyselfDTO.class);
+        AccountDTO dto = extractDTOFromRequest(AccountDTO.class);
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {

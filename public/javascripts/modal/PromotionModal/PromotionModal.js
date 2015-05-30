@@ -19,10 +19,6 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
             $scope.promotionParam.displayErrorMessage = true;
         }
         else {
-
-
-            console.log($scope.promotionParam.dto);
-
             $scope.loading = true;
             if ($scope.update) {
                 promotionService.edit($scope.promotionParam.dto, function () {

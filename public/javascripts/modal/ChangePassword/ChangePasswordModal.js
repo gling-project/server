@@ -50,7 +50,6 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
 
         for (var key in $scope.fields) {
             var obj = $scope.fields[key];
-            console.log(obj);
             if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
                 obj.firstAttempt = false;
                 validation= false;

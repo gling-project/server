@@ -15,6 +15,13 @@ public class CustomerInterestDTO extends DTO{
 
     private String translationName;
 
+    public CustomerInterestDTO() {
+    }
+
+    public CustomerInterestDTO(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

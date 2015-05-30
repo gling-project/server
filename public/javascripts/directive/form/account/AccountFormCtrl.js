@@ -22,14 +22,13 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
 
 
                     scope.$watch('getInfo().dto',function(){
-                        console.log("binding !! ");
                         scope.fields.gender.field =(scope.getInfo().dto.male == null) ? null : (scope.getInfo().dto.male == true) ? 'male' : 'female';
                         scope.fields.firstname.field =scope.getInfo().dto.firstname;
                         scope.fields.lastname.field =scope.getInfo().dto.lastname;
                         scope.fields.email.field =scope.getInfo().dto.email;
                         scope.fields.password.field =scope.getInfo().dto.password;
                         scope.fields.keepSessionOpen.field =scope.getInfo().dto.keepSessionOpen;
-                    });
+                    },true);
 
                     scope.fields = {
                         gender: {

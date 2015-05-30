@@ -7,7 +7,7 @@
 #--.generic.category=Category
 --.generic.close=Close
 #--.generic.date=Date
-#--.generic.description=Description
+--.generic.description=Description
 --.generic.firstname=First name
 --.generic.lastname=Last name
 --.generic.name=Name
@@ -30,7 +30,7 @@
 #--.generic.yourName=Your name
 #--.generic.yourNameAbrv=Your acronym
 #--.generic.creator=Creator
---.generic.yourLanguage=Your language
+#--.generic.yourLanguage=Your language
 --.generic.email=Email
 --.generic.or=Or
 --.generic.yourPassword=Your password
@@ -49,7 +49,7 @@
 --.generic.skip=Skip
 --.generic.numberOnly=Only number
 --.generic.stepNotValidOrSkip=Please finish to complete data or continue to the newt step
---.generic.validation.wrongRepeatPassword=generic.validation.wrongRepeatPassword
+--.generic.validation.wrongRepeatPassword=The repeated password doesn't be the same
 --.generic.street=Street
 --.generic.zip=Zip
 --.generic.city=City
@@ -59,6 +59,7 @@
 --.generic.edit=Edit
 --.generic.cancel=Cancel
 --.generic.remove=Remove
+--.generic.login.btn=Logging
 
 ## login modal
 --.loginModal.title=Login you
@@ -169,7 +170,7 @@
 --.loginModal.toBusinessRegistration=Sign up as business
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
---.editProfileModal.title=Edit your personal information
+#--.editProfileModal.title=Edit your personal information
 
 
 
@@ -199,6 +200,7 @@
 --.error.facebook.notAccountFound=This Facebook account is not registered. To register you, follow one of the links below.
 --.error.account.withoutLoginCredential=This accompt uses the Facebook connection system and doesn't use any password.
 --.error.account.emailUnknown=This email is unkown
+--.error.googleMap=Google map was thrown an error.
 
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -243,4 +245,45 @@
 --.email.registration.customer.body=Welcome {0} ! ...
 
 
+
+
+##  directive/form/promotion/PromotionFormCtrl.js
+--.promotion.minimalQuantity=Minimal quantity (optional)
+--.promotion.price=Price
+--.promotion.endDate=End date
+--.promotion.quantity=Quantity
+--.promotion.unit=Unit
+--.promotion.startDate=Start date
+
+##  view/web/home.html
+--.page.home.title=Home
+
+##  view/mobile/login.html
+--.page.login.title=Login
+
+##  view/mobile/business_registration.html
+--.page.business_registration.title=Sign up
+
+##  view/web/business_welcome.html
+--.business.welcome.addPromotion=Add a promotion
+--.business.profile.promotion=Promotion
+--.business.profile.image=Image
+
+##  modal/PromotionModal/view.html
+--.promotion.modal.title=Promotion
+
+##  view/mobile/customer_registration.html
+--.page.customer_registration.title=Sign up
+
+##  be/lynk/server/util/message/EmailMessageEnum.java
+--.email.default.footer=email.default.footer
+
+##  view/mobile/welcome.html
+--.mobile.welcome.toCustomerRegistration.btn=Sign up now \!
+--.mobile.welcome.toLogin.desc=Already a Lynk account ?
+--.mobile.welcome.toLogin.btn=Log in now \!
+--.page.welcome.title=Welcome to Lynk \!
+--.mobile.welcome.toBusinessRegistration.desc=Your have a business and want to joint the Lynk community ? Try it for free\!
+--.mobile.welcome.toBusinessRegistration.btn=Register your business
+--.mobile.welcome.toCustomerRegistration.desc=Not yet an account Lynk ?
 

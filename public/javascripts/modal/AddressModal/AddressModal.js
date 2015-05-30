@@ -20,10 +20,6 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance, a
             $scope.addressParam.displayErrorMessage = true;
         }
         else {
-
-
-            console.log($scope.addressParam.dto);
-
             $scope.loading = true;
             if ($scope.update) {
                 accountService.editAddress($scope.addressParam.dto, function () {

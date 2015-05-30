@@ -13,6 +13,7 @@ import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Controller;
@@ -47,16 +48,16 @@ public class LoginRestController extends AbstractRestController {
     private StoredFileService storedFileService;
 
     @Transactional
-    public Result forgotPassword(){
+    public Result forgotPassword() {
 
         ForgotPasswordDTO dto = extractDTOFromRequest(ForgotPasswordDTO.class);
 
         Account byEmail = accountService.findByEmail(dto.getEmail());
 
-        if(byEmail==null){
+        if (byEmail == null) {
             throw new MyRuntimeException(ErrorMessageEnum.EMAIL_UNKNOWN);
         }
-        if(byEmail.getLoginCredential()==null){
+        if (byEmail.getLoginCredential() == null) {
             throw new MyRuntimeException(ErrorMessageEnum.ACCOUNT_WITHOUT_LOGIN_CREDENTIAL);
         }
 
@@ -91,7 +92,7 @@ public class LoginRestController extends AbstractRestController {
         FacebookAuthenticationDTO dto = extractDTOFromRequest(FacebookAuthenticationDTO.class);
 
         //authentication
-        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getToken());
+        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getToken(), dto.getUserId());
         if (!facebookTokenAccessControlDTO.getId().equals(dto.getUserId())) {
             throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
         }
@@ -127,7 +128,7 @@ public class LoginRestController extends AbstractRestController {
             }
 
             //control facebook
-            FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getFacebookToken());
+            FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getFacebookToken(), dto.getFacebookUserId());
             if (!facebookTokenAccessControlDTO.getId().equals(dto.getFacebookUserId())) {
                 throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
             }
@@ -170,7 +171,7 @@ public class LoginRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
         }
 
-        if(dto.getKeepSessionOpen()==null){
+        if (dto.getKeepSessionOpen() == null) {
             dto.setKeepSessionOpen(false);
         }
 
@@ -258,7 +259,7 @@ public class LoginRestController extends AbstractRestController {
      */
     @Transactional
     public Result logout() {
-        securityController.logout(Controller.ctx());
+        securityController.logout(ctx());
         return Results.redirect("/");
     }
 
@@ -269,15 +270,22 @@ public class LoginRestController extends AbstractRestController {
         Lang lang = Lang.forCode(code);
         if (lang != null) {
             changeLang(lang.code());
-        }
 
+
+            if (securityController.isAuthenticated(ctx())) {
+                Account account = securityController.getCurrentUser();
+                account.setLang(lang);
+                Logger.info("account=" + account);
+                accountService.saveOrUpdate(account);
+            }
+        }
 
         return ok(new ResultDTO());
     }
 
     private MyselfDTO finalizeConnection(Account account) {
 
-        sessionService.saveOrUpdate(new Session(account, securityController.getSource(Controller.ctx())));
+        sessionService.saveOrUpdate(new Session(account, securityController.getSource(ctx())));
 
         //build success dto
         MyselfDTO myselfDTO = dozerService.map(account, MyselfDTO.class);
@@ -286,7 +294,7 @@ public class LoginRestController extends AbstractRestController {
         myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
 
         //storage
-        securityController.storeAccount(Controller.ctx(), account);
+        securityController.storeAccount(ctx(), account);
 
         return myselfDTO;
     }
@@ -295,25 +303,28 @@ public class LoginRestController extends AbstractRestController {
 
         TestFacebookDTO testFacebookDTO = new TestFacebookDTO();
 
-        //authentication
-        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookAuthenticationDTO.getToken());
-        if (!facebookTokenAccessControlDTO.getId().equals(facebookAuthenticationDTO.getUserId())) {
-            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
-        }
-
+        //1) load the data from facebook
+        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookAuthenticationDTO.getToken(), facebookAuthenticationDTO.getUserId());
         testFacebookDTO.setFacebookTokenAccessControl(facebookTokenAccessControlDTO);
+        testFacebookDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
+        testFacebookDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
+        testFacebookDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
+        testFacebookDTO.setMale(facebookTokenAccessControlDTO.getGender().equals("male"));
 
-        //control
+        //2) test if there is an account with this facebook credential
         FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookAuthenticationDTO.getUserId());
 
         if (facebookCredential != null) {
+            //founded ! the user is already registered
             Account account = facebookCredential.getAccount();
             testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED);
             testFacebookDTO.setMyself(finalizeConnection(account));
         } else if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
-            //an existing account with same email
-            //fusion
+
+            //test if there is an account with the same email address than the facebook account
             Account account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
+            //test if there is an compatibility between account type
+
             if (((account instanceof BusinessAccount) && facebookAuthenticationDTO.getAccountType().equals(AccountTypeEnum.BUSINESS)) ||
                     ((account instanceof CustomerAccount) && facebookAuthenticationDTO.getAccountType().equals(AccountTypeEnum.CUSTOMER))) {
 
@@ -323,8 +334,9 @@ public class LoginRestController extends AbstractRestController {
                 accountFusion.setFacebookUserId(facebookAuthenticationDTO.getUserId());
                 testFacebookDTO.setAccountFusion(accountFusion);
                 testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ACCOUNT_WITH_SAME_EMAIL);
+            } else {
+                throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_FUSION_DIFFERENT_ACCOUNT_TYPE);
             }
-            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_FUSION_DIFFERENT_ACCOUNT_TYPE);
         } else {
             testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.OK);
         }
@@ -335,6 +347,7 @@ public class LoginRestController extends AbstractRestController {
     }
 
     private Account createNewAccount(AccountRegistrationDTO accountRegistrationDTO, FacebookAuthenticationDTO facebookAuthentication, boolean isCustomer) {
+
         //Control email
         if (accountService.findByEmail(accountRegistrationDTO.getEmail()) != null) {
             throw new MyRuntimeException(ErrorMessageEnum.EMAIL_ALREADY_USED);
@@ -343,23 +356,21 @@ public class LoginRestController extends AbstractRestController {
         //account
         Account account;
         if (isCustomer) {
-            CustomerAccount customerAccount = dozerService.map(accountRegistrationDTO, CustomerAccount.class);
-            account = customerAccount;
+            account = dozerService.map(accountRegistrationDTO, CustomerAccount.class);
         } else {
             account = dozerService.map(accountRegistrationDTO, BusinessAccount.class);
         }
-        account.setId(null);
+
+        //define a language
         if (account.getLang() == null) {
-            account.setLang(Controller.lang());
-        }
-
-
-        if (accountRegistrationDTO.getLang() != null) {
-            Controller.changeLang(accountRegistrationDTO.getLang().getCode());
+            account.setLang(lang());
         }
 
         //credential
         if (facebookAuthentication != null) {
+
+            //facebook credential
+            //test facebook
             TestFacebookDTO result = testFacebookAccount(facebookAuthentication);
             if (result.getStatus().equals(TestFacebookDTO.TestFacebookStatusEnum.ACCOUNT_WITH_SAME_EMAIL)) {
                 //TODO test fusion
@@ -368,11 +379,6 @@ public class LoginRestController extends AbstractRestController {
             } else {
                 //continue
                 account.setFacebookCredential(new FacebookCredential(account, facebookAuthentication.getUserId()));
-
-                account.setEmail(result.getFacebookTokenAccessControl().getEmail());
-                account.setFirstname(result.getFacebookTokenAccessControl().getFirst_name());
-                account.setLastname(result.getFacebookTokenAccessControl().getLast_name());
-                account.setMale(result.getFacebookTokenAccessControl().getGender().equals("male"));
 
                 //lang
                 //priority to the facebook language

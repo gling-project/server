@@ -1,169 +1,443 @@
-//package be.lynk.server.controller;
-//
-//import be.lynk.server.dto.AccountFusionDTO;
-//import be.lynk.server.dto.FacebookAuthenticationDTO;
-//import be.lynk.server.dto.LangDTO;
-//import be.lynk.server.dto.MyselfDTO;
-//import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
-//import be.lynk.server.dto.post.LoginDTO;
-//import be.lynk.server.dto.post.CustomerRegistrationDTO;
-//import be.lynk.server.util.AppUtil;
-//import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserAccount;
-//import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserStore;
-//import com.jayway.facebooktestjavaapi.testuser.impl.HttpClientFacebookTestUserStore;
-//import org.junit.FixMethodOrder;
-//import org.junit.Test;
-//import org.junit.runners.MethodSorters;
-//import play.libs.Json;
-//import play.mvc.Result;
-//
-//import static org.junit.Assert.*;
-//import static play.test.Helpers.*;
-//
-///**
-// * Created by florian on 19/04/15.
-// */
-//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-//public class LoginRestControllerTest extends AbstractControllerTest {
-//
-//
-//    @Test
-//    public void test1_registration() {
-//
-//        CustomerRegistrationDTO dto = new CustomerRegistrationDTO();
-//        dto.setFirstname(FIRSTNAME);
-//        dto.setLastname(LASTNAME);
-//        dto.setMale(true);
-//        dto.setEmail(EMAIL);
-//        dto.setPassword(PASSWORD);
-//        dto.setKeepSessionOpen(true);
-//
-//        Result result = request(POST, "/registration", dto);
-//
-//        assertEquals(printError(result), 200, status(result));
-//
-//        // get LoginResultDTO
-//        MyselfDTO formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
-//
-//        assertEquals(FIRSTNAME, formDTO.getFirstname());
-//        assertEquals(LASTNAME, formDTO.getLastname());
-//        assertEquals(EMAIL, formDTO.getEmail());
-//        assertFalse(formDTO.getFacebookAccount());
-//        assertTrue(formDTO.getLoginAccount());
-//
-//    }
-//
-//    @Test
-//    public void test2_login() {
-//
-//        Result result = request(POST, "/login", new LoginDTO(EMAIL, PASSWORD));
-//
-//        MyselfDTO formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
-//
-//        assertEquals(FIRSTNAME, formDTO.getFirstname());
-//        assertEquals(LASTNAME, formDTO.getLastname());
-//        assertEquals(EMAIL, formDTO.getEmail());
-//        assertFalse(formDTO.getFacebookAccount());
-//        assertTrue(formDTO.getLoginAccount());
-//
-//    }
-//
-//    @Test
-//    public void test3_facebookLogin() {
-//
-//        String facebookAppId = AppUtil.getFacebookAppId();
-//        String facebookAppSecret = AppUtil.getFacebookAppSecret();
-//
-//
-//        FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore(facebookAppId, facebookAppSecret);
-//        FacebookTestUserAccount account = facebookStore.createTestUser(true, "email,read_stream");
-//
-//        FacebookAuthenticationDTO facebookAuthenticationDTO = new FacebookAuthenticationDTO();
-//
-//        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO=Json.fromJson(Json.parse(account.getUserDetails()), FacebookTokenAccessControlDTO.class);
-//
-//        //temporary ?
-//        facebookAuthenticationDTO.setToken(account.accessToken());
-//        facebookAuthenticationDTO.setLang(new LangDTO("english","en"));
-//        facebookAuthenticationDTO.setUserId(account.id());
-//
-//        Result result = request(POST, "/login/facebook", facebookAuthenticationDTO);
-//
-//        assertEquals(printError(result), 200, status(result));
-//
-//        // get LoginResultDTO
-//        MyselfDTO formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
-//
-//        assertEquals("error 3.1",facebookTokenAccessControlDTO.getFirst_name(), formDTO.getFirstname());
-//        assertEquals("error 3.2",facebookTokenAccessControlDTO.getLast_name(), formDTO.getLastname());
-//        assertEquals("error 3.3",facebookTokenAccessControlDTO.getEmail(), formDTO.getEmail());
-//        assertTrue("error 3.4",formDTO.getFacebookAccount());
-//        assertFalse("error 3.5",formDTO.getLoginAccount());
-//    }
-//
-//    @Test
-//    public void test4_accountFusion() {
-//
-//
-//        String facebookAppId = AppUtil.getFacebookAppId();
-//        String facebookAppSecret = AppUtil.getFacebookAppSecret();
-//
-//        //create a facebook account
-//        FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore(facebookAppId, facebookAppSecret);
-//        FacebookTestUserAccount account = facebookStore.createTestUser(true, "email,read_stream");
-//
-//        FacebookAuthenticationDTO facebookAuthenticationDTO = new FacebookAuthenticationDTO();
-//
-//        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO=Json.fromJson(Json.parse(account.getUserDetails()), FacebookTokenAccessControlDTO.class);
-//
-//
-//        //first : create a login account
-//        CustomerRegistrationDTO dto = new CustomerRegistrationDTO();
-//        dto.setFirstname(FIRSTNAME);
-//        dto.setLastname(LASTNAME);
-//        dto.setMale(true);
-//        dto.setEmail(facebookTokenAccessControlDTO.getEmail());
-//        dto.setPassword(PASSWORD);
-//        dto.setKeepSessionOpen(true);
-//
-//        Result result = request(POST, "/registration", dto);
-//
-//        assertEquals(printError(result), 200, status(result));
-//
-//        // get LoginResultDTO
-//        MyselfDTO formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
-//
-//        assertEquals(FIRSTNAME, formDTO.getFirstname());
-//        assertEquals(LASTNAME, formDTO.getLastname());
-//        assertEquals(facebookTokenAccessControlDTO.getEmail(), formDTO.getEmail());
-//        assertFalse(formDTO.getFacebookAccount());
-//        assertTrue(formDTO.getLoginAccount());
-//
-//        //second : create a facebook account
-//        facebookAuthenticationDTO.setToken(account.accessToken());
-//        facebookAuthenticationDTO.setLang(new LangDTO("english","en"));
-//        facebookAuthenticationDTO.setUserId(account.id());
-//
-//        result = request(POST, "/login/facebook", facebookAuthenticationDTO);
-//
-//        assertEquals(printError(result), 410, status(result));
-//
-//        // get LoginResultDTO
-//        AccountFusionDTO accountFusionDTO= Json.fromJson(Json.parse(new String(contentAsBytes(result))), AccountFusionDTO.class);
-//        accountFusionDTO.setPassword(PASSWORD);
-//
-//        result = request(POST, "/account/fusion", accountFusionDTO);
-//        assertEquals(printError(result), 200, status(result));
-//
-//        // get LoginResultDTO
-//        formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
-//
-//        assertEquals("error 3.1",FIRSTNAME, formDTO.getFirstname());
-//        assertEquals("error 3.2",LASTNAME, formDTO.getLastname());
-//        assertEquals("error 3.3",facebookTokenAccessControlDTO.getEmail(), formDTO.getEmail());
-//        assertTrue("error 3.4",formDTO.getFacebookAccount());
-//        assertTrue("error 3.5",formDTO.getLoginAccount());
-//    }
-//
-//
-//}
+package be.lynk.server.controller;
+
+import be.lynk.server.dto.*;
+import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
+import be.lynk.server.dto.post.*;
+import be.lynk.server.util.AccountTypeEnum;
+import be.lynk.server.util.exception.MyRuntimeException;
+import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserAccount;
+import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserStore;
+import com.jayway.facebooktestjavaapi.testuser.impl.HttpClientFacebookTestUserStore;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
+import play.Configuration;
+import play.Logger;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+import java.util.Iterator;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static play.test.Helpers.*;
+
+/**
+ * Created by florian on 19/04/15.
+ * Test for routes :
+ * POST     /login
+ * POST     /login/facebook
+ * POST     /account/fusion
+ * POST     /registration/customer
+ * POST     /registration/business
+ * GET      /email/test
+ * PUT      /facebook/test
+ * PUT      /forgot/password
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class LoginRestControllerTest extends AbstractControllerTest {
+
+
+    private static final String FACEBOOK_EMAIL = "face@book.com";
+    private static final String EMAIL2 = "email@aze.ev";
+
+    protected static final String BI_FIRSTNAME = "BI_firstname";
+    protected static final String BI_LASTNAME = "BI_lastname";
+    protected static final String BI_EMAIL = "my@mybusiness.com";
+    protected static final String BI_PASSWORD = "password";
+
+    private static final String ADDRESS_NAME_1 = "Home";
+    private static final String ADDRESS_STREET_1 = "1 grand place";
+    private static final String ADDRESS_ZIP_1 = "1000";
+    private static final String ADDRESS_CITY_1 = "BRUSELS";
+    private static final String ADDRESS_COUNTRY = "BELGIUM";
+
+    private static final String ADDRESS_NAME_2 = "Office";
+    private static final String ADDRESS_STREET_2 = "Brederodestraat 16";
+    private static final String ADDRESS_ZIP_2 = "B-1000 ";
+    private static final String ADDRESS_CITY_2 = "Brussel";
+    private static final String BI_DESCRIPTION = "BI dscription trzs long apofa zpokepo kzepok ze";
+    private static final String BI_NAME = "BI_NAME";
+    private static final String BI_PHONE = "09999239";
+
+
+    @Test
+    public void test1_registration() {
+
+        // ****
+        // *** TEST /customerInterest
+        // ***
+        Result result = request(GET, "/customerInterest");
+
+        assertEquals(printError(result), 200, status(result));
+
+        List<CustomerInterestDTO> customerInterestListDTO = extractList(result, CustomerInterestDTO.class);
+
+        // ****
+        // *** TEST /registration/customer
+        // ***
+        CustomerRegistrationDTO dto = new CustomerRegistrationDTO();
+        AccountRegistrationDTO registrationDTO = new AccountRegistrationDTO();
+        dto.setAccountRegistration(registrationDTO);
+        registrationDTO.setFirstname(FIRSTNAME);
+        registrationDTO.setLastname(LASTNAME);
+        registrationDTO.setMale(true);
+        registrationDTO.setEmail(EMAIL);
+        registrationDTO.setPassword(PASSWORD);
+        registrationDTO.setKeepSessionOpen(true);
+
+        //address
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setName(ADDRESS_NAME_1);
+        addressDTO.setStreet(ADDRESS_STREET_1);
+        addressDTO.setZip(ADDRESS_ZIP_1);
+        addressDTO.setCity(ADDRESS_CITY_1);
+        addressDTO.setCountry(ADDRESS_COUNTRY);
+        dto.setAddress(addressDTO);
+
+        //interest
+        dto.getCustomerInterests().add(new CustomerInterestDTO(customerInterestListDTO.get(0).getName()));
+        dto.getCustomerInterests().add(new CustomerInterestDTO(customerInterestListDTO.get(1).getName()));
+        dto.getCustomerInterests().add(new CustomerInterestDTO(customerInterestListDTO.get(2).getName()));
+
+        result = request(POST, "/registration/customer", dto);
+        connected=true;
+
+        assertEquals(printError(result), 200, status(result));
+
+        // get LoginResultDTO
+        MyselfDTO formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
+
+        assertEquals(FIRSTNAME, formDTO.getFirstname());
+        assertEquals(LASTNAME, formDTO.getLastname());
+        assertEquals(EMAIL, formDTO.getEmail());
+        assertFalse(formDTO.getFacebookAccount());
+        assertTrue(formDTO.getLoginAccount());
+
+        //interest
+        assertEquals(3, formDTO.getCustomerInterests().size());
+
+        //address
+        assertEquals(1, formDTO.getAddresses().size());
+        addressDTO = formDTO.getAddresses().get(0);
+        assertEquals(ADDRESS_NAME_1, addressDTO.getName());
+        assertEquals(ADDRESS_STREET_1, addressDTO.getStreet());
+        assertEquals(ADDRESS_ZIP_1, addressDTO.getZip());
+        assertEquals(ADDRESS_CITY_1, addressDTO.getCity());
+        assertEquals(ADDRESS_COUNTRY, addressDTO.getCountry());
+
+        // ****
+        // *** TEST is connected ?
+        // ***
+        result = request(GET, "/myself");
+        assertEquals(printError(result), 200, status(result));
+
+
+        // ****
+        // *** TEST /email/test
+        // ***
+        result = request(GET, "/email/test/" + EMAIL2, dto);
+
+        assertEquals(printError(result), 200, status(result));
+
+        BooleanDTO booleanDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), BooleanDTO.class);
+        assertFalse(booleanDTO.getValue());
+
+
+        // ****
+        // *** TEST /logout
+        // ***
+        request(GET, "/logout");
+        connected=false;
+
+        // ****
+        // *** TEST is already connected ?
+        // ***
+        result = request(GET, "/myself");
+        assertNotEquals(printError(result), 200, status(result));
+   /* }
+
+    @Test
+    public void test2_login() {
+*/
+
+        // ****
+        // *** TEST /login
+        // ***
+
+        /*Result*/
+        result = request(POST, "/login", new LoginDTO(EMAIL, PASSWORD));
+        connected=true;
+
+        assertEquals(printError(result), 200, status(result));
+
+        /*MyselfDTO*/
+        formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
+
+        assertEquals(FIRSTNAME, formDTO.getFirstname());
+        assertEquals(LASTNAME, formDTO.getLastname());
+        assertEquals(EMAIL, formDTO.getEmail());
+        assertFalse(formDTO.getFacebookAccount());
+        assertTrue(formDTO.getLoginAccount());
+
+        // ****
+        // *** TEST is connected ?
+        // ***
+        result = request(GET, "/myself");
+        assertEquals(printError(result), 200, status(result));
+
+        // ****
+        // *** TEST /language
+        // ***
+        assertEquals("en", formDTO.getLang().getCode());
+
+        result = request(PUT, "/language/fr");
+        assertEquals(printError(result), 200, status(result));
+
+        result = request(GET, "/myself");
+        assertEquals(printError(result), 200, status(result));
+        AccountDTO accountDTO = getDTO(result, AccountDTO.class);
+
+        assertEquals("fr", accountDTO.getLang().getCode());
+
+        // ****
+        // *** TEST /forgot/password
+        // ***
+        ForgotPasswordDTO forgotPasswordDTO = new ForgotPasswordDTO();
+        forgotPasswordDTO.setEmail(EMAIL);
+        request(PUT, "/forgot/password", forgotPasswordDTO);
+    }
+
+    @Test
+    public void test3_registration() {
+
+
+        // ****
+        // *** TEST /businessCategory
+        // ***
+        Result result = request(GET, "/businessCategory");
+
+        assertEquals(printError(result), 200, status(result));
+
+        List<BusinessCategoryDTO> businessCategoryDTOs = extractList(result, BusinessCategoryDTO.class);
+
+        BusinessRegistrationDTO dto = new BusinessRegistrationDTO();
+
+        // ****
+        // *** TEST /registration/business
+        // ***
+        AccountRegistrationDTO registrationDTO = new AccountRegistrationDTO();
+        dto.setAccountRegistration(registrationDTO);
+        registrationDTO.setFirstname(BI_FIRSTNAME);
+        registrationDTO.setLastname(BI_LASTNAME);
+        registrationDTO.setMale(true);
+        registrationDTO.setEmail(BI_EMAIL);
+        registrationDTO.setPassword(BI_PASSWORD);
+        registrationDTO.setKeepSessionOpen(true);
+
+        //business
+        BusinessDTO business = new BusinessDTO();
+        dto.setBusiness(business);
+        business.setName(BI_NAME);
+        business.setPhone(BI_PHONE);
+        business.setDescription(BI_DESCRIPTION);
+
+        //address
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setStreet(ADDRESS_STREET_2);
+        addressDTO.setZip(ADDRESS_ZIP_2);
+        addressDTO.setCity(ADDRESS_CITY_2);
+        addressDTO.setCountry(ADDRESS_COUNTRY);
+        business.setAddress(addressDTO);
+
+        //business category
+        BusinessCategoryDTO next = businessCategoryDTOs.iterator().next();
+        Iterator<BusinessCategoryDTO> iterator = next.getChildren().iterator();
+        business.getBusinessCategories().add(iterator.next());
+        business.getBusinessCategories().add(iterator.next());
+
+        result = request(POST, "/registration/business", dto);
+        connected=true;
+
+        assertEquals(printError(result), 200, status(result));
+
+        // get LoginResultDTO
+        MyselfDTO formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
+
+        assertEquals(BI_FIRSTNAME, formDTO.getFirstname());
+        assertEquals(BI_LASTNAME, formDTO.getLastname());
+        assertEquals(BI_EMAIL, formDTO.getEmail());
+        assertFalse(formDTO.getFacebookAccount());
+        assertTrue(formDTO.getLoginAccount());
+
+        business = formDTO.getBusiness();
+
+        //interest
+        assertEquals(2, business.getBusinessCategories().size());
+
+        //address
+        assertEquals(ADDRESS_STREET_2, business.getAddress().getStreet());
+        assertEquals(ADDRESS_ZIP_2, business.getAddress().getZip());
+        assertEquals(ADDRESS_CITY_2, business.getAddress().getCity());
+        assertEquals(ADDRESS_COUNTRY, business.getAddress().getCountry());
+
+        // ****
+        // *** TEST is connected ?
+        // ***
+        result = request(GET, "/myself");
+        assertEquals(printError(result), 200, status(result));
+
+    }
+
+    @Test
+    public void test4_registrationWithFacebook() {
+
+        // ****
+        // *** TEST /registration/customer with facebook authentication
+        // ***
+        String facebookAppId = Configuration.root().getString("facebook.app.id");
+        String facebookAppSecret = Configuration.root().getString("facebook.app.secret");
+
+
+        FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore(facebookAppId, facebookAppSecret);
+        FacebookTestUserAccount facebookAccount = facebookStore.createTestUser(true, "email,read_stream");
+
+        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = Json.fromJson(Json.parse(facebookAccount.getUserDetails()), FacebookTokenAccessControlDTO.class);
+
+        //create facebook authentication dto
+        FacebookAuthenticationDTO facebookAuthenticationDTO = new FacebookAuthenticationDTO();
+        facebookAuthenticationDTO.setToken(facebookAccount.accessToken());
+        facebookAuthenticationDTO.setLang(new LangDTO("english", "en"));
+        facebookAuthenticationDTO.setUserId(facebookAccount.id());
+
+        //create account
+        CustomerRegistrationDTO dto = new CustomerRegistrationDTO();
+        AccountRegistrationDTO registrationDTO = new AccountRegistrationDTO();
+        dto.setAccountRegistration(registrationDTO);
+        registrationDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
+        registrationDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
+        registrationDTO.setMale(true);
+        registrationDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
+        registrationDTO.setKeepSessionOpen(true);
+        dto.setFacebookAuthentication(facebookAuthenticationDTO);
+
+        //save
+        Result result = request(POST, "/registration/customer", dto);
+        connected=true;
+
+        assertEquals(printError(result), 200, status(result));
+
+        // get LoginResultDTO
+        MyselfDTO formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
+
+        //control
+        assertEquals(facebookTokenAccessControlDTO.getFirst_name(), formDTO.getFirstname());
+        assertEquals(facebookTokenAccessControlDTO.getLast_name(), formDTO.getLastname());
+        assertEquals(facebookTokenAccessControlDTO.getEmail(), formDTO.getEmail());
+        assertTrue(formDTO.getFacebookAccount());
+        assertFalse(formDTO.getLoginAccount());
+
+        // ****
+        // *** TEST is connected ?
+        // ***
+        result = request(GET, "/myself");
+        assertEquals(printError(result), 200, status(result));
+
+        // ****
+        // *** TEST /login/facebook
+        // ***
+        result = request(POST, "/login/facebook", facebookAuthenticationDTO);
+
+        assertEquals(printError(result), 200, status(result));
+
+        // get LoginResultDTO
+        formDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
+
+        assertEquals(facebookTokenAccessControlDTO.getFirst_name(), formDTO.getFirstname());
+        assertEquals(facebookTokenAccessControlDTO.getLast_name(), formDTO.getLastname());
+        assertEquals(facebookTokenAccessControlDTO.getEmail(), formDTO.getEmail());
+        assertTrue(formDTO.getFacebookAccount());
+        assertFalse(formDTO.getLoginAccount());
+    }
+
+    @Test
+    public void test5_accountFusion() {
+
+        // ****
+        // *** TEST /registration/customer with credential login
+        // ***
+        String facebookAppId = Configuration.root().getString("facebook.app.id");
+        String facebookAppSecret = Configuration.root().getString("facebook.app.secret");
+
+        FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore(facebookAppId, facebookAppSecret);
+        FacebookTestUserAccount facebookAccount = facebookStore.createTestUser(true, "email,read_stream");
+
+        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = Json.fromJson(Json.parse(facebookAccount.getUserDetails()), FacebookTokenAccessControlDTO.class);
+
+        //1) create an account with login credential
+        CustomerRegistrationDTO dto = new CustomerRegistrationDTO();
+        AccountRegistrationDTO registrationDTO = new AccountRegistrationDTO();
+        dto.setAccountRegistration(registrationDTO);
+        registrationDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
+        registrationDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
+        registrationDTO.setMale(true);
+        registrationDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
+        registrationDTO.setPassword(PASSWORD);
+        registrationDTO.setKeepSessionOpen(true);
+
+        Result result = request(POST, "/registration/customer", dto);
+        connected=true;
+
+        assertEquals(printError(result), 200, status(result));
+
+        //try to connection with facebook credential
+
+        FacebookAuthenticationDTO facebookAuthenticationDTO = new FacebookAuthenticationDTO();
+        facebookAuthenticationDTO.setToken(facebookAccount.accessToken());
+        facebookAuthenticationDTO.setLang(new LangDTO("english", "en"));
+        facebookAuthenticationDTO.setUserId(facebookAccount.id());
+        facebookAuthenticationDTO.setAccountType(AccountTypeEnum.CUSTOMER);
+        result = request(POST, "/facebook/test", facebookAuthenticationDTO);
+
+        assertEquals(printError(result), 200, status(result));
+
+        // get LoginResultDTO
+        TestFacebookDTO testFacebookDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), TestFacebookDTO.class);
+
+        assertEquals(TestFacebookDTO.TestFacebookStatusEnum.ACCOUNT_WITH_SAME_EMAIL, testFacebookDTO.getStatus());
+
+        // ****
+        // *** TEST is connected ?
+        // ***
+        result = request(GET, "/myself");
+        assertEquals(printError(result), 200, status(result));
+
+        // ****
+        // *** TEST /account/fusion
+        // ***
+        AccountFusionDTO accountFusionDTO = new AccountFusionDTO();
+        accountFusionDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
+        accountFusionDTO.setFacebookToken(facebookAccount.accessToken());
+        accountFusionDTO.setFacebookUserId(facebookAccount.id());
+        accountFusionDTO.setPassword(PASSWORD);
+
+        result = request(POST, "/account/fusion", accountFusionDTO);
+
+        assertEquals(printError(result), 200, status(result));
+
+        // get LoginResultDTO
+        MyselfDTO myselfDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
+
+        //control
+        assertTrue(myselfDTO.getFacebookAccount());
+        assertTrue(myselfDTO.getLoginAccount());
+
+        // ****
+        // *** TEST is connected ?
+        // ***
+        result = request(GET, "/myself");
+        assertEquals(printError(result), 200, status(result));
+    }
+
+}

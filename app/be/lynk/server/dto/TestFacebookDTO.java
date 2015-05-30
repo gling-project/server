@@ -8,6 +8,14 @@ import be.lynk.server.dto.technical.DTO;
  */
 public class TestFacebookDTO extends DTO{
 
+    private String firstname;
+
+    private String lastname;
+
+    private String email;
+
+    private Boolean male;
+
     private TestFacebookStatusEnum status;
 
     private MyselfDTO myself;
@@ -15,6 +23,37 @@ public class TestFacebookDTO extends DTO{
     private AccountFusionDTO accountFusion;
     private FacebookTokenAccessControlDTO facebookTokenAccessControl;
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getMale() {
+        return male;
+    }
+
+    public void setMale(Boolean male) {
+        this.male = male;
+    }
 
     public TestFacebookStatusEnum getStatus() {
         return status;

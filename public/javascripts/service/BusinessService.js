@@ -86,10 +86,6 @@ myApp.service("businessService", function ($flash, $http, accountService) {
 
     this.findByPromotion = function (dto, callbackSuccess, callbackError) {
 
-
-        console.log('ooooooooooooooooo');
-        console.log(dto);
-
         $http({
             'method': "POST",
             'url': "/business/promotions",

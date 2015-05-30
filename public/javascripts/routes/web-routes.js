@@ -26,7 +26,6 @@ var initializeCommonRoutes = function () {
                 resolve: {
                     a: function (accountService) {
                         var status = test(accountService);
-                        console.log("status : " + status);
                     }
                 }
             }).when('/business', {

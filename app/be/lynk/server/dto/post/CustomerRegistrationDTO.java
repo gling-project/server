@@ -5,6 +5,7 @@ import be.lynk.server.dto.technical.DTO;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ public class CustomerRegistrationDTO extends DTO {
     private AccountRegistrationDTO accountRegistration;
 
     private AddressDTO address;
-    private List<CustomerInterestDTO> customerInterests;
+    private List<CustomerInterestDTO> customerInterests = new ArrayList<>();
 
 
     public FacebookAuthenticationDTO getFacebookAuthentication() {

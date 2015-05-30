@@ -14,11 +14,6 @@ myApp.directive("dirFieldSelect", function (directiveService, $timeout,modalServ
                 },
                 post: function (scope) {
 
-
-                    console.log(scope.getInfo().options);
-
-
-
                     directiveService.autoScopeImpl(scope);
 
                     if(scope.getInfo().autoCompleteValue==undefined){

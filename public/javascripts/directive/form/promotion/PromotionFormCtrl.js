@@ -24,7 +24,6 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
 
 
                     scope.$watch('getInfo().dto', function () {
-                        console.log("binding !! ");
                         scope.fields.description.field = scope.getInfo().dto.description;
                         scope.fields.quantity.field = scope.getInfo().dto.quantity;
                         scope.fields.minimalQuantity.field = scope.getInfo().dto.minimalQuantity;

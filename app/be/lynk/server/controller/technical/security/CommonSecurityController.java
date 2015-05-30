@@ -140,7 +140,7 @@ public class CommonSecurityController extends Security.Authenticator {
 
     public void logout(Http.Context ctx) {
 
-        if (getCurrentUser() != null && getCurrentUser().getLoginCredential()!=null && getCurrentUser().getLoginCredential().isKeepSessionOpen()) {
+        if (isAuthenticated(ctx) && getCurrentUser().getLoginCredential()!=null && getCurrentUser().getLoginCredential().isKeepSessionOpen()) {
 
             Account currentAccount = getCurrentUser();
             currentAccount.getLoginCredential().setKeepSessionOpen(false);

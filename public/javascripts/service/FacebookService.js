@@ -31,8 +31,6 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
             if (response.status === 'connected') {
 
-                console.log('connected !! ');
-
                 successCallback(response.authResponse);
                 isConnected = true;
             }
@@ -106,8 +104,6 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
                         //test lang
                         languageService.changeLanguage(data.lang.code);
-
-                        console.log("connected by facebook");
                     },
                     function () {
                         //connection failed
@@ -120,12 +116,8 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
     this.logout = function () {
 
-        console.log('Facebook logout');
-
         //if (this.isConnected()) {
         FB.logout(function (response) {
-            console.log('Facebook logout : ');
-            console.log(response);
         });
         //
     };

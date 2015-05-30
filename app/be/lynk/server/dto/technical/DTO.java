@@ -54,9 +54,9 @@ public class DTO implements Content {
     }
 
     public void set__type(String __type) {
-        if (!get__type().equals(__type)) {
-            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR, get__type()+" instead of "+__type);
-        }
+//        if (!get__type().equals(__type)) {
+//            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR, get__type()+" instead of "+__type);
+//        }
     }
 
     @Override

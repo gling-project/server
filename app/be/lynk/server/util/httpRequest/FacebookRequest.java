@@ -23,7 +23,7 @@ public class FacebookRequest {
     @Autowired
     private HttpRequest httpRequest;
 
-    public FacebookTokenAccessControlDTO debugToken(String accessKey) {
+    public FacebookTokenAccessControlDTO meRequest(String accessKey) {
 
         Map<String, String> map = new HashMap<>();
         map.put("access_token", accessKey);

@@ -21,17 +21,13 @@ myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
     $rootScope.$watch(function() {
         return self.currentLanguage;
     }, function watchCallback(newValue, oldValue) {
-        console.log('$rootScope 1');
         if(newValue != oldValue) {
-            console.log('$rootScope 2');
             self.changeLanguage(self.currentLanguage,true);
         }
     });
 
     this.changeLanguage = function (lang,forced) {
-        console.log('changeLanguage');
         if (lang != this.currentLanguage ||forced) {
-            console.log('changeLanguage 2');
 
             $http({
                 'method': "PUT",

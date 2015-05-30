@@ -22,7 +22,6 @@ myApp.directive('promotionListCtrl', function ($rootScope, businessService, geol
                                     }
                                     data[i].interval = (data[i].endDate - new Date()) / 1000;
                                 }
-                                console.log(data);
                                 scope.promotions = data;
                             });
                         }
