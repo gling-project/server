@@ -42,22 +42,25 @@ public class SearchRestController extends AbstractRestController {
         //compute distance
         List<Address> addresses = new ArrayList<>();
 
-        for (Promotion promotion : promotions) {
-            addresses.add(promotion.getBusiness().getAddress());
-        }
+        if (addresses.size() > 0) {
 
-        //origin
-        //CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
-        //Address origin = currentUser.getAddresses().iterator().next();
-
-        Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
-
-        for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
             for (Promotion promotion : promotions) {
-                if (addressLongEntry.getKey().equals(promotion.getBusiness().getAddress())) {
-                    PromotionDTO promotionDTO = dozerService.map(promotion, PromotionDTO.class);
-                    promotionDTO.setDistance(addressLongEntry.getValue());
-                    promotionDTOs.add(promotionDTO);
+                addresses.add(promotion.getBusiness().getAddress());
+            }
+
+            //origin
+            //CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
+            //Address origin = currentUser.getAddresses().iterator().next();
+
+            Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
+
+            for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
+                for (Promotion promotion : promotions) {
+                    if (addressLongEntry.getKey().equals(promotion.getBusiness().getAddress())) {
+                        PromotionDTO promotionDTO = dozerService.map(promotion, PromotionDTO.class);
+                        promotionDTO.setDistance(addressLongEntry.getValue());
+                        promotionDTOs.add(promotionDTO);
+                    }
                 }
             }
         }

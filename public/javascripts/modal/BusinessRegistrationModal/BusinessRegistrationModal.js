@@ -20,11 +20,13 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
     $scope.next = function () {
         var notValid = false;
         if ($scope.badgeSelected == 1) {
-            if (!$scope.accountParam.isValid) {
+            if (!$scope.accountParam.isValid && facebookAuthentication==null ) {
                 $scope.accountParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValid"));
             }
-            else {
+            else if(facebookAuthentication!=null) {
+                $scope.badgeSelected++;
+            }else{
                 $scope.accountParam.disabled = true;
                 $scope.loading = true;
                 accountService.testEmail($scope.accountParam.dto.email, function (value) {
@@ -85,14 +87,13 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                         $scope.fusion(data2.accountFusion);
                     }
                     else if (data2.status == 'OK') {
-                        $scope.accountParam.disabled = false;
-                        $scope.accountParam.dto.firstname = data2.first_name;
-                        $scope.accountParam.dto.lastname = data2.last_name;
+                        $scope.accountParam.dto.firstname = data2.firstname;
+                        $scope.accountParam.dto.lastname = data2.lastname;
                         $scope.accountParam.dto.email= data2.email;
                         $scope.accountParam.dto.male= data2.male;
                         $scope.accountParam.dto.password= '*********';
                         facebookAuthentication = dto;
-                        $scope.skip();
+                        $scope.next();
                     }
                 });
             },

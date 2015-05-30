@@ -22,9 +22,6 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
                         };
                     }
 
-
-
-
                     scope.fields = {
                         description: {
                             fieldTitle: "--.generic.description",
