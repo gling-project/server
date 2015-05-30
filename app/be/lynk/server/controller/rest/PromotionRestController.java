@@ -8,6 +8,7 @@ import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.Promotion;
 import be.lynk.server.service.PromotionService;
+import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class PromotionRestController extends AbstractRestController {
 
     @Autowired
     private PromotionService promotionService;
+    @Autowired
+    private StoredFileService storedFileService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -36,6 +39,9 @@ public class PromotionRestController extends AbstractRestController {
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
+        if(promotion.getImage()!=null){
+            promotion.setImage(storedFileService.findById(promotion.getImage().getId()));
+        }
         promotion.setBusiness(business);
 
         promotionService.saveOrUpdate(promotion);
@@ -67,7 +73,7 @@ public class PromotionRestController extends AbstractRestController {
         promotionToEdit.setPrice(promotion.getPrice());
         promotionToEdit.setQuantity(promotion.getQuantity());
         promotionToEdit.setStartDate(promotion.getStartDate());
-        promotionToEdit.setStoredFile(promotion.getStoredFile());
+        promotionToEdit.setImage(promotion.getImage());
         promotionToEdit.setUnit(promotion.getUnit());
 
         promotionService.saveOrUpdate(promotionToEdit);

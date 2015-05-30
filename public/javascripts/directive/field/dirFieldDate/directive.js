@@ -52,6 +52,9 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                         if (scope.getInfo().field == null) {
                             isValid = false;
                         }
+                        if (scope.getInfo().validationFct != null) {
+                            isValid = isValid && scope.getInfo().validationFct();
+                        }
                         scope.getInfo().isValid = isValid;
                     };
                     scope.isValid();

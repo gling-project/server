@@ -1,4 +1,4 @@
-myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, translationService) {
 
     return {
         restrict: "E",
@@ -18,7 +18,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
 
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
-                            startDate:new Date()
+                            startDate: new Date()
                         };
                     }
 
@@ -33,7 +33,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
                         },
                         quantity: {
                             fieldTitle: "--.promotion.quantity",
-                            numbersOnly:'double',
+                            numbersOnly: 'double',
                             validationRegex: "^[0-9,.]{1,9}$",
                             validationMessage: '--.generic.numberExpected',
                             disabled: function () {
@@ -42,23 +42,23 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
                         },
                         minimalQuantity: {
                             fieldTitle: "--.promotion.minimalQuantity",
-                            numbersOnly:'double',
+                            numbersOnly: 'double',
                             validationRegex: "^[0-9,.]{1,9}$",
                             validationMessage: '--.generic.numberExpected',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field:'1'
+                            field: '1'
                         },
                         price: {
                             fieldTitle: "--.promotion.price",
-                            numbersOnly:'double',
+                            numbersOnly: 'double',
                             validationRegex: "^[0-9,.]{1,9}$",
                             validationMessage: '--.generic.validation.numberExpected',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            money:"€"
+                            money: "€"
                         },
                         unit: {
                             fieldTitle: "--.promotion.unit",
@@ -70,23 +70,28 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
                         },
                         startDate: {
                             fieldTitle: "--.promotion.startDate",
-                            minimalDelay:'hour',
+                            minimalDelay: 'hour',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             }
                         },
                         endDate: {
                             fieldTitle: "--.promotion.endDate",
-                            validationMessage: '--.generic.validation.notNull',
-                            minimalDelay:'hour',
+                            validationMessage: '--.promotion.validation.endDateBeforeStartDate',
+                            minimalDelay: 'hour',
                             disabled: function () {
                                 return scope.getInfo().disabled;
+                            },
+                            validationFct: function () {
+                                return scope.fields.endDate.field >= scope.fields.startDate.field;
                             }
+                        },
+                        image : {
+                            size:60
                         }
                     };
 
                     scope.$watch('fields', function () {
-                        console.log('balidation !! ');
                         var validation = true;
 
                         for (var key in scope.fields) {
@@ -100,18 +105,19 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService) {
                                 scope.getInfo().dto[key] = obj.field;
                             }
                         }
+                        scope.getInfo().dto.image = scope.fields.image.dto;
                         scope.getInfo().isValid = validation;
                     }, true);
 
                     scope.$watch('getInfo().dto', function () {
                         console.log('$watch info !! ');
-                        if(scope.getInfo().dto.description!=null)scope.fields.description.field = scope.getInfo().dto.description;
-                        if(scope.getInfo().dto.quantity!=null)scope.fields.quantity.field = scope.getInfo().dto.quantity;
-                        if(scope.getInfo().dto.minimalQuantity!=null)scope.fields.minimalQuantity.field = scope.getInfo().dto.minimalQuantity;
-                        if(scope.getInfo().dto.price!=null)scope.fields.price.field = scope.getInfo().dto.price;
-                        if(scope.getInfo().dto.unit!=null)scope.fields.unit.field = scope.getInfo().dto.unit;
-                        if(scope.getInfo().dto.startDate!=null)scope.fields.startDate.field = scope.getInfo().dto.startDate;
-                        if(scope.getInfo().dto.endDate!=null)scope.fields.endDate.field = scope.getInfo().dto.endDate;
+                        if (scope.getInfo().dto.description != null)scope.fields.description.field = scope.getInfo().dto.description;
+                        if (scope.getInfo().dto.quantity != null)scope.fields.quantity.field = scope.getInfo().dto.quantity;
+                        if (scope.getInfo().dto.minimalQuantity != null)scope.fields.minimalQuantity.field = scope.getInfo().dto.minimalQuantity;
+                        if (scope.getInfo().dto.price != null)scope.fields.price.field = scope.getInfo().dto.price;
+                        if (scope.getInfo().dto.unit != null)scope.fields.unit.field = scope.getInfo().dto.unit;
+                        if (scope.getInfo().dto.startDate != null)scope.fields.startDate.field = scope.getInfo().dto.startDate;
+                        if (scope.getInfo().dto.endDate != null)scope.fields.endDate.field = scope.getInfo().dto.endDate;
                     });
 
                     scope.$watch('getInfo().displayErrorMessage', function () {

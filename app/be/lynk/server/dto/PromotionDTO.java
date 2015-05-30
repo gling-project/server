@@ -1,15 +1,9 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.StoredFile;
-import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
-import be.lynk.server.model.entities.technical.AbstractEntity;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -21,7 +15,7 @@ public class PromotionDTO extends DTO {
 
     private BusinessDTO business;
 
-    private StoredFileDTO storedFile;
+    private StoredFileDTO image;
 
     @NotNull
     @Size(min = 1,max = 50,message = "--.validation.dto.size")
@@ -72,12 +66,12 @@ public class PromotionDTO extends DTO {
         this.business = business;
     }
 
-    public StoredFileDTO getStoredFile() {
-        return storedFile;
+    public StoredFileDTO getImage() {
+        return image;
     }
 
-    public void setStoredFile(StoredFileDTO storedFile) {
-        this.storedFile = storedFile;
+    public void setImage(StoredFileDTO image) {
+        this.image = image;
     }
 
     public String getDescription() {
@@ -139,7 +133,7 @@ public class PromotionDTO extends DTO {
     @Override
     public String toString() {
         return "Promotion{" +
-                "storedFile=" + storedFile +
+                "image=" + image +
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", unit='" + unit + '\'' +

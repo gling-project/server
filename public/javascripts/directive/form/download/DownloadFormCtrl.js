@@ -15,14 +15,14 @@ myApp.directive('downloadFormCtrl', function ($flash, directiveService, $timeout
                 },
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
-
-
+                    
                     scope.fields = {
                         file: {
                             fieldTitle: "generic.file",
                             disabled: function () {
                                 return scope.getInfo().disabled;
-                            }
+                            },
+                            size : scope.getInfo().size
                         }
                     };
 

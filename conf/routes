@@ -51,7 +51,8 @@ PUT           /promotion/:id                @be.lynk.server.controller.rest.Prom
 GET           /session                      @be.lynk.server.controller.rest.AccountRestController.mySession()
 
 #file
-POST          /file/                        @be.lynk.server.controller.rest.FilesController.upload()
+POST          /file                         @be.lynk.server.controller.rest.FilesController.upload()
+POST          /file/:size                   @be.lynk.server.controller.rest.FilesController.uploadWithSize(size:Integer)
 GET           /file/:storedFileId           @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 
 ##welcome

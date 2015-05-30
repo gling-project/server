@@ -1,7 +1,5 @@
 package be.lynk.server.model.entities;
 
-import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
@@ -17,8 +15,8 @@ public class Promotion extends AbstractEntity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
     private Business business;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private StoredFile storedFile;
+    @ManyToOne
+    private StoredFile image;
 
     @Basic(optional = false)
     private String description;
@@ -56,12 +54,12 @@ public class Promotion extends AbstractEntity {
         this.business = business;
     }
 
-    public StoredFile getStoredFile() {
-        return storedFile;
+    public StoredFile getImage() {
+        return image;
     }
 
-    public void setStoredFile(StoredFile storedFile) {
-        this.storedFile = storedFile;
+    public void setImage(StoredFile storedFile) {
+        this.image = storedFile;
     }
 
     public String getDescription() {
@@ -123,7 +121,7 @@ public class Promotion extends AbstractEntity {
     @Override
     public String toString() {
         return "Promotion{" +
-                "storedFile=" + storedFile +
+                "storedFile=" + image +
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", unit='" + unit + '\'' +

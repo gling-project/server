@@ -1,4 +1,4 @@
-myApp.service("promotionService", function ($http, $flash) {
+myApp.service("promotionService", function ($http, $flash,$rootScope) {
 
     this.add = function (dto, callbackSuccess, callbackError) {
 
@@ -11,6 +11,7 @@ myApp.service("promotionService", function ($http, $flash) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
+            $rootScope.$broadcast('$refreshPromotion');
         })
             .error(function (data, status) {
                 $flash.error(data.message);
@@ -32,6 +33,7 @@ myApp.service("promotionService", function ($http, $flash) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
+            $rootScope.$broadcast('$refreshPromotion');
         })
             .error(function (data, status) {
                 $flash.error(data.message);

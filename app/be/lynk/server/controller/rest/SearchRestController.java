@@ -42,7 +42,7 @@ public class SearchRestController extends AbstractRestController {
         //compute distance
         List<Address> addresses = new ArrayList<>();
 
-        if (addresses.size() > 0) {
+        if (promotions.size() > 0) {
 
             for (Promotion promotion : promotions) {
                 addresses.add(promotion.getBusiness().getAddress());

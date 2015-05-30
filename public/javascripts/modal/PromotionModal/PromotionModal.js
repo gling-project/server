@@ -15,6 +15,9 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
 
     $scope.save = function () {
 
+
+        console.log($scope.promotionParam.dto);
+
         if (!$scope.promotionParam.isValid) {
             $scope.promotionParam.displayErrorMessage = true;
         }

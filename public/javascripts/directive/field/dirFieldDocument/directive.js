@@ -53,8 +53,13 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                             file = $files[i];
 
 
+                            var url = "/file";
+                            if(scope.getInfo().size !=null && scope.getInfo().size != undefined){
+                                url += "/"+scope.getInfo().size;
+                            }
+
                             scope.upload = $upload.upload({
-                                url: "/file/",
+                                url: url,
                                 data: {
                                     myObj: scope.myModelObj
                                 },

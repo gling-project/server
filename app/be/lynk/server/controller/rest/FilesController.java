@@ -27,17 +27,23 @@ import java.util.List;
 public class FilesController extends AbstractRestController {
 
 
-    public static final String[] IMAGE_POST = new String[]{"jpeg","jpg","png"};
+    public static final String[] IMAGE_POST = new String[]{"jpeg", "jpg", "png"};
 
     @Autowired
     private StoredFileService storedFileService;
+
+    @Transactional(readOnly = false)
+    @SecurityAnnotation(role = RoleEnum.USER)
+    public Result upload() {
+        return uploadWithSize(null);
+    }
 
     /**
      * @return
      */
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.USER)
-    public Result upload() {
+    public Result uploadWithSize(Integer size) {
 
         MultipartFormData body = Controller.request().body().asMultipartFormData();
         List<MultipartFormData.FilePart> files = body.getFiles();
@@ -51,22 +57,24 @@ public class FilesController extends AbstractRestController {
 
 
             String[] split = fileName.split("\\.");
-            String type = split[split.length-1];
-            boolean isImage=false;
+            String type = split[split.length - 1];
+            boolean isImage = false;
             for (String s : IMAGE_POST) {
-                if(s.equals(type)){
-                    isImage=true;
+                if (s.equals(type)) {
+                    isImage = true;
                 }
             }
 
-//            //Treatment
-//            try {
-//                BufferedImage originalImage = ImageIO.read(file);
-//                originalImage = resizeImage(originalImage,originalImage.getType(),60,60);
-//                ImageIO.write(originalImage, type, file);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            //Treatment
+            if (size != null) {
+                try {
+                    BufferedImage originalImage = ImageIO.read(file);
+                    originalImage = resizeImage(originalImage, originalImage.getType(), size, size);
+                    ImageIO.write(originalImage, type, file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
             //int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
 
@@ -78,7 +86,7 @@ public class FilesController extends AbstractRestController {
             }
 
             //create the entity
-            StoredFile storedFile = new StoredFile(fileName, storageKey, 0, securityController.getCurrentUser(),isImage);
+            StoredFile storedFile = new StoredFile(fileName, storageKey, 0, securityController.getCurrentUser(), isImage);
 
             //and save
             storedFileService.saveOrUpdate(storedFile);
@@ -87,7 +95,7 @@ public class FilesController extends AbstractRestController {
             FileUtil.save(file, storageKey);
 
             //complete the result
-            filesUploadedDTO = dozerService.map(storedFile,StoredFileDTO.class);
+            filesUploadedDTO = dozerService.map(storedFile, StoredFileDTO.class);
         }
         return Results.ok(filesUploadedDTO);
     }
@@ -102,7 +110,7 @@ public class FilesController extends AbstractRestController {
         //get the storedFile
         StoredFile storedFile = storedFileService.findById(storedFileId);
 
-        Logger.info(storedFile+"");
+        Logger.info(storedFile + "");
 
         if (storedFile == null) {
             throw new RuntimeException("File " + storedFileId + " was not found");
@@ -125,10 +133,10 @@ public class FilesController extends AbstractRestController {
         return Results.ok(inputStream);
     }
 
-    private static BufferedImage resizeImage(BufferedImage originalImage, int type,int width,int height){
-        BufferedImage resizedImage = new BufferedImage(width,height, type);
+    private static BufferedImage resizeImage(BufferedImage originalImage, int type, int width, int height) {
+        BufferedImage resizedImage = new BufferedImage(width, height, type);
         Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, width,height, null);
+        g.drawImage(originalImage, 0, 0, width, height, null);
         g.dispose();
 
         return resizedImage;

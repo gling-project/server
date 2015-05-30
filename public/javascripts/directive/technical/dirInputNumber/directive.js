@@ -4,7 +4,6 @@ myApp.directive("numbersOnly", function($filter, translationService, $locale) {
         require: "ngModel",
         link: function(scope, element, attrs, modelCtrl) {
             return scope.$watch(attrs.numbersOnly, function() {
-                console.log('I am number inly !! ');
 
                 var convertToFloat, convertToString, displayError, errorMessage, filterFloat, nbDecimal, valueToDisplay;
                 if (attrs.numbersOnly === "integer" || attrs.numbersOnly === "double" || attrs.numbersOnly === "percent") {

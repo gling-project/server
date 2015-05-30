@@ -10,6 +10,6 @@
             class="button">{{'--.field.document.download' | translateText}} {{getInfo().field.name}}
     </button>
 
-    <img ng-show="fields.file.field!=null && fields.file.field.isImage==true" src="{{fileCall}}"/>
+    <img ng-show="fields.file.field!=null && fields.file.field.isImage==true" ng-src="{{fileCall}}"/>
 
 </div>

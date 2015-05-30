@@ -1,4 +1,4 @@
-myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,businessService,modalService,promotionService) {
+myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,businessService,modalService,promotionService,$rootScope) {
 
     $scope.model = accountService.model;
 
@@ -59,6 +59,10 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
         });
     };
     $scope.loadPromotion();
+
+    $rootScope.$on('$refreshPromotion',function(){
+       $scope.loadPromotion();
+    });
 
     $scope.editPromotion = function(promotion){
         modalService.openPromotionModal(promotion);
