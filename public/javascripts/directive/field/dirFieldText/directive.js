@@ -33,9 +33,9 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                     }
                     if (scope.isValidationDefined) {
                         scope.$watch('getInfo().field', function (n, o) {
-                            if (n !== o) {
+                            //if (n !== o) {
                                 return scope.isValid();
-                            }
+                            //}
                         });
                     }
                     scope.isValid = function () {

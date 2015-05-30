@@ -60,6 +60,7 @@
 --.generic.cancel=Cancel
 --.generic.remove=Remove
 --.generic.login.btn=Logging
+--.generic.validation.max=Maximum {0} characters
 
 ## login modal
 --.loginModal.title=Login you
@@ -248,11 +249,11 @@
 
 
 ##  directive/form/promotion/PromotionFormCtrl.js
---.promotion.minimalQuantity=Minimal quantity (optional)
+--.promotion.minimalQuantity=Minimal quantity
 --.promotion.price=Price
 --.promotion.endDate=End date
 --.promotion.quantity=Quantity
---.promotion.unit=Unit
+--.promotion.unit=Unit (optional)
 --.promotion.startDate=Start date
 
 ##  view/web/home.html

@@ -47,6 +47,7 @@
 --.generic.remove=Supprimer
 --.generic.description=Description
 --.generic.login.btn=Connexion
+--.generic.validation.max=Maximum {0} caractères
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -218,11 +219,11 @@
 
 
 ##  directive/form/promotion/PromotionFormCtrl.js
---.promotion.minimalQuantity=Quantité minimum (optionnel)
+--.promotion.minimalQuantity=Quantité minimum
 --.promotion.price=Prix
 --.promotion.endDate=Date de fin
 --.promotion.quantity=Quantité
---.promotion.unit=Unité
+--.promotion.unit=Unité (optionel)
 --.promotion.startDate=Date de début
 
 ##  view/web/home.html
