@@ -17,6 +17,7 @@ POST          /registration/customer        @be.lynk.server.controller.rest.Logi
 POST          /registration/business        @be.lynk.server.controller.rest.LoginRestController.businessRegistration()
 GET           /logout                       @be.lynk.server.controller.rest.LoginRestController.logout()
 GET           /email/test/:email            @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
+POST          /address/test                 @be.lynk.server.controller.rest.LoginRestController.testAddress()
 POST          /facebook/test                @be.lynk.server.controller.rest.LoginRestController.testFacebookAccount()
 PUT           /language/:code               @be.lynk.server.controller.rest.LoginRestController.changeLanguage(code:String)
 PUT           /forgot/password              @be.lynk.server.controller.rest.LoginRestController.forgotPassword()
@@ -43,9 +44,16 @@ PUT           /business/image               @be.lynk.server.controller.rest.Busi
 POST          /business/promotions          @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
 ## promotion
-GET           /promotion                    @be.lynk.server.controller.rest.PromotionRestController.getAll()
+GET           /promotion/mine               @be.lynk.server.controller.rest.PromotionRestController.getMine()
 POST          /promotion                    @be.lynk.server.controller.rest.PromotionRestController.create()
 PUT           /promotion/:id                @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
+DELETE        /promotion/:id                @be.lynk.server.controller.rest.PromotionRestController.delete(id:Long)
+
+## notificaiton
+GET           /businessNotification/mine    @be.lynk.server.controller.rest.BusinessNotificationRestController.getMine()
+POST          /businessNotification         @be.lynk.server.controller.rest.BusinessNotificationRestController.create()
+PUT           /businessNotification/:id     @be.lynk.server.controller.rest.BusinessNotificationRestController.update(id:Long)
+DELETE        /businessNotification/:id     @be.lynk.server.controller.rest.BusinessNotificationRestController.delete(id:Long)
 
 #session
 GET           /session                      @be.lynk.server.controller.rest.AccountRestController.mySession()

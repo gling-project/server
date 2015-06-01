@@ -61,6 +61,20 @@ public class LoginRestControllerTest extends AbstractControllerTest {
     private static final String BI_NAME = "BI_NAME";
     private static final String BI_PHONE = "09999239";
 
+    @Test
+    public void test0_address(){
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setName(ADDRESS_NAME_1);
+        addressDTO.setStreet(ADDRESS_STREET_1);
+        addressDTO.setZip(ADDRESS_ZIP_1);
+        addressDTO.setCity(ADDRESS_CITY_1);
+        addressDTO.setCountry(ADDRESS_COUNTRY);
+
+        Result result = request(POST, "/address/test",addressDTO);
+
+        assertEquals(printError(result), 200, status(result));
+    }
+
 
     @Test
     public void test1_registration() {

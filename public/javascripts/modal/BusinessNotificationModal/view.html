@@ -1,10 +1,9 @@
 <div class="modal-header">
     <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
-    <h4 class="modal-title">{{'--.account.address.modal.title' | translateText}}</h4>
+    <h4 class="modal-title">{{'--.business.modal.title' | translateText}}</h4>
 </div>
 <div class="modal-body"  dir-enter="save()">
-
-    <address-form-ctrl ng-info="addressParam"></address-form-ctrl>
+    <business-notification-form-ctrl ng-info="businessNotificationParam"></business-notification-form-ctrl>
 </div>
 <div class="modal-footer">
     <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' | translateText}}</button>

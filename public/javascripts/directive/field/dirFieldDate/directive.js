@@ -27,6 +27,11 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                         }
                     });
 
+                    scope.isActive = function(){
+
+                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                    };
+
 
 
                     scope.$watch('getInfo().field', function () {
@@ -44,7 +49,7 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                     });
                     scope.isValid = function () {
                         var isValid;
-                        if (scope.getInfo().disabled === true || scope.getInfo().hidden === true) {
+                        if (scope.getInfo().disabled === true || scope.isActive() === false) {
                             scope.getInfo().isValid = true;
                             return;
                         }

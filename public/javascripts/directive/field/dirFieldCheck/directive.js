@@ -22,6 +22,11 @@ myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
                         scope.getInfo().field = "";
                     }
 
+                    scope.isActive = function(){
+
+                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                    };
+
                     scope.isValid = function () {
                         scope.getInfo().isValid = true;
                     };

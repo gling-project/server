@@ -4,6 +4,7 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.ListDTO;
 import be.lynk.server.dto.PromotionDTO;
+import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.Promotion;
@@ -83,16 +84,32 @@ public class PromotionRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result getAll() {
+    public Result getMine() {
 
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-
         Set<Promotion> promotions = business.getPromotions();
 
-        return ok(new ListDTO<PromotionDTO>(dozerService.map(promotions, PromotionDTO.class)));
+        ListDTO<PromotionDTO> promotionDTOListDTO = new ListDTO<>(dozerService.map(promotions, PromotionDTO.class));
+
+        return ok(promotionDTOListDTO);
     }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result delete(Long id){
+        //load
+        Promotion promotion = promotionService.findById(id);
+        if(promotion==null || !promotion.getBusiness().equals(((BusinessAccount)securityController.getCurrentUser()).getBusiness())){
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        promotionService.remove(promotion);
+
+        return ok(new ResultDTO());
+    }
+
 
 
 }

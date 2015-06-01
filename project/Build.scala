@@ -20,9 +20,9 @@ object ApplicationBuild extends Build {
     "org.springframework" % "spring-expression" % "4.1.6.RELEASE",
     "org.springframework" % "spring-orm" % "4.1.6.RELEASE",
     "org.springframework" % "spring-test" % "4.1.6.RELEASE",
-//    "org.springframework.security" % "spring-security-core" % "4.1.6.RELEASE",
+    //    "org.springframework.security" % "spring-security-core" % "4.1.6.RELEASE",
     "org.hibernate" % "hibernate-entitymanager" % "4.3.5.Final",
-//    "org.hibernate" % "hibernate-ehcache" % "4.3.5.Final",
+    //    "org.hibernate" % "hibernate-ehcache" % "4.3.5.Final",
     "org.apache.commons" % "commons-lang3" % "3.1",
     "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api" % "1.0.0.Final",
     "org.postgresql" % "postgresql" % "9.3-1101-jdbc41",
@@ -35,7 +35,12 @@ object ApplicationBuild extends Build {
     "net.sf.dozer" % "dozer" % "5.5.1",
     "com.jayway.facebooktestjavaapi" % "facebook-test-java-api" % "1.1.5",
     "com.mandrillapp.wrapper.lutung" % "lutung" % "0.0.5",
-    "com.google.maps" % "google-maps-services" % "0.1.7"
+    "com.google.maps" % "google-maps-services" % "0.1.7",
+    "org.slf4j" % "slf4j-api" % "1.7.7",
+    "com.google.code.gson" % "gson" % "2.2.4",
+    "org.slf4j" % "slf4j-api" % "1.7.7",
+    "commons-httpclient" % "commons-httpclient" % "3.1",
+    "com.google.code.geocoder-java" % "geocoder-java" % "0.16"
   )
 
   val main = play.Project(name, version, appDependencies)

@@ -1,17 +1,21 @@
-myApp.service("promotionService", function ($http, $flash,$rootScope) {
+myApp.service("businessNotificationService", function ($http, $flash,$rootScope) {
+
+    this.REFRESH_BUSINESS_NOTIFICAITON = "REFRESH_BUSINESS_NOTIFICAITON";
+
+    var self=this;
 
     this.add = function (dto, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/promotion",
+            'url': "/businessNotification",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
-            $rootScope.$broadcast('$refreshPromotion');
+            $rootScope.$broadcast(self.REFRESH_BUSINESS_NOTIFICAITON);
         })
             .error(function (data, status) {
                 $flash.error(data.message);
@@ -26,14 +30,14 @@ myApp.service("promotionService", function ($http, $flash,$rootScope) {
 
         $http({
             'method': "PUT",
-            'url': "/promotion/" + dto.id,
+            'url': "/businessNotification/" + dto.id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
-            $rootScope.$broadcast('$refreshPromotion');
+            $rootScope.$broadcast(self.REFRESH_BUSINESS_NOTIFICAITON);
         })
             .error(function (data, status) {
                 $flash.error(data.message);
@@ -47,7 +51,7 @@ myApp.service("promotionService", function ($http, $flash,$rootScope) {
     this.getMine = function (callbackSuccess, callbackError) {
         $http({
             'method': "GET",
-            'url': "/promotion/mine",
+            'url': "/businessNotification/mine",
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -66,7 +70,7 @@ myApp.service("promotionService", function ($http, $flash,$rootScope) {
     this.delete = function (dto,callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",
-            'url': "/promotion/"+dto.id,
+            'url': "/businessNotification/"+dto.id,
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -81,5 +85,4 @@ myApp.service("promotionService", function ($http, $flash,$rootScope) {
                 }
             });
     };
-
 });

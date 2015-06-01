@@ -40,6 +40,9 @@ public class Business extends AbstractEntity {
     @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
     private Set<Promotion> promotions;
 
+    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
+    private Set<BusinessNotification> businessNotification;
+
     public Set<Promotion> getPromotions() {
         return promotions;
     }
@@ -102,6 +105,14 @@ public class Business extends AbstractEntity {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Set<BusinessNotification> getBusinessNotification() {
+        return businessNotification;
+    }
+
+    public void setBusinessNotification(Set<BusinessNotification> businessNotification) {
+        this.businessNotification = businessNotification;
     }
 
     @Override

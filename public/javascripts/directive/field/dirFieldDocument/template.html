@@ -1,8 +1,10 @@
+<div class="input-text field_text row"
+     ng-class="{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}"
+     ng-hide="isActive() === false">
+    <div class="form-group row">
+        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">{{getInfo().fieldTitle |
+            translateText}}</label>
 
-
-<div class="input-text field_text row" ng-class="{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}" ng-hide="getInfo().isActive === false">
-    <div class="form-group">
-        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">{{getInfo().fieldTitle | translateText}}</label>
         <div class="col-md-6">
             <div ng-class="{'input-group':!!getInfo().money}">
                 <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="document-question-progress-bar">
@@ -10,18 +12,40 @@
                         <spa></spa>
                     </div>
                 </div>
-                <div ng-show="inDownload=== true && percent != 100" class="document-question-progress-percentage">{{percent}} %</div>
-                <div ng-show="inDownload=== true && percent == 100" >{{'--.field.document.inTreatment' | translateText}}</div>
-                <input
-                        name="{{ id }}"
-                        type="file"
-                        ng-file-select="onFileSelect($files)"
-                        ng-hide="inDownload === true || getInfo().disabled()"/>
-                <div ng-show="getInfo().field!=null">{{'--.field.document.success' | translateText}}</div>
+                <div ng-show="inDownload=== true && percent != 100" class="document-question-progress-percentage">
+                    {{percent}} %
+                </div>
+                <div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |
+                    translateText}}
+                </div>
+                <span class="btn btn-default btn-file">
+                    {{((getInfo().field!=null)?'--.download.button.update':'--.download.button.new') | translateText}}
+                    <input
+                            name="{{ id }}"
+                            type="file"
+                            ng-file-select="onFileSelect($files)"
+                            ng-hide="inDownload === true || getInfo().disabled()"/>
+                </span>
+
+                <div ng-show="success">{{'--.field.document.success' | translateText}}</div>
             </div>
         </div>
-        <div class="col-md-3 errors" ng-show="displayError()===true">{{getInfo().validationMessage | translateText}}</div>
+        <div class="col-md-3 errors" ng-show="displayError()===true">{{getInfo().validationMessage | translateText}}
+        </div>
     </div>
-    <div class="col-md-3 hidden-sm hidden-xs"></div>
-    <div class="col-md-6 help" ng-show="getInfo().details!=null">{{getInfo().details | translateText}}</div>
+
+    <div class="row">
+        <div class="col-md-3 hidden-sm hidden-xs" style="height: 40px"></div>
+        <div class="col-md-6 help">
+            <button
+                    type="button"
+                    ng-show="getInfo().field!=null && getInfo().field.isImage!=true"
+                    ng-click="download()"
+                    class="button">{{'--.field.document.download' | translateText}} {{getInfo().field.name}}
+            </button>
+
+            <img ng-show="getInfo().field!=null && getInfo().field.isImage==true" ng-src="{{fileCall}}"/>
+
+        </div>
+    </div>
 </div>

@@ -141,4 +141,20 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
+
+
+    this.openBusinessNotificationModal = function(businessNotification){
+        var resolve = {
+            dto: function () {
+                return businessNotification;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/BusinessNotificationModal/view.html",
+            controller: "BusinessNotificationModalCtrl",
+            size:"l",
+            resolve: resolve
+        });
+    };
+
 });

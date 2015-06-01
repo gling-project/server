@@ -46,6 +46,8 @@ public class LoginRestController extends AbstractRestController {
     private BusinessCategoryService businessCategoryService;
     @Autowired
     private StoredFileService storedFileService;
+    @Autowired
+    private LocalizationService localizationService;
 
     @Transactional
     public Result forgotPassword() {
@@ -184,6 +186,20 @@ public class LoginRestController extends AbstractRestController {
     }
 
     @Transactional
+    public Result testAddress() {
+        AddressDTO addressDTO = extractDTOFromRequest(AddressDTO.class);
+        Address address = dozerService.map(addressDTO, Address.class);
+        //TODO temp
+        address.setCountry("BELGIUM");
+
+        //control address
+        if (!localizationService.validAddress(address)) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+        }
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
     public Result businessRegistration() {
         BusinessRegistrationDTO dto = extractDTOFromRequest(BusinessRegistrationDTO.class);
 
@@ -194,6 +210,11 @@ public class LoginRestController extends AbstractRestController {
         Business business = dozerService.map(dto.getBusiness(), Business.class);
         //TODO temp
         business.getAddress().setCountry("BELGIUM");
+
+        //control address
+        if (!localizationService.validAddress(business.getAddress())) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+        }
 
         //add categories
         business.setBusinessCategories(new HashSet<>());
@@ -232,6 +253,11 @@ public class LoginRestController extends AbstractRestController {
             Address address = dozerService.map(dto.getAddress(), Address.class);
             //TODO temp
             address.setCountry("BELGIUM");
+
+            //control address
+            if (!localizationService.validAddress(address)) {
+                throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+            }
 
             account.getAddresses().add(address);
         }

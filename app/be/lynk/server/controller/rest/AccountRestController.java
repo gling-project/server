@@ -9,6 +9,7 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.service.AddressService;
 import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.LoginCredentialService;
+import be.lynk.server.service.impl.LocalizationServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
@@ -36,6 +37,8 @@ public class
     private AddressService addressService;
     @Autowired
     private CustomerInterestService customerInterestService;
+    @Autowired
+    private LocalizationServiceImpl localizationService;
 
 
     @Transactional
@@ -148,20 +151,26 @@ public class
     public Result addAddress() {
         AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
 
-        Address map = dozerService.map(dto, Address.class);
+        Address address = dozerService.map(dto, Address.class);
 
         //TODO control address
         //TODO temp
-        map.setCountry("BELGIUM");
+        address.setCountry("BELGIUM");
+
+
+        //control address
+        if (!localizationService.validAddress(address)) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+        }
 
         CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
-        currentUser.getAddresses().add(map);
+        currentUser.getAddresses().add(address);
 
         accountService.saveOrUpdate(currentUser);
 
-        Logger.info("my new address : " + map);
+        Logger.info("my new address : " + address);
 
-        return ok(dozerService.map(map, AddressDTO.class));
+        return ok(dozerService.map(address, AddressDTO.class));
     }
 
     @Transactional
@@ -193,16 +202,17 @@ public class
 
         AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
 
-        //TODO control address
-
         Address address = addressService.findById(id);
         address.setCity(dto.getCity());
         address.setStreet(dto.getStreet());
         address.setName(dto.getName());
         address.setZip(dto.getZip());
 
-        //TODO edit country
 
+        //control address
+        if (!localizationService.validAddress(address)) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+        }
 
         addressService.saveOrUpdate(address);
 

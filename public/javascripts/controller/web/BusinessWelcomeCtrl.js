@@ -1,4 +1,4 @@
-myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,businessService,modalService,promotionService,$rootScope) {
+myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,businessService,modalService,promotionService,$rootScope,businessNotificationService) {
 
     $scope.model = accountService.model;
 
@@ -18,7 +18,7 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     };
 
     $scope.editAddress = function (address) {
-        modalService.addressModal(true, address);
+        modalService.addressModal(false, address);
     };
 
     $scope.businessEdit = function () {
@@ -54,7 +54,7 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     };
 
     $scope.loadPromotion = function(){
-        promotionService.getAll(function(data){
+        promotionService.getMine(function(data){
             $scope.promotions = data;
         });
     };
@@ -67,6 +67,36 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     $scope.editPromotion = function(promotion){
         modalService.openPromotionModal(promotion);
     };
+
+    $scope.deletePromotion = function(promotion){
+        promotionService.delete(promotion);
+    };
+
+    //
+    // business notification
+    //
+    $scope.addBusinessNotification = function(){
+        modalService.openBusinessNotificationModal(null);
+    };
+
+    $scope.loadBusinessNotification = function(){
+        businessNotificationService.getMine(function(data){
+            $scope.businessNotifications = data;
+        });
+    };
+    $scope.loadBusinessNotification();
+
+    $rootScope.$on(businessNotificationService.REFRESH_BUSINESS_NOTIFICAITON,function(){
+        $scope.loadBusinessNotification();
+    });
+
+    $scope.editBusinessNotification = function(businessNotification){
+        modalService.openBusinessNotificationModal(businessNotification);
+    };
+
+    $scope.deleteBusinessNotification = function(businessNotification){
+        businessNotificationService.delete(businessNotification);
+    }
 
 
 });

@@ -1,4 +1,4 @@
-myApp.directive("dirFieldText", function (directiveService, $timeout,modalService,$timeout) {
+myApp.directive("dirFieldText", function (directiveService, $timeout,modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -19,6 +19,11 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                     if(scope.getInfo().autoCompleteValue==undefined){
                         scope.getInfo().autoCompleteValue=[];
                     }
+
+                    scope.isActive = function(){
+
+                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                    };
 
                     scope.errorMessage = "";
                     scope.isValidationDefined = (scope.getInfo().validationRegex != null) || (scope.getInfo().validationFct != null);
@@ -41,7 +46,7 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                     scope.isValid = function () {
 
                         var isValid;
-                        if (scope.getInfo().disabled === true || scope.getInfo().hidden === true) {
+                        if (scope.getInfo().disabled === true || scope.isActive() === false) {
                             scope.getInfo().isValid = true;
                             return;
                         }

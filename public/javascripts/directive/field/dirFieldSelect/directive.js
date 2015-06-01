@@ -20,6 +20,11 @@ myApp.directive("dirFieldSelect", function (directiveService, $timeout,modalServ
                         scope.getInfo().autoCompleteValue=[];
                     }
 
+                    scope.isActive = function(){
+
+                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                    };
+
                     scope.errorMessage = "";
                     scope.isValidationDefined = (scope.getInfo().validationRegex != null) || (scope.getInfo().validationFct != null);
                     scope.hideIsValidIcon = !!scope.getInfo().hideIsValidIcon;
@@ -41,7 +46,7 @@ myApp.directive("dirFieldSelect", function (directiveService, $timeout,modalServ
                     scope.isValid = function () {
 
                         var isValid;
-                        if (scope.getInfo().disabled === true || scope.getInfo().hidden === true) {
+                        if (scope.getInfo().disabled === true || scope.isActive() === false) {
                             scope.getInfo().isValid = true;
                             return;
                         }

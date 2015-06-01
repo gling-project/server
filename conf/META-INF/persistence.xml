@@ -20,5 +20,18 @@
             <property name="javax.persistence.jdbc.password" value="play"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="cassandra_pu">
+        <provider>com.impetus.kundera.KunderaPersistence</provider>
+        <class>model.User</class>
+        <properties>
+            <property name="kundera.nodes" value="localhost"/>
+            <property name="kundera.port" value="9160"/>
+            <property name="kundera.keyspace" value="KunderaExamples"/>
+            <property name="kundera.dialect" value="cassandra"/>
+            <property name="kundera.client.lookup.class" value="com.impetus.client.cassandra.thrift.ThriftClientFactory" />
+            <property name="kundera.cache.provider.class" value="com.impetus.kundera.cache.ehcache.EhCacheProvider"/>
+            <property name="kundera.cache.config.resource" value="/ehcache-test.xml"/>
+        </properties>
+    </persistence-unit>
 
 </persistence>

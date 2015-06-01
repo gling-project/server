@@ -1,8 +1,9 @@
 package be.lynk.server.service.impl;
 
-import be.lynk.server.model.entities.Account;
+import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.BusinessNotification;
 import be.lynk.server.model.entities.Promotion;
-import be.lynk.server.service.PromotionService;
+import be.lynk.server.service.BusinessNotificationService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
@@ -13,23 +14,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Created by florian on 23/05/15.
+ * Created by florian on 1/06/15.
  */
 @Service
-public class PromotionServiceImpl extends CrudServiceImpl<Promotion> implements PromotionService {
+public class BusinessNotificationServiceImpl extends CrudServiceImpl<BusinessNotification> implements BusinessNotificationService {
 
     @Override
-    public List<Promotion> findActivePromotion() {
+    public List<BusinessNotification> findActiveNotification() {
 
         LocalDateTime now = LocalDateTime.now();
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-        CriteriaQuery<Promotion> cq = cb.createQuery(Promotion.class);
-        Root<Promotion> from = cq.from(Promotion.class);
+        CriteriaQuery<BusinessNotification> cq = cb.createQuery(BusinessNotification.class);
+        Root<BusinessNotification> from = cq.from(BusinessNotification.class);
         cq.select(from);
         cq.where(cb.lessThan(from.get("startDate"), now));
         cq.where(cb.greaterThan(from.get("endDate"), now));
-        List<Promotion> resultList = JPA.em().createQuery(cq).getResultList();
+        List<BusinessNotification> resultList = JPA.em().createQuery(cq).getResultList();
         return resultList ;
     }
 }

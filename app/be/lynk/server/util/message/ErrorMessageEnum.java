@@ -22,7 +22,8 @@ public enum ErrorMessageEnum {
     FACEBOOK_NOT_ACCOUNT_FOUND("--.error.facebook.notAccountFound"),
     EMAIL_UNKNOWN("--.error.account.emailUnknown"),
     ACCOUNT_WITHOUT_LOGIN_CREDENTIAL("--.error.account.withoutLoginCredential"),
-    GOOGLE_MAP_ERROR("--.error.googleMap");
+    GOOGLE_MAP_ERROR("--.error.googleMap"),
+    WRONG_ADDRESS("--.error.wrongAddress");
 
     private final String key;
 

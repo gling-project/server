@@ -30,6 +30,9 @@ public class BusinessDTO extends DTO {
 
     private StoredFileDTO image;
 
+    public BusinessDTO() {
+    }
+
     public StoredFileDTO getImage() {
         return image;
     }

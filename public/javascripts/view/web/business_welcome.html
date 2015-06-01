@@ -75,8 +75,6 @@
     </div>
 
 
-
-
     <div class="custom-panel">
         <h4>{{'--.business.profile.promotion' | translateText}}</h4>
 
@@ -86,13 +84,48 @@
                 translateText}}
             </button>
 
-            <div ng-repeat="promotion in promotions" style="border: 1px solid #006ee6;background-color: #007fff;padding:3px;margin: 3px;color: #000000">
+            <div ng-repeat="promotion in promotions"
+                 style="border: 1px solid #006ee6;background-color: #007fff;padding:3px;margin: 3px;color: #000000">
                 <div>{{promotion.quantity}} {{promotion.unit}} of {{promotion.description}}</div>
-                <div>{{promotion.price}} € <span ng-show="promotion.minimalQuantity!=1">(min : {{promotion.minimalQuantity}} {{promotion.unit}})</span></div>
+                <div>{{promotion.price}} € <span ng-show="promotion.minimalQuantity!=1">(min : {{promotion.minimalQuantity}} {{promotion.unit}})</span>
+                </div>
                 <div>{{promotion.startDate | date:'medium'}} => {{promotion.endDate | date:'medium'}}</div>
 
-                <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="businessParam.disabled"
+                <button class="btn btn-primary glyphicon glyphicon-edit"
                         ng-click="editPromotion(promotion)">{{'--.generic.edit' |translateText}}
+                </button>
+                <button class="btn btn-primary glyphicon glyphicon-edit"
+                        ng-click="deletePromotion(promotion)">{{'--.generic.delete' |translateText}}
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="custom-panel">
+        <h4>{{'--.business.profile.businessNotification' | translateText}}</h4>
+
+
+        <div>
+            <button class="btn btn-primary" ng-click="addBusinessNotification()">
+                {{'--.business.welcome.addBusinessNotification' |
+                translateText}}
+            </button>
+            <div ng-repeat="businessNotification in businessNotifications"
+                 style="border: 1px solid #006ee6;background-color: #007fff;padding:3px;margin: 3px;color: #000000">
+                <div>{{businessNotification .description}}</div>
+                <div>{{businessNotification .startDate | date:'medium'}} => {{businessNotification .endDate |
+                    date:'medium'}}
+                </div>
+
+                <button class="btn btn-primary glyphicon glyphicon-edit"
+                        ng-click="editBusinessNotification(businessNotification )">
+                    {{'--.generic.edit' |translateText}}
+                </button>
+                <button class="btn btn-primary glyphicon glyphicon-edit"
+                        ng-click="deleteBusinessNotification(businessNotification )">
+                    {{'--.generic.delete' |translateText}}
                 </button>
             </div>
 

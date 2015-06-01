@@ -5,6 +5,11 @@ import be.lynk.server.model.entities.Address;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.maps.*;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.DistanceMatrixElement;
@@ -13,6 +18,7 @@ import org.springframework.stereotype.Service;
 import play.Configuration;
 import play.Logger;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +34,21 @@ public class LocalizationServiceImpl implements LocalizationService {
 
     @Override
     public boolean validAddress(Address address) {
-        return false;
+        final Geocoder geocoder = new Geocoder();
+        String addressString = addressToString(address);
+
+        GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
+                .setAddress(addressString)
+                .setLanguage("en")
+                .getGeocoderRequest();
+        try {
+            GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+            Logger.info("Response:"+geocoderResponse.getStatus());
+            return geocoderResponse.getStatus().equals(GeocoderStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new MyRuntimeException("fatal error : " + e.getMessage());
+        }
     }
 
     @Override
