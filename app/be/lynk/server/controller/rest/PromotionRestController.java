@@ -14,6 +14,7 @@ import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
@@ -40,8 +41,8 @@ public class PromotionRestController extends AbstractRestController {
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        if(promotion.getImage()!=null){
-            promotion.setImage(storedFileService.findById(promotion.getImage().getId()));
+        if(promotion.getIllustration()!=null){
+            promotion.setIllustration(storedFileService.findById(promotion.getIllustration().getId()));
         }
         promotion.setBusiness(business);
 
@@ -74,7 +75,7 @@ public class PromotionRestController extends AbstractRestController {
         promotionToEdit.setPrice(promotion.getPrice());
         promotionToEdit.setQuantity(promotion.getQuantity());
         promotionToEdit.setStartDate(promotion.getStartDate());
-        promotionToEdit.setImage(promotion.getImage());
+        promotionToEdit.setIllustration(promotion.getIllustration());
         promotionToEdit.setUnit(promotion.getUnit());
 
         promotionService.saveOrUpdate(promotionToEdit);
@@ -92,6 +93,8 @@ public class PromotionRestController extends AbstractRestController {
         Set<Promotion> promotions = business.getPromotions();
 
         ListDTO<PromotionDTO> promotionDTOListDTO = new ListDTO<>(dozerService.map(promotions, PromotionDTO.class));
+
+        Logger.info("PROMOTION ççççççç :"+promotionDTOListDTO);
 
         return ok(promotionDTOListDTO);
     }

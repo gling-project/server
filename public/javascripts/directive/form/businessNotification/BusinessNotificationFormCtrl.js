@@ -49,9 +49,10 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                 return scope.fields.endDate.field >= scope.fields.startDate.field;
                             }
                         },
-                        illustration : {
+                        illustration: {
                             fieldTitle: "--.generic.image",
-                            size:60,
+                            validationMessage: '--.error.validation.image',
+                            size: 60,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             }

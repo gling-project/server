@@ -17,8 +17,8 @@ myApp.directive('promotionListCtrl', function ($rootScope, businessService, geol
 
                             businessService.findByPromotion(geolocationService.position, function (data) {
                                 for (var i in data) {
-                                    if (data[i].image!= null) {
-                                        data[i].image.link = "/file/" + data[i].image.id;
+                                    if (data[i].illustration!= null) {
+                                        data[i].illustration.link = "/file/" + data[i].illustration.id;
                                     }
                                     data[i].interval = (data[i].endDate - new Date()) / 1000;
                                 }

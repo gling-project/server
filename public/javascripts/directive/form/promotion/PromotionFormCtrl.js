@@ -86,8 +86,13 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, transla
                                 return scope.fields.endDate.field >= scope.fields.startDate.field;
                             }
                         },
-                        image : {
-                            size:60
+                        illustration : {
+                            fieldTitle: "--.generic.image",
+                            validationMessage: '--.error.validation.image',
+                            size: 60,
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            }
                         }
                     };
 
@@ -105,7 +110,6 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, transla
                                 scope.getInfo().dto[key] = obj.field;
                             }
                         }
-                        scope.getInfo().dto.image = scope.fields.image.dto;
                         scope.getInfo().isValid = validation;
                     }, true);
 
@@ -118,6 +122,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, transla
                         if (scope.getInfo().dto.unit != null)scope.fields.unit.field = scope.getInfo().dto.unit;
                         if (scope.getInfo().dto.startDate != null)scope.fields.startDate.field = scope.getInfo().dto.startDate;
                         if (scope.getInfo().dto.endDate != null)scope.fields.endDate.field = scope.getInfo().dto.endDate;
+                        if (scope.getInfo().dto.illustration != null)scope.fields.illustration.field = scope.getInfo().dto.illustration;
                     });
 
                     scope.$watch('getInfo().displayErrorMessage', function () {

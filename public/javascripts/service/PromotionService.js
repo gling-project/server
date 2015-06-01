@@ -1,4 +1,4 @@
-myApp.service("promotionService", function ($http, $flash,$rootScope) {
+myApp.service("promotionService", function ($http, $flash, $rootScope) {
 
     this.add = function (dto, callbackSuccess, callbackError) {
 
@@ -45,28 +45,32 @@ myApp.service("promotionService", function ($http, $flash,$rootScope) {
     };
 
     this.getMine = function (callbackSuccess, callbackError) {
-        $http({
+        var promise = $http({
             'method': "GET",
-            'url': "/promotion/mine",
+            'url': "/promotion",
             'headers': "Content-Type:application/json"
-        }).success(function (data, status) {
+        });
+        promise.success(function (data, status, headers, d) {
+            console.log("promotion");
+            console.log(d);
+            console.log(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
+        });
+        promise.error(function (data, status) {
+            $flash.error(data.message);
+            if (callbackError != null) {
+                callbackError(data, status);
+            }
+        });
     };
 
 
-    this.delete = function (dto,callbackSuccess, callbackError) {
+    this.delete = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",
-            'url': "/promotion/"+dto.id,
+            'url': "/promotion/" + dto.id,
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

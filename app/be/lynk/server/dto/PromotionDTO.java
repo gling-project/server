@@ -15,7 +15,7 @@ public class PromotionDTO extends DTO {
 
     private BusinessDTO business;
 
-    private StoredFileDTO image;
+    private StoredFileDTO illustration;
 
     @NotNull
     @Size(min = 1,max = 50,message = "--.validation.dto.size")
@@ -66,12 +66,12 @@ public class PromotionDTO extends DTO {
         this.business = business;
     }
 
-    public StoredFileDTO getImage() {
-        return image;
+    public StoredFileDTO getIllustration() {
+        return illustration;
     }
 
-    public void setImage(StoredFileDTO image) {
-        this.image = image;
+    public void setIllustration(StoredFileDTO illustration) {
+        this.illustration = illustration;
     }
 
     public String getDescription() {
@@ -133,7 +133,7 @@ public class PromotionDTO extends DTO {
     @Override
     public String toString() {
         return "Promotion{" +
-                "image=" + image +
+                "illustration=" + illustration +
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", unit='" + unit + '\'' +

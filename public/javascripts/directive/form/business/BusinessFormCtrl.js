@@ -1,4 +1,4 @@
-myApp.directive('businessFormCtrl', function ( $flash, directiveService,$timeout) {
+myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
 
     return {
         restrict: "E",

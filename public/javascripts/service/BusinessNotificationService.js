@@ -1,8 +1,8 @@
-myApp.service("businessNotificationService", function ($http, $flash,$rootScope) {
+myApp.service("businessNotificationService", function ($http, $flash, $rootScope) {
 
     this.REFRESH_BUSINESS_NOTIFICAITON = "REFRESH_BUSINESS_NOTIFICAITON";
 
-    var self=this;
+    var self = this;
 
     this.add = function (dto, callbackSuccess, callbackError) {
 
@@ -24,7 +24,7 @@ myApp.service("businessNotificationService", function ($http, $flash,$rootScope)
                 }
             });
 
-    }
+    };
 
     this.edit = function (dto, callbackSuccess, callbackError) {
 
@@ -49,28 +49,32 @@ myApp.service("businessNotificationService", function ($http, $flash,$rootScope)
     };
 
     this.getMine = function (callbackSuccess, callbackError) {
-        $http({
+        var promise = $http({
             'method': "GET",
-            'url': "/businessNotification/mine",
+            'url': "/businessNotification",
             'headers': "Content-Type:application/json"
-        }).success(function (data, status) {
+        });
+        promise.success(function (data, status, headers, d) {
+            console.log("notification");
+            console.log(d);
+            console.log(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
+        });
+        promise.error(function (data, status) {
+            $flash.error(data.message);
+            if (callbackError != null) {
+                callbackError(data, status);
+            }
+        });
     };
 
 
-    this.delete = function (dto,callbackSuccess, callbackError) {
+    this.delete = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",
-            'url': "/businessNotification/"+dto.id,
+            'url': "/businessNotification/" + dto.id,
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

@@ -35,7 +35,7 @@ public class Business extends AbstractEntity {
     private Set<BusinessCategory> businessCategories;
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-    private StoredFile image;
+    private StoredFile illustration;
 
     @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
     private Set<Promotion> promotions;
@@ -51,12 +51,12 @@ public class Business extends AbstractEntity {
         this.promotions = promotions;
     }
 
-    public StoredFile getImage() {
-        return image;
+    public StoredFile getIllustration() {
+        return illustration;
     }
 
-    public void setImage(StoredFile businessImage) {
-        this.image = businessImage;
+    public void setIllustration(StoredFile illustration) {
+        this.illustration = illustration;
     }
 
     public Set<BusinessCategory> getBusinessCategories() {
@@ -120,9 +120,13 @@ public class Business extends AbstractEntity {
         return "Business{" +
                 "account=" + account +
                 ", name='" + name + '\'' +
-                ", desc='" + description + '\'' +
+                ", description='" + description + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address=" + address +
+                ", businessCategories=" + businessCategories +
+                ", illustration=" + illustration +
+                ", promotions=" + promotions +
+                ", businessNotification=" + businessNotification +
                 '}';
     }
 }

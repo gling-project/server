@@ -62,15 +62,15 @@ myApp.service("businessService", function ($flash, $http, accountService) {
 
     }
 
-    this.editImage = function (dto, callbackSuccess, callbackError) {
+    this.editIllustration = function (dto, callbackSuccess, callbackError) {
 
         $http({
             'method': "PUT",
-            'url': "/business/image",
+            'url': "/business/illustration",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
-            accountService.getMyself().business.image = dto;
+            accountService.getMyself().business.illustration = dto;
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }

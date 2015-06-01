@@ -40,17 +40,17 @@ PUT           /customer/interest/:id        @be.lynk.server.controller.rest.Acco
 ## business
 PUT           /business                     @be.lynk.server.controller.rest.BusinessRestController.update()
 PUT           /business/category            @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory()
-PUT           /business/image               @be.lynk.server.controller.rest.BusinessRestController.editImage()
+PUT           /business/illustration        @be.lynk.server.controller.rest.BusinessRestController.editIllustration()
 POST          /business/promotions          @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
 ## promotion
-GET           /promotion/mine               @be.lynk.server.controller.rest.PromotionRestController.getMine()
+GET           /promotion                    @be.lynk.server.controller.rest.PromotionRestController.getMine()
 POST          /promotion                    @be.lynk.server.controller.rest.PromotionRestController.create()
 PUT           /promotion/:id                @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
 DELETE        /promotion/:id                @be.lynk.server.controller.rest.PromotionRestController.delete(id:Long)
 
 ## notificaiton
-GET           /businessNotification/mine    @be.lynk.server.controller.rest.BusinessNotificationRestController.getMine()
+GET           /businessNotification         @be.lynk.server.controller.rest.BusinessNotificationRestController.getMine()
 POST          /businessNotification         @be.lynk.server.controller.rest.BusinessNotificationRestController.create()
 PUT           /businessNotification/:id     @be.lynk.server.controller.rest.BusinessNotificationRestController.update(id:Long)
 DELETE        /businessNotification/:id     @be.lynk.server.controller.rest.BusinessNotificationRestController.delete(id:Long)

@@ -2,8 +2,9 @@
      ng-class="{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}"
      ng-hide="isActive() === false">
     <div class="form-group row">
-        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">{{getInfo().fieldTitle |
-            translateText}}</label>
+        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">
+            {{getInfo().fieldTitle |translateText}}
+        </label>
 
         <div class="col-md-6">
             <div ng-class="{'input-group':!!getInfo().money}">
@@ -18,13 +19,14 @@
                 <div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |
                     translateText}}
                 </div>
-                <span class="btn btn-default btn-file">
+                <span class="btn btn-default btn-file field-document-btn"
+                      ng-hide="inDownload === true || getInfo().disabled()">
                     {{((getInfo().field!=null)?'--.download.button.update':'--.download.button.new') | translateText}}
                     <input
                             name="{{ id }}"
                             type="file"
                             ng-file-select="onFileSelect($files)"
-                            ng-hide="inDownload === true || getInfo().disabled()"/>
+                            />
                 </span>
 
                 <div ng-show="success">{{'--.field.document.success' | translateText}}</div>
@@ -36,7 +38,7 @@
 
     <div class="row">
         <div class="col-md-3 hidden-sm hidden-xs" style="height: 40px"></div>
-        <div class="col-md-6 help">
+        <div class="col-md-6 help" style="padding-top: 10px;text-align: center">
             <button
                     type="button"
                     ng-show="getInfo().field!=null && getInfo().field.isImage!=true"

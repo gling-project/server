@@ -16,7 +16,7 @@ public class Promotion extends AbstractEntity {
     private Business business;
 
     @ManyToOne
-    private StoredFile image;
+    private StoredFile illustration;
 
     @Basic(optional = false)
     private String description;
@@ -54,12 +54,12 @@ public class Promotion extends AbstractEntity {
         this.business = business;
     }
 
-    public StoredFile getImage() {
-        return image;
+    public StoredFile getIllustration() {
+        return illustration;
     }
 
-    public void setImage(StoredFile storedFile) {
-        this.image = storedFile;
+    public void setIllustration(StoredFile illustration) {
+        this.illustration = illustration;
     }
 
     public String getDescription() {
@@ -121,7 +121,7 @@ public class Promotion extends AbstractEntity {
     @Override
     public String toString() {
         return "Promotion{" +
-                "storedFile=" + image +
+                "illustration=" + illustration +
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", unit='" + unit + '\'' +

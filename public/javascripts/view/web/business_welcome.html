@@ -1,4 +1,4 @@
-<div class="content-block" ng-controller="BusinessWelcomeCtrl">
+<div class="content-block">
 
 
     <div class="row">
@@ -58,17 +58,17 @@
 
         <div>
 
-            <download-form-ctrl ng-info="imageParam"></download-form-ctrl>
+            <dir-field-document ng-info="illustrationParam"></dir-field-document>
 
-            <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="imageParam.disabled"
-                    ng-click="imageEdit()">{{'--.generic.edit' |
+            <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="illustrationDisable"
+                    ng-click="illustrationEdit()">{{'--.generic.edit' |
                 translateText}}
             </button>
-            <button class="btn btn-primary" ng-hide="imageParam.disabled" ng-click="imageSave()">
+            <button class="btn btn-primary" ng-hide="illustrationDisable" ng-click="illustrationSave()">
                 {{'--.generic.save' |
                 translateText}}
             </button>
-            <button class="btn btn-primary" ng-hide="imageParam.disabled" ng-click="imageCancel()">
+            <button class="btn btn-primary" ng-hide="illustrationDisable" ng-click="illustrationCancel()">
                 {{'--.generic.cancel' | translateText}}
             </button>
         </div>

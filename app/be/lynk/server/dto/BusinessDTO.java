@@ -28,17 +28,17 @@ public class BusinessDTO extends DTO {
 
     private AddressDTO address;
 
-    private StoredFileDTO image;
+    private StoredFileDTO illustration;
 
     public BusinessDTO() {
     }
 
-    public StoredFileDTO getImage() {
-        return image;
+    public StoredFileDTO getIllustration() {
+        return illustration;
     }
 
-    public void setImage(StoredFileDTO image) {
-        this.image = image;
+    public void setIllustration(StoredFileDTO illustration) {
+        this.illustration = illustration;
     }
 
     private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
@@ -86,10 +86,12 @@ public class BusinessDTO extends DTO {
     @Override
     public String toString() {
         return "BusinessDTO{" +
-                "address=" + address +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", phone='" + phone + '\'' +
-                ", desc='" + description + '\'' +
-                ", name='" + name + '\'' +
+                ", address=" + address +
+                ", illustration=" + illustration +
+                ", businessCategories=" + businessCategories +
                 '}';
     }
 }

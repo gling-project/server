@@ -40,19 +40,19 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result editImage() {
+    public Result editIllustration() {
         StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
 
-        StoredFile byId = storedFileService.findById(dto.getId());
+        StoredFile storedFile = storedFileService.findById(dto.getId());
 
-        if (!byId.getIsImage() ||
-                !byId.getAccount().equals(securityController.getCurrentUser())) {
+        if (!storedFile.getIsImage() ||
+                !storedFile.getAccount().equals(securityController.getCurrentUser())) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
         BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
         Business business = businessAccount.getBusiness();
-        business.setImage(byId);
+        business.setIllustration(storedFile);
 
         return ok(new ResultDTO());
     }

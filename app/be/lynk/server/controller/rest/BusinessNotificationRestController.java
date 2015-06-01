@@ -13,6 +13,7 @@ import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
@@ -84,6 +85,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
         Set<BusinessNotification> businessNotifications = business.getBusinessNotification();
 
         ListDTO<BusinessNotificationDTO> businessNotificationDTOListDTO = new ListDTO<>(dozerService.map(businessNotifications, BusinessNotificationDTO.class));
+
+        Logger.info("NOTIFICATION ççççççç :" + businessNotificationDTOListDTO);
 
         return ok(businessNotificationDTOListDTO);
     }

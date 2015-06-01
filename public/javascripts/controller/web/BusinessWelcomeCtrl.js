@@ -1,24 +1,14 @@
 myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,businessService,modalService,promotionService,$rootScope,businessNotificationService) {
 
     $scope.model = accountService.model;
+    //
 
+    //
+    // businessParam
+    //
     $scope.businessParam={
         disabled: true,
         dto : angular.copy( accountService.getMyself().business)
-    };
-
-    $scope.businessCategoryParam={
-        disabled: true,
-        value : angular.copy($scope.model.myself.business.businessCategories)
-    };
-
-    $scope.imageParam = {
-        disabled: true,
-        dto : angular.copy(accountService.getMyself().business.image)
-    };
-
-    $scope.editAddress = function (address) {
-        modalService.addressModal(false, address);
     };
 
     $scope.businessEdit = function () {
@@ -35,20 +25,53 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
         $scope.businessParam.disabled = true;
     };
 
-    $scope.imageEdit = function () {
-        $scope.imageParam.disabled = false;
+    //
+    // businessParam
+    //
+    $scope.editAddress = function (address) {
+        modalService.addressModal(false, address);
     };
 
-    $scope.imageSave = function () {
-        $scope.imageParam.disabled = true;
-        businessService.editImage($scope.imageParam.dto);
+    //
+    // business category
+    //
+    $scope.businessCategoryParam={
+        disabled: true,
+        value : angular.copy($scope.model.myself.business.businessCategories)
     };
 
-    $scope.imageCancel = function () {
-        $scope.imageParam.dto=angular.copy(accountService.getMyself().business.image);
-        $scope.imageParam.disabled = true;
+    //
+    // illustration
+    //
+    $scope.illustrationDisable = true;
+    $scope.illustrationParam = {
+        fieldTitle: "--.generic.image",
+        validationMessage: '--.error.validation.image',
+        size: 60,
+        disabled: function(){
+            return $scope.illustrationDisable;
+        },
+        field: angular.copy(accountService.getMyself().business.illustration)
     };
 
+
+    $scope.illustrationEdit = function () {
+        $scope.illustrationDisable = false;
+    };
+
+    $scope.illustrationSave = function () {
+        $scope.illustrationDisable = true;
+        businessService.editIllustration($scope.illustrationParam.field);
+    };
+
+    $scope.illustrationCancel = function () {
+        $scope.illustrationParam.dto=angular.copy(accountService.getMyself().business.illustration);
+        $scope.illustrationDisable = true;
+    };
+
+    //
+    // promotion
+    //
     $scope.addPromotion = function(){
         modalService.openPromotionModal(null);
     };
