@@ -42,6 +42,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         businessNotification.setBusiness(((BusinessAccount) securityController.getCurrentUser()).getBusiness());
 
         if (businessNotification.getIllustration() != null) {
+            //TODO control file
             businessNotification.setIllustration(storedFileService.findById(businessNotification.getIllustration().getId()));
         }
 
@@ -69,7 +70,11 @@ public class BusinessNotificationRestController extends AbstractRestController {
         businessNotificationToEdit.setDescription(businessNotification.getDescription());
         businessNotificationToEdit.setEndDate(businessNotification.getEndDate());
         businessNotificationToEdit.setStartDate(businessNotification.getStartDate());
-        businessNotificationToEdit.setIllustration(businessNotification.getIllustration());
+        if (businessNotification.getIllustration() != null) {
+            //TODO control file
+            businessNotification.setIllustration(storedFileService.findById(businessNotification.getIllustration().getId()));
+        }
+
 
         businessNotificationService.saveOrUpdate(businessNotificationToEdit);
 

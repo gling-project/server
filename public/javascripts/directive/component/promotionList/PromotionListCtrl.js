@@ -2,6 +2,7 @@ myApp.directive('promotionListCtrl', function ($rootScope, businessService, geol
 
     return {
         restrict: "E",
+        scope: {},
         templateUrl: "/assets/javascripts/directive/component/promotionList/template.html",
         replace: true,
         transclude: true,

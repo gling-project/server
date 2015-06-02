@@ -6,7 +6,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService) {
         modalService.openCustomerRegistrationModal();
     };
 
-    $scope.clock_info = {
+    $scope.clock_info = {}
 
-    }
 });

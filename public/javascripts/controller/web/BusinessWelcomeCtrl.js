@@ -1,4 +1,4 @@
-myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,businessService,modalService,promotionService,$rootScope,businessNotificationService) {
+myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,businessService,modalService,promotionService,$rootScope,businessNotificationService,$timeout) {
 
     $scope.model = accountService.model;
     //
@@ -107,7 +107,9 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
             $scope.businessNotifications = data;
         });
     };
-    $scope.loadBusinessNotification();
+    $timeout(function () {
+        $scope.loadBusinessNotification();
+    },100);
 
     $rootScope.$on(businessNotificationService.REFRESH_BUSINESS_NOTIFICAITON,function(){
         $scope.loadBusinessNotification();
