@@ -12,6 +12,7 @@ import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -23,7 +24,7 @@ import java.util.Set;
 /**
  * Created by florian on 1/06/15.
  */
-@Controller
+@Component
 public class BusinessNotificationRestController extends AbstractRestController {
 
     @Autowired
@@ -77,7 +78,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result getMine() {
+    public Result get() {
+
+        Logger.info("REQUEST    BUSINESS    : : "+request().uri());
 
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();

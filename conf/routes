@@ -50,7 +50,7 @@ PUT           /promotion/:id                @be.lynk.server.controller.rest.Prom
 DELETE        /promotion/:id                @be.lynk.server.controller.rest.PromotionRestController.delete(id:Long)
 
 ## notificaiton
-GET           /businessNotification         @be.lynk.server.controller.rest.BusinessNotificationRestController.getMine()
+GET           /businessNotification         @be.lynk.server.controller.rest.BusinessNotificationRestController.get()
 POST          /businessNotification         @be.lynk.server.controller.rest.BusinessNotificationRestController.create()
 PUT           /businessNotification/:id     @be.lynk.server.controller.rest.BusinessNotificationRestController.update(id:Long)
 DELETE        /businessNotification/:id     @be.lynk.server.controller.rest.BusinessNotificationRestController.delete(id:Long)

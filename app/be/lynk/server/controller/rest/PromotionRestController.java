@@ -13,6 +13,7 @@ import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -23,7 +24,7 @@ import java.util.Set;
 /**
  * Created by florian on 23/05/15.
  */
-@Controller
+@Component
 public class PromotionRestController extends AbstractRestController {
 
     @Autowired
@@ -87,6 +88,8 @@ public class PromotionRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result getMine() {
 
+        Logger.info("REQUEST    PROMOTION    : : "+request().uri());
+
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
@@ -94,7 +97,7 @@ public class PromotionRestController extends AbstractRestController {
 
         ListDTO<PromotionDTO> promotionDTOListDTO = new ListDTO<>(dozerService.map(promotions, PromotionDTO.class));
 
-        Logger.info("PROMOTION ççççççç :"+promotionDTOListDTO);
+        Logger.info("PROMOTION ------ :"+promotionDTOListDTO);
 
         return ok(promotionDTOListDTO);
     }

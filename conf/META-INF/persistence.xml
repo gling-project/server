@@ -9,7 +9,7 @@
                  <!--xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">-->
 
     <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <non-jta-data-source>DefaultDS</non-jta-data-source>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
@@ -18,19 +18,6 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/project"/>
             <property name="javax.persistence.jdbc.user" value="play"/>
             <property name="javax.persistence.jdbc.password" value="play"/>
-        </properties>
-    </persistence-unit>
-    <persistence-unit name="cassandra_pu">
-        <provider>com.impetus.kundera.KunderaPersistence</provider>
-        <class>model.User</class>
-        <properties>
-            <property name="kundera.nodes" value="localhost"/>
-            <property name="kundera.port" value="9160"/>
-            <property name="kundera.keyspace" value="KunderaExamples"/>
-            <property name="kundera.dialect" value="cassandra"/>
-            <property name="kundera.client.lookup.class" value="com.impetus.client.cassandra.thrift.ThriftClientFactory" />
-            <property name="kundera.cache.provider.class" value="com.impetus.kundera.cache.ehcache.EhCacheProvider"/>
-            <property name="kundera.cache.config.resource" value="/ehcache-test.xml"/>
         </properties>
     </persistence-unit>
 

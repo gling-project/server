@@ -50,7 +50,7 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
 
     this.getMine = function (callbackSuccess, callbackError) {
         var promise = $http({
-            'method': "GET",
+            'method': "POST",
             'url': "/businessNotification",
             'headers': "Content-Type:application/json"
         });

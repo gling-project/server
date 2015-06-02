@@ -7,6 +7,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -42,9 +43,10 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
 
+//        ctx = new AnnotationConfigApplicationContext(AppConfig.class, DataConfig.class);
 
         final String configLocation = Play.application().configuration().getString("spring.context.location");
-        ctx = new ClassPathXmlApplicationContext(configLocation);
+        ctx = new ClassPathXmlApplicationContext(configLocation);//new AnnotationConfigApplicationContext(AppConfig.class, DataConfig.class);//
         play.Logger.info("Spring Startup @" + new Date(ctx.getStartupDate()));
 
 
@@ -79,10 +81,11 @@ public class Global extends GlobalSettings {
 
     @Override
     public <A> A getControllerInstance(Class<A> clazz) {
+//        return ctx.getBean(clazz);
 
-        play.Logger.debug("Spring getControllerInstance called @" + new Date(ctx.getStartupDate()));
-        //return applicationContext.getBean(clazz);
-
+        play.Logger.debug("Spring getControllerInstance called @" + new Date(ctx.getStartupDate())+" for class "+clazz.getName());
+//        //return applicationContext.getBean(clazz);
+//
         // filter clazz annotation to avoid messing win non Spring annotation
         if (clazz.isAnnotationPresent(Component.class)
                 || clazz.isAnnotationPresent(Controller.class)
