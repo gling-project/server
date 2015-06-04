@@ -232,8 +232,8 @@
 --.promotion.quantity=Quantité
 --.promotion.unit=Unité (optionel)
 --.promotion.startDate=Date de début
---.promotion.offPercent=Prix de la promotion
---.promotion.validation.offPercent=Le prix de la promotion doit être inférieur au prix de base
+--.promotion.offPrice=Prix de la promotion
+--.promotion.validation.offPrice=Le prix de la promotion doit être inférieur au prix de base
 --.promotion.offPercent=Réduction
 --.promotion.validation.minimalQuantityMustBeLowerThanQuantity=La quantité minimale doit être inférieure à la quantité totale proposées.
 --.promotion.illustration=Illustration (optionnelle)

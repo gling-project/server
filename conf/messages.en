@@ -262,8 +262,8 @@
 --.promotion.quantity=Quantity
 --.promotion.unit=Unit (optional)
 --.promotion.startDate=Start date
---.promotion.offPercent=offPercent?
---.promotion.validation.offPercent=promotion.validation.offPercent
+--.promotion.offPrice=offPrice?
+--.promotion.validation.offPrice=promotion.validation.offPrice
 --.promotion.offPercent=promotion.offPercent
 --.promotion.validation.minimalQuantityMustBeLowerThanQuantity=promotion.validation.minimalQuantityMustBeLowerThanQuantity
 --.promotion.illustration=Illustration (optional)

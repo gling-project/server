@@ -92,7 +92,9 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     };
 
     $scope.deletePromotion = function(promotion){
-        promotionService.delete(promotion);
+        promotionService.delete(promotion,function(){
+            $scope.loadPromotion();
+        });
     };
 
     //
@@ -120,7 +122,9 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     };
 
     $scope.deleteBusinessNotification = function(businessNotification){
-        businessNotificationService.delete(businessNotification);
+        businessNotificationService.delete(businessNotification,function(){
+            $scope.loadBusinessNotification();
+        });
     }
 
 
