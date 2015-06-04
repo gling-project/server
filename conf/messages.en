@@ -61,6 +61,9 @@
 --.generic.remove=Remove
 --.generic.login.btn=Logging
 --.generic.validation.max=Maximum {0} characters
+--.generic.image=Image
+--.generic.delete=Delete
+--.generic.validation.numberExpected=Only number
 
 ## login modal
 --.loginModal.title=Login you
@@ -131,14 +134,14 @@
 --.validation.dto.password=Between 6 and 18 letters, numbers or -_%
 
 ##  modal/LoginModal/LoginModal.js (//logout facebook in case)
---.login.flash.success=You are now logged !
+--.login.flash.success=You are now logged \!
 
 ##  modal/HelpModal/view.html
 --.helpModal.title=Help
 
 ##  be/flo/project/dto/AccountDTO.java
 --.validation.dto.size=Between {0} and {1} charaters
---.validation.dto.notNull=Cannot be empty
+--.validation.dto.notNull=This field cannot be empty
 --.validation.dto.email=Email expected
 
 ##  be/flo/project/util/message/ErrorMessageEnum.java
@@ -156,8 +159,8 @@
 --.downloadModal.title=Download file
 
 ##  view/business_registration.html
---.business.registration.newBusiness=I want to join the Lÿnk community !
---.business.registration.title=You want to join the Lÿnk community? Sign up your shop now !
+--.business.registration.newBusiness=I want to join the Lÿnk community \!
+--.business.registration.title=You want to join the Lÿnk community? Sign up your shop now \!
 --.business.registration.oldBusiness=I already have an account and I want to log in me
 
 ##  view/business_welcome.html
@@ -188,10 +191,10 @@
 
 ##  view/home.html
 --.home.toBusiness.btn=I am a business
---.home.main.description=Welcome to Lÿnk !! ....
+--.home.main.description=Welcome to Lÿnk \!\! ....
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
---.customer.registrationModal.alredyRegistred.success=This facebook account is already registered. You are now connected!
+--.customer.registrationModal.alredyRegistred.success=This facebook account is already registered. You are now connected\!
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Phone number expected
@@ -202,6 +205,7 @@
 --.error.account.withoutLoginCredential=This accompt uses the Facebook connection system and doesn't use any password.
 --.error.account.emailUnknown=This email is unkown
 --.error.googleMap=Google map was thrown an error.
+--.error.wrongAddress=This address is unknown by Google Map. Please Choose another one
 
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -218,6 +222,9 @@
 --.form.address.field.zip=Zip code
 --.form.address.field.city=City
 #--.address.form.name.help=Lÿnk
+--.address.type.home=My home
+--.address.type.other=Other...
+--.address.type.work=My office
 
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sub category
@@ -250,11 +257,18 @@
 
 ##  directive/form/promotion/PromotionFormCtrl.js
 --.promotion.minimalQuantity=Minimal quantity
---.promotion.price=Price
+#--.promotion.price=Price
 --.promotion.endDate=End date
 --.promotion.quantity=Quantity
 --.promotion.unit=Unit (optional)
 --.promotion.startDate=Start date
+--.promotion.offPercent=offPercent?
+--.promotion.validation.offPercent=promotion.validation.offPercent
+--.promotion.offPercent=promotion.offPercent
+--.promotion.validation.minimalQuantityMustBeLowerThanQuantity=promotion.validation.minimalQuantityMustBeLowerThanQuantity
+--.promotion.illustration=Illustration (optional)
+--.promotion.originalUnitPrice=Original price
+--.promotion.validation.offPercent=promotion.validation.offPercent
 
 ##  view/web/home.html
 --.page.home.title=Home
@@ -269,9 +283,13 @@
 --.business.welcome.addPromotion=Add a promotion
 --.business.profile.promotion=Promotion
 --.business.profile.image=Image
+--.business.welcome.addBusinessNotification=Post a new notificaiton
+--.business.profile.businessNotification=Notifications
 
 ##  modal/PromotionModal/view.html
---.promotion.modal.title=Promotion
+#--.promotion.modal.title=Promotion
+--.promotion.modal.title.create=Create a new promotion
+--.promotion.modal.title.update=Update a promotion
 
 ##  view/mobile/customer_registration.html
 --.page.customer_registration.title=Sign up
@@ -287,4 +305,23 @@
 --.mobile.welcome.toBusinessRegistration.desc=Your have a business and want to joint the Lynk community ? Try it for free\!
 --.mobile.welcome.toBusinessRegistration.btn=Register your business
 --.mobile.welcome.toCustomerRegistration.desc=Not yet an account Lynk ?
+
+
+##  directive/field/dirFieldDocument/template.html
+--.download.button.new=Upload a file
+--.download.button.update=Change the file
+
+##  modal/AddressModal/view.html
+--.account.address.modal.title.create=Create a new address
+--.account.address.modal.title.update=account.address.modal.title.update
+
+##  controller/web/BusinessWelcomeCtrl.js (//)
+--.error.validation.image=error.validation.image
+
+##  modal/BusinessNotificationModal/view.html
+--.businessNotification.modal.title.update=Update a notificaiton
+--.businessNotification.modal.title.create=Create a notification
+
+##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
+--.promotion.validation.endDateBeforeStartDate=The end date must be after the start date
 

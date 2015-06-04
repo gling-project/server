@@ -74,7 +74,8 @@ public class PromotionRestController extends AbstractRestController {
         promotionToEdit.setDescription(promotion.getDescription());
         promotionToEdit.setEndDate(promotion.getEndDate());
         promotionToEdit.setMinimalQuantity(promotion.getMinimalQuantity());
-        promotionToEdit.setPrice(promotion.getPrice());
+        promotionToEdit.setOriginalPrice(promotion.getOriginalPrice());
+        promotionToEdit.setOffPercent(promotion.getOffPercent());
         promotionToEdit.setQuantity(promotion.getQuantity());
         promotionToEdit.setStartDate(promotion.getStartDate());
         if (promotion.getIllustration() != null) {

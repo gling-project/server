@@ -55,9 +55,6 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
             'headers': "Content-Type:application/json"
         });
         promise.success(function (data, status, headers, d) {
-            console.log("notification");
-            console.log(d);
-            console.log(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }

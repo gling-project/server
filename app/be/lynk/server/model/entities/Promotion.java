@@ -15,23 +15,8 @@ public class Promotion extends AbstractEntity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
     private Business business;
 
-    @ManyToOne
-    private StoredFile illustration;
-
     @Basic(optional = false)
     private String description;
-
-    @Basic(optional = false)
-    private Double quantity;
-
-    @Basic
-    private String unit;
-
-    @Basic(optional = false)
-    private Double minimalQuantity;
-
-    @Basic(optional = false)
-    private Double price;
 
     @Column(columnDefinition = "timestamp")
     @Convert(converter = LocalDateTimePersistenceConverter.class)
@@ -42,6 +27,24 @@ public class Promotion extends AbstractEntity {
     @Convert(converter = LocalDateTimePersistenceConverter.class)
     @Basic(optional = false)
     protected LocalDateTime endDate;
+
+    @ManyToOne
+    private StoredFile illustration;
+
+    @Basic
+    private Double quantity;
+
+    @Basic
+    private Double minimalQuantity;
+
+    @Basic
+    private String unit;
+
+    @Basic
+    private Double originalPrice;
+
+    @Basic
+    private Double offPercent;
 
     public Promotion() {
     }
@@ -54,52 +57,12 @@ public class Promotion extends AbstractEntity {
         this.business = business;
     }
 
-    public StoredFile getIllustration() {
-        return illustration;
-    }
-
-    public void setIllustration(StoredFile illustration) {
-        this.illustration = illustration;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Double getMinimalQuantity() {
-        return minimalQuantity;
-    }
-
-    public void setMinimalQuantity(Double minimalQuantity) {
-        this.minimalQuantity = minimalQuantity;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public LocalDateTime getStartDate() {
@@ -118,17 +81,67 @@ public class Promotion extends AbstractEntity {
         this.endDate = endDate;
     }
 
+    public StoredFile getIllustration() {
+        return illustration;
+    }
+
+    public void setIllustration(StoredFile illustration) {
+        this.illustration = illustration;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getMinimalQuantity() {
+        return minimalQuantity;
+    }
+
+    public void setMinimalQuantity(Double minimalQuantity) {
+        this.minimalQuantity = minimalQuantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Double getOffPercent() {
+        return offPercent;
+    }
+
+    public void setOffPercent(Double offPercent) {
+        this.offPercent = offPercent;
+    }
+
     @Override
     public String toString() {
         return "Promotion{" +
-                "illustration=" + illustration +
+                "business=" + business +
                 ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", unit='" + unit + '\'' +
-                ", minimalQuantity=" + minimalQuantity +
-                ", price=" + price +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", illustration=" + illustration +
+                ", quantity=" + quantity +
+                ", minimalQuantity=" + minimalQuantity +
+                ", unit='" + unit + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", offPercent=" + offPercent+
                 '}';
     }
 }

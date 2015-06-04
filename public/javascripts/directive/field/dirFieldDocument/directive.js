@@ -21,10 +21,11 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                     };
 
                     scope.isValid = function () {
-                        scope.getInfo().isValid = scope.isActive()==false  || scope.getInfo().field!=null;
+                        //scope.getInfo().isValid = true;//scope.isActive()==false  || scope.getInfo().field!=null;
+                            scope.getInfo().isValid = (scope.getInfo().optional!=null && scope.getInfo().optional()) || scope.isActive() == false || scope.getInfo().field != null;
                     };
 
-                    scope.isValid();
+                    //scope.isValid();
 
                     scope.displayError = function () {
                         if (scope.getInfo().isValid == false && scope.getInfo().firstAttempt === false) {
@@ -88,7 +89,8 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                         if (n != null) {
                             scope.fileCall = "/file/" + scope.getInfo().field.id;
                         }
-                        scope.getInfo().isValid = n != null;
+                        //scope.getInfo().isValid = n != null;
+                        scope.isValid();// = n != null;
                     });
 
                     scope.download = function () {

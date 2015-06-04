@@ -2,18 +2,39 @@
 
     <dir-field-text ng-info="fields.description"></dir-field-text>
 
+    <dir-field-date ng-info="fields.startDate"></dir-field-date>
+
+    <dir-field-date ng-info="fields.endDate"></dir-field-date>
+
+    <dir-field-document ng-info="fields.illustration"></dir-field-document>
+
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-5">{{'--.promotion.simplePromotion' | translateText}}</label>
+
+            <div class="col-md-2">
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked ng-model="completePromotion">
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+            <label class="control-label col-md-5">{{'--.promotion.completePromotion' | translateText}}</label>
+        </div>
+    </div>
+
     <dir-field-text ng-info="fields.quantity"></dir-field-text>
 
     <dir-field-text ng-info="fields.minimalQuantity"></dir-field-text>
 
     <dir-field-text ng-info="fields.unit"></dir-field-text>
 
-    <dir-field-text ng-info="fields.price"></dir-field-text>
+    <dir-field-text ng-info="fields.originalPrice"></dir-field-text>
 
-    <dir-field-date ng-info="fields.startDate"></dir-field-date>
+    <dir-field-text ng-info="fields.offPercent"></dir-field-text>
 
-    <dir-field-date ng-info="fields.endDate"></dir-field-date>
-
-    <dir-field-document ng-info="fields.illustration"></dir-field-document>
+    <dir-field-text ng-info="fields.offPrice"></dir-field-text>
 
 </div>

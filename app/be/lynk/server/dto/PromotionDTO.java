@@ -2,8 +2,6 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -13,38 +11,25 @@ public class PromotionDTO extends DTO {
 
     private Long id;
 
-    private BusinessDTO business;
+    private String description;
+
+    protected Date startDate;
+
+    protected Date endDate;
 
     private StoredFileDTO illustration;
 
-    @NotNull
-    @Size(min = 1,max = 50,message = "--.validation.dto.size")
-    private String description;
-
-    @NotNull
     private Double quantity;
+
+    private Double minimalQuantity;
 
     private String unit;
 
-    private Double minimalQuantity = 1.0;
+    private Double originalPrice;
 
-    @NotNull
-    private Double price;
-
-    @NotNull
-    protected Date startDate;
-
-    @NotNull
-    protected Date endDate;
+    private Double offPercent;
 
     private Long distance;
-
-    public PromotionDTO() {
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     public Long getDistance() {
         return distance;
@@ -54,24 +39,12 @@ public class PromotionDTO extends DTO {
         this.distance = distance;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public BusinessDTO getBusiness() {
-        return business;
-    }
-
-    public void setBusiness(BusinessDTO business) {
-        this.business = business;
-    }
-
-    public StoredFileDTO getIllustration() {
-        return illustration;
-    }
-
-    public void setIllustration(StoredFileDTO illustration) {
-        this.illustration = illustration;
     }
 
     public String getDescription() {
@@ -80,38 +53,6 @@ public class PromotionDTO extends DTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Double getMinimalQuantity() {
-        return minimalQuantity;
-    }
-
-    public void setMinimalQuantity(Double minimalQuantity) {
-        this.minimalQuantity = minimalQuantity;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public Date getStartDate() {
@@ -130,17 +71,67 @@ public class PromotionDTO extends DTO {
         this.endDate = endDate;
     }
 
+    public StoredFileDTO getIllustration() {
+        return illustration;
+    }
+
+    public void setIllustration(StoredFileDTO illustration) {
+        this.illustration = illustration;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getMinimalQuantity() {
+        return minimalQuantity;
+    }
+
+    public void setMinimalQuantity(Double minimalQuantity) {
+        this.minimalQuantity = minimalQuantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Double getOffPercent() {
+        return offPercent;
+    }
+
+    public void setOffPercent(Double offPercent) {
+        this.offPercent = offPercent;
+    }
+
     @Override
     public String toString() {
-        return "Promotion{" +
-                "illustration=" + illustration +
+        return "PromotionDTO{" +
+                "id=" + id +
                 ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", unit='" + unit + '\'' +
-                ", minimalQuantity=" + minimalQuantity +
-                ", price=" + price +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", illustration=" + illustration +
+                ", quantity=" + quantity +
+                ", minimalQuantity=" + minimalQuantity +
+                ", unit='" + unit + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", offPercent=" + offPercent +
                 '}';
     }
 }

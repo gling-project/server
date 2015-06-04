@@ -43,6 +43,13 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                             //}
                         });
                     }
+
+                    scope.$watch('getInfo().active()',function(o,n){
+                        if(o!=n){
+                            scope.isValid();
+                        }
+                    },true);
+
                     scope.isValid = function () {
 
                         var isValid;
@@ -66,6 +73,8 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                         }
                         scope.getInfo().isValid = isValid;
                     };
+
+
 
                     scope.isValid();
                     scope.logField = function () {

@@ -8,8 +8,6 @@
         <head>
             <title>@Messages("site.name")</title>
             <meta charset="utf-8"/>
-            <link rel="alternate" media="only screen and (max-width: 640px)" href="http://projectpoc.herokuapp.com/test" >
-
 
             @header.dependencies_header()
 
@@ -47,6 +45,7 @@
                 <!-- main -->
             <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
             <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/web.css")">
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobile.css")">
 
         </head>
         <body class="main-container" ng-app="app" ng-controller="MainCtrl" >

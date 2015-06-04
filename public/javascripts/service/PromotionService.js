@@ -51,9 +51,6 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
             'headers': "Content-Type:application/json"
         });
         promise.success(function (data, status, headers, d) {
-            console.log("promotion");
-            console.log(d);
-            console.log(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }

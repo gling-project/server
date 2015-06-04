@@ -7,7 +7,7 @@
         </label>
 
         <div class="col-md-6">
-            <div ng-class="{'input-group':!!getInfo().money}">
+            <div ng-class="{'input-group':!!getInfo().money}" style="text-align: center">
                 <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="document-question-progress-bar">
                     <div ng-style="style">
                         <spa></spa>
@@ -29,25 +29,28 @@
                             />
                 </span>
 
-                <div ng-show="success">{{'--.field.document.success' | translateText}}</div>
+                <div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}</div>
+                <button
+                        type="button"
+                        ng-show="getInfo().field!=null && getInfo().field.isImage!=true"
+                        ng-click="download()"
+                        class="button">{{'--.field.document.download' | translateText}} {{getInfo().field.name}}
+                </button>
+
+                <img ng-show="getInfo().field!=null && getInfo().field.isImage==true"
+                     style="border:1px solid #999999"
+                     ng-src="{{fileCall}}"/>
             </div>
         </div>
         <div class="col-md-3 errors" ng-show="displayError()===true">{{getInfo().validationMessage | translateText}}
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-3 hidden-sm hidden-xs" style="height: 40px"></div>
-        <div class="col-md-6 help" style="padding-top: 10px;text-align: center">
-            <button
-                    type="button"
-                    ng-show="getInfo().field!=null && getInfo().field.isImage!=true"
-                    ng-click="download()"
-                    class="button">{{'--.field.document.download' | translateText}} {{getInfo().field.name}}
-            </button>
+    <!--<div class="row" ng-show="getInfo().field!=null">-->
+        <!--<div class="col-md-3 hidden-sm hidden-xs" style="height: 40px"></div>-->
+        <!--<div class="col-md-6 help" style="padding-bottom: 5px;padding-top: 5px;text-align: center">-->
+            <!---->
 
-            <img ng-show="getInfo().field!=null && getInfo().field.isImage==true" ng-src="{{fileCall}}"/>
-
-        </div>
-    </div>
+        <!--</div>-->
+    <!--</div>-->
 </div>

@@ -48,6 +48,9 @@
 --.generic.description=Description
 --.generic.login.btn=Connexion
 --.generic.validation.max=Maximum {0} caractères
+--.generic.image=Image
+--.generic.delete=Delete
+--.generic.validation.numberExpected=Uniquement un nombre
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -79,7 +82,7 @@
 
 ##  be/flo/project/dto/AccountDTO.java
 --.validation.dto.size=Entre {0} et {1} caractères
---.validation.dto.notNull=Ne peut pas être vide
+###--.validation.dto.notNull=Ne peut pas être vide
 --.validation.dto.email=Adresse email attendue
 
 ##  modal/ForgotPassword/view.html
@@ -154,6 +157,7 @@
 --.error.account.withoutLoginCredential=Ce compte utilise le système de connection de Facebook et n'utilise aucun mot de passe
 --.error.account.emailUnknown=cet adresse email est inconnue
 --.error.googleMap=Google Map a rencontré une erreur
+--.error.wrongAddress=Cette adresse n'est pas connu de Google Map. Merci d'en renseigner une autre
 
 ##  view/business_registration.html
 --.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk \!
@@ -181,6 +185,9 @@
 --.form.address.field.zip=Code postal
 --.form.address.field.city=Ville
 #--.address.form.name.help=address.form.name.help
+--.address.type.home=Mon domicile
+--.address.type.other=Autre...
+--.address.type.work=Mon bureau
 
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sous catégorie
@@ -191,8 +198,8 @@
 --.loginModal.toBusinessRegistration=S'enregistrer en tant de commerçant
 --.loginModal.toCustomerRegistration=S'enregistrer en tant que client
 --.loginModal.notRegisterYet=Pas encore enregistré?
---.validation.dto.notNull=Ne peut pas être vide
---.validation.dto.notNull=Ne peut pas être vide
+###--.validation.dto.notNull=Ne peut pas être vide
+###--.validation.dto.notNull=Ne peut pas être vide
 
 
 
@@ -207,7 +214,7 @@
 
 ##  modal/EditCustomerInterestModal/view.html
 --.customer.editInterestModal.title=Modifier mes intérêts
---.validation.dto.notNull=Ne peut pas être vide
+###--.validation.dto.notNull=Ne peut pas être vide
 
 
 ##  directive/form/login/template.html
@@ -215,16 +222,25 @@
 
 
 --.email.forgotPassword.subject=Votre nouveau mot de passe
---.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe : {1}
+--.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe \: {1}
 
 
 ##  directive/form/promotion/PromotionFormCtrl.js
 --.promotion.minimalQuantity=Quantité minimum
---.promotion.price=Prix
+#--.promotion.price=Prix
 --.promotion.endDate=Date de fin
 --.promotion.quantity=Quantité
 --.promotion.unit=Unité (optionel)
 --.promotion.startDate=Date de début
+--.promotion.offPercent=Prix de la promotion
+--.promotion.validation.offPercent=Le prix de la promotion doit être inférieur au prix de base
+--.promotion.offPercent=Réduction
+--.promotion.validation.minimalQuantityMustBeLowerThanQuantity=La quantité minimale doit être inférieure à la quantité totale proposées.
+--.promotion.illustration=Illustration (optionnelle)
+--.promotion.originalUnitPrice=Prix de base hors promotion
+--.promotion.validation.offPercent=La réduction doit être comprise entre 1 et 99%
+--.promotion.completePromotion=Créer une promotion complète
+--.promotion.simplePromotion=Créer une promotion simplifiée
 
 ##  view/web/home.html
 --.page.home.title=Home
@@ -239,19 +255,23 @@
 --.business.welcome.addPromotion=Ajouter une promotion
 --.business.profile.promotion=Promotion
 --.business.profile.image=Image
+--.business.welcome.addBusinessNotification=Publier une nouvelle annonce
+--.business.profile.businessNotification=Annonces
 
 ##  modal/PromotionModal/view.html
---.promotion.modal.title=Promotion
+#--.promotion.modal.title=Promotion
+--.promotion.modal.title.create=Céer une nouvelle promotion
+--.promotion.modal.title.update=Editer une promotion
 
 ##  view/mobile/customer_registration.html
 --.page.customer_registration.title=Inscription
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=email.registration.business.body
---.email.registration.business.subject=email.registration.business.subject
---.email.registration.customer.body=email.registration.customer.body
---.email.registration.customer.subject=email.registration.customer.subject
+--.email.registration.business.body=Bienvenue sur Lynk {0}\!<br/><br/>...
+--.email.registration.business.subject=Bienvenu sur Lynk \!
+--.email.registration.customer.body=Bienvenue {0}<br/><br/>...
+--.email.registration.customer.subject=Bienvenue sur Lynk \!<br/><br/>...
 
 ##  view/mobile/welcome.html
 --.mobile.welcome.toCustomerRegistration.btn=Inscrivez-vous maintenant \!
@@ -261,4 +281,25 @@
 --.mobile.welcome.toBusinessRegistration.desc=Vous êtes un commerçant et voulez intégrer la communauté Lynk? Faites un essaie gratuit\!
 --.mobile.welcome.toBusinessRegistration.btn=Inscrivez votre commerce
 --.mobile.welcome.toCustomerRegistration.desc=Pas encore de compte Lynk ?
+
+
+##  directive/field/dirFieldDocument/template.html
+--.download.button.new=Télécharger un fichier
+--.download.button.update=Modifier le fichier
+
+##  modal/AddressModal/view.html
+--.account.address.modal.title.create=Créer une nouvelle adresse
+--.account.address.modal.title.update=Editer une adresse
+
+##  controller/web/BusinessWelcomeCtrl.js (//)
+--.error.validation.image=Sélectionner une image
+
+##  modal/BusinessNotificationModal/view.html
+--.businessNotification.modal.title.update=Editer une anonnce
+--.businessNotification.modal.title.create=Créer une annonce
+
+##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
+--.promotion.validation.endDateBeforeStartDate=La date de fin doit être arpès la date de début
+--.validation.dto.notNull=Ce champs ne peut être vide
+
 

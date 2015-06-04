@@ -50,9 +50,12 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             }
                         },
                         illustration: {
-                            fieldTitle: "--.generic.image",
+                            fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
                             size: 60,
+                            optional : function(){
+                                return true;
+                            },
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             }
@@ -77,13 +80,10 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                     }, true);
 
                     scope.$watch('getInfo().dto', function () {
-                        console.log('$watch info !! ');
                         if (scope.getInfo().dto.description != null)scope.fields.description.field = scope.getInfo().dto.description;
                         if (scope.getInfo().dto.startDate != null)scope.fields.startDate.field = scope.getInfo().dto.startDate;
                         if (scope.getInfo().dto.endDate != null)scope.fields.endDate.field = scope.getInfo().dto.endDate;
                         if (scope.getInfo().dto.illustration != null)scope.fields.illustration.field = scope.getInfo().dto.illustration;
-                        console.log('binding !! ');
-                        console.log(scope.getInfo().dto);
                     });
 
                     scope.$watch('getInfo().displayErrorMessage', function () {

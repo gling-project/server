@@ -1,4 +1,4 @@
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,  translationService, dto,promotionService) {
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService) {
 
     $scope.loading = false;
 
@@ -15,31 +15,36 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
 
     $scope.save = function () {
 
-
-        console.log($scope.promotionParam.dto);
-
         if (!$scope.promotionParam.isValid) {
             $scope.promotionParam.displayErrorMessage = true;
         }
         else {
-            $scope.loading = true;
-            if ($scope.update) {
-                promotionService.edit($scope.promotionParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
+
+
+            if ($scope.promotionParam.minimalQuantity > $scope.promotionParam.quantity) {
+                $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
             }
             else {
-                promotionService.add($scope.promotionParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
+
+                $scope.loading = true;
+                if ($scope.update) {
+                    promotionService.edit($scope.promotionParam.dto, function () {
+                            $scope.loading = false;
+                            $scope.close();
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
+                else {
+                    promotionService.add($scope.promotionParam.dto, function () {
+                            $scope.loading = false;
+                            $scope.close();
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
             }
         }
     }
