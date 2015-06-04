@@ -6,7 +6,7 @@
                 <button class="calculator btn btn-sm btn-default glyphicon glyphicon-th-list" ng-click="openCalculator()"></button>
 
                 <select ng-disabled="getInfo().disabled()"
-                        ng-model="getInfo().field"
+                        ng-model="getInfo().field[getInfo().fieldName]"
                         dir-focus-me="getInfo().focus()"
                         ng-options="option.key as option.value | translateText for option in getInfo().options"
                         class="form-control">

@@ -30,14 +30,14 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
                     scope.hideIsValidIcon = !!scope.getInfo().hideIsValidIcon;
                     scope.fieldType = (scope.getInfo().fieldType != null) ? scope.getInfo().fieldType : "text";
 
-                    if (scope.getInfo().field == null) {
-                        scope.getInfo().field = "";
+                    if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
+                        scope.getInfo().field[scope.getInfo().fieldName] = "";
                     }
                     if (scope.getInfo().isValid == null) {
                         scope.getInfo().isValid = !scope.isValidationDefined;
                     }
                     if (scope.isValidationDefined) {
-                        scope.$watch('getInfo().field', function (n, o) {
+                        scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
                             if (n !== o) {
                                 return scope.isValid();
                             }
@@ -50,16 +50,16 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
                             scope.getInfo().isValid = true;
                             return;
                         }
-                        if (!scope.getInfo().field) {
-                            scope.getInfo().field = "";
+                        if (!scope.getInfo().field[scope.getInfo().fieldName]) {
+                            scope.getInfo().field[scope.getInfo().fieldName] = "";
                         }
 
                         isValid = true;
-                        if (typeof scope.getInfo().field !== 'string') {
-                            scope.getInfo().field += "";
+                        if (typeof scope.getInfo().field[scope.getInfo().fieldName] !== 'string') {
+                            scope.getInfo().field[scope.getInfo().fieldName] += "";
                         }
                         if (scope.getInfo().validationRegex != null) {
-                            isValid = scope.getInfo().field.match(scope.getInfo().validationRegex) != null;
+                            isValid = !!scope.getInfo().field[scope.getInfo().fieldName] && scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
                         }
                         if (scope.getInfo().validationFct != null) {
                             isValid = isValid && scope.getInfo().validationFct();
@@ -92,7 +92,7 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
 
                     scope.openCalculator= function(){
                         modalService.openCalculatorModal(new function(result){
-                            scope.getInfo().field=result;
+                            scope.getInfo().field[scope.getInfo().fieldName]=result;
                         });
                     };
                 }

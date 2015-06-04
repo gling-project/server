@@ -2,6 +2,7 @@ package be.lynk.server.dto;
 
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.GenderEnum;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.constants.ValidationRegex;
 
@@ -18,7 +19,7 @@ public class AccountDTO extends DTO {
     private Long id;
 
     @NotNull(message = "--.validation.dto.notNull")
-    private Boolean male;
+    protected GenderEnum gender;
 
     @NotNull(message = "--.validation.dto.notNull")
     @Size(min = 2,max =50,message = "--.validation.dto.size")
@@ -49,12 +50,12 @@ public class AccountDTO extends DTO {
         this.type = type;
     }
 
-    public Boolean getMale() {
-        return male;
+    public GenderEnum getGender() {
+        return gender;
     }
 
-    public void setMale(Boolean male) {
-        this.male = male;
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
     }
 
     public Long getId() {
@@ -109,12 +110,13 @@ public class AccountDTO extends DTO {
     public String toString() {
         return "AccountDTO{" +
                 "id=" + id +
-                ", male=" + male +
+                ", gender=" + gender +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
-                ", roles=" + role +
+                ", role=" + role +
                 ", lang=" + lang +
+                ", type=" + type +
                 '}';
     }
 }

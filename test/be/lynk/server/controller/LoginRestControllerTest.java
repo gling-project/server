@@ -3,6 +3,7 @@ package be.lynk.server.controller;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.dto.post.*;
+import be.lynk.server.model.GenderEnum;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserAccount;
@@ -96,7 +97,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         dto.setAccountRegistration(registrationDTO);
         registrationDTO.setFirstname(FIRSTNAME);
         registrationDTO.setLastname(LASTNAME);
-        registrationDTO.setMale(true);
+        registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(EMAIL);
         registrationDTO.setPassword(PASSWORD);
         registrationDTO.setKeepSessionOpen(true);
@@ -245,7 +246,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         dto.setAccountRegistration(registrationDTO);
         registrationDTO.setFirstname(BI_FIRSTNAME);
         registrationDTO.setLastname(BI_LASTNAME);
-        registrationDTO.setMale(true);
+        registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(BI_EMAIL);
         registrationDTO.setPassword(BI_PASSWORD);
         registrationDTO.setKeepSessionOpen(true);
@@ -331,7 +332,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         dto.setAccountRegistration(registrationDTO);
         registrationDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
         registrationDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
-        registrationDTO.setMale(true);
+        registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
         registrationDTO.setKeepSessionOpen(true);
         dto.setFacebookAuthentication(facebookAuthenticationDTO);
@@ -395,7 +396,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         dto.setAccountRegistration(registrationDTO);
         registrationDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
         registrationDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
-        registrationDTO.setMale(true);
+        registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
         registrationDTO.setPassword(PASSWORD);
         registrationDTO.setKeepSessionOpen(true);

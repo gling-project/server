@@ -7,7 +7,7 @@
 
                 <input type="checkbox"
                        ng-disabled="getInfo().disabled()"
-                       ng-model="getInfo().field"
+                       ng-model="getInfo().field[getInfo().fieldName]"
                        ng-class="{input_number: getInfo().numbersOnly === 'integer' || getInfo().numbersOnly === 'double',
                        'money':!!getInfo().money}"
                        dir-focus-me="getInfo().focus()"

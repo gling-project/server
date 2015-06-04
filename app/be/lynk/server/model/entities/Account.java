@@ -1,6 +1,7 @@
 package be.lynk.server.model.entities;
 
 import be.lynk.server.controller.technical.security.role.RoleEnum;
+import be.lynk.server.model.GenderEnum;
 import be.lynk.server.model.entities.converter.I18NLangConverter;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.util.AccountTypeEnum;
@@ -21,9 +22,9 @@ public abstract  class Account extends AbstractEntity {
 
 
     @Basic(optional = false)
-    protected Boolean male;
+    @Enumerated(value = EnumType.STRING)
+    protected GenderEnum gender;
 
-    @Basic(optional = false)
     protected String firstname;
 
     @Basic(optional = false)
@@ -101,12 +102,12 @@ public abstract  class Account extends AbstractEntity {
         this.role = role;
     }
 
-    public Boolean getMale() {
-        return male;
+    public GenderEnum getGender() {
+        return gender;
     }
 
-    public void setMale(Boolean male) {
-        this.male = male;
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
     }
 
     public String getFirstname() {
@@ -172,12 +173,17 @@ public abstract  class Account extends AbstractEntity {
     @Override
     public String toString() {
         return "Account{" +
-                "male=" + male +
+                "gender=" + gender +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
+                ", lang=" + lang +
                 ", authenticationKey='" + authenticationKey + '\'' +
-                ", language='" + lang + '\'' +
+                ", role=" + role +
+                ", sessions=" + sessions +
+                ", loginCredential=" + loginCredential +
+                ", facebookCredential=" + facebookCredential +
+                ", type=" + type +
                 '}';
     }
 

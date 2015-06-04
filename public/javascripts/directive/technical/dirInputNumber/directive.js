@@ -26,7 +26,6 @@ myApp.directive("numbersOnly", function($filter, translationService, $locale) {
                         }
                     });
                     modelCtrl.$parsers.unshift(function(viewValue) {
-                        console.log('persers');
                         var result, resultString, resultToDisplay;
                         if (viewValue === "") {
                             return null;
@@ -63,7 +62,6 @@ myApp.directive("numbersOnly", function($filter, translationService, $locale) {
 
                     });
                     modelCtrl.$formatters.unshift(function(modelValue) {
-                        console.log('formatters');
                         //return a string for display
                         return scope.displayValue(modelValue);
                     });

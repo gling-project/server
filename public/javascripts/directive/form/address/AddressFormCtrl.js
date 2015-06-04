@@ -1,4 +1,4 @@
-myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout, $filter, translationService) {
+myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout, $filter, translationService,modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -15,44 +15,41 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    if (scope.getInfo().dto == null) {
-                        scope.getInfo().dto = {};
-                    }
+                    var names = [
+                        {key: translationService.get('--.address.type.home'), value: '--.address.type.home'},
+                        {key: translationService.get('--.address.type.work'), value: '--.address.type.work'},
+                        {key: translationService.get('--.address.type.other'), value: '--.address.type.other'}
+                    ];
 
-                    if (scope.getInfo().dto.name == undefined ||
-                        scope.getInfo().dto.name == null) {
-                        scope.getInfo().dto.name = $filter('translateText')('--.generic.home');
+                    if (scope.getInfo().dto == null) {
+                        scope.getInfo().dto = {
+                            name:$filter('translateText')('--.generic.home')
+                        };
+                    }
+                    else{
+                        var founded=false;
+                        for (var key in names) {
+                            if(key == scope.getInfo().dto.name){
+                                founded=true;
+                            }
+                        }
+                        if(!founded){
+                            names.push({key:scope.getInfo().dto.name,value:scope.getInfo().dto.name});
+                        }
                     }
 
                     scope.fields = {
                         name: {
                             fieldTitle: "--.form.address.field.name",
-                            options: [
-                                {key: translationService.get('--.address.type.home'), value: '--.address.type.home'},
-                                {key: translationService.get('--.address.type.work'), value: '--.address.type.work'},
-                                {key: translationService.get('--.address.type.other'), value: '--.address.type.other'}
-                            ],
+                            options: names,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
                             active: function () {
                                 return scope.getInfo().addName == true;
-                            }
-                        },
-                        nameCustom: {
-                            fieldType: "text",
-                            fieldTitle: "--.form.address.field.name",
-                            validationRegex: "^.{2,50}$",
-                            validationMessage: ['--.generic.validation.size', '2', '50'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
                             },
-                            focus: function () {
-                                return scope.getInfo().addName;
-                            },
-                            active: function () {
-                                return scope.getInfo().addName && scope.fields.name.field == translationService.get('--.address.type.other');
-                            }
+                            field: scope.getInfo().dto,
+                            fieldName: 'name'
                         },
                         street: {
                             fieldType: "text",
@@ -65,7 +62,9 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                             },
                             focus: function () {
                                 return !scope.getInfo().addName;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'street'
                         },
                         zip: {
                             fieldType: "text",
@@ -75,7 +74,9 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                             validationMessage: ['--.generic.validation.size', '2', '20'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'zip'
                         },
                         city: {
                             fieldType: "text",
@@ -85,27 +86,24 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                             validationMessage: ['--.generic.validation.size', '2', '255'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'city'
                         }
                     };
 
                     scope.$watch('getInfo().dto', function () {
-                        if (scope.getInfo().dto.name != null) {
-                            for (var key in scope.fields.name.options) {
-                                if (scope.getInfo().dto.name == key) {
-                                    scope.fields.name.field = key;
-                                }
-                            }
-                            if (scope.fields.name.field == null) {
-                                scope.fields.name.field = translationService.get('--.address.type.other');
-                                scope.fields.nameCustom.field = scope.getInfo().dto.name;
-                            }
+                        if (scope.getInfo().dto.name == translationService.get('--.address.type.other')) {
+                            modalService.openOneFieldModal({name:'--.address.customName.fieldTitle'},function(data){
+                                names.push({key:data,value:data});
+                                scope.getInfo().dto.name = data;
+                            });
                         }
-                        if (scope.getInfo().dto.street != null)scope.fields.street.field = scope.getInfo().dto.street;
-                        if (scope.getInfo().dto.zip != null)scope.fields.zip.field = scope.getInfo().dto.zip;
-                        if (scope.getInfo().dto.city != null)scope.fields.city.field = scope.getInfo().dto.city;
                     }, true);
 
+                    //
+                    // validation : watching on field
+                    //
                     scope.$watch('fields', function () {
                         var validation = true;
 
@@ -116,22 +114,14 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                                     obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                                     validation = false;
                                 }
-                                else if (key == 'name' || key == 'nameCustom') {
-                                    if (scope.fields.name.field != translationService.get('--.address.type.other')) {
-                                        scope.getInfo().dto.name = scope.fields.name.field;
-                                    }
-                                    else if (scope.fields.nameCustom.isValid) {
-                                        scope.getInfo().dto.name = scope.fields.nameCustom.field;
-                                    }
-                                }
-                                else {
-                                    scope.getInfo().dto[key] = scope.fields[key].field;
-                                }
                             }
                         }
                         scope.getInfo().isValid = validation;
                     }, true);
 
+                    //
+                    // display error watching
+                    //
                     scope.$watch('getInfo().displayErrorMessage', function () {
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];

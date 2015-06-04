@@ -34,11 +34,11 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
 
 
     $scope.addAddress = function () {
-        modalService.addressModal(true, null);
+        modalService.addressModal(true, null,false);
     };
 
     $scope.editAddress = function (address) {
-        modalService.addressModal(true, address);
+        modalService.addressModal(true, address,false);
     };
 
     $scope.deleteAddress = function (address) {

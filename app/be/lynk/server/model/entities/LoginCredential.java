@@ -65,7 +65,6 @@ public class LoginCredential  extends AbstractEntity {
     @Override
     public String toString() {
         return "LoginCredential{" +
-                "account=" + account +
                 ", keepSessionOpen=" + keepSessionOpen +
                 ", password='" + password + '\'' +
                 '}';

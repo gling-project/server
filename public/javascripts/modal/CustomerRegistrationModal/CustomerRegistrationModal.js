@@ -107,10 +107,11 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                         $scope.fusion(data2.accountFusion);
                     }
                     else if (data2.status == 'OK') {
+                        console.log(data2);
                         $scope.accountParam.dto.firstname = data2.firstname;
                         $scope.accountParam.dto.lastname = data2.lastname;
                         $scope.accountParam.dto.email= data2.email;
-                        $scope.accountParam.dto.male= data2.male;
+                        $scope.accountParam.dto.gender= data2.gender;
                         $scope.accountParam.dto.password= '*********';
                         facebookAuthentication = dto;
                         $scope.skip();
@@ -150,6 +151,8 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         if ($scope.addressFormParam.isValid) {
             dto.address = $scope.addressFormParam.dto;
         }
+
+        console.log(dto);
 
         $scope.loading = true;
         accountService.registration(dto, function () {

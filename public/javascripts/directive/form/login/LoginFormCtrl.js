@@ -29,7 +29,8 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field: scope.getInfo().dto.email
+                            field: scope.getInfo().dto,
+                            fieldName: 'email'
                         },
                         password: {
                             name: 'password',
@@ -40,7 +41,8 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field: scope.getInfo().dto.password
+                            field: scope.getInfo().dto,
+                            fieldName: 'password'
                         },
                         keepSessionOpen: {
                             fieldTitle: "--.registration.form.keepSessionOpen",
@@ -48,10 +50,14 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field: scope.getInfo().dto.keepSessionOpen
+                            field: scope.getInfo().dto,
+                            fieldName: 'keepSessionOpen'
                         }
                     };
 
+                    //
+                    // validation : watching on field
+                    //
                     scope.$watch('fields', function () {
                         var validation = true;
 
@@ -61,13 +67,15 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                                 obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                                 validation = false;
                             }
-                            else {
-                                scope.getInfo().dto[key] = scope.fields[key].field;
-                            }
                         }
                         scope.getInfo().isValid = validation;
                     }, true);
 
+
+
+                    //
+                    // display error watching
+                    //
                     scope.$watch('getInfo().displayErrorMessage', function () {
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];
@@ -90,7 +98,7 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             });
                     };
 
-                    scope.toForgotPassword = function(){
+                    scope.toForgotPassword = function () {
                         scope.getInfo().forgotPassword(scope.fields.email.field);
                     }
                 }

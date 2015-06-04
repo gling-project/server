@@ -57,11 +57,4 @@ public class Session extends AbstractEntity {
         this.connectionDate = connectionDate;
     }
 
-    @Override
-    public String toString() {
-        return "Session{" +
-                "account=" + account +
-                ", connectionDate=" + connectionDate +
-                '}';
-    }
 }

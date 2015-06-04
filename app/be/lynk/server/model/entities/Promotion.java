@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * Created by florian on 23/05/15.
  */
 @Entity
-public class Promotion extends AbstractEntity {
+public class Promotion extends AbstractEntity implements Comparable<Promotion>{
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
     private Business business;
@@ -143,5 +143,11 @@ public class Promotion extends AbstractEntity {
                 ", originalPrice=" + originalPrice +
                 ", offPercent=" + offPercent+
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(Promotion o) {
+        return o.getCreationDate().compareTo(this.getCreationDate());
     }
 }

@@ -19,18 +19,20 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     scope.update = scope.getInfo().dto != null;
                     scope.completePromotion = true;
 
+                    //
+                    // initialize default data
+                    //
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
                             startDate: new Date(),
-                            minimalQuantity:1
+                            minimalQuantity: 1
                         };
                     }
-                    else{
-                        scope.completePromotion = scope.getInfo().dto.quantity!=null;
+                    else {
+                        scope.completePromotion = scope.getInfo().dto.quantity != null;
                     }
 
-
-
+                    //build field + dto binding
                     scope.fields = {
                         description: {
                             fieldTitle: "--.generic.description",
@@ -39,7 +41,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field:scope.getInfo().dto.description
+                            field: scope.getInfo().dto,
+                            fieldName: 'description'
                         },
                         startDate: {
                             fieldTitle: "--.promotion.startDate",
@@ -47,7 +50,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            field:scope.getInfo().dto.startDate
+                            field: scope.getInfo().dto,
+                            fieldName: 'startDate'
                         },
                         endDate: {
                             fieldTitle: "--.promotion.endDate",
@@ -57,9 +61,10 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 return scope.getInfo().disabled;
                             },
                             validationFct: function () {
-                                return scope.fields.endDate.field >= scope.fields.startDate.field;
+                                return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
-                            field:scope.getInfo().dto.endDate
+                            field: scope.getInfo().dto,
+                            fieldName: 'endDate'
                         },
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
@@ -71,7 +76,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             optional: function () {
                                 return true;
                             },
-                            field:scope.getInfo().dto.illustration
+                            field: scope.getInfo().dto,
+                            fieldName: 'illustration'
                         },
                         quantity: {
                             fieldTitle: "--.promotion.quantity",
@@ -84,7 +90,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             active: function () {
                                 return scope.completePromotion;
                             },
-                            field:scope.getInfo().dto.quantity
+                            field: scope.getInfo().dto,
+                            fieldName: 'quantity'
                         },
                         minimalQuantity: {
                             fieldTitle: "--.promotion.minimalQuantity",
@@ -98,7 +105,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             active: function () {
                                 return scope.completePromotion;
                             },
-                            field:scope.getInfo().dto.minimalQuantity
+                            field: scope.getInfo().dto,
+                            fieldName: 'minimalQuantity'
                         },
                         unit: {
                             fieldTitle: "--.promotion.unit",
@@ -110,15 +118,15 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             active: function () {
                                 return scope.completePromotion;
                             },
-                            field:scope.getInfo().dto.unit
+                            field: scope.getInfo().dto,
+                            fieldName: 'unit'
                         },
                         originalPrice: {
                             fieldTitle: "--.promotion.originalUnitPrice",
                             numbersOnly: 'double',
                             validationMessage: '--.generic.validation.numberExpected',
-                            field:scope.getInfo().dto.originalPrice,
                             validationFct: function () {
-                                return scope.fields.originalPrice.field!=null;
+                                return scope.getInfo().dto.originalPrice != null;
                             },
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -126,27 +134,30 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             money: "€",
                             active: function () {
                                 return scope.completePromotion;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'originalPrice'
                         },
                         offPercent: {
                             fieldTitle: "--.promotion.offPercent",
                             numbersOnly: 'percent',
                             validationFct: function () {
-                                return scope.fields.offPercent.field!=null && parseFloat(scope.fields.offPercent.field) > 0 && parseFloat(scope.fields.offPercent.field) < 1;
+                                return scope.getInfo().dto.offPercent != null && parseFloat(scope.getInfo().dto.offPercent) > 0 && parseFloat(scope.getInfo().dto.offPercent) < 1;
                             },
                             validationMessage: '--.promotion.validation.offPercent',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
                             money: "%",
-                            field:scope.getInfo().dto.offPercent
+                            field: scope.getInfo().dto,
+                            fieldName: 'offPercent'
                         },
                         offPrice: {
                             fieldTitle: "--.promotion.offPrice",
                             numbersOnly: 'double',
                             validationMessage: '--.promotion.validation.offPrice',
                             validationFct: function () {
-                                return scope.fields.offPrice.field!=null && parseFloat(scope.fields.offPrice.field) < parseFloat(scope.fields.originalPrice.field);
+                                return scope.getInfo().dto.offPrice != null && parseFloat(scope.getInfo().dto.offPrice) < parseFloat(scope.getInfo().dto.originalPrice);
                             },
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -155,32 +166,37 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             active: function () {
                                 return scope.completePromotion;
                             },
-                            field:scope.getInfo().dto.offPrice
+                            field: scope.getInfo().dto,
+                            fieldName: 'offPrice'
                         }
                     };
+
+                    //
+                    // specific treatment
+                    //
                     var suspendWatch = false;
-                    scope.$watch('fields.originalPrice.field', function (o, n) {
-                        if (o != n && scope.fields.originalPrice != null && scope.fields.offPercent.field != null && suspendWatch == false) {
+                    scope.$watch('getInfo().dto.originalPrice', function (o, n) {
+                        if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
                             suspendWatch = true;
-                            scope.fields.offPrice.field = parseFloat(scope.fields.originalPrice.field) * (1 - parseFloat(scope.fields.offPercent.field));
+                            scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
                             $timeout(function () {
                                 suspendWatch = false;
                             }, 1);
                         }
                     });
-                    scope.$watch('fields.offPercent.field', function (o, n) {
-                        if (o != n && scope.fields.originalPrice != null && scope.fields.offPercent.field != null && suspendWatch == false) {
+                    scope.$watch('getInfo().dto.offPercent', function (o, n) {
+                        if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
                             suspendWatch = true;
-                            scope.fields.offPrice.field = parseFloat(scope.fields.originalPrice.field) * (1 - parseFloat(scope.fields.offPercent.field));
+                            scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
                             $timeout(function () {
                                 suspendWatch = false;
                             }, 1);
                         }
                     });
-                    scope.$watch('fields.offPrice.field', function (o, n) {
-                        if (o != n && scope.fields.originalPrice != null && scope.fields.offPrice.field && suspendWatch == false) {
+                    scope.$watch('getInfo().dto.offPrice', function (o, n) {
+                        if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPrice && suspendWatch == false) {
                             suspendWatch = true;
-                            scope.fields.offPercent.field = 1 - parseFloat(scope.fields.offPrice.field) / parseFloat(scope.fields.originalPrice.field);
+                            scope.getInfo().dto.offPercent = 1 - parseFloat(scope.getInfo().dto.originalPrice) / parseFloat(scope.getInfo().dto.offPrice);
                             $timeout(function () {
                                 suspendWatch = false;
                             }, 1);
@@ -188,15 +204,17 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     });
 
                     //compute first
-                    if (scope.fields.originalPrice != null && scope.fields.offPercent.field != null && suspendWatch == false) {
+                    if (scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
                         suspendWatch = true;
-                        scope.fields.offPrice.field = parseFloat(scope.fields.originalPrice.field) * (1 - parseFloat(scope.fields.offPercent.field));
+                        scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
                         $timeout(function () {
                             suspendWatch = false;
                         }, 1);
                     }
 
-
+                    //
+                    // validation : watching on field
+                    //
                     scope.$watch('fields', function () {
                         var validation = true;
 
@@ -206,30 +224,13 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                                 validation = false;
                             }
-                            //else {
-                            //    scope.getInfo().dto[key] = obj.field;
-                            //}
                         }
                         scope.getInfo().isValid = validation;
-
-
                     }, true);
 
-                    //scope.$watch('getInfo().dto', function () {
-                    //    if (scope.getInfo().dto.quantity == null && scope.update) {
-                    //        scope.completePromotion = false;
-                    //    }
-                    //    if (scope.getInfo().dto.description != null)scope.fields.description.field = scope.getInfo().dto.description;
-                    //    if (scope.getInfo().dto.quantity != null)scope.fields.quantity.field = scope.getInfo().dto.quantity;
-                    //    if (scope.getInfo().dto.minimalQuantity != null)scope.fields.minimalQuantity.field = scope.getInfo().dto.minimalQuantity;
-                    //    if (scope.getInfo().dto.originalPrice != null)scope.fields.originalPrice.field = scope.getInfo().dto.originalPrice;
-                    //    if (scope.getInfo().dto.offPercent != null)scope.fields.offPercent.field = scope.getInfo().dto.offPercent;
-                    //    if (scope.getInfo().dto.unit != null)scope.fields.unit.field = scope.getInfo().dto.unit;
-                    //    if (scope.getInfo().dto.startDate != null)scope.fields.startDate.field = scope.getInfo().dto.startDate;
-                    //    if (scope.getInfo().dto.endDate != null)scope.fields.endDate.field = scope.getInfo().dto.endDate;
-                    //    if (scope.getInfo().dto.illustration != null)scope.fields.illustration.field = scope.getInfo().dto.illustration;
-                    //});
-
+                    //
+                    // display error watching
+                    //
                     scope.$watch('getInfo().displayErrorMessage', function () {
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];

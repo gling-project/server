@@ -32,29 +32,31 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                         return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
                     };
 
-
-
-                    scope.$watch('getInfo().field', function () {
-                        if (scope.getInfo().field != null) {
-                            return scope.result = new Date(Number(scope.getInfo().field));
+                    scope.$watch('getInfo().field[getInfo().fieldName]', function () {
+                        if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+                            return scope.result = new Date(Number(scope.getInfo().field[scope.getInfo().fieldName]));
                         }
+                        scope.isValid();
                     });
+
                     scope.$watch('result', function () {
                         if (scope.result != null) {
-                            scope.getInfo().field = scope.result.getTime();
+                            scope.getInfo().field[scope.getInfo().fieldName] = scope.result.getTime();
                         } else {
-                            scope.getInfo().field = null;
+                            scope.getInfo().field[scope.getInfo().fieldName] = null;
                         }
                         return scope.isValid();
                     });
+
                     scope.isValid = function () {
+
                         var isValid;
                         if (scope.getInfo().disabled === true || scope.isActive() === false) {
                             scope.getInfo().isValid = true;
                             return;
                         }
                         isValid = true;
-                        if (scope.getInfo().field == null) {
+                        if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
                             isValid = false;
                         }
                         if (scope.getInfo().validationFct != null) {

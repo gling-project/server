@@ -3,6 +3,7 @@ package be.lynk.server.model.entities;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Set;
 public class Business extends AbstractEntity {
 
 
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true,optional = false)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
     private Account account;
 
     @Basic(optional = false)
@@ -24,7 +25,7 @@ public class Business extends AbstractEntity {
     @Basic(optional = false)
     private String phone;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Address address;
 
     @ManyToMany
@@ -32,22 +33,22 @@ public class Business extends AbstractEntity {
             name = "business_category",
             joinColumns = {@JoinColumn(name = "business")},
             inverseJoinColumns = {@JoinColumn(name = "category")})
-    private Set<BusinessCategory> businessCategories;
+    private List<BusinessCategory> businessCategories;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private StoredFile illustration;
 
-    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
-    private Set<Promotion> promotions;
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
+    private List<Promotion> promotions;
 
-    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
-    private Set<BusinessNotification> businessNotification;
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
+    private List<BusinessNotification> businessNotification;
 
-    public Set<Promotion> getPromotions() {
+    public List<Promotion> getPromotions() {
         return promotions;
     }
 
-    public void setPromotions(Set<Promotion> promotions) {
+    public void setPromotions(List<Promotion> promotions) {
         this.promotions = promotions;
     }
 
@@ -59,11 +60,11 @@ public class Business extends AbstractEntity {
         this.illustration = illustration;
     }
 
-    public Set<BusinessCategory> getBusinessCategories() {
+    public List<BusinessCategory> getBusinessCategories() {
         return businessCategories;
     }
 
-    public void setBusinessCategories(Set<BusinessCategory> businessCategories) {
+    public void setBusinessCategories(List<BusinessCategory> businessCategories) {
         this.businessCategories = businessCategories;
     }
 
@@ -107,11 +108,11 @@ public class Business extends AbstractEntity {
         this.address = address;
     }
 
-    public Set<BusinessNotification> getBusinessNotification() {
+    public List<BusinessNotification> getBusinessNotification() {
         return businessNotification;
     }
 
-    public void setBusinessNotification(Set<BusinessNotification> businessNotification) {
+    public void setBusinessNotification(List<BusinessNotification> businessNotification) {
         this.businessNotification = businessNotification;
     }
 

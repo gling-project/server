@@ -18,12 +18,11 @@ myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
                     scope.errorMessage = "";
                     scope.hideIsValidIcon = !!scope.getInfo().hideIsValidIcon;
 
-                    if (scope.getInfo().field == null) {
-                        scope.getInfo().field = "";
+                    if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
+                        scope.getInfo().field[scope.getInfo().fieldName] = "";
                     }
 
                     scope.isActive = function(){
-
                         return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
                     };
 

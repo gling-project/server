@@ -74,7 +74,7 @@ public class
         //edit
         account.setFirstname(dto.getFirstname());
         account.setLastname(dto.getLastname());
-        account.setMale(dto.getMale());
+        account.setGender(dto.getGender());
         account.setEmail(dto.getEmail());
 
         if (dto.getLang() != null) {

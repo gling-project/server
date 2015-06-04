@@ -15,13 +15,11 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-
                     if(scope.getInfo().autoCompleteValue==undefined){
                         scope.getInfo().autoCompleteValue=[];
                     }
 
                     scope.isActive = function(){
-
                         return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
                     };
 
@@ -30,14 +28,15 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                     scope.hideIsValidIcon = !!scope.getInfo().hideIsValidIcon;
                     scope.fieldType = (scope.getInfo().fieldType != null) ? scope.getInfo().fieldType : "text";
 
-                    if (scope.getInfo().field == null) {
-                        scope.getInfo().field = "";
+                    if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
+                        scope.getInfo().field[scope.getInfo().fieldName] = "";
                     }
                     if (scope.getInfo().isValid == null) {
                         scope.getInfo().isValid = !scope.isValidationDefined;
                     }
                     if (scope.isValidationDefined) {
-                        scope.$watch('getInfo().field', function (n, o) {
+                        scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                            console.log('watching');
                             //if (n !== o) {
                                 return scope.isValid();
                             //}
@@ -57,26 +56,24 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                             scope.getInfo().isValid = true;
                             return;
                         }
-                        if (!scope.getInfo().field) {
-                            scope.getInfo().field = "";
+                        if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
+                            scope.getInfo().field[scope.getInfo().fieldName] = "";
                         }
 
                         isValid = true;
-                        if (typeof scope.getInfo().field !== 'string') {
-                            scope.getInfo().field += "";
+                        if (typeof scope.getInfo().field[scope.getInfo().fieldName] !== 'string') {
+                            scope.getInfo().field[scope.getInfo().fieldName] += "";
                         }
                         if (scope.getInfo().validationRegex != null) {
-                            isValid = scope.getInfo().field.match(scope.getInfo().validationRegex) != null;
+                            isValid = scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
                         }
                         if (scope.getInfo().validationFct != null) {
                             isValid = isValid && scope.getInfo().validationFct();
                         }
                         scope.getInfo().isValid = isValid;
                     };
-
-
-
                     scope.isValid();
+
                     scope.logField = function () {
                         return console.log(scope.getInfo());
                     };
@@ -101,7 +98,7 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
 
                     scope.openCalculator= function(){
                         modalService.openCalculatorModal(new function(result){
-                            scope.getInfo().field=result;
+                            scope.getInfo().field[scope.getInfo().fieldName]=result;
                         });
                     };
                 }

@@ -8,6 +8,7 @@ import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.post.CustomerRegistrationDTO;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.dto.technical.ExceptionDTO;
+import be.lynk.server.model.GenderEnum;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.util.exception.MyRuntimeException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -99,7 +100,7 @@ public abstract class AbstractControllerTest implements ApplicationContextAware 
                 dto.setAccountRegistration(registrationDTO);
                 registrationDTO.setFirstname(FIRSTNAME);
                 registrationDTO.setLastname(LASTNAME);
-                registrationDTO.setMale(true);
+                registrationDTO.setGender(GenderEnum.FEMALE);
                 registrationDTO.setEmail(EMAIL);
                 registrationDTO.setPassword(PASSWORD);
                 registrationDTO.setKeepSessionOpen(true);

@@ -82,7 +82,27 @@ myApp.service("businessService", function ($flash, $http, accountService) {
                 }
             });
 
-    }
+    };
+
+    this.editAddress = function (dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "PUT",
+            'url': "/address/" + dto.id,
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            accountService.getMyself().business.address = data;
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
 
     this.findByPromotion = function (dto, callbackSuccess, callbackError) {
 

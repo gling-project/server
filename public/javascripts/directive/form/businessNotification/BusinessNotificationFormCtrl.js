@@ -16,6 +16,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.update = scope.getInfo().dto != null;
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
                             startDate: new Date()
@@ -29,14 +30,18 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             validationMessage: ['--.generic.validation.size', '2', '255'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'description'
                         },
                         startDate: {
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
                                 return scope.getInfo().disabled;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'startDate'
                         },
                         endDate: {
                             fieldTitle: "--.promotion.endDate",
@@ -47,7 +52,9 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             },
                             validationFct: function () {
                                 return scope.fields.endDate.field >= scope.fields.startDate.field;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'endDate'
                         },
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
@@ -58,34 +65,31 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             },
                             disabled: function () {
                                 return scope.getInfo().disabled;
-                            }
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'illustration'
                         }
                     };
 
+                    //
+                    // validation : watching on field
+                    //
                     scope.$watch('fields', function () {
                         var validation = true;
 
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];
-                            console.log(obj.field);
                             if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
                                 obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                                 validation = false;
-                            }
-                            else {
-                                scope.getInfo().dto[key] = obj.field;
                             }
                         }
                         scope.getInfo().isValid = validation;
                     }, true);
 
-                    scope.$watch('getInfo().dto', function () {
-                        if (scope.getInfo().dto.description != null)scope.fields.description.field = scope.getInfo().dto.description;
-                        if (scope.getInfo().dto.startDate != null)scope.fields.startDate.field = scope.getInfo().dto.startDate;
-                        if (scope.getInfo().dto.endDate != null)scope.fields.endDate.field = scope.getInfo().dto.endDate;
-                        if (scope.getInfo().dto.illustration != null)scope.fields.illustration.field = scope.getInfo().dto.illustration;
-                    });
-
+                    //
+                    // display error watching
+                    //
                     scope.$watch('getInfo().displayErrorMessage', function () {
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];

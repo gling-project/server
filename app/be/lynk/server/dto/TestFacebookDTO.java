@@ -2,6 +2,7 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.GenderEnum;
 
 /**
  * Created by florian on 17/05/15.
@@ -14,7 +15,7 @@ public class TestFacebookDTO extends DTO{
 
     private String email;
 
-    private Boolean male;
+    private GenderEnum gender;
 
     private TestFacebookStatusEnum status;
 
@@ -47,12 +48,12 @@ public class TestFacebookDTO extends DTO{
         this.email = email;
     }
 
-    public Boolean getMale() {
-        return male;
+    public GenderEnum getGender() {
+        return gender;
     }
 
-    public void setMale(Boolean male) {
-        this.male = male;
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
     }
 
     public TestFacebookStatusEnum getStatus() {

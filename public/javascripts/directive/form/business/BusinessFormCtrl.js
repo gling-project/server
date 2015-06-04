@@ -15,18 +15,9 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                 },
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
-
-
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {};
                     }
-
-
-                    scope.$watch('getInfo().dto',function(){
-                        scope.fields.name.field =scope.getInfo().dto.name;
-                        scope.fields.description.field =scope.getInfo().dto.description;
-                        scope.fields.phone.field =scope.getInfo().dto.phone;
-                    });
 
                     scope.fields = {
                         name: {
@@ -39,7 +30,9 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                             focus: function () {
                                 return true;
                             },
-                            isActive: !scope.getInfo().updateMode
+                            //isActive: !scope.getInfo().updateMode,
+                            field: scope.getInfo().dto,
+                            fieldName: 'name'
                         },
                         description: {
                             fieldTitle: "--.generic.desc",
@@ -48,19 +41,26 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: !scope.getInfo().updateMode
+                            isActive: !scope.getInfo().updateMode,
+                            field: scope.getInfo().dto,
+                            fieldName: 'description'
                         },
                         phone: {
                             fieldTitle: "--.generic.phone",
-                            validationRegex: "^[0-9. *-]{6,16}$",
+                            validationRegex: "^[0-9. *-+]{6,16}$",
                             validationMessage: '--.validation.dto.notNull',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: !scope.getInfo().updateMode
+                            isActive: !scope.getInfo().updateMode,
+                            field: scope.getInfo().dto,
+                            fieldName: 'phone'
                         }
                     };
 
+                    //
+                    // validation : watching on field
+                    //
                     scope.$watch('fields', function () {
                         var validation = true;
 
@@ -70,18 +70,14 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                                 obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                                 validation = false;
                             }
-                            else {
-                                if (key == 'gender') {
-                                    scope.getInfo().dto.male = (scope.fields[key].field == 'male');
-                                }
-                                else {
-                                    scope.getInfo().dto[key] = scope.fields[key].field;
-                                }
-                            }
                         }
                         scope.getInfo().isValid = validation;
                     }, true);
 
+
+                    //
+                    // display error watching
+                    //
                     scope.$watch('getInfo().displayErrorMessage', function () {
                         for (var key in scope.fields) {
                             var obj = scope.fields[key];

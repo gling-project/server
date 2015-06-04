@@ -44,7 +44,6 @@ public class FacebookCredential extends AbstractEntity {
     @Override
     public String toString() {
         return "FacebookCredential{" +
-                "account=" + account +
                 ", userId='" + userId + '\'' +
                 '}';
     }

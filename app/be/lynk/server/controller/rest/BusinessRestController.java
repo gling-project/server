@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -94,7 +95,7 @@ public class BusinessRestController extends AbstractController {
 
         Business business = currentUser.getBusiness();
         //add categories
-        business.setBusinessCategories(new HashSet<>());
+        business.setBusinessCategories(new ArrayList<>());
         for (BusinessCategoryDTO businessCategoryDTO : dto.getBusinessCategories()) {
             business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
         }

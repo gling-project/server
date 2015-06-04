@@ -19,6 +19,8 @@ import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -98,7 +100,9 @@ public class PromotionRestController extends AbstractRestController {
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        Set<Promotion> promotions = business.getPromotions();
+        List<Promotion> promotions = business.getPromotions();
+
+        Collections.sort(promotions);
 
         ListDTO<PromotionDTO> promotionDTOListDTO = new ListDTO<>(dozerService.map(promotions, PromotionDTO.class));
 

@@ -21,11 +21,11 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                     };
 
                     scope.isValid = function () {
-                        //scope.getInfo().isValid = true;//scope.isActive()==false  || scope.getInfo().field!=null;
-                            scope.getInfo().isValid = (scope.getInfo().optional!=null && scope.getInfo().optional()) || scope.isActive() == false || scope.getInfo().field != null;
-                    };
 
-                    //scope.isValid();
+                        //scope.getInfo().isValid = true;//scope.isActive()==false  || scope.getInfo().field!=null;
+                        scope.getInfo().isValid = (scope.getInfo().optional!=null && scope.getInfo().optional()) || scope.isActive() == false || scope.getInfo().field[scope.getInfo().fieldName] != null;
+                    };
+                    scope.isValid();
 
                     scope.displayError = function () {
                         if (scope.getInfo().isValid == false && scope.getInfo().firstAttempt === false) {
@@ -72,7 +72,7 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                             }).success(function (data, status) {
                                 scope.success = true;
                                 scope.percent = 100.0;
-                                scope.getInfo().field = data;
+                                scope.getInfo().field[scope.getInfo().fieldName] = data;
                                 scope.inDownload=false;
                             })
                                 .error(function (data, status) {
@@ -85,17 +85,16 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                     };
 
                     scope.fileCall = null;
-                    scope.$watch('getInfo().field', function (n, o) {
+                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
                         if (n != null) {
-                            scope.fileCall = "/file/" + scope.getInfo().field.id;
+                            scope.fileCall = "/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
                         }
-                        //scope.getInfo().isValid = n != null;
                         scope.isValid();// = n != null;
                     });
 
                     scope.download = function () {
-                        if (scope.getInfo().field != null) {
-                            var url = "/file/" + scope.getInfo().field.id;
+                        if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+                            var url = "/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
                             $window.open(url);
                         }
                     };

@@ -134,4 +134,6 @@ public class PromotionDTO extends DTO {
                 ", offPercent=" + offPercent +
                 '}';
     }
+
+
 }

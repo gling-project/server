@@ -6,6 +6,7 @@ import be.lynk.server.dto.*;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.dto.post.*;
 import be.lynk.server.dto.technical.ResultDTO;
+import be.lynk.server.model.GenderEnum;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
@@ -20,6 +21,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -217,7 +219,7 @@ public class LoginRestController extends AbstractRestController {
         }
 
         //add categories
-        business.setBusinessCategories(new HashSet<>());
+        business.setBusinessCategories(new ArrayList<>());
         for (BusinessCategoryDTO businessCategoryDTO : dto.getBusiness().getBusinessCategories()) {
             business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
         }
@@ -335,7 +337,7 @@ public class LoginRestController extends AbstractRestController {
         testFacebookDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
         testFacebookDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
         testFacebookDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
-        testFacebookDTO.setMale(facebookTokenAccessControlDTO.getGender().equals("male"));
+        testFacebookDTO.setGender(GenderEnum.getByText(facebookTokenAccessControlDTO.getGender()));
 
         //2) test if there is an account with this facebook credential
         FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookAuthenticationDTO.getUserId());

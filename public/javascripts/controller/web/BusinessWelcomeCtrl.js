@@ -29,7 +29,7 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     // businessParam
     //
     $scope.editAddress = function (address) {
-        modalService.addressModal(false, address);
+        modalService.addressModal(false, address,true);
     };
 
     //
@@ -51,7 +51,8 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
         disabled: function(){
             return $scope.illustrationDisable;
         },
-        field: angular.copy(accountService.getMyself().business.illustration)
+        field: accountService.getMyself().business,
+        fieldName:'illustration'
     };
 
 

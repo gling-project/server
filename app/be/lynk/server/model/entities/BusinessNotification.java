@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * Created by florian on 1/06/15.
  */
 @Entity
-public class BusinessNotification extends AbstractEntity {
+public class BusinessNotification extends AbstractEntity implements Comparable<BusinessNotification>{
 
     @Basic(optional = false)
     @Convert(converter = LocalDateTimePersistenceConverter.class)
@@ -80,5 +80,10 @@ public class BusinessNotification extends AbstractEntity {
                 ", illustration=" + illustration +
                 ", business=" + business +
                 '}';
+    }
+
+    @Override
+    public int compareTo(BusinessNotification o) {
+        return o.getCreationDate().compareTo(this.getCreationDate());
     }
 }

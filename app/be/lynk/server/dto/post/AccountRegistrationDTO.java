@@ -4,6 +4,7 @@ import be.lynk.server.dto.AddressDTO;
 import be.lynk.server.dto.FacebookAuthenticationDTO;
 import be.lynk.server.dto.LangDTO;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.GenderEnum;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Pattern;
 public class AccountRegistrationDTO extends DTO {
 
     @NotNull
-    private Boolean male;
+    private GenderEnum gender;
 
     @NotNull
     @Pattern(regexp = ".{2,50}",message = "--.validation.dto.size")
@@ -37,12 +38,12 @@ public class AccountRegistrationDTO extends DTO {
 
     private Boolean keepSessionOpen;
 
-    public Boolean getMale() {
-        return male;
+    public GenderEnum getGender() {
+        return gender;
     }
 
-    public void setMale(Boolean male) {
-        this.male = male;
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
     }
 
     public String getFirstname() {
@@ -96,7 +97,7 @@ public class AccountRegistrationDTO extends DTO {
     @Override
     public String toString() {
         return "AccountRegistrationDTO{" +
-                "male=" + male +
+                "gender=" + gender +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +

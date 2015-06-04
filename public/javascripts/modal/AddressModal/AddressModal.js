@@ -1,4 +1,4 @@
-myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance, accountService, translationService, addName, dto) {
+myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness) {
 
     $scope.loading = false;
 
@@ -22,13 +22,24 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance, a
         else {
             $scope.loading = true;
             if ($scope.update) {
-                accountService.editAddress($scope.addressParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
+                if(isBusiness){
+                    businessService.editAddress($scope.addressParam.dto, function () {
+                            $scope.loading = false;
+                            $scope.close();
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
+                else {
+                    accountService.editAddress($scope.addressParam.dto, function () {
+                            $scope.loading = false;
+                            $scope.close();
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
             }
             else {
                 accountService.addAddress($scope.addressParam.dto, function () {

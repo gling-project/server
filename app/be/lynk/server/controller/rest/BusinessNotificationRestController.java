@@ -18,7 +18,9 @@ import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -90,7 +92,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        Set<BusinessNotification> businessNotifications = business.getBusinessNotification();
+        List<BusinessNotification> businessNotifications = business.getBusinessNotification();
+
+        Collections.sort(businessNotifications);
 
         ListDTO<BusinessNotificationDTO> businessNotificationDTOListDTO = new ListDTO<>(dozerService.map(businessNotifications, BusinessNotificationDTO.class));
 

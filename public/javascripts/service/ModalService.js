@@ -94,13 +94,16 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.addressModal = function(addName,address){
+    this.addressModal = function(addName,address,isBusiness){
         var resolve = {
             dto: function () {
                 return address;
             }
             ,addName : function(){
                 return addName;
+            },
+            isBusiness : function(){
+                return isBusiness;
             }
         };
         $modal.open({
@@ -156,5 +159,25 @@ myApp.service("modalService", function ($modal) {
             resolve: resolve
         });
     };
+
+
+
+    this.openOneFieldModal = function(field,callback){
+        var resolve = {
+            field: function () {
+                return field;
+            },
+            callback: function () {
+                return callback;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/OneFieldModal/view.html",
+            controller: "OneFieldModalCtrl",
+            size:"l",
+            resolve: resolve
+        });
+    };
+
 
 });
