@@ -1,0 +1,30 @@
+<div class="schedule-form">
+
+    <div>
+        <div class="attendance-light">
+            <input type="radio" ng-model="attendance_selected" value="light"/>Light
+        </div>
+
+        <div class="attendance-moderate">
+            <input type="radio" ng-model="attendance_selected" value="moderate"/>Moderate
+        </div>
+
+        <div class="attendance-heavy">
+            <input type="radio" ng-model="attendance_selected" value="heavy"/>Heavy
+        </div>
+    </div>
+
+    <div class="schedule-block">
+        <button class="hour-block"
+                ng-repeat="section in sections"
+                ng-class="attendance_class[section.attendance]"
+                ng-mousedown="select(section,true)"
+                ng-mouseover="select(section)">
+            {{section.hour}}
+        </button>
+    </div>
+
+
+    <clock-chart-ctrl ng-info="clockParam"></clock-chart-ctrl>
+
+</div>
