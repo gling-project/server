@@ -1,10 +1,12 @@
 package be.lynk.server.model.entities;
 
+import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.model.entities.publication.BusinessNotification;
+import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by florian on 10/11/14.
@@ -39,18 +41,7 @@ public class Business extends AbstractEntity {
     private StoredFile illustration;
 
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
-    private List<Promotion> promotions;
-
-    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
-    private List<BusinessNotification> businessNotification;
-
-    public List<Promotion> getPromotions() {
-        return promotions;
-    }
-
-    public void setPromotions(List<Promotion> promotions) {
-        this.promotions = promotions;
-    }
+    private List<AbstractPublication> publications;
 
     public StoredFile getIllustration() {
         return illustration;
@@ -108,12 +99,12 @@ public class Business extends AbstractEntity {
         this.address = address;
     }
 
-    public List<BusinessNotification> getBusinessNotification() {
-        return businessNotification;
+    public List<AbstractPublication> getPublications() {
+        return publications;
     }
 
-    public void setBusinessNotification(List<BusinessNotification> businessNotification) {
-        this.businessNotification = businessNotification;
+    public void setPublications(List<AbstractPublication> publications) {
+        this.publications = publications;
     }
 
     @Override
@@ -126,8 +117,7 @@ public class Business extends AbstractEntity {
                 ", address=" + address +
                 ", businessCategories=" + businessCategories +
                 ", illustration=" + illustration +
-                ", promotions=" + promotions +
-                ", businessNotification=" + businessNotification +
+                ", publications=" + publications +
                 '}';
     }
 }

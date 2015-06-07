@@ -4,18 +4,29 @@ import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by florian on 18/05/15.
  */
-public class BusinessCategoryDTO extends DTO{
+public class BusinessCategoryDTO extends DTO implements Comparable<BusinessCategoryDTO>{
 
     private String name;
 
     private String translationName;
 
-    private Set<BusinessCategoryDTO> children;
+    private Integer orderIndex;
+
+    private List<BusinessCategoryDTO> children;
+
+    public Integer getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Integer orderIndex) {
+        this.orderIndex = orderIndex;
+    }
 
     public String getName() {
         return name;
@@ -33,11 +44,11 @@ public class BusinessCategoryDTO extends DTO{
         this.translationName = translationName;
     }
 
-    public Set<BusinessCategoryDTO> getChildren() {
+    public List<BusinessCategoryDTO> getChildren() {
         return children;
     }
 
-    public void setChildren(Set<BusinessCategoryDTO> children) {
+    public void setChildren(List<BusinessCategoryDTO> children) {
         this.children = children;
     }
 
@@ -48,5 +59,10 @@ public class BusinessCategoryDTO extends DTO{
                 ", translationName='" + translationName + '\'' +
                 ", children=" + children +
                 '}';
+    }
+
+    @Override
+    public int compareTo(BusinessCategoryDTO o) {
+        return this.getOrderIndex().compareTo(o.getOrderIndex());
     }
 }

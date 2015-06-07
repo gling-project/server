@@ -1,4 +1,4 @@
-myApp.controller('CustomerRegistrationCtrl', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location) {
+myApp.controller('CustomerRegistrationCtrl', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location,addressService) {
 
     var facebookAuthentication = null;
 
@@ -58,6 +58,17 @@ myApp.controller('CustomerRegistrationCtrl', function ($scope,$flash,accountServ
                 $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
                 notValid = true;
             }
+            else {
+                $scope.loading = true;
+                addressService.testAddress($scope.addressFormParam.dto,
+                    function () {
+                        $scope.loading = false;
+                        $scope.badgeSelected++;
+                    },
+                    function () {
+                        $scope.loading = false;
+                    });
+            }
         }
         if (!notValid) {
             $scope.badgeSelected++;
@@ -98,7 +109,7 @@ myApp.controller('CustomerRegistrationCtrl', function ($scope,$flash,accountServ
                         $scope.accountParam.dto.firstname = data2.first_name;
                         $scope.accountParam.dto.lastname = data2.last_name;
                         $scope.accountParam.dto.email= data2.email;
-                        $scope.accountParam.dto.male= data2.male;
+                        $scope.accountParam.dto.gender= data2.gender;
                         $scope.accountParam.dto.password= '*********';
                         facebookAuthentication = dto;
                         $scope.skip();

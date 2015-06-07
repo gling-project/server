@@ -7,4 +7,6 @@ import be.lynk.server.model.entities.CustomerInterest;
  */
 public interface CustomerInterestService extends CrudService<CustomerInterest>{
     CustomerInterest findByName(String name);
+
+    void deleteAll();
 }

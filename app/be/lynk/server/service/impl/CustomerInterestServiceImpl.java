@@ -25,4 +25,9 @@ public class CustomerInterestServiceImpl extends CrudServiceImpl<CustomerInteres
         cq.where(cb.equal(from.get("name"), name));
         return getSingleResultOrNull(cq);
     }
+
+    @Override
+    public void deleteAll() {
+        JPA.em().createQuery("delete from CustomerInterest c").executeUpdate();
+    }
 }

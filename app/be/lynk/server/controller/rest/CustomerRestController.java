@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +30,8 @@ public class CustomerRestController extends AbstractController {
     public Result getAllCustomerInterest(){
 
         List<CustomerInterest> all = customerInterestService.findAll();
+
+        Collections.sort(all);
 
         return ok(new ListDTO<CustomerInterestDTO>(dozerService.map(all, CustomerInterestDTO.class)));
     }

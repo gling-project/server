@@ -40,7 +40,11 @@ object ApplicationBuild extends Build {
     "com.google.code.gson" % "gson" % "2.2.4",
     "org.slf4j" % "slf4j-api" % "1.7.7",
     "commons-httpclient" % "commons-httpclient" % "3.1",
-    "com.google.code.geocoder-java" % "geocoder-java" % "0.16"
+    "com.google.code.geocoder-java" % "geocoder-java" % "0.16",
+    "net.sourceforge.jexcelapi" % "jxl" % "2.6.12" excludeAll(
+      ExclusionRule(organization = "com.sun.jdmk"),
+      ExclusionRule(organization = "com.sun.jmx"),
+      ExclusionRule(organization = "javax.jms"))
   )
 
   val main = play.Project(name, version, appDependencies)

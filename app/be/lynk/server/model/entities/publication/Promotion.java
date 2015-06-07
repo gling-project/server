@@ -1,25 +1,30 @@
-package be.lynk.server.dto;
+package be.lynk.server.model.entities.publication;
 
-import be.lynk.server.dto.technical.DTO;
-
-import java.util.Date;
+import javax.persistence.*;
 
 /**
  * Created by florian on 23/05/15.
  */
-public class PromotionDTO extends AbstractPublicationDTO {
+@Entity
+public class Promotion extends AbstractPublication{
 
+    @Basic
     private Double quantity;
 
+    @Basic
     private Double minimalQuantity;
 
+    @Basic
     private String unit;
 
+    @Basic
     private Double originalPrice;
 
+    @Basic
     private Double offPercent;
 
-    private Long distance;
+    public Promotion() {
+    }
 
     public Double getQuantity() {
         return quantity;
@@ -61,24 +66,16 @@ public class PromotionDTO extends AbstractPublicationDTO {
         this.offPercent = offPercent;
     }
 
-    public Long getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Long distance) {
-        this.distance = distance;
-    }
-
     @Override
     public String toString() {
-        return "PromotionDTO{" +
+        return "Promotion{" +
                 super.toString()+
-                "quantity=" + quantity +
+                ", quantity=" + quantity +
                 ", minimalQuantity=" + minimalQuantity +
                 ", unit='" + unit + '\'' +
                 ", originalPrice=" + originalPrice +
-                ", offPercent=" + offPercent +
-                ", distance=" + distance +
+                ", offPercent=" + offPercent+
                 '}';
     }
+
 }

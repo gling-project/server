@@ -4,24 +4,22 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessNotificationDTO;
 import be.lynk.server.dto.ListDTO;
-import be.lynk.server.dto.PromotionDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.*;
-import be.lynk.server.service.BusinessNotificationService;
+import be.lynk.server.model.entities.publication.BusinessNotification;
+import be.lynk.server.model.entities.publication.Promotion;
+import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by florian on 1/06/15.
@@ -30,7 +28,7 @@ import java.util.Set;
 public class BusinessNotificationRestController extends AbstractRestController {
 
     @Autowired
-    private BusinessNotificationService businessNotificationService;
+    private PublicationService publicationService;
     @Autowired
     private StoredFileService storedFileService;
 
@@ -48,7 +46,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
             businessNotification.setIllustration(storedFileService.findById(businessNotification.getIllustration().getId()));
         }
 
-        businessNotificationService.saveOrUpdate(businessNotification);
+        publicationService.saveOrUpdate(businessNotification);
 
         return ok(new ResultDTO());
     }
@@ -61,7 +59,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         BusinessNotification businessNotification = dozerService.map(dto, BusinessNotification.class);
 
         //load
-        BusinessNotification businessNotificationToEdit = businessNotificationService.findById(id);
+        BusinessNotification businessNotificationToEdit = (BusinessNotification) publicationService.findById(id);
 
 
         //control
@@ -78,7 +76,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
 
-        businessNotificationService.saveOrUpdate(businessNotificationToEdit);
+        publicationService.saveOrUpdate(businessNotificationToEdit);
 
         return ok(dozerService.map(businessNotificationToEdit, BusinessNotificationDTO.class));
     }
@@ -92,13 +90,13 @@ public class BusinessNotificationRestController extends AbstractRestController {
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        List<BusinessNotification> businessNotifications = business.getBusinessNotification();
+        List<BusinessNotification> businessNotifications = publicationService.findByTypeAndBusiness(BusinessNotification.class, business);
 
         Collections.sort(businessNotifications);
 
         ListDTO<BusinessNotificationDTO> businessNotificationDTOListDTO = new ListDTO<>(dozerService.map(businessNotifications, BusinessNotificationDTO.class));
 
-        Logger.info("NOTIFICATION ççççççç :" + businessNotificationDTOListDTO);
+        Logger.info("NOTIFICATION  :" + businessNotificationDTOListDTO);
 
         return ok(businessNotificationDTOListDTO);
     }
@@ -107,12 +105,12 @@ public class BusinessNotificationRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result delete(Long id) {
         //load
-        BusinessNotification businessNotification = businessNotificationService.findById(id);
+        BusinessNotification businessNotification = (BusinessNotification) publicationService.findById(id);
         if (businessNotification == null || !businessNotification.getBusiness().equals(((BusinessAccount) securityController.getCurrentUser()).getBusiness())) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
-        businessNotificationService.remove(businessNotification);
+        publicationService.remove(businessNotification);
 
         return ok(new ResultDTO());
     }

@@ -7,21 +7,19 @@ import be.lynk.server.dto.PromotionDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
-import be.lynk.server.model.entities.Promotion;
-import be.lynk.server.service.PromotionService;
+import be.lynk.server.model.entities.publication.Promotion;
+import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by florian on 23/05/15.
@@ -30,7 +28,7 @@ import java.util.Set;
 public class PromotionRestController extends AbstractRestController {
 
     @Autowired
-    private PromotionService promotionService;
+    private PublicationService publicationService;
     @Autowired
     private StoredFileService storedFileService;
 
@@ -50,7 +48,7 @@ public class PromotionRestController extends AbstractRestController {
         }
         promotion.setBusiness(business);
 
-        promotionService.saveOrUpdate(promotion);
+        publicationService.saveOrUpdate(promotion);
 
         return ok(dozerService.map(promotion, PromotionDTO.class));
     }
@@ -63,7 +61,7 @@ public class PromotionRestController extends AbstractRestController {
         Promotion promotion = dozerService.map(dto, Promotion.class);
 
         //load
-        Promotion promotionToEdit = promotionService.findById(id);
+        Promotion promotionToEdit = (Promotion) publicationService.findById(id);
 
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
@@ -86,7 +84,7 @@ public class PromotionRestController extends AbstractRestController {
         }
         promotionToEdit.setUnit(promotion.getUnit());
 
-        promotionService.saveOrUpdate(promotionToEdit);
+        publicationService.saveOrUpdate(promotionToEdit);
 
         return ok(dozerService.map(promotionToEdit, PromotionDTO.class));
     }
@@ -95,36 +93,35 @@ public class PromotionRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result getMine() {
 
-        Logger.info("REQUEST    PROMOTION    : : "+request().uri());
+        Logger.info("REQUEST    PROMOTION    : : " + request().uri());
 
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        List<Promotion> promotions = business.getPromotions();
+        List<Promotion> promotions = publicationService.findByTypeAndBusiness(Promotion.class, business);
 
         Collections.sort(promotions);
 
         ListDTO<PromotionDTO> promotionDTOListDTO = new ListDTO<>(dozerService.map(promotions, PromotionDTO.class));
 
-        Logger.info("PROMOTION ------ :"+promotionDTOListDTO);
+        Logger.info("PROMOTION ------ :" + promotionDTOListDTO);
 
         return ok(promotionDTOListDTO);
     }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result delete(Long id){
+    public Result delete(Long id) {
         //load
-        Promotion promotion = promotionService.findById(id);
-        if(promotion==null || !promotion.getBusiness().equals(((BusinessAccount)securityController.getCurrentUser()).getBusiness())){
+        Promotion promotion = (Promotion) publicationService.findById(id);
+        if (promotion == null || !promotion.getBusiness().equals(((BusinessAccount) securityController.getCurrentUser()).getBusiness())) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
-        promotionService.remove(promotion);
+        publicationService.remove(promotion);
 
         return ok(new ResultDTO());
     }
-
 
 
 }

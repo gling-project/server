@@ -2,15 +2,14 @@ package be.lynk.server.model.entities;
 
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by florian on 17/05/15.
  */
 @Entity
-public class CustomerInterest extends AbstractEntity{
+public class CustomerInterest extends AbstractEntity implements Comparable<CustomerInterest>{
 
     @Basic(optional = false)
     @Column(unique = true)
@@ -19,6 +18,20 @@ public class CustomerInterest extends AbstractEntity{
     @Basic
     private String translationName;
 
+    @Basic
+    private Integer orderIndex;
+
+    @OneToMany(mappedBy = "customerInterest",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private List<CategoryInterestLink> links;
+
+    public CustomerInterest() {
+    }
+
+    public CustomerInterest(String name, String translationName, Integer orderIndex) {
+        this.name = name;
+        this.translationName = translationName;
+        this.orderIndex = orderIndex;
+    }
 
     public String getName() {
         return name;
@@ -34,6 +47,22 @@ public class CustomerInterest extends AbstractEntity{
 
     public void setTranslationName(String translationName) {
         this.translationName = translationName;
+    }
+
+    public List<CategoryInterestLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<CategoryInterestLink> links) {
+        this.links = links;
+    }
+
+    public Integer getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Integer orderIndex) {
+        this.orderIndex = orderIndex;
     }
 
     @Override
@@ -60,5 +89,10 @@ public class CustomerInterest extends AbstractEntity{
                 "name='" + name + '\'' +
                 ", translationName='" + translationName + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(CustomerInterest o) {
+        return this.orderIndex.compareTo(o.orderIndex);
     }
 }

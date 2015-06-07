@@ -10,30 +10,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * !! IMPORTANT
+ * this DTO must  contain only business public datas
+ * IMPORTANT !!!
  */
-public class BusinessDTO extends DTO {
+public class BusinessForDisplayDTO extends DTO {
 
-    @NotNull(message = "--.validation.dto.notNull")
-    @Size(min = 2,max =250,message = "--.validation.dto.size")
     private String name;
 
-    @NotNull(message = "--.validation.dto.notNull")
-    @Size(min = 2,max =1500,message = "--.validation.dto.size")
     private String description;
 
-    @NotNull(message = "--.validation.dto.notNull")
-    @Pattern(regexp = ValidationRegex.PHONE,message = "--.validation.dto.phone")
     private String phone;
 
     private AddressDTO address;
 
     private StoredFileDTO illustration;
 
-    public BusinessDTO() {
+    //todo businessShedules
+
+    private AbstractPublicationDTO lastPublication;
+
+    public BusinessForDisplayDTO() {
     }
 
     public StoredFileDTO getIllustration() {
         return illustration;
+    }
+
+    public AbstractPublicationDTO getLastPublication() {
+        return lastPublication;
+    }
+
+    public void setLastPublication(AbstractPublicationDTO lastPublication) {
+        this.lastPublication = lastPublication;
     }
 
     public void setIllustration(StoredFileDTO illustration) {

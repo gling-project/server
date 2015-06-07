@@ -35,8 +35,10 @@
                 <accordion-group
                         class="address-container"
                         ng-repeat="address in model.myself.addresses"
-                        heading="{{address.name}}"
                         is-open="address.isOpen">
+                    <accordion-heading>
+                        {{address.name}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}"></i>
+                    </accordion-heading>
                     <div class="address-box">
                         <div><span>{{'--.generic.street' | translateText}}</span>{{address.street}}</div>
                         <div><span>{{'--.generic.zip' | translateText}}</span>{{address.zip}}</div>

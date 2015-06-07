@@ -1,4 +1,4 @@
-myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
+myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService,addressService) {
 
     var facebookAuthentication = null;
 
@@ -69,6 +69,17 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                 $scope.addressFormParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
                 notValid = true;
+            }
+            else {
+                $scope.loading = true;
+                addressService.testAddress($scope.addressFormParam.dto,
+                    function () {
+                        $scope.loading = false;
+                        $scope.badgeSelected++;
+                    },
+                    function () {
+                        $scope.loading = false;
+                    });
             }
         }
         if (!notValid) {

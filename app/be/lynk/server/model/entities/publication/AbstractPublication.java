@@ -1,5 +1,7 @@
-package be.lynk.server.model.entities;
+package be.lynk.server.model.entities.publication;
 
+import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
@@ -7,10 +9,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Created by florian on 23/05/15.
+ * Created by florian on 5/06/15.
  */
 @Entity
-public class Promotion extends AbstractEntity implements Comparable<Promotion>{
+public abstract class AbstractPublication  extends AbstractEntity implements Comparable<AbstractPublication >{
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
     private Business business;
@@ -30,24 +32,6 @@ public class Promotion extends AbstractEntity implements Comparable<Promotion>{
 
     @ManyToOne
     private StoredFile illustration;
-
-    @Basic
-    private Double quantity;
-
-    @Basic
-    private Double minimalQuantity;
-
-    @Basic
-    private String unit;
-
-    @Basic
-    private Double originalPrice;
-
-    @Basic
-    private Double offPercent;
-
-    public Promotion() {
-    }
 
     public Business getBusiness() {
         return business;
@@ -89,65 +73,18 @@ public class Promotion extends AbstractEntity implements Comparable<Promotion>{
         this.illustration = illustration;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getMinimalQuantity() {
-        return minimalQuantity;
-    }
-
-    public void setMinimalQuantity(Double minimalQuantity) {
-        this.minimalQuantity = minimalQuantity;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Double getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(Double originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public Double getOffPercent() {
-        return offPercent;
-    }
-
-    public void setOffPercent(Double offPercent) {
-        this.offPercent = offPercent;
-    }
-
     @Override
     public String toString() {
-        return "Promotion{" +
-                "business=" + business +
+        return "AbstractPublication{" +
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", illustration=" + illustration +
-                ", quantity=" + quantity +
-                ", minimalQuantity=" + minimalQuantity +
-                ", unit='" + unit + '\'' +
-                ", originalPrice=" + originalPrice +
-                ", offPercent=" + offPercent+
                 '}';
     }
 
-
     @Override
-    public int compareTo(Promotion o) {
-        return o.getCreationDate().compareTo(this.getCreationDate());
+    public int compareTo(AbstractPublication o) {
+        return 0;
     }
 }

@@ -40,6 +40,23 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
         value : angular.copy($scope.model.myself.business.businessCategories)
     };
 
+    $scope.businessCategoryEdit = function () {
+        $scope.businessCategoryParam.disabled = false;
+    };
+
+    $scope.businessCategorySave = function () {
+        $scope.businessCategoryParam.disabled = true;
+        console.log($scope.businessCategoryParam.value);
+        var business = angular.copy($scope.model.myself.business);
+        business.businessCategories = $scope.businessCategoryParam.value;
+        businessService.editBusinessCategory(business);
+    };
+
+    $scope.businessCategoryCancel = function () {
+        $scope.businessCategoryParam.value= angular.copy($scope.model.myself.business.businessCategories);
+        $scope.businessCategoryParam.disabled = true;
+    };
+
     //
     // illustration
     //

@@ -3,13 +3,15 @@ package be.lynk.server.model.entities;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by florian on 18/05/15.
  */
 @Entity
-public class BusinessCategory extends AbstractEntity{
+public class BusinessCategory extends AbstractEntity implements Comparable<BusinessCategory>{
 
     @Basic(optional = false)
     @Column(unique = true)
@@ -18,8 +20,11 @@ public class BusinessCategory extends AbstractEntity{
     @Basic(optional = false)
     private String translationName;
 
+    @Basic
+    private Integer orderIndex;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "parent",orphanRemoval = true)
-    private Set<BusinessCategory> children;
+    private List<BusinessCategory> children = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private BusinessCategory parent;
@@ -30,6 +35,33 @@ public class BusinessCategory extends AbstractEntity{
             joinColumns = {@JoinColumn(name = "category")},
             inverseJoinColumns = {@JoinColumn(name = "business")})
     private Set<Business> businesses;
+
+    @OneToMany(mappedBy = "businessCategory",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private List<CategoryInterestLink> links;
+
+    public BusinessCategory() {
+    }
+
+    public BusinessCategory(String name, String translationName, Integer orderIndex) {
+        this.name = name;
+        this.translationName = translationName;
+        this.orderIndex = orderIndex;
+    }
+
+    public BusinessCategory(BusinessCategory parent, String name, String translationName, Integer orderIndex) {
+        this.parent = parent;
+        this.name = name;
+        this.translationName = translationName;
+        this.orderIndex = orderIndex;
+    }
+
+    public List<CategoryInterestLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<CategoryInterestLink> links) {
+        this.links = links;
+    }
 
     public Set<Business> getBusinesses() {
         return businesses;
@@ -55,11 +87,11 @@ public class BusinessCategory extends AbstractEntity{
         this.translationName = translationName;
     }
 
-    public Set<BusinessCategory> getChildren() {
+    public List<BusinessCategory> getChildren() {
         return children;
     }
 
-    public void setChildren(Set<BusinessCategory> children) {
+    public void setChildren(List<BusinessCategory> children) {
         this.children = children;
     }
 
@@ -71,11 +103,18 @@ public class BusinessCategory extends AbstractEntity{
         this.parent = parent;
     }
 
+    public Integer getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Integer orderIndex) {
+        this.orderIndex = orderIndex;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
 
         BusinessCategory that = (BusinessCategory) o;
 
@@ -99,5 +138,10 @@ public class BusinessCategory extends AbstractEntity{
                 ", translationName='" + translationName + '\'' +
                 ", parent=" + parent +
                 '}';
+    }
+
+    @Override
+    public int compareTo(BusinessCategory o) {
+        return this.orderIndex.compareTo(o.orderIndex);
     }
 }

@@ -14,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by florian on 23/03/15.
@@ -27,16 +24,35 @@ public class BusinessRestController extends AbstractController {
 
     @Autowired
     private DozerService dozerService;
-
     @Autowired
     private BusinessCategoryService businessCategoryService;
-
     @Autowired
     private BusinessService businessService;
-
     @Autowired
     private StoredFileService storedFileService;
+    @Autowired
+    private PublicationService publicationService;
 
+    /**
+     * return only public data for all users / non-users
+     *
+     * @param id
+     * @return
+     */
+    @Transactional
+    public Result getPublicData(long id) {
+
+        Business business = businessService.findById(id);
+
+        //convert
+        BusinessForDisplayDTO map = dozerService.map(business, BusinessForDisplayDTO.class);
+
+
+        //load last publication
+        publicationService.findLastPublication(business);
+
+        return ok(map);
+    }
 
 
     @Transactional
@@ -63,7 +79,23 @@ public class BusinessRestController extends AbstractController {
 
         List<BusinessCategory> all = businessCategoryService.findAllParent();
 
-        return ok(new ListDTO<BusinessCategoryDTO>(dozerService.map(all, BusinessCategoryDTO.class)));
+        Collections.sort(all);
+
+        List<BusinessCategoryDTO> map = dozerService.map(all, BusinessCategoryDTO.class);
+
+        Collections.sort(map);
+
+        for (BusinessCategoryDTO businessCategoryDTO : map) {
+            Collections.sort(businessCategoryDTO.getChildren());
+
+            for (BusinessCategoryDTO categoryDTO : businessCategoryDTO.getChildren()) {
+                Collections.sort(categoryDTO.getChildren());
+            }
+
+        }
+
+
+        return ok(new ListDTO<>(map));
     }
 
     @Transactional

@@ -1,4 +1,4 @@
-myApp.directive('businessCategoryFormCtrl', function ( $flash, directiveService,businessCategoryService,$timeout) {
+myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, businessCategoryService, $timeout) {
 
     return {
         restrict: "E",
@@ -16,48 +16,74 @@ myApp.directive('businessCategoryFormCtrl', function ( $flash, directiveService,
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    scope.getInfo().isValid=false;
+                    scope.isDisabled= function(){
+                        return scope.getInfo().disabled;
+                    };
+
+                    scope.getInfo().isValid = false;
 
                     var value = scope.getInfo().value;
 
+                    scope.selectedCategory = null;
 
                     businessCategoryService.getAll(function (data) {
                         scope.categories = data.list;
 
-                        if(scope.getInfo().value!=null && scope.getInfo().value.length>0){
+                        scope.displayValue();
+                    });
+
+                    scope.displayValue = function(){
+                        if (scope.getInfo().value != null && scope.getInfo().value.length > 0) {
                             var catSelected = scope.getInfo().value[0];
-                            for(var cat in scope.categories){
-                                for(var subcat in scope.categories[cat].children){
-                                    if(scope.categories[cat].children[subcat].name == catSelected.name){
-                                        scope.selectedCategory = scope.categories[cat];
-                                        scope.subcategories = scope.categories[cat].children;
-                                        scope.subselectedCategory = scope.categories[cat].children[subcat];
-                                        break;
+                            for (var cat in scope.categories) {
+                                for (var subcat in scope.categories[cat].children) {
+                                    for (var subsubcat in scope.categories[cat].children[subcat].children) {
+
+                                        if (scope.categories[cat].children[subcat].children[subsubcat].name == catSelected.name) {
+
+                                            scope.subcategories = scope.categories[cat].children;
+                                            scope.subsubcategories = scope.categories[cat].children[subcat].children;
+                                            scope.selectedCategory = scope.categories[cat];
+                                            scope.subselectedCategory = scope.categories[cat].children[subcat];
+                                            scope.subsubselectedCategory = scope.categories[cat].children[subcat].children[subsubcat];
+                                            break;
+                                        }
                                     }
                                 }
                             }
                         }
+                    };
+
+                    scope.$watch('getInfo().value',function(){
+                        scope.displayValue();
                     });
 
-
-
-                    scope.selectedCategory = null;
-
-                    scope.select = function(category){
-                        if(category!=scope.selectedCategory) {
+                    scope.select = function (category) {
+                        if (category != scope.selectedCategory) {
                             scope.selectedCategory = category;
                             scope.subcategories = category.children;
                             scope.subselectedCategory = null;
+                            scope.subsubselectedCategory = null;
+                            scope.subsubcategories = null;
                             //TODO more than one cat ?
                             scope.getInfo().value = [];
-                            scope.getInfo().isValid=false;
+                            scope.getInfo().isValid = false;
                         }
                     };
 
-                    scope.selectSubcategory = function(subCategory){
+                    scope.selectSubcategory = function (subCategory) {
                         scope.subselectedCategory = subCategory;
+                        scope.subsubcategories = subCategory.children;
+                        scope.subsubselectedCategory = null;
                         //TODO more than one cat ?
                         scope.getInfo().value = [scope.subselectedCategory];
+                        scope.getInfo().isValid = true;
+                    };
+
+                    scope.selectSubSubcategory = function (subBubCategory) {
+                        scope.subsubselectedCategory = subBubCategory;
+                        //TODO more than one cat ?
+                        scope.getInfo().value = [scope.subsubselectedCategory];
                         scope.getInfo().isValid = true;
                     };
                 }

@@ -34,18 +34,18 @@ insert into address (name,street,zip,city,country) VALUES
 (null,',Rue A. Lavallée, 1','1080','Bruxelles','BELGIUM');
 
 
-insert into account (email,firstname,lastname,male,type,role,lang,dtype) VALUES
-('florian.jean@hotmail.fr','Florian','Jeanmart',true,'CUSTOMER','CUSTOMER','fr','CustomerAccount'),
-('info@boucherie.com','Boucher','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@fleur.com','fleur','La',false,'BUSINESS','BUSINESS','en','BusinessAccount'),
-('info@retauranttai.com','retauranttai','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@pneu.com','pneu','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@vin.com','Vin','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@coiffeur.com','coiffeur','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@theatre.com','theatre','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@pharmacie.com','pharmacie','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@legume.com','legume','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount'),
-('info@fringue.com','fringue','Le',true,'BUSINESS','BUSINESS','fr','BusinessAccount');
+insert into account (email,firstname,lastname,gender,type,role,lang,dtype) VALUES
+('florian.jean@hotmail.fr','Florian','Jeanmart','MALE','CUSTOMER','CUSTOMER','fr','CustomerAccount'),
+('info@boucherie.com','Boucher','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@fleur.com','fleur','La','MALE','BUSINESS','BUSINESS','en','BusinessAccount'),
+('info@retauranttai.com','retauranttai','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@pneu.com','pneu','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@vin.com','Vin','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@coiffeur.com','coiffeur','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@theatre.com','theatre','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@pharmacie.com','pharmacie','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@legume.com','legume','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount'),
+('info@fringue.com','fringue','Le','MALE','BUSINESS','BUSINESS','fr','BusinessAccount');
 
 insert into account_address (account_id,addresses_id) VALUES
 ((select id from account where email = 'florian.jean@hotmail.fr'),(select id from address where street = 'rue royale 73'));

@@ -5,10 +5,9 @@
         {{'--.business.welcome.title' | translateText}}
     </div>
 
-    <div class="custom-panel" style="width: 500px">
-        <h4>{{'--.generic.business' | translateText}}</h4>
-
-        <div>
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'--.generic.business' | translateText}}</div>
+        <div class="panel-body">
 
             <business-form-ctrl ng-info="businessParam"></business-form-ctrl>
 
@@ -27,10 +26,9 @@
     </div>
 
 
-    <div class="custom-panel">
-        <h4>{{'--.generic.address' | translateText}}</h4>
-
-        <div class="address-container">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
+        <div class="panel-body address-container">
             <div class="address-box">
                 <div><span>{{'--.generic.street' | translateText}}</span>{{model.myself.business.address.street}}</div>
                 <div><span>{{'--.generic.zip' | translateText}}</span>{{model.myself.business.address.zip}}</div>
@@ -46,17 +44,34 @@
         </div>
     </div>
 
-    <div class="custom-panel">
-        <h4>{{'--.business.profile.businessCategory' | translateText}}</h4>
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'--.profile.businessCategory' | translateText}}</div>
+        <div class="panel-body">
 
-        <business-category-form-ctrl ng-info="businessCategoryParam"></business-category-form-ctrl>
+            <business-category-form-ctrl ng-info="businessCategoryParam"></business-category-form-ctrl>
+            <button class="btn btn-primary glyphicon glyphicon-edit"
+                    ng-show="businessCategoryParam.disabled"
+                    ng-click="businessCategoryEdit()">
+                {{'--.generic.edit' |translateText}}
+            </button>
+            <button class="btn btn-primary"
+                    ng-hide="businessCategoryParam.disabled"
+                    ng-click="businessCategorySave()">
+                {{'--.generic.save' |
+                translateText}}
+            </button>
+            <button class="btn btn-primary"
+                    ng-hide="businessCategoryParam.disabled"
+                    ng-click="businessCategoryCancel()">
+                {{'--.generic.cancel' | translateText}}
+            </button>
+        </div>
     </div>
 
 
-    <div class="custom-panel">
-        <h4>{{'--.business.profile.image' | translateText}}</h4>
-
-        <div>
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'--.business.profile.image' | translateText}}</div>
+        <div class="panel-body">
 
             <dir-field-document ng-info="illustrationParam"></dir-field-document>
 
@@ -75,11 +90,10 @@
     </div>
 
 
-    <div class="custom-panel">
-        <h4>{{'--.business.profile.promotion' | translateText}}</h4>
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'--.business.profile.promotion' | translateText}}</div>
+        <div class="panel-body">
 
-
-        <div>
             <button class="btn btn-primary" ng-click="addPromotion()">{{'--.business.welcome.addPromotion' |
                 translateText}}
             </button>
@@ -103,11 +117,10 @@
     </div>
 
 
-    <div class="custom-panel">
-        <h4>{{'--.business.profile.businessNotification' | translateText}}</h4>
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'--.business.profile.businessNotification' | translateText}}</div>
+        <div class="panel-body">
 
-
-        <div>
             <button class="btn btn-primary" ng-click="addBusinessNotification()">
                 {{'--.business.welcome.addBusinessNotification' |
                 translateText}}

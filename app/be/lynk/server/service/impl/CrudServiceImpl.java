@@ -1,6 +1,7 @@
 package be.lynk.server.service.impl;
 
 import be.lynk.server.model.entities.Account;
+import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.service.CrudService;
 import play.db.jpa.JPA;

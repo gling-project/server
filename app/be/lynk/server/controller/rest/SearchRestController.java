@@ -3,9 +3,11 @@ package be.lynk.server.controller.rest;
 import be.lynk.server.dto.*;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.*;
+import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.LocalizationService;
-import be.lynk.server.service.PromotionService;
+import be.lynk.server.service.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -29,22 +31,22 @@ public class SearchRestController extends AbstractRestController {
     private LocalizationService localizationService;
 
     @Autowired
-    private PromotionService promotionService;
+    private PublicationService publicationService;
 
     @Transactional
     public Result getByPromotion() {
 
         PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
 
-        List<Promotion> promotions = promotionService.findActivePromotion();
-        List<PromotionDTO> promotionDTOs = new ArrayList<>();
+        List<AbstractPublication> promotions = publicationService.findActivePublication();
+        List<AbstractPublicationDTO> promotionDTOs = new ArrayList<>();
 
         //compute distance
         List<Address> addresses = new ArrayList<>();
 
         if (promotions.size() > 0) {
 
-            for (Promotion promotion : promotions) {
+            for (AbstractPublication promotion : promotions) {
                 addresses.add(promotion.getBusiness().getAddress());
             }
 
@@ -55,7 +57,7 @@ public class SearchRestController extends AbstractRestController {
             Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
 
             for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
-                for (Promotion promotion : promotions) {
+                for (AbstractPublication promotion : promotions) {
                     if (addressLongEntry.getKey().equals(promotion.getBusiness().getAddress())) {
                         PromotionDTO promotionDTO = dozerService.map(promotion, PromotionDTO.class);
                         promotionDTO.setDistance(addressLongEntry.getValue());

@@ -38,4 +38,9 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
         cq.where(cb.equal(from.get("name"), name));
         return getSingleResultOrNull(cq);
     }
+
+    @Override
+    public void deleteAll() {
+        JPA.em().createQuery("delete from BusinessCategory b").executeUpdate();
+    }
 }
