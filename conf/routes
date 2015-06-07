@@ -74,4 +74,5 @@ GET           /test                            @be.lynk.server.controller.rest.S
 #############
 ## importer
 ############
-GET          /import                           @be.lynk.server.controller.rest.SuperAdminController.importer()
+GET          /import                           @be.lynk.server.controller.rest.SuperAdminController.importCategory()
+GET          /import_complete                  @be.lynk.server.controller.rest.SuperAdminController.importCategoryTranslation()

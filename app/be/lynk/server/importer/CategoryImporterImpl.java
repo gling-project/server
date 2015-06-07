@@ -45,7 +45,7 @@ public class CategoryImporterImpl implements CategoryImporter {
     private CategoryInterestLinkService categoryInterestLinkService;
 
     @Override
-    public String importStart() {
+    public String importStart(boolean addTranslation) {
 
         //load
         Map<String, Sheet> workbookSheets = getWorkbookSheets(ACCOUNTS_WORKBOOK_PATH);
@@ -53,11 +53,11 @@ public class CategoryImporterImpl implements CategoryImporter {
         //import category
         Sheet sheet = workbookSheets.get(CATEGORY_STREET);
 
-        return importCategory(sheet);
+        return importCategory(sheet,addTranslation);
 
     }
 
-    private String importCategory(Sheet sheet) {
+    private String importCategory(Sheet sheet, boolean addTranslation) {
 
         //remove
         categoryInterestLinkService.deleteAll();
@@ -162,11 +162,13 @@ public class CategoryImporterImpl implements CategoryImporter {
         }
 
         //add translation key
-        try {
-            writeTranslation(translationMap);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return e.getMessage();
+        if(addTranslation) {
+            try {
+                writeTranslation(translationMap);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return e.getMessage();
+            }
         }
         return "success !";
     }

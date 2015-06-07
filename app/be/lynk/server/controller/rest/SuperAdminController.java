@@ -17,8 +17,14 @@ public class SuperAdminController extends AbstractController {
     private CategoryImporter categoryImporter;
 
     @Transactional
-    public Result importer() {
+    public Result importCategory() {
 
-        return ok(categoryImporter.importStart());
+        return ok(categoryImporter.importStart(false));
+    }
+
+    @Transactional
+    public Result importCategoryTranslation() {
+
+        return ok(categoryImporter.importStart(true));
     }
 }
