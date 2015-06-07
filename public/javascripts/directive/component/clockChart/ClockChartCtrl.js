@@ -38,8 +38,6 @@ myApp.directive('clockChartCtrl', function (directiveService, generateId) {
 
                     var now = getNow();
 
-                    var plotBands = [];
-
                     scope.$watch('getInfo().schedule', function () {
                         scope.buildPlotBand();
                     }, true);
@@ -61,7 +59,7 @@ myApp.directive('clockChartCtrl', function (directiveService, generateId) {
                             },
                             yAxis: {
 
-                                plotBands: plotBands,
+                                plotBands: [],
                                 labels: {
                                     distance: 15
                                 },
@@ -138,11 +136,25 @@ myApp.directive('clockChartCtrl', function (directiveService, generateId) {
                         var chart = $('#chart').highcharts();
                         chart.yAxis[0].removePlotBand();
 
+                        var newPlot = null;
+
+
                         for (var key in scope.getInfo().schedule) {
                             var obj = scope.getInfo().schedule[key];
                             if (!!obj.attendance) {
+
+                                if(newPlot!=null){
+                                    if(newPlot.attendance == obj.attendance){
+                                        //extend
+                                        newPlot.to= (obj.minutes + 30) / 60;
+                                        continue;
+                                    }
+                                    else{
+                                        chart.yAxis[0].addPlotLine(newPlot);
+                                        newPlot=null;
+                                    }
+                                }
                                 var color;
-                                console.log('buildPlotBand:' + obj.attendance);
                                 if (obj.attendance == 'light') {
                                     color = '#00B100';
                                 }
@@ -153,20 +165,23 @@ myApp.directive('clockChartCtrl', function (directiveService, generateId) {
                                     color = '#ff0000';
                                 }
 
-                                var newPlot = {
+                                newPlot = {
+                                    attendance:obj.attendance,
                                     from: obj.minutes / 60,
                                     to: (obj.minutes + 30) / 60,
                                     color: color,
                                     thickness: '100%'
                                 };
-
-                                plotBands.push(newPlot);
-
-                                console.log('buildPlotBand');
-                                console.log(newPlot);
-
-                                chart.yAxis[0].addPlotLine(newPlot);
                             }
+                            else if(newPlot!=null){
+                                chart.yAxis[0].addPlotLine(newPlot);
+                                newPlot=null;
+                            }
+
+
+                        }
+                        if(newPlot!=null){
+                            chart.yAxis[0].addPlotLine(newPlot);
                         }
                     };
 
