@@ -24,13 +24,7 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
 
                     var value = scope.getInfo().value;
 
-                    scope.selectedCategory = null;
-
-                    businessCategoryService.getAll(function (data) {
-                        scope.categories = data.list;
-
-                        scope.displayValue();
-                    });
+                    scope.selectedCategory = null
 
                     scope.displayValue = function(){
                         if (scope.getInfo().value != null && scope.getInfo().value.length > 0) {
@@ -52,7 +46,12 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
                                 }
                             }
                         }
-                    };
+                    };;
+
+                    businessCategoryService.getAll(function (data) {
+                        scope.categories = data.list;
+                        scope.displayValue();
+                    });
 
                     scope.$watch('getInfo().value',function(){
                         scope.displayValue();
