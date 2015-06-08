@@ -44,6 +44,9 @@ PUT           /business/category               @be.lynk.server.controller.rest.B
 PUT           /business/illustration           @be.lynk.server.controller.rest.BusinessRestController.editIllustration()
 POST          /business/promotions             @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
+## business schedule
+POST          /business/schedule              @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
+
 ## promotion
 GET           /promotion                       @be.lynk.server.controller.rest.PromotionRestController.getMine()
 POST          /promotion                       @be.lynk.server.controller.rest.PromotionRestController.create()
@@ -74,5 +77,5 @@ GET           /test                            @be.lynk.server.controller.rest.S
 #############
 ## importer
 ############
-GET          /import                           @be.lynk.server.controller.rest.SuperAdminController.importCategory()
-GET          /import_complete                  @be.lynk.server.controller.rest.SuperAdminController.importCategoryTranslation()
+GET           /import                          @be.lynk.server.controller.rest.SuperAdminController.importCategory()
+GET           /import_complete                 @be.lynk.server.controller.rest.SuperAdminController.importCategoryTranslation()

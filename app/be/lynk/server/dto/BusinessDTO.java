@@ -29,7 +29,17 @@ public class BusinessDTO extends DTO {
 
     private StoredFileDTO illustration;
 
+    private List<BusinessScheduleDTO> businessSchedules;
+
     public BusinessDTO() {
+    }
+
+    public List<BusinessScheduleDTO> getBusinessSchedules() {
+        return businessSchedules;
+    }
+
+    public void setBusinessSchedules(List<BusinessScheduleDTO> businessSchedules) {
+        this.businessSchedules = businessSchedules;
     }
 
     public StoredFileDTO getIllustration() {

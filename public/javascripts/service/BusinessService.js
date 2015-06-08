@@ -122,7 +122,26 @@ myApp.service("businessService", function ($flash, $http, accountService) {
                     callbackError(data, status);
                 }
             });
+    };
 
+    this.createSchedule = function(dto, callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/business/schedule",
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
     }
 
 });

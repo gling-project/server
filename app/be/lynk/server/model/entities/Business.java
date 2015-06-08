@@ -6,6 +6,7 @@ import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +43,17 @@ public class Business extends AbstractEntity {
 
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private List<AbstractPublication> publications;
+
+    @OneToMany(mappedBy = "business")
+    private List<BusinessSchedule> businessSchedules = new ArrayList<>();
+
+    public List<BusinessSchedule> getBusinessSchedules() {
+        return businessSchedules;
+    }
+
+    public void setBusinessSchedules(List<BusinessSchedule> businessSchedules) {
+        this.businessSchedules = businessSchedules;
+    }
 
     public StoredFile getIllustration() {
         return illustration;

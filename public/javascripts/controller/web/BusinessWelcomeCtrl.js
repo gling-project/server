@@ -145,5 +145,27 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
         });
     }
 
+    //
+    // businessParam
+    //
+    $scope.businessScheduleParam={
+        disabled : true,
+        dto:(accountService.getMyself().business.businessSchedules.length>0)?angular.copy(accountService.getMyself().business.businessSchedules[0]):{}
+    };
+
+    $scope.businessScheduleEdit = function () {
+        $scope.businessScheduleParam.disabled = false;
+    };
+
+    $scope.businessScheduleSave = function () {
+        $scope.businessScheduleParam.disabled = true;
+        businessService.createSchedule($scope.businessScheduleParam.dto);
+    };
+
+    $scope.businessScheduleCancel = function () {
+        $scope.businessScheduleParam.dto=(accountService.getMyself().business.businessSchedules.length>0)?angular.copy(accountService.getMyself().business.businessSchedules[0]):{};
+        $scope.businessScheduleParam.disabled = true;
+    };
+
 
 });

@@ -147,11 +147,27 @@
 
 
     <div class="panel panel-default">
-        <div class="panel-heading">{{'--.business.profile.businessNotification' | translateText}}</div>
+        <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
         <div class="panel-body">
 
+            <schedule-form-ctrl ng-info="businessScheduleParam"></schedule-form-ctrl>
 
-            <schedule-form-ctrl></schedule-form-ctrl>
+
+            <button class="btn btn-primary glyphicon glyphicon-edit"
+                    ng-show="businessScheduleParam.disabled"
+                    ng-click="businessScheduleEdit()">
+                {{'--.generic.edit' |translateText}}
+            </button>
+            <button class="btn btn-primary"
+                    ng-hide="businessScheduleParam.disabled"
+                    ng-click="businessScheduleSave()">
+                {{'--.generic.save' |translateText}}
+            </button>
+            <button class="btn btn-primary"
+                    ng-hide="businessScheduleParam.disabled"
+                    ng-click="businessScheduleCancel()">
+                {{'--.generic.cancel' | translateText}}
+            </button>
 
         </div>
     </div>

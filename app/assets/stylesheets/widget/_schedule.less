@@ -1,5 +1,18 @@
 .schedule-form {
 
+    .schedule-form-radio{
+        margin-bottom: 5px;
+        & > div{
+            cursor: pointer;
+            display: inline-block;
+            padding: 4px 10px;
+            border: 1px solid #888;
+            input{
+                margin-right: 5px;
+            }
+        }
+    }
+
     .schedule-block {
         width: 722px;
         height: 40px;
@@ -16,16 +29,18 @@
             background-color: #d3d3d3;
             padding: 0;
         }
-        .attendance-light{
-            background-color: #00b100;
-        }
-        .attendance-moderate{
-            background-color: #e69600;
-        }
-        .attendance-heavy{
-            background-color: #ff0000;
-        }
     }
 
-
+    .attendance-close{
+        background-color: #d3d3d3 !important;
+    }
+    .attendance-light{
+        background-color: #00b100 !important;
+    }
+    .attendance-moderate{
+        background-color: #e69600 !important;
+    }
+    .attendance-heavy{
+        background-color: #ff0000 !important;
+    }
 }

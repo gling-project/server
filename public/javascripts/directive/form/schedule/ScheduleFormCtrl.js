@@ -16,23 +16,22 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    //attendance-heavy
-                    //attendance-moderate
-                    //attendance-lightsections
 
-
-
-                    scope.attendance_selected ='light';
+                    scope.attendance_selected ='LIGHT';
                     scope.attendance_class = {
-                        light:'attendance-light',
-                        moderate:'attendance-moderate',
-                        heavy:'attendance-heavy'
+                        LIGHT:'attendance-light',
+                        MODERATE:'attendance-moderate',
+                        IMPORTANT:'attendance-heavy'
+                    };
+
+                    scope.selectAttendance = function(attendance){
+                        scope.attendance_selected=attendance;
                     };
 
                     scope.sections = [];
 
                     scope.clockParam = {
-                        schedule :scope.sections
+                        schedule :scope.getInfo().dto
                     };
 
 
@@ -48,7 +47,8 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                         }
                         scope.sections.push({
                             hour: hour,
-                            minutes:i*30
+                            minutes:i*30,
+                            attendance:'CLOSE'
                         });
                     }
 
@@ -57,6 +57,65 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                             section.attendance = scope.attendance_selected
                         }
                     };
+                    scope.$watch('sections',function(){
+                        scope.compile();
+                    },true);
+
+                    scope.compile = function(){
+                        scope.getInfo().dto.parts = [];
+                        var newPart = null;
+                        for (var key in scope.sections) {
+                            var obj = scope.sections[key];
+                            if (obj.attendance!='CLOSE') {
+
+                                if(newPart!=null){
+                                    if(newPart.attendance == obj.attendance){
+                                        //extend
+                                        newPart.to= obj.minutes + 30;
+                                        continue;
+                                    }
+                                    else{
+                                        scope.getInfo().dto.parts.push(newPart);
+                                        newPart=null;
+                                    }
+                                }
+                                newPart = {
+                                    attendance:obj.attendance,
+                                    from: obj.minutes ,
+                                    to: obj.minutes + 30
+                                };
+                            }
+                            else if(newPart!=null){
+                                scope.getInfo().dto.parts.push(newPart);
+                                newPart=null;
+                            }
+
+
+                        }
+                        if(newPart!=null){
+                            scope.getInfo().dto.parts.push(newPart);
+                            newPart=null;
+                        }
+                    };
+
+                    scope.decompile = function(){
+
+                        for( var key in scope.getInfo().dto.parts){
+                            var obj = scope.getInfo().dto.parts[key];
+
+                            for (var key2 in scope.sections) {
+                                var obj2 = scope.sections[key2];
+                                console.log(obj2.minutes+"<=>"+obj.from+"/"+(obj2.minutes + 30)+"<=>"+obj.to);
+                                if(obj2.minutes>=obj.from &&
+                                    (obj2.minutes + 30)<= obj.to){
+                                    obj2.attendance = obj.attendance;
+                                }
+                            }
+
+                        }
+                    };
+                    scope.decompile();
+
 
                     var down = false;
                     $(document).mousedown(function () {

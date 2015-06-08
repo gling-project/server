@@ -1,16 +1,19 @@
 <div class="schedule-form">
 
-    <div>
-        <div class="attendance-light">
-            <input type="radio" ng-model="attendance_selected" value="light"/>Light
+    <div class="schedule-form-radio">
+        <div class="attendance-close" ng-click="selectAttendance('CLOSE')">
+            <input type="radio" ng-model="attendance_selected" value="CLOSE"/>Closed
+        </div>
+        <div class="attendance-light" ng-click="selectAttendance('LIGHT')">
+            <input type="radio" ng-model="attendance_selected" value="LIGHT"/>Light
         </div>
 
-        <div class="attendance-moderate">
-            <input type="radio" ng-model="attendance_selected" value="moderate"/>Moderate
+        <div class="attendance-moderate" ng-click="selectAttendance('MODERATE')">
+            <input type="radio" ng-model="attendance_selected" value="MODERATE"/>Moderate
         </div>
 
-        <div class="attendance-heavy">
-            <input type="radio" ng-model="attendance_selected" value="heavy"/>Heavy
+        <div class="attendance-heavy"  ng-click="selectAttendance('IMPORTANT')">
+            <input type="radio" ng-model="attendance_selected" value="IMPORTANT"/>Heavy
         </div>
     </div>
 

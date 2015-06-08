@@ -39,6 +39,7 @@ myApp.directive('clockChartCtrl', function (directiveService, generateId) {
                     var now = getNow();
 
                     scope.$watch('getInfo().schedule', function () {
+                        console.log('scope.buildPlotBand');
                         scope.buildPlotBand();
                     }, true);
 
@@ -136,52 +137,31 @@ myApp.directive('clockChartCtrl', function (directiveService, generateId) {
                         var chart = $('#chart').highcharts();
                         chart.yAxis[0].removePlotBand();
 
-                        var newPlot = null;
 
 
-                        for (var key in scope.getInfo().schedule) {
-                            var obj = scope.getInfo().schedule[key];
-                            if (!!obj.attendance) {
+                        for (var key in scope.getInfo().schedule.parts) {
+                            var obj = scope.getInfo().schedule.parts[key];
 
-                                if(newPlot!=null){
-                                    if(newPlot.attendance == obj.attendance){
-                                        //extend
-                                        newPlot.to= (obj.minutes + 30) / 60;
-                                        continue;
-                                    }
-                                    else{
-                                        chart.yAxis[0].addPlotLine(newPlot);
-                                        newPlot=null;
-                                    }
-                                }
-                                var color;
-                                if (obj.attendance == 'light') {
-                                    color = '#00B100';
-                                }
-                                else if (obj.attendance == 'moderate') {
-                                    color = '#e69600';
-                                }
-                                else if (obj.attendance == 'heavy') {
-                                    color = '#ff0000';
-                                }
-
-                                newPlot = {
-                                    attendance:obj.attendance,
-                                    from: obj.minutes / 60,
-                                    to: (obj.minutes + 30) / 60,
-                                    color: color,
-                                    thickness: '100%'
-                                };
+                            var color;
+                            if (obj.attendance == 'LIGHT') {
+                                color = '#00B100';
                             }
-                            else if(newPlot!=null){
-                                chart.yAxis[0].addPlotLine(newPlot);
-                                newPlot=null;
+                            else if (obj.attendance == 'MODERATE') {
+                                color = '#e69600';
+                            }
+                            else if (obj.attendance == 'IMPORTANT') {
+                                color = '#ff0000';
                             }
 
 
-                        }
-                        if(newPlot!=null){
-                            chart.yAxis[0].addPlotLine(newPlot);
+                            chart.yAxis[0].addPlotLine({
+                                from: obj.from / 60,
+                                to: obj.to / 60,
+                                color: color,
+                                thickness: '100%'
+                            });
+
+
                         }
                     };
 
