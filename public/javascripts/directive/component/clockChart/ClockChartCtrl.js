@@ -39,7 +39,6 @@ myApp.directive('clockChartCtrl', function (directiveService, generateId) {
                     var now = getNow();
 
                     scope.$watch('getInfo().schedule', function () {
-                        console.log('scope.buildPlotBand');
                         scope.buildPlotBand();
                     }, true);
 

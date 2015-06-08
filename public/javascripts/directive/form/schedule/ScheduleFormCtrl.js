@@ -105,7 +105,6 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
 
                             for (var key2 in scope.sections) {
                                 var obj2 = scope.sections[key2];
-                                console.log(obj2.minutes+"<=>"+obj.from+"/"+(obj2.minutes + 30)+"<=>"+obj.to);
                                 if(obj2.minutes>=obj.from &&
                                     (obj2.minutes + 30)<= obj.to){
                                     obj2.attendance = obj.attendance;

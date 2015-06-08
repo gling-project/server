@@ -6,6 +6,4 @@ myApp.controller('HomeCtrl', function ($scope, modalService) {
         modalService.openCustomerRegistrationModal();
     };
 
-    $scope.clock_info = {}
-
 });
