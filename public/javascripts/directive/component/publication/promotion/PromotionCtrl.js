@@ -1,4 +1,4 @@
-myApp.directive('promotionCtrl', function (directiveService) {
+myApp.directive('promotionCtrl', function (directiveService, followService) {
 
     return {
         restrict: "E",
@@ -14,16 +14,21 @@ myApp.directive('promotionCtrl', function (directiveService) {
                     directiveService.autoScopeImpl(scope);
 
                     scope.promotion = scope.getInfo().promotion;
-                    scope.business=scope.getInfo().business;
+                    scope.business = scope.getInfo().business;
 
-                    if(scope.promotion.illustration!=null) {
-                        scope.illustration="/file/"+scope.promotion.illustration.id;
+                    if (scope.promotion.illustration != null) {
+                        scope.illustration = "/file/" + scope.promotion.illustration.id;
                     }
-                    else if(scope.business!=null && scope.business.illustration!=null){
-                        scope.illustration="/file/"+scope.business.illustration.id;
+                    else if (scope.business != null && scope.business.illustration != null) {
+                        scope.illustration = "/file/" + scope.business.illustration.id;
                     }
-                    else{
-                        scope.illustration="assets/images/default_promotion_illustration.png"
+                    else {
+                        scope.illustration = "assets/images/default_promotion_illustration.png"
+                    }
+
+                    scope.follow = function () {
+                        followService.addFollow(scope.promotion.businessId);
+                        scope.promotion.following = true;
                     }
 
                 }

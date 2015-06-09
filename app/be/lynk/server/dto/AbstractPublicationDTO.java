@@ -26,6 +26,7 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
     private Long distance;
 
     private String businessName;
+    private Boolean following;
 
     public String getBusinessName() {
         return businessName;
@@ -83,6 +84,13 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
         this.illustration = illustration;
     }
 
+    public void setFollowing(Boolean following) {
+        this.following = following;
+    }
+
+    public Boolean isFollowing() {
+        return following;
+    }
 
     @Override
     public int compareTo(AbstractPublicationDTO o) {

@@ -46,7 +46,7 @@ PUT           /business/illustration           @be.lynk.server.controller.rest.B
 POST          /business/promotions             @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
 ## business schedule
-POST          /business/schedule              @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
+POST          /business/schedule               @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
 
 ## promotion
 GET           /promotion                       @be.lynk.server.controller.rest.PromotionRestController.getMine()
@@ -60,6 +60,10 @@ POST          /businessNotification            @be.lynk.server.controller.rest.B
 PUT           /businessNotification/:id        @be.lynk.server.controller.rest.BusinessNotificationRestController.update(id:Long)
 DELETE        /businessNotification/:id        @be.lynk.server.controller.rest.BusinessNotificationRestController.delete(id:Long)
 
+## follow
+POST          /follow                          @be.lynk.server.controller.rest.FollowController.followBusiness()
+GET           /follow                          @be.lynk.server.controller.rest.FollowController.getMyFollows()
+
 #session
 GET           /session                         @be.lynk.server.controller.rest.AccountRestController.mySession()
 
@@ -71,6 +75,7 @@ GET           /file/:storedFileId              @be.lynk.server.controller.rest.F
 ##welcome
 GET           /                                @be.lynk.server.controller.MainController.mainPage()
 GET           /mobile                          @be.lynk.server.controller.MainController.mobile()
+
 
 #############
 ## importer

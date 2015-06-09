@@ -6,6 +6,7 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.BusinessService;
+import be.lynk.server.service.FollowLinkService;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,12 @@ public class SearchRestController extends AbstractRestController {
 
     @Autowired
     private BusinessService businessService;
-
     @Autowired
     private LocalizationService localizationService;
-
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private FollowLinkService followLinkService;
 
     @Transactional
     public Result getByPromotion() {
@@ -61,6 +62,8 @@ public class SearchRestController extends AbstractRestController {
                         promotionDTOs.add(publicationDTO);
                         //add business name
                         publicationDTO.setBusinessName(publication.getBusiness().getName());
+                        //follow ?
+                        publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness((CustomerAccount) securityController.getCurrentUser(),publication.getBusiness()));
                     }
                 }
             }
