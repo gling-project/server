@@ -32,6 +32,21 @@ public class AddressDTO extends DTO{
     public AddressDTO() {
     }
 
+    public AddressDTO(String street, String zip, String city, String country) {
+        this.street = street;
+        this.zip = zip;
+        this.city = city;
+        this.country = country;
+    }
+
+    public AddressDTO(String name, String street, String zip, String city, String country) {
+        this.name = name;
+        this.street = street;
+        this.zip = zip;
+        this.city = city;
+        this.country = country;
+    }
+
     public Long getId() {
         return id;
     }

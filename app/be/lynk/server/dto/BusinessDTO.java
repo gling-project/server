@@ -14,15 +14,15 @@ import java.util.List;
 public class BusinessDTO extends DTO {
 
     @NotNull(message = "--.validation.dto.notNull")
-    @Size(min = 2,max =250,message = "--.validation.dto.size")
+    @Size(min = 2, max = 250, message = "--.validation.dto.size")
     private String name;
 
     @NotNull(message = "--.validation.dto.notNull")
-    @Size(min = 2,max =1500,message = "--.validation.dto.size")
+    @Size(min = 2, max = 1500, message = "--.validation.dto.size")
     private String description;
 
     @NotNull(message = "--.validation.dto.notNull")
-    @Pattern(regexp = ValidationRegex.PHONE,message = "--.validation.dto.phone")
+    @Pattern(regexp = ValidationRegex.PHONE, message = "--.validation.dto.phone")
     private String phone;
 
     private AddressDTO address;
@@ -31,7 +31,17 @@ public class BusinessDTO extends DTO {
 
     private List<BusinessScheduleDTO> businessSchedules;
 
+    private Integer totalFollowers;
+
     public BusinessDTO() {
+    }
+
+    public Integer getTotalFollowers() {
+        return totalFollowers;
+    }
+
+    public void setTotalFollowers(Integer totalFollowers) {
+        this.totalFollowers = totalFollowers;
     }
 
     public List<BusinessScheduleDTO> getBusinessSchedules() {

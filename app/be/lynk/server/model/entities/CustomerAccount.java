@@ -2,10 +2,7 @@ package be.lynk.server.model.entities;
 
 import be.lynk.server.util.AccountTypeEnum;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,9 +18,19 @@ public class CustomerAccount extends Account {
     @ManyToMany()
     private Set<CustomerInterest> customerInterests = new HashSet<>();
 
+    @Basic(optional = false)
+    private Boolean sendNotificationByDefault = true;
 
     public CustomerAccount() {
         type = AccountTypeEnum.CUSTOMER;
+    }
+
+    public Boolean getSendNotificationByDefault() {
+        return sendNotificationByDefault;
+    }
+
+    public void setSendNotificationByDefault(Boolean sendNotificationByDefault) {
+        this.sendNotificationByDefault = sendNotificationByDefault;
     }
 
     public Set<Address> getAddresses() {

@@ -4,6 +4,7 @@ import be.lynk.server.dto.*;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.dto.post.*;
 import be.lynk.server.model.GenderEnum;
+import be.lynk.server.model.entities.Address;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserAccount;
@@ -33,6 +34,7 @@ import static play.test.Helpers.*;
  * POST     /registration/customer
  * POST     /registration/business
  * GET      /email/test
+ * POST     /address/test
  * PUT      /facebook/test
  * PUT      /forgot/password
  */
@@ -62,8 +64,12 @@ public class LoginRestControllerTest extends AbstractControllerTest {
     private static final String BI_NAME = "BI_NAME";
     private static final String BI_PHONE = "09999239";
 
+    private static final AddressDTO ADDRESS_TEST_VALID = new AddressDTO("1 grand place", "1000", "Bruxelles", "BELGIUM");
+    private static final AddressDTO ADDRESS_TEST_NOT_VALID = new AddressDTO("gloubigoulba", "90800", "Là-bas", "BELGIUM");
+    private static final AddressDTO ADDRESS_TEST_NOT_VALID_2 = new AddressDTO("Chaussée de Charleroi, 1099213", "1000", "BXL", "BELGIUM");
+
     @Test
-    public void test0_address(){
+    public void test0_address() {
         AddressDTO addressDTO = new AddressDTO();
         addressDTO.setName(ADDRESS_NAME_1);
         addressDTO.setStreet(ADDRESS_STREET_1);
@@ -71,7 +77,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         addressDTO.setCity(ADDRESS_CITY_1);
         addressDTO.setCountry(ADDRESS_COUNTRY);
 
-        Result result = request(POST, "/address/test",addressDTO);
+        Result result = request(POST, "/address/test", addressDTO);
 
         assertEquals(printError(result), 200, status(result));
     }
@@ -117,7 +123,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         dto.getCustomerInterests().add(new CustomerInterestDTO(customerInterestListDTO.get(2).getName()));
 
         result = request(POST, "/registration/customer", dto);
-        connected=true;
+        connected = true;
 
         assertEquals(printError(result), 200, status(result));
 
@@ -164,18 +170,13 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         // *** TEST /logout
         // ***
         request(GET, "/logout");
-        connected=false;
+        connected = false;
 
         // ****
         // *** TEST is already connected ?
         // ***
         result = request(GET, "/myself");
         assertNotEquals(printError(result), 200, status(result));
-   /* }
-
-    @Test
-    public void test2_login() {
-*/
 
         // ****
         // *** TEST /login
@@ -183,7 +184,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
 
         /*Result*/
         result = request(POST, "/login", new LoginDTO(EMAIL, PASSWORD));
-        connected=true;
+        connected = true;
 
         assertEquals(printError(result), 200, status(result));
 
@@ -273,7 +274,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         business.getBusinessCategories().add(iterator.next());
 
         result = request(POST, "/registration/business", dto);
-        connected=true;
+        connected = true;
 
         assertEquals(printError(result), 200, status(result));
 
@@ -339,7 +340,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
 
         //save
         Result result = request(POST, "/registration/customer", dto);
-        connected=true;
+        connected = true;
 
         assertEquals(printError(result), 200, status(result));
 
@@ -402,7 +403,7 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         registrationDTO.setKeepSessionOpen(true);
 
         Result result = request(POST, "/registration/customer", dto);
-        connected=true;
+        connected = true;
 
         assertEquals(printError(result), 200, status(result));
 
@@ -453,6 +454,20 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         // ***
         result = request(GET, "/myself");
         assertEquals(printError(result), 200, status(result));
+    }
+
+    @Test
+    public void test6_controlAddress() {
+
+        Result result = request(POST, "/address/test", ADDRESS_TEST_VALID);
+        assertEquals(printError(result), 200, status(result));
+
+        result = request(POST, "/address/test", ADDRESS_TEST_NOT_VALID);
+        assertNotEquals(printError(result), 200, status(result));
+
+        result = request(POST, "/address/test", ADDRESS_TEST_NOT_VALID_2);
+        assertNotEquals(printError(result), 200, status(result));
+
     }
 
 }

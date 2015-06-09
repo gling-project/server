@@ -50,72 +50,22 @@ public class SearchRestController extends AbstractRestController {
                 addresses.add(promotion.getBusiness().getAddress());
             }
 
-            //origin
-            //CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
-            //Address origin = currentUser.getAddresses().iterator().next();
-
             Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
 
             for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
-                for (AbstractPublication promotion : promotions) {
-                    if (addressLongEntry.getKey().equals(promotion.getBusiness().getAddress())) {
-                        PromotionDTO promotionDTO = dozerService.map(promotion, PromotionDTO.class);
-                        promotionDTO.setDistance(addressLongEntry.getValue());
-                        promotionDTOs.add(promotionDTO);
+                for (AbstractPublication publication : promotions) {
+                    if (addressLongEntry.getKey().equals(publication.getBusiness().getAddress())) {
+
+                        AbstractPublicationDTO publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
+                        publicationDTO.setDistance(addressLongEntry.getValue());
+                        promotionDTOs.add(publicationDTO);
+                        //add business name
+                        publicationDTO.setBusinessName(publication.getBusiness().getName());
                     }
                 }
             }
         }
 
         return ok(new ListDTO<>(promotionDTOs));
-    }
-
-    @Transactional
-    public Result test() {
-
-
-        Address origin = new Address();
-        origin.setStreet("place des bienfaiteur 27");
-        origin.setZip("1030");
-        origin.setCity("Bruxelles");
-        origin.setCountry("Belgique");
-
-        List<Address> address = new ArrayList<>();
-
-        Address address1 = new Address();
-        address1.setStreet("rue charles legrelle 19");
-        address1.setZip("1040");
-        address1.setCity("Bruxelles");
-        address1.setCountry("Belgique");
-        address.add(address1);
-
-        Address address2 = new Address();
-        address2.setStreet("rue de la paix 3");
-        address2.setZip("1420");
-        address2.setCity("Braine l'alleux");
-        address2.setCountry("Belgique");
-        address.add(address2);
-
-        Address address3 = new Address();
-        address3.setStreet("5 RUE LULAY DES FÈBVRES");
-        address3.setZip("4000");
-        address3.setCity("Liège");
-        address3.setCountry("Belgique");
-        address.add(address3);
-
-
-        Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(origin, address);
-
-        for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
-            Logger.info(addressLongEntry.getKey() + "=>" + addressLongEntry.getValue());
-        }
-
-
-        return ok();
-    }
-
-    private boolean compareAddress(Address address, AddressDTO addressDTO) {
-        Address map = dozerService.map(addressDTO, Address.class);
-        return map.equals(address);
     }
 }

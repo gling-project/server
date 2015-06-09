@@ -38,6 +38,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         BusinessNotificationDTO dto = extractDTOFromRequest(BusinessNotificationDTO.class);
 
         BusinessNotification businessNotification = dozerService.map(dto, BusinessNotification.class);
+        businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
 
         businessNotification.setBusiness(((BusinessAccount) securityController.getCurrentUser()).getBusiness());
 
@@ -68,7 +69,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         businessNotificationToEdit.setDescription(businessNotification.getDescription());
-        businessNotificationToEdit.setEndDate(businessNotification.getEndDate());
+        businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
         businessNotificationToEdit.setStartDate(businessNotification.getStartDate());
         if (businessNotification.getIllustration() != null) {
             //TODO control file

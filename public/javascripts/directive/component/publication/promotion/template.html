@@ -1,0 +1,8 @@
+<div class="publication-box publication-promotion">
+    <div class="promotion-reduction">{{promotion.offPercent * 100 | number:0}} % !</div>
+    <img ng-src="{{illustration}}"/>
+    <div class="publication-box-name">{{promotion.description}}</div><br/>
+    <div><i class="fa fa-globe"></i> {{promotion.distance / 1000 | number:2}} km</div><br/>
+    <div>End date : {{promotion.endDate | date:medium}}</div><br/>
+    <timer ng-show="promotion.interval < (24 * 60 * 60)" style="color: red;font-weight: bold" countdown="promotion.interval" language="en" interval="1000" finish-callback="callbackTimer.finished()">{{hours|zeropad}}:{{minutes|zeropad}}:{{seconds|zeropad}}</timer>
+</div>

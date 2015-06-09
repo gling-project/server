@@ -142,7 +142,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldTitle: "--.promotion.offPercent",
                             numbersOnly: 'percent',
                             validationFct: function () {
-                                return scope.getInfo().dto.offPercent != null && parseFloat(scope.getInfo().dto.offPercent) > 0 && parseFloat(scope.getInfo().dto.offPercent) < 1;
+                                return scope.getInfo().dto.offPercent != null && parseFloat(scope.getInfo().dto.offPercent) > 0 && parseFloat(scope.getInfo().dto.offPercent) <= 1;
                             },
                             validationMessage: '--.promotion.validation.offPercent',
                             disabled: function () {
@@ -196,7 +196,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     scope.$watch('getInfo().dto.offPrice', function (o, n) {
                         if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPrice && suspendWatch == false) {
                             suspendWatch = true;
-                            scope.getInfo().dto.offPercent = 1 - parseFloat(scope.getInfo().dto.originalPrice) / parseFloat(scope.getInfo().dto.offPrice);
+                            scope.getInfo().dto.offPercent = 1 -  (parseFloat(scope.getInfo().dto.offPrice) / parseFloat(scope.getInfo().dto.originalPrice));
                             $timeout(function () {
                                 suspendWatch = false;
                             }, 1);

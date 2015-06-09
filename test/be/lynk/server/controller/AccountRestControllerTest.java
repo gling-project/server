@@ -19,6 +19,11 @@ import static org.junit.Assert.*;
 
 /**
 * Created by florian on 19/04/15.
+ * Test for routes :
+ * POST     /myself
+ * PUT      /account/
+ * GET      /customerInterest
+ * POST     /address
  *
 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

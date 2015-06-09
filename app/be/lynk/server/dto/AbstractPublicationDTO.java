@@ -23,6 +23,33 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
     protected Date endDate;
 
     protected StoredFileDTO illustration;
+    private Long distance;
+
+    private String businessName;
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
 
     public String getDescription() {
         return description;
@@ -65,10 +92,13 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
     @Override
     public String toString() {
         return "AbstractPublicationDTO{" +
-                "description='" + description + '\'' +
+                "id=" + id +
+                ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", illustration=" + illustration +
+                ", distance=" + distance +
+                ", businessName='" + businessName + '\'' +
                 '}';
     }
 }

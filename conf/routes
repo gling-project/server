@@ -10,6 +10,7 @@ GET           /assets/*file                    controllers.Assets.at(path="/publ
 #
 
 ## registration and login
+## tested by LoginRestControllerTest
 POST          /login                           @be.lynk.server.controller.rest.LoginRestController.login()
 POST          /login/facebook                  @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
 POST          /account/fusion                  @be.lynk.server.controller.rest.LoginRestController.fusion()
@@ -70,9 +71,6 @@ GET           /file/:storedFileId              @be.lynk.server.controller.rest.F
 ##welcome
 GET           /                                @be.lynk.server.controller.MainController.mainPage()
 GET           /mobile                          @be.lynk.server.controller.MainController.mobile()
-
-
-GET           /test                            @be.lynk.server.controller.rest.SearchRestController.test()
 
 #############
 ## importer

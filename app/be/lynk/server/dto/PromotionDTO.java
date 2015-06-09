@@ -19,7 +19,6 @@ public class PromotionDTO extends AbstractPublicationDTO {
 
     private Double offPercent;
 
-    private Long distance;
 
     public Double getQuantity() {
         return quantity;
@@ -61,24 +60,15 @@ public class PromotionDTO extends AbstractPublicationDTO {
         this.offPercent = offPercent;
     }
 
-    public Long getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Long distance) {
-        this.distance = distance;
-    }
-
     @Override
     public String toString() {
         return "PromotionDTO{" +
-                super.toString()+
+                super.toString() +
                 "quantity=" + quantity +
                 ", minimalQuantity=" + minimalQuantity +
                 ", unit='" + unit + '\'' +
                 ", originalPrice=" + originalPrice +
                 ", offPercent=" + offPercent +
-                ", distance=" + distance +
                 '}';
     }
 }

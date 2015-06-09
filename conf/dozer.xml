@@ -21,5 +21,15 @@
     </configuration>
 
 
+    <!-- publication -->
+    <mapping>
+        <class-a>be.lynk.server.model.entities.publication.BusinessNotification</class-a>
+        <class-b>be.lynk.server.dto.BusinessNotificationDTO</class-b>
+    </mapping>
+    <mapping>
+        <class-a>be.lynk.server.model.entities.publication.Promotion</class-a>
+        <class-b>be.lynk.server.dto.PromotionDTO</class-b>
+    </mapping>
+
 
 </mappings>

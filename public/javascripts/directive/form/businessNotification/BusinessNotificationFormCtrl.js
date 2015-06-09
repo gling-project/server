@@ -54,6 +54,9 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                 return scope.fields.endDate.field >= scope.fields.startDate.field;
                             },
                             field: scope.getInfo().dto,
+                            active:function(){
+                                return false;
+                            },
                             fieldName: 'endDate'
                         },
                         illustration: {
