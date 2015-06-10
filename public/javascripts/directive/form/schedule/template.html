@@ -1,33 +1,45 @@
 <div class="schedule-form">
 
-    <div class="schedule-form-radio">
-        <div class="attendance-close" ng-click="selectAttendance('CLOSE')">
-            <input type="radio" ng-model="attendance_selected" value="CLOSE"/>Closed
-        </div>
-        <div class="attendance-light" ng-click="selectAttendance('LIGHT')">
-            <input type="radio" ng-model="attendance_selected" value="LIGHT"/>Light
+    <button ng-click="display('MONDAY')">monday</button>
+    <button ng-click="display('TUESDAY')">tuesday</button>
+    <button ng-click="display('WEDNESDAY')">WEDNESDAY</button>
+    <button ng-click="display('THURSDAY')">THURSDAY</button>
+    <button ng-click="display('FRIDAY')">FRIDAY</button>
+    <button ng-click="display('SATURDAY')">SATURDAY</button>
+    <button ng-click="display('SUNDAY')">SUNDAY</button>
+
+
+    <div ng-hide="currentSchedule==null">
+        <div class="schedule-form-radio">
+            <div class="attendance-close" ng-click="selectAttendance('CLOSE')">
+                <input type="radio" ng-model="attendance_selected" value="CLOSE"/>Closed
+            </div>
+            <div class="attendance-light" ng-click="selectAttendance('LIGHT')">
+                <input type="radio" ng-model="attendance_selected" value="LIGHT"/>Light
+            </div>
+
+            <div class="attendance-moderate" ng-click="selectAttendance('MODERATE')">
+                <input type="radio" ng-model="attendance_selected" value="MODERATE"/>Moderate
+            </div>
+
+            <div class="attendance-heavy" ng-click="selectAttendance('IMPORTANT')">
+                <input type="radio" ng-model="attendance_selected" value="IMPORTANT"/>Heavy
+            </div>
         </div>
 
-        <div class="attendance-moderate" ng-click="selectAttendance('MODERATE')">
-            <input type="radio" ng-model="attendance_selected" value="MODERATE"/>Moderate
+        <div class="schedule-block">
+            <button class="hour-block"
+                    ng-repeat="section in sections"
+                    ng-class="attendance_class[section.attendance]"
+                    ng-mousedown="select(section,true)"
+                    ng-mouseover="select(section)">
+                {{section.hour}}
+            </button>
         </div>
 
-        <div class="attendance-heavy"  ng-click="selectAttendance('IMPORTANT')">
-            <input type="radio" ng-model="attendance_selected" value="IMPORTANT"/>Heavy
-        </div>
+
+        <clock-chart-ctrl ng-info="clockParam"></clock-chart-ctrl>
+        <clock-chart-ctrl ng-info="clockParamMin"></clock-chart-ctrl>
     </div>
-
-    <div class="schedule-block">
-        <button class="hour-block"
-                ng-repeat="section in sections"
-                ng-class="attendance_class[section.attendance]"
-                ng-mousedown="select(section,true)"
-                ng-mouseover="select(section)">
-            {{section.hour}}
-        </button>
-    </div>
-
-
-    <clock-chart-ctrl ng-info="clockParam"></clock-chart-ctrl>
 
 </div>

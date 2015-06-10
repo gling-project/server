@@ -26,9 +26,15 @@ myApp.directive('promotionCtrl', function (directiveService, followService) {
                         scope.illustration = "assets/images/default_promotion_illustration.png"
                     }
 
-                    scope.follow = function () {
-                        followService.addFollow(scope.promotion.businessId);
-                        scope.promotion.following = true;
+                    scope.follow = function (follow) {
+                        followService.addFollow(follow,scope.promotion.businessId);
+                        scope.promotion.following = follow;
+                        if(follow){
+                            scope.promotion.totalFollowers++;
+                        }
+                        else{
+                            scope.promotion.totalFollowers--;
+                        }
                     }
 
                 }

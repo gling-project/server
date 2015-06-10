@@ -1,6 +1,7 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.PublicationType;
 
 import java.util.Date;
 
@@ -19,6 +20,9 @@ public class PromotionDTO extends AbstractPublicationDTO {
 
     private Double offPercent;
 
+    public PromotionDTO() {
+        type= PublicationType.PROMOTION;
+    }
 
     public Double getQuantity() {
         return quantity;

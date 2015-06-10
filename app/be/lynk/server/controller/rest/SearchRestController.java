@@ -62,8 +62,15 @@ public class SearchRestController extends AbstractRestController {
                         promotionDTOs.add(publicationDTO);
                         //add business name
                         publicationDTO.setBusinessName(publication.getBusiness().getName());
+                        publicationDTO.setBusinessId(publication.getBusiness().getId());
                         //follow ?
-                        publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness((CustomerAccount) securityController.getCurrentUser(),publication.getBusiness()));
+                        if(securityController.getCurrentUser()!=null){
+                            Account account = securityController.getCurrentUser();
+                            if(account instanceof CustomerAccount){
+                                publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness((CustomerAccount) account,publication.getBusiness()));
+                            }
+                        }
+                        publicationDTO.setTotalFollowers(followLinkService.countByBusiness(publication.getBusiness()));
                     }
                 }
             }

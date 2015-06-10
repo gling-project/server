@@ -150,7 +150,7 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     //
     $scope.businessScheduleParam={
         disabled : true,
-        dto:(accountService.getMyself().business.businessSchedules.length>0)?angular.copy(accountService.getMyself().business.businessSchedules[0]):{}
+        dto:(accountService.getMyself().business.schedules.length>0)?angular.copy(accountService.getMyself().business.schedules):{}
     };
 
     $scope.businessScheduleEdit = function () {
@@ -163,7 +163,7 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     };
 
     $scope.businessScheduleCancel = function () {
-        $scope.businessScheduleParam.dto=(accountService.getMyself().business.businessSchedules.length>0)?angular.copy(accountService.getMyself().business.businessSchedules[0]):{};
+        $scope.businessScheduleParam.dto=(accountService.getMyself().business.schedules.length>0)?angular.copy(accountService.getMyself().business.schedules):{};
         $scope.businessScheduleParam.disabled = true;
     };
 

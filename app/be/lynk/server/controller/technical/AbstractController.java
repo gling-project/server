@@ -8,9 +8,14 @@ import be.lynk.server.util.exception.MyRuntimeException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
+import play.libs.Json;
 import play.mvc.Controller;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import play.mvc.Result;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -46,6 +51,13 @@ public abstract class AbstractController extends Controller {
             throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR, DTOclass.getName());
         }
 
+        validation(dto);
+
+        return dto;
+    }
+
+    private <T extends DTO> void validation(T dto) {
+
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -68,7 +80,20 @@ public abstract class AbstractController extends Controller {
 
             throw new MyRuntimeException(message);
         }
-        return dto;
+    }
+
+    protected <T extends DTO> List<T> extractList(Class<T> classExpected) {
+        List<T> resultList = new ArrayList<>();
+        JsonNode parse = request().body().asJson();//Json.parse(new String(contentAsBytes(result)));
+        JsonNode list = parse.get("list");
+        Iterator<JsonNode> elements = list.elements();
+        while (elements.hasNext()) {
+            T item = Json.fromJson(elements.next(), classExpected);
+            validation(item);
+            resultList.add(item);
+        }
+
+        return resultList;
     }
 
     protected boolean isMobileDevice() {

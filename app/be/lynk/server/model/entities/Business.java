@@ -44,7 +44,7 @@ public class Business extends AbstractEntity {
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private List<AbstractPublication> publications;
 
-    @OneToMany(mappedBy = "business")
+    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
     private List<BusinessSchedule> businessSchedules = new ArrayList<>();
 
     public List<BusinessSchedule> getBusinessSchedules() {

@@ -3,6 +3,7 @@ package be.lynk.server.controller.rest;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.FollowDTO;
+import be.lynk.server.dto.FollowFormDTO;
 import be.lynk.server.dto.ListDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerAccount;
@@ -11,9 +12,9 @@ import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.FollowLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import play.db.jpa.Transactional;
 import play.mvc.Result;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,14 +33,21 @@ public class FollowController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result followBusiness() {
-        FollowDTO dto = extractDTOFromRequest(FollowDTO.class);
+        FollowFormDTO dto = extractDTOFromRequest(FollowFormDTO.class);
         Business byId = businessService.findById(dto.getBusinessId());
         CustomerAccount customerAccount = (CustomerAccount) securityController.getCurrentUser();
 
         //control
-        if (followLinkService.findByAccountAndBusiness(customerAccount, byId) == null) {
-            FollowLink followLink = new FollowLink(byId, customerAccount);
-            followLinkService.saveOrUpdate(followLink);
+        FollowLink followLink = followLinkService.findByAccountAndBusiness(customerAccount, byId);
+        if (dto.getFollow()) {
+            if (followLink == null) {
+                followLink = new FollowLink(byId, customerAccount);
+                followLinkService.saveOrUpdate(followLink);
+            }
+        } else {
+            if (followLink != null) {
+                followLinkService.remove(followLink);
+            }
         }
 
         return ok();

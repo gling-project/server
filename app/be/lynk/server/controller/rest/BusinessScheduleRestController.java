@@ -2,17 +2,24 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
+import be.lynk.server.dto.BusinessDTO;
 import be.lynk.server.dto.BusinessScheduleDTO;
+import be.lynk.server.dto.BusinessSchedulePartDTO;
+import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.BusinessSchedule;
 import be.lynk.server.model.entities.BusinessSchedulePart;
 import be.lynk.server.service.BusinessScheduleService;
+import be.lynk.server.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by florian on 8/06/15.
@@ -22,26 +29,36 @@ public class BusinessScheduleRestController extends AbstractRestController {
 
     @Autowired
     private BusinessScheduleService businessScheduleService;
+    @Autowired
+    private BusinessService businessService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result createSchedule() {
 
-        BusinessScheduleDTO dto = extractDTOFromRequest(BusinessScheduleDTO.class);
+        BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 
-        BusinessSchedule businessSchedule = dozerService.map(dto,BusinessSchedule.class);
+        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+        business.setBusinessSchedules(new ArrayList<>());
 
-        businessSchedule.setBusiness(((BusinessAccount)securityController.getCurrentUser()).getBusiness());
-        //TODO TMP
-        businessSchedule.setDayOfWeek(DayOfWeek.MONDAY);
 
-        for (BusinessSchedulePart businessSchedulePart : businessSchedule.getParts()) {
-            businessSchedulePart.setBusinessSchedule(businessSchedule);
+        for (Map.Entry<DayOfWeek, List<BusinessSchedulePartDTO>> dayOfWeekBusinessScheduleDTOEntry : dto.getSchedules().entrySet()) {
+
+            BusinessSchedule businessSchedule = new BusinessSchedule();
+            businessSchedule.setDayOfWeek(dayOfWeekBusinessScheduleDTOEntry.getKey());
+            businessSchedule.setBusiness(business);
+            business.getBusinessSchedules().add(businessSchedule);
+
+            List<BusinessSchedulePart> parts = dozerService.map(dayOfWeekBusinessScheduleDTOEntry.getValue(), BusinessSchedulePart.class);
+            for (BusinessSchedulePart part : parts) {
+                part.setBusinessSchedule(businessSchedule);
+                businessSchedule.getParts().add(part);
+
+
+            }
         }
 
-
-        businessScheduleService.saveOrUpdate(businessSchedule);
-
+        businessService.saveOrUpdate(business);
         return ok();
     }
 }

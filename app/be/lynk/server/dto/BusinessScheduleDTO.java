@@ -15,8 +15,6 @@ public class BusinessScheduleDTO extends DTO {
 
     private List<BusinessSchedulePartDTO> parts;
 
-    private DayOfWeek dayOfWeek;
-
     public List<BusinessSchedulePartDTO> getParts() {
         return parts;
     }
@@ -25,19 +23,10 @@ public class BusinessScheduleDTO extends DTO {
         this.parts = parts;
     }
 
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
     @Override
     public String toString() {
         return "BusinessSchedule{" +
                 "parts=" + parts +
-                ", dayOfWeek=" + dayOfWeek +
                 '}';
     }
 }

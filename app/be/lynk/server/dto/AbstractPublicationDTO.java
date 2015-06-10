@@ -1,6 +1,7 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.PublicationType;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
@@ -23,10 +24,47 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
     protected Date endDate;
 
     protected StoredFileDTO illustration;
+
     private Long distance;
 
     private String businessName;
+
+    private Long businessId;
+
     private Boolean following;
+
+    private Integer totalFollowers;
+
+    protected PublicationType type;
+
+
+    public PublicationType getType() {
+        return type;
+    }
+
+    public void setType(PublicationType type) {
+        this.type = type;
+    }
+
+    public Integer getTotalFollowers() {
+        return totalFollowers;
+    }
+
+    public void setTotalFollowers(Integer totalFollowers) {
+        this.totalFollowers = totalFollowers;
+    }
+
+    public Long getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(Long businessId) {
+        this.businessId = businessId;
+    }
+
+    public Boolean getFollowing() {
+        return following;
+    }
 
     public String getBusinessName() {
         return businessName;
@@ -88,9 +126,6 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
         this.following = following;
     }
 
-    public Boolean isFollowing() {
-        return following;
-    }
 
     @Override
     public int compareTo(AbstractPublicationDTO o) {

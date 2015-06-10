@@ -6,8 +6,11 @@ import be.lynk.server.util.constants.ValidationRegex;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  */
@@ -29,7 +32,7 @@ public class BusinessDTO extends DTO {
 
     private StoredFileDTO illustration;
 
-    private List<BusinessScheduleDTO> businessSchedules;
+    private Map<DayOfWeek, List<BusinessSchedulePartDTO>> schedules = new HashMap<>();
 
     private Integer totalFollowers;
 
@@ -44,12 +47,12 @@ public class BusinessDTO extends DTO {
         this.totalFollowers = totalFollowers;
     }
 
-    public List<BusinessScheduleDTO> getBusinessSchedules() {
-        return businessSchedules;
+    public Map<DayOfWeek, List<BusinessSchedulePartDTO>> getSchedules() {
+        return schedules;
     }
 
-    public void setBusinessSchedules(List<BusinessScheduleDTO> businessSchedules) {
-        this.businessSchedules = businessSchedules;
+    public void setSchedules(Map<DayOfWeek, List<BusinessSchedulePartDTO>> schedules) {
+        this.schedules = schedules;
     }
 
     public StoredFileDTO getIllustration() {

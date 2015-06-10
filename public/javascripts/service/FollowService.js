@@ -6,10 +6,12 @@ myApp.service("followService", function ($flash, $http) {
         myself: null
     };
 
-    this.addFollow = function (businessId, callbackSuccess, callbackError) {
+    this.addFollow = function (follow,businessId, callbackSuccess, callbackError) {
         var dto = {
+            follow:follow,
             businessId:businessId
         };
+        console.log(dto);
         $http({
             'method': "POST",
             'url': "/follow",
