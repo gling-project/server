@@ -191,7 +191,11 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                     });
 
                     var sectionToString = function (section) {
-                        return Math.floor(section.minutes/60%24) + 'h' + section.minutes%60;
+                        var minutes = section.minutes%60;
+                        if(minutes<10){
+                            minutes = "0"+minutes;
+                        }
+                        return Math.floor(section.minutes/60%24) + 'h' + minutes;
                     };
 
                     scope.progress = function (event, day, section) {

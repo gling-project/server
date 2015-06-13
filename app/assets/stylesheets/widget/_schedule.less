@@ -1,22 +1,30 @@
 .schedule-form {
 
-    table{
+    table {
         width: 100%;
-        tr{
-            td{
-                height: 30px;
-                &:first-child{
-                    width:100px;
+        tr {
+            td {
+
+                &:first-child {
+                    width: 100px;
                 }
-                &:nth-child(2) .hour-block{
+                &:nth-child(2) .hour-block {
                     border-left: 1px solid #c0c0c0;
                 }
-                &:nth-child(+2){
+                &:nth-child(+2) {
                     width: 15px;
                 }
-                .hour-block{
+                .hour-block {
                     width: 100%;
                 }
+            }
+            height: 30px;
+            vertical-align: bottom;
+            &:nth-child(1){
+                height: 15px;
+            }
+            &:nth-child(2){
+                height: 20px;
             }
         }
     }
@@ -48,7 +56,7 @@
             border-left: 1px solid #c0c0c0;
         }
         .hour-block-info,
-        .hour-block{
+        .hour-block {
             width: 25px;
 
         }
@@ -59,8 +67,10 @@
         vertical-align: top;
         position: relative;
         & > div {
+            color: #696969;
             position: absolute;
             left: -10px;
+            text-decoration: underline;
         }
     }
     .hour-block {
@@ -81,8 +91,26 @@
 
     }
 
-    button:focus{
-        border: 0px;
+    .schedule-info {
+        background-color: #000000;
+        color: white;
+        padding: 10px;
+        position: fixed;
+        z-index: 100;
+    }
+
+    button:focus {
+        //border: 0px;
+        color: transparent !important;
+        outline: 0;
+        text-shadow: none !important;
+//        border: none !important;
+        box-shadow: none !important;
+
+        border-right: 1px solid #c0c0c0 !important;
+        border-bottom: 1px solid #c0c0c0 !important;
+        border-top: 1px solid #c0c0c0 !important;
+        border-left: 0px !important;
     }
 
     .attendance-close {
