@@ -4,6 +4,7 @@ import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public class BusinessSchedule extends AbstractEntity {
 
     @OneToMany(mappedBy = "businessSchedule",cascade = CascadeType.ALL)
-    private List<BusinessSchedulePart> parts;
+    private List<BusinessSchedulePart> parts = new ArrayList<>();
 
     @Basic(optional = false)
     @Enumerated(value = EnumType.STRING)

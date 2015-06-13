@@ -1,15 +1,11 @@
 <div class="schedule-form">
 
-    <button ng-click="display('MONDAY')">monday</button>
-    <button ng-click="display('TUESDAY')">tuesday</button>
-    <button ng-click="display('WEDNESDAY')">WEDNESDAY</button>
-    <button ng-click="display('THURSDAY')">THURSDAY</button>
-    <button ng-click="display('FRIDAY')">FRIDAY</button>
-    <button ng-click="display('SATURDAY')">SATURDAY</button>
-    <button ng-click="display('SUNDAY')">SUNDAY</button>
+    <div ng-show="startSection!=null"
+         style="background-color: #000000;color: white;padding: 10px;position: fixed"
+            ng-style="infoStyle">{{selectedTiming}}</div>
 
 
-    <div ng-hide="currentSchedule==null">
+    <div>
         <div class="schedule-form-radio">
             <div class="attendance-close" ng-click="selectAttendance('CLOSE')">
                 <input type="radio" ng-model="attendance_selected" value="CLOSE"/>Closed
@@ -26,20 +22,39 @@
                 <input type="radio" ng-model="attendance_selected" value="IMPORTANT"/>Heavy
             </div>
         </div>
+        <!--Start-->
+        <!--<select ng-model="startHour"-->
+                <!--ng-options="option.key as option.value for option in openSchedules"/>-->
+        <!--Stop-->
+        <!--<select ng-model="stopHour"-->
+                <!--ng-options="option.key as option.value for option in openSchedules"/>-->
 
-        <div class="schedule-block">
-            <button class="hour-block"
-                    ng-repeat="section in sections"
-                    ng-class="attendance_class[section.attendance]"
-                    ng-mousedown="select(section,true)"
-                    ng-mouseover="select(section)">
-                {{section.hour}}
-            </button>
-        </div>
+        <table>
+            <tr>
+                <td></td>
+                <td ng-repeat="hour in hours">
+                    <div class="hour-block-info">
+                        <div>
+                            {{hour.text}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="day in days">
+                <td>{{day}}</td>
+                <td ng-repeat="section in sections[day]">
+                    <button class="hour-block"
+                            ng-class="attendance_class[section.attendance]"
+                            ng-mousedown="select(day,section)"
+                            ng-mouseover="progress($event,day,section)">
+                    </button>
+                </td>
 
+            </tr>
+        </table>
 
-        <clock-chart-ctrl ng-info="clockParam"></clock-chart-ctrl>
-        <clock-chart-ctrl ng-info="clockParamMin"></clock-chart-ctrl>
+        <!--<clock-chart-ctrl ng-info="clockParam"></clock-chart-ctrl>-->
+        <!--<clock-chart-ctrl ng-info="clockParamMin"></clock-chart-ctrl>-->
     </div>
 
 </div>

@@ -3,7 +3,6 @@ package be.lynk.server.controller.rest;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessDTO;
-import be.lynk.server.dto.BusinessScheduleDTO;
 import be.lynk.server.dto.BusinessSchedulePartDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
@@ -39,7 +38,7 @@ public class BusinessScheduleRestController extends AbstractRestController {
         BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 
         Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
-        business.setBusinessSchedules(new ArrayList<>());
+        business.setSchedules(new ArrayList<>());
 
 
         for (Map.Entry<DayOfWeek, List<BusinessSchedulePartDTO>> dayOfWeekBusinessScheduleDTOEntry : dto.getSchedules().entrySet()) {
@@ -47,7 +46,7 @@ public class BusinessScheduleRestController extends AbstractRestController {
             BusinessSchedule businessSchedule = new BusinessSchedule();
             businessSchedule.setDayOfWeek(dayOfWeekBusinessScheduleDTOEntry.getKey());
             businessSchedule.setBusiness(business);
-            business.getBusinessSchedules().add(businessSchedule);
+            business.getSchedules().add(businessSchedule);
 
             List<BusinessSchedulePart> parts = dozerService.map(dayOfWeekBusinessScheduleDTOEntry.getValue(), BusinessSchedulePart.class);
             for (BusinessSchedulePart part : parts) {

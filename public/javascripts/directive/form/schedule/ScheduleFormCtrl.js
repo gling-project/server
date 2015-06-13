@@ -17,7 +17,19 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                     directiveService.autoScopeImpl(scope);
 
 
+                    scope.days = [
+                        'MONDAY',
+                        'TUESDAY',
+                        'WEDNESDAY',
+                        'THURSDAY',
+                        'FRIDAY',
+                        'SATURDAY',
+                        'SUNDAY'
+                    ];
+
+
                     scope.attendance_selected = 'LIGHT';
+                    scope.select_day = null;
                     scope.attendance_class = {
                         LIGHT: 'attendance-light',
                         MODERATE: 'attendance-moderate',
@@ -28,26 +40,24 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                         scope.attendance_selected = attendance;
                     };
 
-                    scope.sections = [];
+                    scope.sections = ['e'];
 
                     scope.clockParam = {
                         schedule: [],
-                        min:true
+                        min: true
                     };
-                    scope.clockParamMin={
+                    scope.clockParamMin = {
                         schedule: scope.clockParam.schedule
                     };
 
-                    scope.currentSchedule;
-
-                    scope.display = function (day) {
-                        if (scope.getInfo().dto[day] == undefined) {
-                            scope.getInfo().dto[day] = []
-                        }
-                        scope.currentSchedule = scope.getInfo().dto[day];
-                        scope.clockParam.schedule =scope.currentSchedule;
-                        scope.decompile();
-                    };
+                    //scope.display = function (day) {
+                    //    if (scope.getInfo().dto[day] == undefined) {
+                    //        scope.getInfo().dto[day] = []
+                    //    }
+                    //    scope.currentSchedule = scope.getInfo().dto[day];
+                    //    scope.clockParam.schedule = scope.currentSchedule;
+                    //    scope.decompile();
+                    //};
 
 
                     scope.nbPair = function (nb) {
@@ -55,33 +65,48 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                         else return false;
                     };
 
-                    for (var i = 0; i < 48; i++) {
+                    scope.hours = [];
+                    for (var i = 0; i < 49; i++) {
+
                         var hour = "";
                         if (scope.nbPair(i)) {
                             hour = i / 2 + "h";
                         }
-                        scope.sections.push({
-                            hour: hour,
-                            minutes: i * 30,
-                            attendance: 'CLOSE'
-                        });
+                        scope.hours.push({text: hour});
                     }
+
+                    for (var dayKey in scope.days) {
+                        var day = scope.days[dayKey];
+                        scope.sections[day] = [];
+                        for (var i = 0; i < 48; i++) {
+                            scope.sections[day].push({
+                                minutes: i * 30,
+                                attendance: 'CLOSE'
+                            });
+                        }
+                        scope.$watch('sections.' + day, function () {
+                            scope.compile();
+                        }, true);
+                    }
+                    ;
 
                     scope.select = function (section, force) {
                         if (down || force) {
                             section.attendance = scope.attendance_selected
                         }
                     };
-                    scope.$watch('sections', function () {
-                        scope.compile();
-                    }, true);
+
 
                     scope.compile = function () {
-                        if(scope.currentSchedule!=null) {
-                            scope.currentSchedule.splice(0, scope.currentSchedule.length);
+                        for (var dayKey in scope.days) {
+                            var day = scope.days[dayKey];
+                            if (scope.getInfo().dto[day] == undefined || scope.getInfo().dto[day] == null) {
+                                scope.getInfo().dto[day] = [];
+                            }
+                            scope.getInfo().dto[day].splice(0, scope.getInfo().dto[day].length);
                             var newPart = null;
-                            for (var key in scope.sections) {
-                                var obj = scope.sections[key];
+                            for (var key in scope.sections[day]) {
+                                var obj = scope.sections[day][key];
                                 if (obj.attendance != 'CLOSE') {
 
                                     if (newPart != null) {
@@ -91,7 +116,7 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                                             continue;
                                         }
                                         else {
-                                            scope.currentSchedule.push(newPart);
+                                            scope.getInfo().dto[day].push(newPart);
                                             newPart = null;
                                         }
                                     }
@@ -102,47 +127,108 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                                     };
                                 }
                                 else if (newPart != null) {
-                                    scope.currentSchedule.push(newPart);
+                                    scope.getInfo().dto[day].push(newPart);
                                     newPart = null;
                                 }
 
 
                             }
                             if (newPart != null) {
-                                scope.currentSchedule.push(newPart);
+                                scope.getInfo().dto[day].push(newPart);
                                 newPart = null;
                             }
                         }
                     };
 
                     scope.decompile = function () {
-                        for (var key in scope.sections) {
-                            var obj = scope.sections[key];
-                            obj.attendance = 'CLOSE';
-                        }
-
-                        for (var key in scope.currentSchedule) {
-                            var obj = scope.currentSchedule[key];
-
-                            for (var key2 in scope.sections) {
-                                var obj2 = scope.sections[key2];
-                                if (obj2.minutes >= obj.from &&
-                                    (obj2.minutes + 30) <= obj.to) {
-                                    obj2.attendance = obj.attendance;
-                                }
+                        for (var dayKey in scope.days) {
+                            var day = scope.days[dayKey];
+                            for (var key in scope.sections[day]) {
+                                var obj = scope.sections[day][key];
+                                obj.attendance = 'CLOSE';
                             }
 
+                            for (var key in scope.getInfo().dto[day]) {
+                                var obj = scope.getInfo().dto[day][key];
+
+                                for (var key2 in scope.sections[day]) {
+                                    var obj2 = scope.sections[day][key2];
+                                    if (obj2.minutes >= obj.from &&
+                                        (obj2.minutes + 30) <= obj.to) {
+                                        obj2.attendance = obj.attendance;
+                                    }
+                                }
+                            }
                         }
                     };
                     scope.decompile();
 
 
-                    var down = false;
-                    $(document).mousedown(function () {
-                        down = true;
-                    }).mouseup(function () {
-                        down = false;
+                    scope.openSchedules = [
+                        {key: 0, value: '0h00'},
+                        {key: 30, value: '0h30'}
+                    ]
+
+
+                    //var down = false;
+                    //$(document).mousedown(function () {
+                    //    down = true;
+                    //}).mouseup(function () {
+                    //    down = false;
+                    //});
+
+                    scope.startSection = null;
+
+                    scope.select = function (day, section) {
+                        section.attendance = scope.attendance_selected;
+                        scope.startSection = section;
+                        scope.select_day = day;
+                    };
+
+                    $(document).mouseup(function () {
+                        scope.startSection = null;
+                        scope.select_day=null;
                     });
+
+                    var sectionToString = function (section) {
+                        return Math.floor(section.minutes/60%24) + ':' + section.minutes%60;
+                    };
+
+                    scope.progress = function (event, day, section) {
+
+                        if (scope.select_day == day) {
+
+                            scope.infoStyle = {
+                                left: event.pageX+'px',
+                                top: (event.pageY-50)+'px'
+                            };
+
+                            if (scope.startSection != null) {
+                                if (section.minutes < scope.startSection.minutes) {
+                                    //select all section between section and scope.startSection
+                                    for (var key in scope.sections[day]) {
+                                        var obj = scope.sections[day][key];
+                                        if (obj.minutes >= section.minutes &&
+                                            obj.minutes <= scope.startSection.minutes) {
+                                            obj.attendance = scope.attendance_selected;
+                                        }
+                                    }
+                                    scope.selectedTiming = sectionToString(section) + " to " + sectionToString(scope.startSection);
+
+                                }
+                                else {
+                                    for (var key in scope.sections[day]) {
+                                        var obj = scope.sections[day][key];
+                                        if (obj.minutes <= section.minutes &&
+                                            obj.minutes >= scope.startSection.minutes) {
+                                            obj.attendance = scope.attendance_selected;
+                                        }
+                                    }
+                                    scope.selectedTiming = sectionToString(scope.startSection) + " to " + sectionToString(section);
+                                }
+                            }
+                        }
+                    };
 
                 }
             }

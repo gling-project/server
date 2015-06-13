@@ -1,8 +1,6 @@
 package be.lynk.server.model.entities;
 
 import be.lynk.server.model.entities.publication.AbstractPublication;
-import be.lynk.server.model.entities.publication.BusinessNotification;
-import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
@@ -45,14 +43,14 @@ public class Business extends AbstractEntity {
     private List<AbstractPublication> publications;
 
     @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
-    private List<BusinessSchedule> businessSchedules = new ArrayList<>();
+    private List<BusinessSchedule> schedules = new ArrayList<>();
 
-    public List<BusinessSchedule> getBusinessSchedules() {
-        return businessSchedules;
+    public List<BusinessSchedule> getSchedules() {
+        return schedules;
     }
 
-    public void setBusinessSchedules(List<BusinessSchedule> businessSchedules) {
-        this.businessSchedules = businessSchedules;
+    public void setSchedules(List<BusinessSchedule> businessSchedules) {
+        this.schedules = businessSchedules;
     }
 
     public StoredFile getIllustration() {
