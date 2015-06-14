@@ -62,7 +62,7 @@ public class BusinessRestController extends AbstractController {
 
         StoredFile storedFile = storedFileService.findById(dto.getId());
 
-        if (!storedFile.getIsImage() ||
+        if ((storedFile.getIsImage() != null && !storedFile.getIsImage()) ||
                 !storedFile.getAccount().equals(securityController.getCurrentUser())) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }

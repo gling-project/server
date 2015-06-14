@@ -6,7 +6,7 @@
             {{getInfo().fieldTitle |translateText}}
         </label>
 
-        <div class="col-md-6">
+        <div ng-class="getInfo().fullSize==true?'col-md-12':'col-md-6'">
             <div ng-class="{'input-group':!!getInfo().money}" style="text-align: center">
                 <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="document-question-progress-bar">
                     <div ng-style="style">

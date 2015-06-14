@@ -5,7 +5,8 @@
         {{'--.business.welcome.title' | translateText}}
     </div>
 
-    <div class="panel panel-default">
+    <!-- business -->
+    <div class="panel panel-default" style="display: inline-block;width: 40%;vertical-align: top">
         <div class="panel-heading">{{'--.generic.business' | translateText}}</div>
         <div class="panel-body">
 
@@ -25,8 +26,8 @@
         </div>
     </div>
 
-
-    <div class="panel panel-default">
+    <!-- address -->
+    <div class="panel panel-default" style="display: inline-block;width: 40%;vertical-align: top">
         <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
         <div class="panel-body address-container">
             <div class="address-box">
@@ -44,6 +45,55 @@
         </div>
     </div>
 
+    <!-- image -->
+    <div class="panel panel-default" style="display: inline-block;width: 18%;vertical-align: top">
+        <div class="panel-heading">{{'--.business.profile.image' | translateText}}</div>
+        <div class="panel-body">
+
+            <dir-field-document ng-info="illustrationParam"></dir-field-document>
+
+            <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="illustrationDisable"
+                    ng-click="illustrationEdit()">{{'--.generic.edit' |
+                translateText}}
+            </button>
+            <button class="btn btn-primary" ng-hide="illustrationDisable" ng-click="illustrationSave()">
+                {{'--.generic.save' |
+                translateText}}
+            </button>
+            <button class="btn btn-primary" ng-hide="illustrationDisable" ng-click="illustrationCancel()">
+                {{'--.generic.cancel' | translateText}}
+            </button>
+        </div>
+    </div>
+
+
+    <!-- schedule -->
+    <div class="panel panel-default">
+        <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
+        <div class="panel-body">
+            <schedule-form-ctrl ng-info="businessScheduleParam"></schedule-form-ctrl>
+
+
+            <button class="btn btn-primary glyphicon glyphicon-edit"
+                    ng-show="businessScheduleParam.disabled"
+                    ng-click="businessScheduleEdit()">
+                {{'--.generic.edit' |translateText}}
+            </button>
+            <button class="btn btn-primary"
+                    ng-hide="businessScheduleParam.disabled"
+                    ng-click="businessScheduleSave()">
+                {{'--.generic.save' |translateText}}
+            </button>
+            <button class="btn btn-primary"
+                    ng-hide="businessScheduleParam.disabled"
+                    ng-click="businessScheduleCancel()">
+                {{'--.generic.cancel' | translateText}}
+            </button>
+
+        </div>
+    </div>
+
+    <!-- category -->
     <div class="panel panel-default">
         <div class="panel-heading">{{'--.profile.businessCategory' | translateText}}</div>
         <div class="panel-body">
@@ -68,29 +118,8 @@
         </div>
     </div>
 
-
-    <div class="panel panel-default">
-        <div class="panel-heading">{{'--.business.profile.image' | translateText}}</div>
-        <div class="panel-body">
-
-            <dir-field-document ng-info="illustrationParam"></dir-field-document>
-
-            <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="illustrationDisable"
-                    ng-click="illustrationEdit()">{{'--.generic.edit' |
-                translateText}}
-            </button>
-            <button class="btn btn-primary" ng-hide="illustrationDisable" ng-click="illustrationSave()">
-                {{'--.generic.save' |
-                translateText}}
-            </button>
-            <button class="btn btn-primary" ng-hide="illustrationDisable" ng-click="illustrationCancel()">
-                {{'--.generic.cancel' | translateText}}
-            </button>
-        </div>
-    </div>
-
-
-    <div class="panel panel-default">
+    <!-- promotion -->
+    <div class="panel panel-default" style="display: inline-block;width: 49%;vertical-align: top">
         <div class="panel-heading">{{'--.business.profile.promotion' | translateText}}</div>
         <div class="panel-body">
 
@@ -106,8 +135,8 @@
         </div>
     </div>
 
-
-    <div class="panel panel-default">
+    <!-- notification -->
+    <div class="panel panel-default" style="display: inline-block;width: 49%;vertical-align: top">
         <div class="panel-heading">{{'--.business.profile.businessNotification' | translateText}}</div>
         <div class="panel-body">
 
@@ -131,32 +160,6 @@
                     {{'--.generic.delete' |translateText}}
                 </button>
             </div>
-
-        </div>
-    </div>
-
-
-    <div class="panel panel-default">
-        <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
-        <div class="panel-body">
-            <schedule-form-ctrl ng-info="businessScheduleParam"></schedule-form-ctrl>
-
-
-            <button class="btn btn-primary glyphicon glyphicon-edit"
-                    ng-show="businessScheduleParam.disabled"
-                    ng-click="businessScheduleEdit()">
-                {{'--.generic.edit' |translateText}}
-            </button>
-            <button class="btn btn-primary"
-                    ng-hide="businessScheduleParam.disabled"
-                    ng-click="businessScheduleSave()">
-                {{'--.generic.save' |translateText}}
-            </button>
-            <button class="btn btn-primary"
-                    ng-hide="businessScheduleParam.disabled"
-                    ng-click="businessScheduleCancel()">
-                {{'--.generic.cancel' | translateText}}
-            </button>
 
         </div>
     </div>

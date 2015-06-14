@@ -62,14 +62,15 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
     //
     $scope.illustrationDisable = true;
     $scope.illustrationParam = {
-        fieldTitle: "--.generic.image",
+        fieldTitle: "",
         validationMessage: '--.error.validation.image',
         size: 60,
         disabled: function(){
             return $scope.illustrationDisable;
         },
         field: accountService.getMyself().business,
-        fieldName:'illustration'
+        fieldName:'illustration',
+        fullSize:true
     };
 
 
@@ -79,11 +80,13 @@ myApp.controller('BusinessWelcomeCtrl', function ($scope,accountService,business
 
     $scope.illustrationSave = function () {
         $scope.illustrationDisable = true;
-        businessService.editIllustration($scope.illustrationParam.field);
+        console.log("$scope.illustrationParam.field");
+        console.log($scope.illustrationParam.field);
+        businessService.editIllustration($scope.illustrationParam.field.illustration);
     };
 
     $scope.illustrationCancel = function () {
-        $scope.illustrationParam.dto=angular.copy(accountService.getMyself().business.illustration);
+        $scope.illustrationParam.field=angular.copy(accountService.getMyself().business);
         $scope.illustrationDisable = true;
     };
 
