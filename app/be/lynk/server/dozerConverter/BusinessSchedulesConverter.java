@@ -6,14 +6,7 @@ import be.lynk.server.model.entities.BusinessSchedulePart;
 import be.lynk.server.service.DozerService;
 import be.lynk.server.service.impl.DozerServiceImpl;
 import org.dozer.CustomConverter;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.swing.*;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,8 +19,6 @@ import java.util.Map;
 public class BusinessSchedulesConverter implements CustomConverter{
 
     private DozerService dozerService = new DozerServiceImpl();
-
-    public static ApplicationContext ac;
 
     public Object convert(Object destination, Object source,
                           Class destClass, Class sourceClass) {
@@ -49,9 +40,4 @@ public class BusinessSchedulesConverter implements CustomConverter{
             return null;
         }
     }
-
-//    @Override
-//    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-//        ac = applicationContext;
-//    }
 }
