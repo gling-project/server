@@ -6,4 +6,14 @@ myApp.controller('HomeCtrl', function ($scope, modalService) {
         modalService.openCustomerRegistrationModal();
     };
 
+    $scope.businessInfoParam = {};
+
+    $scope.promotionListParam = {
+        displayBusiness: function (businessId) {
+            $scope.businessInfoParam.businessId = function () {
+                return businessId;
+            }
+        }
+    }
+
 });

@@ -40,23 +40,14 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                         scope.attendance_selected = attendance;
                     };
 
-                    scope.sections = ['e'];
+                    scope.sections = [];
 
-                    scope.clockParam = {
-                        schedule: [],
-                        min: true
-                    };
-                    scope.clockParamMin = {
-                        schedule: scope.clockParam.schedule
-                    };
-
-                    //scope.display = function (day) {
-                    //    if (scope.getInfo().dto[day] == undefined) {
-                    //        scope.getInfo().dto[day] = []
-                    //    }
-                    //    scope.currentSchedule = scope.getInfo().dto[day];
-                    //    scope.clockParam.schedule = scope.currentSchedule;
-                    //    scope.decompile();
+                    //scope.clockParam = {
+                    //    schedule: [],
+                    //    min: true
+                    //};
+                    //scope.clockParamMin = {
+                    //    schedule: scope.clockParam.schedule
                     //};
 
 
@@ -163,39 +154,46 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                     };
                     scope.decompile();
 
-
-                    scope.openSchedules = [
-                        {key: 0, value: '0h00'},
-                        {key: 30, value: '0h30'}
-                    ]
-
-
-                    //var down = false;
-                    //$(document).mousedown(function () {
-                    //    down = true;
-                    //}).mouseup(function () {
-                    //    down = false;
-                    //});
-
                     scope.startSection = null;
 
                     scope.select = function (day, section) {
                         section.attendance = scope.attendance_selected;
                         scope.startSection = section;
                         scope.select_day = day;
+                        computeLabel();
                     };
 
                     $(document).mouseup(function () {
                         scope.startSection = null;
-                        scope.select_day=null;
+                        scope.select_day = null;
                     });
 
-                    var sectionToString = function (section) {
-                        var minutes = section.minutes%60;
-                        if(minutes<10){
-                            minutes = "0"+minutes;
+                    var sectionToString = function (section, end) {
+                        var min = section.minutes + (30 * end);
+                        var minutes = min % 60;
+                        if (minutes < 10) {
+                            minutes = "0" + minutes;
                         }
-                        return Math.floor(section.minutes/60%24) + 'h' + minutes;
+                        return Math.floor(min / 60 % 24) + 'h' + minutes;
+                    };
+
+                    var computeLabel = function () {
+                        if (scope.startSection != null) {
+                            var end = null,start=null;
+                            for (var i = scope.startSection.minutes / 30; i <= 48; i++) {
+                                if (scope.sections[scope.select_day][i].attendance != scope.attendance_selected) {
+                                    end = scope.sections[scope.select_day][i-1];
+                                    break;
+                                }
+                            }
+                            for (var i = scope.startSection.minutes / 30; i >= 0; i--) {
+                                if (scope.sections[scope.select_day][i].attendance != scope.attendance_selected) {
+                                    start = scope.sections[scope.select_day][i+1];
+                                    break;
+                                }
+                            }
+                            scope.selectedTiming = sectionToString(start, 0) + " to " + sectionToString(end, 1);
+                        }
                     };
 
                     scope.progress = function (event, day, section) {
@@ -203,8 +201,8 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                         if (scope.select_day == day) {
 
                             scope.infoStyle = {
-                                left: event.pageX+'px',
-                                top: (event.pageY-50)+'px'
+                                left: event.pageX + 'px',
+                                top: (event.pageY - 50) + 'px'
                             };
 
                             if (scope.startSection != null) {
@@ -217,8 +215,8 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                                             obj.attendance = scope.attendance_selected;
                                         }
                                     }
-                                    scope.selectedTiming = sectionToString(section) + " to " + sectionToString(scope.startSection);
 
+                                    computeLabel();
                                 }
                                 else {
                                     for (var key in scope.sections[day]) {
@@ -228,7 +226,7 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                                             obj.attendance = scope.attendance_selected;
                                         }
                                     }
-                                    scope.selectedTiming = sectionToString(scope.startSection) + " to " + sectionToString(section);
+                                    computeLabel();//scope.selectedTiming = sectionToString(scope.startSection, 0) + " to " + sectionToString(section, 1);
                                 }
                             }
                         }

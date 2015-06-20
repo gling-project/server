@@ -1,4 +1,4 @@
-<div class="publication-box publication-promotion">
+<div class="publication-box publication-promotion" ng-click="click()">
     <div class="business-name">{{promotion.businessName}}</div>
     <div ng-show="promotion.type == 'PROMOTION'" class="promotion-reduction">{{promotion.offPercent * 100 | number:0}} % !</div>
     <img class="illustration" ng-src="{{illustration}}"/>

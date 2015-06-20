@@ -1,5 +1,24 @@
 myApp.service("businessService", function ($flash, $http, accountService) {
 
+
+    this.getBusiness = function (id, callbackSuccess, callbackError) {
+        $http({
+            'method': "GET",
+            'url': "/business/" + id,
+            'headers': "Content-Type:application/json"
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
     this.registration = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
@@ -124,7 +143,9 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             });
     };
 
-    this.createSchedule = function(dto, callbackSuccess, callbackError) {
+    this.createSchedule = function (dto, callbackSuccess, callbackError) {
+        console.log("createSchedule:");
+        console.log(dto);
 
         $http({
             'method': "POST",

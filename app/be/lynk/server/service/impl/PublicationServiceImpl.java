@@ -16,7 +16,7 @@ import java.util.List;
  * Created by florian on 5/06/15.
  */
 @Service
-public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication> implements PublicationService{
+public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication> implements PublicationService {
 
     @Override
     public List<AbstractPublication> findActivePublication() {
@@ -30,11 +30,11 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.lessThan(from.get("startDate"), now));
         cq.where(cb.greaterThan(from.get("endDate"), now));
         List<AbstractPublication> resultList = JPA.em().createQuery(cq).getResultList();
-        return resultList ;
+        return resultList;
     }
 
     @Override
-    public AbstractPublication findLastPublication(Business business){
+    public AbstractPublication findLastPublication(Business business) {
         LocalDateTime now = LocalDateTime.now();
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
@@ -45,7 +45,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.greaterThan(from.get("endDate"), now));
         cq.where(cb.equal(from.get("endDate"), now));
         cq.orderBy(cb.desc(from.get("startDate")));
-        return JPA.em().createQuery(cq).getSingleResult();
+        return getFirstResultOrNull(cq);
     }
 
     @Override

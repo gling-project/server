@@ -3,7 +3,18 @@
     table {
         width: 100%;
         tr {
+
+            &:nth-child(n+2) {
+                td {
+                    &:nth-child(2n+1) {
+                        .hour-block {
+                            border-right: 1px solid #c0c0c0;
+                        }
+                    }
+                }
+            }
             td {
+                width: 15px;
 
                 &:first-child {
                     width: 100px;
@@ -18,14 +29,20 @@
                     width: 100%;
                 }
             }
-            height: 30px;
+            height: 23px;
             vertical-align: bottom;
-            &:nth-child(1){
+            &:nth-child(1) {
                 height: 15px;
             }
-            &:nth-child(2){
+            &:nth-child(2) {
                 height: 20px;
             }
+        }
+    }
+
+    .editable {
+        .hour-block {
+            cursor: col-resize !important;
         }
     }
 
@@ -74,7 +91,13 @@
         }
     }
     .hour-block {
-        border-right: 1px solid #c0c0c0;
+        &:nth-child(2n) {
+            border-right: 1px solid #c0c0c0;
+        }
+        &:nth-child(2n+1) {
+            border-right: 0px;
+        }
+        //        border-right: 1px solid #c0c0c0;
         border-bottom: 1px solid #c0c0c0;
         border-top: 1px solid #c0c0c0;
         border-left: 0px;
@@ -84,7 +107,6 @@
         background-color: white;
         padding: 0;
         height: 20px;
-        cursor: col-resize;
         &:focus {
             border: 0px;
         }
@@ -104,7 +126,7 @@
         color: transparent !important;
         outline: 0;
         text-shadow: none !important;
-//        border: none !important;
+        //        border: none !important;
         box-shadow: none !important;
 
         border-right: 1px solid #c0c0c0 !important;

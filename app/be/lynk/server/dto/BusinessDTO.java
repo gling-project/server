@@ -36,6 +36,8 @@ public class BusinessDTO extends DTO {
 
     private Integer totalFollowers;
 
+    private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
+
     public BusinessDTO() {
     }
 
@@ -62,8 +64,6 @@ public class BusinessDTO extends DTO {
     public void setIllustration(StoredFileDTO illustration) {
         this.illustration = illustration;
     }
-
-    private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
 
     public List<BusinessCategoryDTO> getBusinessCategories() {
         return businessCategories;

@@ -42,5 +42,15 @@
         </field>
     </mapping>
 
+    <mapping>
+        <class-a>be.lynk.server.model.entities.Business</class-a>
+        <class-b>be.lynk.server.dto.BusinessForDisplayDTO</class-b>
+        <field custom-converter=
+                       "be.lynk.server.dozerConverter.BusinessSchedulesConverter">
+            <a>schedules</a>
+            <b>schedules</b>
+        </field>
+    </mapping>
+
 
 </mappings>

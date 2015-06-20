@@ -1,0 +1,25 @@
+<div class="schedule-form">
+    <table style="width: 500px;">
+        <tr>
+            <td></td>
+            <td ng-repeat="hour in hours">
+                <div class="hour-block-info">
+                    <div>
+                        {{hour.text}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="day in days"  ng-show="sections[day].length >0">
+            <td>{{day}}</td>
+            <td ng-repeat="section in sections[day]">
+                <div class="hour-block"
+                        ng-class="attendance_class[section.attendance]"
+                        ng-mousedown="select(day,section)"
+                        ng-mouseover="progress($event,day,section)">
+                </div>
+            </td>
+
+        </tr>
+    </table>
+</div>

@@ -1,14 +1,17 @@
-myApp.directive('promotionListCtrl', function ($rootScope, businessService, geolocationService) {
+myApp.directive('promotionListCtrl', function ($rootScope, businessService, geolocationService,directiveService) {
 
     return {
         restrict: "E",
-        scope: {},
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
         templateUrl: "/assets/javascripts/directive/component/promotionList/template.html",
         replace: true,
         transclude: true,
         compile: function () {
             return {
                 post: function (scope) {
+                    directiveService.autoScopeImpl(scope);
 
                     $rootScope.$watch(function () {
                         return geolocationService.position;
@@ -16,14 +19,24 @@ myApp.directive('promotionListCtrl', function ($rootScope, businessService, geol
 
                         if (geolocationService.position != null) {
 
+                            scope.params = [];
+
                             businessService.findByPromotion(geolocationService.position, function (data) {
                                 for (var i in data) {
                                     if (data[i].illustration!= null) {
                                         data[i].illustration.link = "/file/" + data[i].illustration.id;
                                     }
                                     data[i].interval = (data[i].endDate - new Date()) / 1000;
+                                    scope.params.push({
+                                        promotion:data[i],
+                                        selectCallback:function(businessId){
+                                            if(scope.getInfo().displayBusiness !=null){
+                                                scope.getInfo().displayBusiness(businessId);
+                                            }
+                                        }
+                                    });
+
                                 }
-                                scope.promotions = data;
                             });
                         }
                     });

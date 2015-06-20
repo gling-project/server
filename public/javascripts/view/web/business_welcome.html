@@ -71,7 +71,8 @@
     <div class="panel panel-default">
         <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
         <div class="panel-body">
-            <schedule-form-ctrl ng-info="businessScheduleParam"></schedule-form-ctrl>
+            <schedule-form-ctrl ng-hide="businessScheduleParam.disabled" ng-info="businessScheduleParam"></schedule-form-ctrl>
+            <schedule-ctrl ng-show="businessScheduleParam.disabled" ng-info="businessScheduleParam"></schedule-ctrl>
 
 
             <button class="btn btn-primary glyphicon glyphicon-edit"

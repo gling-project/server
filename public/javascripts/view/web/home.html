@@ -15,14 +15,12 @@
         <div style="display: inline-block;width:35%;vertical-align: top">
             <h4 style="text-align: center;">Last promotion in your neighborhood</h4>
 
-            <promotion-list-ctrl></promotion-list-ctrl>
+            <promotion-list-ctrl ng-info="promotionListParam"></promotion-list-ctrl>
         </div>
 
 
         <div style="display: inline-block;width:35%;vertical-align: top">
-            <h4 style="text-align: center;">Last news in your neighborhood</h4>
-
-            <div style="  height: 400px; background-color: orange;  border: 2px solid red;  margin: 5px;"></div>
+            <business-info-ctrl ng-info="businessInfoParam"></business-info-ctrl>
         </div>
 
         <div style="display: inline-block;width:28%;vertical-align: top">
@@ -42,13 +40,13 @@
                     {{'--.home.toBusiness.btn' | translateText}}
                 </button>
             </div>
-            <div class="temp-box"
-                 ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'">
-                <div>You are a business !</div>
-                <button class="btn btn-default" style="color: #000000" ng-click="navigateTo('/business')">Access to my
-                    business
-                </button>
-            </div>
+            <!--<div class="temp-box"-->
+                 <!--ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'">-->
+                <!--<div>You are a business !</div>-->
+                <!--<button class="btn btn-default" style="color: #000000" ng-click="navigateTo('/business')">Access to my-->
+                    <!--business-->
+                <!--</button>-->
+            <!--</div>-->
         </div>
     </div>
 

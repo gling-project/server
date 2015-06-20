@@ -54,18 +54,18 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
     public void remove(T entity) {
         JPA.em().remove(entity);
     }
-    
+
     @Override
     public List<T> findAll() {
-        return JPA.em().createQuery("select p from "+entityClass.getName()+" p").getResultList();
+        return JPA.em().createQuery("select p from " + entityClass.getName() + " p").getResultList();
     }
 
-    protected T getSingleOrNull(TypedQuery<T> query){
+    protected T getSingleOrNull(TypedQuery<T> query) {
         List<T> resultList = query.getResultList();
-        if(resultList.size()==0){
+        if (resultList.size() == 0) {
             return null;
         }
-        if(resultList.size()>1){
+        if (resultList.size() > 1) {
             throw new RuntimeException("more than one result, expected max 1");
         }
         return resultList.get(0);
@@ -80,5 +80,18 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
             singleResult = null;
         }
         return singleResult;
+    }
+
+    protected T getFirstResultOrNull(CriteriaQuery<T> cq) {
+        List<T> results;
+        try {
+            results = JPA.em().createQuery(cq).getResultList();
+        } catch (NoResultException nre) {
+            results = null;
+        }
+        if (results.size() > 0) {
+            return results.get(0);
+        }
+        return null;
     }
 }

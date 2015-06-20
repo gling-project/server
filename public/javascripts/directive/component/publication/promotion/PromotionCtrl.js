@@ -27,13 +27,19 @@ myApp.directive('promotionCtrl', function (directiveService, followService) {
                     }
 
                     scope.follow = function (follow) {
-                        followService.addFollow(follow,scope.promotion.businessId);
+                        followService.addFollow(follow, scope.promotion.businessId);
                         scope.promotion.following = follow;
-                        if(follow){
+                        if (follow) {
                             scope.promotion.totalFollowers++;
                         }
-                        else{
+                        else {
                             scope.promotion.totalFollowers--;
+                        }
+                    };
+
+                    if (scope.getInfo().selectCallback != null) {
+                        scope.click = function () {
+                            scope.getInfo().selectCallback(scope.promotion.businessId);
                         }
                     }
 
