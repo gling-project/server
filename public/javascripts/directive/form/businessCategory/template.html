@@ -9,7 +9,7 @@
                         ng-disabled="isDisabled()"
                         ng-repeat="category in categories"
                      class="category-box"
-                     ng-class="{'category-selected':selectedCategory == category}"
+                     ng-class="{'category-selected':category.selected === true}"
                      ng-click="select(category)">
                     {{category.translationName | translateText}}
                 </button>
@@ -22,7 +22,7 @@
                         ng-repeat="subcategory in subcategories"
                         ng-disabled="isDisabled()"
                         class="category-box"
-                        ng-class="{'subcategory-selected':subselectedCategory == subcategory}"
+                        ng-class="{'subcategory-selected':subcategory.selected === true}"
                         ng-click="selectSubcategory(subcategory)">
                     {{subcategory.translationName | translateText}}
                 </button>
@@ -35,7 +35,7 @@
                         ng-repeat="subsubcategory in subsubcategories"
                         ng-disabled="isDisabled()"
                         class="category-box"
-                        ng-class="{'subsubcategory-selected':subsubselectedCategory.contains(subsubcategory)}"
+                        ng-class="{'subsubcategory-selected':subsubcategory.selected === true}"
                         ng-click="selectSubSubcategory(subsubcategory)">
                     {{subsubcategory.translationName | translateText}}
                 </button>

@@ -16,7 +16,7 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    scope.isDisabled= function(){
+                    scope.isDisabled = function () {
                         return scope.getInfo().disabled;
                     };
 
@@ -24,70 +24,112 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
 
                     var value = scope.getInfo().value;
 
-                    scope.selectedCategory = null;
-                    scope.subsubselectedCategory = [];
+                    //scope.selectedCategory = null;
+                    //scope.subsubselectedCategory = [];
 
-                    scope.displayValue = function(){
+                    scope.displayValue = function () {
                         if (scope.getInfo().value != null && scope.getInfo().value.length > 0) {
-                            var catSelected = scope.getInfo().value[0];
-                            for (var cat in scope.categories) {
-                                for (var subcat in scope.categories[cat].children) {
-                                    for (var subsubcat in scope.categories[cat].children[subcat].children) {
+                            for (var catSKey in scope.getInfo().value) {
+                                var catSelected = scope.getInfo().value[catSKey];
+                                for (var cat in scope.categories) {
+                                    for (var subcat in scope.categories[cat].children) {
+                                        for (var subsubcat in scope.categories[cat].children[subcat].children) {
 
-                                        if (scope.categories[cat].children[subcat].children[subsubcat].name == catSelected.name) {
+                                            if (scope.categories[cat].children[subcat].children[subsubcat].name == catSelected.name) {
 
-                                            scope.subcategories = scope.categories[cat].children;
-                                            scope.subsubcategories = scope.categories[cat].children[subcat].children;
-                                            scope.selectedCategory = scope.categories[cat];
-                                            scope.subselectedCategory = scope.categories[cat].children[subcat];
-                                            scope.subsubselectedCategory.push(scope.categories[cat].children[subcat].children[subsubcat]);
-                                            break;
+                                                scope.subcategories = scope.categories[cat].children;
+                                                scope.subsubcategories = scope.categories[cat].children[subcat].children;
+                                                scope.categories[cat].selected = true;
+                                                scope.categories[cat].children[subcat].selected = true;
+                                                scope.categories[cat].children[subcat].children[subsubcat].selected = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    };;
+                    };
+                    ;
 
                     businessCategoryService.getAll(function (data) {
                         scope.categories = data.list;
                         scope.displayValue();
                     });
 
-                    scope.$watch('getInfo().value',function(){
+                    scope.$watch('getInfo().value', function () {
                         scope.displayValue();
                     });
 
                     scope.select = function (category) {
-                        if (category != scope.selectedCategory) {
-                            scope.selectedCategory = category;
+
+                        if (category.selected != false) {
+
+                            scope.cleanSubSubCat();
+                            scope.cleanSubCat();
+                            scope.cleanCat();
+
+                            category.selected = true;
                             scope.subcategories = category.children;
-                            scope.subselectedCategory = null;
-                            scope.subsubselectedCategory = [];
                             scope.subsubcategories = null;
-                            //TODO more than one cat ?
-                            scope.getInfo().value = [];
-                            scope.getInfo().isValid = false;
+                            scope.compileValue();
                         }
                     };
 
                     scope.selectSubcategory = function (subCategory) {
-                        scope.subselectedCategory = subCategory;
-                        scope.subsubcategories = subCategory.children;
-                        scope.subsubselectedCategory = [];
-                        //TODO more than one cat ?
-                        scope.getInfo().value = [scope.subselectedCategory];
-                        scope.getInfo().isValid = true;
+
+                        if (subCategory.selected != false) {
+
+                            scope.cleanSubSubCat();
+                            scope.cleanSubCat();
+                            scope.subsubcategories = subCategory.children;
+                            subCategory.selected = true;
+                            scope.compileValue();
+                        }
                     };
 
-                    scope.selectSubSubcategory = function (subBubCategory) {
-                        console.log(subBubCategory);
-                        scope.subsubselectedCategory.push(subBubCategory);
-                        console.log(scope.subsubselectedCategory);
-                        //TODO more than one cat ?
-                        scope.getInfo().value = [scope.subsubselectedCategory];
-                        scope.getInfo().isValid = true;
+                    scope.selectSubSubcategory = function (subSubCategory) {
+
+                        if (subSubCategory.selected === true) {
+                            subSubCategory.selected = false;
+                        }
+                        else {
+                            subSubCategory.selected = true;
+                        }
+                        scope.compileValue();
                     };
+
+                    scope.cleanCat = function () {
+                        for (var key in scope.categories) {
+                            scope.categories[key].selected = false;
+                        }
+                    };
+
+                    scope.cleanSubCat = function () {
+                        for (var key in scope.subcategories) {
+                            scope.subcategories[key].selected = false;
+                        }
+                    };
+
+                    scope.cleanSubSubCat = function () {
+                        for (var key in scope.subsubcategories) {
+                            scope.subsubcategories[key].selected = false;
+                        }
+                    };
+
+                    scope.compileValue = function () {
+
+                        scope.getInfo().isValid = false;
+                        scope.getInfo().value.splice(0, scope.getInfo().value.length);
+
+                        if (scope.subsubcategories != null) {
+                            for (var key in scope.subsubcategories) {
+                                if (scope.subsubcategories[key].selected == true) {
+                                    scope.getInfo().value.push(scope.subsubcategories[key]);
+                                    scope.getInfo().isValid = true;
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -95,4 +137,5 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
     }
 
 
-});
+})
+;

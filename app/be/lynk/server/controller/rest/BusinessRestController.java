@@ -159,7 +159,7 @@ public class BusinessRestController extends AbstractController {
 
         businessService.saveOrUpdate(business);
 
-        return ok(new ListDTO<>(dozerService.map(business.getBusinessCategories(), BusinessCategoryDTO.class)));
+        return ok(dozerService.map(business, BusinessCategoryLittleContainerDTO.class));
 
     }
 

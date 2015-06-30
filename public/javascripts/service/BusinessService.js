@@ -67,7 +67,6 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             'headers': "Content-Type:application/json",
             'data': {list:dto}
         }).success(function (data, status) {
-            accountService.getMyself().business.businessCategories = data.list;
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }

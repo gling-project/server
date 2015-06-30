@@ -57,6 +57,15 @@
             <b>categories</b>
         </field>
     </mapping>
+    <mapping>
+        <class-a>be.lynk.server.model.entities.Business</class-a>
+        <class-b>be.lynk.server.dto.BusinessCategoryLittleContainerDTO</class-b>
+        <field custom-converter=
+                       "be.lynk.server.dozerConverter.BusinessCategoryMapConverter">
+            <a>businessCategories</a>
+            <b>categories</b>
+        </field>
+    </mapping>
 
     <!-- business -> businessId -->
     <mapping>

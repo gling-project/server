@@ -31,16 +31,16 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             }
 
             //distance
-            if (geolocationService.position != null) {
+            $scope.currentPosition = geolocationService.position;
+            if ($scope.currentPosition != null) {
                 console.log("distance immediate !")
                 addressService.distance($scope.business.address.id, function (data) {
                     $scope.business.distance = data.distance;
                 });
             }
             else {
-                geolocationService.$watch('position', function () {
-                    console.log("distance wathhcn : " + geolocationService.position);
-                    if (geolocationService.position != null) {
+                $scope.$watch('currentPosition', function () {
+                    if ($scope.currentPosition != null) {
                         addressService.distance($scope.business.address.id, function (data) {
                             $scope.business.distance = data.distance;
                         });
@@ -146,7 +146,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     function (close) {
                         //scope.business
                         businessService.editBusinessCategory(catList, function (data) {
-                            $scope.business.categories = data;
+                            $scope.business.categories = data.categories;
                             close();
                         });
                     });
