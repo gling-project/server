@@ -1,4 +1,5 @@
 <div class="schedule-form">
+
     <table>
         <tr>
             <td></td>
@@ -11,7 +12,7 @@
             </td>
         </tr>
         <tr ng-repeat="day in days"  ng-show="sections[day].length >0">
-            <td>{{day | translateText}}</td>
+            <td>{{daysTranslation[day] | translateText}}</td>
             <td ng-repeat="section in sections[day]">
                 <div class="hour-block"
                         ng-class="attendance_class[section.attendance]"

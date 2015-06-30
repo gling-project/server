@@ -107,7 +107,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">{{'--.welcome.myProfile' | translateText}}</a></li>
-                                                <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business')">{{'--.welcome.myBusiness' | translateText}}</a></li>
+                                                <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">{{'--.welcome.myBusiness' | translateText}}</a></li>
                                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="logout()">{{'--.generic.logout' | translateText}}</a></li>
                                                 <li>
                                                     <ul></ul>

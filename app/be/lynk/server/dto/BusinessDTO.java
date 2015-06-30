@@ -28,6 +28,12 @@ public class BusinessDTO extends DTO {
     @Pattern(regexp = ValidationRegex.PHONE, message = "--.validation.dto.phone")
     private String phone;
 
+    @Pattern(regexp = ValidationRegex.EMAIL_OR_NULL, message = "--.validation.dto.email")
+    private String email;
+
+    @Pattern(regexp = ValidationRegex.URL_OR_NULL, message = "--.validation.dto.url")
+    private String website;
+
     private AddressDTO address;
 
     private StoredFileDTO illustration;
@@ -41,6 +47,22 @@ public class BusinessDTO extends DTO {
     private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
 
     public BusinessDTO() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public StoredFileDTO getLandscape() {

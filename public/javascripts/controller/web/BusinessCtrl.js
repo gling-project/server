@@ -50,13 +50,20 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
 
 
             //edit name
-            $scope.editName = function () {
-
-            };
-
-            //edit description
-            $scope.editName = function () {
-
+            $scope.editbusiness = function () {
+                var business = angular.copy($scope.business);
+                modalService.basicModal("business-form-ctrl",
+                    {dto: business},
+                    function (close) {
+                        businessService.edit(business, function (data) {
+                            $scope.business.name = data.name;
+                            $scope.business.description = data.description;
+                            $scope.business.phone = data.phone;
+                            $scope.business.website = data.website;
+                            $scope.business.email = data.email;
+                            close();
+                        });
+                    });
             };
 
             //edit illustration
@@ -151,7 +158,22 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                         });
                     });
 
-            }
+            };
+
+            //schedule
+            $scope.editSchedule = function () {
+                var schedules = angular.copy($scope.business.schedules);
+                modalService.basicModal("schedule-form-ctrl",
+                    {dto: schedules,
+                    disabled:false},
+                    function (close) {
+                        businessService.createSchedule({schedules: schedules}, function (data) {
+                            $scope.business.schedules = schedules;
+                            close();
+                        });
+                    });
+
+            };
 
 
         }, function () {

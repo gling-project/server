@@ -55,7 +55,30 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                             isActive: !scope.getInfo().updateMode,
                             field: scope.getInfo().dto,
                             fieldName: 'phone'
+                        },
+                        email: {
+                            fieldTitle: "--.business.contactEmail",
+                            validationRegex: /^($|(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)/,
+                            validationMessage: '--.validation.dto.notNull',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            isActive: !scope.getInfo().updateMode,
+                            field: scope.getInfo().dto,
+                            fieldName: 'email'
+                        },
+                        website: {
+                            fieldTitle: "--.business.website",
+                            validationRegex: "^($|https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$)",
+                            validationMessage: '--.validation.dto.notNull',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            isActive: !scope.getInfo().updateMode,
+                            field: scope.getInfo().dto,
+                            fieldName: 'website'
                         }
+
                     };
 
                     //

@@ -285,6 +285,7 @@
 --.business.profile.image=Image
 --.business.welcome.addBusinessNotification=Post a new notificaiton
 --.business.profile.businessNotification=Notifications
+--.business.profile.businessSchedule=Schedules
 
 ##  modal/PromotionModal/view.html
 #--.promotion.modal.title=Promotion

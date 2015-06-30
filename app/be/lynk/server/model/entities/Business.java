@@ -26,6 +26,12 @@ public class Business extends AbstractEntity {
     @Basic(optional = false)
     private String phone;
 
+    @Basic
+    private String website;
+
+    @Basic
+    private String email;
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Address address;
 
@@ -126,6 +132,22 @@ public class Business extends AbstractEntity {
 
     public void setPublications(List<AbstractPublication> publications) {
         this.publications = publications;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

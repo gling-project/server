@@ -48,9 +48,11 @@
 --.generic.description=Description
 --.generic.login.btn=Connexion
 --.generic.validation.max=Maximum {0} caractères
---.generic.image=Image
+#--.generic.image=Image
 --.generic.delete=Delete
 --.generic.validation.numberExpected=Uniquement un nombre
+--.generic.contact=Contact
+--.generic.valid=Valider
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -82,7 +84,7 @@
 
 ##  be/flo/project/dto/AccountDTO.java
 --.validation.dto.size=Entre {0} et {1} caractères
-###--.validation.dto.notNull=Ne peut pas être vide
+####--.validation.dto.notNull=Ne peut pas être vide
 --.validation.dto.email=Adresse email attendue
 
 ##  modal/ForgotPassword/view.html
@@ -150,6 +152,7 @@
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Numéro de téléphone attendu
+--.validation.dto.url=Url attendu
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=Ce compte Facebook est déjà enregistré pour un autre type de compte. Vous ne pouvez pas utilisez le même compte Facebook pour créer un compte client et un compte commerçant.
@@ -166,10 +169,13 @@
 
 ##  directive/form/business/BusinessFormCtrl.js
 #--.validation.dto.notNul=validation.dto.notNul
+--.business.website=Adresse de votre site web
+--.business.contactEmail=Adresse email de contact
+#--.validation.dto.notNull=validation.dto.notNull
 
 ##  view/business_welcome.html
 --.business.welcome.title=Bienvenue sur la page de votre magasin
---.business.profile.businessCategory=Type de commerce
+#--.business.profile.businessCategory=Type de commerce
 
 ##  modal/BusinessRegistrationModal/view.html
 --.business.registrationModal.category.title=Catégorie de commerce
@@ -188,18 +194,20 @@
 --.address.type.home=Mon domicile
 --.address.type.other=Autre...
 --.address.type.work=Mon bureau
+--.address.customName.fieldTitle=Nom
 
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sous catégorie
 --.businessCategory.column.category=Categorie
+--.businessCategory.column.subsubcategory=businessCategory.column.subsubcategory
 
 
 ##  modal/LoginModal/view.html
 --.loginModal.toBusinessRegistration=S'enregistrer en tant de commerçant
 --.loginModal.toCustomerRegistration=S'enregistrer en tant que client
 --.loginModal.notRegisterYet=Pas encore enregistré?
-###--.validation.dto.notNull=Ne peut pas être vide
-###--.validation.dto.notNull=Ne peut pas être vide
+####--.validation.dto.notNull=Ne peut pas être vide
+####--.validation.dto.notNull=Ne peut pas être vide
 
 
 
@@ -214,7 +222,7 @@
 
 ##  modal/EditCustomerInterestModal/view.html
 --.customer.editInterestModal.title=Modifier mes intérêts
-###--.validation.dto.notNull=Ne peut pas être vide
+####--.validation.dto.notNull=Ne peut pas être vide
 
 
 ##  directive/form/login/template.html
@@ -257,6 +265,7 @@
 --.business.profile.image=Image
 --.business.welcome.addBusinessNotification=Publier une nouvelle annonce
 --.business.profile.businessNotification=Annonces
+--.profile.businessCategory=Type de commerce
 
 ##  modal/PromotionModal/view.html
 #--.promotion.modal.title=Promotion
@@ -300,7 +309,7 @@
 
 ##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
 --.promotion.validation.endDateBeforeStartDate=La date de fin doit être arpès la date de début
---.validation.dto.notNull=Ce champs ne peut être vide
+#--.validation.dto.notNull=Ce champs ne peut être vide
 
 ## day
 day_abrv_monday=Lu
@@ -310,6 +319,21 @@ day_abrv_thusday=Je
 day_abrv_friday=Ve
 day_abrv_saturday=Sa
 day_abrv_sunday=Di
+
+
+##  be/lynk/server/importer/CategoryImporterImpl.java
+--.category.sub.sub.=category.sub.sub.
+--.category.=category.
+--.interest.=interest.
+--.category.sub.=category.sub.
+
+##  view/web/business.html (landscape )
+--.business.page.edit.illustration=Edit logo
+--.business.page.edit.business=Editer
+--.business.page.edit.landscape=Editer l'image de fond
+--.business.profile.businessSchedule=business.profile.businessSchedule
+
+
 
 
 --.category.sub.sub.pharmacie=Pharmacie
@@ -497,6 +521,9 @@ day_abrv_sunday=Di
 --.category.sub.sub.vetements_enfants=Vêtements Enfants
 --.category.sub.sub.office_du_tourisme=Office du Tourisme
 --.category.sub.sub.jeux_video=Jeux Vidéo
+--.generic.image=Image
+--.validation.dto.notNull=Ce champs ne peut être vide
+--.business.profile.businessCategory=Type de commerce
 
 
 

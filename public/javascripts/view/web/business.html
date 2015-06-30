@@ -5,65 +5,90 @@
          ng-style="{'background-image':business.landscape.link }">
 
         <!-- landscape -->
-        <button class="btn btn-primary glyphicon glyphicon-edit"
-                ng-show="editDisplay"
-                ng-click="editLandscape()">
-        </button>
+        <div class="edit-button-container landscape-edit">
+            <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    ng-show="editDisplay"
+                    ng-click="editLandscape()">
+                {{'--.business.page.edit.landscape' | translateText}}
+            </button>
+        </div>
 
         <!-- illustration -->
         <div class="business-page-illustration-container">
             <img class="business-illustration" ng-src="{{business.illustration.link}}"/>
-            <button class="btn btn-primary glyphicon glyphicon-edit btn-sm"
-                    ng-show="editDisplay"
-                    ng-click="editIllustration()">
-            </button>
+
+            <div class="edit-button-container">
+                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
+                        ng-show="editDisplay"
+                        ng-click="editIllustration()">
+                    {{'--.business.page.edit.illustration' | translateText}}
+                </button>
+            </div>
         </div>
 
         <!-- name -->
         <div class="business-page-name">
-            <button class="btn btn-primary glyphicon glyphicon-edit"
-                    ng-show="editDisplay"
-                    ng-click="editName()">
-            </button>
             {{business.name}}
+            <div class="edit-button-container">
+                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                        ng-show="editDisplay"
+                        ng-click="editbusiness()">
+                    {{'--.business.page.edit.business' | translateText}}
+                </button>
+            </div>
         </div>
 
     </div>
     <div class="business-page-body">
 
-        <!-- categoru -->
-        <table class="category-tree">
-            <tr ng-repeat="(catLev1Key,lev2) in business.categories">
-                <td>
-                    <a ng-click="searchCat(catLev1Key)"> {{catLev1Key | translateText}} </a> <span class="transition">>></span>
-                </td>
-                <td>
-                    <table>
-                        <tr ng-repeat="(catLev2Key, lev3) in lev2">
-                            <td>
-                                <a ng-click="searchCat(catLev2Key)"> {{catLev2Key | translateText}}</a> <span class="transition">>></span>
-                            </td>
-                            <td>
+        <div class="business-page-body-center">
+
+            <!-- categoru -->
+            <table class="category-tree">
+                <tr ng-repeat="(catLev1Key,lev2) in business.categories">
+                    <td>
+                        <a ng-click="searchCat(catLev1Key)"> {{catLev1Key | translateText}} </a> <span
+                            class="transition">>></span>
+                    </td>
+                    <td>
+                        <table>
+                            <tr ng-repeat="(catLev2Key, lev3) in lev2">
+                                <td>
+                                    <a ng-click="searchCat(catLev2Key)"> {{catLev2Key | translateText}}</a> <span
+                                        class="transition">>></span>
+                                </td>
+                                <td>
                                 <span ng-repeat="catLev3 in lev3">
                                     <span class="transition" ng-show="$index>0">/</span>
                                     <a ng-click="searchCat(catLev3)">{{catLev3.translationName | translateText}} </a>
                                 </span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td ng-show="editDisplay">
-                    <button class="btn btn-primary glyphicon glyphicon-edit"
-                            ng-click="editCategory()">{{'generic.edit' | translateText}}
-                    </button>
-                </td>
-            </tr>
-        </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td ng-show="editDisplay">
+                        <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                ng-click="editCategory()">{{'--.generic.edit' | translateText}}
+                        </button>
+                    </td>
+                </tr>
+            </table>
 
-        <!-- publication -->
-        <div class="business-page-body-center">
-            Dernières publications
+            <!-- description -->
+            <div class="business-page-description">{{business.description}}
 
+                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                        ng-show="editDisplay"
+                        ng-click="editbusiness()">
+                    {{'--.business.page.edit.business' | translateText}}
+                </button>
+            </div>
+
+            <!-- publication -->
+            <div>
+                Dernières publications
+
+            </div>
         </div>
 
 
@@ -96,10 +121,31 @@
                         <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
                         <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
                     </div>
-                    <button class="btn btn-primary glyphicon glyphicon-edit"
+                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="editDisplay"
-                            ng-click="editAddress()">{{'generic.edit' | translateText}}
+                            ng-click="editAddress()">{{'--.generic.edit' | translateText}}
                     </button>
+                </div>
+            </div>
+
+
+            <!-- contact -->
+            <div class="panel panel-default">
+                <div class="panel-heading">{{'--.generic.contact' | translateText}}</div>
+                <div class="panel-body">
+
+                    <div>{{business.phone}}</div>
+                    <div>
+                        <a href="{{business.website}}" target="_blank">{{business.website}}</a>
+                    </div>
+                    <div>{{business.email}}</div>
+
+                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            ng-show="editDisplay"
+                            ng-click="editbusiness()">
+                        {{'--.business.page.edit.business' | translateText}}
+                    </button>
+
                 </div>
             </div>
 
@@ -110,9 +156,9 @@
 
                     <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
 
-                    <button class="btn btn-primary glyphicon glyphicon-edit"
+                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="editDisplay"
-                            ng-click="editName()">{{'generic.edit' | translateText}}
+                            ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
                     </button>
                 </div>
             </div>

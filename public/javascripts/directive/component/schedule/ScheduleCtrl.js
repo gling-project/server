@@ -19,14 +19,24 @@ myApp.directive('scheduleCtrl', function (directiveService, generateId, $timeout
                     scope.sections = [];
 
                     scope.days = [
-                        'day_abrv_monday',
-                        'day_abrv_tuesday',
-                        'day_abrv_wednesday',
-                        'day_abrv_thusday',
-                        'day_abrv_friday',
-                        'day_abrv_saturday',
-                        'day_abrv_sunday'
+                        'MONDAY',
+                        'TUESDAY',
+                        'WEDNESDAY',
+                        'THURSDAY',
+                        'FRIDAY',
+                        'SATURDAY',
+                        'SUNDAY'
                     ];
+
+                    scope.daysTranslation = {
+                        'MONDAY':'day_abrv_monday',
+                        'TUESDAY':'day_abrv_tuesday',
+                        'WEDNESDAY':'day_abrv_wednesday',
+                        'THURSDAY':'day_abrv_thusday',
+                        'FRIDAY':'day_abrv_friday',
+                        'SATURDAY':'day_abrv_saturday',
+                        'SUNDAY':'day_abrv_sunday'
+                    };
 
                     scope.attendance_class = {
                         LIGHT: 'attendance-light',
@@ -72,7 +82,7 @@ myApp.directive('scheduleCtrl', function (directiveService, generateId, $timeout
 
                                     var hour = "";
                                     if (scope.nbPair(i)) {
-                                        hour = i / 2 + "h";
+                                        hour = i / 2;// + "h";
                                     }
                                     scope.hours.push({text: hour});
                                 }

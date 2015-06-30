@@ -25,6 +25,10 @@ public class BusinessToDisplayDTO extends DTO {
 
     private String phone;
 
+    private String website;
+
+    private String email;
+
     private AddressDTO address;
 
     private StoredFileDTO illustration;
@@ -49,6 +53,22 @@ public class BusinessToDisplayDTO extends DTO {
 
     public void setCategories(Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories) {
         this.categories = categories;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getDistance() {

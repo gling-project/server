@@ -134,6 +134,8 @@ public class BusinessRestController extends AbstractController {
         business.setName(dto.getName());
         business.setDescription(dto.getDescription());
         business.setPhone(dto.getPhone());
+        business.setEmail(dto.getEmail());
+        business.setWebsite(dto.getWebsite());
 
         businessService.saveOrUpdate(business);
 
