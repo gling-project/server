@@ -24,7 +24,8 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
 
                     var value = scope.getInfo().value;
 
-                    scope.selectedCategory = null
+                    scope.selectedCategory = null;
+                    scope.subsubselectedCategory = [];
 
                     scope.displayValue = function(){
                         if (scope.getInfo().value != null && scope.getInfo().value.length > 0) {
@@ -39,7 +40,7 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
                                             scope.subsubcategories = scope.categories[cat].children[subcat].children;
                                             scope.selectedCategory = scope.categories[cat];
                                             scope.subselectedCategory = scope.categories[cat].children[subcat];
-                                            scope.subsubselectedCategory = scope.categories[cat].children[subcat].children[subsubcat];
+                                            scope.subsubselectedCategory.push(scope.categories[cat].children[subcat].children[subsubcat]);
                                             break;
                                         }
                                     }
@@ -62,7 +63,7 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
                             scope.selectedCategory = category;
                             scope.subcategories = category.children;
                             scope.subselectedCategory = null;
-                            scope.subsubselectedCategory = null;
+                            scope.subsubselectedCategory = [];
                             scope.subsubcategories = null;
                             //TODO more than one cat ?
                             scope.getInfo().value = [];
@@ -73,14 +74,16 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
                     scope.selectSubcategory = function (subCategory) {
                         scope.subselectedCategory = subCategory;
                         scope.subsubcategories = subCategory.children;
-                        scope.subsubselectedCategory = null;
+                        scope.subsubselectedCategory = [];
                         //TODO more than one cat ?
                         scope.getInfo().value = [scope.subselectedCategory];
                         scope.getInfo().isValid = true;
                     };
 
                     scope.selectSubSubcategory = function (subBubCategory) {
-                        scope.subsubselectedCategory = subBubCategory;
+                        console.log(subBubCategory);
+                        scope.subsubselectedCategory.push(subBubCategory);
+                        console.log(scope.subsubselectedCategory);
                         //TODO more than one cat ?
                         scope.getInfo().value = [scope.subsubselectedCategory];
                         scope.getInfo().isValid = true;

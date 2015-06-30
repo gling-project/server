@@ -69,7 +69,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            size: 60,
+                            sizex: 60,
+                            sizey: 60,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

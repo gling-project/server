@@ -1,5 +1,26 @@
 myApp.service("modalService", function ($modal) {
 
+
+    this.basicModal = function (directiveName, param, save) {
+        var resolve = {
+            directiveName: function () {
+                return directiveName;
+            },
+            param: function () {
+                return param;
+            },
+            save: function () {
+                return save;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/BasicModal/view.html",
+            controller: "BasicModalCtrl",
+            size: "lg",
+            resolve: resolve
+        });
+    };
+
     this.openCustomerRegistrationModal = function () {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/CustomerRegistrationModal/view.html",
@@ -46,10 +67,10 @@ myApp.service("modalService", function ($modal) {
         });
     }
 
-    this.openCalculatorModal = function(callbackResult){
+    this.openCalculatorModal = function (callbackResult) {
         var resolve = {
             setResult: function () {
-                return function(result){
+                return function (result) {
                     callbackResult(result);
                 };
             }
@@ -58,12 +79,12 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/Calculator/view.html",
             controller: "CalculatorModalCtrl",
-            size:"sm",
+            size: "sm",
             resolve: resolve
         });
     };
 
-    this.openFacebookFusionModal = function(accountFusion){
+    this.openFacebookFusionModal = function (accountFusion) {
         var resolve = {
             accountFusion: function () {
                 return accountFusion;
@@ -78,43 +99,43 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openEditPasswordModal = function(){
+    this.openEditPasswordModal = function () {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/ChangePassword/view.html",
             controller: "ChangePasswordModalCtrl",
-            size:"l"
+            size: "l"
         });
     };
 
-    this.openEditCustomerInterest = function(){
+    this.openEditCustomerInterest = function () {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/EditCustomerInterestModal/view.html",
             controller: "EditCustomerInterestModalCtrl",
-            size:"lg"
+            size: "lg"
         });
     };
 
-    this.addressModal = function(addName,address,isBusiness){
+    this.addressModal = function (addName, address, isBusiness) {
         var resolve = {
             dto: function () {
                 return address;
             }
-            ,addName : function(){
+            , addName: function () {
                 return addName;
             },
-            isBusiness : function(){
+            isBusiness: function () {
                 return isBusiness;
             }
         };
         $modal.open({
             templateUrl: "/assets/javascripts/modal/AddressModal/view.html",
             controller: "AddressModalCtrl",
-            size:"l",
+            size: "l",
             resolve: resolve
         });
     };
 
-    this.openForgotPasswordModal = function(email){
+    this.openForgotPasswordModal = function (email) {
         var resolve = {
             email: function () {
                 return email;
@@ -123,14 +144,13 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/ForgotPasswordModal/view.html",
             controller: "ForgotPasswordModalCtrl",
-            size:"l",
+            size: "l",
             resolve: resolve
         });
     };
 
 
-
-    this.openPromotionModal = function(promotion){
+    this.openPromotionModal = function (promotion) {
         var resolve = {
             dto: function () {
                 return promotion;
@@ -139,14 +159,13 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/PromotionModal/view.html",
             controller: "PromotionModalCtrl",
-            size:"l",
+            size: "l",
             resolve: resolve
         });
     };
 
 
-
-    this.openBusinessNotificationModal = function(businessNotification){
+    this.openBusinessNotificationModal = function (businessNotification) {
         var resolve = {
             dto: function () {
                 return businessNotification;
@@ -155,14 +174,13 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/BusinessNotificationModal/view.html",
             controller: "BusinessNotificationModalCtrl",
-            size:"l",
+            size: "l",
             resolve: resolve
         });
     };
 
 
-
-    this.openOneFieldModal = function(field,callback){
+    this.openOneFieldModal = function (field, callback) {
         var resolve = {
             field: function () {
                 return field;
@@ -174,7 +192,7 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/OneFieldModal/view.html",
             controller: "OneFieldModalCtrl",
-            size:"l",
+            size: "l",
             resolve: resolve
         });
     };

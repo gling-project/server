@@ -36,7 +36,8 @@
     "angularjs-geolocation":"*",
     "angular-timer":"*",
     "humanize-duration":"*",
-    "highcharts": "~4.0.3"
+    "highcharts": "~4.0.3",
+    "angular-google-maps":"*"
   },
   "overrides": {
     "bootstrap-sass": {

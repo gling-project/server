@@ -1,0 +1,45 @@
+(select id from organizations where ref_account_formula= 2)
+(select id from users where ref_organization in (select id from organizations where ref_account_formula= 2))
+
+
+select * from contacts where ref_organization in (select id from organizations where ref_account_formula= 2) order by ref_organization
+Contacts =>
+- il existe des contacts comme 'personne de contact' d'une org : 1 seul cas (Feinpappenwerk Gebr. Schuster GmbH & Co. KG) : on oublie ?
+- les autres sont pour matcher les suppliers(38 cas) : dans v2 je ne peux en prendre qu'un seul par supplier, et dans certains cas il y en a plus d'un : je prend le premier ?
+
+
+Continents => aucun intérêt
+countries => utiliser le alpha2_code avec http://www.factorx.eu/myrmex#countries_classification/ devant
+
+Invitation : j'ai encore 87 invitations, une seule est 'waiting confirmation'
+
+Sites:
+ignore : 
+-> address
+-> contact user
+-> is active !! (actuellement 27)
+-> gs1 prefix
+-> money
+
+Org_product (231 inactifs)
+ignore : 
+-> sku (542)
+-> gtin (36)
+-> unit category
+-> contact user
+-> product type
+-> is product family
+-> nc code
+-> convertion...
+
+Organization
+ignore : 
+- reporting duration
+
+preorganization : 45
+
+
+
+
+
+

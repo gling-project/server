@@ -1,0 +1,9 @@
+Contacts =>
+- il existe des contacts comme 'personne de contact' d'une org : 1 seul cas (Feinpappenwerk Gebr. Schuster GmbH & Co. KG) : on oublie ?
+- les autres sont pour matcher les suppliers(38 cas) : dans v2 je ne peux en prendre qu'un seul par supplier, et dans certains cas il y en a plus d'un : je prend le premier ?
+select * from contacts where ref_organization in (select id from organizations where ref_account_formula= 2) order by ref_organization
+
+Continents => aucun intérêt
+countries => utiliser le alpha2_code avec http://www.factorx.eu/myrmex#countries_classification/ devant
+
+Invitation : 

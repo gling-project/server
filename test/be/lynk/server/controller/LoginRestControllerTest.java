@@ -287,7 +287,10 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         assertFalse(formDTO.getFacebookAccount());
         assertTrue(formDTO.getLoginAccount());
 
-        business = formDTO.getBusiness();
+
+        result = request(POST, "/business/" + formDTO.getBusinessId(), dto);
+        assertEquals(printError(result), 200, status(result));
+        business = Json.fromJson(Json.parse(new String(contentAsBytes(result))), BusinessDTO.class);
 
         //interest
         assertEquals(2, business.getBusinessCategories().size());

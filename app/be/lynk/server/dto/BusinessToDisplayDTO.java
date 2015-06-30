@@ -17,7 +17,7 @@ import java.util.Map;
  * this DTO must  contain only business public datas
  * IMPORTANT !!!
  */
-public class BusinessForDisplayDTO extends DTO {
+public class BusinessToDisplayDTO extends DTO {
 
     private String name;
 
@@ -29,12 +29,42 @@ public class BusinessForDisplayDTO extends DTO {
 
     private StoredFileDTO illustration;
 
+    private StoredFileDTO landscape;
+
     private Map<DayOfWeek, List<BusinessSchedulePartDTO>> schedules = new HashMap<>();
 
     private AbstractPublicationDTO lastPublication;
 
+    private Long distance;
 
-    public BusinessForDisplayDTO() {
+    private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
+
+
+    public BusinessToDisplayDTO() {
+    }
+
+    public Map<String, Map<String, List<BusinessCategoryLittleDTO>>> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories) {
+        this.categories = categories;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
+
+    public StoredFileDTO getLandscape() {
+        return landscape;
+    }
+
+    public void setLandscape(StoredFileDTO landscape) {
+        this.landscape = landscape;
     }
 
     public Map<DayOfWeek, List<BusinessSchedulePartDTO>> getSchedules() {
@@ -59,16 +89,6 @@ public class BusinessForDisplayDTO extends DTO {
 
     public void setIllustration(StoredFileDTO illustration) {
         this.illustration = illustration;
-    }
-
-    private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
-
-    public List<BusinessCategoryDTO> getBusinessCategories() {
-        return businessCategories;
-    }
-
-    public void setBusinessCategories(List<BusinessCategoryDTO> businessCategories) {
-        this.businessCategories = businessCategories;
     }
 
     public String getName() {
@@ -111,7 +131,7 @@ public class BusinessForDisplayDTO extends DTO {
                 ", phone='" + phone + '\'' +
                 ", address=" + address +
                 ", illustration=" + illustration +
-                ", businessCategories=" + businessCategories +
+                ", categories=" + categories +
                 '}';
     }
 }

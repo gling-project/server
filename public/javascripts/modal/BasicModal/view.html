@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
+    <h4 ng-show="update" class="modal-title">{{'--.account.address.modal.title.update' | translateText}}</h4>
+    <h4 ng-hide="update" class="modal-title">{{'--.account.address.modal.title.create' | translateText}}</h4>
+</div>
+<div class="modal-body inject-data"  dir-enter="save()">
+
+
+</div>
+<div class="modal-footer">
+    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' | translateText}}</button>
+    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' | translateText}}</button>
+    <img src="/assets/images/modal-loading.gif" ng-show="loading" />
+</div>

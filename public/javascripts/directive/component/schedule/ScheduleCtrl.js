@@ -19,13 +19,13 @@ myApp.directive('scheduleCtrl', function (directiveService, generateId, $timeout
                     scope.sections = [];
 
                     scope.days = [
-                        'MONDAY',
-                        'TUESDAY',
-                        'WEDNESDAY',
-                        'THURSDAY',
-                        'FRIDAY',
-                        'SATURDAY',
-                        'SUNDAY'
+                        'day_abrv_monday',
+                        'day_abrv_tuesday',
+                        'day_abrv_wednesday',
+                        'day_abrv_thusday',
+                        'day_abrv_friday',
+                        'day_abrv_saturday',
+                        'day_abrv_sunday'
                     ];
 
                     scope.attendance_class = {

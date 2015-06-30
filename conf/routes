@@ -36,6 +36,7 @@ PUT           /account/password/:id            @be.lynk.server.controller.rest.A
 POST          /address                         @be.lynk.server.controller.rest.AccountRestController.addAddress()
 PUT           /address/:id                     @be.lynk.server.controller.rest.AccountRestController.editAddress(id:Long)
 DELETE        /address/:id                     @be.lynk.server.controller.rest.AccountRestController.deleteAddress(id:Long)
+POST          /address/distance/:id            @be.lynk.server.controller.rest.AccountRestController.getDistance(id:Long)
 PUT           /customer/interest/:id           @be.lynk.server.controller.rest.AccountRestController.editCustomerInterest(id:Long)
 
 ## business
@@ -43,6 +44,7 @@ GET           /business/:id                    @be.lynk.server.controller.rest.B
 PUT           /business                        @be.lynk.server.controller.rest.BusinessRestController.update()
 PUT           /business/category               @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory()
 PUT           /business/illustration           @be.lynk.server.controller.rest.BusinessRestController.editIllustration()
+PUT           /business/landscape              @be.lynk.server.controller.rest.BusinessRestController.editLandscape()
 POST          /business/promotions             @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
 ## business schedule
@@ -69,7 +71,7 @@ GET           /session                         @be.lynk.server.controller.rest.A
 
 #file
 POST          /file                            @be.lynk.server.controller.rest.FilesController.upload()
-POST          /file/:size                      @be.lynk.server.controller.rest.FilesController.uploadWithSize(size:Integer)
+POST          /file/:sizex/:sizey              @be.lynk.server.controller.rest.FilesController.uploadWithSize(sizex:Integer,sizey:Integer)
 GET           /file/:storedFileId              @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 
 ##welcome

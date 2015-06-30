@@ -11,9 +11,11 @@ import java.util.Map;
  */
 public interface LocalizationService {
 
-    boolean validAddress(Address address);
+    void validAddress(Address address) throws Exception;
 
     Map<Address, Long> distanceBetweenAddresses(Address origin, List<Address> destinations);
+
+    Long distanceBetweenAddress(Position origin, Address destination);
 
     Map<Address, Long> distanceBetweenAddresses(Position origin, List<Address> destinations);
 }

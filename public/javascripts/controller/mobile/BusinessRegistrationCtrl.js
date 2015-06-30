@@ -144,7 +144,7 @@ myApp.controller('BusinessRegistrationCtrl', function ($scope,$flash,accountServ
             businessService.registration(dto, function () {
                     $scope.loading = false;
                     $flash.success(translationService.get("--.login.flash.success"));
-                    $location.path("/business");
+                    $location.path("/business_old");
                 },
                 function () {
                     $scope.loading = false;

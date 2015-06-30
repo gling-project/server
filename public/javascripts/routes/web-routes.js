@@ -20,7 +20,7 @@ var initializeCommonRoutes = function () {
                         var status = test(accountService);
                     }
                 }
-            }).when('/business', {
+            }).when('/business_old', {
                 templateUrl: '/assets/javascripts/view/web/business_welcome.html',
                 controller: 'BusinessWelcomeCtrl',
                 resolve: {
@@ -50,6 +50,9 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 }
+            }).when('/business/:businessId', {
+                templateUrl: '/assets/javascripts/view/web/business.html',
+                controller: 'BusinessCtrl'
             }).otherwise({
                 redirectTo: '/'
             });

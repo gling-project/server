@@ -35,7 +35,7 @@ public class FilesController extends AbstractRestController {
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result upload() {
-        return uploadWithSize(null);
+        return uploadWithSize(null,null);
     }
 
     /**
@@ -43,7 +43,7 @@ public class FilesController extends AbstractRestController {
      */
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.USER)
-    public Result uploadWithSize(Integer size) {
+    public Result uploadWithSize(Integer sizex, Integer sizey) {
 
         MultipartFormData body = Controller.request().body().asMultipartFormData();
         List<MultipartFormData.FilePart> files = body.getFiles();
@@ -66,10 +66,22 @@ public class FilesController extends AbstractRestController {
             }
 
             //Treatment
-            if (size != null) {
+            if (sizex != null || sizey != null) {
                 try {
                     BufferedImage originalImage = ImageIO.read(file);
-                    originalImage = resizeImage(originalImage, originalImage.getType(), size, size);
+                    int sizexTarget, sizeyTarget;
+                    if (sizex != null && sizey != null) {
+                        sizexTarget = sizex;
+                        sizeyTarget = sizey;
+                    } else if (sizex != null) {
+                        sizexTarget = sizex;
+                        sizeyTarget = originalImage.getMinY();
+
+                    } else {
+                        sizeyTarget = sizey;
+                        sizexTarget = originalImage.getMinX();
+                    }
+                    originalImage = resizeImage(originalImage, originalImage.getType(), sizexTarget, sizeyTarget);
                     ImageIO.write(originalImage, type, file);
                 } catch (IOException e) {
                     e.printStackTrace();

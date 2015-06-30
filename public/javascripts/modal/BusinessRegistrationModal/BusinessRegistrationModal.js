@@ -151,7 +151,7 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                     $scope.loading = false;
                     $flash.success(translationService.get("--.login.flash.success"));
                     $scope.close();
-                    $location.path("/business");
+                    $location.path("/business_old");
                 },
                 function () {
                     $scope.loading = false;

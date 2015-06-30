@@ -32,6 +32,8 @@ public class BusinessRestController extends AbstractController {
     private StoredFileService storedFileService;
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private LocalizationService localizationService;
 
     /**
      * return only public data for all users / non-users
@@ -42,10 +44,12 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     public Result getPublicData(long id) {
 
+
+
         Business business = businessService.findById(id);
 
         //convert
-        BusinessForDisplayDTO map = dozerService.map(business, BusinessForDisplayDTO.class);
+        BusinessToDisplayDTO map = dozerService.map(business, BusinessToDisplayDTO.class);
 
 
         //load last publication
@@ -70,6 +74,25 @@ public class BusinessRestController extends AbstractController {
         BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
         Business business = businessAccount.getBusiness();
         business.setIllustration(storedFile);
+
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result editLandscape() {
+        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
+
+        StoredFile storedFile = storedFileService.findById(dto.getId());
+
+        if ((storedFile.getIsImage() != null && !storedFile.getIsImage()) ||
+                !storedFile.getAccount().equals(securityController.getCurrentUser())) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
+        Business business = businessAccount.getBusiness();
+        business.setLandscape(storedFile);
 
         return ok(new ResultDTO());
     }
@@ -120,7 +143,9 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result editBusinessCategory() {
-        BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
+
+        List<BusinessCategoryDTO>list= extractList(BusinessCategoryDTO.class);
+        //BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 
 
         BusinessAccount currentUser = (BusinessAccount) securityController.getCurrentUser();
@@ -128,7 +153,7 @@ public class BusinessRestController extends AbstractController {
         Business business = currentUser.getBusiness();
         //add categories
         business.setBusinessCategories(new ArrayList<>());
-        for (BusinessCategoryDTO businessCategoryDTO : dto.getBusinessCategories()) {
+        for (BusinessCategoryDTO businessCategoryDTO : list) {
             business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
         }
 

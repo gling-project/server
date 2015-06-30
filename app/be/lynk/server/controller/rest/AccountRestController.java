@@ -5,6 +5,7 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.post.CustomerRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
+import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.AddressService;
 import be.lynk.server.service.CustomerInterestService;
@@ -53,7 +54,7 @@ public class
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result myself() {
-        Logger.info("myself="+securityController.getCurrentUser());
+        Logger.info("myself=" + securityController.getCurrentUser());
         return ok(dozerService.map(securityController.getCurrentUser(), MyselfDTO.class));
     }
 
@@ -86,7 +87,7 @@ public class
         }
 
         //storage
-        securityController.storeAccount(ctx(),account);
+        securityController.storeAccount(ctx(), account);
 
         //save
         accountService.saveOrUpdate(account);
@@ -159,7 +160,9 @@ public class
 
 
         //control address
-        if (!localizationService.validAddress(address)) {
+        try {
+            localizationService.validAddress(address);
+        } catch (Exception e) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
@@ -210,13 +213,17 @@ public class
 
 
         //control address
-        if (!localizationService.validAddress(address)) {
+        try {
+            localizationService.validAddress(address);
+        } catch (Exception e) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
         addressService.saveOrUpdate(address);
 
-        return ok(dozerService.map(address, AddressDTO.class));
+        AddressDTO addressDTO = dozerService.map(address, AddressDTO.class);
+
+        return ok(addressDTO);
     }
 
     @Transactional
@@ -246,6 +253,20 @@ public class
         addressService.remove(addressToDelete);
 
         return ok(new ResultDTO());
+    }
+
+    @Transactional
+    public Result getDistance(long id) {
+
+        //load address
+        Address byId = addressService.findById(id);
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        //distance
+        Long distance = localizationService.distanceBetweenAddress(dozerService.map(dto, Position.class), byId);
+
+        return ok(new DistanceDTO(distance));
     }
 
 

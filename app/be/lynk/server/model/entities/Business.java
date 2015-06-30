@@ -39,6 +39,9 @@ public class Business extends AbstractEntity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private StoredFile illustration;
 
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private StoredFile landscape;
+
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private List<AbstractPublication> publications;
 
@@ -59,6 +62,14 @@ public class Business extends AbstractEntity {
 
     public void setIllustration(StoredFile illustration) {
         this.illustration = illustration;
+    }
+
+    public StoredFile getLandscape() {
+        return landscape;
+    }
+
+    public void setLandscape(StoredFile landscape) {
+        this.landscape = landscape;
     }
 
     public List<BusinessCategory> getBusinessCategories() {

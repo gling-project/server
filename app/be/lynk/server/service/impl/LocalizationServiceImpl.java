@@ -19,6 +19,7 @@ import play.Configuration;
 import play.Logger;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class LocalizationServiceImpl implements LocalizationService {
     private final static String GOOGLE_API_KEY = Configuration.root().getString("google.api.key");
 
     @Override
-    public boolean validAddress(Address address) {
+    public void validAddress(Address address) throws Exception {
         final Geocoder geocoder = new Geocoder();
         String addressString = addressToString(address);
 
@@ -43,8 +44,11 @@ public class LocalizationServiceImpl implements LocalizationService {
                 .getGeocoderRequest();
         try {
             GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
-            Logger.info("Response:"+geocoderResponse.getStatus());
-            return geocoderResponse.getStatus().equals(GeocoderStatus.OK);
+            if (!geocoderResponse.getStatus().equals(GeocoderStatus.OK)) {
+                throw new Exception();
+            }
+            address.setPosx(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat());
+            address.setPosy(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng());
         } catch (IOException e) {
             e.printStackTrace();
             throw new MyRuntimeException("fatal error : " + e.getMessage());
@@ -54,6 +58,29 @@ public class LocalizationServiceImpl implements LocalizationService {
     @Override
     public Map<Address, Long> distanceBetweenAddresses(Address origin, List<Address> destinations) {
         return distanceBetweenAddresses(addressToString(origin), destinations);
+    }
+
+    @Override
+    public Long distanceBetweenAddress(Position origin, Address destination) {
+
+        String destinationsString = addressToString(destination);
+
+        GeoApiContext geoApiContext = new GeoApiContext();
+        geoApiContext.setApiKey(GOOGLE_API_KEY);
+
+        DistanceMatrixApiRequest request = DistanceMatrixApi.newRequest(geoApiContext);
+        request.origins(positionToString(origin));
+        request.destinations(destinationsString);
+
+        try {
+            DistanceMatrix await = request.await();
+            int i = 0;
+            return await.rows[0].elements[0].distance.inMeters;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyRuntimeException(ErrorMessageEnum.GOOGLE_MAP_ERROR);
+        }
     }
 
     @Override

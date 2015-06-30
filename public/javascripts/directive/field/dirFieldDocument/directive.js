@@ -57,8 +57,8 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
 
 
                             var url = "/file";
-                            if(scope.getInfo().size !=null && scope.getInfo().size != undefined){
-                                url += "/"+scope.getInfo().size;
+                            if(scope.getInfo().sizex !=null && scope.getInfo().sizex != undefined){
+                                url += "/"+scope.getInfo().sizex+"/"+scope.getInfo().sizey;
                             }
 
                             scope.upload = $upload.upload({

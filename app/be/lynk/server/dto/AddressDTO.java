@@ -5,6 +5,7 @@ import be.lynk.server.dto.technical.DTO;
 import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 
 /**
  * Created by florian on 17/05/15.
@@ -28,6 +29,12 @@ public class AddressDTO extends DTO{
     private String city;
 
     private String country;
+
+    private BigDecimal posx;
+
+    private BigDecimal posy;
+
+
 
     public AddressDTO() {
     }
@@ -93,6 +100,22 @@ public class AddressDTO extends DTO{
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public BigDecimal getPosx() {
+        return posx;
+    }
+
+    public void setPosx(BigDecimal posx) {
+        this.posx = posx;
+    }
+
+    public BigDecimal getPosy() {
+        return posy;
+    }
+
+    public void setPosy(BigDecimal posy) {
+        this.posy = posy;
     }
 
     @Override

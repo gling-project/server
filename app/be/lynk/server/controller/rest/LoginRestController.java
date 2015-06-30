@@ -195,9 +195,12 @@ public class LoginRestController extends AbstractRestController {
         address.setCountry("BELGIUM");
 
         //control address
-        if (!localizationService.validAddress(address)) {
+        try {
+            localizationService.validAddress(address);
+        } catch (Exception e) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
         }
+
         return ok(new ResultDTO());
     }
 
@@ -214,7 +217,9 @@ public class LoginRestController extends AbstractRestController {
         business.getAddress().setCountry("BELGIUM");
 
         //control address
-        if (!localizationService.validAddress(business.getAddress())) {
+        try {
+            localizationService.validAddress(business.getAddress());
+        } catch (Exception e) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
@@ -257,7 +262,9 @@ public class LoginRestController extends AbstractRestController {
             address.setCountry("BELGIUM");
 
             //control address
-            if (!localizationService.validAddress(address)) {
+            try {
+                localizationService.validAddress(address);
+            } catch (Exception e) {
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
             }
 

@@ -302,6 +302,15 @@
 --.promotion.validation.endDateBeforeStartDate=La date de fin doit être arpès la date de début
 --.validation.dto.notNull=Ce champs ne peut être vide
 
+## day
+day_abrv_monday=Lu
+day_abrv_tuesday=Ma
+day_abrv_wednesday=Me
+day_abrv_thusday=Je
+day_abrv_friday=Ve
+day_abrv_saturday=Sa
+day_abrv_sunday=Di
+
 
 --.category.sub.sub.pharmacie=Pharmacie
 --.category.horeca=Horeca
@@ -488,4 +497,6 @@
 --.category.sub.sub.vetements_enfants=Vêtements Enfants
 --.category.sub.sub.office_du_tourisme=Office du Tourisme
 --.category.sub.sub.jeux_video=Jeux Vidéo
+
+
 

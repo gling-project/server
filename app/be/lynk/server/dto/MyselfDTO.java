@@ -18,7 +18,7 @@ public class MyselfDTO extends AccountDTO {
 
     private String authenticationKey;
 
-    private BusinessDTO business;
+    private Long businessId;
 
     private List<AddressDTO> addresses;
 
@@ -43,12 +43,12 @@ public class MyselfDTO extends AccountDTO {
         this.addresses = addresses;
     }
 
-    public BusinessDTO getBusiness() {
-        return business;
+    public Long getBusinessId() {
+        return businessId;
     }
 
-    public void setBusiness(BusinessDTO business) {
-        this.business = business;
+    public void setBusinessId(Long businessId) {
+        this.businessId = businessId;
     }
 
     public String getAuthenticationKey() {

@@ -32,6 +32,8 @@ public class BusinessDTO extends DTO {
 
     private StoredFileDTO illustration;
 
+    private StoredFileDTO landscape;
+
     private Map<DayOfWeek, List<BusinessSchedulePartDTO>> schedules = new HashMap<>();
 
     private Integer totalFollowers;
@@ -39,6 +41,14 @@ public class BusinessDTO extends DTO {
     private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
 
     public BusinessDTO() {
+    }
+
+    public StoredFileDTO getLandscape() {
+        return landscape;
+    }
+
+    public void setLandscape(StoredFileDTO landscape) {
+        this.landscape = landscape;
     }
 
     public Integer getTotalFollowers() {

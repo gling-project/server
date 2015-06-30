@@ -14,3 +14,13 @@ ok=> recover the interface language to insert it into registrationDTO / facebook
 ok=> display the new language after registration (for facebook)
 ok=> facebook : auto connect with the facebook account of the user
 
+
+
+-------------------------- business visual interface -----------------------------
+-> Photo, name, desc
+-> contact : phone, email(possibilité de désactiver)
+-> extrnal link : facebook, google+, twitter, yelp, etc...
+-> localisation : carte google map, adresse, distance
+-> horiare + open now
+-> liste de publication
+-> galerie photo (limité)

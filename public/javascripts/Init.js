@@ -7,5 +7,6 @@ var myApp = angular.module('app', [
         'ngRoute',
         'ngTable',
         'geolocation',
-        'timer']
+        'timer',
+        'uiGmapgoogle-maps']
 );

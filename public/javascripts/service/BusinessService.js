@@ -65,7 +65,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             'method': "PUT",
             'url': "/business/category",
             'headers': "Content-Type:application/json",
-            'data': dto
+            'data': {list:dto}
         }).success(function (data, status) {
             accountService.getMyself().business.businessCategories = data.list;
             if (callbackSuccess != null) {
@@ -89,7 +89,29 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
-            accountService.getMyself().business.illustration = dto;
+            //accountService.getMyself().business.illustration = dto;
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
+    this.editLandscape = function (dto, callbackSuccess, callbackError) {
+
+        $http({
+            'method': "PUT",
+            'url': "/business/landscape",
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            //accountService.getMyself().business.illustration = dto;
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
@@ -110,7 +132,6 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
-            accountService.getMyself().business.address = data;
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }

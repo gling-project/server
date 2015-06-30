@@ -42,13 +42,30 @@
         </field>
     </mapping>
 
+    <!-- businessToDisplay -->
     <mapping>
         <class-a>be.lynk.server.model.entities.Business</class-a>
-        <class-b>be.lynk.server.dto.BusinessForDisplayDTO</class-b>
+        <class-b>be.lynk.server.dto.BusinessToDisplayDTO</class-b>
         <field custom-converter=
                        "be.lynk.server.dozerConverter.BusinessSchedulesConverter">
             <a>schedules</a>
             <b>schedules</b>
+        </field>
+        <field custom-converter=
+                       "be.lynk.server.dozerConverter.BusinessCategoryMapConverter">
+            <a>businessCategories</a>
+            <b>categories</b>
+        </field>
+    </mapping>
+
+    <!-- business -> businessId -->
+    <mapping>
+        <class-a>be.lynk.server.model.entities.BusinessAccount</class-a>
+        <class-b>be.lynk.server.dto.MyselfDTO</class-b>
+        <field custom-converter=
+                       "be.lynk.server.dozerConverter.BusinessToIdConverter">
+            <a>business</a>
+            <b>businessId</b>
         </field>
     </mapping>
 

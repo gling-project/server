@@ -6,6 +6,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.math.BigDecimal;
 
 /**
  * Created by florian on 17/05/15.
@@ -25,6 +26,12 @@ public class Address extends AbstractEntity {
 
     @Basic(optional = false)
     private String country;
+
+    @Basic(optional = false)
+    private BigDecimal posx;
+
+    @Basic(optional = false)
+    private BigDecimal posy;
 
     public Address() {
     }
@@ -74,6 +81,22 @@ public class Address extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public BigDecimal getPosx() {
+        return posx;
+    }
+
+    public void setPosx(BigDecimal posx) {
+        this.posx = posx;
+    }
+
+    public BigDecimal getPosy() {
+        return posy;
+    }
+
+    public void setPosy(BigDecimal posy) {
+        this.posy = posy;
     }
 
     @Override

@@ -45,8 +45,8 @@ public class Global extends GlobalSettings {
 
 //        ctx = new AnnotationConfigApplicationContext(AppConfig.class, DataConfig.class);
 
-        final String configLocation = Play.application().configuration().getString("spring.context.location");
-        ctx = new ClassPathXmlApplicationContext(configLocation);//new AnnotationConfigApplicationContext(AppConfig.class, DataConfig.class);//
+        //final String configLocation = Play.application().configuration().getString("spring.context.location");
+        ctx = new ClassPathXmlApplicationContext("components.xml");//new AnnotationConfigApplicationContext(AppConfig.class, DataConfig.class);//
         play.Logger.info("Spring Startup @" + new Date(ctx.getStartupDate()));
 
 
