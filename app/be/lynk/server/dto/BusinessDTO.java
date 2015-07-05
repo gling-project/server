@@ -16,6 +16,8 @@ import java.util.*;
  */
 public class BusinessDTO extends DTO {
 
+    private Long id;
+
     @NotNull(message = "--.validation.dto.notNull")
     @Size(min = 2, max = 250, message = "--.validation.dto.size")
     private String name;
@@ -59,6 +61,14 @@ public class BusinessDTO extends DTO {
     }
 
     public BusinessDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BusinessStatus getBusinessStatus() {

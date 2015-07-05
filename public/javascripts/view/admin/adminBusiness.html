@@ -1,0 +1,24 @@
+<div>Business</div>
+
+
+<table ng-table="tableParams" class="table">
+    <tr ng-repeat="business in $data">
+        <td data-title="'--.generic.name' | translateText" sortable="'name'">
+            {{business.name}}
+        </td>
+        <td data-title="'--.generic.status' | translateText" sortable="'businessStatus'">
+            {{business.businessStatus}}
+        </td>
+        <td data-title="'--.generic.action' | translateText">
+            <button
+                    ng-click="toBusiness(business.id)">
+                {{'--.admin.business.toBusiness' | translateText}}
+            </button>
+            <button
+                    ng-click="confirmPublication(business)"
+                    ng-show="business.businessStatus == 'WAITING_CONFIRMATION' ">
+                {{'--.admin.business.confirmPublication' | translateText}}
+            </button>
+        </td>
+    </tr>
+</table>

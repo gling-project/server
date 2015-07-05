@@ -35,8 +35,16 @@ public class BusinessRestController extends AbstractController {
     private StoredFileService storedFileService;
     @Autowired
     private PublicationService publicationService;
-    @Autowired
-    private LocalizationService localizationService;
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result getAll() {
+        List<Business> all = businessService.findAll();
+
+        List<BusinessDTO> map = dozerService.map(all, BusinessDTO.class);
+
+        return ok(new ListDTO<>(map));
+    }
 
 
     /**
@@ -87,7 +95,7 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED,BusinessStatus.PUBLISHED})
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED, BusinessStatus.PUBLISHED})
     public Result askPublication() {
         Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
 
@@ -115,7 +123,7 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED,BusinessStatus.PUBLISHED})
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED, BusinessStatus.PUBLISHED})
     public Result editIllustration() {
         StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
 
@@ -135,7 +143,7 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED,BusinessStatus.PUBLISHED})
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED, BusinessStatus.PUBLISHED})
     public Result editLandscape() {
         StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
 

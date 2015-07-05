@@ -27,6 +27,29 @@ public class MainController extends AbstractController {
     String accessKey = Configuration.root().getString("app.status");
 
     @Transactional
+    public Result admin() {
+
+        String facebookAppId = AppUtil.getFacebookAppId();
+
+        //try with param
+        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
+        interfaceDataDTO.setLangId(lang().code());
+        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
+        interfaceDataDTO.setAppId(facebookAppId);
+        if (securityController.isAuthenticated(ctx())) {
+            Account currentUser = securityController.getCurrentUser();
+            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
+            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
+            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
+            interfaceDataDTO.setMySelf(accountDTO);
+            Logger.info(currentUser + "<=>" + accountDTO);
+        }
+
+
+        return ok(be.lynk.server.views.html.template_admin.render(getAvaiableLanguage(), interfaceDataDTO));
+    }
+
+    @Transactional
     public Result mainPage() {
         return generateDefaultPage(false);
     }
