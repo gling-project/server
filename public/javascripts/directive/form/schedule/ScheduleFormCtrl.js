@@ -202,7 +202,7 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
 
                             scope.infoStyle = {
                                 left: event.pageX + 'px',
-                                top: (event.pageY - 50) + 'px'
+                                top: (event.pageY - 75) + 'px'
                             };
 
                             if (scope.startSection != null) {

@@ -1,4 +1,6 @@
-myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile,directiveName,save,$timeout) {
+myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile,directiveName,save,$timeout,title) {
+
+    $scope.title=title;
 
     var directive = $compile("<" + directiveName + " ng-info=\"param\"/>")($scope);
 

@@ -34,6 +34,7 @@ public class SearchRestController extends AbstractRestController {
     @Autowired
     private FollowLinkService followLinkService;
 
+
     @Transactional
     public Result getByPromotion() {
 

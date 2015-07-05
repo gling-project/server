@@ -1,8 +1,9 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
+import be.lynk.server.controller.technical.security.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.BusinessDTO;
 import be.lynk.server.dto.BusinessScheduleContainerDTO;
 import be.lynk.server.dto.BusinessSchedulePartDTO;
 import be.lynk.server.model.entities.Business;

@@ -1,5 +1,32 @@
-<div>You are the administrator of this page. You can edit it</div>
-<div>Edit display : <input type="checkbox" ng-model="editDisplay" ng-show="edit"></div>
+<div ng-show="myBusiness === true">
+
+    <div ng-show="business.businessStatus === 'NOT_PUBLISHED'">{{'--.business.page.edit.description.notPublished' | translateText}}</div>
+    <div ng-show="business.businessStatus === 'WAITING_CONFIRMATION'">{{'--.business.page.edit.description.waitConfirmation' | translateText}}</div>
+    <div ng-show="business.businessStatus === 'PUBLISHED'">{{'--.business.page.edit.descriptionPublished' | translateText}}</div>
+
+    <div class="onoffswitch-container" ng-hide="business.businessStatus === 'WAITING_CONFIRMATION'">
+        <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked
+                   ng-model="edit">
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        <div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div>
+    </div>
+    <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
+            ng-click="publish()"
+            class="btn btn-primary">
+        {{'--.business.page.publication' | translateText}}
+    </button>
+    <button ng-show="business.businessStatus === 'PUBLISHED'"
+            ng-click="stopPublish()"
+            class="btn btn-primary">
+        {{'--.business.page.stopPublication' | translateText}}
+    </button>
+</div>
 <div class="business-page">
     <div class="business-page-header"
          ng-style="{'background-image':business.landscape.link }">
@@ -7,7 +34,7 @@
         <!-- landscape -->
         <div class="edit-button-container landscape-edit">
             <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                    ng-show="editDisplay"
+                    ng-show="edit"
                     ng-click="editLandscape()">
                 {{'--.business.page.edit.landscape' | translateText}}
             </button>
@@ -19,7 +46,7 @@
 
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
-                        ng-show="editDisplay"
+                        ng-show="edit"
                         ng-click="editIllustration()">
                     {{'--.business.page.edit.illustration' | translateText}}
                 </button>
@@ -31,7 +58,7 @@
             {{business.name}}
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                        ng-show="editDisplay"
+                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                         ng-click="editbusiness()">
                     {{'--.business.page.edit.business' | translateText}}
                 </button>
@@ -66,7 +93,7 @@
                             </tr>
                         </table>
                     </td>
-                    <td ng-show="editDisplay">
+                    <td ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'">
                         <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                                 ng-click="editCategory()">{{'--.generic.edit' | translateText}}
                         </button>
@@ -78,7 +105,7 @@
             <div class="business-page-description">{{business.description}}
 
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                        ng-show="editDisplay"
+                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                         ng-click="editbusiness()">
                     {{'--.business.page.edit.business' | translateText}}
                 </button>
@@ -122,7 +149,7 @@
                         <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
                     </div>
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="editDisplay"
+                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                             ng-click="editAddress()">{{'--.generic.edit' | translateText}}
                     </button>
                 </div>
@@ -141,7 +168,7 @@
                     <div>{{business.email}}</div>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="editDisplay"
+                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                             ng-click="editbusiness()">
                         {{'--.business.page.edit.business' | translateText}}
                     </button>
@@ -150,14 +177,14 @@
             </div>
 
             <!-- schedule -->
-            <div class="panel panel-default">
+            <div class="panel panel-default" ng-show="edit === true || business.schedules.length > 0">
                 <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
                 <div class="panel-body">
 
                     <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="editDisplay"
+                            ng-show="edit"
                             ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
                     </button>
                 </div>

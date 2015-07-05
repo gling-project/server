@@ -1,13 +1,14 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
+import be.lynk.server.controller.technical.security.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessNotificationDTO;
 import be.lynk.server.dto.ListDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.BusinessNotification;
-import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
@@ -34,8 +35,10 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.PUBLISHED})
     public Result create() {
         BusinessNotificationDTO dto = extractDTOFromRequest(BusinessNotificationDTO.class);
+
 
         BusinessNotification businessNotification = dozerService.map(dto, BusinessNotification.class);
         businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
@@ -54,6 +57,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.PUBLISHED})
     public Result update(Long id) {
         BusinessNotificationDTO dto = extractDTOFromRequest(BusinessNotificationDTO.class);
 

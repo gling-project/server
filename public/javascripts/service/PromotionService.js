@@ -20,7 +20,7 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
                 }
             });
 
-    }
+    };
 
     this.edit = function (dto, callbackSuccess, callbackError) {
 

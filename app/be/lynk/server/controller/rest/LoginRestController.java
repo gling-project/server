@@ -1,6 +1,7 @@
 package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.EmailController;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
@@ -213,6 +214,7 @@ public class LoginRestController extends AbstractRestController {
 
         //business
         Business business = dozerService.map(dto.getBusiness(), Business.class);
+        business.setBusinessStatus(BusinessStatus.NOT_PUBLISHED);
         //TODO temp
         business.getAddress().setCountry("BELGIUM");
 
@@ -314,6 +316,9 @@ public class LoginRestController extends AbstractRestController {
                 accountService.saveOrUpdate(account);
             }
         }
+
+        Logger.info("-------------------------------------===>>>>> "+securityController.getCurrentUser().getLang());
+
 
         return ok(new ResultDTO());
     }

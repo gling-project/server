@@ -1,16 +1,16 @@
 package be.lynk.server.dto;
 
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.util.constants.ValidationRegex;
 
+import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  */
@@ -46,7 +46,27 @@ public class BusinessDTO extends DTO {
 
     private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
 
+    private BusinessStatus businessStatus;
+
+    protected Date askPublicationDate;
+
+    public Date getAskPublicationDate() {
+        return askPublicationDate;
+    }
+
+    public void setAskPublicationDate(Date askPublicationDate) {
+        this.askPublicationDate = askPublicationDate;
+    }
+
     public BusinessDTO() {
+    }
+
+    public BusinessStatus getBusinessStatus() {
+        return businessStatus;
+    }
+
+    public void setBusinessStatus(BusinessStatus businessStatus) {
+        this.businessStatus = businessStatus;
     }
 
     public String getEmail() {

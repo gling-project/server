@@ -9,7 +9,9 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
     $scope.addressFormParam = {
         addName: false
     };
-    $scope.businessCategoryFormParam = {};
+    $scope.businessCategoryFormParam = {
+        value:[]
+    };
 
     $scope.businessFormParam = {};
 
@@ -147,11 +149,11 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
             };
 
             $scope.loading = true;
-            businessService.registration(dto, function () {
+            businessService.registration(dto, function (result) {
                     $scope.loading = false;
-                    $flash.success(translationService.get("--.login.flash.success"));
+                    $flash.success(translationService.get("--.registration.business.flash.success"));
                     $scope.close();
-                    $location.path("/business_old");
+                    $location.path("/business/"+result.businessId);
                 },
                 function () {
                     $scope.loading = false;

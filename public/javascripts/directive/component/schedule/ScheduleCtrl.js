@@ -52,7 +52,7 @@ myApp.directive('scheduleCtrl', function (directiveService, generateId, $timeout
 
                     scope.$watch('getInfo().dto', function () {
 
-                            if (scope.getInfo().dto != null) {
+                            if (scope.getInfo().dto != null && Object.keys(scope.getInfo().dto).length > 0){
 
                                 var minMinute = null, maxMinute = null;
 

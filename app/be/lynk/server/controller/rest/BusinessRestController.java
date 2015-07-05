@@ -1,7 +1,9 @@
 package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.technical.AbstractController;
-import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
+import be.lynk.server.controller.technical.security.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.technical.ResultDTO;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -35,6 +38,7 @@ public class BusinessRestController extends AbstractController {
     @Autowired
     private LocalizationService localizationService;
 
+
     /**
      * return only public data for all users / non-users
      *
@@ -43,7 +47,6 @@ public class BusinessRestController extends AbstractController {
      */
     @Transactional
     public Result getPublicData(long id) {
-
 
 
         Business business = businessService.findById(id);
@@ -56,45 +59,6 @@ public class BusinessRestController extends AbstractController {
         publicationService.findLastPublication(business);
 
         return ok(map);
-    }
-
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result editIllustration() {
-        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
-
-        StoredFile storedFile = storedFileService.findById(dto.getId());
-
-        if ((storedFile.getIsImage() != null && !storedFile.getIsImage()) ||
-                !storedFile.getAccount().equals(securityController.getCurrentUser())) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
-        }
-
-        BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
-        Business business = businessAccount.getBusiness();
-        business.setIllustration(storedFile);
-
-        return ok(new ResultDTO());
-    }
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result editLandscape() {
-        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
-
-        StoredFile storedFile = storedFileService.findById(dto.getId());
-
-        if ((storedFile.getIsImage() != null && !storedFile.getIsImage()) ||
-                !storedFile.getAccount().equals(securityController.getCurrentUser())) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
-        }
-
-        BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
-        Business business = businessAccount.getBusiness();
-        business.setLandscape(storedFile);
-
-        return ok(new ResultDTO());
     }
 
     @Transactional
@@ -123,6 +87,75 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED,BusinessStatus.PUBLISHED})
+    public Result askPublication() {
+        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+
+        business.setBusinessStatus(BusinessStatus.WAITING_CONFIRMATION);
+        business.setAskPublicationDate(LocalDateTime.now());
+
+        businessService.saveOrUpdate(business);
+
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.PUBLISHED})
+    public Result stopPublication() {
+        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+
+        business.setBusinessStatus(BusinessStatus.NOT_PUBLISHED);
+        business.setAskPublicationDate(LocalDateTime.now());
+
+        businessService.saveOrUpdate(business);
+
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED,BusinessStatus.PUBLISHED})
+    public Result editIllustration() {
+        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
+
+        StoredFile storedFile = storedFileService.findById(dto.getId());
+
+        if ((storedFile.getIsImage() != null && !storedFile.getIsImage()) ||
+                !storedFile.getAccount().equals(securityController.getCurrentUser())) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
+        Business business = businessAccount.getBusiness();
+        business.setIllustration(storedFile);
+
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED,BusinessStatus.PUBLISHED})
+    public Result editLandscape() {
+        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
+
+        StoredFile storedFile = storedFileService.findById(dto.getId());
+
+        if ((storedFile.getIsImage() != null && !storedFile.getIsImage()) ||
+                !storedFile.getAccount().equals(securityController.getCurrentUser())) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        BusinessAccount businessAccount = (BusinessAccount) securityController.getCurrentUser();
+        Business business = businessAccount.getBusiness();
+        business.setLandscape(storedFile);
+
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED})
     public Result update() {
         BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 
@@ -144,9 +177,10 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED})
     public Result editBusinessCategory() {
 
-        List<BusinessCategoryDTO>list= extractList(BusinessCategoryDTO.class);
+        List<BusinessCategoryDTO> list = extractList(BusinessCategoryDTO.class);
         //BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 
 

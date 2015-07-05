@@ -1,14 +1,11 @@
-myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService) {
+myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash) {
 
 
     $scope.displayError = false;
     $scope.loading = true;
     $scope.business = null;
     $scope.edit = false;
-    $scope.editDisplay = false;
-
-
-    //$scope.business.landscape.link = '/file/13';
+    $scope.myBusiness = false;
 
     //loading
     businessService.getBusiness($routeParams.businessId,
@@ -16,10 +13,16 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             $scope.loading = false;
             $scope.business = data;
             //edit mode ?
-            if (accountService.getMyself().businessId == $routeParams.businessId) {
-                $scope.edit = true;
-                $scope.editDisplay = true;
-            }
+            $scope.$watch('business.businessStatus', function () {
+
+                    if (accountService.getMyself().businessId == $routeParams.businessId) {
+                        if ($scope.business.businessStatus != 'WAITING_CONFIRMATION') {
+                            $scope.edit = true;
+                        }
+                        $scope.myBusiness = true;
+                    }
+                }
+            );
             //illustration
             if ($scope.business.illustration != null) {
                 $scope.business.illustration.link = '/file/' + $scope.business.illustration.id;
@@ -48,11 +51,33 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                 })
             }
 
+            $scope.publish = function () {
+
+                modalService.messageModal("--.business.page.askPublication.window.title", "--.business.page.askPublication.window.message",
+                    function (close) {
+                        businessService.publishBusiness();
+                        close();
+                        $flash.info(translationService.get("--.business.page.askPublication.window.flash"));
+                        $scope.business.businessStatus = 'WAITING_CONFIRMATION';
+                    });
+            };
+
+            $scope.stopPublish = function () {
+
+                modalService.messageModal("--.business.page.stopPublication.window.title", "--.business.page.stopPublication.window.message",
+                    function (close) {
+                        businessService.stopPublication();
+                        close();
+                        $flash.info(translationService.get("--.business.page.stopPublication.window.flash"));
+                        $scope.business.businessStatus = 'NOT_PUBLISHED';
+                    });
+            };
+
 
             //edit name
             $scope.editbusiness = function () {
                 var business = angular.copy($scope.business);
-                modalService.basicModal("business-form-ctrl",
+                modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
                     {dto: business},
                     function (close) {
                         businessService.edit(business, function (data) {
@@ -68,7 +93,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
 
             //edit illustration
             $scope.editIllustration = function () {
-                modalService.basicModal("image-form-ctrl",
+                modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
                     {dto: $scope.business, sizex: 80, sizey: 80, fieldName: 'illustration'},
                     function (close) {
                         businessService.editIllustration($scope.business.illustration, function () {
@@ -81,11 +106,11 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             //edit landscape
             $scope.editLandscape = function () {
                 //$scope.business.landscape={}
-                modalService.basicModal("image-form-ctrl",
+                modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
                     {dto: $scope.business, sizex: 800, sizey: 300, fieldName: 'landscape'},
                     function (close) {
                         businessService.editLandscape($scope.business.landscape, function () {
-                            $scope.business.landscape.link = '/file/' + $scope.business.landscape.id;
+                            $scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
                             close();
                         });
                     });
@@ -115,7 +140,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             //edit address
             $scope.editAddress = function () {
                 var address = angular.copy($scope.business.address);
-                modalService.basicModal("address-form-ctrl",
+                modalService.basicModal("--.business.edit.address.modal.title", "address-form-ctrl",
                     {
                         dto: address,
                         addName: false
@@ -146,7 +171,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                 console.log("catList");
                 console.log(catList);
 
-                modalService.basicModal("business-category-form-ctrl",
+                modalService.basicModal("--.business.edit.category.modal.title", "business-category-form-ctrl",
                     {
                         value: catList
                     },
@@ -163,9 +188,11 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             //schedule
             $scope.editSchedule = function () {
                 var schedules = angular.copy($scope.business.schedules);
-                modalService.basicModal("schedule-form-ctrl",
-                    {dto: schedules,
-                    disabled:false},
+                modalService.basicModal("--.business.edit.schedule.modal.title", "schedule-form-ctrl",
+                    {
+                        dto: schedules,
+                        disabled: false
+                    },
                     function (close) {
                         businessService.createSchedule({schedules: schedules}, function (data) {
                             $scope.business.schedules = schedules;

@@ -1,13 +1,16 @@
 myApp.service("modalService", function ($modal) {
 
 
-    this.basicModal = function (directiveName, param, save) {
+    this.basicModal = function (title,directiveName, param, save) {
         var resolve = {
             directiveName: function () {
                 return directiveName;
             },
             param: function () {
                 return param;
+            },
+            title: function () {
+                return title;
             },
             save: function () {
                 return save;
@@ -16,6 +19,25 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/BasicModal/view.html",
             controller: "BasicModalCtrl",
+            size: "lg",
+            resolve: resolve
+        });
+    };
+    this.messageModal = function (title,message, save) {
+        var resolve = {
+            message: function () {
+                return message;
+            },
+            title: function () {
+                return title;
+            },
+            save: function () {
+                return save;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/MessageModal/view.html",
+            controller: "MessageModalCtrl",
             size: "lg",
             resolve: resolve
         });

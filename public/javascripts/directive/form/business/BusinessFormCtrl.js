@@ -48,7 +48,7 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                         phone: {
                             fieldTitle: "--.generic.phone",
                             validationRegex: "^[0-9. *-+]{6,16}$",
-                            validationMessage: '--.validation.dto.notNull',
+                            validationMessage: '--.validation.dto.phone',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -58,6 +58,7 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                         },
                         email: {
                             fieldTitle: "--.business.contactEmail",
+                            name: 'email',
                             validationRegex: /^($|(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)/,
                             validationMessage: '--.validation.dto.notNull',
                             disabled: function () {
@@ -69,7 +70,7 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                         },
                         website: {
                             fieldTitle: "--.business.website",
-                            validationRegex: "^($|https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$)",
+                            validationRegex: "^($|(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?$)",
                             validationMessage: '--.validation.dto.notNull',
                             disabled: function () {
                                 return scope.getInfo().disabled;

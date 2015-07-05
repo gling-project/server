@@ -1,6 +1,6 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
+import be.lynk.server.controller.technical.security.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.post.CustomerRegistrationDTO;
@@ -55,7 +55,14 @@ public class
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result myself() {
         Logger.info("myself=" + securityController.getCurrentUser());
-        return ok(dozerService.map(securityController.getCurrentUser(), MyselfDTO.class));
+
+
+        MyselfDTO map = dozerService.map(securityController.getCurrentUser(), MyselfDTO.class);
+
+        Logger.info("................................................===>>>>> "+securityController.getCurrentUser().getLang());
+        Logger.info("................................................===>>>>> "+map.getLang());
+
+        return ok(map);
     }
 
 

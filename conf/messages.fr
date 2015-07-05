@@ -120,6 +120,8 @@
 --.error.facebook.authentication_fail=L'authentification Facebook a échoué
 --.error.not_connected=Vous n'êtes pas connecté
 --.error.wrong_password_or_login=Mauvais email ou mot de passe
+--.error.business.mustBePublished=Votre commerce doit etre publié avant de pouvoir poster de nouvelles publications
+
 
 ##  modal/AccountFusionFacebookModal/view.html
 --.account.fusion.modal.title=Fusion de compte
@@ -169,8 +171,8 @@
 
 ##  directive/form/business/BusinessFormCtrl.js
 #--.validation.dto.notNul=validation.dto.notNul
---.business.website=Adresse de votre site web
---.business.contactEmail=Adresse email de contact
+--.business.website=Adresse de votre site web (optionel)
+--.business.contactEmail=Adresse email de contact (optionel)
 #--.validation.dto.notNull=validation.dto.notNull
 
 ##  view/business_welcome.html
@@ -332,7 +334,16 @@ day_abrv_sunday=Di
 --.business.page.edit.business=Editer
 --.business.page.edit.landscape=Editer l'image de fond
 --.business.profile.businessSchedule=business.profile.businessSchedule
-
+--.business.page.edit.editSwitchEdit=Mode édition
+--.business.page.edit.editSwitchDisplay=Mode client
+--.business.page.publication=Publier ma page !
+--.business.page.edit.descriptionPublished=Bienvenue sur votre page de commerce. Votre commerce est désormais publié. Vous ne pouvez apporter que des modifications légères à vos informations comme vos horaires ou vos références de contact. Si vous désirez changer votre adresse ou le nom de votre commerce, vous devez passer en mode édition. Dans ce cas, votre commerce ne sera plus visible publiquement jusqu'à ce que vous choisissez de publier à nouveau votre commerce et qu'un administrateur valide vos modifications.
+--.business.page.edit.description.waitConfirmation=Bienvenue sur votre page de commerce. Votre Commerce est en attente de validation  par un administrateur. Si vous attendez cette confirmation depuis plus de 5 jours ouvrables, veuillez prendre directement contact avec nous.
+--.business.page.edit.description.notPublished=Bienvenue sur votre page de commerce. Vous pouvez éditer vos informations à l'aide des boutons 'Editer' de la page. Une fois les modifications apportées, vous pouvez publier votre page avec le bouton ci-dessous. Votre commerce sera désormais visible pour tous les utilisateurs de Lynk! Pour voir l'aspect visuel de votre page tel que le client la verra, vous pouvez utiliser l'interupteur ci-dessous. N'hésitez pas à nous contacter si vous avez des questions !
+--.business.page.stopPublication.window.flash=Votre commerce est maintenant en mode édition. N'oubliez pas de le publier à nouveau à l'aide du bouton 'publier' une fois vos modifications finalisées.
+--.business.page.stopPublication.window.message=En passant en mode édition, votre commerce et ses annonces ne seront plus visible tant que vous n'aurez pas validé vos modifications. Etes-vous sur de vouloir continuer ?
+--.business.page.askPublication.window.flash=Votre commerce est maintenant en attente de validation par notre équipe
+--.business.page.askPublication.window.message=Une fois votre demande de publication envoyée, vous ne pourrez plus modifier que les horaires et les images de votre commerce. Une fois votre commerce validée par notre équipe, vous serez visibles par les clients et il vous sera possible de publier des annonces et des promotions. Etes-vous sûr de vouloir continuer ?
 
 
 

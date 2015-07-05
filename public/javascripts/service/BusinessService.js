@@ -65,7 +65,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             'method': "PUT",
             'url': "/business/category",
             'headers': "Content-Type:application/json",
-            'data': {list:dto}
+            'data': {list: dto}
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
@@ -78,7 +78,50 @@ myApp.service("businessService", function ($flash, $http, accountService) {
                 }
             });
 
-    }
+    };
+
+    this.publishBusiness = function (callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/business/ask_publication",
+            'headers': "Content-Type:application/json",
+            'data': {}
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
+    this.stopPublication = function(callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/business/stop_publish",
+            'headers': "Content-Type:application/json",
+            'data': {}
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
 
     this.editIllustration = function (dto, callbackSuccess, callbackError) {
 

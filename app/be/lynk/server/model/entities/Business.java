@@ -1,9 +1,12 @@
 package be.lynk.server.model.entities;
 
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +56,30 @@ public class Business extends AbstractEntity {
 
     @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
     private List<BusinessSchedule> schedules = new ArrayList<>();
+
+    @Basic(optional = false)
+    @Enumerated(value = EnumType.STRING)
+    private BusinessStatus businessStatus;
+
+    @Column(columnDefinition = "timestamp")
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
+    protected LocalDateTime askPublicationDate;
+
+    public LocalDateTime getAskPublicationDate() {
+        return askPublicationDate;
+    }
+
+    public void setAskPublicationDate(LocalDateTime askPublicationDate) {
+        this.askPublicationDate = askPublicationDate;
+    }
+
+    public BusinessStatus getBusinessStatus() {
+        return businessStatus;
+    }
+
+    public void setBusinessStatus(BusinessStatus businessStatus) {
+        this.businessStatus = businessStatus;
+    }
 
     public List<BusinessSchedule> getSchedules() {
         return schedules;

@@ -10,7 +10,8 @@ public enum RoleEnum {
 
     USER,
     BUSINESS(USER),
-    CUSTOMER(USER);
+    CUSTOMER(USER),
+    SUPERADMIN(USER);
 
 
     private List<RoleEnum> children;

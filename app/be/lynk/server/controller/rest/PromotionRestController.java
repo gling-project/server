@@ -1,6 +1,8 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
+import be.lynk.server.controller.technical.security.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.ListDTO;
 import be.lynk.server.dto.PromotionDTO;
@@ -34,8 +36,10 @@ public class PromotionRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.PUBLISHED})
     public Result create() {
         PromotionDTO dto = extractDTOFromRequest(PromotionDTO.class);
+
 
         Promotion promotion = dozerService.map(dto, Promotion.class);
 
@@ -55,6 +59,7 @@ public class PromotionRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.PUBLISHED})
     public Result update(Long id) {
         PromotionDTO dto = extractDTOFromRequest(PromotionDTO.class);
 

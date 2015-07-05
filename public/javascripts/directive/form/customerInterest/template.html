@@ -6,7 +6,7 @@
 
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <button class="interest btn" ng-class="{interest_selected:interest.selected}" ng-click="select(interest)">
-                    <input type="checkbox" ng-model="interest.selected" ng-click="select(interest)" disabled/>
+                    <input type="checkbox" ng-checked="interest.selected"/>
                     {{interest.translationName | translateText}}
                 </button>
             </div>

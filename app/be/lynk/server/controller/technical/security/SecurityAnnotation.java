@@ -1,4 +1,4 @@
-package be.lynk.server.controller.technical.security.annotation;
+package be.lynk.server.controller.technical.security;
 
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import play.mvc.With;

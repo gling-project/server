@@ -1,13 +1,11 @@
-package be.lynk.server.controller.technical.security.annotation;
+package be.lynk.server.controller.technical.security;
 //
 
-import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.service.impl.TranslationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import play.Logger;
 import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
