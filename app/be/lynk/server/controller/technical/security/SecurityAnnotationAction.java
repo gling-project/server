@@ -18,8 +18,7 @@ public class SecurityAnnotationAction extends Action<SecurityAnnotation> {
     @Autowired
     protected CommonSecurityController securityController;
 
-    private TranslationService translationService = new TranslationServiceImpl();
-
+    
     @Override
     public F.Promise<SimpleResult> call(final Http.Context context) throws Throwable {
 
