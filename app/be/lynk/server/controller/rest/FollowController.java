@@ -1,6 +1,6 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.controller.technical.security.SecurityAnnotation;
+import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.FollowDTO;
 import be.lynk.server.dto.FollowFormDTO;

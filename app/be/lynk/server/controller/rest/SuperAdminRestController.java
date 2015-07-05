@@ -1,7 +1,7 @@
 package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
-import be.lynk.server.controller.technical.security.SecurityAnnotation;
+import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;

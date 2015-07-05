@@ -1,9 +1,8 @@
-package be.lynk.server.controller.technical.security;
+package be.lynk.server.controller.technical.security.annotation;
 //
 
+import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.service.TranslationService;
-import be.lynk.server.service.impl.TranslationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import play.libs.F;
@@ -18,7 +17,7 @@ public class SecurityAnnotationAction extends Action<SecurityAnnotation> {
     @Autowired
     protected CommonSecurityController securityController;
 
-    
+
     @Override
     public F.Promise<SimpleResult> call(final Http.Context context) throws Throwable {
 
