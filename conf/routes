@@ -90,5 +90,5 @@ GET           /business/confirmPublication/$id<[0-9]+>        @be.lynk.server.co
 #############
 ## importer
 ############
-GET           /import                                         @be.lynk.server.controller.rest.SuperAdminRestController.importCategory()
-POST          /import_complete                                @be.lynk.server.controller.rest.SuperAdminRestController.importCategoryTranslation()
+POST          /import_demo                                    @be.lynk.server.controller.rest.SuperAdminRestController.importDemoDate()
+POST          /import_category                                @be.lynk.server.controller.rest.SuperAdminRestController.importCategoryTranslation()

@@ -6,6 +6,7 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
+import be.lynk.server.importer.DemoImporter;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.service.AccountService;
@@ -31,26 +32,54 @@ public class SuperAdminRestController extends AbstractRestController {
     private LoginCredentialService loginCredentialService;
     @Autowired
     private CategoryImporter categoryImporter;
+    @Autowired
+    private DemoImporter demoImporter;
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result importCategory() {
+    public Result importDemoDate() {
 
-        return ok(categoryImporter.importStart(false));
+        Account account;
+        if (!securityController.isAuthenticated(ctx())) {
+            //extract DTO
+            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+
+            account = accountService.findByEmail(dto.getEmail());
+
+            if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
+                //if there is no account for this email or the password doesn't the right, throw an exception
+                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+            }
+        }
+        else{
+            account=securityController.getCurrentUser();
+        }
+        if(!account.getRole().equals(RoleEnum.SUPERADMIN)){
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        return ok(demoImporter.importStart(true));
     }
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result importCategoryTranslation() {
 
-        //extract DTO
-        LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+        Account account;
+        if (!securityController.isAuthenticated(ctx())) {
+            //extract DTO
+            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
 
-        Account account = accountService.findByEmail(dto.getEmail());
+            account = accountService.findByEmail(dto.getEmail());
 
-        if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
-            //if there is no account for this email or the password doesn't the right, throw an exception
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+            if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
+                //if there is no account for this email or the password doesn't the right, throw an exception
+                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+            }
+        }
+        else{
+            account=securityController.getCurrentUser();
+        }
+        if(!account.getRole().equals(RoleEnum.SUPERADMIN)){
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
         return ok(categoryImporter.importStart(true));

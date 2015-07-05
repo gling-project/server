@@ -17,6 +17,7 @@ echo "[CREATE LANGUAGE]"
 eval $DB_CONNECTION < script/basic_data.sql
 
 #import
-curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' http://localhost:9000/import_complete
+curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' http://localhost:9000/import_category
+curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' http://localhost:9000/import_demo
 
 echo "Done !"

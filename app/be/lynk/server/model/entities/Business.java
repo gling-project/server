@@ -24,6 +24,7 @@ public class Business extends AbstractEntity {
     private String name;
 
     @Basic(optional = false)
+    @Column(columnDefinition = "text not null")
     private String description;
 
     @Basic(optional = false)

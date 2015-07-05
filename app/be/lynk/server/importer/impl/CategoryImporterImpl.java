@@ -1,4 +1,4 @@
-package be.lynk.server.importer;
+package be.lynk.server.importer.impl;
 
 import java.io.*;
 import java.text.Normalizer;
@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import be.lynk.server.importer.CategoryImporter;
 import be.lynk.server.model.entities.BusinessCategory;
 import be.lynk.server.model.entities.CategoryInterestLink;
 import be.lynk.server.model.entities.CustomerInterest;
@@ -24,7 +25,7 @@ import play.i18n.Lang;
  * Created by florian on 5/06/15.
  */
 @Component
-public class CategoryImporterImpl implements CategoryImporter {
+public class CategoryImporterImpl extends AbstractImporter implements CategoryImporter {
 
     private static final Pattern PATTERN = Pattern.compile("messages\\.(.*)");
     private static final String FILE = "/home/florian/idea/project/conf/";
@@ -35,7 +36,6 @@ public class CategoryImporterImpl implements CategoryImporter {
     private static final Integer FIRST_COLUMN_INTEREST = 3;
 
     private static final String ACCOUNTS_WORKBOOK_PATH = "file/category.xls";
-    public static final String CP1252_ENCODING = "Cp1252";
 
     @Autowired
     private CustomerInterestService customerInterestService;
@@ -53,7 +53,7 @@ public class CategoryImporterImpl implements CategoryImporter {
         //import category
         Sheet sheet = workbookSheets.get(CATEGORY_STREET);
 
-        return importCategory(sheet,addTranslation);
+        return importCategory(sheet, addTranslation);
 
     }
 
@@ -162,7 +162,7 @@ public class CategoryImporterImpl implements CategoryImporter {
         }
 
         //add translation key
-        if(addTranslation) {
+        if (addTranslation) {
             try {
                 writeTranslation(translationMap);
             } catch (Exception e) {
@@ -294,15 +294,7 @@ public class CategoryImporterImpl implements CategoryImporter {
 
     }
 
-    private String normalize(String s) {
-        return Normalizer.normalize(s, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .toLowerCase()
-                .replaceAll("( |-)", "_")
-                .replaceAll("('|&|/|\")", "");
-    }
-
-    private BusinessCategory get(List<BusinessCategory> list, BusinessCategory businessCategory) {
+    protected BusinessCategory get(List<BusinessCategory> list, BusinessCategory businessCategory) {
         for (BusinessCategory category : list) {
             if (category.getName().equals(businessCategory.getName())) {
                 return category;
@@ -311,27 +303,5 @@ public class CategoryImporterImpl implements CategoryImporter {
         return null;
     }
 
-    protected static Map<String, Sheet> getWorkbookSheets(String path) {
-        WorkbookSettings ws = new WorkbookSettings();
-        ws.setEncoding(CP1252_ENCODING);
-        ws.setSuppressWarnings(true);
-        Workbook workbook = null;
-        try {
-            workbook = Workbook.getWorkbook(new File(path), ws);
-        } catch (Exception e) {
-            throw new RuntimeException("Exception while loading workbook '" + path + "'", e);
-        }
 
-        // save all sheets in a map (by workbookPath and sheetName)
-        // => reduces by 80% the time of import! (huge performance leak in Workbook.getSheet(String) method)
-        return getAllSheets(workbook);
-    }
-
-    private static Map<String, Sheet> getAllSheets(Workbook workbook) {
-        Map<String, Sheet> workbookSheets = new HashMap<>();
-        for (Sheet sheet : workbook.getSheets()) {
-            workbookSheets.put(sheet.getName(), sheet);
-        }
-        return workbookSheets;
-    }
 }
