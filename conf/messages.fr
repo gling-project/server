@@ -48,11 +48,13 @@
 --.generic.description=Description
 --.generic.login.btn=Connexion
 --.generic.validation.max=Maximum {0} caractères
-#--.generic.image=Image
+##--.generic.image=Image
 --.generic.delete=Delete
 --.generic.validation.numberExpected=Uniquement un nombre
 --.generic.contact=Contact
 --.generic.valid=Valider
+--.generic.action=Action
+--.generic.status=Status
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -84,7 +86,7 @@
 
 ##  be/flo/project/dto/AccountDTO.java
 --.validation.dto.size=Entre {0} et {1} caractères
-####--.validation.dto.notNull=Ne peut pas être vide
+#####--.validation.dto.notNull=Ne peut pas être vide
 --.validation.dto.email=Adresse email attendue
 
 ##  modal/ForgotPassword/view.html
@@ -177,7 +179,7 @@
 
 ##  view/business_welcome.html
 --.business.welcome.title=Bienvenue sur la page de votre magasin
-#--.business.profile.businessCategory=Type de commerce
+##--.business.profile.businessCategory=Type de commerce
 
 ##  modal/BusinessRegistrationModal/view.html
 --.business.registrationModal.category.title=Catégorie de commerce
@@ -208,8 +210,8 @@
 --.loginModal.toBusinessRegistration=S'enregistrer en tant de commerçant
 --.loginModal.toCustomerRegistration=S'enregistrer en tant que client
 --.loginModal.notRegisterYet=Pas encore enregistré?
-####--.validation.dto.notNull=Ne peut pas être vide
-####--.validation.dto.notNull=Ne peut pas être vide
+#####--.validation.dto.notNull=Ne peut pas être vide
+#####--.validation.dto.notNull=Ne peut pas être vide
 
 
 
@@ -224,7 +226,7 @@
 
 ##  modal/EditCustomerInterestModal/view.html
 --.customer.editInterestModal.title=Modifier mes intérêts
-####--.validation.dto.notNull=Ne peut pas être vide
+#####--.validation.dto.notNull=Ne peut pas être vide
 
 
 ##  directive/form/login/template.html
@@ -311,7 +313,7 @@
 
 ##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
 --.promotion.validation.endDateBeforeStartDate=La date de fin doit être arpès la date de début
-#--.validation.dto.notNull=Ce champs ne peut être vide
+##--.validation.dto.notNull=Ce champs ne peut être vide
 
 ## day
 day_abrv_monday=Lu
@@ -333,17 +335,44 @@ day_abrv_sunday=Di
 --.business.page.edit.illustration=Edit logo
 --.business.page.edit.business=Editer
 --.business.page.edit.landscape=Editer l'image de fond
---.business.profile.businessSchedule=business.profile.businessSchedule
+--.business.profile.businessSchedule=Horaires
 --.business.page.edit.editSwitchEdit=Mode édition
 --.business.page.edit.editSwitchDisplay=Mode client
---.business.page.publication=Publier ma page !
+--.business.page.publication=Publier ma page \!
 --.business.page.edit.descriptionPublished=Bienvenue sur votre page de commerce. Votre commerce est désormais publié. Vous ne pouvez apporter que des modifications légères à vos informations comme vos horaires ou vos références de contact. Si vous désirez changer votre adresse ou le nom de votre commerce, vous devez passer en mode édition. Dans ce cas, votre commerce ne sera plus visible publiquement jusqu'à ce que vous choisissez de publier à nouveau votre commerce et qu'un administrateur valide vos modifications.
 --.business.page.edit.description.waitConfirmation=Bienvenue sur votre page de commerce. Votre Commerce est en attente de validation  par un administrateur. Si vous attendez cette confirmation depuis plus de 5 jours ouvrables, veuillez prendre directement contact avec nous.
---.business.page.edit.description.notPublished=Bienvenue sur votre page de commerce. Vous pouvez éditer vos informations à l'aide des boutons 'Editer' de la page. Une fois les modifications apportées, vous pouvez publier votre page avec le bouton ci-dessous. Votre commerce sera désormais visible pour tous les utilisateurs de Lynk! Pour voir l'aspect visuel de votre page tel que le client la verra, vous pouvez utiliser l'interupteur ci-dessous. N'hésitez pas à nous contacter si vous avez des questions !
+--.business.page.edit.description.notPublished=Bienvenue sur votre page de commerce. Vous pouvez éditer vos informations à l'aide des boutons 'Editer' de la page. Une fois les modifications apportées, vous pouvez publier votre page avec le bouton ci-dessous. Votre commerce sera désormais visible pour tous les utilisateurs de Lynk\! Pour voir l'aspect visuel de votre page tel que le client la verra, vous pouvez utiliser l'interupteur ci-dessous. N'hésitez pas à nous contacter si vous avez des questions \!
 --.business.page.stopPublication.window.flash=Votre commerce est maintenant en mode édition. N'oubliez pas de le publier à nouveau à l'aide du bouton 'publier' une fois vos modifications finalisées.
 --.business.page.stopPublication.window.message=En passant en mode édition, votre commerce et ses annonces ne seront plus visible tant que vous n'aurez pas validé vos modifications. Etes-vous sur de vouloir continuer ?
 --.business.page.askPublication.window.flash=Votre commerce est maintenant en attente de validation par notre équipe
 --.business.page.askPublication.window.message=Une fois votre demande de publication envoyée, vous ne pourrez plus modifier que les horaires et les images de votre commerce. Une fois votre commerce validée par notre équipe, vous serez visibles par les clients et il vous sera possible de publier des annonces et des promotions. Etes-vous sûr de vouloir continuer ?
+--.business.page.stopPublication=Repasser en mode édition
+
+
+
+
+##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)
+--.registration.business.flash.success=Votre commerce est maintenant enregistré\! Vous pouvez complèter votre page commerce avant de la publier officiellement pour qu'elle soi visible par tous les utilisateurs de Lynk \!
+
+##  controller/admin/AdminBusinessCtrl.js (// show first page)
+--.admin.business.confirmPublication.modal.message=Confirmer la publication de ce commerce ?
+--.admin.business.confirmPublication.modal.title=Confirmation
+
+##  view/admin/adminBusiness.html
+--.admin.business.confirmPublication=Confirmer la publication
+--.admin.business.toBusiness=Voir la page
+
+##  controller/web/BusinessCtrl.js (//loading)
+--.business.edit.category.modal.title=Modifier la catégorie
+--.business.edit.schedule.modal.title=Modifier l'horaire
+--.business.edit.landscape.modal.title=Modifier la photo d'arrière-plan
+--.business.edit.illustration.modal.title=Modifier le logo
+--.business.edit.address.modal.title=Modifier l'adresse
+--.business.page.stopPublication.window.title=Passer en mode édition
+--.business.edit.data.modal.title=Modifier les données du commerce
+--.business.page.askPublication.window.title=Publier votre commerce
+
+
 
 
 

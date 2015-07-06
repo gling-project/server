@@ -28,7 +28,7 @@ import play.i18n.Lang;
 public class CategoryImporterImpl extends AbstractImporter implements CategoryImporter {
 
     private static final Pattern PATTERN = Pattern.compile("messages\\.(.*)");
-    private static final String FILE = "/home/florian/idea/project/conf/";
+    private static final String FILE = "conf/";
 
 
     private static final String CATEGORY_STREET = "Général - Catégories B. (2)";
