@@ -8,11 +8,10 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.model.entities.publication.Promotion;
-import be.lynk.server.service.BusinessCategoryService;
-import be.lynk.server.service.BusinessService;
-import be.lynk.server.service.LocalizationService;
-import be.lynk.server.service.PublicationService;
+import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
+import be.lynk.server.util.KeyGenerator;
+import be.lynk.server.util.file.FileUtil;
 import jxl.Cell;
 import jxl.NumberCell;
 import jxl.NumberFormulaCell;
@@ -22,6 +21,7 @@ import org.springframework.stereotype.Component;
 import play.Logger;
 import play.i18n.Lang;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +47,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final Integer COL_BUSINESS_ZIP = 5;
     private static final Integer COL_BUSINESS_COUNTRY = 6;
 
+    private static final Integer COL_BUSINESS_LANDSCAPE = 9;
+    private static final Integer COL_BUSINESS_LOGO = 10;
     private static final Integer COL_BUSINESS_CAT = 14;
     private static final Integer COL_BUSINESS_EMAIL = 15;
     private static final int FIRST_COLUMN_INTEREST = 1;
@@ -57,7 +59,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final Integer COL_PUBLICATION_BUSINESS = 0;
     private static final Integer COL_PUBLICATION_TYPE = 1;
     private static final Integer COL_PUBLICATION_TITLE = 2;
-    //    private static final Integer COL_PUBLICATION_DESC = 3;
+    private static final Integer COL_PUBLICATION_LOGO = 6;
     private static final Integer COL_PUBLICATION_Q = 7;
     private static final Integer COL_PUBLICATION_MIN_Q = 8;
     private static final Integer COL_PUBLICATION_UNIT = 9;
@@ -73,6 +75,10 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private LocalizationService localizationService;
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private StoredFileService storedFileService;
+    @Autowired
+    private FileService fileService;
 
     @Override
     public String importStart(boolean b) {
@@ -129,6 +135,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 throw new RuntimeException(e.getMessage());
             }
 
+
             for (String s : sheet.getCell(COL_BUSINESS_CAT, rowCounter).getContents().split("/")) {
                 BusinessCategory byName = businessCategoryService.findByName(s);
                 if (byName == null) {
@@ -139,6 +146,24 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
             }
 
             businessService.saveOrUpdate(business);
+
+            //landscape
+            String landscapePath = sheet.getCell(COL_BUSINESS_LANDSCAPE, rowCounter).getContents();
+            if (landscapePath != null && landscapePath.length() > 0) {
+                String path = "file/images/commerces/" + landscapePath;
+                business.setLandscape(fileService.uploadWithSize(new File(path), 1200, 300, account));
+            }
+
+            //illustration
+            String illustrationPath = sheet.getCell(COL_BUSINESS_LOGO, rowCounter).getContents();
+            if (illustrationPath != null && illustrationPath.length() > 0) {
+                String path = "file/images/commerces/" + illustrationPath;
+                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
+            }
+
+            businessService.saveOrUpdate(business);
+
+
             rowCounter++;
         }
     }
@@ -182,9 +207,9 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                     if (promotion.getOffPercent() == null &&
                             promotion.getOriginalPrice() != null &&
                             sheet.getCell(COL_PUBLICATION_PRICE_F, rowCounter).getContents() != null) {
-                        Double v = getNumber(sheet,COL_PUBLICATION_PRICE_F, rowCounter);
-                        if(v!=null) {
-                            promotion.setOffPercent( v / promotion.getOriginalPrice());
+                        Double v = getNumber(sheet, COL_PUBLICATION_PRICE_F, rowCounter);
+                        if (v != null) {
+                            promotion.setOffPercent(v / promotion.getOriginalPrice());
                         }
                     }
 
@@ -199,6 +224,14 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                     publication.setEndDate(LocalDateTime.now().plusDays(30));
                     publication.setStartDate(LocalDateTime.now());
 
+
+                    //illustration
+                    String illustrationPath = sheet.getCell(COL_PUBLICATION_LOGO, rowCounter).getContents();
+                    if (illustrationPath != null && illustrationPath.length() > 0) {
+                        String path = "file/images/publications/" + illustrationPath;
+                        publication.setIllustration(fileService.uploadWithSize(new File(path), 140, 140, business.getAccount()));
+                    }
+
                     publicationService.saveOrUpdate(publication);
                 }
             }
@@ -207,7 +240,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     }
 
     private Double getNumber(Sheet sheet, Integer colPublicationMinQ, int row) {
-        Cell cell = sheet.getCell(colPublicationMinQ,row);
+        Cell cell = sheet.getCell(colPublicationMinQ, row);
         try {
             NumberCell contents = (NumberCell) cell;
             return contents.getValue();

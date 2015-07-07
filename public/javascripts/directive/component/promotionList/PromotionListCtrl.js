@@ -1,4 +1,4 @@
-myApp.directive('promotionListCtrl', function ($rootScope, businessService, geolocationService,directiveService) {
+myApp.directive('promotionListCtrl', function ($rootScope, businessService, geolocationService,directiveService,searchService) {
 
     return {
         restrict: "E",
@@ -21,7 +21,7 @@ myApp.directive('promotionListCtrl', function ($rootScope, businessService, geol
 
                             scope.params = [];
 
-                            businessService.findByPromotion(geolocationService.position, function (data) {
+                            searchService.default(function (data) {
                                 for (var i in data) {
                                     if (data[i].illustration!= null) {
                                         data[i].illustration.link = "/file/" + data[i].illustration.id;

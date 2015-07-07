@@ -49,7 +49,6 @@ PUT           /business/illustration                          @be.lynk.server.co
 PUT           /business/landscape                             @be.lynk.server.controller.rest.BusinessRestController.editLandscape()
 POST          /business/ask_publication                       @be.lynk.server.controller.rest.BusinessRestController.askPublication()
 POST          /business/stop_publish                          @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
-POST          /business/promotions                            @be.lynk.server.controller.rest.SearchRestController.getByPromotion()
 
 ## business schedule
 POST          /business/schedule                              @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
@@ -72,6 +71,10 @@ GET           /follow                                         @be.lynk.server.co
 
 #session
 GET           /session                                        @be.lynk.server.controller.rest.AccountRestController.mySession()
+
+#search
+POST          /search/publication/default                     @be.lynk.server.controller.rest.SearchRestController.getByDefault()
+POST          /search/publication/business/:id               @be.lynk.server.controller.rest.SearchRestController.getBusiness(id:Long)
 
 #file
 POST          /file                                           @be.lynk.server.controller.rest.FilesController.upload()

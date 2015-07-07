@@ -6,6 +6,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
     $scope.business = null;
     $scope.edit = false;
     $scope.myBusiness = false;
+    $scope.businessId = $routeParams.businessId;
 
     //loading
     businessService.getBusiness($routeParams.businessId,
@@ -200,6 +201,11 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                         });
                     });
 
+            };
+
+            //publication
+            $scope.publicationListParam = {
+                businessId : $scope.business.id
             };
 
 
