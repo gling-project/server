@@ -160,9 +160,6 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     }
                 }
 
-                console.log("catList");
-                console.log(catList);
-
                 modalService.basicModal("--.business.edit.category.modal.title", "business-category-form-ctrl",
                     {
                         value: catList

@@ -108,7 +108,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
         while (sheet.getRows() > rowCounter) {
             String bName = sheet.getCell(COL_BUSINESS_NAME, rowCounter).getContents();
 
-            if (bName!= null && bName.length() > 0) {
+            if (bName != null && bName.length() > 0) {
 
                 Business business = new Business();
                 business.setName(bName);
@@ -163,7 +163,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (file != null) {
                             //landscape
                             try {
-                                business.setLandscape(fileService.uploadWithSize(file, 1200, 300, account));
+//                                business.setLandscape(fileService.uploadWithSize(file, 1200, 300, account));
+                                business.setLandscape(fileService.uploadWithSize(file, account));
                             } catch (Throwable e) {
                                 e.printStackTrace();
                             }
@@ -179,8 +180,10 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         File file = new File(path);
                         if (file != null) {
                             try {
-                                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
+//                                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
+                                business.setIllustration(fileService.uploadWithSize(new File(path), account));
                             } catch (Throwable e) {
+
                                 e.printStackTrace();
                             }
                         }

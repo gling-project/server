@@ -18,6 +18,9 @@ myApp.service("followService", function ($flash, $http) {
             'headers': "Content-Type:application/json",
             data:dto
         }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.value);
+            }
         })
             .error(function (data, status) {
                 $flash.error(data.message);

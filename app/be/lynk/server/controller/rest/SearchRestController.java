@@ -51,7 +51,28 @@ public class SearchRestController extends AbstractRestController {
 
         List<AbstractPublication> publications = publicationService.findActivePublication();
 
-        return ok(new ListDTO<>(finalize(dto, publications)));
+        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(dto, publications));
+
+        return ok(abstractPublicationDTOListDTO);
+    }
+
+    @Transactional
+    public Result getByFollowed() {
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+
+
+
+        Account currentUser = securityController.getCurrentUser();
+        List<Business> byAccount = followLinkService.findBusinessByAccount((CustomerAccount) currentUser);
+
+
+
+        List<AbstractPublication> finalList =publicationService.findActivePublicationByBusinesses(byAccount);
+
+
+        return ok(new ListDTO<>(finalize(dto, finalList)));
     }
 
     @Transactional
@@ -70,7 +91,7 @@ public class SearchRestController extends AbstractRestController {
         for (AbstractPublication publication : publications) {
             for (BusinessCategory businessCategory : publication.getBusiness().getBusinessCategories()) {
                 for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
-                    if(categoryInterestLink.getCustomerInterest().equals(byId)){
+                    if (categoryInterestLink.getCustomerInterest().equals(byId)) {
                         finalList.add(publication);
                         break;
                     }
@@ -113,7 +134,7 @@ public class SearchRestController extends AbstractRestController {
                         l.add(publicationDTO);
                         //add business name
                         publicationDTO.setBusinessName(publication.getBusiness().getName());
-                        publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(),StoredFileDTO.class));
+                        publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
                         publicationDTO.setBusinessId(publication.getBusiness().getId());
                         //follow ?
                         if (securityController.isAuthenticated(ctx())) {

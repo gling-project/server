@@ -1,4 +1,4 @@
-myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService,addressService) {
+myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService,addressService,fctToExecute,fctToExecuteParams) {
 
     var facebookAuthentication = null;
 
@@ -169,6 +169,9 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         accountService.registration(dto, function () {
                 $scope.loading = false;
                 $flash.success(translationService.get("--.login.flash.success"));
+                if(fctToExecute!=null){
+                    fctToExecute(fctToExecuteParams);
+                }
                 $scope.close();
             },
             function () {

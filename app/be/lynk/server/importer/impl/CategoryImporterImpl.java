@@ -31,7 +31,11 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
     private static final String FILE = "conf/";
 
 
+    private static final Integer COL_INTEREST_NAME = 0;
+    private static final Integer COL_INTEREST_NAME_ICON = 2;
+
     private static final String CATEGORY_STREET = "Général - Catégories B. (2)";
+    private static final String INTEREST_SHEET = "Général - Besoins C.";
     private static final Integer CATEGORY_FIRST_ROW = 1;
     private static final Integer FIRST_COLUMN_INTEREST = 3;
 
@@ -47,34 +51,76 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
     @Override
     public String importStart(boolean addTranslation) {
 
-        //load
-        Map<String, Sheet> workbookSheets = getWorkbookSheets(ACCOUNTS_WORKBOOK_PATH);
-
-        //import category
-        Sheet sheet = workbookSheets.get(CATEGORY_STREET);
-
-        return importCategory(sheet, addTranslation);
-
-    }
-
-    private String importCategory(Sheet sheet, boolean addTranslation) {
-
         //remove
         categoryInterestLinkService.deleteAll();
         customerInterestService.deleteAll();
         businessCategoryService.deleteAll();
+
+        try {
+            //load
+            Map<String, Sheet> workbookSheets = getWorkbookSheets(ACCOUNTS_WORKBOOK_PATH);
+
+            //import category
+            Sheet categorySheet = workbookSheets.get(CATEGORY_STREET);
+            Sheet interestSheet = workbookSheets.get(INTEREST_SHEET);
+
+            importInterest(interestSheet, addTranslation);
+            importCategory(categorySheet,  addTranslation);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+
+        return "SUCCESS !!! ";
+    }
+
+    private Map<Integer, CustomerInterest> importInterest(Sheet sheet, boolean addTranslation) {
 
         Map<Lang, Map<String, String>> translationMap = new HashMap<>();
         //TODO add lang ?
         Lang langFr = Lang.forCode("fr");
         translationMap.put(langFr, new HashMap<>());
 
-
         //build interest
         Map<Integer, CustomerInterest> interestMap = new HashMap<>();
 
         int column = FIRST_COLUMN_INTEREST;
+//        String interestS = sheet.getCell(column, 0).getContents();
+
+        int order = 0;
+        int rowCounter = CATEGORY_FIRST_ROW;
+
+        while (sheet.getRows() > rowCounter) {
+
+            String interestS = sheet.getCell(COL_INTEREST_NAME, rowCounter).getContents();
+            if(interestS!=null && interestS.length()>0) {
+                String interestSNormalized = normalize(interestS);
+
+                String translationKey = "--.interest." + interestSNormalized;
+                translationMap.get(langFr).put(translationKey, interestS);
+
+                CustomerInterest customerInterest = new CustomerInterest(interestSNormalized, translationKey, ++order);
+                String iconName = sheet.getCell(COL_INTEREST_NAME_ICON, rowCounter).getContents();
+                if(iconName!=null && iconName.length()>0) {
+                    customerInterest.setIconName(iconName);
+                }
+
+                interestMap.put(column, customerInterest);
+
+                //save
+                customerInterestService.saveOrUpdate(customerInterest);
+            }
+            rowCounter++;
+
+        }
+        return interestMap;
+    }
+
+    private String importCategory(Sheet sheet, boolean addTranslation) {
+
+        int column = FIRST_COLUMN_INTEREST;
         String interestS = sheet.getCell(column, 0).getContents();
+        Map<Integer, CustomerInterest> interestMap = new HashMap<>();
 
         int order = 0;
 
@@ -82,19 +128,23 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
             String interestSNormalized = normalize(interestS);
 
-            String translationKey = "--.interest." + interestSNormalized;
-            translationMap.get(langFr).put(translationKey, interestS);
+            CustomerInterest customerInterest = customerInterestService.findByName(interestSNormalized);
 
-            CustomerInterest customerInterest = new CustomerInterest(interestSNormalized, translationKey, ++order);
-
+            if (customerInterest == null) {
+                throw new RuntimeException("cannot found interest " + interestSNormalized);
+            }
             interestMap.put(column, customerInterest);
-
-            //save
-            customerInterestService.saveOrUpdate(customerInterest);
 
             column++;
             interestS = sheet.getCell(column, 0).getContents();
         }
+
+
+        Map<Lang, Map<String, String>> translationMap = new HashMap<>();
+        //TODO add lang ?
+        Lang langFr = Lang.forCode("fr");
+        translationMap.put(langFr, new HashMap<>());
+
 
         List<BusinessCategory> categories = new ArrayList<>();
         List<CategoryInterestLink> links = new ArrayList<>();

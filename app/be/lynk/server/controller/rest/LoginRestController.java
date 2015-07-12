@@ -317,8 +317,6 @@ public class LoginRestController extends AbstractRestController {
             }
         }
 
-        Logger.info("-------------------------------------===>>>>> "+securityController.getCurrentUser().getLang());
-
 
         return ok(new ResultDTO());
     }

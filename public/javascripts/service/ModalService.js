@@ -1,7 +1,7 @@
 myApp.service("modalService", function ($modal) {
 
 
-    this.basicModal = function (title,directiveName, param, save) {
+    this.basicModal = function (title, directiveName, param, save) {
         var resolve = {
             directiveName: function () {
                 return directiveName;
@@ -23,7 +23,7 @@ myApp.service("modalService", function ($modal) {
             resolve: resolve
         });
     };
-    this.messageModal = function (title,message, save) {
+    this.messageModal = function (title, message, save) {
         var resolve = {
             message: function () {
                 return message;
@@ -43,11 +43,20 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openCustomerRegistrationModal = function () {
+    this.openCustomerRegistrationModal = function (fctToExecute,fctToExecuteParams) {
+        var resolve = {
+            fctToExecute: function () {
+                return fctToExecute;
+            },
+            fctToExecuteParams:function(){
+                return fctToExecuteParams;
+            }
+        };
         $modal.open({
             templateUrl: "/assets/javascripts/modal/CustomerRegistrationModal/view.html",
             controller: "CustomerRegistrationModalCtrl",
-            size: "lg"
+            size: "lg",
+            resolve: resolve
         });
     };
 
@@ -67,11 +76,20 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openLoginModal = function () {
+    this.openLoginModal = function (fctToExecute,fctToExecuteParams) {
+        var resolve = {
+            fctToExecute: function () {
+                return fctToExecute;
+            },
+            fctToExecuteParams:function(){
+                return fctToExecuteParams;
+            }
+        };
         $modal.open({
             templateUrl: "/assets/javascripts/modal/LoginModal/view.html",
             controller: "LoginModalCtrl",
-            size: "l"
+            size: "l",
+            resolve: resolve
         });
     }
 

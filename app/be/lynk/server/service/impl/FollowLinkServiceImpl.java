@@ -7,9 +7,11 @@ import be.lynk.server.service.FollowLinkService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,13 +23,28 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
     @Override
     public FollowLink findByAccountAndBusiness(CustomerAccount customerAccount, Business business) {
 
-        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-        CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
-        Root<FollowLink> from = cq.from(FollowLink.class);
-        cq.select(from);
-        cq.where(cb.equal(from.get("business"), business));
-        cq.where(cb.equal(from.get("account"), customerAccount));
-        return getSingleResultOrNull(cq);
+        String request = "select f from FollowLink f where business = :business and account=:account";
+        List<FollowLink> resultList = JPA.em().createQuery(request, FollowLink.class)
+                .setParameter("business", business)
+                .setParameter("account", customerAccount)
+                .getResultList();
+        if(resultList.size()==0){
+            return null;
+        }
+        if(resultList.size()>1){
+            throw new RuntimeException();
+        }
+        return resultList.get(0);
+
+
+//
+//        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+//        CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
+//        Root<FollowLink> from = cq.from(FollowLink.class);
+//        cq.select(from);
+//        cq.where(cb.equal(from.get("business"), business));
+//        cq.where(cb.equal(from.get("account"), customerAccount));
+//        return getSingleResultOrNull(cq);
     }
 
     @Override
@@ -71,5 +88,24 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
                 .setParameter("business", business)
                 .setParameter("account",customerAccount)
                 .getSingleResult()>0;
+    }
+
+    @Override
+    public List<Business> findBusinessByAccount(CustomerAccount account) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
+        Root<FollowLink> from = cq.from(FollowLink.class);
+        cq.select(from);
+        cq.where(cb.equal(from.get("account"), account));
+        List<FollowLink> resultList = JPA.em().createQuery(cq).getResultList();
+
+        List<Business> l = new ArrayList<>();
+
+        for (FollowLink followLink : resultList) {
+            l.add(followLink.getBusiness());
+        }
+
+
+        return l;
     }
 }

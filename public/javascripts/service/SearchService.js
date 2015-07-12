@@ -21,6 +21,26 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
+    this.byFollowed = function (callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/search/publication/followed",
+            'headers': "Content-Type:application/json",
+            'data': geolocationService.position
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
 
     this.byBusiness = function (businessId, callbackSuccess, callbackError) {
 

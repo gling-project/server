@@ -1,7 +1,12 @@
 <div class="publication-list">
 
+    <div ng-show="getInfo().loading===true" class="publication-list-loading">
+        <img src="assets/images/big_loading.gif"/>
+    </div>
 
-    <div ng-repeat="publication in publications"
+
+    <div ng-hide="getInfo().loading===true"
+         ng-repeat="publication in publications"
          class="publication-box publication-publication"
          ng-click="click()">
 
@@ -10,6 +15,13 @@
         <div class="publication-list-business-data">
             <div>
                 <span class="link" ng-click="navigateTo('/business/'+publication.businessId)">{{publication.businessName}}</span>
+            </div>
+            <div>
+                <button ng-click="follow(publication)" class="follow-button">
+                    <img src="assets/images/haert.png" ng-show="publication.following"/>
+                    <img src="assets/images/haert-off.png" ng-hide="publication.following"/>
+                </button>
+                {{publication.totalFollowers}}
             </div>
             <div class="distance"><i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km</div>
             <br/>

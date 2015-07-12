@@ -1,5 +1,12 @@
 
+
 .publication-list {
+
+
+  .publication-list-loading {
+    text-align: center;
+    padding-top: 50px;
+  }
 
   .publication-box {
     -webkit-box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
@@ -11,8 +18,14 @@
     width: 650px;
     min-height: 160px;
     padding: 10px 5px;
-    background-image: linear-gradient(to bottom,#DDDDDD 0,#e8e8e8 100%);
+    background-image: linear-gradient(to bottom, #DDDDDD 0, #e8e8e8 100%);
     padding: 10px;
+
+    .follow-button {
+      background: none;
+      border: none;
+      outline: none;
+    }
 
     .publication-list-business-data {
       width: ~'calc(100% - 90px)';
@@ -22,6 +35,7 @@
           margin-left: 5px;
           font-size: 16px;
           font-weight: bold;
+          margin-right: 30px;
         }
       }
       .distance {
@@ -38,6 +52,10 @@
 
       .date {
         float: right;
+      }
+
+      img {
+        width: 400px;
       }
 
     }
@@ -78,10 +96,6 @@
       margin: 5px;
     }
 
-    img{
-      width: 400px;
-    }
-
   }
 
   .publication-reduction {
@@ -91,7 +105,7 @@
     left: -80px;
     top: 80px;
 
-    & > div{
+    & > div {
       margin-bottom: 15px;
       background: red;
       padding: 6px 0;

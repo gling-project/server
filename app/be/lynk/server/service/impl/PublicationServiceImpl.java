@@ -8,6 +8,7 @@ import play.db.jpa.JPA;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,5 +59,28 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.select(from);
         cq.where(cb.equal(from.get("business"), business));
         return JPA.em().createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<AbstractPublication> findActivePublicationByBusinesses(List<Business> byAccount) {
+
+        String request = "select p from AbstractPublication p where startDate <:now and endDate >:now and business in :businesses";
+        return JPA.em().createQuery(request)
+                .setParameter("now", LocalDateTime.now())
+                .setParameter("businesses", byAccount)
+                .getResultList();
+
+//        LocalDateTime now = LocalDateTime.now();
+//
+//        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+//        CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
+//        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+//        Path<Business> business = from.get("business");
+//        cq.select(from);
+//        cq.where(cb.lessThan(from.get("startDate"), now));
+//        cq.where(cb.greaterThan(from.get("endDate"), now));
+//        cq.where(cb.in(from.get("business"),byAccount));
+//        List<AbstractPublication> resultList = JPA.em().createQuery(cq).getResultList();
+//        return resultList;
     }
 }

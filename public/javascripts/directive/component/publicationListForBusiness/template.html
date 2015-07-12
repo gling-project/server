@@ -1,15 +1,30 @@
 <div class="publication-list">
 
-    <div    ng-repeat="publication in publications"
-            class="publication-box publication-promotion"
-            ng-click="click()">
-        <div ng-show="publication.type == 'PROMOTION'" class="promotion-reduction">{{publication.offPercent * 100 | number:0}} % !</div>
-        <div class="publication-box-name">{{publication.description}}</div>
-        <div><i class="fa fa-calendar"></i> {{publication.endDate | date:medium}}</div>
-        <timer ng-show="publication.interval < (24 * 60 * 60)" style="color: red;font-weight: bold" countdown="publication.interval" language="en" interval="1000" finish-callback="callbackTimer.finished()">{{hours|zeropad}}:{{minutes|zeropad}}:{{seconds|zeropad}}</timer>
 
-        <div ng-repeat="picture in publication.pictures">
-            <img  ng-src="{{picture | image}}"/>
+
+
+
+    <div    ng-repeat="publication in publications"
+            class="publication-box publication-promotion publication-list-publication-data"
+            ng-click="click()">
+
+        <div class="publication-list-publication-data">
+
+            <div class="publication-reduction">
+                <div ng-show="publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1">
+                    {{publication.offPercent * 100|number:0}} % !
+                </div>
+                <div ng-show="publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)">
+                    Plus que {{ publication.interval |date:'H'}} h !
+                </div>
+            </div>
+
+            <div class="date"><i class="fa fa-calendar"></i> {{publication.endDate | date:medium}}</div>
+            <div class="publication-box-name">{{publication.description}}</div>
+
+            <div ng-repeat="picture in publication.pictures">
+                <img ng-src="{{picture | image}}"/>
+            </div>
         </div>
 
     </div>

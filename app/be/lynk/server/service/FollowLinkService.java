@@ -19,4 +19,6 @@ public interface FollowLinkService extends CrudService<FollowLink> {
     Integer countByBusiness(Business business);
 
     boolean testByAccountAndBusiness(CustomerAccount customerAccount, Business business);
+
+    List<Business> findBusinessByAccount(CustomerAccount currentUser);
 }
