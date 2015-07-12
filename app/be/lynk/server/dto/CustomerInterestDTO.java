@@ -11,11 +11,42 @@ import javax.persistence.Entity;
  */
 public class CustomerInterestDTO extends DTO{
 
+    private Long id;
+
     private String name;
 
     private String translationName;
 
+    private Integer orderIndex;
+
+    private String iconName;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public CustomerInterestDTO() {
+    }
+
+    public String getIconName() {
+        return iconName;
+    }
+
+    public void setIconName(String iconName) {
+        this.iconName = iconName;
+    }
+
+    public Integer getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Integer orderIndex) {
+        this.orderIndex = orderIndex;
     }
 
     public CustomerInterestDTO(String name) {

@@ -12,7 +12,7 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
         }).success(function (data, status) {
             customerInterests = data;
             if (callbackSuccess != null) {
-                callbackSuccess(data);
+                callbackSuccess(data.list);
             }
         })
             .error(function (data, status) {

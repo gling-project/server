@@ -32,6 +32,12 @@ public class FileServiceImpl implements FileService {
 
     public static final String[] IMAGE_POST = new String[]{"bmp", "jpeg", "jpg", "png"};
 
+    @Override
+    public StoredFile uploadWithSize(File file, Account account) {
+        return uploadWithSize(file,null,null,account);
+
+    }
+
     public StoredFile uploadWithSize(File file, Integer sizex, Integer sizey, Account account) {
 
         String fileName = file.getName();

@@ -17,6 +17,8 @@ public class StoredFileDTO extends DTO {
 
     private String originalName;
 
+    private String storedName;
+
     public Long getId() {
         return id;
     }
@@ -39,6 +41,14 @@ public class StoredFileDTO extends DTO {
 
     public void setOriginalName(String originalName) {
         this.originalName = originalName;
+    }
+
+    public String getStoredName() {
+        return storedName;
+    }
+
+    public void setStoredName(String storedName) {
+        this.storedName = storedName;
     }
 
     @Override

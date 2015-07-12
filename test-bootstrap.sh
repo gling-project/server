@@ -1,6 +1,6 @@
 # DEV
 export PGPASSWORD='florian';
-DB_CONNECTION="psql -h 127.0.0.1 -U florian -d lynk -w"
+DB_CONNECTION="heroku pg:psql --app lynk-test DATABASE"
 
 echo "[DROP SCHEMA]"
 echo "DROP SCHEMA public CASCADE;" | eval $DB_CONNECTION
@@ -8,8 +8,9 @@ echo "DROP SCHEMA public CASCADE;" | eval $DB_CONNECTION
 echo "[CREATE SCHEMA]"
 echo "CREATE SCHEMA public;" | eval $DB_CONNECTION
 
+
 echo ""
-echo "Run the app and press enter"
+echo "Run the app"
 read dummyVar
 
 # insert DB

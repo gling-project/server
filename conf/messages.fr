@@ -96,7 +96,6 @@
 --.welcome.myProfile=Mon profile
 #--.menu.home=Home
 --.welcome.signIn=Enregistrement
---.site.name=Lÿnk
 --.welcome.login=Connection
 
 ##  directive/dirFieldDocument/template.html
@@ -217,6 +216,7 @@
 
 ##  be/lynk/server/views/template.scala.html (javascript library )
 --.welcome.myBusiness=Mon commerce
+--.welcome.search=Chercher...
 
 ##  view/profile.html
 --.customer.profile.myAddresses=Mon addresse

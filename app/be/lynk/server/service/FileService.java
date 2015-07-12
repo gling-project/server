@@ -11,5 +11,7 @@ import java.io.File;
  */
 public interface FileService {
 
+    StoredFile uploadWithSize(File file, Account account);
+
     StoredFile uploadWithSize(File file, Integer sizex, Integer sizey, Account account);
 }

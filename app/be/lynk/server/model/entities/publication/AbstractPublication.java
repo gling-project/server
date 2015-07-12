@@ -7,6 +7,8 @@ import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by florian on 5/06/15.
@@ -30,8 +32,8 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
     @Basic(optional = false)
     protected LocalDateTime endDate;
 
-    @ManyToOne
-    private StoredFile illustration;
+    @OneToMany(mappedBy = "publication",cascade = CascadeType.ALL)
+    private List<StoredFile> pictures=new ArrayList<>();
 
     public Business getBusiness() {
         return business;
@@ -65,12 +67,12 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
         this.endDate = endDate;
     }
 
-    public StoredFile getIllustration() {
-        return illustration;
+    public List<StoredFile> getPictures() {
+        return pictures;
     }
 
-    public void setIllustration(StoredFile illustration) {
-        this.illustration = illustration;
+    public void setPictures(List<StoredFile> pictures) {
+        this.pictures = pictures;
     }
 
     @Override
@@ -79,7 +81,6 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", illustration=" + illustration +
                 '}';
     }
 

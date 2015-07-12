@@ -1,5 +1,6 @@
 package be.lynk.server.model.entities;
 
+import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class StoredFile extends AbstractEntity {
     @ManyToOne(optional = false)
     private Account account;
 
+    @ManyToOne
+    private AbstractPublication publication;
+
 
     public StoredFile() {
     }
@@ -36,6 +40,14 @@ public class StoredFile extends AbstractEntity {
         this.isImage=isImage;
     }
 
+
+    public AbstractPublication getPublication() {
+        return publication;
+    }
+
+    public void setPublication(AbstractPublication publication) {
+        this.publication = publication;
+    }
 
     public Boolean getIsImage() {
         return isImage;

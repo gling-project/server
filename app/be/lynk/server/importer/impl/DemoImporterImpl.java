@@ -22,6 +22,7 @@ import play.Logger;
 import play.i18n.Lang;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     /**
      * BUSINESS COLUMNS *
      */
+    private static final Boolean WITH_PICTURE = true;
     private static final Integer COL_BUSINESS_NAME = 0;
     private static final Integer COL_BUSINESS_DESC = 1;
     private static final Integer COL_BUSINESS_PHONE = 2;
@@ -59,6 +61,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final Integer COL_PUBLICATION_BUSINESS = 0;
     private static final Integer COL_PUBLICATION_TYPE = 1;
     private static final Integer COL_PUBLICATION_TITLE = 2;
+    private static final Integer COL_PUBLICATION_START_HOUR = 4;
+    private static final Integer COL_PUBLICATION_END_HOUR = 5;
     private static final Integer COL_PUBLICATION_LOGO = 6;
     private static final Integer COL_PUBLICATION_Q = 7;
     private static final Integer COL_PUBLICATION_MIN_Q = 8;
@@ -102,66 +106,91 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
         int rowCounter = FIRST_COLUMN_INTEREST;
 
         while (sheet.getRows() > rowCounter) {
-
-            Business business = new Business();
             String bName = sheet.getCell(COL_BUSINESS_NAME, rowCounter).getContents();
-            business.setName(bName);
-            business.setDescription(sheet.getCell(COL_BUSINESS_DESC, rowCounter).getContents());
-            business.setPhone(sheet.getCell(COL_BUSINESS_PHONE, rowCounter).getContents());
-            business.setBusinessStatus(BusinessStatus.PUBLISHED);
-            business.setAddress(new Address(
-                    sheet.getCell(COL_BUSINESS_STREET, rowCounter).getContents(),
-                    sheet.getCell(COL_BUSINESS_ZIP, rowCounter).getContents(),
-                    sheet.getCell(COL_BUSINESS_CITY, rowCounter).getContents(),
-                    sheet.getCell(COL_BUSINESS_COUNTRY, rowCounter).getContents()
-            ));
-            business.setEmail(sheet.getCell(COL_BUSINESS_EMAIL, rowCounter).getContents());
-            BusinessAccount account = new BusinessAccount();
-            account.setFirstname(bName);
-            account.setLastname(bName);
-            account.setGender(GenderEnum.MALE);
-            account.setEmail(sheet.getCell(COL_BUSINESS_EMAIL, rowCounter).getContents());
-            account.setLoginCredential(new LoginCredential(account, false, "password"));
-            account.setBusiness(business);
-            account.setRole(RoleEnum.BUSINESS);
-            account.setType(AccountTypeEnum.BUSINESS);
-            account.setLang(Lang.forCode("fr"));
 
-            business.setAccount(account);
+            if (bName!= null && bName.length() > 0) {
 
-            try {
-                localizationService.validAddress(business.getAddress());
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
+                Business business = new Business();
+                business.setName(bName);
+                business.setDescription(sheet.getCell(COL_BUSINESS_DESC, rowCounter).getContents());
+                business.setPhone(sheet.getCell(COL_BUSINESS_PHONE, rowCounter).getContents());
+                business.setBusinessStatus(BusinessStatus.PUBLISHED);
+                business.setAddress(new Address(
+                        sheet.getCell(COL_BUSINESS_STREET, rowCounter).getContents(),
+                        sheet.getCell(COL_BUSINESS_ZIP, rowCounter).getContents(),
+                        sheet.getCell(COL_BUSINESS_CITY, rowCounter).getContents(),
+                        sheet.getCell(COL_BUSINESS_COUNTRY, rowCounter).getContents()
+                ));
+                business.setEmail(sheet.getCell(COL_BUSINESS_EMAIL, rowCounter).getContents());
+                BusinessAccount account = new BusinessAccount();
+                account.setFirstname(bName);
+                account.setLastname(bName);
+                account.setGender(GenderEnum.MALE);
+                account.setEmail(sheet.getCell(COL_BUSINESS_EMAIL, rowCounter).getContents());
+                account.setLoginCredential(new LoginCredential(account, false, "password"));
+                account.setBusiness(business);
+                account.setRole(RoleEnum.BUSINESS);
+                account.setType(AccountTypeEnum.BUSINESS);
+                account.setLang(Lang.forCode("fr"));
+
+                business.setAccount(account);
+
+                try {
+                    localizationService.validAddress(business.getAddress());
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage());
+                }
 
 
-            for (String s : sheet.getCell(COL_BUSINESS_CAT, rowCounter).getContents().split("/")) {
-                BusinessCategory byName = businessCategoryService.findByName(s);
+//            for (String s : sheet.getCell(COL_BUSINESS_CAT, rowCounter).getContents().split("/")) {
+                String s = sheet.getCell(COL_BUSINESS_CAT, rowCounter).getContents();
+                BusinessCategory byName = businessCategoryService.findByName(normalize(s));
                 if (byName == null) {
                     Logger.warn("Cannot found the category " + s);
                 } else {
                     business.getBusinessCategories().add(byName);
                 }
+//            }
+
+                businessService.saveOrUpdate(business);
+
+
+                if (WITH_PICTURE) {
+                    String landscapePath = sheet.getCell(COL_BUSINESS_LANDSCAPE, rowCounter).getContents();
+                    if (landscapePath != null && landscapePath.length() > 0) {
+                        String path = "file/images/commerces/" + landscapePath;
+                        File file = new File(path);
+                        if (file != null) {
+                            //landscape
+                            try {
+                                business.setLandscape(fileService.uploadWithSize(file, 1200, 300, account));
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+                //illustration
+                if (WITH_PICTURE) {
+                    String illustrationPath = sheet.getCell(COL_BUSINESS_LOGO, rowCounter).getContents();
+                    if (illustrationPath != null && illustrationPath.length() > 0) {
+                        String path = "file/images/commerces/" + illustrationPath;
+                        File file = new File(path);
+                        if (file != null) {
+                            try {
+                                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                }
+
+
+                businessService.saveOrUpdate(business);
             }
-
-            businessService.saveOrUpdate(business);
-
-            //landscape
-            String landscapePath = sheet.getCell(COL_BUSINESS_LANDSCAPE, rowCounter).getContents();
-            if (landscapePath != null && landscapePath.length() > 0) {
-                String path = "file/images/commerces/" + landscapePath;
-                business.setLandscape(fileService.uploadWithSize(new File(path), 1200, 300, account));
-            }
-
-            //illustration
-            String illustrationPath = sheet.getCell(COL_BUSINESS_LOGO, rowCounter).getContents();
-            if (illustrationPath != null && illustrationPath.length() > 0) {
-                String path = "file/images/commerces/" + illustrationPath;
-                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
-            }
-
-            businessService.saveOrUpdate(business);
 
 
             rowCounter++;
@@ -221,18 +250,35 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 if (title != null && title.length() > 1) {
                     publication.setDescription(title);
                     publication.setBusiness(business);
-                    publication.setEndDate(LocalDateTime.now().plusDays(30));
-                    publication.setStartDate(LocalDateTime.now());
-
-
-                    //illustration
-                    String illustrationPath = sheet.getCell(COL_PUBLICATION_LOGO, rowCounter).getContents();
-                    if (illustrationPath != null && illustrationPath.length() > 0) {
-                        String path = "file/images/publications/" + illustrationPath;
-                        publication.setIllustration(fileService.uploadWithSize(new File(path), 140, 140, business.getAccount()));
+                    try {
+                        publication.setEndDate(LocalDateTime.now().plusHours(getNumber(sheet, COL_PUBLICATION_END_HOUR, rowCounter).longValue()));
+                        publication.setStartDate(LocalDateTime.now().minusHours(getNumber(sheet, COL_PUBLICATION_START_HOUR, rowCounter).longValue()));
+                    } catch (Exception e) {
+                        publication.setEndDate(LocalDateTime.now());
+                        publication.setStartDate(LocalDateTime.now().plusDays(30));
                     }
 
                     publicationService.saveOrUpdate(publication);
+
+
+                    //illustration
+                    try {
+                        String illustrationPath = sheet.getCell(COL_PUBLICATION_LOGO, rowCounter).getContents();
+                        if (illustrationPath != null && illustrationPath.length() > 0) {
+                            String path = "file/images/publications/" + illustrationPath;
+                            File file = new File(path);
+                            if (file != null) {
+                                StoredFile storedFile = fileService.uploadWithSize(file, business.getAccount());
+                                storedFile.setPublication(publication);
+                                publication.getPictures().add(storedFile);
+                                storedFileService.saveOrUpdate(storedFile);
+                            }
+                        }
+                    } catch (Throwable e) {
+
+                    }
+
+
                 }
             }
             rowCounter++;
@@ -245,7 +291,12 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
             NumberCell contents = (NumberCell) cell;
             return contents.getValue();
         } catch (ClassCastException | NumberFormatException e) {
-            return null;
+            String contents = cell.getContents();
+            try {
+                return Double.parseDouble(contents);
+            } catch (NumberFormatException e1) {
+                return null;
+            }
         }
     }
 }

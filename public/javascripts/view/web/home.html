@@ -1,26 +1,21 @@
 <div class="content-block">
 
 
-    <div class="navbar navbar-app navbar-absolute-top">
-
-        <div class="navbar-brand navbar-brand-center">
-            {{'--.page.home.title' | translateText}}
-        </div>
-    </div>
-
-    <div>{{'--.home.main.description' | translateText}}</div>
-
     <div style="vertical-align: top">
 
-        <div style="display: inline-block;width:35%;vertical-align: top">
+        <div style="display: inline-block;width:71%;vertical-align: top">
             <h4 style="text-align: center;">Last promotion in your neighborhood</h4>
 
-            <promotion-list-ctrl ng-info="promotionListParam"></promotion-list-ctrl>
-        </div>
+            <div class="home-interest-box">
+            <button class="home-interest" ng-repeat="interest in customerInterests" ng-show="interest.iconName!=null"
+                    ng-click="searchByInterest(interest)"
+                    ng-class="{'selected':interest.selected === true}">
 
+                <img ng-src="assets/images/interest/{{interest.iconName}}" style="width:50px"/>
+            </button>
+            </div>
 
-        <div style="display: inline-block;width:35%;vertical-align: top">
-            <business-info-ctrl ng-info="businessInfoParam"></business-info-ctrl>
+            <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>
         </div>
 
         <div style="display: inline-block;width:28%;vertical-align: top">

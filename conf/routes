@@ -74,7 +74,8 @@ GET           /session                                        @be.lynk.server.co
 
 #search
 POST          /search/publication/default                     @be.lynk.server.controller.rest.SearchRestController.getByDefault()
-POST          /search/publication/business/:id               @be.lynk.server.controller.rest.SearchRestController.getBusiness(id:Long)
+POST          /search/publication/business/:id                @be.lynk.server.controller.rest.SearchRestController.getBusiness(id:Long)
+POST          /search/publication/interest/:id                @be.lynk.server.controller.rest.SearchRestController.getByInterest(id:Long)
 
 #file
 POST          /file                                           @be.lynk.server.controller.rest.FilesController.upload()

@@ -2,6 +2,7 @@ package be.lynk.server.service.impl;
 
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Address;
+import be.lynk.server.model.entities.Business;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
@@ -47,8 +48,8 @@ public class LocalizationServiceImpl implements LocalizationService {
             if (!geocoderResponse.getStatus().equals(GeocoderStatus.OK)) {
                 throw new Exception();
             }
-            address.setPosx(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat());
-            address.setPosy(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng());
+            address.setPosx(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue());
+            address.setPosy(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue());
         } catch (IOException e) {
             e.printStackTrace();
             throw new MyRuntimeException("fatal error : " + e.getMessage());
@@ -56,7 +57,7 @@ public class LocalizationServiceImpl implements LocalizationService {
     }
 
     @Override
-    public Map<Address, Long> distanceBetweenAddresses(Address origin, List<Address> destinations) {
+    public Map<Business, Long> distanceBetweenAddresses(Address origin, List<Business> destinations) {
         return distanceBetweenAddresses(addressToString(origin), destinations);
     }
 
@@ -84,18 +85,18 @@ public class LocalizationServiceImpl implements LocalizationService {
     }
 
     @Override
-    public Map<Address, Long> distanceBetweenAddresses(Position origin, List<Address> destinations) {
+    public Map<Business, Long> distanceBetweenAddresses(Position origin, List<Business> destinations) {
         return distanceBetweenAddresses(positionToString(origin), destinations);
     }
 
-    private Map<Address, Long> distanceBetweenAddresses(String originString, List<Address> destinations) {
+    private Map<Business, Long> distanceBetweenAddresses(String originString, List<Business> destinations) {
 
-        Map<Address, Long> map = new HashMap<>();
+        Map<Business, Long> map = new HashMap<>();
 
 
         String[] destinationsString = new String[destinations.size()];
         for (int i = 0; i < destinations.size(); i++) {
-            destinationsString[i] = addressToString(destinations.get(i));
+            destinationsString[i] = addressToString(destinations.get(i).getAddress());
         }
 
         GeoApiContext geoApiContext = new GeoApiContext();

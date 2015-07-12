@@ -16,7 +16,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             //edit mode ?
             $scope.$watch('business.businessStatus', function () {
 
-                    if (accountService.getMyself().businessId == $routeParams.businessId) {
+                    if (accountService.getMyself()!=null && accountService.getMyself().businessId == $routeParams.businessId) {
                         if ($scope.business.businessStatus != 'WAITING_CONFIRMATION') {
                             $scope.edit = true;
                         }
@@ -24,15 +24,6 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     }
                 }
             );
-            //illustration
-            if ($scope.business.illustration != null) {
-                $scope.business.illustration.link = '/file/' + $scope.business.illustration.id;
-            }
-            //landscape
-            if ($scope.business.landscape != null) {
-
-                $scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
-            }
 
             //distance
             $scope.currentPosition = geolocationService.position;
@@ -111,7 +102,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     {dto: $scope.business, sizex: 800, sizey: 300, fieldName: 'landscape'},
                     function (close) {
                         businessService.editLandscape($scope.business.landscape, function () {
-                            $scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
+                            //$scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
                             close();
                         });
                     });
@@ -134,7 +125,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                 var address = $scope.business.address;
                 var url = "https://www.google.be/maps/place/";
                 url += address.posx + ",+" + address.posy;
-                url += "/@" + address.posx + ",+" + address.posy + "," + 16 + "z?hl=" + accountService.getMyself().lang.code;
+                url += "/@" + address.posx + ",+" + address.posy + "," + 16 + "z";
                 $window.open(url, '_blank');
             };
 

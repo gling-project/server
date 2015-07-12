@@ -1,11 +1,11 @@
-myApp.directive('publicationBigListCtrl', function ($rootScope, businessService, geolocationService,directiveService,searchService) {
+myApp.directive('publicationListForBusinessCtrl', function ($rootScope, businessService, geolocationService,directiveService,searchService) {
 
     return {
         restrict: "E",
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/component/publicationBigList/template.html",
+        templateUrl: "/assets/javascripts/directive/component/publicationListForBusiness/template.html",
         replace: true,
         transclude: true,
         compile: function () {
@@ -19,17 +19,12 @@ myApp.directive('publicationBigListCtrl', function ($rootScope, businessService,
 
                         if (geolocationService.position != null) {
 
-                            scope.params = [];
-
                             searchService.byBusiness(scope.getInfo().businessId,function (data) {
-                                for (var i in data) {
-                                    if (data[i].illustration!= null) {
-                                        data[i].illustration.link = "/file/" + data[i].illustration.id;
-                                    }
-                                    data[i].interval = (data[i].endDate - new Date()) / 1000;
-                                    scope.params.push(data[i]);
-
+                                scope.publications = data;
+                                for (var i in scope.publications) {
+                                    scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
                                 }
+
                             });
                         }
                     });

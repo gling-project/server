@@ -46,10 +46,11 @@ public class PromotionRestController extends AbstractRestController {
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        if (dto.getIllustration() != null) {
-            //TODO control file
-            promotion.setIllustration(storedFileService.findById(dto.getIllustration().getId()));
-        }
+        //TODO control file
+//        if (dto.getIllustration() != null) {
+//
+//            promotion.setIllustration(storedFileService.findById(dto.getIllustration().getId()));
+//        }
         promotion.setBusiness(business);
 
         publicationService.saveOrUpdate(promotion);
@@ -83,10 +84,12 @@ public class PromotionRestController extends AbstractRestController {
         promotionToEdit.setOffPercent(promotion.getOffPercent());
         promotionToEdit.setQuantity(promotion.getQuantity());
         promotionToEdit.setStartDate(promotion.getStartDate());
-        if (promotion.getIllustration() != null) {
-            //TODO control file
-            promotionToEdit.setIllustration(storedFileService.findById(promotion.getIllustration().getId()));
-        }
+
+        //TODO control file
+//        if (promotion.getIllustration() != null) {
+//            //TODO control file
+//            promotionToEdit.setIllustration(storedFileService.findById(promotion.getIllustration().getId()));
+//        }
         promotionToEdit.setUnit(promotion.getUnit());
 
         publicationService.saveOrUpdate(promotionToEdit);

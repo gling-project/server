@@ -21,6 +21,9 @@ public class CustomerInterest extends AbstractEntity implements Comparable<Custo
     @Basic
     private Integer orderIndex;
 
+    @Basic
+    private String iconName;
+
     @OneToMany(mappedBy = "customerInterest",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<CategoryInterestLink> links;
 
@@ -31,6 +34,14 @@ public class CustomerInterest extends AbstractEntity implements Comparable<Custo
         this.name = name;
         this.translationName = translationName;
         this.orderIndex = orderIndex;
+    }
+
+    public String getIconName() {
+        return iconName;
+    }
+
+    public void setIconName(String iconName) {
+        this.iconName = iconName;
     }
 
     public String getName() {

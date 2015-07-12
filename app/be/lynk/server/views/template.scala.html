@@ -50,7 +50,7 @@
             <script src="@routes.Assets.at("javascripts/controller/web/BusinessCtrl.js")" type="text/javascript"></script>
 
             <!-- component -->
-            <script src="@routes.Assets.at("javascripts/directive/component/publicationBigList/PublicationBigListCtrl.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.at("javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js")" type="text/javascript"></script>
 
                 <!-- css -->
                 <!-- main -->
@@ -84,6 +84,9 @@
                                 <div class="container">
 
                                     <h1 style="cursor : pointer" ng-click="navigateTo('/')">{{'--.site.name' | translateText}}</h1>
+
+                                    <!-- seach bar -->
+                                        <input type="text" ng-model="searchText" class="search-bar" placeholder="{{'--.welcome.search' | translateText}}"/>
 
                                         <!-- not connected menu -->
                                     <div class="profile-buttons-container" ng-show="accountService.getMyself()==null">

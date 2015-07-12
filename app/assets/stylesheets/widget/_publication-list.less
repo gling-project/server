@@ -1,15 +1,46 @@
 
-.promotion-list {
+.publication-list {
+
   .publication-box {
     -webkit-box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
-    background-color: #ffffff;
-    padding: 5px;
-    width: 300px;
-    background-color: orange;
+    border: 1px solid #999;
     position: relative;
     margin: 12px 5px 5px;
+    width: 650px;
+    min-height: 160px;
+    padding: 10px 5px;
+    background-image: linear-gradient(to bottom,#DDDDDD 0,#e8e8e8 100%);
+    padding: 10px;
+
+    .publication-list-business-data {
+      width: ~'calc(100% - 90px)';
+      & > div {
+        display: inline-block;
+        &:first-child {
+          margin-left: 5px;
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+      .distance {
+        float: right;
+      }
+    }
+
+    .publication-list-publication-data {
+      margin: 5px;
+      padding: 5px;
+      width: ~'calc(100% - 90px)';
+      border-top: 1px solid #CCCCCC;
+      border-left: 1px solid #CCCCCC;
+
+      .date {
+        float: right;
+      }
+
+    }
 
     .publication-box-name {
       font-weight: bold;
@@ -47,31 +78,32 @@
       margin: 5px;
     }
 
-  }
-
-  .publication-promotion {
-    .promotion-reduction {
-      display: inline-block;
-      position: absolute;
-      left: 245px;
-      background: red;
-      padding: 2px 7px;
-      color: white;
-      font-weight: bold;
-      -ms-transform: rotate(25deg);
-      -webkit-transform: rotate(25deg);
-      transform: rotate(25deg);
-      margin-top: -6px;
-      -webkit-box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
-      -moz-box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
-      box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.50);
-      white-space: nowrap;
-      width: 60px;
-      top: 10px;
+    img{
+      width: 400px;
     }
 
   }
 
-  padding-bottom: 10px;
-  padding-top: 10px;
+  .publication-reduction {
+
+    display: inline-block;
+    position: absolute;
+    left: -80px;
+    top: 80px;
+
+    & > div{
+      margin-bottom: 15px;
+      background: red;
+      padding: 6px 0;
+      text-align: center;
+      width: 120px;
+      color: white;
+      font-weight: bold;
+      margin-top: -6px;
+      -webkit-box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.75);
+      box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+    }
+  }
 }

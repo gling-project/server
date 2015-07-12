@@ -44,7 +44,7 @@ public class Business extends AbstractEntity {
             name = "business_category",
             joinColumns = {@JoinColumn(name = "business")},
             inverseJoinColumns = {@JoinColumn(name = "category")})
-    private List<BusinessCategory> businessCategories;
+    private List<BusinessCategory> businessCategories = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private StoredFile illustration;

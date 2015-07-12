@@ -28,10 +28,10 @@ public class Address extends AbstractEntity {
     private String country;
 
     @Basic(optional = false)
-    private BigDecimal posx;
+    private Double posx;
 
     @Basic(optional = false)
-    private BigDecimal posy;
+    private Double posy;
 
     public Address() {
     }
@@ -83,19 +83,19 @@ public class Address extends AbstractEntity {
         this.name = name;
     }
 
-    public BigDecimal getPosx() {
+    public Double getPosx() {
         return posx;
     }
 
-    public void setPosx(BigDecimal posx) {
+    public void setPosx(Double posx) {
         this.posx = posx;
     }
 
-    public BigDecimal getPosy() {
+    public Double getPosy() {
         return posy;
     }
 
-    public void setPosy(BigDecimal posy) {
+    public void setPosy(Double posy) {
         this.posy = posy;
     }
 

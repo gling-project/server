@@ -29,7 +29,7 @@
 </div>
 <div class="business-page">
     <div class="business-page-header"
-         ng-style="{'background-image':business.landscape.link }">
+         ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
 
         <!-- landscape -->
         <div class="edit-button-container landscape-edit">
@@ -42,7 +42,7 @@
 
         <!-- illustration -->
         <div class="business-page-illustration-container">
-            <img class="business-illustration" ng-src="{{business.illustration.link}}"/>
+            <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
 
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
@@ -115,7 +115,7 @@
             <div>
                 Dernières publications
 
-                <publication-big-list-ctrl ng-info="{businessId:businessId}"></publication-big-list-ctrl>
+                <publication-list-for-business-ctrl ng-info="{businessId:businessId}"></publication-list-for-business-ctrl>
 
             </div>
         </div>

@@ -8,7 +8,9 @@ import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by florian on 5/06/15.
@@ -23,11 +25,11 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     protected Date endDate;
 
-    protected StoredFileDTO illustration;
-
     private Long distance;
 
     private String businessName;
+
+    private StoredFileDTO businessIllustration;
 
     private Long businessId;
 
@@ -36,6 +38,18 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
     private Integer totalFollowers;
 
     protected PublicationType type;
+
+    public StoredFileDTO getBusinessIllustration() {
+        return businessIllustration;
+    }
+
+    public void setBusinessIllustration(StoredFileDTO businessIllustration) {
+        this.businessIllustration = businessIllustration;
+    }
+
+
+
+    private List<StoredFileDTO> pictures=new ArrayList<>();
 
 
     public PublicationType getType() {
@@ -114,12 +128,12 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
         this.endDate = endDate;
     }
 
-    public StoredFileDTO getIllustration() {
-        return illustration;
+    public List<StoredFileDTO> getPictures() {
+        return pictures;
     }
 
-    public void setIllustration(StoredFileDTO illustration) {
-        this.illustration = illustration;
+    public void setPictures(List<StoredFileDTO> pictures) {
+        this.pictures = pictures;
     }
 
     public void setFollowing(Boolean following) {
@@ -129,7 +143,7 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     @Override
     public int compareTo(AbstractPublicationDTO o) {
-        return o.getStartDate().compareTo(this.getStartDate());
+        return this.getEndDate().compareTo(o.getEndDate());
     }
 
     @Override
@@ -139,7 +153,6 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", illustration=" + illustration +
                 ", distance=" + distance +
                 ", businessName='" + businessName + '\'' +
                 '}';

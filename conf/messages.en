@@ -1,5 +1,5 @@
 ## common
---.site.name=Lÿnk
+--.site.name=G²app
 --.account.fusion.description=There is an account with the email {0}. If it's you, you can add your Facebook account to this My project account and keep your information. Otherwise, you cannot use this email to create an account.
 
 ##generic
@@ -71,6 +71,7 @@
 ## welcome
 --.welcome.login=Log you
 --.welcome.signIn=Sign up
+--.welcome.search=Search...
 #--.welcome.editProfile=Edit my profile
 
 ## registration

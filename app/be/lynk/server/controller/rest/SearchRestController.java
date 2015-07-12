@@ -5,18 +5,13 @@ import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.publication.Promotion;
-import be.lynk.server.service.BusinessService;
-import be.lynk.server.service.FollowLinkService;
-import be.lynk.server.service.LocalizationService;
-import be.lynk.server.service.PublicationService;
+import be.lynk.server.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by florian on 23/05/15.
@@ -33,6 +28,8 @@ public class SearchRestController extends AbstractRestController {
     private PublicationService publicationService;
     @Autowired
     private FollowLinkService followLinkService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
     @Transactional
     public Result getBusiness(long id) {
@@ -41,7 +38,9 @@ public class SearchRestController extends AbstractRestController {
 
         Business byId = businessService.findById(id);
 
-        return ok(new ListDTO<>(dozerService.map(byId.getPublications(),AbstractPublicationDTO.class)));
+        List<AbstractPublication> publications = byId.getPublications();
+
+        return ok(new ListDTO<>(dozerService.map(publications, AbstractPublicationDTO.class)));
     }
 
 
@@ -55,9 +54,38 @@ public class SearchRestController extends AbstractRestController {
         return ok(new ListDTO<>(finalize(dto, publications)));
     }
 
+    @Transactional
+    public Result getByInterest(long id) {
+
+        //load interest
+        CustomerInterest byId = customerInterestService.findById(id);
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        List<AbstractPublication> publications = publicationService.findActivePublication();
+
+        List<AbstractPublication> finalList = new ArrayList<>();
+
+        //sort
+        for (AbstractPublication publication : publications) {
+            for (BusinessCategory businessCategory : publication.getBusiness().getBusinessCategories()) {
+                for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
+                    if(categoryInterestLink.getCustomerInterest().equals(byId)){
+                        finalList.add(publication);
+                        break;
+                    }
+                }
+            }
+
+        }
+
+
+        return ok(new ListDTO<>(finalize(dto, finalList)));
+    }
+
     private List<AbstractPublicationDTO> finalize(PositionDTO dto, List<AbstractPublication> publications) {
         //compute distance
-        List<Address> addresses = new ArrayList<>();
+        List<Business> addresses = new ArrayList<>();
         List<AbstractPublicationDTO> l = new ArrayList<>();
 
         if (publications.size() > 0) {
@@ -68,24 +96,27 @@ public class SearchRestController extends AbstractRestController {
             }
 
 
-            for (AbstractPublication promotion : publications) {
-                addresses.add(promotion.getBusiness().getAddress());
+            for (AbstractPublication publication : publications) {
+                if (!addresses.contains(publication.getBusiness())) {
+                    addresses.add(publication.getBusiness());
+                }
             }
 
-            Map<Address, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
+            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
 
-            for (Map.Entry<Address, Long> addressLongEntry : addressLongMap.entrySet()) {
+            for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
                 for (AbstractPublication publication : publications) {
-                    if (addressLongEntry.getKey().equals(publication.getBusiness().getAddress())) {
+                    if (addressLongEntry.getKey().equals(publication.getBusiness())) {
 
                         AbstractPublicationDTO publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
                         publicationDTO.setDistance(addressLongEntry.getValue());
                         l.add(publicationDTO);
                         //add business name
                         publicationDTO.setBusinessName(publication.getBusiness().getName());
+                        publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(),StoredFileDTO.class));
                         publicationDTO.setBusinessId(publication.getBusiness().getId());
                         //follow ?
-                        if (securityController.getCurrentUser() != null) {
+                        if (securityController.isAuthenticated(ctx())) {
                             Account account = securityController.getCurrentUser();
                             if (account instanceof CustomerAccount) {
                                 publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness((CustomerAccount) account, publication.getBusiness()));
@@ -96,6 +127,8 @@ public class SearchRestController extends AbstractRestController {
                 }
             }
         }
+
+        Collections.sort(l);
 
         return l;//
     }
