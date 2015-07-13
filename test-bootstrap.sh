@@ -10,8 +10,11 @@ echo "CREATE SCHEMA public;" | eval $DB_CONNECTION
 
 
 echo ""
-echo "Run the app"
+echo "Deploy"
 git push heroku master
+
+echo "open in navigator"
+timeout 60 xdg-open http://lynk-test.herokuapp.com/
 
 # insert DB
 echo "[CREATE LANGUAGE]"
