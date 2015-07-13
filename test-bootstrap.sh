@@ -14,7 +14,10 @@ echo "Deploy"
 git push heroku master
 
 echo "open in navigator"
-timeout 60 xdg-open http://lynk-test.herokuapp.com/
+xdg-open http://lynk-test.herokuapp.com/
+
+echo "wait 1 minute to be sure the database is created"
+sleep 60
 
 # insert DB
 echo "[CREATE LANGUAGE]"
