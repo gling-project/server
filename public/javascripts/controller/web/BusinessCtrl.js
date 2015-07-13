@@ -1,4 +1,4 @@
-myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash) {
+myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash,followService) {
 
 
     $scope.displayError = false;
@@ -173,6 +173,29 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     });
 
             };
+
+            $scope.follow = function(){
+                if (accountService.getMyself() != null) {
+                    $scope.followed();
+                }
+                else {
+                    modalService.openLoginModal($scope.followed);
+                }
+            };
+
+            $scope.followed = function () {
+                var followed = $scope.business.following;
+                followService.addFollow(!followed, $scope.business.id, function () {
+                    $scope.business.following = !followed;
+                    if ($scope.business.following) {
+                        $scope.business.totalFollowers++;
+                    }
+                    else {
+                        $scope.business.totalFollowers--;
+                    }
+                });
+            };
+
 
             //schedule
             $scope.editSchedule = function () {

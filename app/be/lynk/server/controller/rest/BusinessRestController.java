@@ -35,6 +35,8 @@ public class BusinessRestController extends AbstractController {
     private StoredFileService storedFileService;
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private FollowLinkService followLinkService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
@@ -61,6 +63,13 @@ public class BusinessRestController extends AbstractController {
 
         //convert
         BusinessToDisplayDTO map = dozerService.map(business, BusinessToDisplayDTO.class);
+
+        //additional data
+        if (securityController.isAuthenticated(ctx())) {
+            map.setFollowing(followLinkService.testByAccountAndBusiness((CustomerAccount) securityController.getCurrentUser(),business));
+        }
+        map.setTotalFollowers(followLinkService.countByBusiness(business));
+
 
 
         //load last publication

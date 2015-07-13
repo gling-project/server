@@ -1,8 +1,14 @@
 <div ng-show="myBusiness === true">
 
-    <div ng-show="business.businessStatus === 'NOT_PUBLISHED'">{{'--.business.page.edit.description.notPublished' | translateText}}</div>
-    <div ng-show="business.businessStatus === 'WAITING_CONFIRMATION'">{{'--.business.page.edit.description.waitConfirmation' | translateText}}</div>
-    <div ng-show="business.businessStatus === 'PUBLISHED'">{{'--.business.page.edit.descriptionPublished' | translateText}}</div>
+    <div ng-show="business.businessStatus === 'NOT_PUBLISHED'">{{'--.business.page.edit.description.notPublished' |
+        translateText}}
+    </div>
+    <div ng-show="business.businessStatus === 'WAITING_CONFIRMATION'">
+        {{'--.business.page.edit.description.waitConfirmation' | translateText}}
+    </div>
+    <div ng-show="business.businessStatus === 'PUBLISHED'">{{'--.business.page.edit.descriptionPublished' |
+        translateText}}
+    </div>
 
     <div class="onoffswitch-container" ng-hide="business.businessStatus === 'WAITING_CONFIRMATION'">
         <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
@@ -113,15 +119,24 @@
 
             <!-- publication -->
             <div>
-                Dernières publications
 
-                <publication-list-for-business-ctrl ng-info="{businessId:businessId}"></publication-list-for-business-ctrl>
+                <publication-list-for-business-ctrl
+                        ng-info="{businessId:businessId}"></publication-list-for-business-ctrl>
 
             </div>
         </div>
 
 
         <div class="business-page-body-right">
+
+            <!-- follow  TODO TEMP-->
+            <div style="text-align: center;margin: 10px;">
+                <button ng-click="follow()" class="follow-button">
+                    <img src="assets/images/haert.png" ng-show="business.following"/>
+                    <img src="assets/images/haert-off.png" ng-hide="business.following"/>
+                </button>
+                {{business.totalFollowers}}
+            </div>
 
             <!-- address -->
             <div class="panel panel-default">

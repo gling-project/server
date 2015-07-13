@@ -19,6 +19,8 @@ import java.util.*;
  */
 public class BusinessToDisplayDTO extends DTO {
 
+    private Long id;
+
     private String name;
 
     private String description;
@@ -45,8 +47,27 @@ public class BusinessToDisplayDTO extends DTO {
 
     protected Date askPublicationDate;
 
+    private Boolean following;
+
+    private Integer totalFollowers;
+
     private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
 
+    public Boolean getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Boolean following) {
+        this.following = following;
+    }
+
+    public Integer getTotalFollowers() {
+        return totalFollowers;
+    }
+
+    public void setTotalFollowers(Integer totalFollowers) {
+        this.totalFollowers = totalFollowers;
+    }
 
     public Date getAskPublicationDate() {
         return askPublicationDate;
@@ -57,6 +78,14 @@ public class BusinessToDisplayDTO extends DTO {
     }
 
     public BusinessToDisplayDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BusinessStatus getBusinessStatus() {

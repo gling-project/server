@@ -24,13 +24,7 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
     };
 
     this.getAll = function (callback) {
-        if (customerInterests == null) {
-            loadAll(callback);
-        }
-        else {
-            callback(customerInterests);
-        }
-
+        loadAll(callback);
     }
 
 });

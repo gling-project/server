@@ -11,7 +11,7 @@ echo "CREATE SCHEMA public;" | eval $DB_CONNECTION
 
 echo ""
 echo "Run the app"
-read dummyVar
+git push heroku master
 
 # insert DB
 echo "[CREATE LANGUAGE]"
