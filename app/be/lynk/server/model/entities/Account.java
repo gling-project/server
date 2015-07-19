@@ -19,7 +19,7 @@ import java.util.Set;
  * Created by florian on 10/11/14.
  */
 @Entity
-public abstract  class Account extends AbstractEntity {
+public class Account extends AbstractEntity {
 
 
     @Basic(optional = false)
