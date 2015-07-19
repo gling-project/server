@@ -11,6 +11,7 @@ import play.i18n.Lang;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,9 +45,6 @@ public abstract  class Account extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     protected RoleEnum role;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account", orphanRemoval = true)
-    protected Set<Session> sessions;
-
 
     @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL)
     protected LoginCredential loginCredential;
@@ -57,6 +55,15 @@ public abstract  class Account extends AbstractEntity {
 
     @Enumerated(value = EnumType.STRING)
     protected AccountTypeEnum type;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Address> addresses = new HashSet<>();
+
+    @ManyToMany()
+    private Set<CustomerInterest> customerInterests = new HashSet<>();
+
+    @Basic(optional = false)
+    private Boolean sendNotificationByDefault = true;
 
 
     public Account() {
@@ -84,14 +91,6 @@ public abstract  class Account extends AbstractEntity {
 
     public void setLoginCredential(LoginCredential loginCredential) {
         this.loginCredential = loginCredential;
-    }
-
-    public Set<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(Set<Session> sessions) {
-        this.sessions = sessions;
     }
 
     public RoleEnum getRole() {
@@ -150,6 +149,30 @@ public abstract  class Account extends AbstractEntity {
         this.lang = lang;
     }
 
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Set<CustomerInterest> getCustomerInterests() {
+        return customerInterests;
+    }
+
+    public void setCustomerInterests(Set<CustomerInterest> customerInterests) {
+        this.customerInterests = customerInterests;
+    }
+
+    public Boolean getSendNotificationByDefault() {
+        return sendNotificationByDefault;
+    }
+
+    public void setSendNotificationByDefault(Boolean sendNotificationByDefault) {
+        this.sendNotificationByDefault = sendNotificationByDefault;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -180,11 +203,11 @@ public abstract  class Account extends AbstractEntity {
                 ", lang=" + lang +
                 ", authenticationKey='" + authenticationKey + '\'' +
                 ", role=" + role +
-                ", sessions=" + sessions +
                 ", loginCredential=" + loginCredential +
                 ", facebookCredential=" + facebookCredential +
                 ", type=" + type +
-                '}';
+                ", sendNotificationByDefault=" + sendNotificationByDefault +
+                "} " + super.toString();
     }
 
     @PrePersist

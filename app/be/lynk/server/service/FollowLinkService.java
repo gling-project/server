@@ -2,7 +2,6 @@ package be.lynk.server.service;
 
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.CustomerAccount;
 import be.lynk.server.model.entities.FollowLink;
 
 import java.util.List;
@@ -12,13 +11,13 @@ import java.util.List;
  */
 public interface FollowLinkService extends CrudService<FollowLink> {
 
-    FollowLink findByAccountAndBusiness(CustomerAccount customerAccount, Business byId);
+    FollowLink findByAccountAndBusiness(Account customerAccount, Business byId);
 
-    List<FollowLink> findByAccount(CustomerAccount account);
+    List<FollowLink> findByAccount(Account account);
 
     Integer countByBusiness(Business business);
 
-    boolean testByAccountAndBusiness(CustomerAccount customerAccount, Business business);
+    boolean testByAccountAndBusiness(Account customerAccount, Business business);
 
-    List<Business> findBusinessByAccount(CustomerAccount currentUser);
+    List<Business> findBusinessByAccount(Account currentUser);
 }

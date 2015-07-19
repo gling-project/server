@@ -16,7 +16,7 @@ public class FollowLink extends AbstractEntity{
     private Business business;
 
     @ManyToOne(optional = false)
-    private CustomerAccount account;
+    private Account account;
 
     @Basic
     private Boolean notification;
@@ -24,7 +24,7 @@ public class FollowLink extends AbstractEntity{
     public FollowLink() {
     }
 
-    public FollowLink(Business business, CustomerAccount account) {
+    public FollowLink(Business business, Account account) {
         this.business = business;
         this.account = account;
     }
@@ -37,11 +37,11 @@ public class FollowLink extends AbstractEntity{
         this.business = business;
     }
 
-    public CustomerAccount getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(CustomerAccount account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 

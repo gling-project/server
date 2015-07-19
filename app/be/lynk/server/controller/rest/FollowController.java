@@ -5,8 +5,8 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.FollowDTO;
 import be.lynk.server.dto.FollowFormDTO;
 import be.lynk.server.dto.ListDTO;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.CustomerAccount;
 import be.lynk.server.model.entities.FollowLink;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.FollowLinkService;
@@ -34,7 +34,7 @@ public class FollowController extends AbstractRestController {
     public Result followBusiness() {
         FollowFormDTO dto = extractDTOFromRequest(FollowFormDTO.class);
         Business byId = businessService.findById(dto.getBusinessId());
-        CustomerAccount customerAccount = (CustomerAccount) securityController.getCurrentUser();
+        Account customerAccount = securityController.getCurrentUser();
 
         //control
         FollowLink followLink = followLinkService.findByAccountAndBusiness(customerAccount, byId);
@@ -56,7 +56,7 @@ public class FollowController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result getMyFollows() {
 
-        List<FollowLink> followLinks = followLinkService.findByAccount((CustomerAccount) securityController.getCurrentUser());
+        List<FollowLink> followLinks = followLinkService.findByAccount( securityController.getCurrentUser());
 
         List<FollowDTO> followDTOs = followLinks.stream().map(followLink ->
                 new FollowDTO(followLink.getBusiness().getName(), followLink.getBusiness().getId(), followLink.getNotification())).collect(Collectors.toList()

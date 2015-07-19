@@ -9,22 +9,19 @@ import be.lynk.server.dto.post.*;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.GenderEnum;
 import be.lynk.server.model.entities.*;
-import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.KeyGenerator;
-import be.lynk.server.util.message.ErrorMessageEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
-import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Created by florian on 25/03/15.
@@ -255,7 +252,7 @@ public class LoginRestController extends AbstractRestController {
 
         CustomerRegistrationDTO dto = extractDTOFromRequest(CustomerRegistrationDTO.class);
 
-        CustomerAccount account = (CustomerAccount) createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), true);
+        Account account = createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), true);
         account.setRole(RoleEnum.CUSTOMER);
 
         //address ?
@@ -365,7 +362,7 @@ public class LoginRestController extends AbstractRestController {
             //test if there is an compatibility between account type
 
             if (((account instanceof BusinessAccount) && facebookAuthenticationDTO.getAccountType().equals(AccountTypeEnum.BUSINESS)) ||
-                    ((account instanceof CustomerAccount) && facebookAuthenticationDTO.getAccountType().equals(AccountTypeEnum.CUSTOMER))) {
+                    (facebookAuthenticationDTO.getAccountType().equals(AccountTypeEnum.CUSTOMER))) {
 
                 AccountFusionDTO accountFusion = new AccountFusionDTO();
                 accountFusion.setFacebookToken(facebookAuthenticationDTO.getToken());
@@ -395,7 +392,7 @@ public class LoginRestController extends AbstractRestController {
         //account
         Account account;
         if (isCustomer) {
-            account = dozerService.map(accountRegistrationDTO, CustomerAccount.class);
+            account = dozerService.map(accountRegistrationDTO, Account.class);
         } else {
             account = dozerService.map(accountRegistrationDTO, BusinessAccount.class);
         }

@@ -1,13 +1,12 @@
 package be.lynk.server.service.impl;
 
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.CustomerAccount;
 import be.lynk.server.model.entities.FollowLink;
 import be.lynk.server.service.FollowLinkService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -21,7 +20,7 @@ import java.util.List;
 public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implements FollowLinkService {
 
     @Override
-    public FollowLink findByAccountAndBusiness(CustomerAccount customerAccount, Business business) {
+    public FollowLink findByAccountAndBusiness(Account customerAccount, Business business) {
 
         String request = "select f from FollowLink f where business = :business and account=:account";
         List<FollowLink> resultList = JPA.em().createQuery(request, FollowLink.class)
@@ -35,20 +34,10 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
             throw new RuntimeException();
         }
         return resultList.get(0);
-
-
-//
-//        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-//        CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
-//        Root<FollowLink> from = cq.from(FollowLink.class);
-//        cq.select(from);
-//        cq.where(cb.equal(from.get("business"), business));
-//        cq.where(cb.equal(from.get("account"), customerAccount));
-//        return getSingleResultOrNull(cq);
     }
 
     @Override
-    public List<FollowLink> findByAccount(CustomerAccount account) {
+    public List<FollowLink> findByAccount(Account account) {
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
         Root<FollowLink> from = cq.from(FollowLink.class);
@@ -59,25 +48,13 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
 
     @Override
     public Integer countByBusiness(Business business) {
-//        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-//        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-//        Root<FollowLink> from = cq.from(FollowLink.class);
-//        cq.select(cb.count(from));
-//        cq.where(cb.equal(from.get("business"), business));
-//        return JPA.em().createQuery(toString()).getFirstResult();
-//        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-//        CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
-//        Root<FollowLink> from = cq.from(FollowLink.class);
-//        cq.select(from);
-//        cq.where(cb.equal(from.get("business"), business));
-//        return JPA.em().createQuery(cq).getResultList().size();
         return JPA.em().createQuery("select count(f) from FollowLink f where f.business=:business",Long.class)
                 .setParameter("business", business)
                 .getSingleResult().intValue();
     }
 
     @Override
-    public boolean testByAccountAndBusiness(CustomerAccount customerAccount, Business business) {
+    public boolean testByAccountAndBusiness(Account customerAccount, Business business) {
 //        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
 //        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 //        Root<FollowLink> from = cq.from(FollowLink.class);
@@ -91,7 +68,7 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
     }
 
     @Override
-    public List<Business> findBusinessByAccount(CustomerAccount account) {
+    public List<Business> findBusinessByAccount(Account account) {
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
         Root<FollowLink> from = cq.from(FollowLink.class);

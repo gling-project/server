@@ -37,6 +37,10 @@ public class BusinessRestController extends AbstractController {
     private PublicationService publicationService;
     @Autowired
     private FollowLinkService followLinkService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private LocalizationService localizationService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
@@ -66,16 +70,46 @@ public class BusinessRestController extends AbstractController {
 
         //additional data
         if (securityController.isAuthenticated(ctx())) {
-            map.setFollowing(followLinkService.testByAccountAndBusiness((CustomerAccount) securityController.getCurrentUser(),business));
+            map.setFollowing(followLinkService.testByAccountAndBusiness( securityController.getCurrentUser(), business));
         }
         map.setTotalFollowers(followLinkService.countByBusiness(business));
-
 
 
         //load last publication
         publicationService.findLastPublication(business);
 
         return ok(map);
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED})
+    public Result editAddress() {
+
+        //test id
+        Account currentUser = securityController.getCurrentUser();
+
+        AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
+
+        Address address = ((BusinessAccount)currentUser).getBusiness().getAddress();
+        address.setCity(dto.getCity());
+        address.setStreet(dto.getStreet());
+        address.setName(dto.getName());
+        address.setZip(dto.getZip());
+
+
+        //control address
+        try {
+            localizationService.validAddress(address);
+        } catch (Exception e) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+        }
+
+        addressService.saveOrUpdate(address);
+
+        AddressDTO addressDTO = dozerService.map(address, AddressDTO.class);
+
+        return ok(addressDTO);
     }
 
     @Transactional

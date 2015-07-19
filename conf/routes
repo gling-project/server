@@ -44,6 +44,7 @@ GET           /business/$id<[0-9]+>                           @be.lynk.server.co
 #only for superadmiin
 GET           /business/all                                   @be.lynk.server.controller.rest.BusinessRestController.getAll()
 PUT           /business                                       @be.lynk.server.controller.rest.BusinessRestController.update()
+PUT           /business/address                               @be.lynk.server.controller.rest.BusinessRestController.editAddress()
 PUT           /business/category                              @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory()
 PUT           /business/illustration                          @be.lynk.server.controller.rest.BusinessRestController.editIllustration()
 PUT           /business/landscape                             @be.lynk.server.controller.rest.BusinessRestController.editLandscape()

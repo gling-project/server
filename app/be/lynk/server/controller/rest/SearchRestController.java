@@ -6,6 +6,7 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
+import be.lynk.server.util.AccountTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -65,7 +66,7 @@ public class SearchRestController extends AbstractRestController {
 
 
         Account currentUser = securityController.getCurrentUser();
-        List<Business> byAccount = followLinkService.findBusinessByAccount((CustomerAccount) currentUser);
+        List<Business> byAccount = followLinkService.findBusinessByAccount(currentUser);
 
 
 
@@ -139,8 +140,8 @@ public class SearchRestController extends AbstractRestController {
                         //follow ?
                         if (securityController.isAuthenticated(ctx())) {
                             Account account = securityController.getCurrentUser();
-                            if (account instanceof CustomerAccount) {
-                                publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness((CustomerAccount) account, publication.getBusiness()));
+                            if (account.getType().equals(AccountTypeEnum.CUSTOMER)) {
+                                publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness( account, publication.getBusiness()));
                             }
                         }
                         publicationDTO.setTotalFollowers(followLinkService.countByBusiness(publication.getBusiness()));

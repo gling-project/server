@@ -170,7 +170,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
     this.editAddress = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/address/" + dto.id,
+            'url': "/business/address",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {

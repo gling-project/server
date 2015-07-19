@@ -7,9 +7,7 @@ import be.lynk.server.dto.post.CustomerRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.*;
-import be.lynk.server.service.AddressService;
-import be.lynk.server.service.CustomerInterestService;
-import be.lynk.server.service.LoginCredentialService;
+import be.lynk.server.service.*;
 import be.lynk.server.service.impl.LocalizationServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
-import be.lynk.server.service.AccountService;
 import be.lynk.server.util.message.ErrorMessageEnum;
 
 import java.util.*;
@@ -40,15 +37,17 @@ public class
     private CustomerInterestService customerInterestService;
     @Autowired
     private LocalizationServiceImpl localizationService;
+    @Autowired
+    private SessionService sessionService;
 
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result mySession() {
-        Set<Session> sessions = securityController.getCurrentUser().getSessions();
+        List<Session> sessions = sessionService.findByAccount(securityController.getCurrentUser());
         Collection<SessionDTO> map = dozerService.map(sessions, SessionDTO.class);
 
-        return ok(new ListDTO<SessionDTO>(map));
+        return ok(new ListDTO<>(map));
     }
 
     @Transactional
@@ -59,8 +58,8 @@ public class
 
         MyselfDTO map = dozerService.map(securityController.getCurrentUser(), MyselfDTO.class);
 
-        Logger.info("................................................===>>>>> "+securityController.getCurrentUser().getLang());
-        Logger.info("................................................===>>>>> "+map.getLang());
+        Logger.info("................................................===>>>>> " + securityController.getCurrentUser().getLang());
+        Logger.info("................................................===>>>>> " + map.getLang());
 
         return ok(map);
     }
@@ -113,7 +112,7 @@ public class
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
         }
 
-        CustomerAccount account = (CustomerAccount) securityController.getCurrentUser();
+        Account account = securityController.getCurrentUser();
 
         account.setCustomerInterests(new HashSet<>());
 
@@ -173,7 +172,7 @@ public class
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
-        CustomerAccount currentUser = (CustomerAccount) securityController.getCurrentUser();
+        Account currentUser = securityController.getCurrentUser();
         currentUser.getAddresses().add(address);
 
         accountService.saveOrUpdate(currentUser);
@@ -192,16 +191,10 @@ public class
 
         boolean founded = false;
 
-        if (currentUser instanceof CustomerAccount) {
-            for (Address address : ((CustomerAccount) currentUser).getAddresses()) {
-                if (address.getId().equals(id)) {
-                    founded = true;
-                    break;
-                }
-            }
-        } else {
-            if (((BusinessAccount) currentUser).getBusiness().getAddress().getId().equals(id)) {
+        for (Address address : currentUser.getAddresses()) {
+            if (address.getId().equals(id)) {
                 founded = true;
+                break;
             }
         }
 
@@ -241,7 +234,7 @@ public class
 
         Address addressToDelete = null;
 
-        for (Address address : ((CustomerAccount) currentUser).getAddresses()) {
+        for (Address address : currentUser.getAddresses()) {
             if (address.getId().equals(id)) {
                 addressToDelete = address;
                 break;
@@ -252,7 +245,7 @@ public class
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
-        ((CustomerAccount) currentUser).getAddresses().remove(addressToDelete);
+        currentUser.getAddresses().remove(addressToDelete);
 
 
         //delete
