@@ -2,14 +2,16 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.entities.technical.AbstractEntity;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import java.util.Date;
 
 /**
  * Created by florian on 17/05/15.
  */
-public class CustomerInterestDTO extends DTO{
+public class CustomerInterestDTO extends DTO implements KeyTyped<Date> {
 
     private Long id;
 

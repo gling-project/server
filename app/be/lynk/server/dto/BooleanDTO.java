@@ -2,12 +2,15 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import com.fasterxml.jackson.databind.JsonNode;
+import play.modules.mongodb.jackson.KeyTyped;
 import play.mvc.Content;
+
+import java.util.Date;
 
 /**
  * Created by florian on 17/05/15.
  */
-public class BooleanDTO extends DTO {
+public class BooleanDTO extends DTO implements KeyTyped<Date> {
     private Boolean value;
 
     public BooleanDTO() {

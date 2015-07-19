@@ -3,11 +3,14 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.GenderEnum;
+import play.modules.mongodb.jackson.KeyTyped;
+
+import java.util.Date;
 
 /**
  * Created by florian on 17/05/15.
  */
-public class TestFacebookDTO extends DTO{
+public class TestFacebookDTO extends DTO implements KeyTyped<Date> {
 
     private String firstname;
 

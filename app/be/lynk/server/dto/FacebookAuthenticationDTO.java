@@ -2,13 +2,15 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.util.AccountTypeEnum;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * Created by florian on 3/05/15.
  */
-public class FacebookAuthenticationDTO extends DTO {
+public class FacebookAuthenticationDTO extends DTO implements KeyTyped<Date> {
 
     @NotNull(message = "--.validation.dto.notNull")
     private String userId;

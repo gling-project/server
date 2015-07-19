@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,12 +63,16 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
     }
 
     @Override
-    public List<AbstractPublication> findActivePublicationByBusinesses(List<Business> byAccount) {
+    public List<AbstractPublication> findActivePublicationByBusinesses(List<Business> business) {
+
+        if(business.size()==0){
+            return new ArrayList<>();
+        }
 
         String request = "select p from AbstractPublication p where startDate <:now and endDate >:now and business in :businesses";
         return JPA.em().createQuery(request)
                 .setParameter("now", LocalDateTime.now())
-                .setParameter("businesses", byAccount)
+                .setParameter("businesses", business)
                 .getResultList();
 
 //        LocalDateTime now = LocalDateTime.now();

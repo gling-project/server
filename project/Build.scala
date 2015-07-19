@@ -44,7 +44,8 @@ object ApplicationBuild extends Build {
     "net.sourceforge.jexcelapi" % "jxl" % "2.6.12" excludeAll(
       ExclusionRule(organization = "com.sun.jdmk"),
       ExclusionRule(organization = "com.sun.jmx"),
-      ExclusionRule(organization = "javax.jms"))
+      ExclusionRule(organization = "javax.jms")),
+    "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0"
   )
 
   val main = play.Project(name, version, appDependencies)

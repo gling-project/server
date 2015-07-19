@@ -5,8 +5,8 @@
         <div class="customer_interest_form" ng-repeat="interest in interests">
 
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <button class="interest btn" ng-class="{interest_selected:interest.selected}" ng-click="select(interest)">
-                    <input type="checkbox" ng-checked="interest.selected"/>
+                <button class="interest btn" ng-class="{interest_selected:interest.registrationSelection}" ng-click="select(interest)">
+                    <input type="checkbox" ng-checked="interest.registrationSelection"/>
                     {{interest.translationName | translateText}}
                 </button>
             </div>

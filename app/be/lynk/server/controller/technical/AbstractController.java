@@ -1,6 +1,9 @@
 package be.lynk.server.controller.technical;
 
 import be.lynk.server.controller.technical.security.CommonSecurityController;
+import be.lynk.server.dto.post.LoginDTO;
+import be.lynk.server.model.entities.Account;
+import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.DozerService;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.service.TranslationService;
@@ -37,6 +40,8 @@ public abstract class AbstractController extends Controller {
     protected TranslationService translationService;
     @Autowired
     protected DozerService dozerService;
+    @Autowired
+    private MongoDBOperator mongoDBOperator;
 
     /**
      * this function control the dto (via play.validation annotation) and return it if it's valid, or throw a runtimeException with an error message if not.
@@ -52,6 +57,10 @@ public abstract class AbstractController extends Controller {
         }
 
         validation(dto);
+        if(securityController.isAuthenticated(ctx())) {
+            dto.setCurrentAccountEmail(securityController.getUsername(ctx()));
+        }
+        mongoDBOperator.write(dto, DTOclass);
 
         return dto;
     }

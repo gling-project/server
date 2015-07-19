@@ -2,13 +2,14 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.PublicationType;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import java.util.Date;
 
 /**
  * Created by florian on 23/05/15.
  */
-public class PromotionDTO extends AbstractPublicationDTO {
+public class PromotionDTO extends AbstractPublicationDTO implements KeyTyped<Date> {
 
     private Double quantity;
 

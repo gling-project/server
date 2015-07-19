@@ -2,13 +2,14 @@ package be.lynk.server.dto;
 
 import be.lynk.server.controller.technical.security.source.SourceEnum;
 import be.lynk.server.dto.technical.DTO;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import java.util.Date;
 
 /**
  * Created by florian on 2/05/15.
  */
-public class SessionDTO extends DTO {
+public class SessionDTO extends DTO implements KeyTyped<Date> {
 
     private Date connectionDate;
 

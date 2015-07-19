@@ -1,16 +1,18 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by florian on 17/05/15.
  */
-public class AddressDTO extends DTO{
+public class AddressDTO extends DTO implements KeyTyped<Date> {
 
     private Long id;
 

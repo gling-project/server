@@ -17,5 +17,5 @@ public interface PublicationService extends CrudService<AbstractPublication> {
 
     <T extends AbstractPublication> List<T> findByTypeAndBusiness(Class<T> promotionClass, Business business);
 
-    List<AbstractPublication> findActivePublicationByBusinesses(List<Business> byAccount);
+    List<AbstractPublication> findActivePublicationByBusinesses(List<Business> business);
 }

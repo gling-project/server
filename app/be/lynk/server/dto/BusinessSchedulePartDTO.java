@@ -3,13 +3,15 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.AttendanceEnum;
 import be.lynk.server.model.entities.technical.AbstractEntity;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by florian on 7/06/15.
  */
-public class BusinessSchedulePartDTO extends DTO{
+public class BusinessSchedulePartDTO extends DTO implements KeyTyped<Date> {
 
     private Integer from;
 

@@ -3,15 +3,17 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.technical.AbstractEntity;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by florian on 7/06/15.
  */
-public class BusinessScheduleDTO extends DTO {
+public class BusinessScheduleDTO extends DTO implements KeyTyped<Date> {
 
     private List<BusinessSchedulePartDTO> parts;
 

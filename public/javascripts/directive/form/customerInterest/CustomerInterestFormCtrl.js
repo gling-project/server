@@ -18,11 +18,11 @@ myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, 
 
                         scope.interests = {};
                         customerInterestService.getAll(function (result) {
-                                scope.interests = result.list;
+                                scope.interests = result;
                                 for (var j in scope.interests) {
                                     for (var i in scope.getInfo().result) {
                                         if (scope.getInfo().result[i].name == scope.interests[j].name) {
-                                            scope.interests[j].selected = true;
+                                            scope.interests[j].registrationSelection = true;
                                         }
                                     }
                                 }
@@ -30,7 +30,7 @@ myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, 
                         );
 
                         scope.select = function (interest) {
-                            interest.selected = !interest.selected;//true;//!scope.interests[interest].selected;
+                            interest.registrationSelection = !interest.registrationSelection;//true;//!scope.interests[interest].selected;
                         };
 
                         scope.$watch('interests', function (o, n) {
@@ -43,7 +43,7 @@ myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, 
 
                                 for (var key in scope.interests) {
                                     var interest = scope.interests[key];
-                                    if (interest.selected) {
+                                    if (interest.registrationSelection) {
                                         scope.getInfo().result.push(interest);
                                     }
                                 }

@@ -1,11 +1,14 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
+import play.modules.mongodb.jackson.KeyTyped;
+
+import java.util.Date;
 
 /**
  * Created by florian on 6/01/15.
  */
-public class LangDTO extends DTO {
+public class LangDTO extends DTO implements KeyTyped<Date> {
 
     private String language;
 

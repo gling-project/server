@@ -5,6 +5,7 @@ import be.lynk.server.model.PublicationType;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by florian on 5/06/15.
  */
-public abstract class AbstractPublicationDTO extends DTO implements Comparable<AbstractPublicationDTO> {
+public abstract class AbstractPublicationDTO extends DTO implements Comparable<AbstractPublicationDTO> ,KeyTyped<Date> {
 
     protected Long id;
 

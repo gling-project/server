@@ -2,7 +2,9 @@ package be.lynk.server.dto;
 
 import be.lynk.server.model.entities.Address;
 import be.lynk.server.model.entities.CustomerInterest;
+import play.modules.mongodb.jackson.KeyTyped;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +12,7 @@ import java.util.Set;
 /**
  * Created by florian on 11/11/14.
  */
-public class MyselfDTO extends AccountDTO {
+public class MyselfDTO extends AccountDTO implements KeyTyped<Date> {
 
     private Boolean loginAccount;
 

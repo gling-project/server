@@ -2,13 +2,15 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.util.constants.ValidationRegex;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 /**
  * Created by florian on 27/12/14.
  */
-public class ChangeEmailDTO extends DTO {
+public class ChangeEmailDTO extends DTO implements KeyTyped<Date> {
 
     @Pattern(regexp = ValidationRegex.PASSWORD,message = "--.validation.dto.password")
     private String oldPassword;

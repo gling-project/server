@@ -10,7 +10,7 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
             'url': "customerInterest",
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
-            customerInterests = data;
+            customerInterests = data.list;
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
@@ -24,7 +24,13 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
     };
 
     this.getAll = function (callback) {
-        loadAll(callback);
+        if (customerInterests == null) {
+            loadAll(callback);
+        }
+        else {
+            callback(customerInterests);
+        }
+
     }
 
 });

@@ -3,6 +3,7 @@ package be.lynk.server.dto;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.util.constants.ValidationRegex;
+import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ import java.util.*;
  * this DTO must  contain only business public datas
  * IMPORTANT !!!
  */
-public class BusinessToDisplayDTO extends DTO {
+public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date> {
 
     private Long id;
 

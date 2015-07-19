@@ -9,6 +9,7 @@ import be.lynk.server.dto.post.*;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.GenderEnum;
 import be.lynk.server.model.entities.*;
+import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.KeyGenerator;
