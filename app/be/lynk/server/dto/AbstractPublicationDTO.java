@@ -40,6 +40,8 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     protected PublicationType type;
 
+    private List<StoredFileDTO> pictures=new ArrayList<>();
+
     public StoredFileDTO getBusinessIllustration() {
         return businessIllustration;
     }
@@ -47,11 +49,6 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
     public void setBusinessIllustration(StoredFileDTO businessIllustration) {
         this.businessIllustration = businessIllustration;
     }
-
-
-
-    private List<StoredFileDTO> pictures=new ArrayList<>();
-
 
     public PublicationType getType() {
         return type;

@@ -20,7 +20,7 @@
 --.generic.submit=Submit
 #--.generic.total=Total
 #--.generic.value=Value
-#--.generic.valid=Valid
+--.generic.valid=Valid
 --.generic.validation.size=Between {0} and {1} characters
 #--.generic.validation.date=Select a date
 #--.generic.validation.notNull=This field is required
@@ -55,15 +55,18 @@
 --.generic.city=City
 --.generic.country=Country
 --.generic.address=Address
---.generic.business=Business
+#--.generic.business=Business
 --.generic.edit=Edit
 --.generic.cancel=Cancel
 --.generic.remove=Remove
 --.generic.login.btn=Logging
 --.generic.validation.max=Maximum {0} characters
---.generic.image=Image
---.generic.delete=Delete
+#--.generic.image=Image
+#--.generic.delete=Delete
 --.generic.validation.numberExpected=Only number
+--.generic.contact=generic.contact
+--.generic.action=generic.action
+--.generic.status=generic.status
 
 ## login modal
 --.loginModal.title=Login you
@@ -165,8 +168,8 @@
 --.business.registration.oldBusiness=I already have an account and I want to log in me
 
 ##  view/business_welcome.html
---.business.welcome.title=Welcome to your business page
---.business.profile.businessCategory=Business category
+#--.business.welcome.title=Welcome to your business page
+#--.business.profile.businessCategory=Business category
 
 ##  modal/LoginModal/view.html (add the google+ button here )
 --.loginModal.facebook.btn=Log in with Facebook
@@ -192,13 +195,14 @@
 
 ##  view/home.html
 --.home.toBusiness.btn=I am a business
---.home.main.description=Welcome to Lÿnk \!\! ....
+#--.home.main.description=Welcome to Lÿnk \!\! ....
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 --.customer.registrationModal.alredyRegistred.success=This facebook account is already registered. You are now connected\!
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Phone number expected
+--.validation.dto.url=validation.dto.url
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=This Facebook account is alredy registered but for an other type of account. You cannot used the same Facebook account to create a customer account and a business account.
@@ -207,6 +211,8 @@
 --.error.account.emailUnknown=This email is unkown
 --.error.googleMap=Google map was thrown an error.
 --.error.wrongAddress=This address is unknown by Google Map. Please Choose another one
+--.error.business.mustBePublished=error.business.mustBePublished
+--.error.search.wrongCriteria=One search criteria is wrong
 
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -226,16 +232,20 @@
 --.address.type.home=My home
 --.address.type.other=Other...
 --.address.type.work=My office
+--.address.customName.fieldTitle=address.customName.fieldTitle
 
 ##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Sub category
 --.businessCategory.column.category=Category
+--.businessCategory.column.subsubcategory=businessCategory.column.subsubcategory
 
 
 
 
 ##  be/lynk/server/views/template.scala.html (javascript library )
 --.welcome.myBusiness=My business
+--.welcome.search.advanced.link=Advanced serach...
+--.welcome.serach.advanced.criteria=Criterias
 
 ##  view/profile.html
 --.customer.profile.myAddresses=My address
@@ -281,11 +291,11 @@
 --.page.business_registration.title=Sign up
 
 ##  view/web/business_welcome.html
---.business.welcome.addPromotion=Add a promotion
---.business.profile.promotion=Promotion
---.business.profile.image=Image
---.business.welcome.addBusinessNotification=Post a new notificaiton
---.business.profile.businessNotification=Notifications
+#--.business.welcome.addPromotion=Add a promotion
+#--.business.profile.promotion=Promotion
+#--.business.profile.image=Image
+#--.business.welcome.addBusinessNotification=Post a new notificaiton
+#--.business.profile.businessNotification=Notifications
 --.business.profile.businessSchedule=Schedules
 
 ##  modal/PromotionModal/view.html
@@ -326,4 +336,69 @@
 
 ##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
 --.promotion.validation.endDateBeforeStartDate=The end date must be after the start date
+
+
+##  directive/component/searchResult/template.html
+--.search.category=search.category
+--.search.publication=search.publication
+--.search.business.seeMore=search.business.seeMore
+--.search.seeMore=search.seeMore
+--.search.business=search.business
+--.search.nothing=search.nothing
+--.search.publication.seeMore=search.publication.seeMore
+
+##  be/lynk/server/model/SearchCriteriaEnum.java
+--.search.criteria.business=search.criteria.business
+--.search.criteria.publication=search.criteria.publication
+--.search.criteria.category=search.criteria.category
+
+##  be/lynk/server/importer/impl/CategoryImporterImpl.java
+--.category.sub.sub.=category.sub.sub.
+--.interest.=interest.
+--.category.sub.=category.sub.
+
+##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)
+--.registration.business.flash.success=registration.business.flash.success
+
+##  controller/web/BusinessCtrl.js (//loading)
+--.business.edit.category.modal.title=business.edit.category.modal.title
+--.business.edit.schedule.modal.title=business.edit.schedule.modal.title
+--.business.edit.landscape.modal.title=business.edit.landscape.modal.title
+--.business.edit.illustration.modal.title=business.edit.illustration.modal.title
+--.business.edit.address.modal.title=business.edit.address.modal.title
+--.business.page.stopPublication.window.title=business.page.stopPublication.window.title
+--.business.page.askPublication.window.message=business.page.askPublication.window.message
+--.business.page.stopPublication.window.message=business.page.stopPublication.window.message
+--.business.edit.data.modal.title=business.edit.data.modal.title
+--.business.page.askPublication.window.title=business.page.askPublication.window.title
+--.business.page.askPublication.window.flash=business.page.askPublication.window.flash
+--.business.page.stopPublication.window.flash=business.page.stopPublication.window.flash
+
+##  view/web/business.html (landscape )
+--.business.page.edit.description.notPublished=business.page.edit.description.notPublished
+--.business.page.edit.illustration=business.page.edit.illustration
+--.business.page.edit.business=business.page.edit.business
+--.business.page.edit.editSwitchEdit=business.page.edit.editSwitchEdit
+--.business.page.publication=business.page.publication
+--.business.page.edit.editSwitchDisplay=business.page.edit.editSwitchDisplay
+--.business.page.edit.description.waitConfirmation=business.page.edit.description.waitConfirmation
+--.business.page.edit.descriptionPublished=business.page.edit.descriptionPublished
+--.business.page.edit.landscape=business.page.edit.landscape
+--.business.page.stopPublication=business.page.stopPublication
+
+##  directive/form/promotion/template.html
+--.promotion.completePromotion=promotion.completePromotion
+--.promotion.simplePromotion=promotion.simplePromotion
+
+##  controller/admin/AdminBusinessCtrl.js (// show first page)
+--.admin.business.confirmPublication.modal.message=admin.business.confirmPublication.modal.message
+--.admin.business.confirmPublication.modal.title=admin.business.confirmPublication.modal.title
+
+##  view/admin/adminBusiness.html
+--.admin.business.confirmPublication=admin.business.confirmPublication
+--.admin.business.toBusiness=admin.business.toBusiness
+
+##  directive/form/business/BusinessFormCtrl.js (//isActive: !scope.getInfo().updateMode,)
+--.business.contactEmail=business.contactEmail
+--.business.website=business.website
 

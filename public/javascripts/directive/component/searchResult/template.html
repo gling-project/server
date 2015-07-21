@@ -6,7 +6,12 @@
     </div>
     <div ng-hide="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0">
         <div ng-show="getInfo().result.businesses.length > 0">
-            <div class="search-result-sub-title">{{'--.search.business' | translateText}}</div>
+            <div class="search-result-sub-title">
+                <button ng-click="seeAllBusiness()" class="search-result-show-more link search-result-sub-title-see-more">
+                    {{'--.search.business.seeMore' | translateText}}
+                </button>
+                {{'--.search.business' | translateText}}
+            </div>
             <div class="search-result-business search-result-content"
                  ng-click="navigateTo('business/'+business.id)"
                  ng-repeat="business in getInfo().result.businesses">
@@ -23,13 +28,25 @@
             </div>
         </div>
         <div ng-show="getInfo().result.publications.length >0">
-            <div class="search-result-sub-title">{{'--.search.publication' | translateText}}</div>
+            <div class="search-result-sub-title">
+                <button ng-click="seeAllPublication()" class="search-result-show-more link search-result-sub-title-see-more">
+                    {{'--.search.publication.seeMore' | translateText}}
+                </button>
+                {{'--.search.publication' | translateText}}
+            </div>
             <div class="search-result-publication search-result-content"
                  ng-click="navigateTo(publication)"
                  ng-repeat="publication in getInfo().result.publications">
+                <div class="search-result-publication-business">
+                    <img ng-src="{{publication.businessIllustration | image}}"/>
+                    {{publication.businessName}}
+                </div>
+                <img ng-src="{{publication.pictures[0] | image}}"/>
                 {{publication.description}}
             </div>
         </div>
-        <button class="search-result-show-more">Show all results...</button>
+        <button ng-click="seeAll()" class="search-result-show-more link">
+            {{'--.search.seeMore' | translateText}}
+        </button>
     </div>
 </div>

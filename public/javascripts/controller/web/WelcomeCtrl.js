@@ -33,7 +33,7 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
 
     $scope.searchResultParam = {
         display: false,
-        cleanSearch:function(){
+        cleanSearch: function () {
             $scope.searchText = "";
         }
     };
@@ -43,10 +43,16 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
             var searchS = angular.copy($scope.searchText);
             $timeout(function () {
                 if (searchS == $scope.searchText) {
-                    searchService.searchByStringLittle($scope.searchText, function (result) {
-                        $scope.searchResultParam.result = result;
-                        $scope.searchResultParam.display = true;
-                    });
+                    console.log($scope.searchText.indexOf(":"));
+                    console.log($scope.searchText);
+
+                    if (($scope.searchText.indexOf(":") != -1 && $scope.searchText.split(":")[1].length > 0) ||
+                        ($scope.searchText.indexOf(":") == -1 && $scope.searchText.length > 0)) {
+                        searchService.searchByStringLittle($scope.searchText, function (result) {
+                            $scope.searchResultParam.result = result;
+                            $scope.searchResultParam.display = true;
+                        });
+                    }
                 }
             }, 500);
         }

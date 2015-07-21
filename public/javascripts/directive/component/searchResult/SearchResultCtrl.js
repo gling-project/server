@@ -18,19 +18,46 @@ myApp.directive('searchResultCtrl', function (directiveService, $location) {
 
                     scope.selected = null;
 
-                    scope.top = function(){
+                    scope.top = function () {
 
                     };
 
-                    scope.bottom = function(){
+                    scope.bottom = function () {
 
                     };
 
+                    scope.seeAll = function () {
+
+                    };
+
+                    scope.seeAllPublication = function () {
+
+                    };
+
+                    scope.seeAllBusiness = function () {
+
+                    };
+
+                    //element.bind("keydown keypress", function(event) {
+                    //    console.log(event.which);
+                    //    if (event.which === 40) {
+                    //        scope.$apply(function() {
+                    //            console.log('down');
+                    //        });
+                    //        return event.preventDefault();
+                    //    }
+                    //    else if (event.which === 38) {
+                    //        scope.$apply(function() {
+                    //            console.log('up');
+                    //        });
+                    //        return event.preventDefault();
+                    //    }
+                    //});
 
 
                     scope.navigateTo = function (target) {
                         $location.path(target);
-                        scope.getInfo().display=false;
+                        scope.getInfo().display = false;
                         scope.getInfo().cleanSearch();
                     };
 
