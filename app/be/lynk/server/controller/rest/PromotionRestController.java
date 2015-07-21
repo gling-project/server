@@ -40,7 +40,6 @@ public class PromotionRestController extends AbstractRestController {
     public Result create() {
         PromotionDTO dto = extractDTOFromRequest(PromotionDTO.class);
 
-
         Promotion promotion = dozerService.map(dto, Promotion.class);
 
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();

@@ -23,9 +23,8 @@
 @import 'widget/_welcome';
 @import 'widget/_home-interest';
 @import 'widget/_follow';
+@import 'widget/_search-result';
 @import '_TEMP';
-
-
 
 //
 // color
@@ -52,7 +51,7 @@
 @color-header-title: @color-lat-menu-text;
 
 //illustration
-@business-illustration-size:60px;
+@business-illustration-size: 60px;
 
 //
 //size
@@ -82,7 +81,7 @@ body {
 }
 
 .main-container {
-//    overflow: auto;
+    //    overflow: auto;
 }
 
 .my-page-header {
@@ -106,12 +105,20 @@ body {
 }
 
 header {
-    height: 50px;
+    //    height: 50px;
     background-color: @color-header-bg;
+
+    & > .container {
+        vertical-align: middle;
+        & > * {
+            vertical-align: middle;
+            display: inline-block;
+        }
+    }
 
     .sidebar-button {
         float: left;
-        margin-right: 30px;
+        margin-right: 20px;
         button {
             width: 60px;
             color: rgba(226, 226, 226, 1);
@@ -121,14 +128,6 @@ header {
             font-weight: normal;
             height: 48px;
         }
-        /*
-        margin-right: 30px;
-        margin-left: 15px;
-        */
-    }
-
-    & > * {
-        line-height: 50px;
     }
 
     .profile-buttons-container {
@@ -137,7 +136,7 @@ header {
         float: right;
         margin-right: 25px;
 
-        & > select{
+        & > select {
             display: inline-block;
             width: 70px;
             vertical-align: middle;
@@ -175,8 +174,6 @@ h3 {
     font-size: 22px;
     padding-left: 15px;
 }
-
-
 
 input[type=checkbox].big_ck {
     border: 1px solid #ccc;
@@ -261,29 +258,30 @@ button {
     color: rgba(45, 77, 238, 0.57);
     cursor: pointer;
 }
-.link:hover{
+
+.link:hover {
     color: #0000ff;
 }
 
-.modal-body{
+.modal-body {
     padding-top: 5px;
 }
 
-.custom-panel{
+.custom-panel {
     display: inline-block;
     vertical-align: top;
     background-color: #ffffff;
     border: 1px solid rgba(58, 58, 58, 0.61);
     margin: 10px;
 
-    & > h4{
+    & > h4 {
         display: block;
         padding: 10px;
         background-color: #eee;
         margin: 0px 0px 10px;
         border-bottom: 2px solid rgba(58, 58, 58, 0.61);
     }
-    & > div{
+    & > div {
         padding: 15px;
     }
 }
@@ -292,6 +290,7 @@ button {
     position: relative;
     overflow: hidden;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -308,7 +307,7 @@ button {
     display: block;
 }
 
-a{
+a {
     cursor: pointer;
 }
 

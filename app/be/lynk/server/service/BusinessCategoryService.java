@@ -1,6 +1,7 @@
 package be.lynk.server.service;
 
 import be.lynk.server.model.entities.BusinessCategory;
+import play.i18n.Lang;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface BusinessCategoryService extends CrudService<BusinessCategory>{
 
     void deleteAll();
 
+    List<BusinessCategory> search(String criteria,Lang lang);
 }

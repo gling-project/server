@@ -26,7 +26,7 @@ public class DTO implements Content ,KeyTyped<Date> {
     @javax.persistence.Id
     protected Date parsingDate =new Date();
 
-    protected String currentAccountEmail;
+    protected Long currentAccountId;
 
 
     private String __type;
@@ -94,11 +94,11 @@ public class DTO implements Content ,KeyTyped<Date> {
         this.parsingDate = parsingDate;
     }
 
-    public String getCurrentAccountEmail() {
-        return currentAccountEmail;
+    public Long getCurrentAccountId() {
+        return currentAccountId;
     }
 
-    public void setCurrentAccountEmail(String currentAccountEmail) {
-        this.currentAccountEmail = currentAccountEmail;
+    public void setCurrentAccountId(Long currentAccountId) {
+        this.currentAccountId = currentAccountId;
     }
 }

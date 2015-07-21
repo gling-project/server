@@ -78,6 +78,8 @@ POST          /search/publication/default                     @be.lynk.server.co
 POST          /search/publication/business/:id                @be.lynk.server.controller.rest.SearchRestController.getBusiness(id:Long)
 POST          /search/publication/interest/:id                @be.lynk.server.controller.rest.SearchRestController.getByInterest(id:Long)
 POST          /search/publication/followed                    @be.lynk.server.controller.rest.SearchRestController.getByFollowed()
+POST          /search/text/little                             @be.lynk.server.controller.rest.SearchRestController.getByStringLittle()
+POST          /search/text                                    @be.lynk.server.controller.rest.SearchRestController.getByString()
 
 #file
 POST          /file                                           @be.lynk.server.controller.rest.FilesController.upload()

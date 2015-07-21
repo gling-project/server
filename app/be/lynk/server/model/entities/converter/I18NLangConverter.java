@@ -21,7 +21,7 @@ public class I18NLangConverter implements AttributeConverter<Lang,String>{
 
     @Override
     public Lang convertToEntityAttribute(String s) {
-        Lang lang = Lang.forCode("en");
+        Lang lang = Lang.forCode(s);
         return lang;
     }
 }

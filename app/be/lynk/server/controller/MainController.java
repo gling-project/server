@@ -1,12 +1,12 @@
 package be.lynk.server.controller;
 
+import be.lynk.server.controller.rest.SearchRestController;
 import be.lynk.server.controller.technical.AbstractController;
-import be.lynk.server.dto.InterfaceDataDTO;
-import be.lynk.server.dto.MyselfDTO;
+import be.lynk.server.dto.*;
+import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.util.AppUtil;
-import be.lynk.server.dto.LangDTO;
-import be.lynk.server.dto.ListDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -23,7 +23,6 @@ import java.util.Random;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-
     String accessKey = Configuration.root().getString("app.status");
 
     @Transactional
@@ -36,6 +35,7 @@ public class MainController extends AbstractController {
         interfaceDataDTO.setLangId(lang().code());
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
+        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();
             MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
@@ -63,6 +63,7 @@ public class MainController extends AbstractController {
         interfaceDataDTO.setLangId(lang().code());
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
+        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();
             MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
@@ -98,4 +99,14 @@ public class MainController extends AbstractController {
         }
         return langDTOListDTO;
     }
+
+    private List<SearchCriteriaDTO> getSearchCriteria() {
+        List<SearchCriteriaDTO> finalList = new ArrayList<>();
+        for (SearchCriteriaEnum searchCriteriaEnum : SearchCriteriaEnum.values()) {
+            finalList.add(dozerService.map(searchCriteriaEnum, SearchCriteriaDTO.class));
+        }
+
+        return finalList;
+    }
+
 }

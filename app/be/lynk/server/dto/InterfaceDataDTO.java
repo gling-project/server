@@ -19,7 +19,18 @@ public class InterfaceDataDTO extends DTO implements KeyTyped<Date> {
     private String langId;
 
     private List<LangDTO> languages;
+
+    private List<SearchCriteriaDTO> searchCriterias;
+
     private String appId;
+
+    public List<SearchCriteriaDTO> getSearchCriterias() {
+        return searchCriterias;
+    }
+
+    public void setSearchCriterias(List<SearchCriteriaDTO> searchCriterias) {
+        this.searchCriterias = searchCriterias;
+    }
 
     public List<LangDTO> getLanguages() {
         return languages;

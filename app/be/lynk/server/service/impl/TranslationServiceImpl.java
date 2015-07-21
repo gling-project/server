@@ -72,7 +72,7 @@ public class TranslationServiceImpl implements TranslationService {
     public String getTranslation(Translation translation, Lang language, Object... params) {
         String message = null;
         for (TranslationValue translationValue : translation.getTranslationValues()) {
-            if (translationValue.getLanguageCode().equals(language.code())) {
+            if (translationValue.getLang().equals(language)) {
                 message = translationValue.getContent();
             }
         }

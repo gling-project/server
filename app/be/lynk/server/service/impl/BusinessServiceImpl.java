@@ -27,4 +27,17 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         return JPA.em().createQuery(cq).getResultList();
 
     }
+
+    @Override
+    public List<Business> search(String criteria) {
+
+        criteria="%"+criteria.replaceAll(" ","%")+"%";
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Business> cq = cb.createQuery(Business.class);
+        Root<Business> from = cq.from(Business.class);
+        cq.select(from);
+        cq.where(cb.like(from.get("name"), criteria));
+        return JPA.em().createQuery(cq).getResultList();
+    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public class Translation extends AbstractEntity {
 
     @OneToMany(mappedBy = "translation",cascade = CascadeType.ALL)
-    private List<TranslationValue> translationValues;
+    private List<TranslationValue> translationValues=new ArrayList<>();
 
     public List<TranslationValue> getTranslationValues() {
         return translationValues;

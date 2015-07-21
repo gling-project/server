@@ -1,4 +1,4 @@
-myApp.directive("dirFocusMe", function($timeout, $parse) {
+myApp.directive("dirFocusMe", function() {
     return {
         restrict: 'A',
         scope: {

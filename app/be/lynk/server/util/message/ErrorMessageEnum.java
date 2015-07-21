@@ -24,7 +24,8 @@ public enum ErrorMessageEnum {
     ACCOUNT_WITHOUT_LOGIN_CREDENTIAL("--.error.account.withoutLoginCredential"),
     GOOGLE_MAP_ERROR("--.error.googleMap"),
     WRONG_ADDRESS("--.error.wrongAddress"),
-    BUSINESS_MUST_BE_PUBLISHED("--.error.business.mustBePublished");
+    BUSINESS_MUST_BE_PUBLISHED("--.error.business.mustBePublished"),
+    SEARCH_WRONG_CRITERIA("--.error.search.wrongCriteria");
 
     private final String key;
 
@@ -35,4 +36,5 @@ public enum ErrorMessageEnum {
     public String getKey() {
         return key;
     }
+
 }

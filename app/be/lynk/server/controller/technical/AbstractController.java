@@ -58,7 +58,7 @@ public abstract class AbstractController extends Controller {
 
         validation(dto);
         if(securityController.isAuthenticated(ctx())) {
-            dto.setCurrentAccountEmail(securityController.getUsername(ctx()));
+            dto.setCurrentAccountId(securityController.getCurrentUser().getId());
         }
         mongoDBOperator.write(dto, DTOclass);
 
@@ -101,6 +101,7 @@ public abstract class AbstractController extends Controller {
             validation(item);
             resultList.add(item);
         }
+
 
         return resultList;
     }

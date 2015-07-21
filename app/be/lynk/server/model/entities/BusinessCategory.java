@@ -17,8 +17,8 @@ public class BusinessCategory extends AbstractEntity implements Comparable<Busin
     @Column(unique = true)
     private String name;
 
-    @Basic(optional = false)
-    private String translationName;
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    private Translation translationName;
 
     @Basic
     private Integer orderIndex;
@@ -42,13 +42,13 @@ public class BusinessCategory extends AbstractEntity implements Comparable<Busin
     public BusinessCategory() {
     }
 
-    public BusinessCategory(String name, String translationName, Integer orderIndex) {
+    public BusinessCategory(String name, Translation translationName, Integer orderIndex) {
         this.name = name;
         this.translationName = translationName;
         this.orderIndex = orderIndex;
     }
 
-    public BusinessCategory(BusinessCategory parent, String name, String translationName, Integer orderIndex) {
+    public BusinessCategory(BusinessCategory parent, String name, Translation translationName, Integer orderIndex) {
         this.parent = parent;
         this.name = name;
         this.translationName = translationName;
@@ -79,11 +79,11 @@ public class BusinessCategory extends AbstractEntity implements Comparable<Busin
         this.name = name;
     }
 
-    public String getTranslationName() {
+    public Translation getTranslationName() {
         return translationName;
     }
 
-    public void setTranslationName(String translationName) {
+    public void setTranslationName(Translation translationName) {
         this.translationName = translationName;
     }
 

@@ -21,6 +21,52 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
+    this.searchByStringLittle = function (searchText,callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/search/text/little",
+            'headers': "Content-Type:application/json",
+            'data': {
+                search:searchText,
+                position:geolocationService.position
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.searchByString = function (searchText,callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/search/text",
+            'headers': "Content-Type:application/json",
+            'data': {
+                search:searchText,
+                position:geolocationService.position
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
     this.byFollowed = function (callbackSuccess, callbackError) {
 
         $http({
@@ -30,7 +76,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'data': geolocationService.position
         }).success(function (data, status) {
             if (callbackSuccess != null) {
-                callbackSuccess(data.list);
+                callbackSuccess(data);
             }
         })
             .error(function (data, status) {

@@ -1,0 +1,35 @@
+<div ng-show="getInfo().display" class="search-result-box" dir-bottom-arrow="down()" dir-top-arrow="top()">
+    <div
+            ng-show="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0"
+            class="search-result-nothing">
+        {{'--.search.nothing' | translateText}}
+    </div>
+    <div ng-hide="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0">
+        <div ng-show="getInfo().result.businesses.length > 0">
+            <div class="search-result-sub-title">{{'--.search.business' | translateText}}</div>
+            <div class="search-result-business search-result-content"
+                 ng-click="navigateTo('business/'+business.id)"
+                 ng-repeat="business in getInfo().result.businesses">
+                <img ng-src="{{business.illustration | image}}"/>
+                {{business.name}}
+            </div>
+        </div>
+        <div ng-show="getInfo().result.categories.length > 0">
+            <div class="search-result-sub-title">{{'--.search.category' | translateText}}</div>
+            <div class="search-result-category search-result-content"
+                 ng-click="navigateTo('search/category:'+category.name)"
+                 ng-repeat="category in getInfo().result.categories">
+                {{category.translationName}}
+            </div>
+        </div>
+        <div ng-show="getInfo().result.publications.length >0">
+            <div class="search-result-sub-title">{{'--.search.publication' | translateText}}</div>
+            <div class="search-result-publication search-result-content"
+                 ng-click="navigateTo(publication)"
+                 ng-repeat="publication in getInfo().result.publications">
+                {{publication.description}}
+            </div>
+        </div>
+        <button class="search-result-show-more">Show all results...</button>
+    </div>
+</div>

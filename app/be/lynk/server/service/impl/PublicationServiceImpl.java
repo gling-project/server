@@ -88,4 +88,17 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 //        List<AbstractPublication> resultList = JPA.em().createQuery(cq).getResultList();
 //        return resultList;
     }
+
+    @Override
+    public List<AbstractPublication> search(String criteria) {
+
+        criteria="%"+criteria.replaceAll(" ","%")+"%";
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        cq.select(from);
+        cq.where(cb.like(from.get("description"), criteria));
+        return JPA.em().createQuery(cq).getResultList();
+    }
 }

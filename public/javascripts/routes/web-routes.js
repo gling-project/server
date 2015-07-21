@@ -50,6 +50,9 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 }
+            }).when('/search/:param', {
+                templateUrl: '/assets/javascripts/view/web/search_page.html',
+                controller: 'SearchPageCtrl'
             }).when('/business/:businessId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
                 controller: 'BusinessCtrl'

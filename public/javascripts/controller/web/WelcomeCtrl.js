@@ -1,5 +1,59 @@
-myApp.controller('WelcomeCtrl', function ($scope,  languageService,$location,accountService,facebookService,modalService) {
+myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, searchService) {
 
+
+    $scope.advancedSearch = false;
+
+    $scope.displayAdvancedSearch = function () {
+        $scope.advancedSearch = !$scope.advancedSearch;
+    };
+
+
+    $scope.searchCriteria = data.searchCriterias;
+
+    $scope.$watch('searchCriteria', function () {
+        $scope.searchText = "";
+        var first = true;
+        for (var key in $scope.searchCriteria) {
+            if ($scope.searchCriteria[key].selected === true) {
+                if (first) {
+                    first = false;
+                }
+                else {
+                    $scope.searchText += "|";
+                }
+                $scope.searchText += $scope.searchCriteria[key].key;
+            }
+        }
+        if (!first) {
+            $scope.searchText += ":";
+            $(".search-bar").focus();
+        }
+
+    }, true);
+
+    $scope.searchResultParam = {
+        display: false,
+        cleanSearch:function(){
+            $scope.searchText = "";
+        }
+    };
+
+    $scope.$watch('searchText', function (o, n) {
+        if (o != n && $scope.searchText != "" && $scope.searchText.length >= 2) {
+            var searchS = angular.copy($scope.searchText);
+            $timeout(function () {
+                if (searchS == $scope.searchText) {
+                    searchService.searchByStringLittle($scope.searchText, function (result) {
+                        $scope.searchResultParam.result = result;
+                        $scope.searchResultParam.display = true;
+                    });
+                }
+            }, 500);
+        }
+    });
+
+    $scope.search = function () {
+    };
 
     //use the model
     $scope.myself = accountService.getMyself();
@@ -25,7 +79,7 @@ myApp.controller('WelcomeCtrl', function ($scope,  languageService,$location,acc
     //log out
     $scope.logout = function () {
         facebookService.logout();
-        accountService.logout(function(){
+        accountService.logout(function () {
             $location.path('/');
         });
     };
@@ -34,7 +88,7 @@ myApp.controller('WelcomeCtrl', function ($scope,  languageService,$location,acc
     // change lang
     //
     $scope.$watch('lang', function () {
-        if(!angular.isUndefined($scope.lang)) {
+        if (!angular.isUndefined($scope.lang)) {
             languageService.changeLanguage($scope.lang);
         }
     });

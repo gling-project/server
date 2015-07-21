@@ -4,9 +4,13 @@ import be.lynk.server.dto.BusinessCategoryDTO;
 import be.lynk.server.dto.BusinessCategoryLittleDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
+import be.lynk.server.model.entities.Translation;
+import be.lynk.server.model.entities.TranslationValue;
 import be.lynk.server.service.DozerService;
 import be.lynk.server.service.impl.DozerServiceImpl;
 import org.dozer.CustomConverter;
+import play.i18n.Lang;
+import play.mvc.Http;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,13 +30,15 @@ public class BusinessCategoryMapConverter implements CustomConverter {
 
             Map<String, Map<String, List<BusinessCategoryLittleDTO>>> map = new HashMap<>();
 
+            Lang lang = Http.Context.current().lang();
+
             for (BusinessCategory businessCategory : ((List<BusinessCategory>) source)) {
 
                 BusinessCategoryLittleDTO third = new BusinessCategoryLittleDTO(
                         businessCategory.getName(),
-                        businessCategory.getTranslationName());
-                String second = businessCategory.getParent().getTranslationName();
-                String first = businessCategory.getParent().getParent().getTranslationName();
+                        getTranslation(businessCategory.getTranslationName()));
+                String second = getTranslation(businessCategory.getParent().getTranslationName());
+                String first = getTranslation(businessCategory.getParent().getParent().getTranslationName());
 
                 if (!map.containsKey(first)) {
                     map.put(first, new HashMap<>());
@@ -49,5 +55,23 @@ public class BusinessCategoryMapConverter implements CustomConverter {
             //TODO ?
             return null;
         }
+    }
+
+    private String getTranslation(Translation translation){
+        String defaultText = null;
+        String text = null;
+        Lang lang = Http.Context.current().lang();
+        for (TranslationValue translationValue : translation.getTranslationValues()) {
+            if (translationValue.getLang().equals(lang)) {
+                text = translationValue.getContent();
+            }
+            if (translationValue.getLang().equals("en")) {
+                defaultText = translationValue.getContent();
+            }
+        }
+        if (text == null) {
+            return defaultText;
+        }
+        return text;
     }
 }

@@ -1,11 +1,10 @@
 package be.lynk.server.model.entities;
 
+import be.lynk.server.model.entities.converter.I18NLangConverter;
 import be.lynk.server.model.entities.technical.AbstractEntity;
+import play.i18n.Lang;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by florian on 19/02/15.
@@ -16,14 +15,21 @@ public class TranslationValue extends AbstractEntity {
     @ManyToOne
     private Translation translation;
 
-    @Basic(optional = false)
-    private String languageCode;
+    @Column(nullable = false, columnDefinition = "character varying(255) NOT NULL DEFAULT 'en'")
+    @Convert(converter = I18NLangConverter.class)
+    private Lang lang;
 
     @Column(columnDefinition = "TEXT")
     @Basic(optional = false)
     private String content;
 
     public TranslationValue() {
+    }
+
+    public TranslationValue(Translation translation, Lang lang, String content) {
+        this.translation = translation;
+        this.lang= lang;
+        this.content = content;
     }
 
     public Translation getTranslation() {
@@ -34,12 +40,12 @@ public class TranslationValue extends AbstractEntity {
         this.translation = translation;
     }
 
-    public String getLanguageCode() {
-        return languageCode;
+    public Lang getLang() {
+        return lang;
     }
 
-    public void setLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
+    public void setLang(Lang lang) {
+        this.lang = lang;
     }
 
     public String getContent() {
@@ -53,7 +59,7 @@ public class TranslationValue extends AbstractEntity {
     @Override
     public String toString() {
         return "Translation{" +
-                "languageCode='" + languageCode + '\'' +
+                "lang='" + lang+ '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
