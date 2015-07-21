@@ -138,7 +138,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 try {
                     localizationService.validAddress(business.getAddress());
                 } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
+                    throw new RuntimeException(e.getMessage()+"for address : "+business.getAddress());
                 }
 
 
