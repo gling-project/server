@@ -21,6 +21,11 @@
                 <class-b>java.lang.String</class-b>
             </converter>
 
+            <converter type="be.lynk.server.dozerConverter.BusinessCategoryFlatConverter">
+                <class-a>be.lynk.server.model.entities.BusinessCategory</class-a>
+                <class-b>be.lynk.server.dto.BusinessCategoryFlatDTO</class-b>
+            </converter>
+
         </custom-converters>
 
     </configuration>
@@ -71,6 +76,8 @@
             <b>categories</b>
         </field>
     </mapping>
+
+
 
     <!-- business -> businessId -->
     <mapping>

@@ -139,7 +139,7 @@ public class SearchRestController extends AbstractRestController {
 
                 switch (searchCriteriaEnum) {
                     case CATEGORY:
-                        searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang()), BusinessCategoryLittleDTO.class));
+                        searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang()), BusinessCategoryFlatDTO.class));
                         break;
                     case BUSINESS:
                         searchResultDTO.setBusinesses(dozerService.map(businessService.search(searchElement.getText()), BusinessDTO.class));
@@ -151,7 +151,7 @@ public class SearchRestController extends AbstractRestController {
             }
         } else {
 
-            searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang()), BusinessCategoryLittleDTO.class));
+            searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang()), BusinessCategoryFlatDTO.class));
             searchResultDTO.setBusinesses(dozerService.map(businessService.search(searchElement.getText()), BusinessDTO.class));
             searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText())));
         }

@@ -11,7 +11,7 @@ public class SearchResultDTO extends DTO {
 
     private List<BusinessDTO> businesses;
     private List<AbstractPublicationDTO> publications;
-    private List<BusinessCategoryLittleDTO> categories;
+    private List<BusinessCategoryFlatDTO> categories;
 
     public List<BusinessDTO> getBusinesses() {
         return businesses;
@@ -29,11 +29,11 @@ public class SearchResultDTO extends DTO {
         this.publications = publications;
     }
 
-    public List<BusinessCategoryLittleDTO> getCategories() {
+    public List<BusinessCategoryFlatDTO> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<BusinessCategoryLittleDTO> categories) {
+    public void setCategories(List<BusinessCategoryFlatDTO> categories) {
         this.categories = categories;
     }
 }
