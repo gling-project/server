@@ -52,6 +52,14 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date> {
 
     private Integer totalFollowers;
 
+    private String facebookLink;
+
+    private String twitterLink;
+
+    private String foursquareLink;
+
+    private String googleplusLink;
+
     private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
 
     public Boolean getFollowing() {
@@ -191,6 +199,38 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date> {
 
     public void setAddress(AddressDTO address) {
         this.address = address;
+    }
+
+    public String getFacebookLink() {
+        return facebookLink;
+    }
+
+    public void setFacebookLink(String facebookLink) {
+        this.facebookLink = facebookLink;
+    }
+
+    public String getTwitterLink() {
+        return twitterLink;
+    }
+
+    public void setTwitterLink(String twitterLink) {
+        this.twitterLink = twitterLink;
+    }
+
+    public String getFoursquareLink() {
+        return foursquareLink;
+    }
+
+    public void setFoursquareLink(String foursquareLink) {
+        this.foursquareLink = foursquareLink;
+    }
+
+    public String getGoogleplusLink() {
+        return googleplusLink;
+    }
+
+    public void setGoogleplusLink(String googleplusLink) {
+        this.googleplusLink = googleplusLink;
     }
 
     @Override

@@ -22,6 +22,9 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
     @Basic(optional = false)
     private String description;
 
+    @Basic(optional = false)
+    private String searchableDescription;
+
     @Column(columnDefinition = "timestamp")
     @Convert(converter = LocalDateTimePersistenceConverter.class)
     @Basic(optional = false)
@@ -39,6 +42,14 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
         return business;
     }
 
+    public String getSearchableDescription() {
+        return searchableDescription;
+    }
+
+    public void setSearchableDescription(String searchableDescription) {
+        this.searchableDescription = searchableDescription;
+    }
+
     public void setBusiness(Business business) {
         this.business = business;
     }
@@ -49,6 +60,7 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
 
     public void setDescription(String description) {
         this.description = description;
+        this.setSearchableDescription(normalize(description));
     }
 
     public LocalDateTime getStartDate() {

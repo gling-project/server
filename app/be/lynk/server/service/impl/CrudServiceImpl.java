@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
+import java.text.Normalizer;
 import java.util.List;
 
 /**
@@ -93,5 +94,15 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
             return results.get(0);
         }
         return null;
+    }
+
+    protected String normalizeForSearch(String s){
+
+        s="%"+s.replaceAll(" ","%")+"%";
+        s=s.toLowerCase();
+        s= Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[^\\p{ASCII}]", "");
+        s = s.replaceAll("\\p{M}", "");
+        return s;
     }
 }

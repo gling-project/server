@@ -15,6 +15,9 @@ public class TranslationValue extends AbstractEntity {
     @ManyToOne
     private Translation translation;
 
+    @Basic(optional = false)
+    private String searchableContent;
+
     @Column(nullable = false, columnDefinition = "character varying(255) NOT NULL DEFAULT 'en'")
     @Convert(converter = I18NLangConverter.class)
     private Lang lang;
@@ -29,7 +32,15 @@ public class TranslationValue extends AbstractEntity {
     public TranslationValue(Translation translation, Lang lang, String content) {
         this.translation = translation;
         this.lang= lang;
-        this.content = content;
+        this.setContent(content);
+    }
+
+    public String getSearchableContent() {
+        return searchableContent;
+    }
+
+    public void setSearchableContent(String searchableContent) {
+        this.searchableContent = searchableContent;
     }
 
     public Translation getTranslation() {
@@ -54,6 +65,7 @@ public class TranslationValue extends AbstractEntity {
 
     public void setContent(String content) {
         this.content = content;
+        this.searchableContent = normalize(content);
     }
 
     @Override

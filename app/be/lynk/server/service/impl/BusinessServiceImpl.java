@@ -31,13 +31,13 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
     @Override
     public List<Business> search(String criteria) {
 
-        criteria="%"+criteria.replaceAll(" ","%")+"%";
+        criteria=normalizeForSearch(criteria);
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Business> cq = cb.createQuery(Business.class);
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
-        cq.where(cb.like(from.get("name"), criteria));
+        cq.where(cb.like(from.get("searchableName"), criteria));
         return JPA.em().createQuery(cq).getResultList();
     }
 }

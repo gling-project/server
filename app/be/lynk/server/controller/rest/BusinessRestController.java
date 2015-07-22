@@ -42,6 +42,8 @@ public class BusinessRestController extends AbstractController {
     @Autowired
     private LocalizationService localizationService;
 
+
+
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result getAll() {
@@ -220,6 +222,27 @@ public class BusinessRestController extends AbstractController {
         business.setPhone(dto.getPhone());
         business.setEmail(dto.getEmail());
         business.setWebsite(dto.getWebsite());
+
+        businessService.saveOrUpdate(business);
+
+        return ok(dozerService.map(business, BusinessDTO.class));
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result updateSocialNetwork(){
+
+        BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
+
+
+        BusinessAccount currentUser = (BusinessAccount) securityController.getCurrentUser();
+
+        Business business = currentUser.getBusiness();
+
+        business.setFacebookLink(dto.getFacebookLink());
+        business.setGoogleplusLink(dto.getGoogleplusLink());
+        business.setTwitterLink(dto.getTwitterLink());
+        business.setFoursquareLink(dto.getFoursquareLink());
 
         businessService.saveOrUpdate(business);
 

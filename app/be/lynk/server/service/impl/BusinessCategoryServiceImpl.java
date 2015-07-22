@@ -49,9 +49,9 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
     @Override
     public List<BusinessCategory> search(String criteria, Lang lang) {
 
-        criteria = "%" + criteria.replaceAll(" ", "%") + "%";
+        criteria = normalizeForSearch(criteria);
 
-        String s = "select c from BusinessCategory c, Translation t, TranslationValue v where c.translationName = t and v.translation=t and v.lang=:lang and v.content like :criteria";
+        String s = "select c from BusinessCategory c, Translation t, TranslationValue v where c.translationName = t and v.translation=t and v.lang=:lang and v.searchableContent like :criteria";
 
         return JPA.em().createQuery(s)
                 .setParameter("lang", lang)

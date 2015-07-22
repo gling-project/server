@@ -7,6 +7,7 @@ import play.mvc.Http;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.Normalizer;
 import java.time.LocalDateTime;
 
 /**
@@ -121,6 +122,15 @@ public abstract class AbstractEntity implements Serializable {
                 ", creationDate=" + creationDate +
                 ", lastUpdate=" + lastUpdate +
                 '}';
+    }
+
+
+    protected String normalize(String s){
+        s=s.toLowerCase();
+        s= Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[^\\p{ASCII}]", "");
+        s = s.replaceAll("\\p{M}", "");
+        return s;
     }
 
 

@@ -92,13 +92,13 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
     @Override
     public List<AbstractPublication> search(String criteria) {
 
-        criteria="%"+criteria.replaceAll(" ","%")+"%";
+        criteria = normalizeForSearch(criteria);
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
         Root<AbstractPublication> from = cq.from(AbstractPublication.class);
         cq.select(from);
-        cq.where(cb.like(from.get("description"), criteria));
+        cq.where(cb.like(from.get("searchableDescription"), criteria));
         return JPA.em().createQuery(cq).getResultList();
     }
 }

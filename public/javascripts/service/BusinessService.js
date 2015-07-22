@@ -59,6 +59,25 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             });
     };
 
+    this.editSocialNetwork = function (dto, callbackSuccess, callbackError) {
+        $http({
+            'method': "PUT",
+            'url': "/business/social_network",
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
     this.editBusinessCategory = function (dto, callbackSuccess, callbackError) {
 
         $http({

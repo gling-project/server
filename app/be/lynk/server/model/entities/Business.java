@@ -24,6 +24,9 @@ public class Business extends AbstractEntity {
     private String name;
 
     @Basic(optional = false)
+    private String searchableName;
+
+    @Basic(optional = false)
     @Column(columnDefinition = "text not null")
     private String description;
 
@@ -66,16 +69,38 @@ public class Business extends AbstractEntity {
     @Convert(converter = LocalDateTimePersistenceConverter.class)
     protected LocalDateTime askPublicationDate;
 
+    @Basic
+    private String facebookLink;
+
+    @Basic
+    private String twitterLink;
+
+    @Basic
+    private String foursquareLink;
+    @Basic
+    private String googleplusLink;
+
+
+
+    public BusinessStatus getBusinessStatus() {
+        return businessStatus;
+    }
+
+    public String getSearchableName() {
+        return searchableName;
+    }
+
+    public void setSearchableName(String searchableName) {
+        this.searchableName = searchableName;
+
+    }
+
     public LocalDateTime getAskPublicationDate() {
         return askPublicationDate;
     }
 
     public void setAskPublicationDate(LocalDateTime askPublicationDate) {
         this.askPublicationDate = askPublicationDate;
-    }
-
-    public BusinessStatus getBusinessStatus() {
-        return businessStatus;
     }
 
     public void setBusinessStatus(BusinessStatus businessStatus) {
@@ -128,6 +153,7 @@ public class Business extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
+        this.searchableName = normalize(name);
     }
 
     public String getDescription() {
@@ -176,6 +202,38 @@ public class Business extends AbstractEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFacebookLink() {
+        return facebookLink;
+    }
+
+    public void setFacebookLink(String facebookLink) {
+        this.facebookLink = facebookLink;
+    }
+
+    public String getTwitterLink() {
+        return twitterLink;
+    }
+
+    public void setTwitterLink(String twitterLink) {
+        this.twitterLink = twitterLink;
+    }
+
+    public String getFoursquareLink() {
+        return foursquareLink;
+    }
+
+    public void setFoursquareLink(String foursquareLink) {
+        this.foursquareLink = foursquareLink;
+    }
+
+    public String getGoogleplusLink() {
+        return googleplusLink;
+    }
+
+    public void setGoogleplusLink(String googleplusLink) {
+        this.googleplusLink = googleplusLink;
     }
 
     @Override

@@ -43,14 +43,14 @@ public class BusinessCategory extends AbstractEntity implements Comparable<Busin
     }
 
     public BusinessCategory(String name, Translation translationName, Integer orderIndex) {
-        this.name = name;
+        this.setName(name);
         this.translationName = translationName;
         this.orderIndex = orderIndex;
     }
 
     public BusinessCategory(BusinessCategory parent, String name, Translation translationName, Integer orderIndex) {
         this.parent = parent;
-        this.name = name;
+        this.setName(name);
         this.translationName = translationName;
         this.orderIndex = orderIndex;
     }

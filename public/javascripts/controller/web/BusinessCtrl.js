@@ -219,6 +219,22 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                 businessId : $scope.business.id
             };
 
+            //edit social network
+            $scope.editSocialNetwork = function(){
+                var business = angular.copy($scope.business);
+                modalService.basicModal("--.business.edit.address.modal.title", "business-social-network-ctrl",
+                    {
+                        dto: business
+                    },
+                    function (close) {
+                        //scope.business
+                        businessService.editSocialNetwork(business, function (data) {
+                            $scope.business = data;
+                            close();
+                        });
+                    });
+            };
+
 
         }, function () {
             $scope.loading = false;
