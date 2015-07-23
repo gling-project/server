@@ -1,12 +1,22 @@
 myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash,followService) {
 
 
+    if($routeParams.publicationId !=null){
+        $scope.publicationIdToGo =$routeParams.publicationId;
+    }
+
+
     $scope.displayError = false;
     $scope.loading = true;
     $scope.business = null;
     $scope.edit = false;
     $scope.myBusiness = false;
     $scope.businessId = $routeParams.businessId;
+    //publication
+    $scope.publicationListParam = {
+        businessId : $scope.businessId,
+        scrollTo:$scope.publicationIdToGo
+    };
 
     //loading
     businessService.getBusiness($routeParams.businessId,
@@ -214,10 +224,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
 
             };
 
-            //publication
-            $scope.publicationListParam = {
-                businessId : $scope.business.id
-            };
+
 
             //edit social network
             $scope.editSocialNetwork = function(){

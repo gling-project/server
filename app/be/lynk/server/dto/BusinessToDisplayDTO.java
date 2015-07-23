@@ -18,7 +18,7 @@ import java.util.*;
  * this DTO must  contain only business public datas
  * IMPORTANT !!!
  */
-public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date> {
+public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Comparable<BusinessToDisplayDTO> {
 
     private Long id;
 
@@ -243,5 +243,10 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date> {
                 ", illustration=" + illustration +
                 ", categories=" + categories +
                 '}';
+    }
+
+    @Override
+    public int compareTo(BusinessToDisplayDTO o) {
+        return this.distance.compareTo(o.distance);
     }
 }

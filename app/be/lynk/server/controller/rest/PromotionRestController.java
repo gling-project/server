@@ -76,6 +76,7 @@ public class PromotionRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
+        promotionToEdit.setTitle(promotion.getTitle());
         promotionToEdit.setDescription(promotion.getDescription());
         promotionToEdit.setEndDate(promotion.getEndDate());
         promotionToEdit.setMinimalQuantity(promotion.getMinimalQuantity());
@@ -94,26 +95,6 @@ public class PromotionRestController extends AbstractRestController {
         publicationService.saveOrUpdate(promotionToEdit);
 
         return ok(dozerService.map(promotionToEdit, PromotionDTO.class));
-    }
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result getMine() {
-
-        Logger.info("REQUEST    PROMOTION    : : " + request().uri());
-
-        BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
-        Business business = account.getBusiness();
-
-        List<Promotion> promotions = publicationService.findByTypeAndBusiness(Promotion.class, business);
-
-        Collections.sort(promotions);
-
-        ListDTO<PromotionDTO> promotionDTOListDTO = new ListDTO<>(dozerService.map(promotions, PromotionDTO.class));
-
-        Logger.info("PROMOTION ------ :" + promotionDTOListDTO);
-
-        return ok(promotionDTOListDTO);
     }
 
     @Transactional

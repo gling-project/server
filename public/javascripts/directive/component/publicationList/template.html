@@ -39,7 +39,8 @@
             </div>
 
             <div class="date"><i class="fa fa-calendar"></i> {{publication.endDate | date:medium}}</div>
-            <div class="publication-box-name">{{publication.description}}</div>
+            <div class="publication-box-name">{{publication.title}}</div>
+            <div class="publication-box-description">{{publication.description}}</div>
 
             <div ng-repeat="picture in publication.pictures">
                 <img ng-src="{{picture | image}}"/>

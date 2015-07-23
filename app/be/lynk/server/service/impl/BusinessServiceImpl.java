@@ -1,5 +1,6 @@
 package be.lynk.server.service.impl;
 
+import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.service.BusinessService;
@@ -29,7 +30,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
     }
 
     @Override
-    public List<Business> search(String criteria) {
+    public List<Business> search(String criteria,int max) {
 
         criteria=normalizeForSearch(criteria);
 
@@ -37,7 +38,11 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         CriteriaQuery<Business> cq = cb.createQuery(Business.class);
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
-        cq.where(cb.like(from.get("searchableName"), criteria));
-        return JPA.em().createQuery(cq).getResultList();
+        cq.where(cb.like(from.get("searchableName"), criteria),
+                cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+        
+        return JPA.em().createQuery(cq)
+                .setMaxResults(max)
+                .getResultList();
     }
 }

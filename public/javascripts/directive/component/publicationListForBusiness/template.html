@@ -1,12 +1,9 @@
 <div class="publication-list">
 
-
-
-
-
-    <div    ng-repeat="publication in publications"
-            class="publication-box publication-promotion publication-list-publication-data"
-            ng-click="click()">
+    <div ng-repeat="publication in publications"
+         id="publication{{publication.id}}"
+         class="publication-box publication-promotion publication-list-publication-data"
+         ng-click="click()">
 
         <div class="publication-list-publication-data">
 
@@ -20,7 +17,8 @@
             </div>
 
             <div class="date"><i class="fa fa-calendar"></i> {{publication.endDate | date:medium}}</div>
-            <div class="publication-box-name">{{publication.description}}</div>
+            <div class="publication-box-name">{{publication.title}}</div>
+            <div class="publication-box-description">{{publication.description}}</div>
 
             <div ng-repeat="picture in publication.pictures">
                 <img ng-src="{{picture | image}}"/>

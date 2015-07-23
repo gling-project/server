@@ -15,5 +15,5 @@ public interface BusinessCategoryService extends CrudService<BusinessCategory>{
 
     void deleteAll();
 
-    List<BusinessCategory> search(String criteria,Lang lang);
+    List<BusinessCategory> search(String criteria,Lang lang,int max);
 }

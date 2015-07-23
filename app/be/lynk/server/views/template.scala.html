@@ -52,6 +52,7 @@
             <!-- component -->
         <script src="@routes.Assets.at("javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/directive/component/searchResult/SearchResultCtrl.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/directive/component/businessList/BusinessListCtrl.js")" type="text/javascript"></script>
 
             <!-- css -->
             <!-- main -->
@@ -60,7 +61,7 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobile.css")">
 
     </head>
-    <body class="main-container" ng-app="app" ng-controller="MainCtrl" >
+    <body ng-app="app" ng-controller="MainCtrl" >
 
         <div class="global-container" ng-controller="WelcomeCtrl">
 
@@ -76,16 +77,20 @@
             <div class="main-body">
                 <div class="global-content-container">
 
-                    <div id="main-header-container">
+                    @*<div id="main-header-container">*@
 
                             <!-- header -->
-                        <header>
+                        <div
+                            class="navigation-bar"
+                        ng-class="{'header-with-advanced-search':advancedSearch}">
 
-                                <!-- title -->
+                                <!-- advanced search -->
                             <div ng-show="advancedSearch" class="container search-advanced-block" >
                                 <div class="search-advanced-block-desc">
+
+                                    <!-- criteria -->
                                     <div>{{'--.welcome.serach.advanced.criteria' | translateText}}</div>
-                                    <div class="search-advanced-criteria" ng-repeat="criteria in searchCriteria">
+                                    <div class="search-advanced-criteria" ng-repeat="criteria in searchBarService.searchCriteria">
                                         <input type="checkbox" ng-model="criteria.selected"/>
                                         {{criteria.nameRef | translateText}}
                                     </div>
@@ -102,7 +107,7 @@
                                     dir-bottom-arrow="down()" dir-top-arrow="top()"
                                     type="text"
                                         dir-enter="search()"
-                                    ng-model="searchText"
+                                    ng-model="searchBarService.currentSearch"
                                     class="search-bar"
                                     placeholder="{{'--.welcome.search' | translateText}}"/>
 
@@ -133,13 +138,13 @@
                                         class="form-control"
                                         ng-model="languageService.currentLanguage"
                                         ng-options="lang.code as lang.language for lang in languageService.languages"
-                                        style="display : inline-block ; width : 80px">
-                                        </select>
-                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                            {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                                style="display: inline-block;width:80px">
+                                            </select>
+                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                             <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">
                                                 {{'--.welcome.myProfile' | translateText}}</a></li>
                                             <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
@@ -154,10 +159,11 @@
                                 </div>
 
                             </div>
-                        </header>
-                    </div>
+                        </div>
+                    @*</div>*@
 
-                    <div class="container main-container">
+                    <div class="container main-container"
+                    ng-class="{'main-container-with-advanced-search':advancedSearch}">
 
                             <!-- content -->
                         <div ng-view></div>

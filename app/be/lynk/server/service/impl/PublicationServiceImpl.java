@@ -51,21 +51,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
     }
 
     @Override
-    public <T extends AbstractPublication> List<T> findByTypeAndBusiness(Class<T> clazz, Business business) {
-        LocalDateTime now = LocalDateTime.now();
-        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-        CriteriaQuery<T> cq = cb.createQuery(clazz);
-        Root<T> from = cq.from(clazz);
-
-        cq.select(from);
-        cq.where(cb.equal(from.get("business"), business));
-        return JPA.em().createQuery(cq).getResultList();
-    }
-
-    @Override
     public List<AbstractPublication> findActivePublicationByBusinesses(List<Business> business) {
 
-        if(business.size()==0){
+        if (business.size() == 0) {
             return new ArrayList<>();
         }
 
@@ -90,7 +78,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
     }
 
     @Override
-    public List<AbstractPublication> search(String criteria) {
+    public List<AbstractPublication> search(String criteria, int max) {
 
         criteria = normalizeForSearch(criteria);
 
@@ -98,7 +86,13 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
         Root<AbstractPublication> from = cq.from(AbstractPublication.class);
         cq.select(from);
-        cq.where(cb.like(from.get("searchableDescription"), criteria));
-        return JPA.em().createQuery(cq).getResultList();
+        cq.where(cb.like(from.get("searchableTitle"), criteria)
+                , cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+        );
+
+        return JPA.em().createQuery(cq)
+                .setMaxResults(max)
+                .getResultList();
     }
 }

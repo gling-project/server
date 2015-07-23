@@ -1,3 +1,33 @@
 <div>
 
+    <div ng-show="results == null">
+        Loading
+    </div>
+
+    <div ng-hide="results==null">
+        <tabset>
+            <!-- business -->
+            <tab ng-show="businessTab.display" active="businessTab.active">
+                <tab-heading>
+                    {{'--.generic.business' | translateText}}
+                </tab-heading>
+                <business-list-ctrl ng-info="businessParams"></business-list-ctrl>
+            </tab>
+            <!-- publication -->
+            <tab ng-show="publicationTab.display" active="publicationTab.active">
+                <tab-heading>
+                    {{'--.generic.publication' | translateText}}
+                </tab-heading>
+                <publication-list-ctrl ng-info="publicationParams"></publication-list-ctrl>
+            </tab>
+            <!-- category -->
+            <tab ng-show="categoryTab.display" active="categoryTab.active">
+                <tab-heading>
+                    {{'--.generic.category' | translateText}}
+                </tab-heading>
+                category !!
+            </tab>
+        </tabset>
+    </div>
+
 </div>

@@ -1,0 +1,32 @@
+<div class="business-list">
+
+    <div ng-show="getInfo().loading===true" class="business-list-loading">
+        <img src="assets/images/big_loading.gif"/>
+    </div>
+
+
+    <div ng-hide="getInfo().loading===true"
+         ng-repeat="business in businesses"
+         class="business-box business-business"
+         ng-click="click()">
+
+        <img class="illustration" ng-src="{{business.illustration | image}}"/>
+
+        <div class="business-data">
+            <div>
+                <span class="link" ng-click="navigateTo('/business/'+business.id)">{{business.name}}</span>
+            </div>
+            <div>
+                <button ng-click="follow(business)" class="follow-button">
+                    <img src="assets/images/haert.png" ng-show="business.following"/>
+                    <img src="assets/images/haert-off.png" ng-hide="business.following"/>
+                </button>
+                {{business.totalFollowers}}
+            </div>
+            <div class="distance"><i class="fa fa-globe"></i> {{business.distance / 1000 | number:2}} km</div>
+            <br/>
+        </div>
+
+    </div>
+
+</div>

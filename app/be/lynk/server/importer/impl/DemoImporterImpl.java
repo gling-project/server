@@ -61,6 +61,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final Integer COL_PUBLICATION_BUSINESS = 0;
     private static final Integer COL_PUBLICATION_TYPE = 1;
     private static final Integer COL_PUBLICATION_TITLE = 2;
+    private static final Integer COL_PUBLICATION_DESC = 3;
     private static final Integer COL_PUBLICATION_START_HOUR = 4;
     private static final Integer COL_PUBLICATION_END_HOUR = 5;
     private static final Integer COL_PUBLICATION_LOGO = 6;
@@ -250,8 +251,11 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 }
 
                 String title = sheet.getCell(COL_PUBLICATION_TITLE, rowCounter).getContents();
-                if (title != null && title.length() > 1) {
-                    publication.setDescription(title);
+                String desc = sheet.getCell(COL_PUBLICATION_DESC, rowCounter).getContents();
+
+                if (title != null && title.length() >= 2 && title.length() <= 100) {
+                    publication.setTitle(title);
+                    publication.setDescription(desc);
                     publication.setBusiness(business);
                     try {
                         publication.setEndDate(LocalDateTime.now().plusHours(getNumber(sheet, COL_PUBLICATION_END_HOUR, rowCounter).longValue()));

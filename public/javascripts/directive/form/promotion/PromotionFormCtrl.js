@@ -35,9 +35,19 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     //build field + dto binding
                     scope.fields = {
                         description: {
+                            fieldTitle: "--.generic.title",
+                            validationRegex: "^.{2,100}$",
+                            validationMessage: ['--.generic.validation.size', '2', '100'],
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'title'
+                        },
+                        description: {
                             fieldTitle: "--.generic.description",
-                            validationRegex: "^.{2,255}$",
-                            validationMessage: ['--.generic.validation.size', '2', '255'],
+                            validationRegex: "^.{0,1000}$",
+                            validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

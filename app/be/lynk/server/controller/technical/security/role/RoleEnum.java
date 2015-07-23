@@ -9,9 +9,9 @@ import java.util.List;
 public enum RoleEnum {
 
     USER,
-    BUSINESS(USER),
     CUSTOMER(USER),
-    SUPERADMIN(USER);
+    BUSINESS(CUSTOMER),
+    SUPERADMIN(CUSTOMER);
 
 
     private List<RoleEnum> children;

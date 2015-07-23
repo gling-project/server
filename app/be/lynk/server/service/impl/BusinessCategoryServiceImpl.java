@@ -47,7 +47,7 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
     }
 
     @Override
-    public List<BusinessCategory> search(String criteria, Lang lang) {
+    public List<BusinessCategory> search(String criteria, Lang lang,int max) {
 
         criteria = normalizeForSearch(criteria);
 
@@ -56,6 +56,7 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
         return JPA.em().createQuery(s)
                 .setParameter("lang", lang)
                 .setParameter("criteria", criteria)
+                .setMaxResults(max)
                 .getResultList();
 
 //        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();

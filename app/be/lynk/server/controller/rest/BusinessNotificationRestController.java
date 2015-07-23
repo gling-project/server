@@ -73,6 +73,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
+        businessNotificationToEdit.setTitle(businessNotification.getTitle());
         businessNotificationToEdit.setDescription(businessNotification.getDescription());
         businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
         businessNotificationToEdit.setStartDate(businessNotification.getStartDate());
@@ -89,25 +90,6 @@ public class BusinessNotificationRestController extends AbstractRestController {
         return ok(dozerService.map(businessNotificationToEdit, BusinessNotificationDTO.class));
     }
 
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result get() {
-
-        Logger.info("REQUEST    BUSINESS    : : "+request().uri());
-
-        BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
-        Business business = account.getBusiness();
-
-        List<BusinessNotification> businessNotifications = publicationService.findByTypeAndBusiness(BusinessNotification.class, business);
-
-        Collections.sort(businessNotifications);
-
-        ListDTO<BusinessNotificationDTO> businessNotificationDTOListDTO = new ListDTO<>(dozerService.map(businessNotifications, BusinessNotificationDTO.class));
-
-        Logger.info("NOTIFICATION  :" + businessNotificationDTOListDTO);
-
-        return ok(businessNotificationDTOListDTO);
-    }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)

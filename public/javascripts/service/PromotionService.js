@@ -44,26 +44,6 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
 
     };
 
-    this.getMine = function (callbackSuccess, callbackError) {
-        var promise = $http({
-            'method': "GET",
-            'url': "/promotion",
-            'headers': "Content-Type:application/json"
-        });
-        promise.success(function (data, status, headers, d) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        });
-        promise.error(function (data, status) {
-            $flash.error(data.message);
-            if (callbackError != null) {
-                callbackError(data, status);
-            }
-        });
-    };
-
-
     this.delete = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",

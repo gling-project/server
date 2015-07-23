@@ -10,5 +10,5 @@ import java.util.List;
 public interface BusinessService extends CrudService<Business>{
     List<Business> findByName(String businessName);
 
-    List<Business> search(String text);
+    List<Business> search(String text,int max);
 }

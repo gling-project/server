@@ -121,7 +121,11 @@ public class SearchRestController extends AbstractRestController {
     }
 
 
-    private Result getByString(boolean min) {
+    private Result getByString(boolean little) {
+
+        //TODO do not compute distance for little
+
+        int max = (little) ? 4 : 20;
 
         SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
 
@@ -139,24 +143,64 @@ public class SearchRestController extends AbstractRestController {
 
                 switch (searchCriteriaEnum) {
                     case CATEGORY:
-                        searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang()), BusinessCategoryFlatDTO.class));
+                        searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
                         break;
                     case BUSINESS:
-                        searchResultDTO.setBusinesses(dozerService.map(businessService.search(searchElement.getText()), BusinessDTO.class));
+                        searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
                         break;
                     case PUBLICATION:
-                        searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText())));
+                        searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
                         break;
                 }
             }
         } else {
 
-            searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang()), BusinessCategoryFlatDTO.class));
-            searchResultDTO.setBusinesses(dozerService.map(businessService.search(searchElement.getText()), BusinessDTO.class));
-            searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText())));
+            searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
+            searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
+            searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
         }
 
         return ok(searchResultDTO);
+    }
+
+    private List<BusinessToDisplayDTO> finalizeBusiness(PositionDTO dto, List<Business> businesses) {
+        //compute distance
+        List<BusinessToDisplayDTO> finalResult = new ArrayList<>();
+
+        if (businesses.size() > 0) {
+
+            //limit to 20 !
+            if (businesses.size() > 20) {
+                businesses = businesses.subList(0, 20);
+            }
+
+            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), businesses);
+
+            for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
+                for (Business business : businesses) {
+                    if (addressLongEntry.getKey().equals(business)) {
+
+                        BusinessToDisplayDTO businessToDisplayDTO = dozerService.map(business, BusinessToDisplayDTO.class);
+                        businessToDisplayDTO.setDistance(addressLongEntry.getValue());
+                        finalResult.add(businessToDisplayDTO);
+
+                        //follow ?
+                        if (securityController.isAuthenticated(ctx())) {
+                            Account account = securityController.getCurrentUser();
+                            if (account.getType().equals(AccountTypeEnum.CUSTOMER)) {
+                                businessToDisplayDTO.setFollowing(followLinkService.testByAccountAndBusiness(account, business));
+                            }
+                        }
+                        businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+                    }
+                }
+            }
+        }
+
+        Collections.sort(finalResult);
+
+        return finalResult;//
+
     }
 
 

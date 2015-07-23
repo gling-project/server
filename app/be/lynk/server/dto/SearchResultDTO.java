@@ -9,15 +9,15 @@ import java.util.List;
  */
 public class SearchResultDTO extends DTO {
 
-    private List<BusinessDTO> businesses;
+    private List<BusinessToDisplayDTO> businesses;
     private List<AbstractPublicationDTO> publications;
     private List<BusinessCategoryFlatDTO> categories;
 
-    public List<BusinessDTO> getBusinesses() {
+    public List<BusinessToDisplayDTO> getBusinesses() {
         return businesses;
     }
 
-    public void setBusinesses(List<BusinessDTO> businesses) {
+    public void setBusinesses(List<BusinessToDisplayDTO> businesses) {
         this.businesses = businesses;
     }
 

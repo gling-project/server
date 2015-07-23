@@ -20,16 +20,6 @@ var initializeCommonRoutes = function () {
                         var status = test(accountService);
                     }
                 }
-            }).when('/business_old', {
-                templateUrl: '/assets/javascripts/view/web/business_welcome.html',
-                controller: 'BusinessWelcomeCtrl',
-                resolve: {
-                    a: function (accountService, $location) {
-                        if (test(accountService) != 'BUSINESS') {
-                            $location.path('/');
-                        }
-                    }
-                }
             }).when('/profile', {
                 templateUrl: '/assets/javascripts/view/web/profile.html',
                 controller: 'ProfileCtrl',
@@ -54,6 +44,9 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/web/search_page.html',
                 controller: 'SearchPageCtrl'
             }).when('/business/:businessId', {
+                templateUrl: '/assets/javascripts/view/web/business.html',
+                controller: 'BusinessCtrl'
+            }).when('/business/:businessId/publication/:publicationId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
                 controller: 'BusinessCtrl'
             }).otherwise({

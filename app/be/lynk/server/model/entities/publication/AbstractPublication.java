@@ -20,10 +20,14 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
     private Business business;
 
     @Basic(optional = false)
+    private String title;
+
+    @Basic
+    @Column(columnDefinition = "text")
     private String description;
 
     @Basic(optional = false)
-    private String searchableDescription;
+    private String searchableTitle;
 
     @Column(columnDefinition = "timestamp")
     @Convert(converter = LocalDateTimePersistenceConverter.class)
@@ -38,16 +42,28 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
     @OneToMany(mappedBy = "publication",cascade = CascadeType.ALL)
     private List<StoredFile> pictures=new ArrayList<>();
 
+    public AbstractPublication() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        this.setSearchableTitle(normalize(title));
+    }
+
     public Business getBusiness() {
         return business;
     }
 
-    public String getSearchableDescription() {
-        return searchableDescription;
+    public String getSearchableTitle() {
+        return searchableTitle;
     }
 
-    public void setSearchableDescription(String searchableDescription) {
-        this.searchableDescription = searchableDescription;
+    public void setSearchableTitle(String searchableTitle) {
+        this.searchableTitle = searchableTitle;
     }
 
     public void setBusiness(Business business) {
@@ -60,7 +76,6 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
 
     public void setDescription(String description) {
         this.description = description;
-        this.setSearchableDescription(normalize(description));
     }
 
     public LocalDateTime getStartDate() {

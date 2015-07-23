@@ -56,13 +56,11 @@ POST          /business/stop_publish                          @be.lynk.server.co
 POST          /business/schedule                              @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
 
 ## promotion
-GET           /promotion                                      @be.lynk.server.controller.rest.PromotionRestController.getMine()
 POST          /promotion                                      @be.lynk.server.controller.rest.PromotionRestController.create()
 PUT           /promotion/$id<[0-9]+>                          @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
 DELETE        /promotion/$id<[0-9]+>                          @be.lynk.server.controller.rest.PromotionRestController.delete(id:Long)
 
 ## notificaiton
-GET           /businessNotification                           @be.lynk.server.controller.rest.BusinessNotificationRestController.get()
 POST          /businessNotification                           @be.lynk.server.controller.rest.BusinessNotificationRestController.create()
 PUT           /businessNotification/$id<[0-9]+>               @be.lynk.server.controller.rest.BusinessNotificationRestController.update(id:Long)
 DELETE        /businessNotification/$id<[0-9]+>               @be.lynk.server.controller.rest.BusinessNotificationRestController.delete(id:Long)

@@ -16,9 +16,11 @@ import java.util.List;
 /**
  * Created by florian on 5/06/15.
  */
-public abstract class AbstractPublicationDTO extends DTO implements Comparable<AbstractPublicationDTO> ,KeyTyped<Date> {
+public abstract class AbstractPublicationDTO extends DTO implements Comparable<AbstractPublicationDTO>, KeyTyped<Date> {
 
     protected Long id;
+
+    private String title;
 
     protected String description;
 
@@ -40,7 +42,18 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     protected PublicationType type;
 
-    private List<StoredFileDTO> pictures=new ArrayList<>();
+    private List<StoredFileDTO> pictures = new ArrayList<>();
+
+    public AbstractPublicationDTO() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public StoredFileDTO getBusinessIllustration() {
         return businessIllustration;
@@ -141,7 +154,7 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     @Override
     public int compareTo(AbstractPublicationDTO o) {
-        return this.getEndDate().compareTo(o.getEndDate());
+        return this.getDistance().compareTo(o.getDistance());
     }
 
     @Override
