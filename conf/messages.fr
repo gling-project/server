@@ -425,3 +425,18 @@ day_abrv_sunday=Di
 ##  directive/component/publicationListForBusiness/template.html (start date )
 --.publication.promotionData=Détails de la promotion
 
+
+--.interest.mhabiller=M'habiller
+--.interest.voyager=Voyager
+--.interest.me_cultiver=Me cultiver
+--.interest.faire_du_shopping_plaisir=Faire du shopping "plaisir"
+--.interest.manger=Manger
+--.interest.soccuper_denfants=S'occuper d'enfants
+--.interest.decorer_ma_maison=Décorer ma maison
+--.interest.prendre_soin_de_moi=Prendre soin de moi
+--.interest.sortir=Sortir
+--.interest.prendre_soin_de_mes_animaux=Prendre soin de mes animaux
+--.interest.faire_des_courses=Faire des courses
+--.interest.prendre_un_verre=Prendre un verre
+--.interest.se_loger=Se loger
+--.interest.faire_du_sport=Faire du sport
