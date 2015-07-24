@@ -24,10 +24,6 @@
                 </div>
             </div>
 
-            <div class="date"><i class="fa fa-calendar"></i> {{publication.endDate | date:medium}}</div>
-            <div class="publication-box-name">{{publication.title}}</div>
-            <div class="publication-box-description">{{publication.description}}</div>
-
             <!-- start date -->
             <div class="date"><i class="fa fa-calendar"></i> {{publication.startDate | date:medium}}</div>
             <!-- name -->
@@ -38,21 +34,25 @@
             <!-- promotion data -->
             <div ng-show="publication.type == 'PROMOTION'"
                  class="publication-box-promotion-data">
+                {{'--.publication.promotionData' | translateText}}
                 <table>
-                    <tr>
+                    <tr ng-show="publication.quantity!=null">
                         <td>{{'--.promotion.quantity' | translateText}}</td>
                         <td>{{publication.quantity}} {{publication.unit}}</td>
                     </tr>
                     <tr ng-show="publication.originalPrice!=null">
-                        <td>{{'--.promotion.originalPrice' | translateText}}</td>
-                        <td>{{publication.originalPrice}}</td>
+                        <td>{{'--.promotion.originalUnitPrice' | translateText}}</td>
+                        <td>{{publication.originalPrice | number:2}} €</td>
                     </tr>
                     <tr ng-show="publication.originalPrice!=null">
                         <td>{{'--.promotion.offPrice' | translateText}}</td>
-                        <td>{{(publication.originalPrice * publication.offPercent)}}</td>
+                        <td>{{(publication.originalPrice * (1 - publication.offPercent))  | number:2 }} €</td>
+                    </tr>
+                    <tr>
+                        <td>{{'--.promotion.offPercent' | translateText}}</td>
+                        <td> - {{(publication.offPercent * 100) | number:2 }} %</td>
                     </tr>
                 </table>
-
             </div>
 
 

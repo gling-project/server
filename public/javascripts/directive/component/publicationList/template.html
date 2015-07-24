@@ -68,18 +68,17 @@
                     </tr>
                     <tr ng-show="publication.originalPrice!=null">
                         <td>{{'--.promotion.originalUnitPrice' | translateText}}</td>
-                        <td>{{publication.originalPrice}}</td>
+                        <td>{{publication.originalPrice | number:2}} €</td>
                     </tr>
                     <tr ng-show="publication.originalPrice!=null">
                         <td>{{'--.promotion.offPrice' | translateText}}</td>
-                        <td>{{(publication.originalPrice * publication.offPercent)}}</td>
+                        <td>{{(publication.originalPrice * (1 - publication.offPercent))  | number:2 }} €</td>
                     </tr>
                     <tr>
                         <td>{{'--.promotion.offPercent' | translateText}}</td>
                         <td> - {{(publication.offPercent * 100)}} %</td>
                     </tr>
                 </table>
-
             </div>
 
 

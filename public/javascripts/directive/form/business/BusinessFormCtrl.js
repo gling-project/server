@@ -70,8 +70,8 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                         },
                         website: {
                             fieldTitle: "--.business.website",
-                            validationRegex: "^($|(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?$)",
-                            validationMessage: '--.validation.dto.notNull',
+                            validationRegex: "^($|(((http|ftp|https)://)[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?)$)",
+                            validationMessage: '--.validation.dto.url',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

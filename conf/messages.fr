@@ -155,7 +155,7 @@
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Numéro de téléphone attendu
---.validation.dto.url=Url attendu
+--.validation.dto.url=Url attendu (commencez avec htttp://)
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=Ce compte Facebook est déjà enregistré pour un autre type de compte. Vous ne pouvez pas utilisez le même compte Facebook pour créer un compte client et un compte commerçant.
