@@ -34,6 +34,7 @@ myApp.directive('businessListCtrl', function ($rootScope, businessService, geolo
                         }
                     };
 
+
                     scope.followed = function (business) {
                         var followed = business.following;
                         followService.addFollow(!followed, business.id, function () {

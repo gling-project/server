@@ -9,6 +9,7 @@ import be.lynk.server.dto.PromotionDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
+import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
@@ -46,13 +47,16 @@ public class PromotionRestController extends AbstractRestController {
         Business business = account.getBusiness();
 
         //TODO control file
-//        if (dto.getIllustration() != null) {
-//
-//            promotion.setIllustration(storedFileService.findById(dto.getIllustration().getId()));
-//        }
+
         promotion.setBusiness(business);
 
         publicationService.saveOrUpdate(promotion);
+
+        for (StoredFile storedFile : promotion.getPictures()) {
+            StoredFile originalStoredFile = storedFileService.findByStoredName(storedFile.getStoredName());
+            originalStoredFile.setPublication(promotion);
+            storedFileService.saveOrUpdate(originalStoredFile);
+        }
 
         return ok(dozerService.map(promotion, PromotionDTO.class));
     }

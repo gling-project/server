@@ -45,13 +45,15 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         businessNotification.setBusiness(((BusinessAccount) securityController.getCurrentUser()).getBusiness());
 
-//TODO control file
-//        if (businessNotification.getPictures() != null) {
-//
-//            businessNotification.setIllustration(storedFileService.findById(businessNotification.getIllustration().getId()));
-//        }
+        //TODO control file
 
         publicationService.saveOrUpdate(businessNotification);
+
+        for (StoredFile storedFile : businessNotification.getPictures()) {
+            StoredFile originalStoredFile = storedFileService.findByStoredName(storedFile.getStoredName());
+            originalStoredFile.setPublication(businessNotification);
+            storedFileService.saveOrUpdate(originalStoredFile);
+        }
 
         return ok(new ResultDTO());
     }
@@ -86,6 +88,10 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
 
         publicationService.saveOrUpdate(businessNotificationToEdit);
+
+        for (StoredFile storedFile : businessNotification.getPictures()) {
+            storedFileService.saveOrUpdate(storedFile);
+        }
 
         return ok(dozerService.map(businessNotificationToEdit, BusinessNotificationDTO.class));
     }

@@ -16,7 +16,7 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
         }
     };
 
-    $scope.$watch('searchBarService.currentSearch', function (o,n) {
+    $scope.$watch('searchBarService.currentSearch', function (o, n) {
         if (searchBarService.displaySearchResult && o != n && searchBarService.currentSearch != "" && searchBarService.currentSearch.length >= 2) {
             var searchS = angular.copy(searchBarService.currentSearch);
             $timeout(function () {
@@ -61,7 +61,10 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
 
     //log out
     $scope.logout = function () {
-        facebookService.logout();
+        console.log(accountService.getMyself());
+        if (accountService.getMyself().facebookAccount) {
+            facebookService.logout();
+        }
         accountService.logout(function () {
             $location.path('/');
         });

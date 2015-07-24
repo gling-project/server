@@ -1,4 +1,4 @@
-myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance,  translationService, dto,businessNotificationService) {
+myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance,  translationService, dto,businessNotificationService,callback) {
 
     $scope.loading = false;
 
@@ -24,6 +24,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
                 businessNotificationService.edit($scope.businessNotificationParam.dto, function () {
                         $scope.loading = false;
                         $scope.close();
+                        callback();
                     },
                     function () {
                         $scope.loading = false;
@@ -33,11 +34,13 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
                 businessNotificationService.add($scope.businessNotificationParam.dto, function () {
                         $scope.loading = false;
                         $scope.close();
+                        callback();
                     },
                     function () {
                         $scope.loading = false;
                     });
             }
+
         }
     }
 

@@ -1,8 +1,8 @@
-myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash,followService) {
+myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService) {
 
 
-    if($routeParams.publicationId !=null){
-        $scope.publicationIdToGo =$routeParams.publicationId;
+    if ($routeParams.publicationId != null) {
+        $scope.publicationIdToGo = $routeParams.publicationId;
     }
 
 
@@ -14,9 +14,11 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
     $scope.businessId = $routeParams.businessId;
     //publication
     $scope.publicationListParam = {
-        businessId : $scope.businessId,
-        scrollTo:$scope.publicationIdToGo
+        businessId: $scope.businessId,
+        scrollTo: $scope.publicationIdToGo
     };
+    //address
+    $scope.googleMapParams = {}
 
     //loading
     businessService.getBusiness($routeParams.businessId,
@@ -26,7 +28,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             //edit mode ?
             $scope.$watch('business.businessStatus', function () {
 
-                    if (accountService.getMyself()!=null && accountService.getMyself().businessId == $routeParams.businessId) {
+                    if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
                         if ($scope.business.businessStatus != 'WAITING_CONFIRMATION') {
                             $scope.edit = true;
                         }
@@ -119,25 +121,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             };
 
             //address
-            //test
-            $scope.centerMap = function () {
-                $scope.map = {
-                    center: {
-                        latitude: $scope.business.address.posx,
-                        longitude: $scope.business.address.posy
-                    }
-                };
-            };
-            $scope.centerMap();
-
-            $scope.toGoogleMap = function () {
-
-                var address = $scope.business.address;
-                var url = "https://www.google.be/maps/place/";
-                url += address.posx + ",+" + address.posy;
-                url += "/@" + address.posx + ",+" + address.posy + "," + 16 + "z";
-                $window.open(url, '_blank');
-            };
+            $scope.googleMapParams.address = $scope.business.address
 
             //edit address
             $scope.editAddress = function () {
@@ -155,6 +139,10 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                             close();
                         });
                     });
+            };
+
+            $scope.categoryLineParams = {
+                categories: $scope.business.categories
             };
 
             //edit category
@@ -184,7 +172,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
 
             };
 
-            $scope.follow = function(){
+            $scope.follow = function () {
                 if (accountService.getMyself() != null) {
                     $scope.followed();
                 }
@@ -225,9 +213,8 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             };
 
 
-
             //edit social network
-            $scope.editSocialNetwork = function(){
+            $scope.editSocialNetwork = function () {
                 var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.address.modal.title", "business-social-network-ctrl",
                     {
@@ -241,6 +228,30 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                         });
                     });
             };
+
+            //create publication
+            $scope.createPromotion = function () {
+                modalService.openPromotionModal(null, function () {
+                    console.log('je usi callback');
+                    $scope.publicationListParam.refresh();
+                });
+
+            };
+            $scope.createNotification = function () {
+                modalService.openBusinessNotificationModal(null, function () {
+                    console.log('je usi callback');
+                    $scope.publicationListParam.refresh();
+                });
+            };
+
+            $scope.displaySchedule = function () {
+                for (var i in $scope.business.schedules) {
+                    if ($scope.business.schedules[i].length > 0) {
+                        return true;
+                    }
+                }
+                return false;
+            }
 
 
         }, function () {

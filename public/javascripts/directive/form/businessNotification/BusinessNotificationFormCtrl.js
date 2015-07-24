@@ -24,10 +24,20 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                     }
 
                     scope.fields = {
+                        title: {
+                            fieldTitle: "--.generic.title",
+                            validationRegex: "^.{2,100}$",
+                            validationMessage: ['--.generic.validation.size', '2', '100'],
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'title'
+                        },
                         description: {
                             fieldTitle: "--.generic.description",
-                            validationRegex: "^.{2,255}$",
-                            validationMessage: ['--.generic.validation.size', '2', '255'],
+                            validationRegex: "^.{0,1000}$",
+                            validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -71,7 +81,8 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                 return scope.getInfo().disabled;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'illustration'
+                            multiple:true,
+                            fieldName: 'pictures'
                         }
                     };
 

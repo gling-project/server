@@ -34,7 +34,7 @@ public class FilesController extends AbstractRestController {
     private StoredFileService storedFileService;
 
     @Transactional(readOnly = false)
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result upload() {
         return uploadWithSize(null, null);
     }
@@ -43,7 +43,7 @@ public class FilesController extends AbstractRestController {
      * @return
      */
     @Transactional(readOnly = false)
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result uploadWithSize(Integer sizex, Integer sizey) {
 
         MultipartFormData body = Controller.request().body().asMultipartFormData();

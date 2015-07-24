@@ -1,0 +1,18 @@
+<div ng-click="toGoogleMap()">
+    <ui-gmap-google-map
+            center='map.center'
+            refresh="true"
+            dragging='false'
+            options="{disableDefaultUI:true,
+                            draggable:false,
+                            scrollwheel: false}"
+            zoom='15'>
+
+        <ui-gmap-marker
+                idKey='1'
+                coords='{latitude:getInfo().address.posx,longitude:getInfo().address.posy}'
+                >
+        </ui-gmap-marker>
+
+    </ui-gmap-google-map>
+</div>

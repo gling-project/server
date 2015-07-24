@@ -13,9 +13,10 @@
     <div class="onoffswitch-container" ng-hide="business.businessStatus === 'WAITING_CONFIRMATION'">
         <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
         <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchFromBusiness"
+                   checked
                    ng-model="edit">
-            <label class="onoffswitch-label" for="myonoffswitch">
+            <label class="onoffswitch-label" for="myonoffswitchFromBusiness">
                 <span class="onoffswitch-inner"></span>
                 <span class="onoffswitch-switch"></span>
             </label>
@@ -40,7 +41,7 @@
         <!-- landscape -->
         <div class="edit-button-container landscape-edit">
             <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                    ng-show="edit"
+                    ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
                     ng-click="editLandscape()">
                 {{'--.business.page.edit.landscape' | translateText}}
             </button>
@@ -52,7 +53,7 @@
 
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
-                        ng-show="edit"
+                        ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
                         ng-click="editIllustration()">
                     {{'--.business.page.edit.illustration' | translateText}}
                 </button>
@@ -77,35 +78,12 @@
         <div class="business-page-body-center">
 
             <!-- categoru -->
-            <table class="category-tree">
-                <tr ng-repeat="(catLev1Key,lev2) in business.categories">
-                    <td>
-                        <a ng-click="searchCat(catLev1Key)"> {{catLev1Key | translateText}} </a> <span
-                            class="transition">>></span>
-                    </td>
-                    <td>
-                        <table>
-                            <tr ng-repeat="(catLev2Key, lev3) in lev2">
-                                <td>
-                                    <a ng-click="searchCat(catLev2Key)"> {{catLev2Key | translateText}}</a> <span
-                                        class="transition">>></span>
-                                </td>
-                                <td>
-                                <span ng-repeat="catLev3 in lev3">
-                                    <span class="transition" ng-show="$index>0">/</span>
-                                    <a ng-click="searchCat(catLev3)">{{catLev3.translationName | translateText}} </a>
-                                </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'">
-                        <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                                ng-click="editCategory()">{{'--.generic.edit' | translateText}}
-                        </button>
-                    </td>
-                </tr>
-            </table>
+            <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
+
+            <button ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                    class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    ng-click="editCategory()">{{'--.generic.edit' | translateText}}
+            </button>
 
             <!-- description -->
             <div class="business-page-description">{{business.description}}
@@ -119,6 +97,17 @@
 
             <!-- publication -->
             <div>
+
+                <button class="btn btn-primary"
+                        ng-click="createPromotion()"
+                        ng-show="edit && business.businessStatus === 'PUBLISHED'">
+                    {{'--.business.publication.btn.promotion' | translateText}}
+                </button>
+                <button class="btn btn-primary"
+                        ng-click="createNotification()"
+                        ng-show="edit && business.businessStatus === 'PUBLISHED'">
+                    {{'--.business.publication.btn.notification' | translateText}}
+                </button>
 
                 <publication-list-for-business-ctrl
                         ng-info="publicationListParam"></publication-list-for-business-ctrl>
@@ -143,23 +132,7 @@
                 <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
                 <div class="panel-body">
 
-                    <div ng-click="toGoogleMap()">
-                        <ui-gmap-google-map
-                                center='map.center'
-                                refresh="true"
-                                dragging='false'
-                                options="{disableDefaultUI:true,
-                            draggable:false}"
-                                zoom='15'>
-
-                            <ui-gmap-marker
-                                    idKey='1'
-                                    coords='{latitude:business.address.posx,longitude:business.address.posy}'
-                                    >
-                            </ui-gmap-marker>
-
-                        </ui-gmap-google-map>
-                    </div>
+                    <google-map-widget-ctrl ng-info="googleMapParams"></google-map-widget-ctrl>
 
                     <div class="business-address">
                         <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
@@ -202,7 +175,7 @@
 
                     <div ng-show="!!business.facebookLink" class="business-social-network-box">
                         <a href="{{business.facebookLink}}" target="_blank">
-                        <img src="http://localhost:9000/assets/images/social_network/facebook.png">
+                            <img src="http://localhost:9000/assets/images/social_network/facebook.png">
                         </a>
                     </div>
 
@@ -225,7 +198,7 @@
                     </div>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit"
+                            ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
                             ng-click="editSocialNetwork()">
                         {{'--.business.page.edit.business' | translateText}}
                     </button>
@@ -234,14 +207,14 @@
             </div>
 
             <!-- schedule -->
-            <div class="panel panel-default" ng-show="edit === true || business.schedules.length > 0">
+            <div class="panel panel-default" ng-show="edit === true || displaySchedule()">
                 <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
                 <div class="panel-body">
 
                     <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit"
+                            ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
                             ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
                     </button>
                 </div>

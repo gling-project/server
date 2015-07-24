@@ -1,4 +1,4 @@
-myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout, translationService) {
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout) {
 
     return {
         restrict: "E",
@@ -34,7 +34,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
 
                     //build field + dto binding
                     scope.fields = {
-                        description: {
+                        title: {
                             fieldTitle: "--.generic.title",
                             validationRegex: "^.{2,100}$",
                             validationMessage: ['--.generic.validation.size', '2', '100'],
@@ -88,7 +88,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 return true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'illustration'
+                            multiple:true,
+                            fieldName: 'pictures'
                         },
                         quantity: {
                             fieldTitle: "--.promotion.quantity",

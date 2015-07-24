@@ -190,10 +190,13 @@ myApp.service("modalService", function ($modal) {
     };
 
 
-    this.openPromotionModal = function (promotion) {
+    this.openPromotionModal = function (promotion,callback) {
         var resolve = {
             dto: function () {
                 return promotion;
+            },
+            callback:function(){
+                return callback;
             }
         };
         $modal.open({
@@ -205,10 +208,13 @@ myApp.service("modalService", function ($modal) {
     };
 
 
-    this.openBusinessNotificationModal = function (businessNotification) {
+    this.openBusinessNotificationModal = function (businessNotification,callback) {
         var resolve = {
             dto: function () {
                 return businessNotification;
+            },
+            callback:function(){
+                return callback;
             }
         };
         $modal.open({

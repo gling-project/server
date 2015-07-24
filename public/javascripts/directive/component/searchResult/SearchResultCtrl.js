@@ -16,22 +16,23 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                     directiveService.autoScopeImpl(scope);
 
 
-                    var counter = 0;
+                    var counter = -1;
                     scope.$watch('getInfo().result', function () {
                         if (scope.getInfo().result != null) {
-                            counter = 0;
+                            counter = -1;
                             for (var i in scope.getInfo().result.businesses) {
-                                scope.getInfo().result.businesses[i].index = counter;
-                                counter++;
+                                scope.getInfo().result.businesses[i].index = ++counter;
                             }
-                            for (var i in scope.getInfo().result.categories) {
-                                scope.getInfo().result.categories[i].index = counter;
-                                counter++;
-                            }
+                            scope.seeMoreBusinessIndex = ++counter;
                             for (var i in scope.getInfo().result.publications) {
-                                scope.getInfo().result.publications[i].index = counter;
-                                counter++;
+                                scope.getInfo().result.publications[i].index = ++counter;
                             }
+                            scope.seeMorePublicationIndex = ++counter;
+                            for (var i in scope.getInfo().result.categories) {
+                                scope.getInfo().result.categories[i].index = ++counter;
+                            }
+                            scope.seeMoreCategoryIndex = ++counter;
+                            scope.seeMoreIndex = ++counter;
                         }
                         else {
                             scope.getInfo().display = false;
@@ -44,7 +45,7 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                     $(document).keydown(function (e) {
                         if (e.keyCode == 40) {
                             if (scope.indexSelected == null ||
-                                scope.indexSelected == counter - 1) {
+                                scope.indexSelected == counter) {
                                 scope.indexSelected = 0;
                             }
                             else {
@@ -55,7 +56,7 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                         else if (e.keyCode == 38) {
                             if (scope.indexSelected == null ||
                                 scope.indexSelected == 0) {
-                                scope.indexSelected = counter - 1;
+                                scope.indexSelected = counter;
                             }
                             else {
                                 scope.indexSelected--;
@@ -98,8 +99,8 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                         }
                     });
 
-                    scope.select =function(index){
-                      scope.indexSelected=index;
+                    scope.select = function (index) {
+                        scope.indexSelected = index;
                     };
 
                     scope.seeAll = function () {

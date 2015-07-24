@@ -1,4 +1,4 @@
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService) {
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService,callback) {
 
     $scope.loading = false;
 
@@ -30,6 +30,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                     promotionService.edit($scope.promotionParam.dto, function () {
                             $scope.loading = false;
                             $scope.close();
+                            callback();
                         },
                         function () {
                             $scope.loading = false;
@@ -39,6 +40,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                     promotionService.add($scope.promotionParam.dto, function () {
                             $scope.loading = false;
                             $scope.close();
+                            callback();
                         },
                         function () {
                             $scope.loading = false;

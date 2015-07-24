@@ -1,4 +1,4 @@
-myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTableParams, $filter, $window) {
+myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTableParams, $filter, $window,modalService) {
 
     superAdminService.getAllBusinesses(function (data) {
         $scope.businesses = data.list;

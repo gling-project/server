@@ -5,13 +5,11 @@ import be.lynk.server.model.Position;
 import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
-import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
@@ -48,7 +46,11 @@ public class SearchRestController extends AbstractRestController {
 
         List<AbstractPublication> publications = byId.getPublications();
 
-        return ok(new ListDTO<>(dozerService.map(publications, AbstractPublicationDTO.class)));
+        List<AbstractPublicationDTO> map = dozerService.map(publications, AbstractPublicationDTO.class);
+
+        Collections.sort(map);
+
+        return ok(new ListDTO<>(map));
     }
 
 
@@ -112,24 +114,12 @@ public class SearchRestController extends AbstractRestController {
 
     @Transactional
     public Result getByString() {
-        return getByString(false);
-    }
-
-    @Transactional
-    public Result getByStringLittle() {
-        return getByString(true);
-    }
-
-
-    private Result getByString(boolean little) {
 
         //TODO do not compute distance for little
 
-        int max = (little) ? 4 : 20;
+        int max = 20;
 
         SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
-
-        List<AbstractPublication> finalList = new ArrayList<>();
 
         //parse criteria
         SearchElement searchElement = new SearchElement(searchDTO.getSearch());
@@ -143,7 +133,19 @@ public class SearchRestController extends AbstractRestController {
 
                 switch (searchCriteriaEnum) {
                     case CATEGORY:
-                        searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
+                        //1 recover cat
+                        List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(), max);
+                        if (categories.size() == 1) {
+                            //load 20 possible businesses
+                            searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
+                                    dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
+                                    finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 20))));
+                        } else {
+                            //for each, load max 4 businesses
+                            searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
+                                    dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
+                                    finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 4))));
+                        }
                         break;
                     case BUSINESS:
                         searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
@@ -154,13 +156,65 @@ public class SearchRestController extends AbstractRestController {
                 }
             }
         } else {
-
-            searchResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
+            //1 recover cat
+            List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(), max);
+            if (categories.size() == 1) {
+                //load 20 possible businesses
+                searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
+                        dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
+                        finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 20))));
+            } else {
+                //for each, load max 4 businesses
+                searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
+                        dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
+                        finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 4))));
+            }
             searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
             searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
         }
-
         return ok(searchResultDTO);
+    }
+
+    @Transactional
+    public Result getByStringLittle() {
+
+        //TODO do not compute distance for little
+
+        int max = 4;
+
+        SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
+
+        List<AbstractPublication> finalList = new ArrayList<>();
+
+        //parse criteria
+        SearchElement searchElement = new SearchElement(searchDTO.getSearch());
+        SearchLittleResultDTO searchLittleResultDTO = new SearchLittleResultDTO();
+        if (searchElement.getParameters().size() > 0) {
+            for (String s : searchElement.getParameters()) {
+                SearchCriteriaEnum searchCriteriaEnum = SearchCriteriaEnum.findByKey(s);
+                if (searchCriteriaEnum == null) {
+                    throw new MyRuntimeException(ErrorMessageEnum.SEARCH_WRONG_CRITERIA);
+                }
+
+                switch (searchCriteriaEnum) {
+                    case CATEGORY:
+                        searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
+                        break;
+                    case BUSINESS:
+                        searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
+                        break;
+                    case PUBLICATION:
+                        searchLittleResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
+                        break;
+                }
+            }
+        } else {
+            searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
+            searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
+            searchLittleResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
+        }
+
+        return ok(searchLittleResultDTO);
     }
 
     private List<BusinessToDisplayDTO> finalizeBusiness(PositionDTO dto, List<Business> businesses) {

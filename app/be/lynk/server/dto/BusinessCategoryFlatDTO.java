@@ -38,4 +38,13 @@ public class BusinessCategoryFlatDTO extends DTO {
     public void setSubSubCategory(BusinessCategoryLittleDTO subSubCategory) {
         this.subSubCategory = subSubCategory;
     }
+
+    @Override
+    public String toString() {
+        return "BusinessCategoryFlatDTO{" +
+                "category=" + category +
+                ", subCategory=" + subCategory +
+                ", subSubCategory=" + subSubCategory +
+                "} " + super.toString();
+    }
 }

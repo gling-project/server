@@ -14,7 +14,7 @@ import java.util.List;
  * Created by florian on 5/06/15.
  */
 @Entity
-public abstract class AbstractPublication  extends AbstractEntity implements Comparable<AbstractPublication >{
+public abstract class AbstractPublication extends AbstractEntity implements Comparable<AbstractPublication> {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
     private Business business;
@@ -39,8 +39,8 @@ public abstract class AbstractPublication  extends AbstractEntity implements Com
     @Basic(optional = false)
     protected LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "publication",cascade = CascadeType.ALL)
-    private List<StoredFile> pictures=new ArrayList<>();
+    @OneToMany(mappedBy = "publication", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
+    private List<StoredFile> pictures = new ArrayList<>();
 
     public AbstractPublication() {
     }

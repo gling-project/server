@@ -2,16 +2,19 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by florian on 21/07/15.
  */
 public class SearchResultDTO extends DTO {
 
-    private List<BusinessToDisplayDTO> businesses;
-    private List<AbstractPublicationDTO> publications;
-    private List<BusinessCategoryFlatDTO> categories;
+    private List<BusinessToDisplayDTO> businesses = new ArrayList<>();
+    private List<AbstractPublicationDTO> publications = new ArrayList<>();
+    private List<BusinessesByCategory> categoriesMap = new ArrayList<>();
 
     public List<BusinessToDisplayDTO> getBusinesses() {
         return businesses;
@@ -29,11 +32,37 @@ public class SearchResultDTO extends DTO {
         this.publications = publications;
     }
 
-    public List<BusinessCategoryFlatDTO> getCategories() {
-        return categories;
+    public List<BusinessesByCategory> getCategoriesMap() {
+        return categoriesMap;
     }
 
-    public void setCategories(List<BusinessCategoryFlatDTO> categories) {
-        this.categories = categories;
+    public void setCategoriesMap(List<BusinessesByCategory> categoriesMap) {
+        this.categoriesMap = categoriesMap;
+    }
+
+    public static class BusinessesByCategory {
+        BusinessCategoryFlatDTO category;
+        List<BusinessToDisplayDTO> businesses;
+
+        public BusinessesByCategory(BusinessCategoryFlatDTO category, List<BusinessToDisplayDTO> businesses) {
+            this.category = category;
+            this.businesses = businesses;
+        }
+
+        public BusinessCategoryFlatDTO getCategory() {
+            return category;
+        }
+
+        public void setCategory(BusinessCategoryFlatDTO category) {
+            this.category = category;
+        }
+
+        public List<BusinessToDisplayDTO> getBusinesses() {
+            return businesses;
+        }
+
+        public void setBusinesses(List<BusinessToDisplayDTO> businesses) {
+            this.businesses = businesses;
+        }
     }
 }
