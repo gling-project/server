@@ -41,7 +41,7 @@
 --.generic.city=Ville
 --.generic.country=Pays
 --.generic.address=Addresse
-#--.generic.business=Commerce
+--.generic.business=Commerce
 --.generic.edit=Editer
 --.generic.cancel=Annuler
 --.generic.remove=Supprimer
@@ -55,6 +55,18 @@
 --.generic.valid=Valider
 --.generic.action=Action
 --.generic.status=Status
+--.generic.publication=Publication
+--.generic.facebook=Facebook
+--.generic.category=Catégorie
+--.generic.validation.googleplus=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://plus.google.com/)
+--.generic.foursquare=Four Square
+--.generic.twitter=Twitter
+--.generic.validation.facebook=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://facebook.com/)
+--.generic.validation.twitter=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://twitter.com/)
+--.generic.title=Title
+--.generic.socialNetwork=Your social network
+--.generic.googleplus=Google+
+--.generic.validation.foursquare=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://fr.foursquare.com/)
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -155,7 +167,7 @@
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Numéro de téléphone attendu
---.validation.dto.url=Url attendu (commencez avec htttp://)
+--.validation.dto.url=Url attendu (commencez avec htttp\://)
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=Ce compte Facebook est déjà enregistré pour un autre type de compte. Vous ne pouvez pas utilisez le même compte Facebook pour créer un compte client et un compte commerçant.
@@ -175,7 +187,7 @@
 #--.validation.dto.notNul=validation.dto.notNul
 --.business.website=Adresse de votre site web (optionel)
 --.business.contactEmail=Adresse email de contact (optionel)
-#--.validation.dto.notNull=validation.dto.notNull
+--.validation.dto.notNull=validation.dto.notNull
 
 ##  view/business_welcome.html
 #--.business.welcome.title=Bienvenue sur la page de votre magasin
@@ -218,7 +230,7 @@
 ##  be/lynk/server/views/template.scala.html (javascript library )
 --.welcome.myBusiness=Mon commerce
 --.welcome.search=Chercher...
---.site.name=site.name
+--.site.name=Gling
 --.welcome.search.advanced.link=Recherche avancée...
 --.welcome.serach.advanced.criteria=Critères
 
@@ -330,10 +342,10 @@ day_abrv_sunday=Di
 
 
 ##  be/lynk/server/importer/CategoryImporterImpl.java
-#--.category.sub.sub.=category.sub.sub.
+--.category.sub.sub.=category.sub.sub.
 #--.category.=category.
 --.interest.=interest.
-#--.category.sub.=category.sub.
+--.category.sub.=category.sub.
 
 ##  view/web/business.html (landscape )
 --.business.page.edit.illustration=Edit logo
@@ -351,6 +363,8 @@ day_abrv_sunday=Di
 --.business.page.askPublication.window.flash=Votre commerce est maintenant en attente de validation par notre équipe
 --.business.page.askPublication.window.message=Une fois votre demande de publication envoyée, vous ne pourrez plus modifier que les horaires et les images de votre commerce. Une fois votre commerce validée par notre équipe, vous serez visibles par les clients et il vous sera possible de publier des annonces et des promotions. Etes-vous sûr de vouloir continuer ?
 --.business.page.stopPublication=Repasser en mode édition
+--.business.publication.btn.notification=Publier une actualité
+--.business.publication.btn.promotion=Publier une promotion
 
 
 
@@ -391,9 +405,23 @@ day_abrv_sunday=Di
 --.search.business=Commerces
 --.search.nothing=Aucun résultats
 --.search.publication.seeMore=Voir plus de publications...
+--.search.category.seeMore=Voir plus de catégories
 
 ##  be/lynk/server/model/SearchCriteriaEnum.java
 --.search.criteria.business=Commerces
 --.search.criteria.publication=Publications
 --.search.criteria.category=Catégories
+
+
+##  directive/form/businessSocialNetwork/template.html
+--.business.socialNetwork.form.description=Ajoutez ici les liens de vos pages personnelles des différents réseaux sociaux proposés si vous en avez une.
+
+##  view/web/search_page.html (business )
+--.list.nothing=Aucun résultat trouvé.
+
+##  directive/field/dirFieldImageMutiple/template.html
+--.download.button.add=Ajouter une autre image
+
+##  directive/component/publicationListForBusiness/template.html (start date )
+--.publication.promotionData=Détails de la promotion
 
