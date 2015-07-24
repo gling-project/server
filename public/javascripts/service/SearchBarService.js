@@ -1,6 +1,6 @@
-myApp.service("searchBarService", function ($timeout,$rootScope) {
+myApp.service("searchBarService", function ($timeout, $rootScope) {
 
-    this.currentSearch="";
+    this.currentSearch = "";
     this.searchCriteria = data.searchCriterias;
 
     var self = this;
@@ -16,7 +16,7 @@ myApp.service("searchBarService", function ($timeout,$rootScope) {
         }, 1);
     };
 
-    $rootScope.$watch(function() {
+    $rootScope.$watch(function () {
         return self.searchCriteria;
     }, function watchCallback(newValue, oldValue) {
         if (!suspendBinding) {
@@ -42,22 +42,32 @@ myApp.service("searchBarService", function ($timeout,$rootScope) {
                 suspendBinding = false;
             }, 1);
         }
-    },true);
+    }, true);
 
 
-
-    $rootScope.$watch(function() {
+    $rootScope.$watch(function () {
         return self.currentSearch;
     }, function watchCallback(newValue, oldValue) {
+
+        console.log('!!!!');
+
         if (!suspendBinding) {
             suspendBinding = true;
 
+            console.log(',,,,');
+
+            for (var j in self.searchCriteria) {
+                self.searchCriteria[j].selected = false;
+            }
+
             if (self.currentSearch.indexOf(":") != -1) {
                 var criterias = self.currentSearch.split(":")[0].split("|");
-                for (var i in criterias) {
-                    for (var j in self.searchCriteria) {
+                for (var j in self.searchCriteria) {
+                    var founded=false;
+                    for (var i in criterias) {
                         if (criterias[i] == self.searchCriteria[j].key) {
                             self.searchCriteria[j].selected = true;
+                            founded=true;
                         }
                     }
                 }

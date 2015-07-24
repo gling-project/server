@@ -166,6 +166,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                         //scope.business
                         businessService.editBusinessCategory(catList, function (data) {
                             $scope.business.categories = data.categories;
+                            $scope.categoryLineParams.categories = $scope.business.categories;
                             close();
                         });
                     });

@@ -14,18 +14,17 @@
             </div>
             <div class="search-result-business search-result-content"
                  ng-mouseenter="select(business.index)"
-                 ng-click="goToBusiness('business/'+business.id)"
+                 ng-click="goToBusiness(business)"
                  ng-class="{'search-result-selected':indexSelected==business.index}"
                  ng-repeat="business in getInfo().result.businesses">
                 <img ng-src="{{business.illustration | image}}"/>
                 {{business.name}}
             </div>
             <div class="search-result-content"
+                 ng-click="seeAllBusiness()"
                  ng-mouseenter="select(seeMoreBusinessIndex)"
                  ng-class="{'search-result-selected':indexSelected==seeMoreBusinessIndex}">
-                <button
-                        ng-click="seeAllBusiness()"
-                        class="search-result-show-more link">
+                <button class="search-result-show-more link">
                     {{'--.search.business.seeMore' | translateText}}
                 </button>
             </div>
@@ -49,13 +48,13 @@
                 {{publication.title}}
             </div>
             <div
+                    ng-click="seeAllPublication()"
                     ng-mouseenter="select(seeMorePublicationIndex)"
                     class="search-result-content"
                     ng-class="{'search-result-selected':indexSelected==seeMorePublicationIndex}">
-                <button ng-click="seeAllPublication()"
-                        class="search-result-show-more link">
+                <div class="search-result-show-more link">
                     {{'--.search.publication.seeMore' | translateText}}
-                </button>
+                </div>
             </div>
         </div>
 
@@ -76,23 +75,25 @@
                 <span class="transition" ng-show="category.subSubCategory!=null">>></span>
                 {{category.subSubCategory.translationName}}
             </div>
-            <div class="search-result-content"
+            <div ng-click="seeAllCategory()"
+                 class="search-result-content"
                  ng-mouseenter="select(seeMoreCategoryIndex)"
                  ng-class="{'search-result-selected':indexSelected==seeMoreCategoryIndex}">
-                <button ng-click="seeAllCategory()"
+                <div
                         class="search-result-show-more link">
                     {{'--.search.category.seeMore' | translateText}}
-                </button>
+                </div>
             </div>
         </div>
 
         <!-- see more -->
         <div class="search-result-content"
+             ng-click="seeAll()"
              ng-mouseenter="select(seeMoreIndex)"
              ng-class="{'search-result-selected':indexSelected==seeMoreIndex}">
-            <button ng-click="seeAll()" class="search-result-show-more link">
+            <div class="search-result-show-more link">
                 {{'--.search.seeMore' | translateText}}
-            </button>
+            </div>
         </div>
     </div>
 </div>
