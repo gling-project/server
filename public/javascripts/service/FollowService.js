@@ -11,7 +11,7 @@ myApp.service("followService", function ($flash, $http) {
             follow:follow,
             businessId:businessId
         };
-        console.log(dto);
+        
         $http({
             'method': "POST",
             'url': "/follow",
