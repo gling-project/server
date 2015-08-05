@@ -55,6 +55,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     });
 
     $scope.searchByInterest = function (interest) {
+
         $scope.publicationListCtrl.loading = true;
         if (interest.selected == true) {
             interest.selected = false;
@@ -73,6 +74,33 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             }
             interest.selected = true;
         }
-    }
+    };
+
+    $scope.$on('POSITION_CHANGED', function () {
+
+        var interest = null;
+        for (var i in $scope.customerInterests) {
+            if ($scope.customerInterests[i].selected) {
+                interest = $scope.customerInterests[i];
+            }
+        }
+        console.log("interest");
+        console.log(interest);
+
+        $scope.publicationListCtrl.loading = true;
+        if (interest != null) {
+            searchService.byInterest(interest.id, function (result) {
+                $scope.publicationListCtrl.loading = false;
+                $scope.publicationListCtrl.data = result;
+            });
+        }
+        else {
+            searchService.default(function (result) {
+                $scope.publicationListCtrl.loading = false;
+                $scope.publicationListCtrl.data = result;
+            });
+        }
+    });
+
 
 });

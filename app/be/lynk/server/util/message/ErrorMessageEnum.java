@@ -25,7 +25,9 @@ public enum ErrorMessageEnum {
     GOOGLE_MAP_ERROR("--.error.googleMap"),
     WRONG_ADDRESS("--.error.wrongAddress"),
     BUSINESS_MUST_BE_PUBLISHED("--.error.business.mustBePublished"),
-    SEARCH_WRONG_CRITERIA("--.error.search.wrongCriteria");
+    SEARCH_WRONG_CRITERIA("--.error.search.wrongCriteria"),
+    WRONG_ADDRESS_NAME_ALREADY_USED("--.error.address.nameAlreadyUsed"),
+    WRONG_ADDRESS_NAME("--.error.address.nameNotExists");
 
     private final String key;
 

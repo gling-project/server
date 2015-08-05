@@ -135,18 +135,23 @@
                                     <!-- connected menu -->
                                 <div class="profile-buttons-container" ng-show="accountService.getMyself()!=null" style="display : inline-block">
                                     <div class="dropdown" ng-show="accountService.getMyself()!=null" style="display : inline-block">
-                                            <!-- lang -->
+
+                                        <!-- lang -->
                                         <select
                                         class="form-control"
                                         ng-model="languageService.currentLanguage"
                                         ng-options="lang.code as lang.language for lang in languageService.languages"
                                                 style="display: inline-block;width:80px">
-                                            </select>
-                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                                {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                        </select>
+
+                                        <!-- connection button -->
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                            {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
+                                            <span class="caret"></span>
+                                        </button>
+
+                                        <!-- connected menu -->
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                             <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">
                                                 {{'--.welcome.myProfile' | translateText}}</a></li>
                                             <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
@@ -157,6 +162,15 @@
                                                 <ul></ul>
                                             </li>
                                         </ul>
+
+                                        <!-- position choice -->
+                                        <img src="assets/images/menu/icon_home.png" />
+                                        <select
+                                        class="form-control"
+                                        ng-model="currentPosition"
+                                        ng-options="position.key as position.translation | translateText for position in positions"
+                                        style="display: inline-block;width: 120px">
+                                        </select>
                                     </div>
                                 </div>
 

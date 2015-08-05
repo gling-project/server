@@ -34,6 +34,7 @@ GET           /myself                                         @be.lynk.server.co
 PUT           /account/$id<[0-9]+>                            @be.lynk.server.controller.rest.AccountRestController.editAccount(id:Long)
 PUT           /account/password/$id<[0-9]+>                   @be.lynk.server.controller.rest.AccountRestController.changePassword(id:Long)
 POST          /address                                        @be.lynk.server.controller.rest.AccountRestController.addAddress()
+PUT           /address/current                                @be.lynk.server.controller.rest.AccountRestController.setCurrentAddress()
 PUT           /address/$id<[0-9]+>                            @be.lynk.server.controller.rest.AccountRestController.editAddress(id:Long)
 DELETE        /address/$id<[0-9]+>                            @be.lynk.server.controller.rest.AccountRestController.deleteAddress(id:Long)
 POST          /address/distance/$id<[0-9]+>                   @be.lynk.server.controller.rest.AccountRestController.getDistance(id:Long)

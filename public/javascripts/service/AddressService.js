@@ -42,4 +42,28 @@ myApp.service("addressService", function ($flash, $http, geolocationService) {
         }
     };
 
+    this.changeAddress = function (addressText, callbackSuccess, callbackError) {
+
+        if (geolocationService.position != null) {
+            $http({
+                'method': "PUT",
+                'url': "address/current",
+                'headers': "Content-Type:application/json",
+                data: {
+                    addressName:addressText
+                }
+            }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
+                .error(function (data, status) {
+                    $flash.error(data.message);
+                    if (callbackError != null) {
+                        callbackError(data, status);
+                    }
+                });
+        }
+    };
+
 });

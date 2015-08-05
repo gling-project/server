@@ -65,8 +65,19 @@ public class Account extends AbstractEntity {
     @Basic(optional = false)
     private Boolean sendNotificationByDefault = true;
 
+    @ManyToOne
+    private Address selectedAddress;
+
 
     public Account() {
+    }
+
+    public Address getSelectedAddress() {
+        return selectedAddress;
+    }
+
+    public void setSelectedAddress(Address selectedAddress) {
+        this.selectedAddress = selectedAddress;
     }
 
     public AccountTypeEnum getType() {

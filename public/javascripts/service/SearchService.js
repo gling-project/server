@@ -1,16 +1,31 @@
-myApp.service("searchService", function ($http, $flash, $rootScope, geolocationService) {
+myApp.service("searchService", function ($http, $flash, $rootScope, geolocationService,$q) {
 
 
     this.currentSearch = "";
 
+    var canceler = null;
+
     this.default = function (callbackSuccess, callbackError) {
 
+
+
+
+
         geolocalisedSearch(function (unbindWatcher) {
+            if(canceler!=null){
+                canceler.resolve();
+            }
+            canceler = $q.defer();
+
+            console.log('search default : '+geolocationService.position.x+'-'+geolocationService.position.y);
             $http({
                 'method': "POST",
                 'url': "/search/publication/default",
                 'headers': "Content-Type:application/json",
-                'data': geolocationService.position
+                'data': geolocationService.position,
+                'config':{
+                    timeout: canceler.promise
+                }
             }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data.list);
@@ -33,6 +48,11 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.searchByStringLittle = function (searchText, callbackSuccess, callbackError) {
 
+        if(canceler!=null){
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
         geolocalisedSearch(function (unbindWatcher) {
             $http({
                 'method': "POST",
@@ -41,6 +61,9 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
                 'data': {
                     search: searchText,
                     position: geolocationService.position
+                },
+                'config':{
+                    timeout: canceler.promise
                 }
             }).success(function (data, status) {
                 if (callbackSuccess != null) {
@@ -64,6 +87,11 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.searchByString = function (searchText, callbackSuccess, callbackError) {
 
+        if(canceler!=null){
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
         geolocalisedSearch(function (unbindWatcher) {
             $http({
                 'method': "POST",
@@ -72,6 +100,9 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
                 'data': {
                     search: searchText,
                     position: geolocationService.position
+                },
+                'config':{
+                    timeout: canceler.promise
                 }
             }).success(function (data, status) {
                 if (callbackSuccess != null) {
@@ -95,12 +126,20 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.byFollowed = function (callbackSuccess, callbackError) {
 
+        if(canceler!=null){
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
         geolocalisedSearch(function (unbindWatcher) {
             $http({
                 'method': "POST",
                 'url': "/search/publication/followed",
                 'headers': "Content-Type:application/json",
-                'data': geolocationService.position
+                'data': geolocationService.position,
+                'config':{
+                    timeout: canceler.promise
+                }
             }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data.list);
@@ -124,12 +163,20 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.byBusiness = function (businessId, callbackSuccess, callbackError) {
 
+        if(canceler!=null){
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
         geolocalisedSearch(function (unbindWatcher) {
             $http({
                 'method': "POST",
                 'url': "/search/publication/business/" + businessId,
                 'headers': "Content-Type:application/json",
-                'data': geolocationService.position
+                'data': geolocationService.position,
+                'config':{
+                    timeout: canceler.promise
+                }
             }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data.list);
@@ -153,12 +200,21 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.byInterest = function (interestId, callbackSuccess, callbackError) {
 
+        if(canceler!=null){
+            canceler.resolve();
+        }
+
+        canceler = $q.defer();
+
         geolocalisedSearch(function (unbindWatcher) {
             $http({
                 'method': "POST",
                 'url': "/search/publication/interest/" + interestId,
                 'headers': "Content-Type:application/json",
-                'data': geolocationService.position
+                'data': geolocationService.position,
+                'config':{
+                    timeout: canceler.promise
+                }
             }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data.list);
@@ -179,7 +235,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
                 });
         });
 
-    }
+    };
 
     var geolocalisedSearch = function (request) {
 

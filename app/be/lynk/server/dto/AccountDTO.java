@@ -3,6 +3,7 @@ package be.lynk.server.dto;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.GenderEnum;
+import be.lynk.server.model.entities.Address;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.constants.ValidationRegex;
 import play.modules.mongodb.jackson.KeyTyped;
@@ -24,15 +25,15 @@ public class AccountDTO extends DTO implements KeyTyped<Date> {
     protected GenderEnum gender;
 
     @NotNull(message = "--.validation.dto.notNull")
-    @Size(min = 2,max =50,message = "--.validation.dto.size")
+    @Size(min = 2, max = 50, message = "--.validation.dto.size")
     private String firstname;
 
     @NotNull(message = "--.validation.dto.notNull")
-    @Size(min = 2,max =50,message = "--.validation.dto.size")
+    @Size(min = 2, max = 50, message = "--.validation.dto.size")
     private String lastname;
 
     @NotNull(message = "--.validation.dto.notNull")
-    @Pattern(regexp = ValidationRegex.EMAIL,message = "--.validation.dto.email")
+    @Pattern(regexp = ValidationRegex.EMAIL, message = "--.validation.dto.email")
     private String email;
 
     private RoleEnum role;
@@ -41,7 +42,17 @@ public class AccountDTO extends DTO implements KeyTyped<Date> {
 
     private AccountTypeEnum type;
 
+    private AddressDTO selectedAddress;
+
     public AccountDTO() {
+    }
+
+    public AddressDTO getSelectedAddress() {
+        return selectedAddress;
+    }
+
+    public void setSelectedAddress(AddressDTO selectedAddress) {
+        this.selectedAddress = selectedAddress;
     }
 
     public AccountTypeEnum getType() {

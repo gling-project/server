@@ -53,13 +53,8 @@ public class
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result myself() {
-        Logger.info("myself=" + securityController.getCurrentUser());
-
 
         MyselfDTO map = dozerService.map(securityController.getCurrentUser(), MyselfDTO.class);
-
-        Logger.info("................................................===>>>>> " + securityController.getCurrentUser().getLang());
-        Logger.info("................................................===>>>>> " + map.getLang());
 
         return ok(map);
     }
@@ -172,7 +167,14 @@ public class
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
+
         Account currentUser = securityController.getCurrentUser();
+
+        //control name
+        if (addressService.findByNameAndAccount(address.getName(), currentUser) != null) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME_ALREADY_USED);
+        }
+
         currentUser.getAddresses().add(address);
 
         accountService.saveOrUpdate(currentUser);
@@ -267,6 +269,39 @@ public class
         Long distance = localizationService.distanceBetweenAddress(dozerService.map(dto, Position.class), byId);
 
         return ok(new DistanceDTO(distance));
+    }
+
+    @Transactional
+    public Result setCurrentAddress() {
+
+        NewAddressDTO newAddressDTO = extractDTOFromRequest(NewAddressDTO.class);
+
+        if (!securityController.isAuthenticated(ctx())) {
+            return ok(new ResultDTO());
+        }
+
+        Account currentUser = securityController.getCurrentUser();
+
+        AddressDTO addressDTO = null;
+
+
+
+        if (newAddressDTO.getAddressName().equals("currentPosition")) {
+            currentUser.setSelectedAddress(null);
+        } else {
+            Address address = addressService.findByNameAndAccount(newAddressDTO.getAddressName(), currentUser);
+            if (address == null) {
+                throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME);
+            }
+            currentUser.setSelectedAddress(address);
+            addressDTO = dozerService.map(address,AddressDTO.class);
+        }
+
+        accountService.saveOrUpdate(currentUser);
+        if(addressDTO==null){
+            return ok(new ResultDTO());
+        }
+        return ok(addressDTO);
     }
 
 
