@@ -1,106 +1,81 @@
 myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService) {
 
+    //variable
+    $scope.followedMode = false;
+    $scope.businessInfoParam = {};
+    $scope.accountService = accountService.model;
+    customerInterestService.getAll(function (value) {
+        $scope.customerInterests = value;
+    });
+    $scope.publicationListCtrl = {};
 
-//login open modal
+    //open registration modal
     $scope.customerRegistration = function () {
         modalService.openCustomerRegistrationModal();
     };
 
-    $scope.followedMode = false;
+    //initialisation
+    $scope.search();
 
-    $scope.businessInfoParam = {};
-
-
-    $scope.accountService = accountService.model;
-
-
-    customerInterestService.getAll(function (value) {
-        $scope.customerInterests = value;
-    });
-
-    $scope.publicationListCtrl = {};
-
-
-    $scope.publicationListCtrl.loading = true;
-    if ($scope.followedMode) {
-        searchService.byFollowed(function (data) {
-            $scope.publicationListCtrl.loading = false;
-            $scope.publicationListCtrl.data = data;
-        });
-    }
-    else {
-        searchService.default(function (data) {
-            $scope.publicationListCtrl.loading = false;
-            $scope.publicationListCtrl.data = data;
-        });
-    }
-
-    $scope.$watch('followedMode', function () {
-        $scope.publicationListCtrl.loading = true;
-        if ($scope.followedMode) {
-            searchService.byFollowed(function (data) {
-                $scope.publicationListCtrl.loading = false;
-                $scope.publicationListCtrl.data = data;
-            });
-        }
-        else {
-            for (var i in $scope.customerInterests) {
-                $scope.customerInterests[i].selected = false;
-            }
-            searchService.default(function (data) {
-                $scope.publicationListCtrl.loading = false;
-                $scope.publicationListCtrl.data = data;
-            });
-        }
-    });
-
+    //functions
+    //search by interest
     $scope.searchByInterest = function (interest) {
 
-        $scope.publicationListCtrl.loading = true;
         if (interest.selected == true) {
             interest.selected = false;
-            searchService.default(function (result) {
-                $scope.publicationListCtrl.loading = false;
-                $scope.publicationListCtrl.data = result;
-            });
         }
         else {
-            searchService.byInterest(interest.id, function (result) {
-                $scope.publicationListCtrl.loading = false;
-                $scope.publicationListCtrl.data = result;
-            });
             for (var i in $scope.customerInterests) {
                 $scope.customerInterests[i].selected = false;
             }
             interest.selected = true;
         }
+        $scope.search();
     };
 
+    //watch on change position
     $scope.$on('POSITION_CHANGED', function () {
+        $scope.search();
+    });
 
-        var interest = null;
-        for (var i in $scope.customerInterests) {
-            if ($scope.customerInterests[i].selected) {
-                interest = $scope.customerInterests[i];
+    //watch in follow mode
+    $scope.$watch('followedMode', function () {
+        $scope.search();
+    });
+
+    //search function
+    $scope.search = function () {
+        if (geolocationService.position != null) {
+            $scope.publicationListCtrl.loading = true;
+            if ($scope.followedMode) {
+                searchService.byFollowed(function (data) {
+                    $scope.publicationListCtrl.loading = false;
+                    $scope.publicationListCtrl.data = data;
+                });
+            }
+            else {
+                var interestSelected = null;
+                for (var i in $scope.customerInterests) {
+                    if ($scope.customerInterests[i].selected) {
+                        interestSelected = $scope.customerInterests[i];
+                    }
+                }
+                if (interestSelected != null) {
+                    searchService.byInterest(interestSelected.id, function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+
+                }
+                else {
+                    searchService.default(function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+                }
             }
         }
-        console.log("interest");
-        console.log(interest);
-
-        $scope.publicationListCtrl.loading = true;
-        if (interest != null) {
-            searchService.byInterest(interest.id, function (result) {
-                $scope.publicationListCtrl.loading = false;
-                $scope.publicationListCtrl.data = result;
-            });
-        }
-        else {
-            searchService.default(function (result) {
-                $scope.publicationListCtrl.loading = false;
-                $scope.publicationListCtrl.data = result;
-            });
-        }
-    });
+    };
 
 
 });

@@ -3,6 +3,7 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
 
         this.position = null;
         this.currentPosition = null;
+        var self = this;
 
         $http({
             'method': "GET",
@@ -15,13 +16,14 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
                     x: pos[0],
                     y: pos[1]
                 };
+                computePosition();
+                $timeout(function () {
+                    $rootScope.$broadcast('POSITION_CHANGED');
+                }, 1);
                 //$rootScope.$broadcast('POSITION_CHANGED');
                 console.log('posiition computed !!!!!!!!!!!!!!!!!!!!!!!!!!');
                 console.log(self.currentPosition);
             }
-        }).error(function (data, status) {
-            console.log('failed');
-            console.log(data);
         });
 
 
@@ -50,26 +52,7 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
 
         }
 
-        //geolocation.getLocation().then(function (data) {
-        //    self.currentPosition = {
-        //        x: data.coords.latitude,
-        //        y: data.coords.longitude
-        //    };
-        //    //$rootScope.$broadcast('POSITION_CHANGED');
-        //    //self.position = {
-        //    //    x: data.coords.latitude,
-        //    //    y: data.coords.longitude
-        //    //};
-        //});
 
-        $rootScope.$on('error', function () {
-            console.log('errrrrrrrrrrrrrrrrrrrrrrr 1')
-        });
-        $rootScope.$on('error', function () {
-            console.log('errrrrrrrrrrrrrrrrrrrrrrr 2')
-        });
-
-        var self = this;
 
         var computePosition = function () {
 
@@ -91,22 +74,18 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
 
                 }
                 else {
-                    console.log('catch position');
                     self.position = {
                         x: self.currentPosition.x,
                         y: self.currentPosition.y
                     };
                 }
-                //console.log('current position : '+self.position.x+'-'+self.position.y)
             }
             else {
                 self.position = {
                     x: accountService.getMyself().selectedAddress.posx,
                     y: accountService.getMyself().selectedAddress.posy
                 };
-                console.log('seelted address : ' + self.position.x + '-' + self.position.y)
             }
-            //console.log(self.position.x + '<->' + self.position.y);
         };
 
         $timeout(function () {
@@ -121,25 +100,6 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
         }, function watchCallback(newValue, oldValue) {
             computePosition();
         });
-
-
-        /**
-         * useless ??
-         */
-            //geolocation.getLocation().then(function (data) {
-            //    if (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null) {
-            //        self.position = {
-            //            x: data.coords.latitude,
-            //            y: data.coords.longitude
-            //        };
-            //    }
-            //    else {
-            //        self.position = {
-            //            x: accountService.getMyself().selectedAddress.posx,
-            //            y: accountService.getMyself().selectedAddress.posy
-            //        };
-            //    }
-            //});
 
         this.getLocationText = function () {
             if (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null) {

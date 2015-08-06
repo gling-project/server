@@ -38,22 +38,17 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             );
 
             //distance
-            $scope.currentPosition = geolocationService.position;
-            if ($scope.currentPosition != null) {
-                console.log("distance immediate !")
+            $scope.computeDistance = function () {
                 addressService.distance($scope.business.address.id, function (data) {
                     $scope.business.distance = data.distance;
                 });
+            };
+            if (geolocationService.position != null) {
+                $scope.computeDistance();
             }
-            else {
-                $scope.$watch('currentPosition', function () {
-                    if ($scope.currentPosition != null) {
-                        addressService.distance($scope.business.address.id, function (data) {
-                            $scope.business.distance = data.distance;
-                        });
-                    }
-                })
-            }
+            $scope.$on('POSITION_CHANGED', function () {
+                $scope.computeDistance();
+            });
 
             $scope.publish = function () {
 
@@ -244,6 +239,9 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     $scope.publicationListParam.refresh();
                 });
             };
+            $scope.$on('POSITION_CHANGED',function(){
+                $scope.publicationListParam.refresh();
+            });
 
             $scope.displaySchedule = function () {
                 for (var i in $scope.business.schedules) {
