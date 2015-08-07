@@ -52,6 +52,8 @@ PUT           /business/illustration                          @be.lynk.server.co
 PUT           /business/landscape                             @be.lynk.server.controller.rest.BusinessRestController.editLandscape()
 POST          /business/ask_publication                       @be.lynk.server.controller.rest.BusinessRestController.askPublication()
 POST          /business/stop_publish                          @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
+POST          /business/edit/gallery                          @be.lynk.server.controller.rest.BusinessRestController.editGallery()
+
 
 ## business schedule
 POST          /business/schedule                              @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()

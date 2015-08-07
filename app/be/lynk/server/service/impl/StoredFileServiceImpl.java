@@ -8,6 +8,7 @@ import play.db.jpa.JPA;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Repository
 public class StoredFileServiceImpl extends CrudServiceImpl<StoredFile> implements StoredFileService {
@@ -20,6 +21,7 @@ public class StoredFileServiceImpl extends CrudServiceImpl<StoredFile> implement
         Root<StoredFile> from = cq.from(StoredFile.class);
         cq.select(from);
         cq.where(cb.equal(from.get("storedName"), storedName));
-        return getSingleResultOrNull(cq);
+        StoredFile singleResultOrNull = getSingleResultOrNull(cq);
+        return singleResultOrNull;
     }
 }

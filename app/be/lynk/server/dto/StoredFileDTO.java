@@ -5,6 +5,7 @@ import be.lynk.server.model.entities.Account;
 import play.modules.mongodb.jackson.KeyTyped;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import java.util.Date;
 
@@ -20,6 +21,16 @@ public class StoredFileDTO extends DTO implements KeyTyped<Date> {
     private String originalName;
 
     private String storedName;
+
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public Long getId() {
         return id;

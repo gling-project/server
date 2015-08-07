@@ -43,7 +43,6 @@ public class BusinessRestController extends AbstractController {
     private LocalizationService localizationService;
 
 
-
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result getAll() {
@@ -72,7 +71,7 @@ public class BusinessRestController extends AbstractController {
 
         //additional data
         if (securityController.isAuthenticated(ctx())) {
-            map.setFollowing(followLinkService.testByAccountAndBusiness( securityController.getCurrentUser(), business));
+            map.setFollowing(followLinkService.testByAccountAndBusiness(securityController.getCurrentUser(), business));
         }
         map.setTotalFollowers(followLinkService.countByBusiness(business));
 
@@ -84,7 +83,36 @@ public class BusinessRestController extends AbstractController {
     }
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.USER)
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED, BusinessStatus.PUBLISHED})
+    public Result editGallery() {
+        List<StoredFileDTO> galleryPictures = extractList(StoredFileDTO.class);
+
+        Business business = securityController.getBusiness();
+
+        List<StoredFile> map = dozerService.map(galleryPictures, StoredFile.class);
+
+        business.getGalleryPictures().clear();
+
+
+
+        for (StoredFile storedFile : map) {
+
+            StoredFile byStoredName = storedFileService.findByStoredName(storedFile.getStoredName());
+
+            byStoredName.setBusinessGalleryPicture(business);
+
+            business.getGalleryPictures().add(byStoredName);
+        }
+
+        businessService.saveOrUpdate(business);
+
+        return ok(new ListDTO(dozerService.map(business.getGalleryPictures(), StoredFileDTO.class)));
+    }
+
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED})
     public Result editAddress() {
 
@@ -93,7 +121,7 @@ public class BusinessRestController extends AbstractController {
 
         AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
 
-        Address address = ((BusinessAccount)currentUser).getBusiness().getAddress();
+        Address address = ((BusinessAccount) currentUser).getBusiness().getAddress();
         address.setCity(dto.getCity());
         address.setStreet(dto.getStreet());
         address.setName(dto.getName());
@@ -230,7 +258,7 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result updateSocialNetwork(){
+    public Result updateSocialNetwork() {
 
         BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 

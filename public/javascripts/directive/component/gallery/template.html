@@ -1,0 +1,6 @@
+<div class="gallery-component">
+    <img ng-repeat="image in getInfo().images"
+         ng-click="openGallery(image)"
+         class="gallery-picture"
+         ng-src="{{image | image}}"/>
+</div>

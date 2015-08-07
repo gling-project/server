@@ -52,6 +52,10 @@ public class BusinessNotificationRestController extends AbstractRestController {
         for (StoredFile storedFile : businessNotification.getPictures()) {
             StoredFile originalStoredFile = storedFileService.findByStoredName(storedFile.getStoredName());
             originalStoredFile.setPublication(businessNotification);
+
+            //add comments
+            originalStoredFile.setComment(storedFile.getComment());
+
             storedFileService.saveOrUpdate(originalStoredFile);
         }
 

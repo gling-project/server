@@ -3,6 +3,8 @@ package be.lynk.server.controller.technical.security;
 import be.lynk.server.controller.technical.security.source.SourceEnum;
 import be.lynk.server.dto.technical.ExceptionDTO;
 import be.lynk.server.model.entities.Account;
+import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.service.AccountService;
 import be.lynk.server.service.impl.AccountServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
@@ -114,7 +116,7 @@ public class CommonSecurityController extends Security.Authenticator {
     public boolean isAuthenticated(Http.Context ctx) {
 
         try {
-            if(getCurrentUser()!=null) {
+            if (getCurrentUser() != null) {
                 return true;
             }
             return false;
@@ -183,5 +185,9 @@ public class CommonSecurityController extends Security.Authenticator {
             return getCurrentUser().getId() + ":" + getCurrentUser().getAuthenticationKey();
         }
         return null;
+    }
+
+    public Business getBusiness() {
+        return ((BusinessAccount) getCurrentUser()).getBusiness();
     }
 }

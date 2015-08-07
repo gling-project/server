@@ -40,6 +40,7 @@
         <script src="@routes.Assets.at("javascripts/modal/OneFieldModal/OneFieldModal.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/modal/BasicModal/BasicModal.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/modal/MessageModal/MessageModal.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/modal/GalleryModal/GalleryModal.js")" type="text/javascript"></script>
 
             <!-- controllers -->
         <script src="@routes.Assets.at("javascripts/controller/web/WelcomeCtrl.js")" type="text/javascript"></script>
@@ -55,6 +56,7 @@
         <script src="@routes.Assets.at("javascripts/directive/component/businessList/BusinessListCtrl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/directive/component/categoryLine/CategoryLineCtrl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/directive/component/googleMapWidget/GoogleMapWidgetCtrl.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/directive/component/gallery/GalleryCtrl.js")" type="text/javascript"></script>
 
             <!-- css -->
             <!-- main -->
@@ -145,23 +147,25 @@
                                         </select>
 
                                         <!-- connection button -->
-                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                            {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
-                                            <span class="caret"></span>
-                                        </button>
+                                        <div class="menu-connection-button-container">
+                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
+                                                <span class="caret"></span>
+                                            </button>
 
-                                        <!-- connected menu -->
-                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">
-                                                {{'--.welcome.myProfile' | translateText}}</a></li>
-                                            <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
-                                                {{'--.welcome.myBusiness' | translateText}}</a></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="logout()">
-                                                {{'--.generic.logout' | translateText}}</a></li>
-                                            <li>
-                                                <ul></ul>
-                                            </li>
-                                        </ul>
+                                            <!-- connected menu -->
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">
+                                                    {{'--.welcome.myProfile' | translateText}}</a></li>
+                                                <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
+                                                    {{'--.welcome.myBusiness' | translateText}}</a></li>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="logout()">
+                                                    {{'--.generic.logout' | translateText}}</a></li>
+                                                <li>
+                                                    <ul></ul>
+                                                </li>
+                                            </ul>
+                                        </div>
 
                                         <!-- position choice -->
                                         <img src="assets/images/menu/icon_home.png" />

@@ -208,6 +208,27 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
 
             };
 
+            $scope.editGallery = function(){
+                var business = angular.copy($scope.business);
+                modalService.basicModal("--.business.edit.address.modal.title", "dir-field-image-mutiple",
+                    {
+                        fieldTitle: "--.business.modal.gallery.title",
+                        validationMessage: '--.error.validation.image',
+                        sizex: 60,
+                        sizey: 60,
+                        field: business,
+                        multiple:true,
+                        fieldName: 'galleryPictures'
+                    },
+                    function (close) {
+                        //scope.business
+                        businessService.editGallery({list:business.galleryPictures}, function (data) {
+                            $scope.business.galleryPictures = data;
+                            close();
+                        });
+                    });
+            };
+
 
             //edit social network
             $scope.editSocialNetwork = function () {
@@ -228,14 +249,12 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             //create publication
             $scope.createPromotion = function () {
                 modalService.openPromotionModal(null, function () {
-                    console.log('je usi callback');
                     $scope.publicationListParam.refresh();
                 });
 
             };
             $scope.createNotification = function () {
                 modalService.openBusinessNotificationModal(null, function () {
-                    console.log('je usi callback');
                     $scope.publicationListParam.refresh();
                 });
             };

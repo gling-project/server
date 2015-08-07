@@ -243,5 +243,22 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
+    this.galleryModal = function (image, images) {
+        var resolve = {
+            image: function () {
+                return image;
+            },
+            images: function () {
+                return images;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/GalleryModal/view.html",
+            controller: "GalleryModalCtrl",
+            windowClass:'modal-gallery-content',
+            size: "lg",
+            resolve: resolve
+        });
+    };
 
 });

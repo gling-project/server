@@ -120,7 +120,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
 
     };
 
-    this.stopPublication = function(callbackSuccess, callbackError) {
+    this.stopPublication = function (callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
@@ -206,10 +206,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
     };
 
 
-
     this.createSchedule = function (dto, callbackSuccess, callbackError) {
-        console.log("createSchedule:");
-        console.log(dto);
 
         $http({
             'method': "POST",
@@ -227,6 +224,26 @@ myApp.service("businessService", function ($flash, $http, accountService) {
                     callbackError(data, status);
                 }
             });
-    }
+    };
+
+    this.editGallery = function (dto, callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/business/edit/gallery",
+            'headers': "Content-Type:application/json",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
 
 });

@@ -126,101 +126,116 @@
                 {{business.totalFollowers}}
             </div>
 
-            <!-- address -->
+            <!-- gallery -->
             <div class="panel panel-default">
-                <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
-                <div class="panel-body">
-
-                    <google-map-widget-ctrl ng-info="googleMapParams"></google-map-widget-ctrl>
-
-                    <div class="business-address">
-                        <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
-                        <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
-                    </div>
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                            ng-click="editAddress()">{{'--.generic.edit' | translateText}}
-                    </button>
-                </div>
-            </div>
-
-
-            <!-- contact -->
-            <div class="panel panel-default">
-                <div class="panel-heading">{{'--.generic.contact' | translateText}}</div>
-                <div class="panel-body">
-
-                    <div>{{business.phone}}</div>
-                    <div>
-                        <a href="{{business.website}}" target="_blank">{{business.website}}</a>
-                    </div>
-                    <div>{{business.email}}</div>
-
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                            ng-click="editbusiness()">
-                        {{'--.business.page.edit.business' | translateText}}
-                    </button>
-
-                </div>
-            </div>
-
-            <!-- social network -->
-            <div class="panel panel-default"
-                 ng-show="edit === true || business.facebookLink!=null || business.twitterLink!=null || business.googleplusLink!=null || business.foursquareLink!=null">
-                <div class="panel-heading">{{'--.generic.socialNetwork' | translateText}}</div>
+                <div class="panel-heading">{{'--.business.gallery' | translateText}}</div>
                 <div class="panel-body">
 
 
-                    <div ng-show="!!business.facebookLink" class="business-social-network-box">
-                        <a href="{{business.facebookLink}}" target="_blank">
-                            <img src="http://localhost:9000/assets/images/social_network/facebook.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.googleplusLink" class="business-social-network-box">
-                        <a href="{{business.googleplusLink}}" target="_blank">
-                            <img src="http://localhost:9000/assets/images/social_network/googleplus.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.twitterLink" class="business-social-network-box">
-                        <a href="{{business.twitterLink}}" target="_blank">
-                            <img src="http://localhost:9000/assets/images/social_network/twitter.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.foursquareLink" class="business-social-network-box">
-                        <a href="{{business.foursquare}}" target="_blank">
-                            <img src="http://localhost:9000/assets/images/social_network/foursquare.png">
-                        </a>
-                    </div>
+                    <gallery-ctrl ng-info="{images:business.galleryPictures}"></gallery-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
-                            ng-click="editSocialNetwork()">
-                        {{'--.business.page.edit.business' | translateText}}
-                    </button>
-
-                </div>
-            </div>
-
-            <!-- schedule -->
-            <div class="panel panel-default" ng-show="edit === true || displaySchedule()">
-                <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
-                <div class="panel-body">
-
-                    <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
-
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
-                            ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
+                            ng-click="editGallery()">
+                        {{'--.business.page.edit.gallery' | translateText}}
                     </button>
                 </div>
+
+                <!-- address -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
+                    <div class="panel-body">
+
+                        <google-map-widget-ctrl ng-info="googleMapParams"></google-map-widget-ctrl>
+
+                        <div class="business-address">
+                            <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
+                            <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
+                        </div>
+                        <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                                ng-click="editAddress()">{{'--.generic.edit' | translateText}}
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- contact -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{'--.generic.contact' | translateText}}</div>
+                    <div class="panel-body">
+
+                        <div>{{business.phone}}</div>
+                        <div>
+                            <a href="{{business.website}}" target="_blank">{{business.website}}</a>
+                        </div>
+                        <div>{{business.email}}</div>
+
+                        <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                                ng-click="editbusiness()">
+                            {{'--.business.page.edit.business' | translateText}}
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- social network -->
+                <div class="panel panel-default"
+                     ng-show="edit === true || business.facebookLink!=null || business.twitterLink!=null || business.googleplusLink!=null || business.foursquareLink!=null">
+                    <div class="panel-heading">{{'--.generic.socialNetwork' | translateText}}</div>
+                    <div class="panel-body">
+
+
+                        <div ng-show="!!business.facebookLink" class="business-social-network-box">
+                            <a href="{{business.facebookLink}}" target="_blank">
+                                <img src="http://localhost:9000/assets/images/social_network/facebook.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.googleplusLink" class="business-social-network-box">
+                            <a href="{{business.googleplusLink}}" target="_blank">
+                                <img src="http://localhost:9000/assets/images/social_network/googleplus.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.twitterLink" class="business-social-network-box">
+                            <a href="{{business.twitterLink}}" target="_blank">
+                                <img src="http://localhost:9000/assets/images/social_network/twitter.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.foursquareLink" class="business-social-network-box">
+                            <a href="{{business.foursquare}}" target="_blank">
+                                <img src="http://localhost:9000/assets/images/social_network/foursquare.png">
+                            </a>
+                        </div>
+
+                        <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
+                                ng-click="editSocialNetwork()">
+                            {{'--.business.page.edit.business' | translateText}}
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- schedule -->
+                <div class="panel panel-default" ng-show="edit === true || displaySchedule()">
+                    <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
+                    <div class="panel-body">
+
+                        <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
+
+                        <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
+                                ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
+                        </button>
+                    </div>
+                </div>
+
+
             </div>
-
-
         </div>
-    </div>
 
-</div>
+    </div>

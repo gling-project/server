@@ -2,6 +2,7 @@ package be.lynk.server.dto;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.util.constants.ValidationRegex;
 import play.modules.mongodb.jackson.KeyTyped;
 
@@ -60,7 +61,20 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
 
     private String googleplusLink;
 
+    private List<StoredFileDTO> galleryPictures = new ArrayList<>();
+
     private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
+
+    public BusinessToDisplayDTO() {
+    }
+
+    public List<StoredFileDTO> getGalleryPictures() {
+        return galleryPictures;
+    }
+
+    public void setGalleryPictures(List<StoredFileDTO> galleryPictures) {
+        this.galleryPictures = galleryPictures;
+    }
 
     public Boolean getFollowing() {
         return following;
@@ -86,8 +100,6 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
         this.askPublicationDate = askPublicationDate;
     }
 
-    public BusinessToDisplayDTO() {
-    }
 
     public Long getId() {
         return id;

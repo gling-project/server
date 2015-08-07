@@ -1,4 +1,4 @@
-<div class="input-text field_text row"
+<div class="input-text field_text row field-image-multiple"
      ng-class="{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}"
      ng-hide="isActive() === false">
     <div class="form-group row">
@@ -8,18 +8,18 @@
 
         <div ng-class="getInfo().fullSize==true?'col-md-12':'col-md-6'">
             <div ng-class="{'input-group':!!getInfo().money}" style="text-align: center">
-                <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="document-question-progress-bar">
+                <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="field-image-multiple-progress-bar">
                     <div ng-style="style">
                         <spa></spa>
                     </div>
                 </div>
-                <div ng-show="inDownload=== true && percent != 100" class="document-question-progress-percentage">
+                <div ng-show="inDownload=== true && percent != 100" class="field-image-multiple-progress-percentage">
                     {{percent}} %
                 </div>
                 <div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |
                     translateText}}
                 </div>
-                <span class="btn btn-default btn-file field-document-btn"
+                <span class="btn btn-default btn-file field-image-multiple-btn"
                       ng-hide="inDownload === true || getInfo().disabled()">
                     {{'--.download.button.add' | translateText}}
                     <input
@@ -33,9 +33,15 @@
                 </div>
 
                 <div ng-repeat="image in getInfo().field[getInfo().fieldName]"
-                     style="display: inline-block;margin: 5px;">
-                    <img style="border:1px solid #999999;width: 40px;height: 40px"
-                         ng-src="{{image | image}}"/>
+                     class="image-block">
+                    <img ng-src="{{image | image}}"/>
+
+                    <div class="image">
+                        <img style="border:1px solid #999999;width: 160px;height: 160px"
+                             ng-src="{{image | image}}"/>
+                        COMMENTS :
+                        <textarea ng-model="image.comment"></textarea>
+                    </div>
                 </div>
             </div>
         </div>

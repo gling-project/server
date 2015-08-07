@@ -58,10 +58,7 @@
 
             <!-- pictures -->
             <div class="publication-box-picture-container">
-                <div class="publication-box-picture"
-                     ng-repeat="picture in publication.pictures">
-                    <img ng-src="{{picture | image}}"/>
-                </div>
+                <gallery-ctrl ng-info="{images:publication.pictures}"></gallery-ctrl>
             </div>
         </div>
 

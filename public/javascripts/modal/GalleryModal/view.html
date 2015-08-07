@@ -1,0 +1,29 @@
+<div class="modal-body gallery-modal" dir-enter="save()">
+
+    <div>
+        <img class="gallery-picture"
+             ng-src="{{image | image}}"/>
+    </div>
+
+    <div class="comment-container">
+        {{image.comment}}
+    </div>
+
+    <div ng-show="images.length > 1">
+        <button type=button"
+                class="btn btn-primary"
+                ng-click="previous()">
+            {{'--.gallery.modal.previous' | translateText}}
+        </button>
+
+        {{imageNb}} / {{images.length}}
+
+        <button type=button"
+                style="float: right"
+                class="btn btn-primary"
+                ng-click="next()">
+            {{'--.gallery.modal.next' | translateText}}
+        </button>
+    </div>
+
+</div>

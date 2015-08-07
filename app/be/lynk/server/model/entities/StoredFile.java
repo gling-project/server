@@ -28,6 +28,13 @@ public class StoredFile extends AbstractEntity {
     @ManyToOne
     private AbstractPublication publication;
 
+    @ManyToOne
+    private Business businessGalleryPicture;
+
+    @Basic
+    @Column(columnDefinition = "text")
+    private String comment;
+
 
     public StoredFile() {
     }
@@ -37,9 +44,24 @@ public class StoredFile extends AbstractEntity {
         this.storedName = storedName;
         this.size = size;
         this.account = account;
-        this.isImage=isImage;
+        this.isImage = isImage;
     }
 
+    public Business getBusinessGalleryPicture() {
+        return businessGalleryPicture;
+    }
+
+    public void setBusinessGalleryPicture(Business businessGalleryPicture) {
+        this.businessGalleryPicture = businessGalleryPicture;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public AbstractPublication getPublication() {
         return publication;

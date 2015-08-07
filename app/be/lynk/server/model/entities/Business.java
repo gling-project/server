@@ -55,10 +55,10 @@ public class Business extends AbstractEntity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private StoredFile landscape;
 
-    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<AbstractPublication> publications;
 
-    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<BusinessSchedule> schedules = new ArrayList<>();
 
     @Basic(optional = false)
@@ -80,7 +80,16 @@ public class Business extends AbstractEntity {
     @Basic
     private String googleplusLink;
 
+    @OneToMany(mappedBy = "businessGalleryPicture",cascade = CascadeType.ALL)
+    private List<StoredFile> galleryPictures = new ArrayList<>();
 
+    public List<StoredFile> getGalleryPictures() {
+        return galleryPictures;
+    }
+
+    public void setGalleryPictures(List<StoredFile> galleryPictures) {
+        this.galleryPictures = galleryPictures;
+    }
 
     public BusinessStatus getBusinessStatus() {
         return businessStatus;
