@@ -293,9 +293,8 @@ public class SearchRestController extends AbstractRestController {
                         //follow ?
                         if (securityController.isAuthenticated(ctx())) {
                             Account account = securityController.getCurrentUser();
-                            if (account.getType().equals(AccountTypeEnum.CUSTOMER)) {
-                                publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness(account, publication.getBusiness()));
-                            }
+                            publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness(account, publication.getBusiness()));
+
                         }
                         publicationDTO.setTotalFollowers(followLinkService.countByBusiness(publication.getBusiness()));
                     }

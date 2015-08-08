@@ -40,7 +40,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     /**
      * BUSINESS COLUMNS *
      */
-    private static final Boolean WITH_PICTURE = true;
+    private static final Boolean WITH_PICTURE = false;//true;
     private static final Integer COL_BUSINESS_NAME = 0;
     private static final Integer COL_BUSINESS_DESC = 1;
     private static final Integer COL_BUSINESS_PHONE = 2;
@@ -139,7 +139,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 try {
                     localizationService.validAddress(business.getAddress());
                 } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage()+"for address : "+business.getAddress());
+                    throw new RuntimeException(e.getMessage() + "for address : " + business.getAddress());
                 }
 
 
@@ -152,8 +152,12 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                     business.getBusinessCategories().add(byName);
                 }
 //            }
-
-                businessService.saveOrUpdate(business);
+                try {
+                    businessService.saveOrUpdate(business);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
 
 
                 if (WITH_PICTURE) {

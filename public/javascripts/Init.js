@@ -8,5 +8,10 @@ var myApp = angular.module('app', [
         'ngTable',
         'geolocation',
         'timer',
-        'uiGmapgoogle-maps']
+        'uiGmapgoogle-maps',
+        'djds4rce.angular-socialshare']
 );
+
+myApp.config(function($locationProvider){
+    $locationProvider.html5Mode(true).hashPrefix('!');
+});

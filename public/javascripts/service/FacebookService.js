@@ -1,4 +1,4 @@
-myApp.service("facebookService", function ($http, accountService, $locale, languageService) {
+myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB,$location) {
 
 
     this.facebookAppId;
@@ -13,6 +13,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
             xfbml: true,
             version: 'v2.3'
         });
+        $FB.init(this.facebookAppId);
     };
 
     var isConnected = false;
