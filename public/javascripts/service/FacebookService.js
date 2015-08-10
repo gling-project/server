@@ -39,7 +39,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
                 failCallback();
             }
         }, {
-            scope: 'public_profile, email'
+            scope: 'public_profile, email,publish_actions'
         });
     };
 
@@ -59,7 +59,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
                 failCallback();
             }
         }, {
-            scope: 'public_profile, email'
+            scope: 'public_profile, email,publish_actions'
         });
     };
 
@@ -121,6 +121,15 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
         FB.logout(function (response) {
         });
         //
+    };
+
+    this.share = function(url){
+        url = url.replace('#','%23');
+        console.log('url:'+url);
+        FB.ui({
+            method: 'share',
+            href: url
+        }, function(response){});
     };
 
     loginToServer = function (authResponse, callbackSuccess, callbackError) {

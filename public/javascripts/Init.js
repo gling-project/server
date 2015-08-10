@@ -12,6 +12,6 @@ var myApp = angular.module('app', [
         'djds4rce.angular-socialshare']
 );
 
-myApp.config(function($locationProvider){
-    $locationProvider.html5Mode(true).hashPrefix('!');
-});
+//myApp.config(function($locationProvider){
+//    $locationProvider.html5Mode(true).hashPrefix('!');
+//});

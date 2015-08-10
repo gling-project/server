@@ -1,4 +1,4 @@
-myApp.directive('publicationListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
+myApp.directive('publicationListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService, facebookService) {
 
     return {
         restrict: "E",
@@ -49,12 +49,15 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
                             for (var i in scope.publications) {
                                 if (scope.publications[i].businessId == publication.businessId) {
                                     scope.publications[i].following = publication.following;
-                                    scope.publications[i].totalFollowers=publication.totalFollowers;
+                                    scope.publications[i].totalFollowers = publication.totalFollowers;
                                 }
                             }
                         });
-                    }
+                    };
 
+                    scope.share = function (publication) {
+                        facebookService.share('http://lynk-test.herokuapp.com/#/business/' + publication.businessId + '/publication/' + publication.id);
+                    };
 
 
                     //(function(d, s, id) {
