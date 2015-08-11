@@ -56,7 +56,7 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
                     };
 
                     scope.share = function (publication) {
-                        facebookService.share('http://lynk-test.herokuapp.com/facebookshare/publication/' + publication.id);
+                        facebookService.share('http://lynk-test.herokuapp.com/facebookshare/publication/'+publication.id);
                     };
 
 
