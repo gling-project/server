@@ -1,6 +1,5 @@
 package be.lynk.server.controller;
 
-import be.lynk.server.controller.rest.SearchRestController;
 import be.lynk.server.controller.technical.AbstractController;
 import be.lynk.server.dto.*;
 import be.lynk.server.model.SearchCriteriaEnum;
@@ -8,7 +7,6 @@ import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
-import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.Logger;
@@ -19,7 +17,6 @@ import play.mvc.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by florian on 23/03/15.
