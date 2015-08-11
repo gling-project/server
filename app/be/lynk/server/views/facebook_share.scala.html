@@ -11,16 +11,23 @@
 
             <!-- facebook meta -->
         <meta property="og:url" content="http://lynk-test.herokuapp.com/redirect/business/@(publication.getBusinessId)/publication/@(publication.getId)" />
+
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Gling" />
+        <meta property="fb:app_id" content="1042793935750669" />
         <meta property="og:title" content="@(publication.getTitle) - @(publication.getBusinessName)" />
         @if(publication.getDescription != null) {
             <meta property="og:description" content="@(publication.getDescription)" />
         }
+
+
         @if(publication.getPictures.size() > 0) {
             <meta property="og:image" content="https://s3.amazonaws.com/lynk-test/@(publication.getPictures.get(0).getStoredName)" />
+            <meta property="og:image:type" content="image/png" />
         }
         @if(publication.getPictures.size() == 0 && publication.getBusinessIllustration != null) {
             <meta property="og:image" content="https://s3.amazonaws.com/lynk-test/@(publication.getBusinessIllustration.getStoredName)" />
+            <meta property="og:image:type" content="image/png" />
         }
 
 
