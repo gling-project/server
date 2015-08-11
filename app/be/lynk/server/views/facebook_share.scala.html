@@ -1,0 +1,23 @@
+@(publication: be.lynk.server.dto.AbstractPublicationDTO)
+
+@import com.fasterxml.jackson.databind.ObjectMapper
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@Messages("site.name")</title>
+        <meta charset="utf-8"/>
+
+            <!-- facebook meta -->
+        <meta property="og:url" content="http://www.your-domain.com/your-page.html" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="@(publication.getTitle)" />
+        <meta property="og:description" content="@(publication.getDescription)" />
+        <meta property="og:image" content="https://s3.amazonaws.com/lynk-test/@(publication.getBusinessIllustration.getStoredName)" />
+
+
+    </head>
+    <body>
+    </body>
+</html>

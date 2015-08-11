@@ -5,12 +5,16 @@ import be.lynk.server.controller.technical.AbstractController;
 import be.lynk.server.dto.*;
 import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
+import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
+import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import java.util.ArrayList;
@@ -24,6 +28,60 @@ import java.util.Random;
 public class MainController extends AbstractController {
 
     String accessKey = Configuration.root().getString("app.status");
+
+    @Autowired
+    private PublicationService publicationService;
+
+    @Transactional
+    public Result facebookSharePublication(Long id){
+
+        AbstractPublication publication = publicationService.findById(id);
+
+        return ok(be.lynk.server.views.html.facebook_share.render(dozerService.map(publication,AbstractPublicationDTO.class)));
+
+    }
+
+    @Transactional
+    public Result mainPageByRedirect(String url) {
+
+        String facebookAppId = AppUtil.getFacebookAppId();
+
+        Http.Request r = ctx().request();
+
+        String a = r.host();
+
+        String[] split = a.split("/");
+
+        //String h = split[0];
+
+        String h = "http://localhost:9000";
+
+        String target = h + "/#" + url;
+
+        return redirect(target);
+
+//        //try with param
+//        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
+//        interfaceDataDTO.setLangId(lang().code());
+//        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
+//        interfaceDataDTO.setAppId(facebookAppId);
+//        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+//        if (securityController.isAuthenticated(ctx())) {
+//            Account currentUser = securityController.getCurrentUser();
+//            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
+//            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
+//            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
+//            interfaceDataDTO.setMySelf(accountDTO);
+//            Logger.info(currentUser + "<=>" + accountDTO);
+//        }
+//
+//
+//        if (isMobileDevice()) {
+//            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+//        } else {
+//            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO));
+//        }
+    }
 
     @Transactional
     public Result admin() {

@@ -127,8 +127,11 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
         url = url.replace('#','%23');
         console.log('url:'+url);
         FB.ui({
-            method: 'share',
-            href: url
+            method: 'share_open_graph',
+            action_type: 'og.likes',
+            action_properties: JSON.stringify({
+                object:url
+            })
         }, function(response){});
     };
 
