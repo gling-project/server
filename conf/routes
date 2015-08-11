@@ -91,7 +91,7 @@ GET           /file/:storedFileId                             @be.lynk.server.co
 ##welcome
 GET           /                                               @be.lynk.server.controller.MainController.mainPage()
 GET           /redirect/*url                                  @be.lynk.server.controller.MainController.mainPageByRedirect(url:String)
-GET           /facebookshare/publication/:id                  @be.lynk.server.controller.MainController.facebookSharePublication(id:Long)
+GET           /facebook/publication/:id                  @be.lynk.server.controller.MainController.facebookSharePublication(id:Long)
 GET           /admin                                          @be.lynk.server.controller.MainController.admin()
 GET           /mobile                                         @be.lynk.server.controller.MainController.mobile()
 

@@ -36,6 +36,10 @@ public class MainController extends AbstractController {
 
         AbstractPublicationDTO map = dozerService.map(publication, AbstractPublicationDTO.class);
 
+        map.setBusinessName(publication.getBusiness().getName());
+        map.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+        map.setBusinessId(publication.getBusiness().getId());
+
         return ok(be.lynk.server.views.html.facebook_share.render(map));
 
     }
