@@ -40,7 +40,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     /**
      * BUSINESS COLUMNS *
      */
-    private static final Boolean WITH_PICTURE = false;//true;
+    private static final Boolean WITH_PICTURE = true;
     private static final Integer COL_BUSINESS_NAME = 0;
     private static final Integer COL_BUSINESS_DESC = 1;
     private static final Integer COL_BUSINESS_PHONE = 2;
