@@ -34,7 +34,9 @@ public class MainController extends AbstractController {
 
         AbstractPublication publication = publicationService.findById(id);
 
-        return ok(be.lynk.server.views.html.facebook_share.render(dozerService.map(publication,AbstractPublicationDTO.class)));
+        AbstractPublicationDTO map = dozerService.map(publication, AbstractPublicationDTO.class);
+
+        return ok(be.lynk.server.views.html.facebook_share.render(map));
 
     }
 
