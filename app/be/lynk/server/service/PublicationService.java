@@ -11,6 +11,7 @@ import java.util.List;
  * Created by florian on 5/06/15.
  */
 public interface PublicationService extends CrudService<AbstractPublication> {
+
     List<AbstractPublication> findActivePublication();
 
     AbstractPublication findLastPublication(Business business);

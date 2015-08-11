@@ -31,7 +31,8 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         Root<AbstractPublication> from = cq.from(AbstractPublication.class);
         Path<Business> business = from.get("business");
         cq.select(from);
-        cq.where(cb.lessThan(from.get("startDate"), now),
+        cq.where(
+                cb.lessThan(from.get("startDate"), now),
                 cb.greaterThan(from.get("endDate"), now),
                 cb.equal(business.get("businessStatus"), BusinessStatus.PUBLISHED));
 
