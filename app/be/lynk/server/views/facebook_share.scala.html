@@ -16,11 +16,13 @@
         @if(publication.getDescription != null) {
             <meta property="og:description" content="@(publication.getDescription)" />
         }
-        @if(publication.getPictures.size() > 0) {
-            <meta property="og:image" content="https://s3.amazonaws.com/lynk-test/@(publication.getPictures.get(0).getStoredName)" />
-        }
-        else(publication.getBusinessIllustration != null) {
-            <meta property="og:image" content="https://s3.amazonaws.com/lynk-test/@(publication.getBusinessIllustration.getStoredName)" />
+        @{
+            if(publication.getPictures.size() > 0) {
+                    <meta property="og:image" content="https://s3.amazonaws.com/lynk-test/@(publication.getPictures.get(0).getStoredName)" />
+            }
+            else if(publication.getBusinessIllustration != null) {
+                    <meta property="og:image" content="https://s3.amazonaws.com/lynk-test/@(publication.getBusinessIllustration.getStoredName)" />
+            }
         }
 
 
