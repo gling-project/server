@@ -17,6 +17,8 @@ import play.mvc.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by florian on 23/03/15.
@@ -30,7 +32,7 @@ public class MainController extends AbstractController {
     private PublicationService publicationService;
 
     @Transactional
-    public Result facebookSharePublication(Long id){
+    public Result facebookSharePublication(Long id) {
 
         AbstractPublication publication = publicationService.findById(id);
 
@@ -47,43 +49,61 @@ public class MainController extends AbstractController {
     @Transactional
     public Result mainPageByRedirect(String url) {
 
+//        String facebookAppId = AppUtil.getFacebookAppId();
+//
+//        Http.Request r = ctx().request();
+//
+//        String a = r.host();
+//
+//        String[] split = a.split("/");
+//
+//        //String h = split[0];
+//
+//        String h = "http://localhost:9000";
+//
+//        String target = h + "/#/" + url;
+
         String facebookAppId = AppUtil.getFacebookAppId();
 
-        Http.Request r = ctx().request();
-
-        String a = r.host();
-
-        String[] split = a.split("/");
-
-        //String h = split[0];
-
-        String h = "http://localhost:9000";
-
-        String target = h + "/#" + url;
-
-        return redirect(target);
-
-//        //try with param
-//        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
-//        interfaceDataDTO.setLangId(lang().code());
-//        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
-//        interfaceDataDTO.setAppId(facebookAppId);
-//        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
-//        if (securityController.isAuthenticated(ctx())) {
-//            Account currentUser = securityController.getCurrentUser();
-//            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
-//            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
-//            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
-//            interfaceDataDTO.setMySelf(accountDTO);
-//            Logger.info(currentUser + "<=>" + accountDTO);
-//        }
+//        Http.Request r = ctx().request();
 //
-//
-//        if (isMobileDevice()) {
-//            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
-//        } else {
-//            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO));
-//        }
+//        String a = r.host();
+
+        AbstractPublicationDTO publicationDTO=null;
+        if (url.contains("publication/")) {
+            Pattern p = Pattern.compile("publication/([0-9]+)");
+            Matcher matcher = p.matcher(url);
+            if (matcher.find()) {
+                AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
+                publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
+
+                publicationDTO.setBusinessName(publication.getBusiness().getName());
+                publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+                publicationDTO.setBusinessId(publication.getBusiness().getId());
+            }
+        }
+
+        //try with param
+        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
+        interfaceDataDTO.setLangId(lang().code());
+        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
+        interfaceDataDTO.setAppId(facebookAppId);
+        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+        if (securityController.isAuthenticated(ctx())) {
+            Account currentUser = securityController.getCurrentUser();
+            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
+            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
+            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
+            interfaceDataDTO.setMySelf(accountDTO);
+            Logger.info(currentUser + "<=>" + accountDTO);
+        }
+
+
+        if (isMobileDevice() ) {
+            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+        } else {
+            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO,publicationDTO));
+        }
     }
 
     @Transactional
@@ -119,6 +139,24 @@ public class MainController extends AbstractController {
 
         String facebookAppId = AppUtil.getFacebookAppId();
 
+        Http.Request r = ctx().request();
+
+        String a = r.host();
+
+        AbstractPublicationDTO publicationDTO=null;
+        if (a.contains("publication/")) {
+            Pattern p = Pattern.compile("publication/([0-9]+)");
+            Matcher matcher = p.matcher(a);
+            if (matcher.find()) {
+                AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
+                publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
+
+                publicationDTO.setBusinessName(publication.getBusiness().getName());
+                publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+                publicationDTO.setBusinessId(publication.getBusiness().getId());
+            }
+        }
+
         //try with param
         InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
         interfaceDataDTO.setLangId(lang().code());
@@ -138,7 +176,7 @@ public class MainController extends AbstractController {
         if (isMobileDevice() || forceMobile) {
             return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
         } else {
-            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO));
+            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO,publicationDTO));
         }
 
 
