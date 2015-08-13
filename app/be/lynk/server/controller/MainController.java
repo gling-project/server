@@ -145,7 +145,7 @@ public class MainController extends AbstractController {
         String facebookAppId = AppUtil.getFacebookAppId();
 
         AbstractPublicationDTO publicationDTO=null;
-        if (url.contains("publication/")) {
+        if (url !=null && url.contains("publication/")) {
             Pattern p = Pattern.compile("publication/([0-9]+)");
             Matcher matcher = p.matcher(url);
             if (matcher.find()) {
