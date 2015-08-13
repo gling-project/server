@@ -4,7 +4,7 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
 
         $http({
             'method': "POST",
-            'url': "/promotion",
+            'url': "/rest/promotion",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -26,7 +26,7 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
 
         $http({
             'method': "PUT",
-            'url': "/promotion/" + dto.id,
+            'url': "/rest/promotion/" + dto.id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -47,7 +47,7 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
     this.delete = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",
-            'url': "/promotion/" + dto.id,
+            'url': "/rest/promotion/" + dto.id,
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

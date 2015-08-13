@@ -1,7 +1,7 @@
 <div class="publication-list">
 
     <div ng-show="getInfo().loading===true" class="loading">
-        <img src="assets/images/big_loading.gif"/>
+        <img src="/assets/images/big_loading.gif"/>
     </div>
 
 
@@ -27,8 +27,8 @@
 
                 <!-- following -->
                 <button ng-click="follow(publication)" class="follow-button">
-                    <img src="assets/images/haert.png" ng-show="publication.following"/>
-                    <img src="assets/images/haert-off.png" ng-hide="publication.following"/>
+                    <img src="/assets/images/haert.png" ng-show="publication.following"/>
+                    <img src="/assets/images/haert-off.png" ng-hide="publication.following"/>
                 </button>
                 {{publication.totalFollowers}}
             </div>
@@ -53,7 +53,7 @@
             <!-- share facebook -->
             <a facebook
                class="facebookShare"
-               data-url="http://lynk-test.herokuapp.com/redirect/business/{{publication.businessId}}/publication/{{publication.id}}"
+               data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}"
                data-shares='shares'>{{ shares }}</a>
             <!--<button ng-click="share(publication)">Share</button>-->
             <!--<a facebook-feed-share class="facebookShare" data-url='http://google.com' data-shares='shares', data-description="Example text">{{ shares }}</a>-->

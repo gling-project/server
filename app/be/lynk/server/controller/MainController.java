@@ -30,81 +30,81 @@ public class MainController extends AbstractController {
 
     @Autowired
     private PublicationService publicationService;
-
-    @Transactional
-    public Result facebookSharePublication(Long id) {
-
-        AbstractPublication publication = publicationService.findById(id);
-
-        AbstractPublicationDTO map = dozerService.map(publication, AbstractPublicationDTO.class);
-
-        map.setBusinessName(publication.getBusiness().getName());
-        map.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
-        map.setBusinessId(publication.getBusiness().getId());
-
-        return ok(be.lynk.server.views.html.facebook_share.render(map));
-
-    }
-
-    @Transactional
-    public Result mainPageByRedirect(String url) {
-
+//
+//    @Transactional
+//    public Result facebookSharePublication(Long id) {
+//
+//        AbstractPublication publication = publicationService.findById(id);
+//
+//        AbstractPublicationDTO map = dozerService.map(publication, AbstractPublicationDTO.class);
+//
+//        map.setBusinessName(publication.getBusiness().getName());
+//        map.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+//        map.setBusinessId(publication.getBusiness().getId());
+//
+//        return ok(be.lynk.server.views.html.facebook_share.render(map));
+//
+//    }
+//
+//    @Transactional
+//    public Result mainPageByRedirect(String url) {
+//
+////        String facebookAppId = AppUtil.getFacebookAppId();
+////
+////        Http.Request r = ctx().request();
+////
+////        String a = r.host();
+////
+////        String[] split = a.split("/");
+////
+////        //String h = split[0];
+////
+////        String h = "http://localhost:9000";
+////
+////        String target = h + "/#/" + url;
+//
 //        String facebookAppId = AppUtil.getFacebookAppId();
 //
-//        Http.Request r = ctx().request();
+////        Http.Request r = ctx().request();
+////
+////        String a = r.host();
 //
-//        String a = r.host();
+//        AbstractPublicationDTO publicationDTO=null;
+//        if (url.contains("publication/")) {
+//            Pattern p = Pattern.compile("publication/([0-9]+)");
+//            Matcher matcher = p.matcher(url);
+//            if (matcher.find()) {
+//                AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
+//                publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
 //
-//        String[] split = a.split("/");
+//                publicationDTO.setBusinessName(publication.getBusiness().getName());
+//                publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+//                publicationDTO.setBusinessId(publication.getBusiness().getId());
+//            }
+//        }
 //
-//        //String h = split[0];
+//        //try with param
+//        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
+//        interfaceDataDTO.setLangId(lang().code());
+//        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
+//        interfaceDataDTO.setAppId(facebookAppId);
+//        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+//        if (securityController.isAuthenticated(ctx())) {
+//            Account currentUser = securityController.getCurrentUser();
+//            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
+//            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
+//            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
+//            interfaceDataDTO.setMySelf(accountDTO);
+//            Logger.info(currentUser + "<=>" + accountDTO);
+//        }
 //
-//        String h = "http://localhost:9000";
 //
-//        String target = h + "/#/" + url;
-
-        String facebookAppId = AppUtil.getFacebookAppId();
-
-//        Http.Request r = ctx().request();
-//
-//        String a = r.host();
-
-        AbstractPublicationDTO publicationDTO=null;
-        if (url.contains("publication/")) {
-            Pattern p = Pattern.compile("publication/([0-9]+)");
-            Matcher matcher = p.matcher(url);
-            if (matcher.find()) {
-                AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
-                publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
-
-                publicationDTO.setBusinessName(publication.getBusiness().getName());
-                publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
-                publicationDTO.setBusinessId(publication.getBusiness().getId());
-            }
-        }
-
-        //try with param
-        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
-        interfaceDataDTO.setLangId(lang().code());
-        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
-        interfaceDataDTO.setAppId(facebookAppId);
-        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
-        if (securityController.isAuthenticated(ctx())) {
-            Account currentUser = securityController.getCurrentUser();
-            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
-            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
-            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
-            interfaceDataDTO.setMySelf(accountDTO);
-            Logger.info(currentUser + "<=>" + accountDTO);
-        }
-
-
-        if (isMobileDevice() ) {
-            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
-        } else {
-            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO,publicationDTO));
-        }
-    }
+//        if (isMobileDevice() ) {
+//            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+//        } else {
+//            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO,publicationDTO));
+//        }
+//    }
 
     @Transactional
     public Result admin() {
@@ -131,22 +131,23 @@ public class MainController extends AbstractController {
     }
 
     @Transactional
-    public Result mainPage() {
-        return generateDefaultPage(false);
+    public Result mainPage2() {
+        return mainPage(null);
     }
 
-    public Result generateDefaultPage(boolean forceMobile) {
+    @Transactional
+    public Result mainPage(String url) {
+        return generateDefaultPage(url,false);
+    }
+
+    public Result generateDefaultPage(String url,boolean forceMobile) {
 
         String facebookAppId = AppUtil.getFacebookAppId();
 
-        Http.Request r = ctx().request();
-
-        String a = r.host();
-
         AbstractPublicationDTO publicationDTO=null;
-        if (a.contains("publication/")) {
+        if (url.contains("publication/")) {
             Pattern p = Pattern.compile("publication/([0-9]+)");
-            Matcher matcher = p.matcher(a);
+            Matcher matcher = p.matcher(url);
             if (matcher.find()) {
                 AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
                 publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
@@ -184,7 +185,7 @@ public class MainController extends AbstractController {
 
     @Transactional
     public Result mobile() {
-        return generateDefaultPage(true);
+        return generateDefaultPage(null,true);
     }
 
     private ListDTO<LangDTO> getAvaiableLanguage() {

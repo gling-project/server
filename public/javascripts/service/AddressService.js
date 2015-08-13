@@ -4,7 +4,7 @@ myApp.service("addressService", function ($flash, $http, geolocationService) {
     this.testAddress = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
-            'url': "address/test",
+            'url': "/rest/address/test",
             'headers': "Content-Type:application/json",
             data: dto
         }).success(function (data, status) {
@@ -25,7 +25,7 @@ myApp.service("addressService", function ($flash, $http, geolocationService) {
         if (geolocationService.position != null) {
             $http({
                 'method': "POST",
-                'url': "address/distance/" + addressId,
+                'url': "/rest/address/distance/" + addressId,
                 'headers': "Content-Type:application/json",
                 data: geolocationService.position
             }).success(function (data, status) {
@@ -47,7 +47,7 @@ myApp.service("addressService", function ($flash, $http, geolocationService) {
         if (geolocationService.position != null) {
             $http({
                 'method': "PUT",
-                'url': "address/current",
+                'url': "/rest/address/current",
                 'headers': "Content-Type:application/json",
                 data: {
                     addressName:addressText

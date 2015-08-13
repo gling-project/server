@@ -9,7 +9,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.testEmail = function (email, callbackSuccess, callbackError) {
         $http({
             'method': "GET",
-            'url': "email/test/" + email,
+            'url': "/rest/email/test/" + email,
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -27,7 +27,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.registration = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
-            'url': "registration/customer",
+            'url': "/rest/registration/customer",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -47,7 +47,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.testFacebook = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
-            'url': "facebook/test",
+            'url': "/rest/facebook/test",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -67,7 +67,7 @@ myApp.service("accountService", function ($flash, $http) {
 
         $http({
             'method': "GET",
-            'url': "logout",
+            'url': "/rest/logout",
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             self.setMyself(null);
@@ -86,7 +86,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.accountFusion = function (accountFusion, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
-            'url': "/account/fusion",
+            'url': "/rest/account/fusion",
             'headers': "Content-Type:application/json",
             'data': accountFusion
         }).success(function (data, status) {
@@ -112,7 +112,7 @@ myApp.service("accountService", function ($flash, $http) {
 
         $http({
             'method': "PUT",
-            'url': "/account/password/" + self.getMyself().id,
+            'url': "/rest/account/password/" + self.getMyself().id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -132,7 +132,7 @@ myApp.service("accountService", function ($flash, $http) {
 
         $http({
             'method': "PUT",
-            'url': "/account/" + self.getMyself().id,
+            'url': "/rest/account/" + self.getMyself().id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -152,7 +152,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.login = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
-            'url': "/login",
+            'url': "/rest/login",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -172,7 +172,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.addAddress = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
-            'url': "/address",
+            'url': "/rest/address",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -192,7 +192,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.editAddress = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/address/" + dto.id,
+            'url': "/rest/address/" + dto.id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -217,7 +217,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.deleteAddress = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",
-            'url': "/address/" + dto.id,
+            'url': "/rest/address/" + dto.id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -242,7 +242,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.editCustomerInterest = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/customer/interest/" + self.getMyself().id,
+            'url': "/rest/customer/inte/rest/" + self.getMyself().id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -263,7 +263,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.forgotPassword = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/forgot/password",
+            'url': "/rest/forgot/password",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {

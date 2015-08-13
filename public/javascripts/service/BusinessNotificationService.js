@@ -8,7 +8,7 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
 
         $http({
             'method': "POST",
-            'url': "/businessNotification",
+            'url': "/rest/businessNotification",
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -30,7 +30,7 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
 
         $http({
             'method': "PUT",
-            'url': "/businessNotification/" + dto.id,
+            'url': "/rest/businessNotification/" + dto.id,
             'headers': "Content-Type:application/json",
             'data': dto
         }).success(function (data, status) {
@@ -51,7 +51,7 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
     this.delete = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "DELETE",
-            'url': "/businessNotification/" + dto.id,
+            'url': "/rest/businessNotification/" + dto.id,
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

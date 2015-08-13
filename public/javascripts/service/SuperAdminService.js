@@ -5,7 +5,7 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
         $http({
             'method': "GET",
-            'url': "/business/confirmPublication/" + businessId,
+            'url': "/rest/business/confirmPublication/" + businessId,
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -25,7 +25,7 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
         $http({
             'method': "GET",
-            'url': "/business/all",
+            'url': "/rest/business/all",
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

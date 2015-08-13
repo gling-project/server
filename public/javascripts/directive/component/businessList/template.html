@@ -1,7 +1,7 @@
 <div class="business-list">
 
     <div ng-show="getInfo().loading===true" class="loading">
-        <img src="assets/images/big_loading.gif"/>
+        <img src="/assets/images/big_loading.gif"/>
     </div>
 
     <div ng-show="getInfo().loading!=true && businesses.length == 0">
@@ -21,8 +21,8 @@
             </div>
             <div>
                 <button ng-click="follow(business)" class="follow-button">
-                    <img src="assets/images/haert.png" ng-show="business.following"/>
-                    <img src="assets/images/haert-off.png" ng-hide="business.following"/>
+                    <img src="/assets/images/haert.png" ng-show="business.following"/>
+                    <img src="/assets/images/haert-off.png" ng-hide="business.following"/>
                 </button>
                 {{business.totalFollowers}}
             </div>

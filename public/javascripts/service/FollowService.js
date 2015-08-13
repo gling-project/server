@@ -14,7 +14,7 @@ myApp.service("followService", function ($flash, $http) {
         
         $http({
             'method': "POST",
-            'url': "/follow",
+            'url': "/rest/follow",
             'headers': "Content-Type:application/json",
             data:dto
         }).success(function (data, status) {
@@ -33,7 +33,7 @@ myApp.service("followService", function ($flash, $http) {
     this.getFollows = function (callbackSuccess, callbackError) {
         $http({
             'method': "GET",
-            'url': "/follow",
+            'url': "/rest/follow",
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

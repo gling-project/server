@@ -14,7 +14,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         
         $http({
             'method': "POST",
-            'url': "/search/publication/default",
+            'url': "/rest/search/publication/default",
             'headers': "Content-Type:application/json",
             'data': geolocationService.position,
             'config': {
@@ -42,7 +42,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/search/text/little",
+            'url': "/rest/search/text/little",
             'headers': "Content-Type:application/json",
             'data': {
                 search: searchText,
@@ -73,7 +73,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/search/text",
+            'url': "/rest/search/text",
             'headers': "Content-Type:application/json",
             'data': {
                 search: searchText,
@@ -104,7 +104,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/search/publication/followed",
+            'url': "/rest/search/publication/followed",
             'headers': "Content-Type:application/json",
             'data': geolocationService.position,
             'config': {
@@ -133,7 +133,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/search/publication/business/" + businessId,
+            'url': "/rest/search/publication/business/" + businessId,
             'headers': "Content-Type:application/json",
             'data': geolocationService.position,
             'config': {
@@ -163,7 +163,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/search/publication/interest/" + interestId,
+            'url': "/rest/search/publication/inte/rest/" + interestId,
             'headers': "Content-Type:application/json",
             'data': geolocationService.position,
             'config': {

@@ -11,7 +11,7 @@ var test = function (accountService) {
 
 var initializeCommonRoutes = function () {
     myApp
-        .config(function ($routeProvider) {
+        .config(function ($routeProvider,$locationProvider) {
             $routeProvider.when('/', {
                 templateUrl: '/assets/javascripts/view/web/home.html',
                 controller: 'HomeCtrl',
@@ -52,5 +52,9 @@ var initializeCommonRoutes = function () {
             }).otherwise({
                 redirectTo: '/'
             });
+
+
+            // use the HTML5 History API
+            $locationProvider.html5Mode(true);
         });
 };

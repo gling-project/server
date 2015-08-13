@@ -31,7 +31,7 @@ myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
 
             $http({
                 'method': "PUT",
-                'url': "/language/" + lang,
+                'url': "/rest/language/" + lang,
                 'headers': "Content-Type:application/json"
             }).success(function (data, status) {
                 $window.location.reload();

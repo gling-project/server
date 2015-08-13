@@ -55,9 +55,9 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
                         });
                     };
 
-                    scope.share = function (publication) {
-                        facebookService.share('http://lynk-test.herokuapp.com/facebook/publication/'+publication.id);
-                    };
+                    //scope.share = function (publication) {
+                    //    facebookService.share('http://lynk-test.herokuapp.com/publication/'+publication.id);
+                    //};
 
 
                     //(function(d, s, id) {

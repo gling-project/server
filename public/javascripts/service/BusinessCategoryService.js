@@ -7,7 +7,7 @@ myApp.service("businessCategoryService", function ($sce,$http,$flash) {
     var loadAll = function (callbackSuccess,callbackError) {
         $http({
             'method': "GET",
-            'url': "businessCategory",
+            'url': "/rest/businessCategory",
             'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             businessCategory = data;
