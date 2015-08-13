@@ -24,7 +24,7 @@ echo "[CREATE LANGUAGE]"
 eval $DB_CONNECTION < script/basic_data.sql
 
 #import
-curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' http://lynk-test.herokuapp.com/import_category
-curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' http://lynk-test.herokuapp.com/import_demo
+curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' http://lynk-test.herokuapp.com/rest/import_category
+curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' http://lynk-test.herokuapp.com/rest/import_demo
 
 echo "Done !"

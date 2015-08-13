@@ -103,7 +103,5 @@ POST          /rest/import_category                                @be.lynk.serv
 ##welcome
 GET           /admin/                                              @be.lynk.server.controller.MainController.admin()
 GET           /mobile/                                             @be.lynk.server.controller.MainController.mobile()
-GET           /                                           @be.lynk.server.controller.MainController.mainPage2()
-GET           /*merde                                              @be.lynk.server.controller.MainController.mainPage(merde:String)
-#GET           /redirect/*url                                  @be.lynk.server.controller.MainController.mainPageByRedirect(url:String)
-#GET           /facebook/publication/:id                       @be.lynk.server.controller.MainController.facebookSharePublication(id:Long)
+GET           /                                                    @be.lynk.server.controller.MainController.mainPage2()
+GET           /*url                                                @be.lynk.server.controller.MainController.mainPage(url)
