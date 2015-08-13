@@ -61,10 +61,10 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
 
     //log out
     $scope.logout = function () {
-        console.log(accountService.getMyself());
         if (accountService.getMyself().facebookAccount) {
             facebookService.logout();
         }
+        $scope.$broadcast('LOGOUT');
         accountService.logout(function () {
             $location.path('/');
         });
@@ -95,12 +95,10 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
             if (n != null && o != n) {
                 addressService.changeAddress($scope.currentPosition, function (result) {
 
-                    console.log("result");
-                    console.log(result);
-                    if(result.__type.indexOf('AddressDTO')==-1){
+                    if (result.__type.indexOf('AddressDTO') == -1) {
                         accountService.getMyself().selectedAddress = null;
                     }
-                    else{
+                    else {
                         accountService.getMyself().selectedAddress = result;
                     }
                     $timeout(function () {
@@ -117,7 +115,6 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
         });
 
     }, 1);
-
     var completePositions = function () {
         $scope.positions = [
             {key: 'currentPosition', translation: '--.position.current'}
@@ -133,6 +130,12 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
         }
         $scope.currentPosition = geolocationService.getLocationText();
     };
+
+    $rootScope.$watch(function () {
+        return accountService.model.myself;
+    }, function watchCallback(n, o) {
+        completePositions();
+    },true);
 
 
 });

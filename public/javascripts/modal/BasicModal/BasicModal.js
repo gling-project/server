@@ -1,12 +1,12 @@
-myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile,directiveName,save,$timeout,title) {
+myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
 
-    $scope.title=title;
+    $scope.title = title;
 
     var directive = $compile("<" + directiveName + " ng-info=\"param\"/>")($scope);
 
-    $timeout(function(){
-    $('.inject-data:first').append(directive)
-    },1);
+    $timeout(function () {
+        $('.inject-data:first').append(directive)
+    }, 1);
 
 
     $scope.loading = false;
@@ -18,9 +18,21 @@ myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, bus
         $modalInstance.close();
     };
 
-    $scope.save = function () {
+    $scope.setLoading = function(value){
+        $scope.loading = value;
+    };
 
-        save($scope.close);
+    $scope.save = function () {
+        var isValid = true;
+        if (param.isValid != undefined) {
+            isValid = param.isValid;
+
+            param.displayErrorMessage = true;
+        }
+        if (isValid) {
+            $scope.loading = true;
+            save($scope.close,$scope.setLoading);
+        }
     }
 
 

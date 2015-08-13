@@ -93,7 +93,7 @@ public class
         //save
         accountService.saveOrUpdate(account);
 
-        return ok(dozerService.map(account, AccountDTO.class));
+        return ok(dozerService.map(account, MyselfDTO.class));
     }
 
     @Transactional

@@ -56,7 +56,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final int FIRST_COLUMN_INTEREST = 1;
 
     /**
-     * BUSINESS COLUMNS *
+     * PUBLICATION COLUMNS *
      */
     private static final Integer COL_PUBLICATION_BUSINESS = 0;
     private static final Integer COL_PUBLICATION_TYPE = 1;

@@ -1,4 +1,4 @@
-myApp.directive("dirFieldImageMutiple", function(directiveService, $upload, $flash, $filter,generateId,$window) {
+myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $flash, $filter, generateId, $window) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -15,19 +15,23 @@ myApp.directive("dirFieldImageMutiple", function(directiveService, $upload, $fla
                     scope.id = generateId.generate();
                     scope.errorMessage = "";
 
-                    scope.isActive = function(){
+                    scope.isActive = function () {
 
-                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
                     };
 
-                    if(scope.getInfo().field[scope.getInfo().fieldName]==null){
+                    if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
                         scope.getInfo().field[scope.getInfo().fieldName] = [];
                     }
 
                     scope.isValid = function () {
+                        if((scope.getInfo().optional != null && scope.getInfo().optional()) || scope.isActive() == false){
+                            scope.getInfo().isValid = true;
+                        }
+                        else {
+                            scope.getInfo().isValid = scope.getInfo().field[scope.getInfo().fieldName].length > 0;
+                        }
 
-                        //scope.getInfo().isValid = true;//scope.isActive()==false  || scope.getInfo().field!=null;
-                        scope.getInfo().isValid = (scope.getInfo().optional!=null && scope.getInfo().optional()) || scope.isActive() == false;
                     };
                     scope.isValid();
 
@@ -38,21 +42,32 @@ myApp.directive("dirFieldImageMutiple", function(directiveService, $upload, $fla
                         return false;
                     };
 
-
-                    scope.inDownload = false;
-                    scope.percent = 0;
-                    scope.$watch('percent', function() {
-                        var _ref;
-                        return scope.style = {
-                            "width": scope.percent + "%",
-                            "color": (_ref = scope.percent > 50) != null ? _ref : {
-                                "white": "black"
+                    scope.remove = function (imageContainer) {
+                        for (var key in scope.images) {
+                            if (scope.images[key] == imageContainer) {
+                                scope.images.splice(key, 1);
                             }
-                        };
-                    });
+                        }
+                    };
 
                     scope.success = false;
-                    scope.onFileSelect = function($files) {
+                    scope.images = [];
+
+                    //build images (first time)
+                    for (var key in scope.getInfo().field[scope.getInfo().fieldName]) {
+                        scope.images.push({
+                            image: scope.getInfo().field[scope.getInfo().fieldName][key]
+                        });
+                    }
+
+
+                    scope.onFileSelect = function ($files) {
+
+
+
+                        //create a new object
+                        var imgContainer = {};
+
                         var file, i;
                         scope.inDownload = true;
                         i = 0;
@@ -60,33 +75,42 @@ myApp.directive("dirFieldImageMutiple", function(directiveService, $upload, $fla
                             file = $files[i];
 
 
-                            var url = "/file";
-                            if(scope.getInfo().sizex !=null && scope.getInfo().sizex != undefined){
-                                url += "/"+scope.getInfo().sizex+"/"+scope.getInfo().sizey;
+                            var url = "/rest/file";
+                            if (scope.getInfo().sizex != null && scope.getInfo().sizex != undefined) {
+                                url += "/" + scope.getInfo().sizex + "/" + scope.getInfo().sizey;
                             }
 
+                            scope.images.push(imgContainer);
                             scope.upload = $upload.upload({
                                 url: url,
                                 data: {
                                     myObj: scope.myModelObj
                                 },
                                 file: file
-                            }).progress(function(evt) {
-                                scope.percent = parseInt(100.0 * evt.loaded / evt.total);
+                            }).progress(function (evt) {
+                                imgContainer.percent = parseInt(100.0 * evt.loaded / evt.total);
                             }).success(function (data, status) {
                                 scope.success = true;
-                                scope.percent = 100.0;
-                                scope.getInfo().field[scope.getInfo().fieldName].push(data);
-                                scope.inDownload=false;
+                                imgContainer.percent = 100.0;
+                                imgContainer.image = data;
+                                scope.inDownload = false;
                             })
                                 .error(function (data, status) {
-                                    scope.percent = 0;
+                                    imgContainer.percent = 0;
                                     scope.inDownload = false;
                                     $flash.error(data.message);
                                 });
                             i++;
                         }
                     };
+
+                    scope.$watch('images', function () {
+                        scope.getInfo().field[scope.getInfo().fieldName] = [];
+                        for (var key in scope.images) {
+                            scope.getInfo().field[scope.getInfo().fieldName].push(scope.images[key].image);
+                        }
+                        scope.isValid();
+                    }, true);
                 }
             };
         }

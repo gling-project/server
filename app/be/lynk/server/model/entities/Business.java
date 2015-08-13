@@ -8,7 +8,9 @@ import be.lynk.server.model.entities.technical.AbstractEntity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by florian on 10/11/14.
@@ -49,7 +51,7 @@ public class Business extends AbstractEntity {
             inverseJoinColumns = {@JoinColumn(name = "category")})
     private List<BusinessCategory> businessCategories = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = CascadeType.ALL)
     private StoredFile illustration;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -81,13 +83,13 @@ public class Business extends AbstractEntity {
     private String googleplusLink;
 
     @OneToMany(mappedBy = "businessGalleryPicture",cascade = CascadeType.ALL)
-    private List<StoredFile> galleryPictures = new ArrayList<>();
+    private Set<StoredFile> galleryPictures = new HashSet<>();
 
-    public List<StoredFile> getGalleryPictures() {
+    public Set<StoredFile> getGalleryPictures() {
         return galleryPictures;
     }
 
-    public void setGalleryPictures(List<StoredFile> galleryPictures) {
+    public void setGalleryPictures(Set<StoredFile> galleryPictures) {
         this.galleryPictures = galleryPictures;
     }
 

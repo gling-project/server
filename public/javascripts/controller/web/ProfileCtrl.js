@@ -14,7 +14,7 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
 
     $scope.interestEdit = function(){
         modalService.openEditCustomerInterest();
-    }
+    };
 
     $scope.personalEdit = function () {
         $scope.accountParam.disabled = false;

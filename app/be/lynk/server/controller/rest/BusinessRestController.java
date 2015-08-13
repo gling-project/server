@@ -75,6 +75,9 @@ public class BusinessRestController extends AbstractController {
         }
         map.setTotalFollowers(followLinkService.countByBusiness(business));
 
+        //order gallery
+        Collections.sort(map.getGalleryPictures());
+
 
         //load last publication
         publicationService.findLastPublication(business);
@@ -92,9 +95,15 @@ public class BusinessRestController extends AbstractController {
 
         List<StoredFile> map = dozerService.map(galleryPictures, StoredFile.class);
 
+        for (StoredFile storedFile : business.getGalleryPictures()) {
+            storedFile.setBusinessGalleryPicture(null);
+        }
+
         business.getGalleryPictures().clear();
 
+        Set<StoredFile> f = new HashSet<>();
 
+        int order=0;
 
         for (StoredFile storedFile : map) {
 
@@ -102,8 +111,16 @@ public class BusinessRestController extends AbstractController {
 
             byStoredName.setBusinessGalleryPicture(business);
 
+            byStoredName.setComment(storedFile.getComment());
+
+            byStoredName.setFileOrder(++order);
+
+            f.add(byStoredName);
+
             business.getGalleryPictures().add(byStoredName);
         }
+
+//        business.setGalleryPictures(f);
 
         businessService.saveOrUpdate(business);
 

@@ -7,41 +7,52 @@
         </label>
 
         <div ng-class="getInfo().fullSize==true?'col-md-12':'col-md-6'">
-            <div ng-class="{'input-group':!!getInfo().money}" style="text-align: center">
-                <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="field-image-multiple-progress-bar">
-                    <div ng-style="style">
-                        <spa></spa>
+            <div ng-class="{'input-group':!!getInfo().money}">
+                <!--<div ng-show="inDownload=== true &amp;&amp; percent != 100" class="field-image-multiple-progress-bar">-->
+                <!--<div ng-style="style">-->
+                <!--<spa></spa>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div ng-show="inDownload=== true && percent != 100" class="field-image-multiple-progress-percentage">-->
+                <!--{{percent}} %-->
+                <!--</div>-->
+                <!--<div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |-->
+                <!--translateText}}-->
+                <!--</div>-->
+                <!--<span class="btn btn-default btn-file field-image-multiple-btn"-->
+                <!--ng-hide="inDownload === true || getInfo().disabled()">-->
+                <!--{{'--.download.button.add' | translateText}}-->
+
+                <!--</span>-->
+
+                <!--<div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}-->
+                <!--</div>-->
+
+                <div ng-repeat="imageContainer in images"
+                     class="image-block-container">
+                    <div class="image-block">
+                        <div ng-show="imageContainer.percent>0 && imageContainer.percent < 100">
+                            {{imageContainer.percent}} %
+                        </div>
+
+                        <div class="image-container">
+                            <img ng-src="{{imageContainer.image| image}}"/>
+                        </div>
+
+                        <div class="image-remove glyphicon glyphicon-remove"
+                             ng-click="remove(imageContainer)">
+                        </div>
+
                     </div>
+                    {{'--.generic.comment' | translateText}}
+                    <textarea ng-model="imageContainer.image.comment"></textarea>
+
                 </div>
-                <div ng-show="inDownload=== true && percent != 100" class="field-image-multiple-progress-percentage">
-                    {{percent}} %
-                </div>
-                <div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |
-                    translateText}}
-                </div>
-                <span class="btn btn-default btn-file field-image-multiple-btn"
-                      ng-hide="inDownload === true || getInfo().disabled()">
-                    {{'--.download.button.add' | translateText}}
-                    <input
-                            name="{{ id }}"
-                            type="file"
-                            ng-file-select="onFileSelect($files)"
+                <div class="add-image-button image-block">
+                    <input name="{{ id }}"
+                           type="file"
+                           ng-file-select="onFileSelect($files)"
                             />
-                </span>
-
-                <div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}
-                </div>
-
-                <div ng-repeat="image in getInfo().field[getInfo().fieldName]"
-                     class="image-block">
-                    <img ng-src="{{image | image}}"/>
-
-                    <div class="image">
-                        <img style="border:1px solid #999999;width: 160px;height: 160px"
-                             ng-src="{{image | image}}"/>
-                        COMMENTS :
-                        <textarea ng-model="image.comment"></textarea>
-                    </div>
                 </div>
             </div>
         </div>

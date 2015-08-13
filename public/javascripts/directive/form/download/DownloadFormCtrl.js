@@ -33,7 +33,7 @@ myApp.directive('downloadFormCtrl', function ($flash, directiveService, $timeout
                     scope.fileCall = null;
                     scope.$watch('fields.file.field', function (n, o) {
                         if (n != null) {
-                            scope.fileCall = "/file/" + scope.fields.file.field.id;
+                            scope.fileCall = "/rest/file/" + scope.fields.file.field.id;
                         }
                         scope.getInfo().isValid = n != null;
                         scope.getInfo().dto = scope.fields.file.field;
@@ -42,7 +42,7 @@ myApp.directive('downloadFormCtrl', function ($flash, directiveService, $timeout
 
                     scope.download = function () {
                         if (scope.fields.file.field != null) {
-                            var url = "/file/" + scope.fields.file.field.id;
+                            var url = "/rest/file/" + scope.fields.file.field.id;
                             $window.open(url);
                         }
                     };

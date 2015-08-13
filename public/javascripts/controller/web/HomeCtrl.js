@@ -43,6 +43,12 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         $scope.search();
     });
 
+    $scope.$on('LOGOUT', function () {
+        if ($scope.followedMode) {
+            $scope.followedMode = false;
+        }
+    });
+
     //search function
     $scope.search = function () {
         if (geolocationService.position != null) {

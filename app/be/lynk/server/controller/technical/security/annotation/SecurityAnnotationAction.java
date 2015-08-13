@@ -23,8 +23,8 @@ public class SecurityAnnotationAction extends Action<SecurityAnnotation> {
 
         if (securityController.isAuthenticated(context)) {
             RoleEnum role = securityController.getCurrentUser().getRole();
-            if (role.equals(configuration.role()) ||
-                    role.getChildren().contains(configuration.role())) {
+            RoleEnum expectedRole = configuration.role();
+            if (testChildren(expectedRole, role)) {
                 return delegate.call(context);
 
             }
@@ -37,5 +37,20 @@ public class SecurityAnnotationAction extends Action<SecurityAnnotation> {
                 return securityController.onUnauthorized(context);
             }
         });
+    }
+
+    private boolean testChildren(RoleEnum expectedRole, RoleEnum userRole) {
+        if (userRole.equals(expectedRole)) {
+            return true;
+        }
+        if (userRole.getChildren().size() > 0) {
+            for (RoleEnum roleEnum : userRole.getChildren()) {
+                if (testChildren(expectedRole, roleEnum)) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 }

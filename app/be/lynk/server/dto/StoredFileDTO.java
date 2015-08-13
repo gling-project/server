@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by florian on 23/05/15.
  */
-public class StoredFileDTO extends DTO implements KeyTyped<Date> {
+public class StoredFileDTO extends DTO implements KeyTyped<Date>, Comparable<StoredFileDTO> {
 
     private Long id;
 
@@ -23,6 +23,16 @@ public class StoredFileDTO extends DTO implements KeyTyped<Date> {
     private String storedName;
 
     private String comment;
+
+    private Integer fileOrder = 0;
+
+    public Integer getFileOrder() {
+        return fileOrder;
+    }
+
+    public void setFileOrder(Integer fileOrder) {
+        this.fileOrder = fileOrder;
+    }
 
     public String getComment() {
         return comment;
@@ -71,5 +81,10 @@ public class StoredFileDTO extends DTO implements KeyTyped<Date> {
                 ", isImage=" + isImage +
                 ", originalName='" + originalName + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(StoredFileDTO o) {
+        return this.getFileOrder().compareTo(o.getFileOrder());
     }
 }

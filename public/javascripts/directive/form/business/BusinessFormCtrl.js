@@ -1,4 +1,4 @@
-myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
+myApp.directive('businessFormCtrl', function ($flash, directiveService) {
 
     return {
         restrict: "E",
@@ -70,7 +70,7 @@ myApp.directive('businessFormCtrl', function ( $flash, directiveService) {
                         },
                         website: {
                             fieldTitle: "--.business.website",
-                            validationRegex: "^($|(((http|ftp|https)://)[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?)$)",
+                            validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
                             validationMessage: '--.validation.dto.url',
                             disabled: function () {
                                 return scope.getInfo().disabled;

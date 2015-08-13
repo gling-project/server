@@ -35,6 +35,10 @@ public class StoredFile extends AbstractEntity {
     @Column(columnDefinition = "text")
     private String comment;
 
+    @Basic
+    @Column(columnDefinition = "int default 0")
+    private Integer fileOrder = 0;
+
 
     public StoredFile() {
     }
@@ -45,6 +49,14 @@ public class StoredFile extends AbstractEntity {
         this.size = size;
         this.account = account;
         this.isImage = isImage;
+    }
+
+    public Integer getFileOrder() {
+        return fileOrder;
+    }
+
+    public void setFileOrder(Integer fileOrder) {
+        this.fileOrder = fileOrder;
     }
 
     public Business getBusinessGalleryPicture() {

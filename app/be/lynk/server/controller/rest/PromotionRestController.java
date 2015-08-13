@@ -52,12 +52,16 @@ public class PromotionRestController extends AbstractRestController {
 
         publicationService.saveOrUpdate(promotion);
 
+        int order = 0;
+
         for (StoredFile storedFile : promotion.getPictures()) {
             StoredFile originalStoredFile = storedFileService.findByStoredName(storedFile.getStoredName());
             originalStoredFile.setPublication(promotion);
 
             //add comments
             originalStoredFile.setComment(storedFile.getComment());
+
+            originalStoredFile.setFileOrder(++order);
 
             storedFileService.saveOrUpdate(originalStoredFile);
         }
