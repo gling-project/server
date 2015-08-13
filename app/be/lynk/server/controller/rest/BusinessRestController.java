@@ -103,7 +103,7 @@ public class BusinessRestController extends AbstractController {
 
         Set<StoredFile> f = new HashSet<>();
 
-        int order=0;
+        int order = 0;
 
         for (StoredFile storedFile : map) {
 
@@ -190,6 +190,19 @@ public class BusinessRestController extends AbstractController {
         Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
 
         business.setBusinessStatus(BusinessStatus.WAITING_CONFIRMATION);
+        business.setAskPublicationDate(LocalDateTime.now());
+
+        businessService.saveOrUpdate(business);
+
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @BusinessStatusAnnotation(status = {BusinessStatus.WAITING_CONFIRMATION})
+    public Result cancelPublicationRequest() {Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+
+        business.setBusinessStatus(BusinessStatus.NOT_PUBLISHED);
         business.setAskPublicationDate(LocalDateTime.now());
 
         businessService.saveOrUpdate(business);

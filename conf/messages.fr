@@ -58,15 +58,15 @@
 --.generic.publication=Publication
 --.generic.facebook=Facebook
 --.generic.category=Catégorie
---.generic.validation.googleplus=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://plus.google.com/)
+--.generic.validation.googleplus=Ceci n'est pas une adresse Google+ valie (elle doit commencer par https\://plus.google.com/)
 --.generic.foursquare=Four Square
 --.generic.twitter=Twitter
---.generic.validation.facebook=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://facebook.com/)
---.generic.validation.twitter=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://twitter.com/)
+--.generic.validation.facebook=Ceci n'est pas une adresse Facebook valie (elle doit commencer par https\://facebook.com/)
+--.generic.validation.twitter=Ceci n'est pas une adresse Twitter valie (elle doit commencer par https\://twitter.com/)
 --.generic.title=Title
 --.generic.socialNetwork=Your social network
 --.generic.googleplus=Google+
---.generic.validation.foursquare=Ceci n'est pas une adresse google+ valie (elle doit commencer par https\://fr.foursquare.com/)
+--.generic.validation.foursquare=Ceci n'est pas une adresse Foursquare valie (elle doit commencer par https\://fr.foursquare.com/)
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte

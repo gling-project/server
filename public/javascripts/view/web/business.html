@@ -10,7 +10,8 @@
         translateText}}
     </div>
 
-    <div class="onoffswitch-container" ng-hide="business.businessStatus === 'WAITING_CONFIRMATION'">
+    <!-- show edit buttons or not -->
+    <div class="onoffswitch-container">
         <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
         <div class="onoffswitch">
             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchFromBusiness"
@@ -23,11 +24,19 @@
         </div>
         <div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div>
     </div>
+
     <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
             ng-click="publish()"
             class="btn btn-primary">
         {{'--.business.page.publication' | translateText}}
     </button>
+
+    <button ng-show="business.businessStatus === 'WAITING_CONFIRMATION'"
+            ng-click="cancelPublishRequest()"
+            class="btn btn-primary">
+        {{'--.business.page.cancelPublishRequest' | translateText}}
+    </button>
+
     <button ng-show="business.businessStatus === 'PUBLISHED'"
             ng-click="stopPublish()"
             class="btn btn-primary">
@@ -41,7 +50,7 @@
         <!-- landscape -->
         <div class="edit-button-container landscape-edit">
             <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                    ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
+                    ng-show="edit"
                     ng-click="editLandscape()">
                 {{'--.business.page.edit.landscape' | translateText}}
             </button>
@@ -53,7 +62,7 @@
 
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
-                        ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
+                        ng-show="edit"
                         ng-click="editIllustration()">
                     {{'--.business.page.edit.illustration' | translateText}}
                 </button>
@@ -135,7 +144,7 @@
                     <gallery-ctrl ng-info="{images:business.galleryPictures}"></gallery-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
+                            ng-show="edit"
                             ng-click="editGallery()">
                         {{'--.business.page.edit.gallery' | translateText}}
                     </button>
@@ -213,7 +222,7 @@
                     </div>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
+                            ng-show="edit"
                             ng-click="editSocialNetwork()">
                         {{'--.business.page.edit.business' | translateText}}
                     </button>
@@ -229,7 +238,7 @@
                     <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit && business.businessStatus != 'WAITING_CONFIRMATION'"
+                            ng-show="edit"
                             ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
                     </button>
                 </div>

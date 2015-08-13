@@ -52,6 +52,7 @@ PUT           /rest/business/illustration                          @be.lynk.serv
 PUT           /rest/business/landscape                             @be.lynk.server.controller.rest.BusinessRestController.editLandscape()
 POST          /rest/business/ask_publication                       @be.lynk.server.controller.rest.BusinessRestController.askPublication()
 POST          /rest/business/stop_publish                          @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
+POST          /rest/business/cancel_publication_request            @be.lynk.server.controller.rest.BusinessRestController.cancelPublicationRequest()
 POST          /rest/business/edit/gallery                          @be.lynk.server.controller.rest.BusinessRestController.editGallery()
 
 

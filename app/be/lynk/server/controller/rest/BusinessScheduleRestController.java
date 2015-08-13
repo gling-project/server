@@ -38,7 +38,7 @@ public class BusinessScheduleRestController extends AbstractRestController {
         BusinessScheduleContainerDTO dto = extractDTOFromRequest(BusinessScheduleContainerDTO.class);
 
         Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
-        business.setSchedules(new ArrayList<>());
+        business.getSchedules().clear();
 
 
         for (Map.Entry<DayOfWeek, List<BusinessSchedulePartDTO>> dayOfWeekBusinessScheduleDTOEntry : dto.getSchedules().entrySet()) {

@@ -120,6 +120,27 @@ myApp.service("businessService", function ($flash, $http, accountService) {
 
     };
 
+    this.cancelPublishRequest =function (callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/rest/business/cancel_publication_request",
+            'headers': "Content-Type:application/json",
+            'data': {}
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
     this.stopPublication = function (callbackSuccess, callbackError) {
 
         $http({

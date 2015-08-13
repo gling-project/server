@@ -61,6 +61,17 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     });
             };
 
+            $scope.cancelPublishRequest= function () {
+
+                modalService.messageModal("--.business.page.cancelPublishRequest.window.title", "--.business.page.cancelPublishRequest.window.message",
+                    function (close) {
+                        businessService.cancelPublishRequest();
+                        close();
+                        $flash.info(translationService.get("--.business.page.cancelPublishRequest.window.flash"));
+                        $scope.business.businessStatus = 'NOT_PUBLISHED';
+                    });
+            };
+
             $scope.stopPublish = function () {
 
                 modalService.messageModal("--.business.page.stopPublication.window.title", "--.business.page.stopPublication.window.message",

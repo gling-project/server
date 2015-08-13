@@ -23,7 +23,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                         facebook: {
                             fieldTitle: "--.generic.facebook",
                             fieldImage:'assets/social_network/facebook.png',
-                            validationRegex: "^https://facebook\.com/.*$",
+                            validationRegex: "^($|https://facebook\.com/.*$)",
                             validationMessage: '--.generic.validation.facebook',
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -38,7 +38,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                         twitter: {
                             fieldTitle: "--.generic.twitter",
                             fieldImage:'assets/social_network/twitter.png',
-                            validationRegex: "^https://twitter\.com/.*$",
+                            validationRegex: "^($|^https://twitter\.com/.*$)",
                             validationMessage: '--.generic.validation.twitter',
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -53,7 +53,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                         googleplus: {
                             fieldTitle: "--.generic.googleplus",
                             fieldImage:'assets/social_network/googleplus.png',
-                            validationRegex: "^https://plus\.google\.com/.*$",
+                            validationRegex: "^($|^https://plus\.google\.com/.*$)",
                             validationMessage: '--.generic.validation.googleplus',
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -68,7 +68,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                         foursquare: {
                             fieldTitle: "--.generic.foursquare",
                             fieldImage:'assets/social_network/foursquare.png',
-                            validationRegex: "^https://[a-z]+\.foursquare\.com/.*$",
+                            validationRegex: "^($|^https://[a-z]+\.foursquare\.com/.*$)",
                             validationMessage: '--.generic.validation.foursquare',
                             disabled: function () {
                                 return scope.getInfo().disabled;
