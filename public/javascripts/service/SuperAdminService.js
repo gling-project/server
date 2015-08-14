@@ -19,7 +19,7 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
                 }
             });
 
-    }
+    };
 
     this.getAllBusinesses = function(callbackSuccess, callbackError) {
 

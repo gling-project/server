@@ -19,7 +19,7 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
                 if (callbackError != null) {
                     callbackError(data, status);
                 }
-                $flash.error(data.message);
+                $flash.error(data);
             });
     };
 
