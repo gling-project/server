@@ -5,7 +5,7 @@ myApp.service("publicationService", function ($http, $flash, $rootScope) {
         $http({
             'method': "DELETE",
             'url': "/rest/publication/"+dto.id,
-            'headers': "Content-Type:application/json"
+            'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);

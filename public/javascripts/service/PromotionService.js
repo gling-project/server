@@ -5,7 +5,7 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
         $http({
             'method': "POST",
             'url': "/rest/promotion",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -26,7 +26,7 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
         $http({
             'method': "PUT",
             'url': "/rest/promotion/" + dto.id,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {

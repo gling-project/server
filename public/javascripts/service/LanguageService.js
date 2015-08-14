@@ -32,7 +32,7 @@ myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
             $http({
                 'method': "PUT",
                 'url': "/rest/language/" + lang,
-                'headers': "Content-Type:application/json"
+                'headers': "Content-Type:application/json;charset=utf-8"
             }).success(function (data, status) {
                 $window.location.reload();
             })

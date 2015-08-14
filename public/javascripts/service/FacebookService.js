@@ -155,7 +155,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
         $http({
             'method': "POST",
             'url': "/rest/login/facebook",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data) {
             if (callbackSuccess != null) {

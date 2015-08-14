@@ -9,7 +9,7 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
         $http({
             'method': "POST",
             'url': "/rest/businessNotification",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -31,7 +31,7 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
         $http({
             'method': "PUT",
             'url': "/rest/businessNotification/" + dto.id,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {

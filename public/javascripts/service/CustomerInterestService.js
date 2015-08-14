@@ -8,7 +8,7 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
         $http({
             'method': "GET",
             'url': "/rest/customerInterest",
-            'headers': "Content-Type:application/json"
+            'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             customerInterests = data.list;
             if (callbackSuccess != null) {

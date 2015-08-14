@@ -5,7 +5,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "GET",
             'url': "/rest/business/" + id,
-            'headers': "Content-Type:application/json"
+            'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
@@ -23,7 +23,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "POST",
             'url': "/rest/registration/business",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             accountService.setMyself(data);
@@ -43,7 +43,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "PUT",
             'url': "/rest/business",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             accountService.getMyself().business = data;
@@ -63,7 +63,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "PUT",
             'url': "/rest/business/social_network",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -83,7 +83,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "PUT",
             'url': "/rest/business/category",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': {list: dto}
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -104,7 +104,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "POST",
             'url': "/rest/business/ask_publication",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': {}
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -125,7 +125,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "POST",
             'url': "/rest/business/cancel_publication_request",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': {}
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -146,7 +146,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "POST",
             'url': "/rest/business/stop_publish",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': {}
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -168,7 +168,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "PUT",
             'url': "/rest/business/illustration",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             //accountService.getMyself().business.illustration = dto;
@@ -190,7 +190,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "PUT",
             'url': "/rest/business/landscape",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             //accountService.getMyself().business.illustration = dto;
@@ -211,7 +211,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "PUT",
             'url': "/rest/business/address",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -232,7 +232,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "POST",
             'url': "/rest/business/schedule",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -252,7 +252,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "POST",
             'url': "/rest/business/edit/gallery",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -273,7 +273,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         $http({
             'method': "GET",
             'url': "/rest/business/interests",
-            'headers': "Content-Type:application/json"
+            'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);

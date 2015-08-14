@@ -15,7 +15,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/publication/default",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise
@@ -43,7 +43,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/text/little",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': {
                 search: searchText,
                 position: geolocationService.position
@@ -74,7 +74,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/text",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': {
                 search: searchText,
                 position: geolocationService.position
@@ -105,7 +105,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/publication/followed",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise
@@ -133,7 +133,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/publication/followed/interest/"+interestId,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise
@@ -162,7 +162,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/publication/business/" + businessId,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise
@@ -191,7 +191,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/publication/interest/" + interestId,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise

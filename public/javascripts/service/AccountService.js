@@ -10,7 +10,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "GET",
             'url': "/rest/email/test/" + email,
-            'headers': "Content-Type:application/json"
+            'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data.value);
@@ -28,7 +28,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "POST",
             'url': "/rest/registration/customer",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             self.setMyself(data);
@@ -48,7 +48,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "POST",
             'url': "/rest/facebook/test",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -68,7 +68,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "GET",
             'url': "/rest/logout",
-            'headers': "Content-Type:application/json"
+            'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             self.setMyself(null);
             if (callbackSuccess != null) {
@@ -87,7 +87,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "POST",
             'url': "/rest/account/fusion",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': accountFusion
         }).success(function (data, status) {
             $flash.success(translationService.get("--.login.flash.success"));
@@ -113,7 +113,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "PUT",
             'url': "/rest/account/password/" + self.getMyself().id,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -133,7 +133,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "PUT",
             'url': "/rest/account/" + self.getMyself().id,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             self.setMyself(data);
@@ -153,7 +153,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "POST",
             'url': "/rest/login",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             self.setMyself(data);
@@ -173,7 +173,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "POST",
             'url': "/rest/address",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             self.getMyself().addresses.push(data);
@@ -193,7 +193,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "PUT",
             'url': "/rest/address/" + dto.id,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
 
@@ -218,7 +218,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "DELETE",
             'url': "/rest/address/" + dto.id,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
 
@@ -243,7 +243,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "PUT",
             'url': "/rest/customer/inte/rest/" + self.getMyself().id,
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
 
@@ -264,7 +264,7 @@ myApp.service("accountService", function ($flash, $http) {
         $http({
             'method': "PUT",
             'url': "/rest/forgot/password",
-            'headers': "Content-Type:application/json",
+            'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
             if (callbackSuccess != null) {
