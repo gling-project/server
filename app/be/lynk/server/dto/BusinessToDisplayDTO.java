@@ -53,19 +53,21 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
 
     private Integer totalFollowers;
 
-    private String facebookLink;
-
-    private String twitterLink;
-
-    private String foursquareLink;
-
-    private String googleplusLink;
+    private BusinessSocialNetworkDTO socialNetwork;
 
     private List<StoredFileDTO> galleryPictures = new ArrayList<>();
 
     private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
 
     public BusinessToDisplayDTO() {
+    }
+
+    public BusinessSocialNetworkDTO getSocialNetwork() {
+        return socialNetwork;
+    }
+
+    public void setSocialNetwork(BusinessSocialNetworkDTO socialNetwork) {
+        this.socialNetwork = socialNetwork;
     }
 
     public List<StoredFileDTO> getGalleryPictures() {
@@ -213,37 +215,7 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
         this.address = address;
     }
 
-    public String getFacebookLink() {
-        return facebookLink;
-    }
 
-    public void setFacebookLink(String facebookLink) {
-        this.facebookLink = facebookLink;
-    }
-
-    public String getTwitterLink() {
-        return twitterLink;
-    }
-
-    public void setTwitterLink(String twitterLink) {
-        this.twitterLink = twitterLink;
-    }
-
-    public String getFoursquareLink() {
-        return foursquareLink;
-    }
-
-    public void setFoursquareLink(String foursquareLink) {
-        this.foursquareLink = foursquareLink;
-    }
-
-    public String getGoogleplusLink() {
-        return googleplusLink;
-    }
-
-    public void setGoogleplusLink(String googleplusLink) {
-        this.googleplusLink = googleplusLink;
-    }
 
     @Override
     public String toString() {

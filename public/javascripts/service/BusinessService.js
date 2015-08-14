@@ -120,7 +120,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
 
     };
 
-    this.cancelPublishRequest =function (callbackSuccess, callbackError) {
+    this.cancelPublishRequest = function (callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
@@ -254,6 +254,26 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             'url': "/rest/business/edit/gallery",
             'headers': "Content-Type:application/json",
             'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+
+    this.getInterests = function (callbackSuccess, callbackError) {
+
+        $http({
+            'method': "GET",
+            'url': "/rest/business/interests",
+            'headers': "Content-Type:application/json"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);

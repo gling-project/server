@@ -1,5 +1,7 @@
 package be.lynk.server.controller.rest;
 
+import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
+import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.SearchCriteriaEnum;
@@ -44,7 +46,7 @@ public class SearchRestController extends AbstractRestController {
 
         Business byId = businessService.findById(id);
 
-        List<AbstractPublication> publications = byId.getPublications();
+        List<AbstractPublication> publications = publicationService.findActivePublicationByBusiness(byId);
 
         List<AbstractPublicationDTO> map = dozerService.map(publications, AbstractPublicationDTO.class);
 
@@ -67,6 +69,7 @@ public class SearchRestController extends AbstractRestController {
     }
 
     @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
     public Result getByFollowed() {
 
         PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
@@ -93,21 +96,27 @@ public class SearchRestController extends AbstractRestController {
 
         List<AbstractPublication> publications = publicationService.findActivePublication();
 
-        List<AbstractPublication> finalList = new ArrayList<>();
+        List<AbstractPublication> finalList = sortByInterest(publications, byId);
 
-        //sort
-        for (AbstractPublication publication : publications) {
-            for (BusinessCategory businessCategory : publication.getBusiness().getBusinessCategories()) {
-                for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
-                    if (categoryInterestLink.getCustomerInterest().equals(byId)) {
-                        finalList.add(publication);
-                        break;
-                    }
-                }
-            }
 
-        }
+        return ok(new ListDTO<>(finalize(dto, finalList)));
+    }
 
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
+    public Result getByInterestAndFollowed(long id) {
+
+        //load interest
+        CustomerInterest byId = customerInterestService.findById(id);
+
+        Account currentUser = securityController.getCurrentUser();
+        List<Business> byAccount = followLinkService.findBusinessByAccount(currentUser);
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        List<AbstractPublication> publications = publicationService.findActivePublicationByBusinesses(byAccount);
+
+        List<AbstractPublication> finalList = sortByInterest(publications, byId);
 
         return ok(new ListDTO<>(finalize(dto, finalList)));
     }
@@ -342,6 +351,29 @@ public class SearchRestController extends AbstractRestController {
         public String getText() {
             return text;
         }
+    }
+
+    private List<AbstractPublication> sortByInterest(List<AbstractPublication> publications, CustomerInterest expectedInterest) {
+        List<AbstractPublication> finalList = new ArrayList<>();
+
+        //sort
+        for (AbstractPublication publication : publications) {
+            if (publication.getInterest() != null) {
+                if (publication.getInterest().equals(expectedInterest)) {
+                    finalList.add(publication);
+                }
+            } else {
+                for (BusinessCategory businessCategory : publication.getBusiness().getBusinessCategories()) {
+                    for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
+                        if (categoryInterestLink.getCustomerInterest().equals(expectedInterest)) {
+                            finalList.add(publication);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return finalList;
     }
 
 

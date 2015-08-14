@@ -15,10 +15,15 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
     //publication
     $scope.publicationListParam = {
         businessId: $scope.businessId,
-        scrollTo: $scope.publicationIdToGo
+        scrollTo: $scope.publicationIdToGo,
+        displayRemoveIcon: $scope.edit
     };
+    $scope.$watch('edit', function () {
+        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
+    });
     //address
     $scope.googleMapParams = {}
+
 
     //loading
     businessService.getBusiness($routeParams.businessId,
@@ -61,7 +66,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     });
             };
 
-            $scope.cancelPublishRequest= function () {
+            $scope.cancelPublishRequest = function () {
 
                 modalService.messageModal("--.business.page.cancelPublishRequest.window.title", "--.business.page.cancelPublishRequest.window.message",
                     function (close) {
@@ -89,7 +94,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                 var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
                     {dto: business},
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         businessService.edit(business, function (data) {
                             $scope.business.name = data.name;
                             $scope.business.description = data.description;
@@ -97,7 +102,7 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                             $scope.business.website = data.website;
                             $scope.business.email = data.email;
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
@@ -107,11 +112,11 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             $scope.editIllustration = function () {
                 modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
                     {dto: $scope.business, sizex: 80, sizey: 80, fieldName: 'illustration'},
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         businessService.editIllustration($scope.business.illustration, function () {
                             $scope.business.illustration.link = '/rest/file/' + $scope.business.illustration.id;
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
@@ -122,11 +127,11 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                 //$scope.business.landscape={}
                 modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
                     {dto: $scope.business, sizex: 800, sizey: 300, fieldName: 'landscape'},
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         businessService.editLandscape($scope.business.landscape, function () {
                             //$scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
@@ -143,13 +148,13 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                         dto: address,
                         addName: false
                     },
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         //scope.business
                         businessService.editAddress(address, function (data) {
                             $scope.business.address = data;
                             $scope.centerMap();
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
@@ -176,13 +181,13 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                     {
                         value: catList
                     },
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         //scope.business
                         businessService.editBusinessCategory(catList, function (data) {
                             $scope.business.categories = data.categories;
                             $scope.categoryLineParams.categories = $scope.business.categories;
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
@@ -220,18 +225,18 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                         dto: schedules,
                         disabled: false
                     },
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         businessService.createSchedule({schedules: schedules}, function (data) {
                             $scope.business.schedules = schedules;
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
 
             };
 
-            $scope.editGallery = function(){
+            $scope.editGallery = function () {
                 var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.address.modal.title", "dir-field-image-mutiple",
                     {
@@ -240,15 +245,15 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                         sizex: 60,
                         sizey: 60,
                         field: business,
-                        multiple:true,
+                        multiple: true,
                         fieldName: 'galleryPictures'
                     },
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         //scope.business
-                        businessService.editGallery({list:business.galleryPictures}, function (data) {
+                        businessService.editGallery({list: business.galleryPictures}, function (data) {
                             $scope.business.galleryPictures = data;
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
@@ -257,17 +262,21 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
 
             //edit social network
             $scope.editSocialNetwork = function () {
-                var business = angular.copy($scope.business);
+                var socialNetwork = angular.copy($scope.business.socialNetwork);
+                if (socialNetwork == undefined || socialNetwork == null) {
+                    socialNetwork = {};
+                }
+                console.log(socialNetwork);
                 modalService.basicModal("--.business.edit.address.modal.title", "business-social-network-ctrl",
                     {
-                        dto: business
+                        dto: socialNetwork
                     },
-                    function (close,setLoading) {
+                    function (close, setLoading) {
                         //scope.business
-                        businessService.editSocialNetwork(business, function (data) {
-                            $scope.business = data;
+                        businessService.editSocialNetwork(socialNetwork, function (data) {
+                            $scope.business.socialNetwork = socialNetwork;
                             close();
-                        },function(){
+                        }, function () {
                             setLoading(false);
                         });
                     });
@@ -276,16 +285,21 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             //create publication
             $scope.createPromotion = function () {
                 modalService.openPromotionModal(null, function () {
-                    $scope.publicationListParam.refresh();
+                    $scope.$broadcast('RELOAD_PUBLICATION');
                 });
 
             };
             $scope.createNotification = function () {
                 modalService.openBusinessNotificationModal(null, function () {
-                    $scope.publicationListParam.refresh();
+                    $scope.$broadcast('RELOAD_PUBLICATION');
                 });
             };
-            $scope.$on('POSITION_CHANGED',function(){
+            $scope.$on('POSITION_CHANGED', function () {
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            });
+
+            $scope.$on('RELOAD_PUBLICATION', function () {
+                console.log('je suis refrech de merde');
                 $scope.publicationListParam.refresh();
             });
 

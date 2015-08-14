@@ -200,7 +200,8 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatus.WAITING_CONFIRMATION})
-    public Result cancelPublicationRequest() {Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+    public Result cancelPublicationRequest() {
+        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
 
         business.setBusinessStatus(BusinessStatus.NOT_PUBLISHED);
         business.setAskPublicationDate(LocalDateTime.now());
@@ -290,17 +291,14 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result updateSocialNetwork() {
 
-        BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
+        BusinessSocialNetworkDTO dto = extractDTOFromRequest(BusinessSocialNetworkDTO.class);
 
 
         BusinessAccount currentUser = (BusinessAccount) securityController.getCurrentUser();
 
         Business business = currentUser.getBusiness();
 
-        business.setFacebookLink(dto.getFacebookLink());
-        business.setGoogleplusLink(dto.getGoogleplusLink());
-        business.setTwitterLink(dto.getTwitterLink());
-        business.setFoursquareLink(dto.getFoursquareLink());
+        business.setSocialNetwork(dozerService.map(dto, BusinessSocialNetwork.class));
 
         businessService.saveOrUpdate(business);
 
@@ -329,6 +327,23 @@ public class BusinessRestController extends AbstractController {
 
         return ok(dozerService.map(business, BusinessCategoryLittleContainerDTO.class));
 
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result getInterests() {
+
+        List<CustomerInterest> result = new ArrayList<>();
+
+        Business business = securityController.getBusiness();
+
+        for (BusinessCategory businessCategory : business.getBusinessCategories()) {
+            for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
+                result.add(categoryInterestLink.getCustomerInterest());
+            }
+        }
+
+        return ok(new ListDTO<>(dozerService.map(result, CustomerInterestDTO.class)));
     }
 
 }

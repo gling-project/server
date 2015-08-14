@@ -53,13 +53,7 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
 
     protected Date askPublicationDate;
 
-    private String facebookLink;
-
-    private String twitterLink;
-
-    private String foursquareLink;
-
-    private String googleplusLink;
+    private BusinessSocialNetworkDTO socialNetwork;
 
     public Date getAskPublicationDate() {
         return askPublicationDate;
@@ -176,36 +170,12 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
         this.address = address;
     }
 
-    public String getFacebookLink() {
-        return facebookLink;
+    public BusinessSocialNetworkDTO getSocialNetwork() {
+        return socialNetwork;
     }
 
-    public void setFacebookLink(String facebookLink) {
-        this.facebookLink = facebookLink;
-    }
-
-    public String getTwitterLink() {
-        return twitterLink;
-    }
-
-    public void setTwitterLink(String twitterLink) {
-        this.twitterLink = twitterLink;
-    }
-
-    public String getFoursquareLink() {
-        return foursquareLink;
-    }
-
-    public void setFoursquareLink(String foursquareLink) {
-        this.foursquareLink = foursquareLink;
-    }
-
-    public String getGoogleplusLink() {
-        return googleplusLink;
-    }
-
-    public void setGoogleplusLink(String googleplusLink) {
-        this.googleplusLink = googleplusLink;
+    public void setSocialNetwork(BusinessSocialNetworkDTO socialNetwork) {
+        this.socialNetwork = socialNetwork;
     }
 
     @Override

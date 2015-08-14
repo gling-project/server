@@ -1,4 +1,4 @@
-myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout) {
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout,businessService) {
 
     return {
         restrict: "E",
@@ -31,6 +31,24 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     else {
                         scope.completePromotion = scope.getInfo().dto.quantity != null;
                     }
+
+
+                    //load interests
+                    businessService.getInterests(function (data) {
+                        scope.interests = data;
+                        if (scope.interests.length > 1) {
+                            scope.fields.interests.isActive = function () {
+                                return true;
+                            };
+                            for (var key in scope.interests) {
+                                var interest = scope.interests[key];
+                                scope.fields.interests.options.push({
+                                    key: interest,
+                                    value: interest.translationName
+                                });
+                            }
+                        }
+                    });
 
                     //build field + dto binding
                     scope.fields = {
@@ -180,6 +198,23 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'offPrice'
+                        },
+                        interests: {
+                            fieldTitle: "--.promotion.interest",
+                            details: '--.promotion.interest.help',
+                            validationMessage: '--.error.validation.not_null',
+                            options: [],
+                            optional: function () {
+                                return false;
+                            },
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            isActive: function () {
+                                return false
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'interest'
                         }
                     };
 

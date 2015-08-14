@@ -123,6 +123,34 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
+    this.byFollowedAndInterest = function (interestId,callbackSuccess, callbackError) {
+
+        if (canceler != null) {
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/publication/followed/interest/"+interestId,
+            'headers': "Content-Type:application/json",
+            'data': geolocationService.position,
+            'config': {
+                timeout: canceler.promise
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
 
     this.byBusiness = function (businessId, callbackSuccess, callbackError) {
 
@@ -143,7 +171,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
-            $rootScope.$broadcast('$refreshPromotion');
         })
             .error(function (data, status) {
                 $flash.error(data.message);
@@ -163,7 +190,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/inte/rest/" + interestId,
+            'url': "/rest/search/publication/interest/" + interestId,
             'headers': "Content-Type:application/json",
             'data': geolocationService.position,
             'config': {
@@ -173,7 +200,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
-            $rootScope.$broadcast('$refreshPromotion');
         })
             .error(function (data, status) {
                 $flash.error(data.message);

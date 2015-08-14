@@ -3,6 +3,7 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.PublicationType;
 import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import play.modules.mongodb.jackson.KeyTyped;
@@ -44,7 +45,17 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     private List<StoredFileDTO> pictures = new ArrayList<>();
 
+    private CustomerInterestDTO interest;
+
     public AbstractPublicationDTO() {
+    }
+
+    public CustomerInterestDTO getInterest() {
+        return interest;
+    }
+
+    public void setInterest(CustomerInterestDTO interest) {
+        this.interest = interest;
     }
 
     public String getTitle() {
@@ -154,7 +165,7 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     @Override
     public int compareTo(AbstractPublicationDTO o) {
-        if (this.getDistance()==null || this.getDistance().compareTo(o.getDistance()) == 0) {
+        if (this.getDistance() == null || this.getDistance().compareTo(o.getDistance()) == 0) {
             return o.startDate.compareTo(this.startDate);
         }
         return this.getDistance().compareTo(o.getDistance());

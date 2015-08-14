@@ -11,6 +11,7 @@ import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.Promotion;
+import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
@@ -34,6 +35,8 @@ public class PromotionRestController extends AbstractRestController {
     private PublicationService publicationService;
     @Autowired
     private StoredFileService storedFileService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -50,6 +53,10 @@ public class PromotionRestController extends AbstractRestController {
 
         promotion.setBusiness(business);
 
+        if (promotion.getInterest() != null) {
+            promotion.setInterest(customerInterestService.findById(promotion.getInterest().getId()));
+        }
+
         publicationService.saveOrUpdate(promotion);
 
         int order = 0;
@@ -65,7 +72,6 @@ public class PromotionRestController extends AbstractRestController {
 
             storedFileService.saveOrUpdate(originalStoredFile);
         }
-
         return ok(dozerService.map(promotion, PromotionDTO.class));
     }
 
@@ -107,20 +113,6 @@ public class PromotionRestController extends AbstractRestController {
         publicationService.saveOrUpdate(promotionToEdit);
 
         return ok(dozerService.map(promotionToEdit, PromotionDTO.class));
-    }
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result delete(Long id) {
-        //load
-        Promotion promotion = (Promotion) publicationService.findById(id);
-        if (promotion == null || !promotion.getBusiness().equals(((BusinessAccount) securityController.getCurrentUser()).getBusiness())) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
-        }
-
-        publicationService.remove(promotion);
-
-        return ok(new ResultDTO());
     }
 
 

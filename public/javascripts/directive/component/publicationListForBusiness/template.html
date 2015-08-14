@@ -46,7 +46,7 @@
                     </tr>
                     <tr ng-show="publication.originalPrice!=null">
                         <td>{{'--.promotion.offPrice' | translateText}}</td>
-                        <td>{{(publication.originalPrice * (1 - publication.offPercent))  | number:2 }} €</td>
+                        <td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td>
                     </tr>
                     <tr>
                         <td>{{'--.promotion.offPercent' | translateText}}</td>
@@ -61,6 +61,16 @@
                 <gallery-ctrl ng-info="{images:publication.pictures}"></gallery-ctrl>
             </div>
         </div>
+
+
+        <!-- remove publication -->
+        <button
+                ng-show="getInfo().displayRemoveIcon"
+                type="button"
+                class="btn btn-primary"
+                ng-click="removePublication(publication)">
+            {{'--.generic.remove' | translateText}}
+        </button>
 
     </div>
 

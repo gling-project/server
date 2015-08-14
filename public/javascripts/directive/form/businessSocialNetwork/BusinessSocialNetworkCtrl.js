@@ -23,7 +23,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                         facebook: {
                             fieldTitle: "--.generic.facebook",
                             fieldImage:'assets/social_network/facebook.png',
-                            validationRegex: "^($|https://facebook\.com/.*$)",
+                            validationRegex: "^($|https://www.facebook\.com/.*$)",
                             validationMessage: '--.generic.validation.facebook',
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -50,11 +50,11 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                             fieldName: 'twitterLink',
                             placeholder:'https://twitter.com/'
                         },
-                        googleplus: {
-                            fieldTitle: "--.generic.googleplus",
-                            fieldImage:'assets/social_network/googleplus.png',
-                            validationRegex: "^($|^https://plus\.google\.com/.*$)",
-                            validationMessage: '--.generic.validation.googleplus',
+                        instagram: {
+                            fieldTitle: "--.generic.instagram",
+                            fieldImage:'assets/social_network/instagram.png',
+                            validationRegex: "^($|^https://instagram\.com/.*$)",
+                            validationMessage: '--.generic.validation.instagram',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -62,14 +62,14 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                                 return true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'googleplusLink',
-                            placeholder:'https://plus.google.com/'
+                            fieldName: 'instagramLink',
+                            placeholder:'https://instagram.com/'
                         },
-                        foursquare: {
-                            fieldTitle: "--.generic.foursquare",
-                            fieldImage:'assets/social_network/foursquare.png',
-                            validationRegex: "^($|^https://[a-z]+\.foursquare\.com/.*$)",
-                            validationMessage: '--.generic.validation.foursquare',
+                        delivery: {
+                            fieldTitle: "--.business.socialNetwork.delivery",
+                            fieldImage:'assets/social_network/delivery.png',
+                            validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
+                            validationMessage: '--.validation.dto.url',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -77,8 +77,53 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                                 return true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'foursquareLink',
-                            placeholder:'https://'+languageService.currentLanguage.code+'foursquare.com/'
+                            fieldName: 'deliveryLink',
+                            placeholder:'http://...'
+                        },
+                        ecommerce: {
+                            fieldTitle: "--.business.socialNetwork.ecommerce",
+                            fieldImage:'assets/social_network/e-commerce.png',
+                            validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
+                            validationMessage: '--.validation.dto.url',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            focus: function () {
+                                return true;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'ecommerceLink',
+                            placeholder:'http://...'
+                        },
+                        opinion: {
+                            fieldTitle: "--.business.socialNetwork.opinion",
+                            fieldImage:'assets/social_network/opinion.png',
+                            validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
+                            validationMessage: '--.validation.dto.url',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            focus: function () {
+                                return true;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'opinionLink',
+                            placeholder:'http://...'
+                        },
+                        reservation: {
+                            fieldTitle: "--.business.socialNetwork.reservation",
+                            fieldImage:'assets/social_network/reservation.png',
+                            validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
+                            validationMessage: '--.validation.dto.url',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            focus: function () {
+                                return true;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'reservationLink',
+                            placeholder:'http://...'
                         }
 
                     };

@@ -1,6 +1,8 @@
+
 package be.lynk.server.model.entities.publication;
 
 import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import be.lynk.server.model.entities.technical.AbstractEntity;
@@ -42,7 +44,18 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
     @OneToMany(mappedBy = "publication", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
     private List<StoredFile> pictures = new ArrayList<>();
 
+    @ManyToOne
+    private CustomerInterest interest;
+
     public AbstractPublication() {
+    }
+
+    public CustomerInterest getInterest() {
+        return interest;
+    }
+
+    public void setInterest(CustomerInterest interest) {
+        this.interest = interest;
     }
 
     public String getTitle() {

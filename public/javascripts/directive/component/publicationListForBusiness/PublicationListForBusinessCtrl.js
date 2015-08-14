@@ -1,4 +1,4 @@
-myApp.directive('publicationListForBusinessCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout) {
+myApp.directive('publicationListForBusinessCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout,publicationService) {
 
     return {
         restrict: "E",
@@ -32,6 +32,12 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                         });
                     };
                     scope.getInfo().refresh();
+
+                    scope.removePublication = function (publication) {
+                        publicationService.delete(publication, function () {
+                            $rootScope.$broadcast('RELOAD_PUBLICATION');
+                        });
+                    }
                 }
             }
         }

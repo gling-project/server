@@ -191,35 +191,69 @@
             </div>
 
             <!-- social network -->
-            <div class="panel panel-default"
+            <div class="panel panel-default business-social-panel"
                  ng-show="edit === true || business.facebookLink!=null || business.twitterLink!=null || business.googleplusLink!=null || business.foursquareLink!=null">
                 <div class="panel-heading">{{'--.generic.socialNetwork' | translateText}}</div>
                 <div class="panel-body">
 
 
-                    <div ng-show="!!business.facebookLink" class="business-social-network-box">
-                        <a href="{{business.facebookLink}}" target="_blank">
+                    <div ng-show="!!business.socialNetwork.facebookLink" class="business-social-network-box">
+                        <a href="{{business.socialNetwork.facebookLink}}"
+                           title="{{business.socialNetwork.facebookLink}}"
+                           target="_blank">
                             <img src="/assets/images/social_network/facebook.png">
                         </a>
                     </div>
 
-                    <div ng-show="!!business.googleplusLink" class="business-social-network-box">
-                        <a href="{{business.googleplusLink}}" target="_blank">
-                            <img src="/assets/images/social_network/googleplus.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.twitterLink" class="business-social-network-box">
-                        <a href="{{business.twitterLink}}" target="_blank">
+                    <div ng-show="!!business.socialNetwork.twitterLink" class="business-social-network-box">
+                        <a href="{{business.socialNetwork.twitterLink}}"
+                           title="{{business.socialNetwork.twitterLink}}"
+                           target="_blank">
                             <img src="/assets/images/social_network/twitter.png">
                         </a>
                     </div>
 
-                    <div ng-show="!!business.foursquareLink" class="business-social-network-box">
-                        <a href="{{business.foursquare}}" target="_blank">
-                            <img src="/assets/images/social_network/foursquare.png">
+                    <div ng-show="!!business.socialNetwork.instagramLink" class="business-social-network-box">
+                        <a href="{{business.socialNetwork.instagramLink}}"
+                           title="{{business.socialNetwork.instagramLink}}"
+                           target="_blank">
+                            <img src="/assets/images/social_network/instagram.png">
                         </a>
                     </div>
+
+                    <div ng-show="!!business.socialNetwork.deliveryLink" class="business-social-network-box">
+                        <a href="{{business.socialNetwork.deliveryLink}}"
+                           title="{{business.socialNetwork.deliveryLink}}"
+                           target="_blank">
+                            <img src="/assets/images/social_network/delivery.png">
+                        </a>
+                    </div>
+
+                    <div ng-show="!!business.socialNetwork.reservationLink" class="business-social-network-box">
+                        <a href="{{business.socialNetwork.reservationLink}}"
+                           title="{{business.socialNetwork.reservationLink}}"
+                           target="_blank">
+                            <img src="/assets/images/social_network/reservation.png">
+                        </a>
+                    </div>
+
+                    <div ng-show="!!business.socialNetwork.opinionLink" class="business-social-network-box">
+                        <a href="{{business.socialNetwork.opinionLink}}"
+                           title="{{business.socialNetwork.opinionLink}}"
+                           target="_blank">
+                            <img src="/assets/images/social_network/opinion.png">
+                        </a>
+                    </div>
+
+                    <div ng-show="!!business.socialNetwork.ecommerceLink" class="business-social-network-box">
+                        <a href="{{business.socialNetwork.ecommerceLink}}"
+                           title="{{business.socialNetwork.ecommerceLink}}"
+                           target="_blank">
+                            <img src="/assets/images/social_network/e_commerce.png">
+                        </a>
+                    </div>
+
+                    <br/>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="edit"

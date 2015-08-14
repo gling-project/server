@@ -52,20 +52,31 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     //search function
     $scope.search = function () {
         if (geolocationService.position != null) {
+
+            var interestSelected = null;
+            for (var i in $scope.customerInterests) {
+                if ($scope.customerInterests[i].selected) {
+                    interestSelected = $scope.customerInterests[i];
+                }
+            }
+
             $scope.publicationListCtrl.loading = true;
             if ($scope.followedMode) {
-                searchService.byFollowed(function (data) {
-                    $scope.publicationListCtrl.loading = false;
-                    $scope.publicationListCtrl.data = data;
-                });
+                if (interestSelected != null) {
+                    searchService.byFollowedAndInterest(interestSelected.id,function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+
+                }
+                else {
+                    searchService.byFollowed(function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+                }
             }
             else {
-                var interestSelected = null;
-                for (var i in $scope.customerInterests) {
-                    if ($scope.customerInterests[i].selected) {
-                        interestSelected = $scope.customerInterests[i];
-                    }
-                }
                 if (interestSelected != null) {
                     searchService.byInterest(interestSelected.id, function (data) {
                         $scope.publicationListCtrl.loading = false;

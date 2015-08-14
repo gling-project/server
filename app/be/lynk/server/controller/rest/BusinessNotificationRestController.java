@@ -9,6 +9,7 @@ import be.lynk.server.dto.ListDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.BusinessNotification;
+import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.exception.MyRuntimeException;
@@ -32,6 +33,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
     private PublicationService publicationService;
     @Autowired
     private StoredFileService storedFileService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -44,6 +47,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
         businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
 
         businessNotification.setBusiness(((BusinessAccount) securityController.getCurrentUser()).getBusiness());
+        if (businessNotification.getInterest() != null) {
+            businessNotification.setInterest(customerInterestService.findById(businessNotification.getInterest().getId()));
+        }
 
         //TODO control file
 
@@ -102,20 +108,5 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         return ok(dozerService.map(businessNotificationToEdit, BusinessNotificationDTO.class));
-    }
-
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result delete(Long id) {
-        //load
-        BusinessNotification businessNotification = (BusinessNotification) publicationService.findById(id);
-        if (businessNotification == null || !businessNotification.getBusiness().equals(((BusinessAccount) securityController.getCurrentUser()).getBusiness())) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
-        }
-
-        publicationService.remove(businessNotification);
-
-        return ok(new ResultDTO());
     }
 }

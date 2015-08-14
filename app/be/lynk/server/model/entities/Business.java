@@ -71,16 +71,10 @@ public class Business extends AbstractEntity {
     @Convert(converter = LocalDateTimePersistenceConverter.class)
     protected LocalDateTime askPublicationDate;
 
-    @Basic
-    private String facebookLink;
+    @Embedded
+    private BusinessSocialNetwork socialNetwork;
 
-    @Basic
-    private String twitterLink;
 
-    @Basic
-    private String foursquareLink;
-    @Basic
-    private String googleplusLink;
 
     @OneToMany(mappedBy = "businessGalleryPicture",cascade = CascadeType.ALL)
     private Set<StoredFile> galleryPictures = new HashSet<>();
@@ -215,36 +209,12 @@ public class Business extends AbstractEntity {
         this.email = email;
     }
 
-    public String getFacebookLink() {
-        return facebookLink;
+    public BusinessSocialNetwork getSocialNetwork() {
+        return socialNetwork;
     }
 
-    public void setFacebookLink(String facebookLink) {
-        this.facebookLink = facebookLink;
-    }
-
-    public String getTwitterLink() {
-        return twitterLink;
-    }
-
-    public void setTwitterLink(String twitterLink) {
-        this.twitterLink = twitterLink;
-    }
-
-    public String getFoursquareLink() {
-        return foursquareLink;
-    }
-
-    public void setFoursquareLink(String foursquareLink) {
-        this.foursquareLink = foursquareLink;
-    }
-
-    public String getGoogleplusLink() {
-        return googleplusLink;
-    }
-
-    public void setGoogleplusLink(String googleplusLink) {
-        this.googleplusLink = googleplusLink;
+    public void setSocialNetwork(BusinessSocialNetwork socialNetwork) {
+        this.socialNetwork = socialNetwork;
     }
 
     @Override
