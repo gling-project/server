@@ -1,4 +1,4 @@
-myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService,addressService,fctToExecute,fctToExecuteParams) {
+myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, addressService, fctToExecute, fctToExecuteParams) {
 
     var facebookAuthentication = null;
 
@@ -34,13 +34,13 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
     $scope.next = function () {
         var notValid = false;
         if ($scope.badgeSelected == 1) {
-            if (!$scope.accountParam.isValid && facebookAuthentication==null ) {
+            if (!$scope.accountParam.isValid && facebookAuthentication == null) {
                 $scope.accountParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValid"));
             }
-            else if(facebookAuthentication!=null) {
+            else if (facebookAuthentication != null) {
                 $scope.badgeSelected++;
-            }else {
+            } else {
                 $scope.accountParam.disabled = true;
                 $scope.loading = true;
                 accountService.testEmail($scope.accountParam.dto.email, function (value) {
@@ -118,14 +118,22 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                         $scope.fusion(data2.accountFusion);
                     }
                     else if (data2.status == 'OK') {
-                        console.log(data2);
                         $scope.accountParam.dto.firstname = data2.firstname;
                         $scope.accountParam.dto.lastname = data2.lastname;
-                        $scope.accountParam.dto.email= data2.email;
-                        $scope.accountParam.dto.gender= data2.gender;
-                        $scope.accountParam.dto.password= '*********';
-                        facebookAuthentication = dto;
-                        $scope.skip();
+                        $scope.accountParam.dto.email = data2.email;
+                        $scope.accountParam.dto.gender = data2.gender;
+                        $scope.accountParam.maskPassword();
+                        if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
+                            ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
+                            ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
+                            ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
+                            $scope.accountParam.disabled = false;
+                            $flash.info('--.registration.facebook.someDataEmpty');
+                        }
+                        else {
+                            facebookAuthentication = dto;
+                            $scope.skip();
+                        }
                     }
                 });
             },
@@ -147,8 +155,8 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
 
     $scope.save = function (skipStep3) {
 
-        if(!skipStep3){
-            if(!$scope.addressFormParam.isValid){
+        if (!skipStep3) {
+            if (!$scope.addressFormParam.isValid) {
                 $scope.addressFormParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
                 return;
@@ -163,13 +171,11 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
             dto.address = $scope.addressFormParam.dto;
         }
 
-        console.log(dto);
-
         $scope.loading = true;
         accountService.registration(dto, function () {
                 $scope.loading = false;
                 $flash.success(translationService.get("--.login.flash.success"));
-                if(fctToExecute!=null){
+                if (fctToExecute != null) {
                     fctToExecute(fctToExecuteParams);
                 }
                 $scope.close();

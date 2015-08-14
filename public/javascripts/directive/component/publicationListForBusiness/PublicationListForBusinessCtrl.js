@@ -15,7 +15,6 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
 
 
                     scope.getInfo().refresh = function () {
-                        console.log('REFRSH !! ');
                         searchService.byBusiness(scope.getInfo().businessId, function (data) {
                             scope.publications = data;
                             for (var i in scope.publications) {

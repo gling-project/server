@@ -28,7 +28,7 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
             loadAll(callback);
         }
         else {
-            callback(customerInterests);
+            callback(angular.copy(customerInterests));
         }
 
     }

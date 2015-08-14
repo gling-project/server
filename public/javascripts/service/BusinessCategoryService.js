@@ -28,7 +28,7 @@ myApp.service("businessCategoryService", function ($sce,$http,$flash) {
             loadAll(callback);
         }
         else {
-            callback(businessCategory);
+            callback(angular.copy(businessCategory));
         }
 
     }

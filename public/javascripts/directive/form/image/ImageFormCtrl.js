@@ -16,8 +16,6 @@ myApp.directive('imageFormCtrl', function ($flash, directiveService) {
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    console.log(scope.getInfo());
-
                     scope.imageParam = {
                         fieldTitle: "",
                         validationMessage: '--.error.validation.image',

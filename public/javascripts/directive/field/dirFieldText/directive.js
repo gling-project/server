@@ -1,4 +1,4 @@
-myApp.directive("dirFieldText", function (directiveService, $timeout,modalService) {
+myApp.directive("dirFieldText", function (directiveService, $timeout, modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -15,12 +15,12 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    if(scope.getInfo().autoCompleteValue==undefined){
-                        scope.getInfo().autoCompleteValue=[];
+                    if (scope.getInfo().autoCompleteValue == undefined) {
+                        scope.getInfo().autoCompleteValue = [];
                     }
 
-                    scope.isActive = function(){
-                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                    scope.isActive = function () {
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
                     };
 
                     scope.errorMessage = "";
@@ -36,18 +36,15 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                     }
                     if (scope.isValidationDefined) {
                         scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
-                            console.log('watching');
-                            //if (n !== o) {
-                                return scope.isValid();
-                            //}
+                            return scope.isValid();
                         });
                     }
 
-                    scope.$watch('getInfo().active()',function(o,n){
-                        if(o!=n){
+                    scope.$watch('getInfo().active()', function (o, n) {
+                        if (o != n) {
                             scope.isValid();
                         }
-                    },true);
+                    }, true);
 
                     scope.isValid = function () {
 
@@ -96,9 +93,9 @@ myApp.directive("dirFieldText", function (directiveService, $timeout,modalServic
                     };
 
 
-                    scope.openCalculator= function(){
-                        modalService.openCalculatorModal(new function(result){
-                            scope.getInfo().field[scope.getInfo().fieldName]=result;
+                    scope.openCalculator = function () {
+                        modalService.openCalculatorModal(new function (result) {
+                            scope.getInfo().field[scope.getInfo().fieldName] = result;
                         });
                     };
                 }

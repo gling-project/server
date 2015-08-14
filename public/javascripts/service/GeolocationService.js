@@ -20,9 +20,6 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
                 $timeout(function () {
                     $rootScope.$broadcast('POSITION_CHANGED');
                 }, 1);
-                //$rootScope.$broadcast('POSITION_CHANGED');
-                console.log('posiition computed !!!!!!!!!!!!!!!!!!!!!!!!!!');
-                console.log(self.currentPosition);
             }
         });
 
@@ -31,8 +28,6 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
 
             $window.navigator.geolocation.getCurrentPosition(
                 function (position) {
-                    console.log('---------------------------------------------------- ok !! ');
-                    console.log(position);
                     self.currentPosition = {
                         x: position.coords.latitude,
                         y: position.coords.longitude
@@ -41,24 +36,13 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
                     $timeout(function () {
                         $rootScope.$broadcast('POSITION_CHANGED');
                     }, 1);
-                },
-                function (error) {
-                    console.log('---------------------------------------------------- ceci est un erreur : ');
-                    console.log(error);
                 });
         }
-        else {
-            console.log('PAS ok !! ');
-
-        }
-
-
 
         var computePosition = function () {
 
             if (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null) {
                 if (self.currentPosition == null) {
-                    console.log('compute position  ...');
 
                     $rootScope.$watch(function () {
                         return self.currentPosition;

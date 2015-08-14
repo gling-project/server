@@ -61,7 +61,7 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
 
     //log out
     $scope.logout = function () {
-        if (accountService.getMyself().facebookAccount) {
+        if (facebookService.isConnected()) {
             facebookService.logout();
         }
         $scope.$broadcast('LOGOUT');
@@ -135,7 +135,7 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
         return accountService.model.myself;
     }, function watchCallback(n, o) {
         completePositions();
-    },true);
+    }, true);
 
 
 });

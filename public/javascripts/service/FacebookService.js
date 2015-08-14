@@ -14,6 +14,12 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
             version: 'v2.3'
         });
         $FB.init(this.facebookAppId);
+
+        FB.getLoginStatus(function (response) {
+            if(response.status == 'connected'){
+                isConnected=true;
+            }
+        });
     };
 
     var isConnected = false;
@@ -27,6 +33,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
     // registration
     //
     this.registration = function (successCallback, failCallback) {
+
         // From now on you can use the  service just as Facebook api says
         FB.login(function (response) {
 
@@ -125,7 +132,6 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
     this.share = function(url){
         url = url.replace('#','%23');
-        console.log('url:'+url);
         FB.ui({
             method: 'share_open_graph',
             action_type: 'og.likes',

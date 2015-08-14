@@ -105,9 +105,18 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                         $scope.accountParam.dto.lastname = data2.lastname;
                         $scope.accountParam.dto.email = data2.email;
                         $scope.accountParam.dto.gender = data2.gender;
-                        $scope.accountParam.dto.password = '*********';
-                        facebookAuthentication = dto;
-                        $scope.next();
+                        $scope.accountParam.maskPassword();
+                        if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
+                            ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
+                            ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
+                            ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
+                            $scope.accountParam.disabled = false;
+                            $flash.info('--.registration.facebook.someDataEmpty');
+                        }
+                        else {
+                            facebookAuthentication = dto;
+                            $scope.next();
+                        }
                     }
                 });
             },

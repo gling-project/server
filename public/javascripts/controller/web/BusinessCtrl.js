@@ -266,7 +266,6 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
                 if (socialNetwork == undefined || socialNetwork == null) {
                     socialNetwork = {};
                 }
-                console.log(socialNetwork);
                 modalService.basicModal("--.business.edit.address.modal.title", "business-social-network-ctrl",
                     {
                         dto: socialNetwork
@@ -299,7 +298,6 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             });
 
             $scope.$on('RELOAD_PUBLICATION', function () {
-                console.log('je suis refrech de merde');
                 $scope.publicationListParam.refresh();
             });
 

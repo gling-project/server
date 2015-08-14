@@ -62,11 +62,7 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
 
                     scope.select = function (category) {
 
-                        console.log('1');
-
                         if (category.selected != true) {
-
-                            console.log('2');
 
                             scope.cleanSubSubCat();
                             scope.cleanSubCat();

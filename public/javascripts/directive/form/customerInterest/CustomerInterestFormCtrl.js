@@ -30,7 +30,7 @@ myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, 
                         );
 
                         scope.select = function (interest) {
-                            interest.registrationSelection = !interest.registrationSelection;//true;//!scope.interests[interest].selected;
+                            interest.registrationSelection = !interest.registrationSelection;
                         };
 
                         scope.$watch('interests', function (o, n) {

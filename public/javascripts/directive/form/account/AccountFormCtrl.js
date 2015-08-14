@@ -24,12 +24,16 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                         scope.getInfo().dto = {
                             gender: null
                         };
-                    }
+                    };
+
+                    scope.passwordActive = true;
 
                     scope.fields = {
                         gender: {
                             name: 'gender',
                             fieldTitle: "--.generic.gender",
+                            validationRegex: "^.+$",
+                            validationMessage: '--.error.validation.not_null',
                             options: [
                                 {key: 'MALE', value: '--.generic.male'},
                                 {key: 'FEMALE', value: '--.generic.female'}
@@ -85,7 +89,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                                 return scope.getInfo().disabled;
                             },
                             active: function () {
-                                return !scope.getInfo().updateMode
+                                return !scope.getInfo().updateMode && scope.passwordActive
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'password'
@@ -102,7 +106,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                                 return scope.fields.password.field === scope.fields.repeatPassword.field;
                             },
                             active: function () {
-                                return !scope.getInfo().updateMode
+                                return !scope.getInfo().updateMode && scope.passwordActive
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'repeatPAssword'
@@ -118,6 +122,10 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                             field: scope.getInfo().dto,
                             fieldName: 'keepSessionOpen'
                         }
+                    };
+
+                    scope.getInfo().maskPassword = function () {
+                        scope.passwordActive=false;
                     };
 
                     //

@@ -49,12 +49,8 @@ myApp.service("searchBarService", function ($timeout, $rootScope) {
         return self.currentSearch;
     }, function watchCallback(newValue, oldValue) {
 
-        console.log('!!!!');
-
         if (!suspendBinding) {
             suspendBinding = true;
-
-            console.log(',,,,');
 
             for (var j in self.searchCriteria) {
                 self.searchCriteria[j].selected = false;

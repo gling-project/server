@@ -38,7 +38,6 @@ myApp.controller('SearchPageCtrl', function ($scope, searchService, $routeParams
                 $scope.publicationTab.display = true;
             }
 
-            console.log(result);
             $scope.results = result;
 
             //compute tabs
@@ -64,7 +63,6 @@ myApp.controller('SearchPageCtrl', function ($scope, searchService, $routeParams
                 }
             }
             if ($scope.categoryTab.display) {
-                console.log($scope.results.categoriesMap);
                 $scope.categoryTab.total = $scope.results.categoriesMap.length;
                 if ($scope.categoryTab.total >= 20) {
                     $scope.categoryTab.total += "+";
