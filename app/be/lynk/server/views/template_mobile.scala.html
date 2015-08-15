@@ -38,6 +38,9 @@
         <script src="@routes.Assets.at("javascripts/controller/mobile/MenuCtrl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/controller/mobile/ProfileCtrl.js")" type="text/javascript"></script>
 
+            <!-- component -->
+        <script src="@routes.Assets.at("javascripts/directive/component/publicationListMobile/PublicationListMobileCtrl.js")" type="text/javascript"></script>
+
             <!-- directive -->
         <script src="@routes.Assets.at("javascripts/directive/mobile/title/MobileTitleCtrl.js")" type="text/javascript"></script>
 
@@ -52,9 +55,9 @@
 
             <!-- load data -->
         <script>
-        var data = @Html(new ObjectMapper().writeValueAsString(data)) ;
-        var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;
-        var lang = " @ctx().lang().code ";
+        var data = @Html(new ObjectMapper().writeValueAsString(data));
+        var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList));
+        var lang = "@ctx().lang().code";
         </script>
 
             <!-- Sidebars -->
@@ -89,7 +92,7 @@
         <div class="app">
 
                 <!-- App body -->
-            <div ng-view style="height : 100 %"></div>
+            <div ng-view style="height : 100%"></div>
 
 
         </div>

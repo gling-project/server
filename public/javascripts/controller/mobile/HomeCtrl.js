@@ -1,4 +1,4 @@
-myApp.controller('HomeCtrl', function ($scope,geolocationService,searchService,customerInterestService,$timeout,accountService,addressService,$rootScope) {
+myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope) {
 
 
     customerInterestService.getAll(function (value) {
@@ -21,7 +21,7 @@ myApp.controller('HomeCtrl', function ($scope,geolocationService,searchService,c
             $scope.publicationListCtrl.loading = true;
             if ($scope.followedMode) {
                 if (interestSelected != null) {
-                    searchService.byFollowedAndInterest(interestSelected.id,function (data) {
+                    searchService.byFollowedAndInterest(interestSelected.id, function (data) {
                         $scope.publicationListCtrl.loading = false;
                         $scope.publicationListCtrl.data = data;
                     });
@@ -51,6 +51,36 @@ myApp.controller('HomeCtrl', function ($scope,geolocationService,searchService,c
             }
         }
     };
+
+
+    //initialisation
+    $scope.search();
+
+    //functions
+    //search by interest
+    $scope.searchByInterest = function (interest) {
+
+        if (interest.selected == true) {
+            interest.selected = false;
+        }
+        else {
+            for (var i in $scope.customerInterests) {
+                $scope.customerInterests[i].selected = false;
+            }
+            interest.selected = true;
+        }
+        $scope.search();
+    };
+
+    //watch on change position
+    $scope.$on('POSITION_CHANGED', function () {
+        $scope.search();
+    });
+
+    //watch in follow mode
+    $scope.$watch('followedMode', function () {
+        $scope.search();
+    });
 
 
 
@@ -108,7 +138,6 @@ myApp.controller('HomeCtrl', function ($scope,geolocationService,searchService,c
         }
         $scope.currentPosition = geolocationService.getLocationText();
     };
-
 
 
 });
