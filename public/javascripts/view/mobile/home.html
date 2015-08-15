@@ -1,9 +1,88 @@
-<mobile-title-ctrl title="'--.page.home.title'" display-menu="true"></mobile-title-ctrl>
+<!-- header -->
+<div class="navbar navbar-app navbar-absolute-top">
+
+    <div class="navbar-brand navbar-brand-center">
+        <input
+                class="search-bar"
+                type="text"
+                placeholder="{{'--.generic.search' | translateText}}"/>
+
+        <div
+                class="glyphicon glyphicon-plus generic-cursor"
+                ng-click="searchMore()">
+        </div>
+    </div>
+
+    <div class="btn-group pull-left">
+        <div class="btn btn-navbar">
+            <div ui-toggle="uiSidebarLeft" class="nav-button">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- body -->
 <div class='app-body'>
     <div class='app-content'>
-        <div class="section">
-            <promotion-list-ctrl></promotion-list-ctrl>
 
+        <div class="scrollable">
+            <div class="section scrollable-content">
+
+                <!-- interest -->
+                <div style="overflow: auto">
+                    <div class="home-interest-box"
+                         style="width:700px"
+                         ng-style="{width:(customerInterests.length * 34 + 20) + 'px'}">
+                        <button class="home-interest" ng-repeat="interest in customerInterests"
+                                ng-show="interest.iconName!=null"
+                                ng-click="searchByInterest(interest)"
+                                ng-class="{'selected':interest.selected === true}">
+
+                            <img ng-src="/assets/images/interest/{{interest.iconName}}" style="width:50px"/>
+                        </button>
+                    </div>
+                </div>
+
+
+                <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div class="navbar navbar-app navbar-absolute-bottom">
+
+    <div class="btn-group navbar-brand-center">
+        <div class="home-footer">
+
+            <!-- switch -->
+            <div>
+                <div class="home-footer-position-details">
+                    <div ng-repeat="position in positions"
+                            ng-click="selectPosition(position)">
+                        {{position.translation | translateText}}
+                    </div>
+
+                </div>
+                <label class="glyphicon glyphicon-home"></label>
+            </div>
+            <div>
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+                           checked ng-model="followedMode">
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label class="glyphicon glyphicon-heart-empty"></label>
+            </div>
 
         </div>
     </div>

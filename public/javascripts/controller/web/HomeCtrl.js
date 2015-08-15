@@ -1,4 +1,4 @@
-myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService) {
+myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
 
     //variable
     $scope.followedMode = false;
@@ -63,7 +63,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             $scope.publicationListCtrl.loading = true;
             if ($scope.followedMode) {
                 if (interestSelected != null) {
-                    searchService.byFollowedAndInterest(interestSelected.id,function (data) {
+                    searchService.byFollowedAndInterest(interestSelected.id, function (data) {
                         $scope.publicationListCtrl.loading = false;
                         $scope.publicationListCtrl.data = data;
                     });
@@ -93,6 +93,5 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             }
         }
     };
-
 
 });

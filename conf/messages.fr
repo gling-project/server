@@ -58,15 +58,15 @@
 --.generic.publication=Publication
 --.generic.facebook=Facebook
 --.generic.category=Catégorie
---.generic.validation.googleplus=Ceci n'est pas une adresse Google+ valie (elle doit commencer par https\://plus.google.com/)
+--.generic.validation.googleplus=Ceci n'est pas une adresse Google+ valie (elle doit commencer par https://plus.google.com/)
 --.generic.foursquare=Four Square
 --.generic.twitter=Twitter
---.generic.validation.facebook=Ceci n'est pas une adresse Facebook valie (elle doit commencer par https\://facebook.com/)
---.generic.validation.twitter=Ceci n'est pas une adresse Twitter valie (elle doit commencer par https\://twitter.com/)
+--.generic.validation.facebook=Ceci n'est pas une adresse Facebook valie (elle doit commencer par https://facebook.com/)
+--.generic.validation.twitter=Ceci n'est pas une adresse Twitter valie (elle doit commencer par https://twitter.com/)
 --.generic.title=Title
 --.generic.socialNetwork=Your social network
 --.generic.googleplus=Google+
---.generic.validation.foursquare=Ceci n'est pas une adresse Foursquare valie (elle doit commencer par https\://fr.foursquare.com/)
+--.generic.validation.foursquare=Ceci n'est pas une adresse Foursquare valie (elle doit commencer par https://fr.foursquare.com/)
 
 ##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte
@@ -79,7 +79,7 @@
 --.forgotPassword.success=Un email vous a été envoyé avec un nouveau mot de passe
 
 ##  modal/LoginModal/LoginModal.js (//logout facebook in case)
---.login.flash.success=Vous êtes maintenant connecté \!
+--.login.flash.success=Vous êtes maintenant connecté !
 --.registration.form.yourEmail=Votre adresse email
 
 ##  modal/RegistrationModal/view.html
@@ -119,7 +119,7 @@
 --.changePasswordModal.title=Changez votre mot de passe
 
 ##  be/flo/project/util/message/ErrorMessageEnum.java
---.error.fatal_error=Une erreur fatale est survenue \: {0}
+--.error.fatal_error=Une erreur fatale est survenue : {0}
 --.error.validation.email=Adresse email attendue
 --.error.validation.password=Entre 6 et 18 lettres, chiffres ou -_%
 --.error.validation.pattern=Le champs {0} attend le pattern {1}
@@ -152,22 +152,22 @@
 --.customer.registrationModal.personal.address=Adresse
 --.customer.registrationModal.personal.title=Personnelle
 --.registrationModal.facebook.btn=Enregistrez-vous avec Facebook
---.registrationModal.toBusinessRegistration=Vous voulez enregistrer un commerce ? Suivez ce lien \!
+--.registrationModal.toBusinessRegistration=Vous voulez enregistrer un commerce ? Suivez ce lien !
 
 ##  view/home.html
 --.home.toBusiness.btn=Je suis un commerçant
-#--.home.main.description=Bienvenu dans Lÿnk \! ...
+#--.home.main.description=Bienvenu dans Lÿnk ! ...
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 #--.customer.registrationModal.account.notValid=customer.registrationModal.account.notValid
---.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté \!
+--.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté !
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
 #--.editProfileModal.title=Editez vos informations personnelles
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Numéro de téléphone attendu
---.validation.dto.url=Url attendu (commencez avec htttp\://)
+--.validation.dto.url=Url attendu (commencez avec htttp://)
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=Ce compte Facebook est déjà enregistré pour un autre type de compte. Vous ne pouvez pas utilisez le même compte Facebook pour créer un compte client et un compte commerçant.
@@ -179,8 +179,8 @@
 --.error.search.wrongCriteria=Un des critères de sélection ne correspond pas
 
 ##  view/business_registration.html
---.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk \!
---.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat\!
+--.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk !
+--.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat!
 --.business.registration.oldBusiness=J'ai déjà un compte et je veux me connecter
 
 ##  directive/form/business/BusinessFormCtrl.js
@@ -250,7 +250,7 @@
 
 
 --.email.forgotPassword.subject=Votre nouveau mot de passe
---.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe \: {1}
+--.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe : {1}
 
 
 ##  directive/form/promotion/PromotionFormCtrl.js
@@ -297,17 +297,17 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Bienvenue sur Lynk {0}\!<br/><br/>...
---.email.registration.business.subject=Bienvenu sur Lynk \!
+--.email.registration.business.body=Bienvenue sur Lynk {0}!<br/><br/>...
+--.email.registration.business.subject=Bienvenu sur Lynk !
 --.email.registration.customer.body=Bienvenue {0}<br/><br/>...
---.email.registration.customer.subject=Bienvenue sur Lynk \!<br/><br/>...
+--.email.registration.customer.subject=Bienvenue sur Lynk !<br/><br/>...
 
 ##  view/mobile/welcome.html
---.mobile.welcome.toCustomerRegistration.btn=Inscrivez-vous maintenant \!
+--.mobile.welcome.toCustomerRegistration.btn=Inscrivez-vous maintenant !
 --.mobile.welcome.toLogin.desc=Vous avez déjà un compte Lynk ?
---.mobile.welcome.toLogin.btn=Connectez-vous \!
---.page.welcome.title=Bienvenue \!
---.mobile.welcome.toBusinessRegistration.desc=Vous êtes un commerçant et voulez intégrer la communauté Lynk? Faites un essaie gratuit\!
+--.mobile.welcome.toLogin.btn=Connectez-vous !
+--.page.welcome.title=Bienvenue !
+--.mobile.welcome.toBusinessRegistration.desc=Vous êtes un commerçant et voulez intégrer la communauté Lynk? Faites un essaie gratuit!
 --.mobile.welcome.toBusinessRegistration.btn=Inscrivez votre commerce
 --.mobile.welcome.toCustomerRegistration.desc=Pas encore de compte Lynk ?
 
@@ -354,10 +354,10 @@ day_abrv_sunday=Di
 --.business.profile.businessSchedule=Horaires
 --.business.page.edit.editSwitchEdit=Mode édition
 --.business.page.edit.editSwitchDisplay=Mode client
---.business.page.publication=Publier ma page \!
+--.business.page.publication=Publier ma page !
 --.business.page.edit.descriptionPublished=Bienvenue sur votre page de commerce. Votre commerce est désormais publié. Vous ne pouvez apporter que des modifications légères à vos informations comme vos horaires ou vos références de contact. Si vous désirez changer votre adresse ou le nom de votre commerce, vous devez passer en mode édition. Dans ce cas, votre commerce ne sera plus visible publiquement jusqu'à ce que vous choisissez de publier à nouveau votre commerce et qu'un administrateur valide vos modifications.
 --.business.page.edit.description.waitConfirmation=Bienvenue sur votre page de commerce. Votre Commerce est en attente de validation  par un administrateur. Si vous attendez cette confirmation depuis plus de 5 jours ouvrables, veuillez prendre directement contact avec nous.
---.business.page.edit.description.notPublished=Bienvenue sur votre page de commerce. Vous pouvez éditer vos informations à l'aide des boutons 'Editer' de la page. Une fois les modifications apportées, vous pouvez publier votre page avec le bouton ci-dessous. Votre commerce sera désormais visible pour tous les utilisateurs de Lynk\! Pour voir l'aspect visuel de votre page tel que le client la verra, vous pouvez utiliser l'interupteur ci-dessous. N'hésitez pas à nous contacter si vous avez des questions \!
+--.business.page.edit.description.notPublished=Bienvenue sur votre page de commerce. Vous pouvez éditer vos informations à l'aide des boutons 'Editer' de la page. Une fois les modifications apportées, vous pouvez publier votre page avec le bouton ci-dessous. Votre commerce sera désormais visible pour tous les utilisateurs de Lynk! Pour voir l'aspect visuel de votre page tel que le client la verra, vous pouvez utiliser l'interupteur ci-dessous. N'hésitez pas à nous contacter si vous avez des questions !
 --.business.page.stopPublication.window.flash=Votre commerce est maintenant en mode édition. N'oubliez pas de le publier à nouveau à l'aide du bouton 'publier' une fois vos modifications finalisées.
 --.business.page.stopPublication.window.message=En passant en mode édition, votre commerce et ses annonces ne seront plus visible tant que vous n'aurez pas validé vos modifications. Etes-vous sur de vouloir continuer ?
 --.business.page.askPublication.window.flash=Votre commerce est maintenant en attente de validation par notre équipe
@@ -370,7 +370,7 @@ day_abrv_sunday=Di
 
 
 ##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)
---.registration.business.flash.success=Votre commerce est maintenant enregistré\! Vous pouvez complèter votre page commerce avant de la publier officiellement pour qu'elle soi visible par tous les utilisateurs de Lynk \!
+--.registration.business.flash.success=Votre commerce est maintenant enregistré! Vous pouvez complèter votre page commerce avant de la publier officiellement pour qu'elle soi visible par tous les utilisateurs de Lynk !
 
 ##  controller/admin/AdminBusinessCtrl.js (// show first page)
 --.admin.business.confirmPublication.modal.message=Confirmer la publication de ce commerce ?
