@@ -10,7 +10,9 @@ myApp.controller('CustomerRegistrationCtrl', function ($scope,$flash,accountServ
 
     $scope.customerInterestParam = {};
 
-    $scope.accountParam = {};
+    $scope.accountParam = {
+        mobileVersion:true
+    };
 
     $scope.skip = function () {
         if ($scope.badgeSelected == 3) {

@@ -19,11 +19,13 @@
     <div ng-show="badgeSelected==1">
         <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
-        <div class="modal-login-or">
-            <div></div>
-            <div>{{'--.generic.or' | translateText}}</div>
-            <div></div>
-        </div>
+        <table class="horizontal-split">
+            <tr>
+                <td><div></div></td>
+                <td>{{'--.generic.or' | translateText}}</td>
+                <td><div></div></td>
+            </tr>
+        </table>
 
         <div class="facebook-login-btn-container">
             <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">

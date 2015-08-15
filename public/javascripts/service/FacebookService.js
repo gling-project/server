@@ -1,4 +1,4 @@
-myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB,$location) {
+myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB) {
 
 
     this.facebookAppId;

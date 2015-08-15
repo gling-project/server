@@ -8,7 +8,7 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
         $http({
             'method': "GET",
             'url': "http://ipinfo.io/json",
-            'headers': "Content-Type:application/json"
+            'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (self.currentPosition == null) {
                 var pos = data.loc.split(',');

@@ -25,6 +25,7 @@
 @import 'widget/_search-result';
 @import 'widget/_category-line';
 @import 'widget/_gallery';
+@import 'widget/_facebook-login';
 @import '_TEMP';
 
 //
@@ -337,5 +338,37 @@ a {
         left: 0 !important;
         top: 23px !important;
     }
+}
+
+.horizontal-split {
+
+    width: 100%;
+    table-layout : fixed;
+
+    tr{
+
+        td:first-child,
+        td:last-child{
+            width: 2em;
+        }
+        td:nth-child(2){
+            width: 1em;
+            text-align: center;
+        }
+
+        div{
+            width: 100%;//~'calc(50% - 30px)';
+            height: 1px;
+            background: #bbbbbb;
+            vertical-align: middle;
+        }
+    }
+}
+
+.generic-center{
+    text-align: center;
+}
+.generic-pointer{
+    cursor: pointer;
 }
 

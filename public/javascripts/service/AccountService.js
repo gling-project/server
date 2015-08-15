@@ -162,6 +162,7 @@ myApp.service("accountService", function ($flash, $http) {
             }
         })
             .error(function (data, status) {
+                console.log(data);
                 $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);

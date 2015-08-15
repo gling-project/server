@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form login-form">
 
     <div class="facebook-login-btn-container">
         <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
@@ -6,11 +6,13 @@
             <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
         </button>
     </div>
-    <div class="modal-login-or">
-        <div></div>
-        <div>{{'--.generic.or' | translateText}}</div>
-        <div></div>
-    </div>
+    <table class="horizontal-split">
+        <tr>
+            <td><div></div></td>
+            <td>{{'--.generic.or' | translateText}}</td>
+            <td><div></div></td>
+        </tr>
+    </table>
 
     <dir-field-text ng-info="fields.email"></dir-field-text>
 
@@ -18,6 +20,6 @@
 
     <dir-field-check ng-info="fields.keepSessionOpen"></dir-field-check>
 
-    <div class="link" ng-click="toForgotPassword()">{{'--.login.form.button.forgotPassword' | translateText}}</div>
+
 
 </div>

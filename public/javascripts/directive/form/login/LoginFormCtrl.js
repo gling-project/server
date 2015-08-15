@@ -50,6 +50,9 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
+                            active : function(){
+                              return !scope.getInfo().mobileVersion
+                            },
                             field: scope.getInfo().dto,
                             fieldName: 'keepSessionOpen'
                         }
@@ -97,10 +100,6 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                                 $flash.error(data.message);
                             });
                     };
-
-                    scope.toForgotPassword = function () {
-                        scope.getInfo().forgotPassword(scope.fields.email.field);
-                    }
                 }
             }
         }

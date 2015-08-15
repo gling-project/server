@@ -31,11 +31,14 @@
                         </button>
                     </div>
 
-                    <div class="modal-login-or">
-                        <div></div>
-                        <div>{{'--.generic.or' | translateText}}</div>
-                        <div></div>
-                    </div>
+                    <table class="horizontal-split">
+                        <tr>
+                            <td><div></div></td>
+                            <td>{{'--.generic.or' | translateText}}</td>
+                            <td><div></div></td>
+                        </tr>
+                    </table>
+
                     <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
                 </div>
@@ -58,9 +61,8 @@
     <div class="btn-group navbar-brand-center">
         <div style="text-align: center;width: 100%;">
             <div
-                class="btn btn-navbar"
+                class="btn btn-navbar glyphicon glyphicon-home"
                 ng-click="navigateTo('/')">
-                {{'--.generic.home'| translateText}}
             </div>
 
         </div>

@@ -1,9 +1,8 @@
-myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
+myApp.controller('ForgotPasswordCtrl', function ($scope,facebookService,accountService,$location,$filter,$flash) {
 
     $scope.loading = false;
 
     $scope.dto = {
-        email:email
     };
 
     $scope.fields = {
@@ -22,10 +21,6 @@ myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $mo
             field: $scope.dto,
             fieldName: 'email'
         }
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
     };
 
     //
@@ -63,7 +58,7 @@ myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $mo
             accountService.forgotPassword($scope.dto, function () {
                     $flash.success($filter('translateText')('--.forgotPassword.success'));
                     $scope.loading = false;
-                    $scope.close();
+                    $location.path('/');
                 },
                 function () {
                     $scope.loading = false;
@@ -73,5 +68,7 @@ myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $mo
             $scope.displayErrorMessage = true;
         }
     };
+
+
 
 });

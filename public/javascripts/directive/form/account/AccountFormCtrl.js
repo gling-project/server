@@ -117,7 +117,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                                 return scope.getInfo().disabled;
                             },
                             active: function () {
-                                return !scope.getInfo().updateMode
+                                return !scope.getInfo().updateMode && !scope.getInfo().mobileVersion
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'keepSessionOpen'

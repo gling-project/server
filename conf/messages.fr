@@ -149,7 +149,7 @@
 --.customer.registrationModal.address.desc=Créer une adresse. Vous pouvez utiliser cette adresse pour trouver des magasins au alentour. Vous pouvez passer cette étape en cliquant sur 'passer' et y revenir plus tard.
 --.customer.registrationModal.title=Créer un nouveau compte
 --.customer.registrationModal.personal.desc=Créer un compte
---.customer.registrationModal.personal.address=Votre adresse
+--.customer.registrationModal.personal.address=Adresse
 --.customer.registrationModal.personal.title=Personnelle
 --.registrationModal.facebook.btn=Enregistrez-vous avec Facebook
 --.registrationModal.toBusinessRegistration=Vous voulez enregistrer un commerce ? Suivez ce lien \!
@@ -440,3 +440,6 @@ day_abrv_sunday=Di
 --.interest.prendre_un_verre=Prendre un verre
 --.interest.se_loger=Se loger
 --.interest.faire_du_sport=Faire du sport
+
+--.mobile.welcome.registration.desc=Vous n'avez pas encore de compte ? Inscrivez-vous en quelques secondes et découvrez Gling !
+--.mobile.welcome.login.desc=Vous possédez déjà un compte Gling? Connectez-vous!

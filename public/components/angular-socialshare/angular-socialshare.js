@@ -21,21 +21,19 @@ angular.module('djds4rce.angular-socialshare', [])
 						});
 					};
 					(function(d) {
-						//var js,
-						//	id = 'facebook-jssdk',
-						//	ref = d.getElementsByTagName('script')[0];
-						//if (d.getElementById(id)) {
-						//	return;
-						//}
-                        //
-						//js = d.createElement('script');
-                        //console.log('!---!-!---!-!---!');
-                        //console.log(js);
-						//js.id = id;
-						//js.async = true;
-						//js.src = "//connect.facebook.net/en_US/sdk.js";
-                        //
-						//ref.parentNode.insertBefore(js, ref);
+						var js,
+							id = 'facebook-jssdk',
+							ref = d.getElementsByTagName('script')[0];
+						if (d.getElementById(id)) {
+							return;
+						}
+
+						js = d.createElement('script');
+						js.id = id;
+						js.async = true;
+						js.src = "//connect.facebook.net/en_US/sdk.js";
+
+						ref.parentNode.insertBefore(js, ref);
 
 					}(document));
 				} else {
@@ -94,7 +92,6 @@ angular.module('djds4rce.angular-socialshare', [])
 					}
 					element.unbind();
 					element.bind('click', function(e) {
-                        console.log('-->'+attr.url);
 						FB.ui({
 							method: 'share',
 							href: attr.url

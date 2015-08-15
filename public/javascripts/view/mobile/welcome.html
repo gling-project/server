@@ -5,21 +5,32 @@
 
             <h2>Welcome to Lynk</h2>
 
-            <div>{{'--.mobile.welcome.toCustomerRegistration.desc' | translateText}}</div>
-            <button class="btn btn-default" ng-click="navigateTo('/customer_registration')">
-                {{'--.mobile.welcome.toCustomerRegistration.btn' | translateText}}
-            </button>
+            <div>{{'--.mobile.welcome.login.desc' | translateText}}</div>
 
-            <div>{{'--.mobile.welcome.toLogin.desc' | translateText}}</div>
-            <button class="btn btn-default" ng-click="navigateTo('/login')">
-                {{'--.mobile.welcome.toLogin.btn' |translateText}}
-            </button>
+            <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>
+
+            <div class="generic-center">
+                <button
+                        ng-click="save()"
+                        ng-disabled="loading"
+                        type="button"
+                        class="btn btn-primary">
+                    {{'--.mobile.welcome.login.btn' | translateText}}
+                </button>
+            </div>
+
+            <div class="link"
+                 ng-click="navigateTo('/forgot_password')">{{'--.login.form.button.forgotPassword' | translateText}}
+            </div>
 
 
-            <div>{{'--.mobile.welcome.toBusinessRegistration.desc' | translateText}}</div>
-            <button class="btn btn-default" ng-click="navigateTo('/business_registration')">
-                {{'--.mobile.welcome.toBusinessRegistration.btn' |translateText}}
-            </button>
+            <div class="mobile_welcome_registration_title">{{'--.mobile.welcome.registration.desc' | translateText}}</div>
+
+            <div class="generic-center">
+                <button class="btn btn-primary" ng-click="navigateTo('/customer_registration')">
+                    {{'--.mobile.welcome.toCustomerRegistration.btn' | translateText}}
+                </button>
+            </div>
 
 
         </div>

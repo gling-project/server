@@ -1,16 +1,12 @@
-myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService,fctToExecute,fctToExecuteParams) {
+myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
 
     $scope.loading = false;
 
     $scope.loginFormParam = {
         facebookSuccess: function (data) {
-            if(fctToExecute!=null){
+            if (fctToExecute != null) {
                 fctToExecute(fctToExecuteParams);
             }
-            $scope.close();
-        },
-        forgotPassword: function(email){
-            modalService.openForgotPasswordModal(email);
             $scope.close();
         }
     };
@@ -36,7 +32,7 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
                     if (accountService.getMyself().type == 'BUSINESS') {
                         $location.path('/business');
                     }
-                    if(fctToExecute!=null){
+                    if (fctToExecute != null) {
                         fctToExecute(fctToExecuteParams);
                     }
                 },
@@ -44,9 +40,15 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
                     $scope.loading = false;
                 });
         }
-        else{
+        else {
             $scope.loginFormParam.displayErrorMessage = true;
         }
+    };
+
+    $scope.toForgotPassword = function () {
+        console.log($scope.loginFormParam.dto);
+        modalService.openForgotPasswordModal($scope.loginFormParam.dto.email);
+        $scope.close();
     };
 
     $scope.toBusinessRegistration = function () {
@@ -56,7 +58,7 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
 
     $scope.toCustomerRegistration = function () {
         $scope.close();
-        modalService.openCustomerRegistrationModal(fctToExecute,fctToExecuteParams);
+        modalService.openCustomerRegistrationModal(fctToExecute, fctToExecuteParams);
     };
 
 });

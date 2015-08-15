@@ -8,5 +8,6 @@ var myApp = angular.module('app', [
         'ngRoute',
         'ngTable',
         'geolocation',
-        'timer']
+        'timer',
+        'djds4rce.angular-socialshare']
 );
