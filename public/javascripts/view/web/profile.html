@@ -1,10 +1,9 @@
-<div>
+<div class="profile-page">
 
-    <div class="custom-panel" style="width:500px">
 
-        <h4>{{'--.customer.profile.personalInformation' | translateText}}</h4>
-
-        <div>
+    <div class="panel panel-default main-panel panel-personal-information">
+        <div class="panel-heading">{{'--.customer.profile.personalInformation' | translateText}}</div>
+        <div class="panel-body">
 
             <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
@@ -25,56 +24,60 @@
                 |translateText}}
             </button>
         </div>
-
     </div>
-    <div class="custom-panel">
-        <h4>{{'--.customer.profile.myAddresses' | translateText}}</h4>
 
-        <div>
-            <accordion>
-                <accordion-group
-                        class="address-container"
-                        ng-repeat="address in model.myself.addresses"
-                        is-open="address.isOpen">
-                    <accordion-heading>
-                        {{address.name}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}"></i>
-                    </accordion-heading>
-                    <div class="address-box">
-                        <div><span>{{'--.generic.street' | translateText}}</span>{{address.street}}</div>
-                        <div><span>{{'--.generic.zip' | translateText}}</span>{{address.zip}}</div>
-                        <div><span>{{'--.generic.city' | translateText}}</span>{{address.city}}</div>
-                        <div><span>{{'--.generic.country' | translateText}}</span>{{address.country}}</div>
-                    </div>
-                    <button class="btn btn-primary glyphicon glyphicon-edit" ng-click="editAddress(address)">
-                        {{'--.generic.edit' |
-                        translateText}}
-                    </button>
-                    <button class="btn btn-primary glyphicon glyphicon-remove" ng-click="deleteAddress(address)">
-                        {{'--.generic.remove' |translateText}}
-                    </button>
+    <div class="panel panel-default main-panel">
+        <div class="panel-heading">{{'--.customer.profile.myAddresses' | translateText}}</div>
+        <div class="panel-body">
 
 
+            <div>
+                <accordion>
+                    <accordion-group
+                            class="address-container"
+                            ng-repeat="address in model.myself.addresses"
+                            is-open="address.isOpen">
+                        <accordion-heading>
+                            {{address.name}} <i class="pull-right glyphicon"
+                                                ng-class="{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}"></i>
+                        </accordion-heading>
+                        <div class="address-box">
+                            <div><span>{{'--.generic.street' | translateText}}</span>{{address.street}}</div>
+                            <div><span>{{'--.generic.zip' | translateText}}</span>{{address.zip}}</div>
+                            <div><span>{{'--.generic.city' | translateText}}</span>{{address.city}}</div>
+                            <div><span>{{'--.generic.country' | translateText}}</span>{{address.country}}</div>
+                        </div>
+                        <button class="btn btn-primary glyphicon glyphicon-edit" ng-click="editAddress(address)">
+                            {{'--.generic.edit' |
+                            translateText}}
+                        </button>
+                        <button class="btn btn-primary glyphicon glyphicon-remove" ng-click="deleteAddress(address)">
+                            {{'--.generic.remove' |translateText}}
+                        </button>
 
-                </accordion-group>
-            </accordion>
-            <button class="btn btn-primary" ng-click="addAddress()">{{'--.customer.profile.create' | translateText}}
-            </button>
+
+                    </accordion-group>
+                </accordion>
+                <button class="btn btn-primary" ng-click="addAddress()">{{'--.customer.profile.create' | translateText}}
+                </button>
+            </div>
         </div>
     </div>
 
-    <div class="custom-panel business-category" style="width:500px">
+    <div class="panel panel-default main-panel">
+        <div class="panel-heading">{{'--.customer.profile.interest' | translateText}}</div>
+        <div class="panel-body">
 
-        <h4>{{'--.customer.profile.interest' | translateText}}</h4>
+            <div>
+                <div ng-repeat="interest in model.myself.customerInterests" class="category-box">
+                    {{interest.translationName |translateText}}
+                </div>
 
-        <div>
-            <div ng-repeat="interest in model.myself.customerInterests" class="category-box">
-                {{interest.translationName |translateText}}
+                <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="accountParam.disabled"
+                        ng-click="interestEdit()">{{'--.generic.edit' |
+                    translateText}}
+                </button>
             </div>
-
-            <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="accountParam.disabled"
-                    ng-click="interestEdit()">{{'--.generic.edit' |
-                translateText}}
-            </button>
         </div>
     </div>
 

@@ -243,7 +243,7 @@ myApp.service("accountService", function ($flash, $http) {
     this.editCustomerInterest = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/rest/customer/inte/rest/" + self.getMyself().id,
+            'url': "/rest/customer/interest/" + self.getMyself().id,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {

@@ -31,7 +31,7 @@
 --.generic.name=Nom
 --.generic.back=Retour
 --.generic.stepNotValid=Merci de complèter cette étape avant de passer à la suivant
---.generic.home=Maison
+--.generic.home=Accueil
 --.generic.skip=Passer
 --.generic.numberOnly=Uniquement une valeur numérique
 --.generic.stepNotValidOrSkip=Merci de complèter cette étape avant ou de passer à la suivante

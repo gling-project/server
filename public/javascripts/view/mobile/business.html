@@ -27,12 +27,105 @@
     <div class='app-content'>
 
         <div class="body-mask"
-                ng-show="displayMask"></div>
+             ng-show="displayMask"></div>
 
         <div class="scrollable">
-            <div class="section scrollable-content">
+            <div class="section scrollable-content business-mobile-page">
 
-                {{business.name}}
+                <div class="business-page-header"
+                     ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
+
+                    <!-- landscape -->
+                    <div class="edit-button-container landscape-edit">
+                        <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                ng-show="edit"
+                                ng-click="editLandscape()">
+                            {{'--.business.page.edit.landscape' | translateText}}
+                        </button>
+                    </div>
+
+                    <!-- illustration -->
+                    <div class="business-page-illustration-container">
+                        <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
+
+                        <div class="edit-button-container">
+                            <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
+                                    ng-show="edit"
+                                    ng-click="editIllustration()">
+                                {{'--.business.page.edit.illustration' | translateText}}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- name -->
+                    <div class="business-page-name">
+                        {{business.name}}
+                        <div class="edit-button-container">
+                            <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                    ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                                    ng-click="editbusiness()">
+                                {{'--.business.page.edit.business' | translateText}}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- option -->
+                    <div style="overflow: auto">
+                        <div class="home-interest-box"
+                             ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">
+                            <button class="home-interest"
+                                    ng-repeat="action in actions"
+                                    ng-show="action.display()"
+                                    ng-click="action.action()">
+
+                                <img ng-src="{{action.icon}}"
+                                     style="width:50px"/>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- home-->
+                    <div ng-show="interfaceToDisplay=='home'">
+
+                        <publication-list-mobile-for-business-ctrl
+                                ng-info="publicationListParam">
+                        </publication-list-mobile-for-business-ctrl>
+
+                    </div>
+
+                    <!-- info-->
+                    <div ng-show="interfaceToDisplay=='info'">
+                        <h4>{{'--.generic.info' | translateText}}</h4>
+
+                        <!-- address + google map -->
+                        <google-map-widget-ctrl ng-info="googleMapParams"></google-map-widget-ctrl>
+
+                        <div class="business-address">
+                            <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
+                            <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
+                        </div>
+
+                        <!-- contact -->
+                        <div>{{business.phone}}</div>
+                        <div>
+                            <a href="{{business.website}}" target="_blank">{{business.website}}</a>
+                        </div>
+                        <div>{{business.email}}</div>
+                        
+                        <!-- schedule -->
+                        <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
+                    </div>
+
+                    <!-- gallery-->
+                    <div ng-show="interfaceToDisplay=='gallery'">
+                        <h4>{{'--.generic.gallery' | translateText}}</h4>
+                        <img ng-repeat="image in business.galleryPictures"
+                             style="margin-top: 5px"
+                             ng-click="openGallery(image)"
+                             ng-src="{{image | image}}"/>
+                    </div>
+
+                </div>
 
             </div>
 
