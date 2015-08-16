@@ -37,7 +37,7 @@ myApp.service("followService", function ($flash, $http) {
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
-                callbackSuccess(data.value);
+                callbackSuccess(data.list);
             }
         })
             .error(function (data, status) {

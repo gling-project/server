@@ -27,7 +27,8 @@ public enum ErrorMessageEnum {
     BUSINESS_MUST_BE_PUBLISHED("--.error.business.mustBePublished"),
     SEARCH_WRONG_CRITERIA("--.error.search.wrongCriteria"),
     WRONG_ADDRESS_NAME_ALREADY_USED("--.error.address.nameAlreadyUsed"),
-    WRONG_ADDRESS_NAME("--.error.address.nameNotExists");
+    WRONG_ADDRESS_NAME("--.error.address.nameNotExists"),
+    WRONG_OLD_PASSWORD("--.error.address.wrongOldPassword");
 
     private final String key;
 

@@ -56,7 +56,7 @@ public class Account extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     protected AccountTypeEnum type;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "account")
     private Set<Address> addresses = new HashSet<>();
 
     @ManyToMany()

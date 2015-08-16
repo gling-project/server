@@ -64,19 +64,27 @@ var initializeCommonRoutes = function () {
                             }
                         }
                     }
-                })
-                //.when('/business_registration', {
-                //    templateUrl: '/assets/javascripts/view/mobile/business_registration.html',
-                //    controller: 'BusinessRegistrationCtrl',
-                //    resolve: {
-                //        a: function (accountService, $location) {
-                //            if (test(accountService) != 'NOT_CONNECTED') {
-                //                $location.path('/');
-                //            }
-                //        }
-                //    }
-                //})
-                .when('/forgot_password', {
+                }).when('/business/:businessId', {
+                    templateUrl: '/assets/javascripts/view/mobile/business.html',
+                    controller: 'BusinessCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                }).when('/business/:businessId/publication/:publicationId', {
+                    templateUrl: '/assets/javascripts/view/mobile/business.html',
+                    controller: 'BusinessCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                }).when('/forgot_password', {
                     templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
                     controller: 'ForgotPasswordCtrl',
                     resolve: {

@@ -2,11 +2,10 @@ package be.lynk.server.model.entities;
 
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by florian on 17/05/15.
@@ -33,6 +32,9 @@ public class Address extends AbstractEntity {
     @Basic(optional = false)
     private Double posy;
 
+    @ManyToOne
+    private Account account;
+
     public Address() {
     }
 
@@ -41,6 +43,14 @@ public class Address extends AbstractEntity {
         this.zip = zip;
         this.city = city;
         this.country = country;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getStreet() {

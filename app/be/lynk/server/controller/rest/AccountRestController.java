@@ -109,7 +109,7 @@ public class
 
         Account account = securityController.getCurrentUser();
 
-        account.setCustomerInterests(new HashSet<>());
+        account.setCustomerInterests(new HashSet<CustomerInterest>());
 
         if (dto.getCustomerInterests() != null) {
             for (CustomerInterestDTO customerInterestDTO : dto.getCustomerInterests()) {
@@ -137,7 +137,7 @@ public class
 
         //control last password
         if (account.getLoginCredential() == null || !loginCredentialService.controlPassword(changePasswordDTO.getOldPassword(), account.getLoginCredential())) {
-            throw new MyRuntimeException(ErrorMessageEnum.VALIDATION_PASSWORD);
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_OLD_PASSWORD);
         }
 
         account.getLoginCredential().setPassword(changePasswordDTO.getNewPassword());
@@ -175,6 +175,7 @@ public class
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME_ALREADY_USED);
         }
 
+        address.setAccount(currentUser);
         currentUser.getAddresses().add(address);
 
         accountService.saveOrUpdate(currentUser);

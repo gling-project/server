@@ -2,6 +2,8 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
 
     $scope.loading=false;
 
+    $scope.dto={};
+
     $scope.fields = {
         oldPassword: {
             name:'password',
@@ -14,7 +16,9 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
             },
             disabled:function(){
                 return $scope.loading;
-            }
+            },
+            field: $scope.dto,
+            fieldName: 'oldPassword'
         },
         newPassword: {
             fieldTitle: "--.changePasswordModal.newPassword",
@@ -24,18 +28,22 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
             details:'--.registration.form.password.help',
             disabled:function(){
                 return $scope.loading;
-            }
+            },
+            field: $scope.dto,
+            fieldName: 'newPassword'
         },
         repeatPassword: {
             fieldTitle: "--.generic.repeatPassword",
             fieldType: 'password',
             validationMessage: "--.generic.validation.repeatPassword",
             validation: function () {
-                return $scope.o.newPassword === $scope.o.repeatPassword;
+                return $scope.dto.newPassword === $scope.dto.repeatPassword;
             },
             disabled:function(){
                 return $scope.loading;
-            }
+            },
+            field: $scope.dto,
+            fieldName: 'repeatPassword'
         }
     };
 
@@ -44,29 +52,41 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
         $modalInstance.close();
     };
 
-    $scope.allFieldValid = function () {
-
+    //
+    // validation : watching on field
+    //
+    $scope.$watch('fields', function () {
         var validation = true;
 
         for (var key in $scope.fields) {
             var obj = $scope.fields[key];
             if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                obj.firstAttempt = false;
-                validation= false;
+                obj.firstAttempt = !$scope.displayErrorMessage;
+                validation = false;
             }
         }
-        return validation;
-    };
+        $scope.isValid = validation;
+    }, true);
+
+    //
+    // display error watching
+    //
+    $scope.$watch('displayErrorMessage', function () {
+        for (var key in $scope.fields) {
+            var obj = $scope.fields[key];
+            obj.firstAttempt = !$scope.displayErrorMessage;
+        }
+    });
 
     $scope.save = function () {
 
-        if ($scope.allFieldValid()) {
+        if ($scope.isValid) {
 
             $scope.loading=true;
 
             accountService.changePassword(
-                $scope.fields.oldPassword.field,
-                $scope.fields.newPassword.field,
+                $scope.dto.oldPassword,
+                $scope.dto.newPassword,
             function(){
                 $scope.loading=false;
                 $scope.close();
@@ -76,10 +96,5 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
             });
         }
     };
-
-    $timeout(function() {
-        $scope.loadingFinish = true;
-    },800);
-
 
 });

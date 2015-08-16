@@ -22,7 +22,8 @@ public class AddressServiceImpl extends CrudServiceImpl<Address> implements Addr
         CriteriaQuery<Address> cq = cb.createQuery(Address.class);
         Root<Address> from = cq.from(Address.class);
         cq.select(from);
-        cq.where(cb.equal(from.get("name"), name));
+        cq.where(cb.equal(from.get("name"), name),
+                cb.equal(from.get("account"), currentUser));
         return getSingleResultOrNull(cq);
     }
 }

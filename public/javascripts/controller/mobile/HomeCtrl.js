@@ -1,4 +1,6 @@
-myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope) {
+myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService) {
+
+    $scope.displayMask = true;
 
 
     customerInterestService.getAll(function (value) {
@@ -83,7 +85,6 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     });
 
 
-
     //position
     $scope.positions = [
         {key: 'currentPosition', translation: '--.position.current'}
@@ -93,6 +94,7 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
 
     $scope.selectPosition = function (position) {
         $scope.currentPosition = position;
+        $scope.displayPositionDetails = false;
     };
 
     $timeout(function () {
@@ -128,6 +130,8 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
             {key: 'currentPosition', translation: '--.position.current'}
         ];
         if (accountService.getMyself() != null) {
+            console.log('load address');
+            console.log(accountService.getMyself());
             for (var key in accountService.getMyself().addresses) {
                 $scope.positions.push(
                     {
@@ -138,6 +142,38 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
         }
         $scope.currentPosition = geolocationService.getLocationText();
     };
+    //initialisation
+    completePositions();
 
+    //position panel
+    $scope.displayPositionDetails = false;
+    $scope.openPositionDetails = function () {
+        $scope.displayPositionDetails = !$scope.displayPositionDetails;
+    };
+
+    //favoriteBusiness
+    $scope.displayFavoriteBusiness = false;
+    $scope.openFavoriteBusiness = function () {
+        $scope.displayFavoriteBusiness = !$scope.displayFavoriteBusiness;
+    };
+
+    var refreshFollowList = function() {
+        followService.getFollows(function (list) {
+            $scope.follows = list;
+        });
+    };
+    refreshFollowList();
+
+
+    //mask
+    $scope.$watch('displayPositionDetails', function () {
+        $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
+        $scope.displayFavoriteBusiness=false;
+
+    });
+    $scope.$watch('displayFavoriteBusiness', function () {
+        $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
+        $scope.displayPositionDetails=false;
+    });
 
 });

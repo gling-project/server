@@ -4,18 +4,11 @@
 </div>
 <div class="modal-body form" dir-enter="save()">
 
-    <div ng-class="{'hidden':loadingFinish==true}" class="form_loading">
-        <img src="/assets/images/form_loading.gif"/>
-    </div>
-
-    <div ng-class="{'hidden':loadingFinish!=true}">
-
         <dir-field-text ng-info="fields.oldPassword"></dir-field-text>
 
         <dir-field-text ng-info="fields.newPassword"></dir-field-text>
 
         <dir-field-text ng-info="fields.repeatPassword"></dir-field-text>
-    </div>
 </div>
 <div class="modal-footer">
     <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' |
