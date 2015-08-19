@@ -7,6 +7,9 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
         $scope.customerInterests = value;
     });
 
+    $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
+        $scope.advancedSearch = params.display;
+    });
 
     //search function
     $scope.publicationListCtrl = {};

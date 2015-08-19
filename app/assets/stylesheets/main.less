@@ -18,10 +18,8 @@
 @import 'widget/_onoffswitch';
 @import 'widget/_schedule';
 @import 'widget/_business-page';
-@import 'widget/_welcome';
 @import 'widget/_home-interest';
 @import 'widget/_follow';
-@import 'widget/_search-result';
 @import 'widget/_category-line';
 @import 'widget/_gallery';
 @import 'widget/_facebook-login';
@@ -111,6 +109,14 @@ body {
     display: none;
 }
 
+.header-with-advanced-search {
+    height: 165px;
+    .header-option-container{
+        position: fixed;
+        top:100px;
+    }
+}
+
 .navigation-bar {
     //    height: 50px;
     background-color: @color-header-bg;
@@ -119,10 +125,6 @@ body {
     z-index: 11;
     height: 65px;
     top: 0;
-
-    &.header-with-advanced-search {
-        height: 165px;
-    }
 
     & > .container {
         vertical-align: middle;
@@ -379,29 +381,6 @@ a {
     display: block !important;
 }
 
-.business-info-line {
-    border-bottom: 1px solid #999;
-    font-size: 18px;
-    width: 100%;
-    & > tbody{
-        & > tr {
 
-            & > td {
-                padding: 5px 10px;
-            }
-            .td-action {
-                text-align: right;
-            }
-        }
-    }
-    & .glyphicon {
-        font-size: 30px;
-    }
-}
-
-.angular-google-map-container {
-    height: 150px !important;;
-    width: 100% !important;
-}
 
 

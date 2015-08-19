@@ -1,0 +1,35 @@
+<div class="search-container">
+
+    <div ng-show="advancedSearch" class="container search-advanced-block">
+        <div class="search-advanced-block-desc">
+
+            <!-- criteria -->
+            <div>{{'--.welcome.serach.advanced.criteria' | translateText}}</div>
+            <div class="search-advanced-criteria" ng-repeat="criteria in searchBarService.searchCriteria">
+                <input type="checkbox" ng-model="criteria.selected"/>
+                {{criteria.nameRef | translateText}}
+            </div>
+        </div>
+    </div>
+
+    <input
+            dir-bottom-arrow="down()" dir-top-arrow="top()"
+            type="text"
+            dir-enter="search()"
+            ng-model="searchBarService.currentSearch"
+            class="search-bar"
+            placeholder="{{'--.welcome.search' | translateText}}"/>
+
+    <search-result-ctrl ng-info="searchResultParam"></search-result-ctrl>
+
+    <button ng-show="getInfo().mobile"
+         ng-click="displayAdvancedSearch()"
+         class="glyphicon glyphicon-plus generic-cursor">
+    </button>
+
+    <button ng-hide="getInfo().mobile"
+            class="search-advanced"
+            ng-click="displayAdvancedSearch()">
+        {{'--.welcome.search.advanced.link' | translateText}}
+    </button>
+</div>

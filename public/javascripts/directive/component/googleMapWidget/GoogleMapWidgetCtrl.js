@@ -50,35 +50,18 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
                                         protocol = 'http://';
 
                                     }
-                                    window.location = protocol + scope.complete('maps.apple.com/maps');//?daddr=' + lat + ',' + lng + '&amp;ll=';
+                                    window.location = protocol + scope.complete('maps.apple.com/maps');
                                 }
                                 else {
-                                    window.open(scope.complete('http://maps.google.com'));//?daddr=' + lat + ',' + lng + '&amp;ll=');
+                                    window.open(scope.complete('http://maps.google.com'));
                                 }
                             };
 
                             scope.complete = function(url){
                                 var address = scope.getInfo().address;
-                                url += '?daddr='+address.posx + ",+" + address.posy;
-                                //url += "/@" + address.posx + ",+" + address.posy + "," + 16 + "z";
+                                url += '?q='+address.posx + ",+" + address.posy;
                                 return url;
-                                //$window.open(url, '_blank');
                             };
-
-                            //scope.toGoogleMap = function () {
-                            //
-                            //    var address = scope.getInfo().address;
-                            //    var url = "";
-                            //    if (scope.getInfo().mobile) {
-                            //        url = "maps://www.google.be/maps/place/";
-                            //    }
-                            //    else {
-                            //        url = "https://www.google.be/maps/place/";
-                            //    }
-                            //    url += address.posx + ",+" + address.posy;
-                            //    url += "/@" + address.posx + ",+" + address.posy + "," + 16 + "z";
-                            //    $window.open(url, '_blank');
-                            //}
                         }
                     });
 

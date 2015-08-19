@@ -1,42 +1,10 @@
-myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, searchService, searchBarService, geolocationService, addressService, $rootScope) {
+myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
 
-
-    $scope.advancedSearch = false;
-
-    $scope.displayAdvancedSearch = function () {
-        $scope.advancedSearch = !$scope.advancedSearch;
-    };
-
-    $scope.searchBarService = searchBarService;
-
-    $scope.searchResultParam = {
-        display: false,
-        cleanSearch: function () {
-            searchBarService.currentSearch = "";
-        }
-    };
-
-    $scope.$watch('searchBarService.currentSearch', function (o, n) {
-        if (searchBarService.displaySearchResult && o != n && searchBarService.currentSearch != "" && searchBarService.currentSearch.length >= 2) {
-            var searchS = angular.copy(searchBarService.currentSearch);
-            $timeout(function () {
-                if (searchS == searchBarService.currentSearch) {
-
-                    if ((searchBarService.currentSearch.indexOf(":") != -1 && searchBarService.currentSearch.split(":")[1].length > 0) ||
-                        (searchBarService.currentSearch.indexOf(":") == -1 && searchBarService.currentSearch.length > 0)) {
-                        searchService.searchByStringLittle(searchBarService.currentSearch, function (result) {
-                            $scope.searchResultParam.result = result;
-                            $scope.searchResultParam.display = true;
-                        });
-                    }
-                }
-            }, 500);
-        }
+    $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
+        $scope.advancedSearch = params.display;
     });
 
 
-    $scope.search = function () {
-    };
 
     //use the model
     $scope.myself = accountService.getMyself();

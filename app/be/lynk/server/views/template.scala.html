@@ -76,7 +76,6 @@
 
             <!-- component -->
         <script src="@routes.Assets.at("javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/directive/component/searchResult/SearchResultCtrl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/directive/component/businessList/BusinessListCtrl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/directive/component/categoryLine/CategoryLineCtrl.js")" type="text/javascript"></script>
 
@@ -109,39 +108,14 @@
                             class="navigation-bar"
                         ng-class="{'header-with-advanced-search':advancedSearch}">
 
-                                <!-- advanced search -->
-                            <div ng-show="advancedSearch" class="container search-advanced-block" >
-                                <div class="search-advanced-block-desc">
-
-                                    <!-- criteria -->
-                                    <div>{{'--.welcome.serach.advanced.criteria' | translateText}}</div>
-                                    <div class="search-advanced-criteria" ng-repeat="criteria in searchBarService.searchCriteria">
-                                        <input type="checkbox" ng-model="criteria.selected"/>
-                                        {{criteria.nameRef | translateText}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="container">
+                            <div class="container header-option-container" >
 
                                 <h1 style="cursor : pointer" ng-click="navigateTo('/')">
                                     {{'--.site.name' | translateText}}</h1>
 
                                     <!-- seach bar -->
-                                <div class="search-container">
-                                    <input
-                                    dir-bottom-arrow="down()" dir-top-arrow="top()"
-                                    type="text"
-                                        dir-enter="search()"
-                                    ng-model="searchBarService.currentSearch"
-                                    class="search-bar"
-                                    placeholder="{{'--.welcome.search' | translateText}}"/>
+                                    <search-bar-ctrl  ng-info="{mobile:false}"></search-bar-ctrl>
 
-                                    <search-result-ctrl ng-info="searchResultParam"></search-result-ctrl>
-
-                                    <button class="search-advanced" ng-click="displayAdvancedSearch()">
-                                        {{'--.welcome.search.advanced.link' | translateText}}
-                                    </button>
-                                </div>
 
                                     <!-- not connected menu -->
                                 <div class="profile-buttons-container" ng-show="accountService.getMyself()==null">
