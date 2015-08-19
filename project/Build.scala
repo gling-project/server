@@ -48,9 +48,9 @@ object ApplicationBuild extends Build {
     "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0"
   )
 
-  val main = play.Project(name, version, appDependencies).settings(
+  val main = play.Project(name, version, appDependencies)/*.settings(
     lessEntryPoints <<= baseDirectory(_ / "app" / "assets" / "stylesheets" ** "*.less")
-  )
+  )*/
   javaOptions ++= Seq("-Xmx512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
 
 
