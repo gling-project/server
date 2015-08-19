@@ -86,7 +86,8 @@ body {
 .main-container {
     margin-top: 65px;
 }
-.main-container-with-advanced-search{
+
+.main-container-with-advanced-search {
     margin-top: 165px !important;
 }
 
@@ -117,9 +118,9 @@ body {
     position: fixed;
     z-index: 11;
     height: 65px;
-    top:0;
+    top: 0;
 
-    &.header-with-advanced-search{
+    &.header-with-advanced-search {
         height: 165px;
     }
 
@@ -326,16 +327,16 @@ a {
     cursor: pointer;
 }
 
-.loading{
+.loading {
     text-align: center;
     padding-top: 50px;
 }
 
-.menu-connection-button-container{
+.menu-connection-button-container {
     position: relative;
     display: inline;
 
-    & > ul{
+    & > ul {
         left: 0 !important;
         top: 23px !important;
     }
@@ -344,21 +345,21 @@ a {
 .horizontal-split {
 
     width: 100%;
-    table-layout : fixed;
+    table-layout: fixed;
 
-    tr{
+    tr {
 
         td:first-child,
-        td:last-child{
+        td:last-child {
             width: 2em;
         }
-        td:nth-child(2){
+        td:nth-child(2) {
             width: 1em;
             text-align: center;
         }
 
-        div{
-            width: 100%;//~'calc(50% - 30px)';
+        div {
+            width: 100%; //~'calc(50% - 30px)';
             height: 1px;
             background: #bbbbbb;
             vertical-align: middle;
@@ -366,16 +367,57 @@ a {
     }
 }
 
-.generic-center{
+.generic-center {
     text-align: center;
 }
-.generic-pointer{
+
+.generic-pointer {
     cursor: pointer;
 }
 
-.generic-block{
+.generic-block {
     display: block !important;
 }
 
+.business-info-line {
+    border-top: 1px solid #999;
+    font-size: 18px;
+    width: 100%;
+    & > tbody{
+        & > tr {
+
+            & > td {
+                padding: 5px 10px;
+            }
+            & > td:last-child {
+                text-align: right;
+            }
+        }
+    }
+    & .glyphicon {
+        font-size: 30px;
+    }
+//    border-top: 1px solid #999;
+//    padding: 5px 15px;
+//    font-size: 18px;
+//    min-height: 40px;
+//    .business-info-line-action {
+//        float: right;
+//    }
+//    & > *:first-child {
+//        line-height: 30px;
+//    }
+//    & > * {
+//        display: inline-block;
+//        vertical-align: top;
+//    }
+//    & > .glyphicon {
+//        font-size: 30px;
+//    }
+//    a,
+//    a:hover {
+//        text-decoration: none;
+//    }
+}
 
 
