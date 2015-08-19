@@ -15,6 +15,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
 
 
                     scope.getInfo().refresh = function () {
+
                         searchService.byBusiness(scope.getInfo().businessId, function (data) {
                             scope.publications = data;
                             for (var i in scope.publications) {
@@ -30,8 +31,6 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
 
                         });
                     };
-                    scope.getInfo().refresh();
-
                     scope.removePublication = function (publication) {
                         publicationService.delete(publication, function () {
                             $rootScope.$broadcast('RELOAD_PUBLICATION');

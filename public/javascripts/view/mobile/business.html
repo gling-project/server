@@ -95,25 +95,47 @@
 
                     <!-- info-->
                     <div ng-show="interfaceToDisplay=='info'">
-                        <h4>{{'--.generic.info' | translateText}}</h4>
 
                         <!-- address + google map -->
-                        <google-map-widget-ctrl ng-info="googleMapParams"></google-map-widget-ctrl>
+                        <div class="business-info-line"
+                             style="height: 210px">
 
-                        <div class="business-address">
-                            <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
-                            <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
+                            <!-- address / distance -->
+                            <div class="business-address">
+                                <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}
+                                </div>
+                                <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
+                            </div>
+                            <!-- map -->
+                            <div class="business-info-line-action">
+                                <google-map-widget-ctrl
+                                        ng-info="googleMapParams">
+                                </google-map-widget-ctrl>
+                            </div>
                         </div>
 
                         <!-- contact -->
-                        <div>{{business.phone}}</div>
-                        <div>
+                        <!-- phone -->
+                        <div class="business-info-line" ng-show="business.phone!=null">
+                            <div>{{business.phone}}</div>
+                            <a class="business-info-line-action glyphicon glyphicon-earphone"
+                               href="tel:{{business.phone}}"></a>
+                        </div>
+                        <!-- website -->
+                        <div class="business-info-line" ng-show="business.website!=null">
                             <a href="{{business.website}}" target="_blank">{{business.website}}</a>
                         </div>
-                        <div>{{business.email}}</div>
-                        
+                        <!-- email -->
+                        <div class="business-info-line" ng-show="business.email!=null">
+                            <div>{{business.email}}</div>
+                            <a class="business-info-line-action glyphicon glyphicon-envelope"
+                               href="mailto:{{business.email}}"></a>
+                        </div>
+
                         <!-- schedule -->
-                        <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
+                        <div class="business-info-line" ng-show="business.schedules!=null">
+                            <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
+                        </div>
                     </div>
 
                     <!-- gallery-->

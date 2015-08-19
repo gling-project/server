@@ -1,4 +1,4 @@
-myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService) {
+myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
 
 
     if ($routeParams.publicationId != null) {
@@ -138,7 +138,10 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             };
 
             //address
-            $scope.googleMapParams.address = $scope.business.address
+            $scope.googleMapParams.address = $scope.business.address;
+            $timeout(function(){
+                $scope.googleMapParams.refreshNow();
+            },1);
 
             //edit address
             $scope.editAddress = function () {
@@ -300,6 +303,11 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
             $scope.$on('RELOAD_PUBLICATION', function () {
                 $scope.publicationListParam.refresh();
             });
+
+            //initialization
+            if(geolocationService.currentPosition!=null){
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            }
 
             $scope.displaySchedule = function () {
                 for (var i in $scope.business.schedules) {

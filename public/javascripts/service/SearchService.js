@@ -11,7 +11,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             canceler.resolve();
         }
         canceler = $q.defer();
-        
+
         $http({
             'method': "POST",
             'url': "/rest/search/publication/default",
@@ -158,6 +158,9 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             canceler.resolve();
         }
         canceler = $q.defer();
+
+        console.log("geolocationService.position");
+        console.log(geolocationService.position);
 
         $http({
             'method': "POST",

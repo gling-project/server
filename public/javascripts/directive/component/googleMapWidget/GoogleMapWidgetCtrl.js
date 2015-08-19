@@ -14,6 +14,11 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
                     directiveService.autoScopeImpl(scope);
 
                     scope.$watch('getInfo().address', function () {
+
+                        scope.getInfo().refreshNow = function () {
+                            scope.centerMap();
+                        };
+
                         if (scope.getInfo().address != null) {
                             //test
                             scope.centerMap = function () {
@@ -24,12 +29,17 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
                                     }
                                 };
                             };
-                            scope.centerMap();
 
                             scope.toGoogleMap = function () {
 
                                 var address = scope.getInfo().address;
-                                var url = "https://www.google.be/maps/place/";
+                                var url = "";
+                                if (scope.getInfo().mobile) {
+                                    url = "maps://www.google.be/maps/place/";
+                                }
+                                else {
+                                    url = "https://www.google.be/maps/place/";
+                                }
                                 url += address.posx + ",+" + address.posy;
                                 url += "/@" + address.posx + ",+" + address.posy + "," + 16 + "z";
                                 $window.open(url, '_blank');

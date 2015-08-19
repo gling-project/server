@@ -1,4 +1,4 @@
-myApp.controller('BusinessCtrl', function ($scope, $routeParams, businessService,geolocationService,addressService) {
+myApp.controller('BusinessCtrl', function ($scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
 
     $scope.loading = true;
 
@@ -10,13 +10,19 @@ myApp.controller('BusinessCtrl', function ($scope, $routeParams, businessService
             $scope.loading = false;
             $scope.business = data;
 
-            console.log(data);
-
-
             $scope.interfaceToDisplay = 'home';
 
             //address
-            $scope.googleMapParams.address = $scope.business.address
+            $scope.googleMapParams.address = $scope.business.address;
+            $scope.googleMapParams.mobile=true;
+
+            $scope.$watch('interfaceToDisplay', function () {
+                if ($scope.interfaceToDisplay == 'info') {
+                    $timeout(function () {
+                        $scope.googleMapParams.refreshNow();
+                    }, 1);
+                }
+            });
 
             $scope.actions = [{
                 icon: '/assets/images/action/home.png',
@@ -57,6 +63,21 @@ myApp.controller('BusinessCtrl', function ($scope, $routeParams, businessService
             $scope.$on('POSITION_CHANGED', function () {
                 $scope.computeDistance();
             });
+
+
+            $scope.$on('POSITION_CHANGED', function () {
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            });
+
+            $scope.$on('RELOAD_PUBLICATION', function () {
+                console.log("RELOAD_PUBLICATION");
+                $scope.publicationListParam.refresh();
+            });
+
+            //initialization
+            if (geolocationService.currentPosition != null) {
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            }
 
         });
     $scope.publicationListParam = {

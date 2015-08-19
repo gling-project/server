@@ -30,7 +30,6 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
 
                         });
                     };
-                    scope.getInfo().refresh();
 
                     scope.removePublication = function (publication) {
                         publicationService.delete(publication, function () {
