@@ -30,7 +30,7 @@
              ng-show="displayMask"></div>
 
         <div class="scrollable">
-            <div class="section scrollable-content business-mobile-page">
+            <div class="scrollable-content business-mobile-page">
 
                 <div class="business-page-header"
                      ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
@@ -68,120 +68,119 @@
                             </button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- option -->
-                    <div style="overflow: auto">
-                        <div class="home-interest-box"
-                             ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">
-                            <button class="home-interest"
-                                    ng-repeat="action in actions"
-                                    ng-show="action.display()"
-                                    ng-click="action.action()">
+                <!-- option -->
+                <div style="overflow: auto">
+                    <div class="home-interest-box"
+                         ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">
+                        <button class="home-interest"
+                                ng-repeat="action in actions"
+                                ng-show="action.display()"
+                                ng-click="action.action()">
 
-                                <img ng-src="{{action.icon}}"
-                                     style="width:50px"/>
-                            </button>
-                        </div>
+                            <img ng-src="{{action.icon}}"
+                                 style="width:50px"/>
+                        </button>
                     </div>
+                </div>
 
-                    <!-- home-->
-                    <div ng-show="interfaceToDisplay=='home'">
+                <!-- home-->
+                <div ng-show="interfaceToDisplay=='home'">
 
-                        <publication-list-mobile-for-business-ctrl
-                                ng-info="publicationListParam">
-                        </publication-list-mobile-for-business-ctrl>
+                    <publication-list-mobile-for-business-ctrl
+                            ng-info="publicationListParam">
+                    </publication-list-mobile-for-business-ctrl>
 
-                    </div>
+                </div>
 
-                    <!-- info-->
-                    <div ng-show="interfaceToDisplay=='info'">
+                <!-- info-->
+                <div class="section" ng-show="interfaceToDisplay=='info'">
 
-                        <!-- address + google map -->
-                        <table class="business-info-line">
-                            <tr>
-                                <td>
-                                    <!-- address / distance -->
-                                    <div class="business-address">
-                                        <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}
-                                        </div>
-                                        <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
-                                    </div>
-                                </td>
-                                <td style="width: 200px">
-                                    <!-- map -->
-                                    <div class="business-info-line-action">
-                                        <google-map-widget-ctrl
-                                                ng-info="googleMapParams">
-                                        </google-map-widget-ctrl>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                    <!-- address + google map -->
+                    <table class="business-info-line">
+                        <tr>
+                            <td colspan="2">
+                                <!-- map -->
+                                <div class="business-info-line-action">
+                                    <google-map-widget-ctrl
+                                            ng-info="googleMapParams">
+                                    </google-map-widget-ctrl>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- address / distance -->
+                                <div class="business-address">
+                                    {{business.address.street}}<br/>
+                                    {{business.address.zip}}<br/>
+                                    {{business.address.city}}
+                                </div>
+                            </td>
+                            <td class="td-action">
+                                {{business.distance / 1000 | number:2}} Km
+                            </td>
+                        </tr>
+                    </table>
 
-                        <!-- contact -->
-                        <!-- phone -->
-                        <table class="business-info-line" ng-show="business.phone!=null">
-                            <tr>
-                                <td>
-                                    {{business.phone}}
-                                </td>
-                                <td>
-                                    <a class="business-info-line-action glyphicon glyphicon-earphone"
-                                       href="tel:{{business.phone}}"></a>
-                                </td>
-                            </tr>
-                        </table>
+                    <!-- contact -->
+                    <!-- phone -->
+                    <table class="business-info-line" ng-show="business.phone!=null">
+                        <tr>
+                            <td>
+                                {{business.phone}}
+                            </td>
+                            <td class="td-action">
+                                <a class="business-info-line-action glyphicon glyphicon-earphone"
+                                   href="tel:{{business.phone}}"></a>
+                            </td>
+                        </tr>
+                    </table>
 
-                        <!-- website -->
-                        <table class="business-info-line" ng-show="business.website!=null">
-                            <tr>
-                                <td>
-                                    {{business.website}}
-                                </td>
-                                <td>
-                                    <a href="{{business.website}}" target="_blank">{{business.website}}</a>
-                                </td>
-                            </tr>
-                        </table>
+                    <!-- website -->
+                    <table class="business-info-line" ng-show="business.website!=null">
+                        <tr>
+                            <td>
+                                {{business.website}}
+                            </td>
+                            <td class="td-action">
+                                <a href="{{business.website}}" target="_blank">{{business.website}}</a>
+                            </td>
+                        </tr>
+                    </table>
 
-                        <!-- email -->
-                        <table class="business-info-line" ng-show="business.email!=null">
-                            <tr>
-                                <td>
-                                    {{business.email}}
-                                </td>
-                                <td>
+                    <!-- email -->
+                    <table class="business-info-line" ng-show="business.email!=null">
+                        <tr>
+                            <td>
+                                {{business.email}}
+                            </td>
+                            <td class="td-action">
+                                <a class="business-info-line-action glyphicon glyphicon-envelope"
+                                   href="mailto:{{business.email}}"></a>
+                            </td>
+                        </tr>
+                    </table>
 
-                                    <a class="business-info-line-action glyphicon glyphicon-envelope"
-                                       href="mailto:{{business.email}}"></a>
-                                </td>
-                            </tr>
-                        </table>
+                    <!-- schedule -->
+                    <table class="business-info-line" ng-show="business.schedules!=null">
+                        <tr>
+                            <td>
+                                <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
+                            </td>
+                        </tr>
+                    </table>
 
-                        <!-- schedule -->
-                        <table class="business-info-line"  ng-show="business.schedules!=null">
-                            <tr>
-                                <td>
-                                    <div class="business-info-line">
-                                        <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
-                                    </div>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </table>
+                </div>
 
-                    </div>
-
-                    <!-- gallery-->
-                    <div ng-show="interfaceToDisplay=='gallery'">
-                        <h4>{{'--.generic.gallery' | translateText}}</h4>
-                        <img ng-repeat="image in business.galleryPictures"
-                             style="margin-top: 5px"
-                             ng-click="openGallery(image)"
-                             ng-src="{{image | image}}"/>
-                    </div>
-
+                <!-- gallery-->
+                <div  class="section gallery-mobile" ng-show="interfaceToDisplay=='gallery'">
+                    <h4>{{'--.generic.gallery' | translateText}}</h4>
+                    <img ng-repeat="image in business.galleryPictures"
+                         style="margin-top: 5px"
+                         ng-click="openGallery(image)"
+                         ng-src="{{image | image}}"/>
                 </div>
 
             </div>
