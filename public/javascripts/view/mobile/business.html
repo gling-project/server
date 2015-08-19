@@ -1,19 +1,14 @@
 <!-- header -->
-<div class="navbar navbar-app navbar-absolute-top">
+<div class="navbar navbar-app navbar-absolute-top"
+     ng-class="{'header-with-advanced-search':advancedSearch}">
 
-    <div class="navbar-brand navbar-brand-center">
-        <input
-                class="search-bar"
-                type="text"
-                placeholder="{{'--.generic.search' | translateText}}"/>
+    <div class="navbar-brand navbar-brand-center header-option-container">
 
-        <div
-                class="glyphicon glyphicon-plus generic-cursor"
-                ng-click="searchMore()">
-        </div>
+        <search-bar-ctrl ng-info="{mobile:true}"></search-bar-ctrl>
+
     </div>
 
-    <div class="btn-group pull-left">
+    <div class="btn-group pull-left header-option-container">
         <div class="btn btn-navbar">
             <div ui-toggle="uiSidebarLeft" class="nav-button">
                 <i class="fa fa-bars"></i>

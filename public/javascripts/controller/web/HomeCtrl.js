@@ -14,9 +14,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         modalService.openCustomerRegistrationModal();
     };
 
-    //initialisation
-    $scope.search();
-
     //functions
     //search by interest
     $scope.searchByInterest = function (interest) {

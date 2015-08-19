@@ -35,18 +35,47 @@
             <div class="search-result-sub-title">
                 {{'--.search.publication' | translateText}}
             </div>
-            <div class="search-result-publication search-result-content"
-                 ng-mouseenter="select(publication.index)"
-                 ng-click="goToPublication(publication)"
-                 ng-class="{'search-result-selected':indexSelected==publication.index}"
-                 ng-repeat="publication in getInfo().result.publications">
-                <div class="search-result-publication-business">
-                    <img ng-src="{{publication.businessIllustration | image}}"/>
-                    {{publication.businessName}}
-                </div>
-                <img ng-src="{{publication.pictures[0] | image}}"/>
-                {{publication.title}}
-            </div>
+            <!--<div class="search-result-publication search-result-content"-->
+            <!--ng-mouseenter="select(publication.index)"-->
+            <!--ng-click="goToPublication(publication)"-->
+            <!--ng-class="{'search-result-selected':indexSelected==publication.index}"-->
+            <!--ng-repeat="publication in getInfo().result.publications">-->
+            <!--<div class="search-result-publication-business">-->
+            <!--<img ng-src="{{publication.businessIllustration | image}}"/>-->
+            <!--{{publication.businessName}}-->
+            <!--</div>-->
+            <!--<img ng-src="{{publication.pictures[0] | image}}"/>-->
+            <!--{{publication.title}}-->
+            <!--</div>-->
+            <!--<div-->
+            <!--ng-click="seeAllPublication()"-->
+            <!--ng-mouseenter="select(seeMorePublicationIndex)"-->
+            <!--class="search-result-content"-->
+            <!--ng-class="{'search-result-selected':indexSelected==seeMorePublicationIndex}">-->
+            <!--<div class="search-result-show-more link">-->
+            <!--{{'--.search.publication.seeMore' | translateText}}-->
+            <!--</div>-->
+            <!--</div>-->
+
+
+            <table>
+                <tr class="search-result-publication search-result-content"
+                    ng-mouseenter="select(publication.index)"
+                    ng-click="goToPublication(publication)"
+                    ng-class="{'search-result-selected':indexSelected==publication.index}"
+                    ng-repeat="publication in getInfo().result.publications">
+                    <td>
+                        <img ng-src="{{publication.pictures[0] | image}}"/>
+                        {{publication.title}}
+                    </td>
+                    <td>
+                        <div class="search-result-publication-business">
+                            <img ng-src="{{publication.businessIllustration | image}}"/>
+                            {{publication.businessName}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
             <div
                     ng-click="seeAllPublication()"
                     ng-mouseenter="select(seeMorePublicationIndex)"
@@ -56,6 +85,7 @@
                     {{'--.search.publication.seeMore' | translateText}}
                 </div>
             </div>
+
         </div>
 
 
