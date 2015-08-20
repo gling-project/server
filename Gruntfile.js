@@ -70,7 +70,8 @@ module.exports = function (grunt) {
                 files: {
                     'public/dist/dependencies.min.js': ['public/dist/dependencies.js'],
                     'public/dist/common.min.js': ['public/dist/common.js'],
-                    'public/dist/web.min.js': ['public/dist/web.js']
+                    'public/dist/web.min.js': ['public/dist/web.js'],
+                    'public/dist/mobile.min.js': ['public/dist/mobile.js']
                 }
             }
         },
@@ -142,7 +143,10 @@ module.exports = function (grunt) {
                         'public/javascripts/service/FollowService.js',
                         'public/javascripts/service/SearchService.js',
                         'public/javascripts/service/SearchBarService.js',
-                        'public/javascripts/service/PublicationService.js']
+                        'public/javascripts/service/PublicationService.js',
+                        //TODO ??
+                        'public/javascripts/dist/templateCacheWeb.js'
+                    ]
                     , 'public/dist/web.js': [
                         'public/components/lodash/lodash.min.js',
                         'public/components/angular-google-maps/dist/angular-google-maps.min.js',
@@ -183,24 +187,86 @@ module.exports = function (grunt) {
                         <!-- component -->
                         'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
                         'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
-                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js']
+                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js'],
+                    'public/dist/mobile.js':[
+                        'public/components/lodash/lodash.min.js',
+                        'public/components/angular-google-maps/dist/angular-google-maps.min.js',
+                        'public/components/angular-google-maps/dist/angular-google-maps_dev_mapped.min.js',
+                        'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.min.js',
+                        'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.core.min.js',
+                        'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.components.min.js',
+                        'public/javascripts/routes/mobile-routes.js',
+                        'public/javascripts/InitMobile.js',
+                        'public/javascripts/modal/ChangePassword/ChangePasswordModal.js',
+                        'public/javascripts/modal/AddressModal/AddressModal.js',
+                        'public/javascripts/controller/mobile/WelcomeCtrl.js',
+                        'public/javascripts/controller/mobile/HomeCtrl.js',
+                        'public/javascripts/controller/mobile/ForgotPasswordCtrl.js',
+                        'public/javascripts/controller/mobile/CustomerRegistrationCtrl.js',
+                        'public/javascripts/controller/mobile/BusinessRegistrationCtrl.js',
+                        'public/javascripts/controller/mobile/MenuCtrl.js',
+                        'public/javascripts/controller/mobile/ProfileCtrl.js',
+                        'public/javascripts/controller/mobile/BusinessCtrl.js',
+                        'public/javascripts/directive/component/publicationListMobile/PublicationListMobileCtrl.js',
+                        'public/javascripts/directive/component/publicationListMobileForBusiness/PublicationListMobileForBusinessCtrl.js',
+                        'public/javascripts/directive/mobile/title/MobileTitleCtrl.js'
+                    ]
                 }
             }
         }
-    });
+        ,
+        html2js: {
+            options: {
+                base: 'public',
+                module: 'app',
+                existingModule:true,
+                singleModule: true,
+                useStrict: true,
+                rename:function (moduleName) {
+                    return moduleName.replace('javascripts/', '/assets/javascripts/');
+                },
+                htmlmin: {
+                    collapseBooleanAttributes: true,
+                    collapseWhitespace: true,
+                    removeAttributeQuotes: true,
+                    removeComments: true,
+                    removeEmptyAttributes: true,
+                    removeRedundantAttributes: true,
+                    removeScriptTypeAttributes: true,
+                    removeStyleLinkTypeAttributes: true
+                }
+            }
+            ,
+            main: {
+                src: ['public/javascripts/**/*.html'],
+                dest: 'public/javascripts/dist/templateCacheWeb.js'
+            }
+        }
+    })
+    ;
 
-    // Load the plugin that provides the "uglify" task.
+// Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-ng-annotate');
+    grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-usemin');
 
 
-    // Default task(s).
-    grunt.registerTask('default', ['concat',
+// Default task(s).
+    grunt.registerTask('default', [
+        //'html2js',
+        'concat',
         'ngAnnotate',
-        'uglify'/*,
-         'cssmin'*/]);
+        'uglify'
+        // ,'cssmin'
+    ]);
 
-};
+// cache task(s).
+    grunt.registerTask('cache', [
+        'html2js'
+    ]);
+
+}
+;

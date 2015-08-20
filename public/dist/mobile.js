@@ -120,6 +120,9 @@ l=b.isDefined(a.position)?a.position.toUpperCase().replace(/-/g,"_"):"TOP_CENTER
 for(a=0;a<c.length;a++)b.extend(c[a].getPosition());return b},e.prototype.remove=function(){this.clusterIcon_.setMap(null),this.markers_=[],delete this.markers_},e.prototype.addMarker=function(a){var b,c,d;if(this.isMarkerAlreadyAdded_(a))return!1;if(this.center_){if(this.averageCenter_){var e=this.markers_.length+1,f=(this.center_.lat()*(e-1)+a.getPosition().lat())/e,g=(this.center_.lng()*(e-1)+a.getPosition().lng())/e;this.center_=new google.maps.LatLng(f,g),this.calculateBounds_()}}else this.center_=a.getPosition(),this.calculateBounds_();if(a.isAdded=!0,this.markers_.push(a),c=this.markers_.length,d=this.markerClusterer_.getMaxZoom(),null!==d&&this.map_.getZoom()>d)a.getMap()!==this.map_&&a.setMap(this.map_);else if(c<this.minClusterSize_)a.getMap()!==this.map_&&a.setMap(this.map_);else if(c===this.minClusterSize_)for(b=0;c>b;b++)this.markers_[b].setMap(null);else a.setMap(null);return this.updateIcon_(),!0},e.prototype.isMarkerInClusterBounds=function(a){return this.bounds_.contains(a.getPosition())},e.prototype.calculateBounds_=function(){var a=new google.maps.LatLngBounds(this.center_,this.center_);this.bounds_=this.markerClusterer_.getExtendedBounds(a)},e.prototype.updateIcon_=function(){var a=this.markers_.length,b=this.markerClusterer_.getMaxZoom();if(null!==b&&this.map_.getZoom()>b)return void this.clusterIcon_.hide();if(a<this.minClusterSize_)return void this.clusterIcon_.hide();var c=this.markerClusterer_.getStyles().length,d=this.markerClusterer_.getCalculator()(this.markers_,c);this.clusterIcon_.setCenter(this.center_),this.clusterIcon_.useStyle(d),this.clusterIcon_.show()},e.prototype.isMarkerAlreadyAdded_=function(a){var b;if(this.markers_.indexOf)return-1!==this.markers_.indexOf(a);for(b=0;b<this.markers_.length;b++)if(a===this.markers_[b])return!0;return!1},f.prototype.onAdd=function(){var a=this;this.activeMap_=this.getMap(),this.ready_=!0,this.repaint(),this.listeners_=[google.maps.event.addListener(this.getMap(),"zoom_changed",function(){a.resetViewport_(!1),(this.getZoom()===(this.get("minZoom")||0)||this.getZoom()===this.get("maxZoom"))&&google.maps.event.trigger(this,"idle")}),google.maps.event.addListener(this.getMap(),"idle",function(){a.redraw_()})]},f.prototype.onRemove=function(){var a;for(a=0;a<this.markers_.length;a++)this.markers_[a].getMap()!==this.activeMap_&&this.markers_[a].setMap(this.activeMap_);for(a=0;a<this.clusters_.length;a++)this.clusters_[a].remove();for(this.clusters_=[],a=0;a<this.listeners_.length;a++)google.maps.event.removeListener(this.listeners_[a]);this.listeners_=[],this.activeMap_=null,this.ready_=!1},f.prototype.draw=function(){},f.prototype.setupStyles_=function(){var a,b;if(!(this.styles_.length>0))for(a=0;a<this.imageSizes_.length;a++)b=this.imageSizes_[a],this.styles_.push({url:this.imagePath_+(a+1)+"."+this.imageExtension_,height:b,width:b})},f.prototype.fitMapToMarkers=function(){var a,b=this.getMarkers(),c=new google.maps.LatLngBounds;for(a=0;a<b.length;a++)c.extend(b[a].getPosition());this.getMap().fitBounds(c)},f.prototype.getGridSize=function(){return this.gridSize_},f.prototype.setGridSize=function(a){this.gridSize_=a},f.prototype.getMinimumClusterSize=function(){return this.minClusterSize_},f.prototype.setMinimumClusterSize=function(a){this.minClusterSize_=a},f.prototype.getMaxZoom=function(){return this.maxZoom_},f.prototype.setMaxZoom=function(a){this.maxZoom_=a},f.prototype.getStyles=function(){return this.styles_},f.prototype.setStyles=function(a){this.styles_=a},f.prototype.getTitle=function(){return this.title_},f.prototype.setTitle=function(a){this.title_=a},f.prototype.getZoomOnClick=function(){return this.zoomOnClick_},f.prototype.setZoomOnClick=function(a){this.zoomOnClick_=a},f.prototype.getAverageCenter=function(){return this.averageCenter_},f.prototype.setAverageCenter=function(a){this.averageCenter_=a},f.prototype.getIgnoreHidden=function(){return this.ignoreHidden_},f.prototype.setIgnoreHidden=function(a){this.ignoreHidden_=a},f.prototype.getEnableRetinaIcons=function(){return this.enableRetinaIcons_},f.prototype.setEnableRetinaIcons=function(a){this.enableRetinaIcons_=a},f.prototype.getImageExtension=function(){return this.imageExtension_},f.prototype.setImageExtension=function(a){this.imageExtension_=a},f.prototype.getImagePath=function(){return this.imagePath_},f.prototype.setImagePath=function(a){this.imagePath_=a},f.prototype.getImageSizes=function(){return this.imageSizes_},f.prototype.setImageSizes=function(a){this.imageSizes_=a},f.prototype.getCalculator=function(){return this.calculator_},f.prototype.setCalculator=function(a){this.calculator_=a},f.prototype.getBatchSizeIE=function(){return this.batchSizeIE_},f.prototype.setBatchSizeIE=function(a){this.batchSizeIE_=a},f.prototype.getClusterClass=function(){return this.clusterClass_},f.prototype.setClusterClass=function(a){this.clusterClass_=a},f.prototype.getMarkers=function(){return this.markers_},f.prototype.getTotalMarkers=function(){return this.markers_.length},f.prototype.getClusters=function(){return this.clusters_},f.prototype.getTotalClusters=function(){return this.clusters_.length},f.prototype.addMarker=function(a,b){this.pushMarkerTo_(a),b||this.redraw_()},f.prototype.addMarkers=function(a,b){var c;for(c in a)a.hasOwnProperty(c)&&this.pushMarkerTo_(a[c]);b||this.redraw_()},f.prototype.pushMarkerTo_=function(a){if(a.getDraggable()){var b=this;google.maps.event.addListener(a,"dragend",function(){b.ready_&&(this.isAdded=!1,b.repaint())})}a.isAdded=!1,this.markers_.push(a)},f.prototype.removeMarker=function(a,b){var c=this.removeMarker_(a);return!b&&c&&this.repaint(),c},f.prototype.removeMarkers=function(a,b){var c,d,e=!1;for(c=0;c<a.length;c++)d=this.removeMarker_(a[c]),e=e||d;return!b&&e&&this.repaint(),e},f.prototype.removeMarker_=function(a){var b,c=-1;if(this.markers_.indexOf)c=this.markers_.indexOf(a);else for(b=0;b<this.markers_.length;b++)if(a===this.markers_[b]){c=b;break}return-1===c?!1:(a.setMap(null),this.markers_.splice(c,1),!0)},f.prototype.clearMarkers=function(){this.resetViewport_(!0),this.markers_=[]},f.prototype.repaint=function(){var a=this.clusters_.slice();this.clusters_=[],this.resetViewport_(!1),this.redraw_(),setTimeout(function(){var b;for(b=0;b<a.length;b++)a[b].remove()},0)},f.prototype.getExtendedBounds=function(a){var b=this.getProjection(),c=new google.maps.LatLng(a.getNorthEast().lat(),a.getNorthEast().lng()),d=new google.maps.LatLng(a.getSouthWest().lat(),a.getSouthWest().lng()),e=b.fromLatLngToDivPixel(c);e.x+=this.gridSize_,e.y-=this.gridSize_;var f=b.fromLatLngToDivPixel(d);f.x-=this.gridSize_,f.y+=this.gridSize_;var g=b.fromDivPixelToLatLng(e),h=b.fromDivPixelToLatLng(f);return a.extend(g),a.extend(h),a},f.prototype.redraw_=function(){this.createClusters_(0)},f.prototype.resetViewport_=function(a){var b,c;for(b=0;b<this.clusters_.length;b++)this.clusters_[b].remove();for(this.clusters_=[],b=0;b<this.markers_.length;b++)c=this.markers_[b],c.isAdded=!1,a&&c.setMap(null)},f.prototype.distanceBetweenPoints_=function(a,b){var c=6371,d=(b.lat()-a.lat())*Math.PI/180,e=(b.lng()-a.lng())*Math.PI/180,f=Math.sin(d/2)*Math.sin(d/2)+Math.cos(a.lat()*Math.PI/180)*Math.cos(b.lat()*Math.PI/180)*Math.sin(e/2)*Math.sin(e/2),g=2*Math.atan2(Math.sqrt(f),Math.sqrt(1-f)),h=c*g;return h},f.prototype.isMarkerInBounds_=function(a,b){return b.contains(a.getPosition())},f.prototype.addToClosestCluster_=function(a){var b,c,d,f,g=4e4,h=null;for(b=0;b<this.clusters_.length;b++)d=this.clusters_[b],f=d.getCenter(),f&&(c=this.distanceBetweenPoints_(f,a.getPosition()),g>c&&(g=c,h=d));h&&h.isMarkerInClusterBounds(a)?h.addMarker(a):(d=new e(this),d.addMarker(a),this.clusters_.push(d))},f.prototype.createClusters_=function(a){var b,c,d,e=this;if(this.ready_){0===a&&(google.maps.event.trigger(this,"clusteringbegin",this),"undefined"!=typeof this.timerRefStatic&&(clearTimeout(this.timerRefStatic),delete this.timerRefStatic)),d=this.getMap().getZoom()>3?new google.maps.LatLngBounds(this.getMap().getBounds().getSouthWest(),this.getMap().getBounds().getNorthEast()):new google.maps.LatLngBounds(new google.maps.LatLng(85.02070771743472,-178.48388434375),new google.maps.LatLng(-85.08136444384544,178.00048865625));var f=this.getExtendedBounds(d),g=Math.min(a+this.batchSize_,this.markers_.length);for(b=a;g>b;b++)c=this.markers_[b],!c.isAdded&&this.isMarkerInBounds_(c,f)&&(!this.ignoreHidden_||this.ignoreHidden_&&c.getVisible())&&this.addToClosestCluster_(c);g<this.markers_.length?this.timerRefStatic=setTimeout(function(){e.createClusters_(g)},0):(delete this.timerRefStatic,google.maps.event.trigger(this,"clusteringend",this))}},f.prototype.extend=function(a,b){return function(a){var b;for(b in a.prototype)this.prototype[b]=a.prototype[b];return this}.apply(a,[b])},f.CALCULATOR=function(a,b){for(var c=0,d="",e=a.length.toString(),f=e;0!==f;)f=parseInt(f/10,10),c++;return c=Math.min(c,b),{text:e,index:c,title:d}},f.BATCH_SIZE=2e3,f.BATCH_SIZE_IE=500,f.IMAGE_PATH="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m",f.IMAGE_EXTENSION="png",f.IMAGE_SIZES=[53,56,66,78,90],g(h,google.maps.OverlayView),h.getSharedCross=function(a){var b;return"undefined"==typeof h.getSharedCross.crossDiv&&(b=document.createElement("img"),b.style.cssText="position: absolute; z-index: 1000002; display: none;",b.style.marginLeft="-8px",b.style.marginTop="-9px",b.src=a,h.getSharedCross.crossDiv=b),h.getSharedCross.crossDiv},h.prototype.onAdd=function(){var a,b,c,d,e,f,g,i=this,j=!1,k=!1,l=20,m="url("+this.handCursorURL_+")",n=function(a){a.preventDefault&&a.preventDefault(),a.cancelBubble=!0,a.stopPropagation&&a.stopPropagation()},o=function(){i.marker_.setAnimation(null)};this.getPanes().overlayImage.appendChild(this.labelDiv_),this.getPanes().overlayMouseTarget.appendChild(this.eventDiv_),"undefined"==typeof h.getSharedCross.processed&&(this.getPanes().overlayImage.appendChild(this.crossDiv_),h.getSharedCross.processed=!0),this.listeners_=[google.maps.event.addDomListener(this.eventDiv_,"mouseover",function(a){(i.marker_.getDraggable()||i.marker_.getClickable())&&(this.style.cursor="pointer",google.maps.event.trigger(i.marker_,"mouseover",a))}),google.maps.event.addDomListener(this.eventDiv_,"mouseout",function(a){!i.marker_.getDraggable()&&!i.marker_.getClickable()||k||(this.style.cursor=i.marker_.getCursor(),google.maps.event.trigger(i.marker_,"mouseout",a))}),google.maps.event.addDomListener(this.eventDiv_,"mousedown",function(a){k=!1,i.marker_.getDraggable()&&(j=!0,this.style.cursor=m),(i.marker_.getDraggable()||i.marker_.getClickable())&&(google.maps.event.trigger(i.marker_,"mousedown",a),n(a))}),google.maps.event.addDomListener(document,"mouseup",function(b){var c;if(j&&(j=!1,i.eventDiv_.style.cursor="pointer",google.maps.event.trigger(i.marker_,"mouseup",b)),k){if(e){c=i.getProjection().fromLatLngToDivPixel(i.marker_.getPosition()),c.y+=l,i.marker_.setPosition(i.getProjection().fromDivPixelToLatLng(c));try{i.marker_.setAnimation(google.maps.Animation.BOUNCE),setTimeout(o,1406)}catch(f){}}i.crossDiv_.style.display="none",i.marker_.setZIndex(a),d=!0,k=!1,b.latLng=i.marker_.getPosition(),google.maps.event.trigger(i.marker_,"dragend",b)}}),google.maps.event.addListener(i.marker_.getMap(),"mousemove",function(d){var h;j&&(k?(d.latLng=new google.maps.LatLng(d.latLng.lat()-b,d.latLng.lng()-c),h=i.getProjection().fromLatLngToDivPixel(d.latLng),e&&(i.crossDiv_.style.left=h.x+"px",i.crossDiv_.style.top=h.y+"px",i.crossDiv_.style.display="",h.y-=l),i.marker_.setPosition(i.getProjection().fromDivPixelToLatLng(h)),e&&(i.eventDiv_.style.top=h.y+l+"px"),google.maps.event.trigger(i.marker_,"drag",d)):(b=d.latLng.lat()-i.marker_.getPosition().lat(),c=d.latLng.lng()-i.marker_.getPosition().lng(),a=i.marker_.getZIndex(),f=i.marker_.getPosition(),g=i.marker_.getMap().getCenter(),e=i.marker_.get("raiseOnDrag"),k=!0,i.marker_.setZIndex(1e6),d.latLng=i.marker_.getPosition(),google.maps.event.trigger(i.marker_,"dragstart",d)))}),google.maps.event.addDomListener(document,"keydown",function(a){k&&27===a.keyCode&&(e=!1,i.marker_.setPosition(f),i.marker_.getMap().setCenter(g),google.maps.event.trigger(document,"mouseup",a))}),google.maps.event.addDomListener(this.eventDiv_,"click",function(a){(i.marker_.getDraggable()||i.marker_.getClickable())&&(d?d=!1:(google.maps.event.trigger(i.marker_,"click",a),n(a)))}),google.maps.event.addDomListener(this.eventDiv_,"dblclick",function(a){(i.marker_.getDraggable()||i.marker_.getClickable())&&(google.maps.event.trigger(i.marker_,"dblclick",a),n(a))}),google.maps.event.addListener(this.marker_,"dragstart",function(a){k||(e=this.get("raiseOnDrag"))}),google.maps.event.addListener(this.marker_,"drag",function(a){k||e&&(i.setPosition(l),i.labelDiv_.style.zIndex=1e6+(this.get("labelInBackground")?-1:1))}),google.maps.event.addListener(this.marker_,"dragend",function(a){k||e&&i.setPosition(0)}),google.maps.event.addListener(this.marker_,"position_changed",function(){i.setPosition()}),google.maps.event.addListener(this.marker_,"zindex_changed",function(){i.setZIndex()}),google.maps.event.addListener(this.marker_,"visible_changed",function(){i.setVisible()}),google.maps.event.addListener(this.marker_,"labelvisible_changed",function(){i.setVisible()}),google.maps.event.addListener(this.marker_,"title_changed",function(){i.setTitle()}),google.maps.event.addListener(this.marker_,"labelcontent_changed",function(){i.setContent()}),google.maps.event.addListener(this.marker_,"labelanchor_changed",function(){i.setAnchor()}),google.maps.event.addListener(this.marker_,"labelclass_changed",function(){i.setStyles()}),google.maps.event.addListener(this.marker_,"labelstyle_changed",function(){i.setStyles()})]},h.prototype.onRemove=function(){var a;for(this.labelDiv_.parentNode.removeChild(this.labelDiv_),this.eventDiv_.parentNode.removeChild(this.eventDiv_),a=0;a<this.listeners_.length;a++)google.maps.event.removeListener(this.listeners_[a])},h.prototype.draw=function(){this.setContent(),this.setTitle(),this.setStyles()},h.prototype.setContent=function(){var a=this.marker_.get("labelContent");"undefined"==typeof a.nodeType?(this.labelDiv_.innerHTML=a,this.eventDiv_.innerHTML=this.labelDiv_.innerHTML):(this.labelDiv_.innerHTML="",this.labelDiv_.appendChild(a),a=a.cloneNode(!0),this.eventDiv_.innerHTML="",this.eventDiv_.appendChild(a))},h.prototype.setTitle=function(){this.eventDiv_.title=this.marker_.getTitle()||""},h.prototype.setStyles=function(){var a,b;this.labelDiv_.className=this.marker_.get("labelClass"),this.eventDiv_.className=this.labelDiv_.className,this.labelDiv_.style.cssText="",this.eventDiv_.style.cssText="",b=this.marker_.get("labelStyle");for(a in b)b.hasOwnProperty(a)&&(this.labelDiv_.style[a]=b[a],this.eventDiv_.style[a]=b[a]);this.setMandatoryStyles()},h.prototype.setMandatoryStyles=function(){this.labelDiv_.style.position="absolute",this.labelDiv_.style.overflow="hidden","undefined"!=typeof this.labelDiv_.style.opacity&&""!==this.labelDiv_.style.opacity&&(this.labelDiv_.style.MsFilter='"progid:DXImageTransform.Microsoft.Alpha(opacity='+100*this.labelDiv_.style.opacity+')"',this.labelDiv_.style.filter="alpha(opacity="+100*this.labelDiv_.style.opacity+")"),this.eventDiv_.style.position=this.labelDiv_.style.position,this.eventDiv_.style.overflow=this.labelDiv_.style.overflow,this.eventDiv_.style.opacity=.01,this.eventDiv_.style.MsFilter='"progid:DXImageTransform.Microsoft.Alpha(opacity=1)"',this.eventDiv_.style.filter="alpha(opacity=1)",this.setAnchor(),this.setPosition(),this.setVisible()},h.prototype.setAnchor=function(){var a=this.marker_.get("labelAnchor");this.labelDiv_.style.marginLeft=-a.x+"px",this.labelDiv_.style.marginTop=-a.y+"px",this.eventDiv_.style.marginLeft=-a.x+"px",this.eventDiv_.style.marginTop=-a.y+"px"},h.prototype.setPosition=function(a){var b=this.getProjection().fromLatLngToDivPixel(this.marker_.getPosition());"undefined"==typeof a&&(a=0),this.labelDiv_.style.left=Math.round(b.x)+"px",this.labelDiv_.style.top=Math.round(b.y-a)+"px",this.eventDiv_.style.left=this.labelDiv_.style.left,this.eventDiv_.style.top=this.labelDiv_.style.top,this.setZIndex()},h.prototype.setZIndex=function(){var a=this.marker_.get("labelInBackground")?-1:1;"undefined"==typeof this.marker_.getZIndex()?(this.labelDiv_.style.zIndex=parseInt(this.labelDiv_.style.top,10)+a,this.eventDiv_.style.zIndex=this.labelDiv_.style.zIndex):(this.labelDiv_.style.zIndex=this.marker_.getZIndex()+a,this.eventDiv_.style.zIndex=this.labelDiv_.style.zIndex)},h.prototype.setVisible=function(){this.marker_.get("labelVisible")?this.labelDiv_.style.display=this.marker_.getVisible()?"block":"none":this.labelDiv_.style.display="none",this.eventDiv_.style.display=this.labelDiv_.style.display},g(i,google.maps.Marker),i.prototype.setMap=function(a){google.maps.Marker.prototype.setMap.apply(this,arguments),this.label.setMap(a)},j.prototype=new google.maps.OverlayView,a.RichMarker=j,j.prototype.getVisible=function(){return this.get("visible")},j.prototype.getVisible=j.prototype.getVisible,j.prototype.setVisible=function(a){this.set("visible",a)},j.prototype.setVisible=j.prototype.setVisible,j.prototype.visible_changed=function(){this.ready_&&(this.markerWrapper_.style.display=this.getVisible()?"":"none",this.draw())},j.prototype.visible_changed=j.prototype.visible_changed,j.prototype.setFlat=function(a){this.set("flat",!!a)},j.prototype.setFlat=j.prototype.setFlat,j.prototype.getFlat=function(){return this.get("flat")},j.prototype.getFlat=j.prototype.getFlat,j.prototype.getWidth=function(){return this.get("width")},j.prototype.getWidth=j.prototype.getWidth,j.prototype.getHeight=function(){return this.get("height")},j.prototype.getHeight=j.prototype.getHeight,j.prototype.setShadow=function(a){this.set("shadow",a),this.flat_changed()},j.prototype.setShadow=j.prototype.setShadow,j.prototype.getShadow=function(){return this.get("shadow")},j.prototype.getShadow=j.prototype.getShadow,j.prototype.flat_changed=function(){this.ready_&&(this.markerWrapper_.style.boxShadow=this.markerWrapper_.style.webkitBoxShadow=this.markerWrapper_.style.MozBoxShadow=this.getFlat()?"":this.getShadow())},j.prototype.flat_changed=j.prototype.flat_changed,j.prototype.setZIndex=function(a){this.set("zIndex",a)},j.prototype.setZIndex=j.prototype.setZIndex,j.prototype.getZIndex=function(){return this.get("zIndex")},j.prototype.getZIndex=j.prototype.getZIndex,j.prototype.zIndex_changed=function(){this.getZIndex()&&this.ready_&&(this.markerWrapper_.style.zIndex=this.getZIndex())},j.prototype.zIndex_changed=j.prototype.zIndex_changed,j.prototype.getDraggable=function(){return this.get("draggable")},j.prototype.getDraggable=j.prototype.getDraggable,j.prototype.setDraggable=function(a){this.set("draggable",!!a)},j.prototype.setDraggable=j.prototype.setDraggable,j.prototype.draggable_changed=function(){this.ready_&&(this.getDraggable()?this.addDragging_(this.markerWrapper_):this.removeDragListeners_())},j.prototype.draggable_changed=j.prototype.draggable_changed,j.prototype.getPosition=function(){return this.get("position")},j.prototype.getPosition=j.prototype.getPosition,j.prototype.setPosition=function(a){this.set("position",a)},j.prototype.setPosition=j.prototype.setPosition,j.prototype.position_changed=function(){this.draw()},j.prototype.position_changed=j.prototype.position_changed,j.prototype.getAnchor=function(){return this.get("anchor")},j.prototype.getAnchor=j.prototype.getAnchor,j.prototype.setAnchor=function(a){this.set("anchor",a)},j.prototype.setAnchor=j.prototype.setAnchor,j.prototype.anchor_changed=function(){this.draw()},j.prototype.anchor_changed=j.prototype.anchor_changed,j.prototype.htmlToDocumentFragment_=function(a){var b=document.createElement("DIV");if(b.innerHTML=a,1==b.childNodes.length)return b.removeChild(b.firstChild);for(var c=document.createDocumentFragment();b.firstChild;)c.appendChild(b.firstChild);return c},j.prototype.removeChildren_=function(a){if(a)for(var b;b=a.firstChild;)a.removeChild(b)},j.prototype.setContent=function(a){this.set("content",a)},j.prototype.setContent=j.prototype.setContent,j.prototype.getContent=function(){return this.get("content")},j.prototype.getContent=j.prototype.getContent,j.prototype.content_changed=function(){if(this.markerContent_){this.removeChildren_(this.markerContent_);var a=this.getContent();if(a){"string"==typeof a&&(a=a.replace(/^\s*([\S\s]*)\b\s*$/,"$1"),a=this.htmlToDocumentFragment_(a)),this.markerContent_.appendChild(a);for(var b,c=this,d=this.markerContent_.getElementsByTagName("IMG"),e=0;b=d[e];e++)google.maps.event.addDomListener(b,"mousedown",function(a){c.getDraggable()&&(a.preventDefault&&a.preventDefault(),a.returnValue=!1)}),google.maps.event.addDomListener(b,"load",function(){c.draw()});google.maps.event.trigger(this,"domready")}this.ready_&&this.draw()}},j.prototype.content_changed=j.prototype.content_changed,j.prototype.setCursor_=function(a){if(this.ready_){var b="";-1!==navigator.userAgent.indexOf("Gecko/")?("dragging"==a&&(b="-moz-grabbing"),"dragready"==a&&(b="-moz-grab"),"draggable"==a&&(b="pointer")):(("dragging"==a||"dragready"==a)&&(b="move"),"draggable"==a&&(b="pointer")),this.markerWrapper_.style.cursor!=b&&(this.markerWrapper_.style.cursor=b)}},j.prototype.startDrag=function(a){if(this.getDraggable()&&!this.dragging_){this.dragging_=!0;var b=this.getMap();this.mapDraggable_=b.get("draggable"),b.set("draggable",!1),this.mouseX_=a.clientX,this.mouseY_=a.clientY,this.setCursor_("dragready"),this.markerWrapper_.style.MozUserSelect="none",this.markerWrapper_.style.KhtmlUserSelect="none",this.markerWrapper_.style.WebkitUserSelect="none",this.markerWrapper_.unselectable="on",this.markerWrapper_.onselectstart=function(){return!1},this.addDraggingListeners_(),google.maps.event.trigger(this,"dragstart")}},j.prototype.stopDrag=function(){this.getDraggable()&&this.dragging_&&(this.dragging_=!1,this.getMap().set("draggable",this.mapDraggable_),this.mouseX_=this.mouseY_=this.mapDraggable_=null,this.markerWrapper_.style.MozUserSelect="",this.markerWrapper_.style.KhtmlUserSelect="",this.markerWrapper_.style.WebkitUserSelect="",this.markerWrapper_.unselectable="off",this.markerWrapper_.onselectstart=function(){},this.removeDraggingListeners_(),this.setCursor_("draggable"),google.maps.event.trigger(this,"dragend"),this.draw())},j.prototype.drag=function(a){if(!this.getDraggable()||!this.dragging_)return void this.stopDrag();var b=this.mouseX_-a.clientX,c=this.mouseY_-a.clientY;this.mouseX_=a.clientX,this.mouseY_=a.clientY;var d=parseInt(this.markerWrapper_.style.left,10)-b,e=parseInt(this.markerWrapper_.style.top,10)-c;this.markerWrapper_.style.left=d+"px",this.markerWrapper_.style.top=e+"px";var f=this.getOffset_(),g=new google.maps.Point(d-f.width,e-f.height),h=this.getProjection();this.setPosition(h.fromDivPixelToLatLng(g)),this.setCursor_("dragging"),google.maps.event.trigger(this,"drag")},j.prototype.removeDragListeners_=function(){this.draggableListener_&&(google.maps.event.removeListener(this.draggableListener_),delete this.draggableListener_),this.setCursor_("")},j.prototype.addDragging_=function(a){if(a){var b=this;this.draggableListener_=google.maps.event.addDomListener(a,"mousedown",function(a){b.startDrag(a)}),this.setCursor_("draggable")}},j.prototype.addDraggingListeners_=function(){var b=this;this.markerWrapper_.setCapture?(this.markerWrapper_.setCapture(!0),this.draggingListeners_=[google.maps.event.addDomListener(this.markerWrapper_,"mousemove",function(a){b.drag(a)},!0),google.maps.event.addDomListener(this.markerWrapper_,"mouseup",function(){b.stopDrag(),b.markerWrapper_.releaseCapture()},!0)]):this.draggingListeners_=[google.maps.event.addDomListener(a,"mousemove",function(a){b.drag(a)},!0),google.maps.event.addDomListener(a,"mouseup",function(){b.stopDrag()},!0)]},j.prototype.removeDraggingListeners_=function(){if(this.draggingListeners_){for(var a,b=0;a=this.draggingListeners_[b];b++)google.maps.event.removeListener(a);this.draggingListeners_.length=0}},j.prototype.getOffset_=function(){var a=this.getAnchor();if("object"==typeof a)return a;var b=new google.maps.Size(0,0);if(!this.markerContent_)return b;var c=this.markerContent_.offsetWidth,d=this.markerContent_.offsetHeight;switch(a){case k.TOP_LEFT:break;case k.TOP:b.width=-c/2;break;case k.TOP_RIGHT:b.width=-c;break;case k.LEFT:b.height=-d/2;break;case k.MIDDLE:b.width=-c/2,b.height=-d/2;break;case k.RIGHT:b.width=-c,b.height=-d/2;break;case k.BOTTOM_LEFT:b.height=-d;break;case k.BOTTOM:b.width=-c/2,b.height=-d;break;case k.BOTTOM_RIGHT:b.width=-c,b.height=-d}return b},j.prototype.onAdd=function(){if(this.markerWrapper_||(this.markerWrapper_=document.createElement("DIV"),this.markerWrapper_.style.position="absolute"),this.getZIndex()&&(this.markerWrapper_.style.zIndex=this.getZIndex()),this.markerWrapper_.style.display=this.getVisible()?"":"none",!this.markerContent_){this.markerContent_=document.createElement("DIV"),this.markerWrapper_.appendChild(this.markerContent_);var a=this;google.maps.event.addDomListener(this.markerContent_,"click",function(b){google.maps.event.trigger(a,"click")}),google.maps.event.addDomListener(this.markerContent_,"mouseover",function(b){google.maps.event.trigger(a,"mouseover")}),google.maps.event.addDomListener(this.markerContent_,"mouseout",function(b){google.maps.event.trigger(a,"mouseout")})}this.ready_=!0,this.content_changed(),this.flat_changed(),this.draggable_changed();var b=this.getPanes();b&&b.overlayMouseTarget.appendChild(this.markerWrapper_),google.maps.event.trigger(this,"ready")},j.prototype.onAdd=j.prototype.onAdd,j.prototype.draw=function(){if(this.ready_&&!this.dragging_){var a=this.getProjection();if(a){var b=this.get("position"),c=a.fromLatLngToDivPixel(b),d=this.getOffset_();this.markerWrapper_.style.top=c.y+d.height+"px",this.markerWrapper_.style.left=c.x+d.width+"px";var e=this.markerContent_.offsetHeight,f=this.markerContent_.offsetWidth;f!=this.get("width")&&this.set("width",f),e!=this.get("height")&&this.set("height",e)}}},j.prototype.draw=j.prototype.draw,j.prototype.onRemove=function(){this.markerWrapper_&&this.markerWrapper_.parentNode&&this.markerWrapper_.parentNode.removeChild(this.markerWrapper_),this.removeDragListeners_()},j.prototype.onRemove=j.prototype.onRemove;var k={TOP_LEFT:1,TOP:2,TOP_RIGHT:3,LEFT:4,MIDDLE:5,RIGHT:6,BOTTOM_LEFT:7,BOTTOM:8,BOTTOM_RIGHT:9};a.RichMarkerPosition=k,a.InfoBox=b,a.Cluster=e,a.ClusterIcon=d,a.MarkerClusterer=f,a.MarkerLabel_=h,a.MarkerWithLabel=i,a.RichMarker=j})}}),function(a){function b(d){if(c[d])return c[d].exports;var e=c[d]={exports:{},id:d,loaded:!1};return a[d].call(e.exports,e,e.exports,b),e.loaded=!0,e.exports}var c={};return b.m=a,b.c=c,b.p="",b(0)}([function(a,c,d){b.module("uiGmapgoogle-maps.wrapped").service("uiGmapDataStructures",function(){return{Graph:d(1).Graph,Queue:d(1).Queue}})},function(a,b,c){(function(){a.exports={Graph:c(2),Heap:c(3),LinkedList:c(4),Map:c(5),Queue:c(6),RedBlackTree:c(7),Trie:c(8)}}).call(this)},function(a,b,c){(function(){var b,c={}.hasOwnProperty;b=function(){function a(){this._nodes={},this.nodeSize=0,this.edgeSize=0}return a.prototype.addNode=function(a){return this._nodes[a]?void 0:(this.nodeSize++,this._nodes[a]={_outEdges:{},_inEdges:{}})},a.prototype.getNode=function(a){return this._nodes[a]},a.prototype.removeNode=function(a){var b,d,e,f,g;if(d=this._nodes[a]){f=d._outEdges;for(e in f)c.call(f,e)&&this.removeEdge(a,e);g=d._inEdges;for(b in g)c.call(g,b)&&this.removeEdge(b,a);return this.nodeSize--,delete this._nodes[a],d}},a.prototype.addEdge=function(a,b,c){var d,e,f;return null==c&&(c=1),!this.getEdge(a,b)&&(e=this._nodes[a],f=this._nodes[b],e&&f)?(d={weight:c},e._outEdges[b]=d,f._inEdges[a]=d,this.edgeSize++,d):void 0},a.prototype.getEdge=function(a,b){var c,d;return c=this._nodes[a],d=this._nodes[b],c&&d?c._outEdges[b]:void 0},a.prototype.removeEdge=function(a,b){var c,d,e;return d=this._nodes[a],e=this._nodes[b],(c=this.getEdge(a,b))?(delete d._outEdges[b],delete e._inEdges[a],this.edgeSize--,c):void 0},a.prototype.getInEdgesOf=function(a){var b,d,e,f;e=this._nodes[a],d=[],f=null!=e?e._inEdges:void 0;for(b in f)c.call(f,b)&&d.push(this.getEdge(b,a));return d},a.prototype.getOutEdgesOf=function(a){var b,d,e,f;b=this._nodes[a],d=[],f=null!=b?b._outEdges:void 0;for(e in f)c.call(f,e)&&d.push(this.getEdge(a,e));return d},a.prototype.getAllEdgesOf=function(a){var b,c,d,e,f,g,h;if(c=this.getInEdgesOf(a),d=this.getOutEdgesOf(a),0===c.length)return d;for(e=this.getEdge(a,a),b=f=0,g=c.length;g>=0?g>f:f>g;b=g>=0?++f:--f)if(c[b]===e){h=[c[c.length-1],c[b]],c[b]=h[0],c[c.length-1]=h[1],c.pop();break}return c.concat(d)},a.prototype.forEachNode=function(a){var b,d,e;e=this._nodes;for(b in e)c.call(e,b)&&(d=e[b],a(d,b))},a.prototype.forEachEdge=function(a){var b,d,e,f,g,h;g=this._nodes;for(d in g)if(c.call(g,d)){e=g[d],h=e._outEdges;for(f in h)c.call(h,f)&&(b=h[f],a(b))}},a}(),a.exports=b}).call(this)},function(a,b,c){(function(){var b,c,d,e;b=function(){function a(a){var b,c,d,e,f,g;for(null==a&&(a=[]),this._data=[void 0],d=0,f=a.length;f>d;d++)c=a[d],null!=c&&this._data.push(c);if(this._data.length>1)for(b=e=2,g=this._data.length;g>=2?g>e:e>g;b=g>=2?++e:--e)this._upHeap(b);this.size=this._data.length-1}return a.prototype.add=function(a){return null!=a?(this._data.push(a),this._upHeap(this._data.length-1),this.size++,a):void 0},a.prototype.removeMin=function(){var a;if(1!==this._data.length)return this.size--,2===this._data.length?this._data.pop():(a=this._data[1],this._data[1]=this._data.pop(),this._downHeap(),a)},a.prototype.peekMin=function(){return this._data[1]},a.prototype._upHeap=function(a){var b,c;for(b=this._data[a];this._data[a]<this._data[d(a)]&&a>1;)c=[this._data[d(a)],this._data[a]],this._data[a]=c[0],this._data[d(a)]=c[1],a=d(a)},a.prototype._downHeap=function(){var a,b,d;for(a=1;c(a<this._data.length)&&(b=c(a),b<this._data.length-1&&this._data[e(a)]<this._data[b]&&(b=e(a)),this._data[b]<this._data[a]);)d=[this._data[a],this._data[b]],this._data[b]=d[0],this._data[a]=d[1],a=b},a}(),d=function(a){return a>>1},c=function(a){return a<<1},e=function(a){return(a<<1)+1},a.exports=b}).call(this)},function(a,b,c){(function(){var b;b=function(){function a(a){var b,c,d;for(null==a&&(a=[]),this.head={prev:void 0,value:void 0,next:void 0},this.tail={prev:void 0,value:void 0,next:void 0},this.size=0,c=0,d=a.length;d>c;c++)b=a[c],this.add(b)}return a.prototype.at=function(a){var b,c,d,e,f;if(-this.size<=a&&a<this.size){if(a=this._adjust(a),2*a<this.size)for(b=this.head,c=d=1;a>=d;c=d+=1)b=b.next;else for(b=this.tail,c=e=1,f=this.size-a-1;f>=e;c=e+=1)b=b.prev;return b}},a.prototype.add=function(a,b){var c,d,e,f,g;return null==b&&(b=this.size),-this.size<=b&&b<=this.size?(d={value:a},b=this._adjust(b),0===this.size?this.head=d:0===b?(e=[d,this.head,d],this.head.prev=e[0],d.next=e[1],this.head=e[2]):(c=this.at(b-1),f=[c.next,d,d,c],d.next=f[0],null!=(g=c.next)?g.prev=f[1]:void 0,c.next=f[2],d.prev=f[3]),b===this.size&&(this.tail=d),this.size++,a):void 0},a.prototype.removeAt=function(a){var b,c,d;return null==a&&(a=this.size-1),-this.size<=a&&a<this.size&&0!==this.size?(a=this._adjust(a),1===this.size?(c=this.head.value,this.head.value=this.tail.value=void 0):0===a?(c=this.head.value,this.head=this.head.next,this.head.prev=void 0):(b=this.at(a),c=b.value,b.prev.next=b.next,null!=(d=b.next)&&(d.prev=b.prev),a===this.size-1&&(this.tail=b.prev)),this.size--,c):void 0},a.prototype.remove=function(a){var b;if(null!=a){for(b=this.head;b&&b.value!==a;)b=b.next;if(b)return 1===this.size?this.head.value=this.tail.value=void 0:b===this.head?(this.head=this.head.next,this.head.prev=void 0):b===this.tail?(this.tail=this.tail.prev,this.tail.next=void 0):(b.prev.next=b.next,b.next.prev=b.prev),this.size--,a}},a.prototype.indexOf=function(a,b){var c,d;if(null==b&&(b=0),null==this.head.value&&!this.head.next||b>=this.size)return-1;for(b=Math.max(0,this._adjust(b)),c=this.at(b),d=b;c&&c.value!==a;)c=c.next,d++;return d===this.size?-1:d;
 },a.prototype._adjust=function(a){return 0>a?this.size+a:a},a}(),a.exports=b}).call(this)},function(a,b,c){(function(){var b,c,d,e,f={}.hasOwnProperty;c="_mapId_",b=function(){function a(b){var c,d;this._content={},this._itemId=0,this._id=a._newMapId(),this.size=0;for(c in b)f.call(b,c)&&(d=b[c],this.set(c,d))}return a._mapIdTracker=0,a._newMapId=function(){return this._mapIdTracker++},a.prototype.hash=function(a,b){var f,g;return null==b&&(b=!1),g=d(a),e(a)?(f=c+this._id,b&&!a[f]&&(a[f]=this._itemId++),f+"_"+a[f]):g+"_"+a},a.prototype.set=function(a,b){return this.has(a)||this.size++,this._content[this.hash(a,!0)]=[b,a],b},a.prototype.get=function(a){var b;return null!=(b=this._content[this.hash(a)])?b[0]:void 0},a.prototype.has=function(a){return this.hash(a)in this._content},a.prototype["delete"]=function(a){var b;return b=this.hash(a),b in this._content?(delete this._content[b],e(a)&&delete a[c+this._id],this.size--,!0):!1},a.prototype.forEach=function(a){var b,c,d;d=this._content;for(b in d)f.call(d,b)&&(c=d[b],a(c[1],c[0]))},a}(),e=function(a){var b,c,e,f,g;for(b=["Boolean","Number","String","Undefined","Null","RegExp","Function"],e=d(a),f=0,g=b.length;g>f;f++)if(c=b[f],e===c)return!1;return!0},d=function(a){return Object.prototype.toString.apply(a).match(/\[object (.+)\]/)[1]},a.exports=b}).call(this)},function(a,b,c){(function(){var b;b=function(){function a(a){null==a&&(a=[]),this._content=a,this._dequeueIndex=0,this.size=this._content.length}return a.prototype.enqueue=function(a){return this.size++,this._content.push(a),a},a.prototype.dequeue=function(){var a;if(0!==this.size)return this.size--,a=this._content[this._dequeueIndex],this._dequeueIndex++,2*this._dequeueIndex>this._content.length&&(this._content=this._content.slice(this._dequeueIndex),this._dequeueIndex=0),a},a.prototype.peek=function(){return this._content[this._dequeueIndex]},a}(),a.exports=b}).call(this)},function(a,b,c){(function(){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p;c=0,d=1,e=2,h=3,f=1,b=2,g=function(){function a(a){var b,c,d;for(null==a&&(a=[]),this._root,this.size=0,c=0,d=a.length;d>c;c++)b=a[c],null!=b&&this.add(b)}return a.prototype.add=function(a){var g,l,m,n;if(null!=a){if(this.size++,m={value:a,_color:f},this._root){if(l=i(this._root,function(b){return a===b.value?c:a<b.value?b._left?d:(m._parent=b,b._left=m,h):b._right?e:(m._parent=b,b._right=m,h)}),null!=l)return}else this._root=m;for(g=m;;){if(g===this._root){g._color=b;break}if(g._parent._color===b)break;{if((null!=(n=p(g))?n._color:void 0)!==f){!k(g)&&k(g._parent)?(this._rotateLeft(g._parent),g=g._left):k(g)&&!k(g._parent)&&(this._rotateRight(g._parent),g=g._right),g._parent._color=b,j(g)._color=f,k(g)?this._rotateRight(j(g)):this._rotateLeft(j(g));break}g._parent._color=b,p(g)._color=b,j(g)._color=f,g=j(g)}}return a}},a.prototype.has=function(a){var b;return b=i(this._root,function(b){return a===b.value?c:a<b.value?d:e}),b?!0:!1},a.prototype.peekMin=function(){var a;return null!=(a=n(this._root))?a.value:void 0},a.prototype.peekMax=function(){var a;return null!=(a=m(this._root))?a.value:void 0},a.prototype.remove=function(a){var b;return(b=i(this._root,function(b){return a===b.value?c:a<b.value?d:e}))?(this._removeNode(this._root,b),this.size--,a):void 0},a.prototype.removeMin=function(){var a,b;return(a=n(this._root))?(b=a.value,this._removeNode(this._root,a),b):void 0},a.prototype.removeMax=function(){var a,b;return(a=m(this._root))?(b=a.value,this._removeNode(this._root,a),b):void 0},a.prototype._removeNode=function(a,c){var d,e,g,h,i,j,m,p,q,r;if(c._left&&c._right&&(e=n(c._right),c.value=e.value,c=e),e=c._left||c._right,e||(e={color:b,_right:void 0,_left:void 0,isLeaf:!0}),e._parent=c._parent,null!=(g=c._parent)&&(g[l(c)]=e),c._color===b)if(e._color===f)e._color=b,e._parent||(this._root=e);else for(;;){if(!e._parent){e.isLeaf?this._root=void 0:this._root=e;break}if(d=o(e),(null!=d?d._color:void 0)===f&&(e._parent._color=f,d._color=b,k(e)?this._rotateLeft(e._parent):this._rotateRight(e._parent)),d=o(e),e._parent._color!==b||d&&(d._color!==b||d._left&&d._left._color!==b||d._right&&d._right._color!==b)){if(!(e._parent._color!==f||d&&(d._color!==b||d._left&&(null!=(h=d._left)?h._color:void 0)!==b||d._right&&(null!=(i=d._right)?i._color:void 0)!==b))){null!=d&&(d._color=f),e._parent._color=b;break}if((null!=d?d._color:void 0)===b){!k(e)||d._right&&d._right._color!==b||(null!=(j=d._left)?j._color:void 0)!==f?k(e)||d._left&&d._left._color!==b||(null!=(p=d._right)?p._color:void 0)!==f||(d._color=f,null!=(q=d._right)&&(q._color=b),this._rotateLeft(d)):(d._color=f,null!=(m=d._left)&&(m._color=b),this._rotateRight(d));break}d=o(e),d._color=e._parent._color,k(e)?(d._right._color=b,this._rotateRight(e._parent)):(d._left._color=b,this._rotateLeft(e._parent))}else null!=d&&(d._color=f),e.isLeaf&&(e._parent[l(e)]=void 0),e=e._parent}return e.isLeaf&&null!=(r=e._parent)?r[l(e)]=void 0:void 0},a.prototype._rotateLeft=function(a){var b,c;return null!=(b=a._parent)&&(b[l(a)]=a._right),a._right._parent=a._parent,a._parent=a._right,a._right=a._right._left,a._parent._left=a,null!=(c=a._right)&&(c._parent=a),null==a._parent._parent?this._root=a._parent:void 0},a.prototype._rotateRight=function(a){var b,c;return null!=(b=a._parent)&&(b[l(a)]=a._left),a._left._parent=a._parent,a._parent=a._left,a._left=a._left._right,a._parent._right=a,null!=(c=a._left)&&(c._parent=a),null==a._parent._parent?this._root=a._parent:void 0},a}(),k=function(a){return a===a._parent._left},l=function(a){return k(a)?"_left":"_right"},i=function(a,b){var f,g,i;for(g=a,i=void 0;g;){if(f=b(g),f===c){i=g;break}if(f===d)g=g._left;else if(f===e)g=g._right;else if(f===h)break}return i},n=function(a){return i(a,function(a){return a._left?d:c})},m=function(a){return i(a,function(a){return a._right?e:c})},j=function(a){var b;return null!=(b=a._parent)?b._parent:void 0},p=function(a){return j(a)?k(a._parent)?j(a)._right:j(a)._left:void 0},o=function(a){return k(a)?a._parent._right:a._parent._left},a.exports=g}).call(this)},function(a,b,c){(function(){var b,d,e,f,g={}.hasOwnProperty;b=c(6),e="end",d=function(){function a(a){var b,c,d;for(null==a&&(a=[]),this._root={},this.size=0,c=0,d=a.length;d>c;c++)b=a[c],this.add(b)}return a.prototype.add=function(a){var b,c,d,f;if(null!=a){for(this.size++,b=this._root,d=0,f=a.length;f>d;d++)c=a[d],null==b[c]&&(b[c]={}),b=b[c];return b[e]=!0,a}},a.prototype.has=function(a){var b,c,d,f;if(null==a)return!1;for(b=this._root,d=0,f=a.length;f>d;d++){if(c=a[d],null==b[c])return!1;b=b[c]}return b[e]?!0:!1},a.prototype.longestPrefixOf=function(a){var b,c,d,e,f;if(null==a)return"";for(b=this._root,d="",e=0,f=a.length;f>e&&(c=a[e],null!=b[c]);e++)d+=c,b=b[c];return d},a.prototype.wordsWithPrefix=function(a){var c,d,f,h,i,j,k,l,m,n;if(null==a)return[];for(null!=a||(a=""),k=[],d=this._root,l=0,m=a.length;m>l;l++)if(f=a[l],d=d[f],null==d)return[];for(i=new b,i.enqueue([d,""]);0!==i.size;){n=i.dequeue(),h=n[0],c=n[1],h[e]&&k.push(a+c);for(f in h)g.call(h,f)&&(j=h[f],i.enqueue([j,c+f]))}return k},a.prototype.remove=function(a){var b,c,d,g,h,i,j,k;if(null!=a){for(b=this._root,g=[],h=0,j=a.length;j>h;h++){if(d=a[h],null==b[d])return;b=b[d],g.push([d,b])}if(b[e]){if(this.size--,delete b[e],f(b,1))return a;for(c=i=k=g.length-1;(1>=k?1>=i:i>=1)&&!f(g[c][1],1);c=1>=k?++i:--i)delete g[c-1][1][g[c][0]];return f(this._root[g[0][0]],1)||delete this._root[g[0][0]],a}}},a}(),f=function(a,b){var c,d;if(0===b)return!0;d=0;for(c in a)if(g.call(a,c)&&(d++,d>=b))return!0;return!1},a.exports=d}).call(this)}]),b.module("uiGmapgoogle-maps.extensions").service("uiGmapExtendMarkerClusterer",["uiGmapLodash","uiGmapPropMap",function(b,c){return{init:_.once(function(){(function(){var d={}.hasOwnProperty,e=function(a,b){function c(){this.constructor=a}for(var e in b)d.call(b,e)&&(a[e]=b[e]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a};a.NgMapCluster=function(a){function d(a){d.__super__.constructor.call(this,a),this.markers_=new c}return e(d,a),d.prototype.addMarker=function(a){var b,c;if(this.isMarkerAlreadyAdded_(a)){var d=this.markers_.get(a.key);if(d.getPosition().lat()==a.getPosition().lat()&&d.getPosition().lon()==a.getPosition().lon())return!1}if(this.center_){if(this.averageCenter_){var e=this.markers_.length+1,f=(this.center_.lat()*(e-1)+a.getPosition().lat())/e,g=(this.center_.lng()*(e-1)+a.getPosition().lng())/e;this.center_=new google.maps.LatLng(f,g),this.calculateBounds_()}}else this.center_=a.getPosition(),this.calculateBounds_();return a.isAdded=!0,this.markers_.push(a),b=this.markers_.length,c=this.markerClusterer_.getMaxZoom(),null!==c&&this.map_.getZoom()>c?a.getMap()!==this.map_&&a.setMap(this.map_):b<this.minClusterSize_?a.getMap()!==this.map_&&a.setMap(this.map_):b===this.minClusterSize_?this.markers_.each(function(a){a.setMap(null)}):a.setMap(null),!0},d.prototype.isMarkerAlreadyAdded_=function(a){return b.isNullOrUndefined(this.markers_.get(a.key))},d.prototype.getBounds=function(){var a=new google.maps.LatLngBounds(this.center_,this.center_);return this.getMarkers().each(function(b){a.extend(b.getPosition())}),a},d.prototype.remove=function(){this.clusterIcon_.setMap(null),this.markers_=new c,delete this.markers_},d}(Cluster),a.NgMapMarkerClusterer=function(a){function b(a,d,e){b.__super__.constructor.call(this,a,d,e),this.markers_=new c}return e(b,a),b.prototype.clearMarkers=function(){this.resetViewport_(!0),this.markers_=new c},b.prototype.removeMarker_=function(a){return this.markers_.get(a.key)?(a.setMap(null),this.markers_.remove(a.key),!0):!1},b.prototype.createClusters_=function(a){var b,c,d,e=this;if(this.ready_){0===a&&(google.maps.event.trigger(this,"clusteringbegin",this),"undefined"!=typeof this.timerRefStatic&&(clearTimeout(this.timerRefStatic),delete this.timerRefStatic)),d=this.getMap().getZoom()>3?new google.maps.LatLngBounds(this.getMap().getBounds().getSouthWest(),this.getMap().getBounds().getNorthEast()):new google.maps.LatLngBounds(new google.maps.LatLng(85.02070771743472,-178.48388434375),new google.maps.LatLng(-85.08136444384544,178.00048865625));var f=this.getExtendedBounds(d),g=Math.min(a+this.batchSize_,this.markers_.length),h=this.markers_.values();for(b=a;g>b;b++)c=h[b],!c.isAdded&&this.isMarkerInBounds_(c,f)&&(!this.ignoreHidden_||this.ignoreHidden_&&c.getVisible())&&this.addToClosestCluster_(c);if(g<this.markers_.length)this.timerRefStatic=setTimeout(function(){e.createClusters_(g)},0);else{for(b=0;b<this.clusters_.length;b++)this.clusters_[b].updateIcon_();delete this.timerRefStatic,google.maps.event.trigger(this,"clusteringend",this)}}},b.prototype.addToClosestCluster_=function(a){var b,c,d,e,f=4e4,g=null;for(b=0;b<this.clusters_.length;b++)d=this.clusters_[b],e=d.getCenter(),e&&(c=this.distanceBetweenPoints_(e,a.getPosition()),f>c&&(f=c,g=d));g&&g.isMarkerInClusterBounds(a)?g.addMarker(a):(d=new NgMapCluster(this),d.addMarker(a),this.clusters_.push(d))},b.prototype.redraw_=function(){this.createClusters_(0)},b.prototype.resetViewport_=function(a){var b;for(b=0;b<this.clusters_.length;b++)this.clusters_[b].remove();this.clusters_=[],this.markers_.each(function(b){b.isAdded=!1,a&&b.setMap(null)})},b.prototype.extend=function(a,b){return function(a){var b;for(b in a.prototype)"constructor"!==b&&(this.prototype[b]=a.prototype[b]);return this}.apply(a,[b])},ClusterIcon.prototype.show=function(){if(this.div_){var a="",b=this.backgroundPosition_.split(" "),c=parseInt(b[0].trim(),10),d=parseInt(b[1].trim(),10),e=this.getPosFromLatLng_(this.center_);this.div_.style.cssText=this.createCss(e),a="<img src='"+this.url_+"' style='position: absolute; top: "+d+"px; left: "+c+"px; ",a+=this.cluster_.getMarkerClusterer().enableRetinaIcons_?"width: "+this.width_+"px;height: "+this.height_+"px;":"clip: rect("+-1*d+"px, "+(-1*c+this.width_)+"px, "+(-1*d+this.height_)+"px, "+-1*c+"px);",a+="'>",this.div_.innerHTML=a+"<div style='position: absolute;top: "+this.anchorText_[0]+"px;left: "+this.anchorText_[1]+"px;color: "+this.textColor_+";font-size: "+this.textSize_+"px;font-family: "+this.fontFamily_+";font-weight: "+this.fontWeight_+";font-style: "+this.fontStyle_+";text-decoration: "+this.textDecoration_+";text-align: center;width: "+this.width_+"px;line-height:"+this.height_+"px;'>"+this.sums_.text+"</div>","undefined"==typeof this.sums_.title||""===this.sums_.title?this.div_.title=this.cluster_.getMarkerClusterer().getTitle():this.div_.title=this.sums_.title,this.div_.style.display=""}this.visible_=!0},b}(MarkerClusterer)}).call(this)})}}])}(window,angular);
 //# sourceMappingURL=angular-google-maps_dev_mapped.min.js.map
+function FastClick(a,b){"use strict";function c(a,b){return function(){return a.apply(b,arguments)}}var d;if(b=b||{},this.trackingClick=!1,this.trackingClickStart=0,this.targetElement=null,this.touchStartX=0,this.touchStartY=0,this.lastTouchIdentifier=0,this.touchBoundary=b.touchBoundary||10,this.layer=a,this.tapDelay=b.tapDelay||200,!FastClick.notNeeded(a)){for(var e=["onMouse","onClick","onTouchStart","onTouchMove","onTouchEnd","onTouchCancel"],f=this,g=0,h=e.length;h>g;g++)f[e[g]]=c(f[e[g]],f);deviceIsAndroid&&(a.addEventListener("mouseover",this.onMouse,!0),a.addEventListener("mousedown",this.onMouse,!0),a.addEventListener("mouseup",this.onMouse,!0)),a.addEventListener("click",this.onClick,!0),a.addEventListener("touchstart",this.onTouchStart,!1),a.addEventListener("touchmove",this.onTouchMove,!1),a.addEventListener("touchend",this.onTouchEnd,!1),a.addEventListener("touchcancel",this.onTouchCancel,!1),Event.prototype.stopImmediatePropagation||(a.removeEventListener=function(b,c,d){var e=Node.prototype.removeEventListener;"click"===b?e.call(a,b,c.hijacked||c,d):e.call(a,b,c,d)},a.addEventListener=function(b,c,d){var e=Node.prototype.addEventListener;"click"===b?e.call(a,b,c.hijacked||(c.hijacked=function(a){a.propagationStopped||c(a)}),d):e.call(a,b,c,d)}),"function"==typeof a.onclick&&(d=a.onclick,a.addEventListener("click",function(a){d(a)},!1),a.onclick=null)}}var deviceIsAndroid=navigator.userAgent.indexOf("Android")>0,deviceIsIOS=/iP(ad|hone|od)/.test(navigator.userAgent),deviceIsIOS4=deviceIsIOS&&/OS 4_\d(_\d)?/.test(navigator.userAgent),deviceIsIOSWithBadTarget=deviceIsIOS&&/OS ([6-9]|\d{2})_\d/.test(navigator.userAgent),deviceIsBlackBerry10=navigator.userAgent.indexOf("BB10")>0;FastClick.prototype.needsClick=function(a){"use strict";switch(a.nodeName.toLowerCase()){case"button":case"select":case"textarea":if(a.disabled)return!0;break;case"input":if(deviceIsIOS&&"file"===a.type||a.disabled)return!0;break;case"label":case"video":return!0}return/\bneedsclick\b/.test(a.className)},FastClick.prototype.needsFocus=function(a){"use strict";switch(a.nodeName.toLowerCase()){case"textarea":return!0;case"select":return!deviceIsAndroid;case"input":switch(a.type){case"button":case"checkbox":case"file":case"image":case"radio":case"submit":return!1}return!a.disabled&&!a.readOnly;default:return/\bneedsfocus\b/.test(a.className)}},FastClick.prototype.sendClick=function(a,b){"use strict";var c,d;document.activeElement&&document.activeElement!==a&&document.activeElement.blur(),d=b.changedTouches[0],c=document.createEvent("MouseEvents"),c.initMouseEvent(this.determineEventType(a),!0,!0,window,1,d.screenX,d.screenY,d.clientX,d.clientY,!1,!1,!1,!1,0,null),c.forwardedTouchEvent=!0,a.dispatchEvent(c)},FastClick.prototype.determineEventType=function(a){"use strict";return deviceIsAndroid&&"select"===a.tagName.toLowerCase()?"mousedown":"click"},FastClick.prototype.focus=function(a){"use strict";var b;deviceIsIOS&&a.setSelectionRange&&0!==a.type.indexOf("date")&&"time"!==a.type?(b=a.value.length,a.setSelectionRange(b,b)):a.focus()},FastClick.prototype.updateScrollParent=function(a){"use strict";var b,c;if(b=a.fastClickScrollParent,!b||!b.contains(a)){c=a;do{if(c.scrollHeight>c.offsetHeight){b=c,a.fastClickScrollParent=c;break}c=c.parentElement}while(c)}b&&(b.fastClickLastScrollTop=b.scrollTop)},FastClick.prototype.getTargetElementFromEventTarget=function(a){"use strict";return a.nodeType===Node.TEXT_NODE?a.parentNode:a},FastClick.prototype.onTouchStart=function(a){"use strict";var b,c,d;if(a.targetTouches.length>1)return!0;if(b=this.getTargetElementFromEventTarget(a.target),c=a.targetTouches[0],deviceIsIOS){if(d=window.getSelection(),d.rangeCount&&!d.isCollapsed)return!0;if(!deviceIsIOS4){if(c.identifier&&c.identifier===this.lastTouchIdentifier)return a.preventDefault(),!1;this.lastTouchIdentifier=c.identifier,this.updateScrollParent(b)}}return this.trackingClick=!0,this.trackingClickStart=a.timeStamp,this.targetElement=b,this.touchStartX=c.pageX,this.touchStartY=c.pageY,a.timeStamp-this.lastClickTime<this.tapDelay&&a.preventDefault(),!0},FastClick.prototype.touchHasMoved=function(a){"use strict";var b=a.changedTouches[0],c=this.touchBoundary;return Math.abs(b.pageX-this.touchStartX)>c||Math.abs(b.pageY-this.touchStartY)>c?!0:!1},FastClick.prototype.onTouchMove=function(a){"use strict";return this.trackingClick?((this.targetElement!==this.getTargetElementFromEventTarget(a.target)||this.touchHasMoved(a))&&(this.trackingClick=!1,this.targetElement=null),!0):!0},FastClick.prototype.findControl=function(a){"use strict";return void 0!==a.control?a.control:a.htmlFor?document.getElementById(a.htmlFor):a.querySelector("button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea")},FastClick.prototype.onTouchEnd=function(a){"use strict";var b,c,d,e,f,g=this.targetElement;if(!this.trackingClick)return!0;if(a.timeStamp-this.lastClickTime<this.tapDelay)return this.cancelNextClick=!0,!0;if(this.cancelNextClick=!1,this.lastClickTime=a.timeStamp,c=this.trackingClickStart,this.trackingClick=!1,this.trackingClickStart=0,deviceIsIOSWithBadTarget&&(f=a.changedTouches[0],g=document.elementFromPoint(f.pageX-window.pageXOffset,f.pageY-window.pageYOffset)||g,g.fastClickScrollParent=this.targetElement.fastClickScrollParent),d=g.tagName.toLowerCase(),"label"===d){if(b=this.findControl(g)){if(this.focus(g),deviceIsAndroid)return!1;g=b}}else if(this.needsFocus(g))return a.timeStamp-c>100||deviceIsIOS&&window.top!==window&&"input"===d?(this.targetElement=null,!1):(this.focus(g),this.sendClick(g,a),deviceIsIOS&&"select"===d||(this.targetElement=null,a.preventDefault()),!1);return deviceIsIOS&&!deviceIsIOS4&&(e=g.fastClickScrollParent,e&&e.fastClickLastScrollTop!==e.scrollTop)?!0:(this.needsClick(g)||(a.preventDefault(),this.sendClick(g,a)),!1)},FastClick.prototype.onTouchCancel=function(){"use strict";this.trackingClick=!1,this.targetElement=null},FastClick.prototype.onMouse=function(a){"use strict";return this.targetElement?a.forwardedTouchEvent?!0:a.cancelable&&(!this.needsClick(this.targetElement)||this.cancelNextClick)?(a.stopImmediatePropagation?a.stopImmediatePropagation():a.propagationStopped=!0,a.stopPropagation(),a.preventDefault(),!1):!0:!0},FastClick.prototype.onClick=function(a){"use strict";var b;return this.trackingClick?(this.targetElement=null,this.trackingClick=!1,!0):"submit"===a.target.type&&0===a.detail?!0:(b=this.onMouse(a),b||(this.targetElement=null),b)},FastClick.prototype.destroy=function(){"use strict";var a=this.layer;deviceIsAndroid&&(a.removeEventListener("mouseover",this.onMouse,!0),a.removeEventListener("mousedown",this.onMouse,!0),a.removeEventListener("mouseup",this.onMouse,!0)),a.removeEventListener("click",this.onClick,!0),a.removeEventListener("touchstart",this.onTouchStart,!1),a.removeEventListener("touchmove",this.onTouchMove,!1),a.removeEventListener("touchend",this.onTouchEnd,!1),a.removeEventListener("touchcancel",this.onTouchCancel,!1)},FastClick.notNeeded=function(a){"use strict";var b,c,d;if("undefined"==typeof window.ontouchstart)return!0;if(c=+(/Chrome\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1]){if(!deviceIsAndroid)return!0;if(b=document.querySelector("meta[name=viewport]")){if(-1!==b.content.indexOf("user-scalable=no"))return!0;if(c>31&&document.documentElement.scrollWidth<=window.outerWidth)return!0}}if(deviceIsBlackBerry10&&(d=navigator.userAgent.match(/Version\/([0-9]*)\.([0-9]*)/),d[1]>=10&&d[2]>=3&&(b=document.querySelector("meta[name=viewport]")))){if(-1!==b.content.indexOf("user-scalable=no"))return!0;if(document.documentElement.scrollWidth<=window.outerWidth)return!0}return"none"===a.style.msTouchAction?!0:!1},FastClick.attach=function(a,b){"use strict";return new FastClick(a,b)},"function"==typeof define&&"object"==typeof define.amd&&define.amd?define(function(){"use strict";return FastClick}):"undefined"!=typeof module&&module.exports?(module.exports=FastClick.attach,module.exports.FastClick=FastClick):window.FastClick=FastClick,function(){"use strict";angular.module("mobile-angular-ui.core.activeLinks",[]).run(["$rootScope","$window","$document","$location",function(a,b,c,d){var e=function(){var a,e=d.url(),f=e.indexOf("#"),g=e.indexOf("?"),h=b.location.href,i=h.indexOf(e);-1===f&&-1===g?a=h:-1!=f&&f>g?a=h.slice(0,i+f):-1!=g&&g>f&&(a=h.slice(0,i+g));for(var j=c[0].links,k=0;k<j.length;k++){var l=j[k],m=angular.element(l);l.href===a?m.addClass("active"):l.href&&l.href.length&&m.removeClass("active")}};a.$on("$locationChangeSuccess",e),a.$on("$includeContentLoaded",e)}])}(),function(){"use strict";angular.module("mobile-angular-ui.core.capture",[]).run(["Capture","$rootScope",function(a,b){b.$on("$routeChangeStart",function(){a.resetAll()})}]).factory("Capture",["$compile",function(a){var b={};return{resetAll:function(){for(var a in b)this.resetYielder(a)},resetYielder:function(a){var c=b[a];this.setContentFor(a,c.defaultContent,c.defaultScope)},putYielder:function(a,c,d,e){var f={};f.name=a,f.element=c,f.defaultContent=e||"",f.defaultScope=d,b[a]=f},getYielder:function(a){return b[a]},removeYielder:function(a){delete b[a]},setContentFor:function(c,d,e){var f=b[c];f&&(f.element.html(d),a(f.element.contents())(e))}}}]).directive("uiContentFor",["Capture",function(a){return{compile:function(b,c){var d=b.html();return(null===c.uiDuplicate||void 0===c.uiDuplicate)&&(b.html(""),b.remove()),function(b,c,e){a.setContentFor(e.uiContentFor,d,b)}}}}]).directive("uiYieldTo",["$compile","Capture",function(a,b){return{link:function(a,c,d){b.putYielder(d.uiYieldTo,c,a,c.html()),c.on("$destroy",function(){b.removeYielder(d.uiYieldTo)}),a.$on("$destroy",function(){b.removeYielder(d.uiYieldTo)})}}}])}(),function(){"use strict";var a=angular.module("mobile-angular-ui.core.fastclick",[]);a.run(["$window","$document",function(a,b){a.addEventListener("load",function(){FastClick.attach(b[0].body)},!1)}]),angular.forEach(["select","input","textarea"],function(b){a.directive(b,function(){return{restrict:"E",compile:function(a){a.addClass("needsclick")}}})})}(),function(){"use strict";var a=function(a,b){for(var c=a;c.length>0;){if(c[0]===b[0])return c=null,!0;c=c.parent()}return c=null,!1};angular.module("mobile-angular-ui.core.outerClick",[]).factory("bindOuterClick",["$document","$timeout",function(b,c){return function(d,e,f,g){var h=function(b){a(angular.element(b.target),e)||d.$apply(function(){f(d,{$event:b})})},i=angular.noop,j=null;g?i=d.$watch(g,function(a){c.cancel(j),a?j=c(function(){b.on("click tap",h)},0):b.unbind("click tap",h)}):(c.cancel(j),b.on("click tap",h)),d.$on("$destroy",function(){i(),b.unbind("click tap",h)})}}]).directive("uiOuterClick",["bindOuterClick","$parse",function(a,b){return{restrict:"A",compile:function(c,d){var e=b(d.uiOuterClick),f=d.uiOuterClickIf;return function(b,c){a(b,c,e,f)}}}}])}(),function(){"use strict";var a=angular.module("mobile-angular-ui.core.sharedState",[]);a.factory("SharedState",["$rootScope","$parse",function(a){var b={},c={},d={},e={};return{initialize:function(f,g,h){h=h||{};var i=void 0===d[f],j=h.defaultValue,k=h.exclusionGroup;d[f.$id]=d[f.$id]||[],d[f.$id].push(g),c[g]?i&&c[g].references++:(c[g]=angular.extend({},h,{references:1}),a.$broadcast("mobile-angular-ui.state.initialized."+g,j),void 0!==j&&this.setOne(g,j),k&&(e[k]=e[k]||{},e[k][g]=!0)),f.$on("$destroy",function(){for(var h=d[f.$id]||[],i=0;i<h.length;i++){var j=c[h[i]];j.exclusionGroup&&(delete e[j.exclusionGroup][h[i]],0===Object.keys(e[j.exclusionGroup]).length&&delete e[j.exclusionGroup]),j.references--,j.references<=0&&(delete c[h[i]],delete b[h[i]],a.$broadcast("mobile-angular-ui.state.destroyed."+g))}delete d[f.$id]})},setOne:function(d,e){if(void 0!==c[d]){var f=b[d];return b[d]=e,f!=e&&a.$broadcast("mobile-angular-ui.state.changed."+d,e,f),e}console&&console.warn("Warning: Attempt to set uninitialized shared state:",d)},setMany:function(a){angular.forEach(a,function(a,b){this.setOne(b,a)},this)},set:function(a,b){angular.isObject(a)&&angular.isUndefined(b)?this.setMany(a):this.setOne(a,b)},turnOn:function(a){var b=c[a]&&c[a].exclusionGroup;if(b)for(var d=Object.keys(e[b]),f=0;f<d.length;f++){var g=d[f];g!=a&&this.turnOff(g)}return this.setOne(a,!0)},turnOff:function(a){return this.setOne(a,!1)},toggle:function(a){return this.get(a)?this.turnOff(a):this.turnOn(a)},get:function(a){return c[a]&&b[a]},isActive:function(a){return!!this.get(a)},active:function(a){return this.isActive(a)},isUndefined:function(a){return void 0===c[a]||void 0===this.get(a)},has:function(a){return void 0!==c[a]},referenceCount:function(a){var b=c[a];return void 0===b?void 0:b.references},equals:function(a,b){return this.get(a)===b},eq:function(a,b){return this.equals(a,b)},values:function(){return b}}}]);var b=function(a,b,c,d){c=c||"click tap",b.on(c,function(b){a.$apply(function(){d(a,{$event:b})})})};a.directive("uiState",["SharedState","$parse",function(a){return{restrict:"EA",priority:601,link:function(b,c,d){var e=d.uiState||d.id,f=d.uiDefault||d["default"],g=f?b.$eval(f):void 0;a.initialize(b,e,{defaultValue:g,exclusionGroup:d.uiExclusionGroup})}}}]),angular.forEach(["toggle","turnOn","turnOff","set"],function(c){var d="ui"+c[0].toUpperCase()+c.slice(1);a.directive(d,["$parse","SharedState",function(a,e){var f=e[c];return{restrict:"A",priority:1,compile:function(g,h){var i="set"===c?a(h[d]):function(){return h[d]};return function(a,c,d){var g=function(){var b=i(a);return f.call(e,b)};b(a,c,d.uiTriggers,g)}}}}])});var c=function(a){if(!a||""===a)return[];for(var b=a?a.trim().split(/ *, */):[],c=[],d=0;d<b.length;d++){var e=b[d].split(/ *as */);if(e.length>2||e.length<1)throw new Error('Error parsing uiScopeContext="'+a+'"');c.push(e)}return c},d=function(a,b,c){for(var d=0;d<b.length;d++){var e=b[d][0],f=b[d][1]||e;a[f]=c[e]}},e=function(a,b,e,f,g){var h=g(b[a]),i=c(b.uiScopeContext);return function(){var a;return i.length?(a=angular.extend({},f.values()),d(a,i,e)):a=f.values(),h(a)}};a.directive("uiIf",["$animate","SharedState","$parse",function(a,b,c){function d(a){var b=a[0],c=a[a.length-1],d=[b];do{if(b=b.nextSibling,!b)break;d.push(b)}while(b!==c);return angular.element(d)}return{multiElement:!0,transclude:"element",priority:600,terminal:!0,restrict:"A",$$tlb:!0,link:function(f,g,h,i,j){var k,l,m,n=e("uiIf",h,f,b,c);f.$watch(n,function(b){if(b)l||j(function(b,c){l=c,b[b.length++]=document.createComment(" end uiIf: "+h.uiIf+" "),k={clone:b},a.enter(b,g.parent(),g)});else if(m&&(m.remove(),m=null),l&&(l.$destroy(),l=null),k){m=d(k.clone);var c=function(){m=null},e=a.leave(m,c);e&&e.then(c),k=null}})}}}]),a.directive("uiHide",["$animate","SharedState","$parse",function(a,b,c){var d="ng-hide",f="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(g,h,i){var j=(c(i.uiHide),e("uiHide",i,g,b,c));g.$watch(j,function(b){a[b?"addClass":"removeClass"](h,d,{tempClasses:f})})}}}]),a.directive("uiShow",["$animate","SharedState","$parse",function(a,b,c){var d="ng-hide",f="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(g,h,i){var j=(c(i.uiShow),e("uiShow",i,g,b,c));g.$watch(j,function(b){a[b?"removeClass":"addClass"](h,d,{tempClasses:f})})}}}]),a.directive("uiClass",["SharedState","$parse",function(a,b){return{restrict:"A",link:function(c,d,f){var g=(b(f.uiClass),e("uiClass",f,c,a,b));c.$watch(g,function(a){var b="",c="";angular.forEach(a,function(a,e){a?b+=" "+e:c+=" "+e,b.length&&d.addClass(b),c.length&&d.removeClass(c)})},!0)}}}]),a.run(["$rootScope","SharedState",function(a,b){a.Ui=b}])}(),function(){"use strict";angular.module("mobile-angular-ui.core",["mobile-angular-ui.core.fastclick","mobile-angular-ui.core.activeLinks","mobile-angular-ui.core.capture","mobile-angular-ui.core.outerClick","mobile-angular-ui.core.sharedState"])}(),function(a){var b=a.document,c=b.documentElement,d="overthrow-enabled",e="ontouchmove"in b,f="WebkitOverflowScrolling"in c.style||"msOverflowStyle"in c.style||!e&&a.screen.width>800||function(){var b=a.navigator.userAgent,c=b.match(/AppleWebKit\/([0-9]+)/),d=c&&c[1],e=c&&d>=534;return b.match(/Android ([0-9]+)/)&&RegExp.$1>=3&&e||b.match(/ Version\/([0-9]+)/)&&RegExp.$1>=0&&a.blackberry&&e||b.indexOf("PlayBook")>-1&&e&&-1===!b.indexOf("Android 2")||b.match(/Firefox\/([0-9]+)/)&&RegExp.$1>=4||b.match(/wOSBrowser\/([0-9]+)/)&&RegExp.$1>=233&&e||b.match(/NokiaBrowser\/([0-9\.]+)/)&&7.3===parseFloat(RegExp.$1)&&c&&d>=533}();a.overthrow={},a.overthrow.enabledClassName=d,a.overthrow.addClass=function(){-1===c.className.indexOf(a.overthrow.enabledClassName)&&(c.className+=" "+a.overthrow.enabledClassName)},a.overthrow.removeClass=function(){c.className=c.className.replace(a.overthrow.enabledClassName,"")},a.overthrow.set=function(){f&&a.overthrow.addClass()},a.overthrow.canBeFilledWithPoly=e,a.overthrow.forget=function(){a.overthrow.removeClass()},a.overthrow.support=f?"native":"none"}(this),function(a){a.overthrow.set()}(this),function(a,b,c){if(b!==c){b.scrollIndicatorClassName="overthrow";var d=a.document,e=d.documentElement,f="native"===b.support,g=b.canBeFilledWithPoly,h=(b.configure,b.set),i=b.forget,j=b.scrollIndicatorClassName;b.closest=function(a,c){return!c&&a.className&&a.className.indexOf(j)>-1&&a||b.closest(a.parentNode)};var k=!1;b.set=function(){if(h(),!k&&!f&&g){a.overthrow.addClass(),k=!0,b.support="polyfilled",b.forget=function(){i(),k=!1,d.removeEventListener&&d.removeEventListener("touchstart",u,!1)};var j,l,m,n,o=[],p=[],q=function(){o=[],l=null},r=function(){p=[],m=null},s=function(a){n=j.querySelectorAll("textarea, input");for(var b=0,c=n.length;c>b;b++)n[b].style.pointerEvents=a},t=function(a,b){if(d.createEvent){var e,f=(!b||b===c)&&j.parentNode||j.touchchild||j;f!==j&&(e=d.createEvent("HTMLEvents"),e.initEvent("touchend",!0,!0),j.dispatchEvent(e),f.touchchild=j,j=f,f.dispatchEvent(a))}},u=function(a){if(b.intercept&&b.intercept(),q(),r(),j=b.closest(a.target),j&&j!==e&&!(a.touches.length>1)){s("none");var c=a,d=j.scrollTop,f=j.scrollLeft,g=j.offsetHeight,h=j.offsetWidth,i=a.touches[0].pageY,k=a.touches[0].pageX,n=j.scrollHeight,u=j.scrollWidth,v=function(a){var b=d+i-a.touches[0].pageY,e=f+k-a.touches[0].pageX,s=b>=(o.length?o[0]:0),v=e>=(p.length?p[0]:0);b>0&&n-g>b||e>0&&u-h>e?a.preventDefault():t(c),l&&s!==l&&q(),m&&v!==m&&r(),l=s,m=v,j.scrollTop=b,j.scrollLeft=e,o.unshift(b),p.unshift(e),o.length>3&&o.pop(),p.length>3&&p.pop()},w=function(){s("auto"),setTimeout(function(){s("none")},450),j.removeEventListener("touchmove",v,!1),j.removeEventListener("touchend",w,!1)};j.addEventListener("touchmove",v,!1),j.addEventListener("touchend",w,!1)}};d.addEventListener("touchstart",u,!1)}}}}(this,this.overthrow),function(){"use strict";angular.module("mobile-angular-ui.components.modals",[]).directive("modal",["$rootElement",function(a){return{restrict:"C",link:function(b,c){a.addClass("has-modal"),c.on("$destroy",function(){a.removeClass("has-modal")}),b.$on("$destroy",function(){a.removeClass("has-modal")})}}}]).directive("modalOverlay",["$rootElement",function(a){return{restrict:"C",link:function(b,c){a.addClass("has-modal-overlay"),c.on("$destroy",function(){a.removeClass("has-modal-overlay")}),b.$on("$destroy",function(){a.removeClass("has-modal-overlay")})}}}])}(),function(){"use strict";var a=angular.module("mobile-angular-ui.components.navbars",[]);angular.forEach(["top","bottom"],function(b){var c="navbarAbsolute"+b.charAt(0).toUpperCase()+b.slice(1);a.directive(c,["$rootElement",function(a){return{restrict:"C",link:function(c){a.addClass("has-navbar-"+b),c.$on("$destroy",function(){a.removeClass("has-navbar-"+b)})}}}])})}(),function(){"use strict";var a=angular.module("mobile-angular-ui.components.scrollable",[]);a.directive("scrollableContent",function(){return{restrict:"C",controller:["$element",function(a){var b=a[0],c=a.parent()[0];this.scrollableContent=b,this.scrollTo=function(a,d){if(d=d||0,angular.isNumber(a))b.scrollTop=a-d;else{var e=angular.element(a)[0];e.offsetParent&&e.offsetParent!=c?this.scrollTo(e.offsetParent,d-e.offsetTop):b.scrollTop=e.offsetTop-d}}}],link:function(a,b){"native"!==overthrow.support&&(b.addClass("overthrow"),overthrow.forget(),overthrow.set())}}}),angular.forEach(["input","textarea"],function(b){a.directive(b,["$rootScope","$timeout",function(a,b){return{require:"?^^scrollableContent",link:function(a,c,d,e){c.on("focus",function(){if(e&&e.scrollableContent){var a=e.scrollableContent.offsetHeight;b(function(){var b=e.scrollableContent.offsetHeight;a>b&&e.scrollTo(c,10)},500)}})}}}])}),angular.forEach({uiScrollTop:function(a){return 0===a.scrollTop},uiScrollBottom:function(a){return a.scrollHeight==a.scrollTop+a.clientHeight}},function(b,c){a.directive(c,[function(){return{restrict:"A",link:function(a,d,e){d.on("scroll",function(){b(d[0])&&a.$apply(function(){a.$eval(e[c])})})}}}])}),angular.forEach({Top:"scrollableHeader",Bottom:"scrollableFooter"},function(b,c){a.directive(b,["$window",function(a){return{restrict:"C",link:function(b,d){var e=d[0],f=d.parent()[0].style,g=function(){var b=a.getComputedStyle(e),d=parseInt(b.marginTop)+parseInt(b.marginBottom);f["padding"+c]=e.offsetHeight+d+"px"},h=setInterval(g,30);d.on("$destroy",function(){f["padding"+c]=null,clearInterval(h),h=g=d=null})}}}])})}(),function(){"use strict";var a=angular.module("mobile-angular-ui.components.sidebars",["mobile-angular-ui.core.sharedState","mobile-angular-ui.core.outerClick"]);angular.forEach(["left","right"],function(b){var c="sidebar"+b.charAt(0).toUpperCase()+b.slice(1),d="ui"+c.charAt(0).toUpperCase()+c.slice(1);a.directive(c,["$rootElement","SharedState","bindOuterClick","$location",function(a,c,e,f){return{restrict:"C",link:function(g,h,i){var j="has-sidebar-"+b,k="sidebar-"+b+"-visible",l="sidebar-"+b+"-in";i.id&&(d=i.id);var m=function(){c.turnOff(d)},n=function(){return c.isActive(d)};a.addClass(j),g.$on("$destroy",function(){a.removeClass(j),a.removeClass(k),a.removeClass(l)});var o=void 0!==i.active&&"false"!==i.active;c.initialize(g,d,{defaultValue:o}),g.$on("mobile-angular-ui.state.changed."+d,function(b,c){(""===i.uiTrackAsSearchParam||i.uiTrackAsSearchParam)&&f.search(d,c||null),c?(a.addClass(k),a.addClass(l)):a.removeClass(l)}),g.$on("$routeChangeSuccess",function(){c.turnOff(d)}),g.$on("$routeUpdate",function(){i.uiTrackAsSearchParam&&(f.search()[d]?c.turnOn(d):c.turnOff(d))}),g.$on("mobile-angular-ui.app.transitionend",function(){c.isActive(d)||a.removeClass(k)}),"false"!==i.closeOnOuterClicks&&e(g,h,m,n)}}}])}),a.directive("app",["$rootScope","SharedState",function(a){return{restrict:"C",link:function(b,c){c.on("transitionend webkitTransitionEnd oTransitionEnd otransitionend",function(){a.$broadcast("mobile-angular-ui.app.transitionend")})}}}])}(),function(){"use strict";angular.module("mobile-angular-ui.components.switch",[]).directive("uiSwitch",function(){return{restrict:"EA",replace:!0,scope:{model:"=ngModel",changeExpr:"@ngChange",disabled:"@"},template:"<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",link:function(a,b,c){b.on("click tap",function(){(null===c.disabled||void 0===c.disabled)&&(a.model=!a.model,a.$apply(),null!==a.changeExpr&&void 0!==a.changeExpr&&a.$parent.$eval(a.changeExpr))}),b.addClass("switch-transition-enabled")}}})}(),function(){"use strict";angular.module("mobile-angular-ui.components",["mobile-angular-ui.components.modals","mobile-angular-ui.components.navbars","mobile-angular-ui.components.sidebars","mobile-angular-ui.components.scrollable","mobile-angular-ui.components.switch"])}(),function(){"use strict";angular.module("mobile-angular-ui",["mobile-angular-ui.core","mobile-angular-ui.components"])}();
+function FastClick(a,b){"use strict";function c(a,b){return function(){return a.apply(b,arguments)}}var d;if(b=b||{},this.trackingClick=!1,this.trackingClickStart=0,this.targetElement=null,this.touchStartX=0,this.touchStartY=0,this.lastTouchIdentifier=0,this.touchBoundary=b.touchBoundary||10,this.layer=a,this.tapDelay=b.tapDelay||200,!FastClick.notNeeded(a)){for(var e=["onMouse","onClick","onTouchStart","onTouchMove","onTouchEnd","onTouchCancel"],f=this,g=0,h=e.length;h>g;g++)f[e[g]]=c(f[e[g]],f);deviceIsAndroid&&(a.addEventListener("mouseover",this.onMouse,!0),a.addEventListener("mousedown",this.onMouse,!0),a.addEventListener("mouseup",this.onMouse,!0)),a.addEventListener("click",this.onClick,!0),a.addEventListener("touchstart",this.onTouchStart,!1),a.addEventListener("touchmove",this.onTouchMove,!1),a.addEventListener("touchend",this.onTouchEnd,!1),a.addEventListener("touchcancel",this.onTouchCancel,!1),Event.prototype.stopImmediatePropagation||(a.removeEventListener=function(b,c,d){var e=Node.prototype.removeEventListener;"click"===b?e.call(a,b,c.hijacked||c,d):e.call(a,b,c,d)},a.addEventListener=function(b,c,d){var e=Node.prototype.addEventListener;"click"===b?e.call(a,b,c.hijacked||(c.hijacked=function(a){a.propagationStopped||c(a)}),d):e.call(a,b,c,d)}),"function"==typeof a.onclick&&(d=a.onclick,a.addEventListener("click",function(a){d(a)},!1),a.onclick=null)}}var deviceIsAndroid=navigator.userAgent.indexOf("Android")>0,deviceIsIOS=/iP(ad|hone|od)/.test(navigator.userAgent),deviceIsIOS4=deviceIsIOS&&/OS 4_\d(_\d)?/.test(navigator.userAgent),deviceIsIOSWithBadTarget=deviceIsIOS&&/OS ([6-9]|\d{2})_\d/.test(navigator.userAgent),deviceIsBlackBerry10=navigator.userAgent.indexOf("BB10")>0;FastClick.prototype.needsClick=function(a){"use strict";switch(a.nodeName.toLowerCase()){case"button":case"select":case"textarea":if(a.disabled)return!0;break;case"input":if(deviceIsIOS&&"file"===a.type||a.disabled)return!0;break;case"label":case"video":return!0}return/\bneedsclick\b/.test(a.className)},FastClick.prototype.needsFocus=function(a){"use strict";switch(a.nodeName.toLowerCase()){case"textarea":return!0;case"select":return!deviceIsAndroid;case"input":switch(a.type){case"button":case"checkbox":case"file":case"image":case"radio":case"submit":return!1}return!a.disabled&&!a.readOnly;default:return/\bneedsfocus\b/.test(a.className)}},FastClick.prototype.sendClick=function(a,b){"use strict";var c,d;document.activeElement&&document.activeElement!==a&&document.activeElement.blur(),d=b.changedTouches[0],c=document.createEvent("MouseEvents"),c.initMouseEvent(this.determineEventType(a),!0,!0,window,1,d.screenX,d.screenY,d.clientX,d.clientY,!1,!1,!1,!1,0,null),c.forwardedTouchEvent=!0,a.dispatchEvent(c)},FastClick.prototype.determineEventType=function(a){"use strict";return deviceIsAndroid&&"select"===a.tagName.toLowerCase()?"mousedown":"click"},FastClick.prototype.focus=function(a){"use strict";var b;deviceIsIOS&&a.setSelectionRange&&0!==a.type.indexOf("date")&&"time"!==a.type?(b=a.value.length,a.setSelectionRange(b,b)):a.focus()},FastClick.prototype.updateScrollParent=function(a){"use strict";var b,c;if(b=a.fastClickScrollParent,!b||!b.contains(a)){c=a;do{if(c.scrollHeight>c.offsetHeight){b=c,a.fastClickScrollParent=c;break}c=c.parentElement}while(c)}b&&(b.fastClickLastScrollTop=b.scrollTop)},FastClick.prototype.getTargetElementFromEventTarget=function(a){"use strict";return a.nodeType===Node.TEXT_NODE?a.parentNode:a},FastClick.prototype.onTouchStart=function(a){"use strict";var b,c,d;if(a.targetTouches.length>1)return!0;if(b=this.getTargetElementFromEventTarget(a.target),c=a.targetTouches[0],deviceIsIOS){if(d=window.getSelection(),d.rangeCount&&!d.isCollapsed)return!0;if(!deviceIsIOS4){if(c.identifier&&c.identifier===this.lastTouchIdentifier)return a.preventDefault(),!1;this.lastTouchIdentifier=c.identifier,this.updateScrollParent(b)}}return this.trackingClick=!0,this.trackingClickStart=a.timeStamp,this.targetElement=b,this.touchStartX=c.pageX,this.touchStartY=c.pageY,a.timeStamp-this.lastClickTime<this.tapDelay&&a.preventDefault(),!0},FastClick.prototype.touchHasMoved=function(a){"use strict";var b=a.changedTouches[0],c=this.touchBoundary;return Math.abs(b.pageX-this.touchStartX)>c||Math.abs(b.pageY-this.touchStartY)>c?!0:!1},FastClick.prototype.onTouchMove=function(a){"use strict";return this.trackingClick?((this.targetElement!==this.getTargetElementFromEventTarget(a.target)||this.touchHasMoved(a))&&(this.trackingClick=!1,this.targetElement=null),!0):!0},FastClick.prototype.findControl=function(a){"use strict";return void 0!==a.control?a.control:a.htmlFor?document.getElementById(a.htmlFor):a.querySelector("button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea")},FastClick.prototype.onTouchEnd=function(a){"use strict";var b,c,d,e,f,g=this.targetElement;if(!this.trackingClick)return!0;if(a.timeStamp-this.lastClickTime<this.tapDelay)return this.cancelNextClick=!0,!0;if(this.cancelNextClick=!1,this.lastClickTime=a.timeStamp,c=this.trackingClickStart,this.trackingClick=!1,this.trackingClickStart=0,deviceIsIOSWithBadTarget&&(f=a.changedTouches[0],g=document.elementFromPoint(f.pageX-window.pageXOffset,f.pageY-window.pageYOffset)||g,g.fastClickScrollParent=this.targetElement.fastClickScrollParent),d=g.tagName.toLowerCase(),"label"===d){if(b=this.findControl(g)){if(this.focus(g),deviceIsAndroid)return!1;g=b}}else if(this.needsFocus(g))return a.timeStamp-c>100||deviceIsIOS&&window.top!==window&&"input"===d?(this.targetElement=null,!1):(this.focus(g),this.sendClick(g,a),deviceIsIOS&&"select"===d||(this.targetElement=null,a.preventDefault()),!1);return deviceIsIOS&&!deviceIsIOS4&&(e=g.fastClickScrollParent,e&&e.fastClickLastScrollTop!==e.scrollTop)?!0:(this.needsClick(g)||(a.preventDefault(),this.sendClick(g,a)),!1)},FastClick.prototype.onTouchCancel=function(){"use strict";this.trackingClick=!1,this.targetElement=null},FastClick.prototype.onMouse=function(a){"use strict";return this.targetElement?a.forwardedTouchEvent?!0:a.cancelable&&(!this.needsClick(this.targetElement)||this.cancelNextClick)?(a.stopImmediatePropagation?a.stopImmediatePropagation():a.propagationStopped=!0,a.stopPropagation(),a.preventDefault(),!1):!0:!0},FastClick.prototype.onClick=function(a){"use strict";var b;return this.trackingClick?(this.targetElement=null,this.trackingClick=!1,!0):"submit"===a.target.type&&0===a.detail?!0:(b=this.onMouse(a),b||(this.targetElement=null),b)},FastClick.prototype.destroy=function(){"use strict";var a=this.layer;deviceIsAndroid&&(a.removeEventListener("mouseover",this.onMouse,!0),a.removeEventListener("mousedown",this.onMouse,!0),a.removeEventListener("mouseup",this.onMouse,!0)),a.removeEventListener("click",this.onClick,!0),a.removeEventListener("touchstart",this.onTouchStart,!1),a.removeEventListener("touchmove",this.onTouchMove,!1),a.removeEventListener("touchend",this.onTouchEnd,!1),a.removeEventListener("touchcancel",this.onTouchCancel,!1)},FastClick.notNeeded=function(a){"use strict";var b,c,d;if("undefined"==typeof window.ontouchstart)return!0;if(c=+(/Chrome\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1]){if(!deviceIsAndroid)return!0;if(b=document.querySelector("meta[name=viewport]")){if(-1!==b.content.indexOf("user-scalable=no"))return!0;if(c>31&&document.documentElement.scrollWidth<=window.outerWidth)return!0}}if(deviceIsBlackBerry10&&(d=navigator.userAgent.match(/Version\/([0-9]*)\.([0-9]*)/),d[1]>=10&&d[2]>=3&&(b=document.querySelector("meta[name=viewport]")))){if(-1!==b.content.indexOf("user-scalable=no"))return!0;if(document.documentElement.scrollWidth<=window.outerWidth)return!0}return"none"===a.style.msTouchAction?!0:!1},FastClick.attach=function(a,b){"use strict";return new FastClick(a,b)},"function"==typeof define&&"object"==typeof define.amd&&define.amd?define(function(){"use strict";return FastClick}):"undefined"!=typeof module&&module.exports?(module.exports=FastClick.attach,module.exports.FastClick=FastClick):window.FastClick=FastClick,function(){"use strict";angular.module("mobile-angular-ui.core.activeLinks",[]).run(["$rootScope","$window","$document","$location",function(a,b,c,d){var e=function(){var a,e=d.url(),f=e.indexOf("#"),g=e.indexOf("?"),h=b.location.href,i=h.indexOf(e);-1===f&&-1===g?a=h:-1!=f&&f>g?a=h.slice(0,i+f):-1!=g&&g>f&&(a=h.slice(0,i+g));for(var j=c[0].links,k=0;k<j.length;k++){var l=j[k],m=angular.element(l);l.href===a?m.addClass("active"):l.href&&l.href.length&&m.removeClass("active")}};a.$on("$locationChangeSuccess",e),a.$on("$includeContentLoaded",e)}])}(),function(){"use strict";angular.module("mobile-angular-ui.core.capture",[]).run(["Capture","$rootScope",function(a,b){b.$on("$routeChangeStart",function(){a.resetAll()})}]).factory("Capture",["$compile",function(a){var b={};return{resetAll:function(){for(var a in b)this.resetYielder(a)},resetYielder:function(a){var c=b[a];this.setContentFor(a,c.defaultContent,c.defaultScope)},putYielder:function(a,c,d,e){var f={};f.name=a,f.element=c,f.defaultContent=e||"",f.defaultScope=d,b[a]=f},getYielder:function(a){return b[a]},removeYielder:function(a){delete b[a]},setContentFor:function(c,d,e){var f=b[c];f&&(f.element.html(d),a(f.element.contents())(e))}}}]).directive("uiContentFor",["Capture",function(a){return{compile:function(b,c){var d=b.html();return(null===c.uiDuplicate||void 0===c.uiDuplicate)&&(b.html(""),b.remove()),function(b,c,e){a.setContentFor(e.uiContentFor,d,b)}}}}]).directive("uiYieldTo",["$compile","Capture",function(a,b){return{link:function(a,c,d){b.putYielder(d.uiYieldTo,c,a,c.html()),c.on("$destroy",function(){b.removeYielder(d.uiYieldTo)}),a.$on("$destroy",function(){b.removeYielder(d.uiYieldTo)})}}}])}(),function(){"use strict";var a=angular.module("mobile-angular-ui.core.fastclick",[]);a.run(["$window","$document",function(a,b){a.addEventListener("load",function(){FastClick.attach(b[0].body)},!1)}]),angular.forEach(["select","input","textarea"],function(b){a.directive(b,function(){return{restrict:"E",compile:function(a){a.addClass("needsclick")}}})})}(),function(){"use strict";var a=function(a,b){for(var c=a;c.length>0;){if(c[0]===b[0])return c=null,!0;c=c.parent()}return c=null,!1};angular.module("mobile-angular-ui.core.outerClick",[]).factory("bindOuterClick",["$document","$timeout",function(b,c){return function(d,e,f,g){var h=function(b){a(angular.element(b.target),e)||d.$apply(function(){f(d,{$event:b})})},i=angular.noop,j=null;g?i=d.$watch(g,function(a){c.cancel(j),a?j=c(function(){b.on("click tap",h)},0):b.unbind("click tap",h)}):(c.cancel(j),b.on("click tap",h)),d.$on("$destroy",function(){i(),b.unbind("click tap",h)})}}]).directive("uiOuterClick",["bindOuterClick","$parse",function(a,b){return{restrict:"A",compile:function(c,d){var e=b(d.uiOuterClick),f=d.uiOuterClickIf;return function(b,c){a(b,c,e,f)}}}}])}(),function(){"use strict";var a=angular.module("mobile-angular-ui.core.sharedState",[]);a.factory("SharedState",["$rootScope","$parse",function(a){var b={},c={},d={},e={};return{initialize:function(f,g,h){h=h||{};var i=void 0===d[f],j=h.defaultValue,k=h.exclusionGroup;d[f.$id]=d[f.$id]||[],d[f.$id].push(g),c[g]?i&&c[g].references++:(c[g]=angular.extend({},h,{references:1}),a.$broadcast("mobile-angular-ui.state.initialized."+g,j),void 0!==j&&this.setOne(g,j),k&&(e[k]=e[k]||{},e[k][g]=!0)),f.$on("$destroy",function(){for(var h=d[f.$id]||[],i=0;i<h.length;i++){var j=c[h[i]];j.exclusionGroup&&(delete e[j.exclusionGroup][h[i]],0===Object.keys(e[j.exclusionGroup]).length&&delete e[j.exclusionGroup]),j.references--,j.references<=0&&(delete c[h[i]],delete b[h[i]],a.$broadcast("mobile-angular-ui.state.destroyed."+g))}delete d[f.$id]})},setOne:function(d,e){if(void 0!==c[d]){var f=b[d];return b[d]=e,f!=e&&a.$broadcast("mobile-angular-ui.state.changed."+d,e,f),e}console&&console.warn("Warning: Attempt to set uninitialized shared state:",d)},setMany:function(a){angular.forEach(a,function(a,b){this.setOne(b,a)},this)},set:function(a,b){angular.isObject(a)&&angular.isUndefined(b)?this.setMany(a):this.setOne(a,b)},turnOn:function(a){var b=c[a]&&c[a].exclusionGroup;if(b)for(var d=Object.keys(e[b]),f=0;f<d.length;f++){var g=d[f];g!=a&&this.turnOff(g)}return this.setOne(a,!0)},turnOff:function(a){return this.setOne(a,!1)},toggle:function(a){return this.get(a)?this.turnOff(a):this.turnOn(a)},get:function(a){return c[a]&&b[a]},isActive:function(a){return!!this.get(a)},active:function(a){return this.isActive(a)},isUndefined:function(a){return void 0===c[a]||void 0===this.get(a)},has:function(a){return void 0!==c[a]},referenceCount:function(a){var b=c[a];return void 0===b?void 0:b.references},equals:function(a,b){return this.get(a)===b},eq:function(a,b){return this.equals(a,b)},values:function(){return b}}}]);var b=function(a,b,c,d){c=c||"click tap",b.on(c,function(b){a.$apply(function(){d(a,{$event:b})})})};a.directive("uiState",["SharedState","$parse",function(a){return{restrict:"EA",priority:601,link:function(b,c,d){var e=d.uiState||d.id,f=d.uiDefault||d["default"],g=f?b.$eval(f):void 0;a.initialize(b,e,{defaultValue:g,exclusionGroup:d.uiExclusionGroup})}}}]),angular.forEach(["toggle","turnOn","turnOff","set"],function(c){var d="ui"+c[0].toUpperCase()+c.slice(1);a.directive(d,["$parse","SharedState",function(a,e){var f=e[c];return{restrict:"A",priority:1,compile:function(g,h){var i="set"===c?a(h[d]):function(){return h[d]};return function(a,c,d){var g=function(){var b=i(a);return f.call(e,b)};b(a,c,d.uiTriggers,g)}}}}])});var c=function(a){if(!a||""===a)return[];for(var b=a?a.trim().split(/ *, */):[],c=[],d=0;d<b.length;d++){var e=b[d].split(/ *as */);if(e.length>2||e.length<1)throw new Error('Error parsing uiScopeContext="'+a+'"');c.push(e)}return c},d=function(a,b,c){for(var d=0;d<b.length;d++){var e=b[d][0],f=b[d][1]||e;a[f]=c[e]}},e=function(a,b,e,f,g){var h=g(b[a]),i=c(b.uiScopeContext);return function(){var a;return i.length?(a=angular.extend({},f.values()),d(a,i,e)):a=f.values(),h(a)}};a.directive("uiIf",["$animate","SharedState","$parse",function(a,b,c){function d(a){var b=a[0],c=a[a.length-1],d=[b];do{if(b=b.nextSibling,!b)break;d.push(b)}while(b!==c);return angular.element(d)}return{multiElement:!0,transclude:"element",priority:600,terminal:!0,restrict:"A",$$tlb:!0,link:function(f,g,h,i,j){var k,l,m,n=e("uiIf",h,f,b,c);f.$watch(n,function(b){if(b)l||j(function(b,c){l=c,b[b.length++]=document.createComment(" end uiIf: "+h.uiIf+" "),k={clone:b},a.enter(b,g.parent(),g)});else if(m&&(m.remove(),m=null),l&&(l.$destroy(),l=null),k){m=d(k.clone);var c=function(){m=null},e=a.leave(m,c);e&&e.then(c),k=null}})}}}]),a.directive("uiHide",["$animate","SharedState","$parse",function(a,b,c){var d="ng-hide",f="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(g,h,i){var j=(c(i.uiHide),e("uiHide",i,g,b,c));g.$watch(j,function(b){a[b?"addClass":"removeClass"](h,d,{tempClasses:f})})}}}]),a.directive("uiShow",["$animate","SharedState","$parse",function(a,b,c){var d="ng-hide",f="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(g,h,i){var j=(c(i.uiShow),e("uiShow",i,g,b,c));g.$watch(j,function(b){a[b?"removeClass":"addClass"](h,d,{tempClasses:f})})}}}]),a.directive("uiClass",["SharedState","$parse",function(a,b){return{restrict:"A",link:function(c,d,f){var g=(b(f.uiClass),e("uiClass",f,c,a,b));c.$watch(g,function(a){var b="",c="";angular.forEach(a,function(a,e){a?b+=" "+e:c+=" "+e,b.length&&d.addClass(b),c.length&&d.removeClass(c)})},!0)}}}]),a.run(["$rootScope","SharedState",function(a,b){a.Ui=b}])}(),function(){"use strict";angular.module("mobile-angular-ui.core",["mobile-angular-ui.core.fastclick","mobile-angular-ui.core.activeLinks","mobile-angular-ui.core.capture","mobile-angular-ui.core.outerClick","mobile-angular-ui.core.sharedState"])}();
+!function(a){var b=a.document,c=b.documentElement,d="overthrow-enabled",e="ontouchmove"in b,f="WebkitOverflowScrolling"in c.style||"msOverflowStyle"in c.style||!e&&a.screen.width>800||function(){var b=a.navigator.userAgent,c=b.match(/AppleWebKit\/([0-9]+)/),d=c&&c[1],e=c&&d>=534;return b.match(/Android ([0-9]+)/)&&RegExp.$1>=3&&e||b.match(/ Version\/([0-9]+)/)&&RegExp.$1>=0&&a.blackberry&&e||b.indexOf("PlayBook")>-1&&e&&-1===!b.indexOf("Android 2")||b.match(/Firefox\/([0-9]+)/)&&RegExp.$1>=4||b.match(/wOSBrowser\/([0-9]+)/)&&RegExp.$1>=233&&e||b.match(/NokiaBrowser\/([0-9\.]+)/)&&7.3===parseFloat(RegExp.$1)&&c&&d>=533}();a.overthrow={},a.overthrow.enabledClassName=d,a.overthrow.addClass=function(){-1===c.className.indexOf(a.overthrow.enabledClassName)&&(c.className+=" "+a.overthrow.enabledClassName)},a.overthrow.removeClass=function(){c.className=c.className.replace(a.overthrow.enabledClassName,"")},a.overthrow.set=function(){f&&a.overthrow.addClass()},a.overthrow.canBeFilledWithPoly=e,a.overthrow.forget=function(){a.overthrow.removeClass()},a.overthrow.support=f?"native":"none"}(this),function(a){a.overthrow.set()}(this),function(a,b,c){if(b!==c){b.scrollIndicatorClassName="overthrow";var d=a.document,e=d.documentElement,f="native"===b.support,g=b.canBeFilledWithPoly,h=(b.configure,b.set),i=b.forget,j=b.scrollIndicatorClassName;b.closest=function(a,c){return!c&&a.className&&a.className.indexOf(j)>-1&&a||b.closest(a.parentNode)};var k=!1;b.set=function(){if(h(),!k&&!f&&g){a.overthrow.addClass(),k=!0,b.support="polyfilled",b.forget=function(){i(),k=!1,d.removeEventListener&&d.removeEventListener("touchstart",u,!1)};var j,l,m,n,o=[],p=[],q=function(){o=[],l=null},r=function(){p=[],m=null},s=function(a){n=j.querySelectorAll("textarea, input");for(var b=0,c=n.length;c>b;b++)n[b].style.pointerEvents=a},t=function(a,b){if(d.createEvent){var e,f=(!b||b===c)&&j.parentNode||j.touchchild||j;f!==j&&(e=d.createEvent("HTMLEvents"),e.initEvent("touchend",!0,!0),j.dispatchEvent(e),f.touchchild=j,j=f,f.dispatchEvent(a))}},u=function(a){if(b.intercept&&b.intercept(),q(),r(),j=b.closest(a.target),j&&j!==e&&!(a.touches.length>1)){s("none");var c=a,d=j.scrollTop,f=j.scrollLeft,g=j.offsetHeight,h=j.offsetWidth,i=a.touches[0].pageY,k=a.touches[0].pageX,n=j.scrollHeight,u=j.scrollWidth,v=function(a){var b=d+i-a.touches[0].pageY,e=f+k-a.touches[0].pageX,s=b>=(o.length?o[0]:0),v=e>=(p.length?p[0]:0);b>0&&n-g>b||e>0&&u-h>e?a.preventDefault():t(c),l&&s!==l&&q(),m&&v!==m&&r(),l=s,m=v,j.scrollTop=b,j.scrollLeft=e,o.unshift(b),p.unshift(e),o.length>3&&o.pop(),p.length>3&&p.pop()},w=function(){s("auto"),setTimeout(function(){s("none")},450),j.removeEventListener("touchmove",v,!1),j.removeEventListener("touchend",w,!1)};j.addEventListener("touchmove",v,!1),j.addEventListener("touchend",w,!1)}};d.addEventListener("touchstart",u,!1)}}}}(this,this.overthrow),function(){"use strict";angular.module("mobile-angular-ui.components.modals",[]).directive("modal",["$rootElement",function(a){return{restrict:"C",link:function(b,c){a.addClass("has-modal"),c.on("$destroy",function(){a.removeClass("has-modal")}),b.$on("$destroy",function(){a.removeClass("has-modal")})}}}]).directive("modalOverlay",["$rootElement",function(a){return{restrict:"C",link:function(b,c){a.addClass("has-modal-overlay"),c.on("$destroy",function(){a.removeClass("has-modal-overlay")}),b.$on("$destroy",function(){a.removeClass("has-modal-overlay")})}}}])}(),function(){"use strict";var a=angular.module("mobile-angular-ui.components.navbars",[]);angular.forEach(["top","bottom"],function(b){var c="navbarAbsolute"+b.charAt(0).toUpperCase()+b.slice(1);a.directive(c,["$rootElement",function(a){return{restrict:"C",link:function(c){a.addClass("has-navbar-"+b),c.$on("$destroy",function(){a.removeClass("has-navbar-"+b)})}}}])})}(),function(){"use strict";var a=angular.module("mobile-angular-ui.components.scrollable",[]);a.directive("scrollableContent",function(){return{restrict:"C",controller:["$element",function(a){var b=a[0],c=a.parent()[0];this.scrollableContent=b,this.scrollTo=function(a,d){if(d=d||0,angular.isNumber(a))b.scrollTop=a-d;else{var e=angular.element(a)[0];e.offsetParent&&e.offsetParent!=c?this.scrollTo(e.offsetParent,d-e.offsetTop):b.scrollTop=e.offsetTop-d}}}],link:function(a,b){"native"!==overthrow.support&&(b.addClass("overthrow"),overthrow.forget(),overthrow.set())}}}),angular.forEach(["input","textarea"],function(b){a.directive(b,["$rootScope","$timeout",function(a,b){return{require:"?^^scrollableContent",link:function(a,c,d,e){c.on("focus",function(){if(e&&e.scrollableContent){var a=e.scrollableContent.offsetHeight;b(function(){var b=e.scrollableContent.offsetHeight;a>b&&e.scrollTo(c,10)},500)}})}}}])}),angular.forEach({uiScrollTop:function(a){return 0===a.scrollTop},uiScrollBottom:function(a){return a.scrollHeight==a.scrollTop+a.clientHeight}},function(b,c){a.directive(c,[function(){return{restrict:"A",link:function(a,d,e){d.on("scroll",function(){b(d[0])&&a.$apply(function(){a.$eval(e[c])})})}}}])}),angular.forEach({Top:"scrollableHeader",Bottom:"scrollableFooter"},function(b,c){a.directive(b,["$window",function(a){return{restrict:"C",link:function(b,d){var e=d[0],f=d.parent()[0].style,g=function(){var b=a.getComputedStyle(e),d=parseInt(b.marginTop)+parseInt(b.marginBottom);f["padding"+c]=e.offsetHeight+d+"px"},h=setInterval(g,30);d.on("$destroy",function(){f["padding"+c]=null,clearInterval(h),h=g=d=null})}}}])})}(),function(){"use strict";var a=angular.module("mobile-angular-ui.components.sidebars",["mobile-angular-ui.core.sharedState","mobile-angular-ui.core.outerClick"]);angular.forEach(["left","right"],function(b){var c="sidebar"+b.charAt(0).toUpperCase()+b.slice(1),d="ui"+c.charAt(0).toUpperCase()+c.slice(1);a.directive(c,["$rootElement","SharedState","bindOuterClick","$location",function(a,c,e,f){return{restrict:"C",link:function(g,h,i){var j="has-sidebar-"+b,k="sidebar-"+b+"-visible",l="sidebar-"+b+"-in";i.id&&(d=i.id);var m=function(){c.turnOff(d)},n=function(){return c.isActive(d)};a.addClass(j),g.$on("$destroy",function(){a.removeClass(j),a.removeClass(k),a.removeClass(l)});var o=void 0!==i.active&&"false"!==i.active;c.initialize(g,d,{defaultValue:o}),g.$on("mobile-angular-ui.state.changed."+d,function(b,c){(""===i.uiTrackAsSearchParam||i.uiTrackAsSearchParam)&&f.search(d,c||null),c?(a.addClass(k),a.addClass(l)):a.removeClass(l)}),g.$on("$routeChangeSuccess",function(){c.turnOff(d)}),g.$on("$routeUpdate",function(){i.uiTrackAsSearchParam&&(f.search()[d]?c.turnOn(d):c.turnOff(d))}),g.$on("mobile-angular-ui.app.transitionend",function(){c.isActive(d)||a.removeClass(k)}),"false"!==i.closeOnOuterClicks&&e(g,h,m,n)}}}])}),a.directive("app",["$rootScope","SharedState",function(a){return{restrict:"C",link:function(b,c){c.on("transitionend webkitTransitionEnd oTransitionEnd otransitionend",function(){a.$broadcast("mobile-angular-ui.app.transitionend")})}}}])}(),function(){"use strict";angular.module("mobile-angular-ui.components.switch",[]).directive("uiSwitch",function(){return{restrict:"EA",replace:!0,scope:{model:"=ngModel",changeExpr:"@ngChange",disabled:"@"},template:"<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",link:function(a,b,c){b.on("click tap",function(){(null===c.disabled||void 0===c.disabled)&&(a.model=!a.model,a.$apply(),null!==a.changeExpr&&void 0!==a.changeExpr&&a.$parent.$eval(a.changeExpr))}),b.addClass("switch-transition-enabled")}}})}(),function(){"use strict";angular.module("mobile-angular-ui.components",["mobile-angular-ui.components.modals","mobile-angular-ui.components.navbars","mobile-angular-ui.components.sidebars","mobile-angular-ui.components.scrollable","mobile-angular-ui.components.switch"])}();
 var test = function (accountService) {
     var myself = accountService.getMyself();
     if (myself == null) {
@@ -132,57 +135,99 @@ var test = function (accountService) {
 
 
 var initializeCommonRoutes = function () {
+    //angular.module('app').run(function($rootScope, $location) {
+    //    $rootScope.onFormPath = function(period, scope) {
+    //        return $location.path($rootScope.getFormPath() + '/' + period + '/' + scope);
+    //    };
+    //    return $rootScope.getDefaultRoute = function() {
+    //        return '/driver';
+    //    };
+    //});
     myApp
-        .config(['$routeProvider', '$locationProvider', function ($routeProvider,$locationProvider) {
-            $routeProvider.when('/', {
-                templateUrl: '/assets/javascripts/view/web/home.html',
-                controller: 'HomeCtrl',
-                resolve: {
-                    a: ['accountService', function (accountService) {
-                        var status = test(accountService);
-                    }]
-                }
-            }).when('/profile', {
-                templateUrl: '/assets/javascripts/view/web/profile.html',
-                controller: 'ProfileCtrl',
-                resolve: {
-                    a: ['accountService', '$location', function (accountService, $location) {
-                        if (test(accountService) == 'NOT_CONNECTED') {
-                            $location.path('/');
-                        }
-                    }]
-                }
-            }).when('/business_registration', {
-                templateUrl: '/assets/javascripts/view/web/business_registration.html',
-                controller: 'BusinessRegistrationCtrl',
-                resolve: {
-                    a: ['accountService', '$location', function (accountService, $location) {
-                        if (test(accountService) == 'BUSINESS') {
-                            $location.path('/business');
-                        }
-                    }]
-                }
-            }).when('/search/:param', {
-                templateUrl: '/assets/javascripts/view/web/search_page.html',
-                controller: 'SearchPageCtrl'
-            }).when('/business/:businessId', {
-                templateUrl: '/assets/javascripts/view/web/business.html',
-                controller: 'BusinessCtrl'
-            }).when('/business/:businessId/publication/:publicationId', {
-                templateUrl: '/assets/javascripts/view/web/business.html',
-                controller: 'BusinessCtrl'
-            }).otherwise({
-                redirectTo: '/'
-            });
-
-
-            // use the HTML5 History API
-            $locationProvider.html5Mode(true);
+        .config(['$routeProvider', function ($routeProvider) {
+            $routeProvider
+                .when('/', {
+                    templateUrl: '/assets/javascripts/view/mobile/welcome.html',
+                    controller: 'WelcomeCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            if (test(accountService) != 'NOT_CONNECTED') {
+                                $location.path('/home');
+                            }
+                        }]
+                    }
+                })
+                .when('/home', {
+                    templateUrl: '/assets/javascripts/view/mobile/home.html',
+                    controller: 'HomeCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                })
+                .when('/customer_registration', {
+                    templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
+                    controller: 'CustomerRegistrationCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            if (test(accountService) != 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                })
+                .when('/profile', {
+                    templateUrl: '/assets/javascripts/view/mobile/profile.html',
+                    controller: 'ProfileCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                }).when('/business/:businessId', {
+                    templateUrl: '/assets/javascripts/view/mobile/business.html',
+                    controller: 'BusinessCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                }).when('/business/:businessId/publication/:publicationId', {
+                    templateUrl: '/assets/javascripts/view/mobile/business.html',
+                    controller: 'BusinessCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                }).when('/forgot_password', {
+                    templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
+                    controller: 'ForgotPasswordCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            if (test(accountService) != 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                }).otherwise({
+                    redirectTo: '/'
+                });
         }]);
 };
 var myApp = angular.module('app', [
         'ngAnimate',
         'ui.bootstrap',
+        "mobile-angular-ui",
         'ui.bootstrap.datetimepicker',
         "angucomplete",
         'angularFileUpload',
@@ -193,71 +238,6 @@ var myApp = angular.module('app', [
         'uiGmapgoogle-maps',
         'djds4rce.angular-socialshare']
 );
-
-myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
-
-    $scope.loading = false;
-
-    $scope.loginFormParam = {
-        facebookSuccess: function (data) {
-            if (fctToExecute != null) {
-                fctToExecute(fctToExecuteParams);
-            }
-            $scope.close();
-        }
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-
-        if ($scope.loginFormParam.isValid) {
-
-            $scope.loading = true;
-
-            accountService.login($scope.loginFormParam.dto,
-                function () {
-
-                    $flash.success(translationService.get("--.login.flash.success"));
-                    $scope.loading = false;
-                    $scope.close();
-                    //logout facebook in case
-                    facebookService.logout();
-                    if (accountService.getMyself().type == 'BUSINESS') {
-                        $location.path('/business');
-                    }
-                    if (fctToExecute != null) {
-                        fctToExecute(fctToExecuteParams);
-                    }
-                },
-                function () {
-                    $scope.loading = false;
-                });
-        }
-        else {
-            $scope.loginFormParam.displayErrorMessage = true;
-        }
-    };
-
-    $scope.toForgotPassword = function () {
-        console.log($scope.loginFormParam.dto);
-        modalService.openForgotPasswordModal($scope.loginFormParam.dto.email);
-        $scope.close();
-    };
-
-    $scope.toBusinessRegistration = function () {
-        $scope.close();
-        modalService.openBusinessRegistrationModal();
-    };
-
-    $scope.toCustomerRegistration = function () {
-        $scope.close();
-        modalService.openCustomerRegistrationModal(fctToExecute, fctToExecuteParams);
-    };
-
-}]);
 myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountService', '$timeout', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
     $scope.loading=false;
@@ -358,12 +338,294 @@ myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance
     };
 
 }]);
-myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$modalInstance', '$filter', 'email', 'accountService', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
+myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness) {
+
+    $scope.loading = false;
+
+    $scope.update = (dto != null);
+
+    $scope.addressParam = {
+        addName: addName,
+        dto: angular.copy(dto)
+    };
+
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.save = function () {
+
+        if (!$scope.addressParam.isValid) {
+            $scope.addressParam.displayErrorMessage = true;
+        }
+        else {
+            $scope.loading = true;
+            if ($scope.update) {
+                if(isBusiness){
+                    businessService.editAddress($scope.addressParam.dto, function () {
+                            $scope.loading = false;
+                            $scope.close();
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
+                else {
+                    accountService.editAddress($scope.addressParam.dto, function () {
+                            $scope.loading = false;
+                            $scope.close();
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
+            }
+            else {
+                accountService.addAddress($scope.addressParam.dto, function () {
+                        $scope.loading = false;
+                        $scope.close();
+                    },
+                    function () {
+                        $scope.loading = false;
+                    });
+            }
+        }
+    }
+
+
+}]);
+myApp.controller('WelcomeCtrl', ['$scope', '$location', 'accountService', '$flash', 'translationService', function ($scope,$location,accountService,$flash,translationService) {
+
+    $scope.loginFormParam = {
+        dto: {},
+        mobileVersion: true,
+        facebookSuccess: function (data) {
+            $location.path('/home');
+        }
+    };
+
+    $scope.save = function () {
+
+        if ($scope.loginFormParam.isValid) {
+
+            console.log('valid')
+
+            $scope.loading = true;
+
+            accountService.login($scope.loginFormParam.dto,
+                function () {
+                    console.log('success')
+
+                    $flash.success(translationService.get("--.login.flash.success"));
+                    $scope.loading = false;
+                    //logout facebook in case
+                    //facebookService.logout();
+                    $location.path('/home');
+                },
+                function () {
+                    console.log('faild')
+                    $scope.loading = false;
+                });
+        }
+        else{
+            $scope.loginFormParam.displayErrorMessage = true;
+        }
+    };
+
+    $scope.toForgotPassword = function(){
+
+    };
+
+
+}]);
+myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService) {
+
+    $scope.displayMask = true;
+
+
+    customerInterestService.getAll(function (value) {
+        $scope.customerInterests = value;
+    });
+
+    $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
+        $scope.advancedSearch = params.display;
+    });
+
+    //search function
+    $scope.publicationListCtrl = {};
+    $scope.search = function () {
+        if (geolocationService.position != null) {
+
+            var interestSelected = null;
+            for (var i in $scope.customerInterests) {
+                if ($scope.customerInterests[i].selected) {
+                    interestSelected = $scope.customerInterests[i];
+                }
+            }
+
+            $scope.publicationListCtrl.loading = true;
+            if ($scope.followedMode) {
+                if (interestSelected != null) {
+                    searchService.byFollowedAndInterest(interestSelected.id, function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+
+                }
+                else {
+                    searchService.byFollowed(function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+                }
+            }
+            else {
+                if (interestSelected != null) {
+                    searchService.byInterest(interestSelected.id, function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+
+                }
+                else {
+                    searchService.default(function (data) {
+                        $scope.publicationListCtrl.loading = false;
+                        $scope.publicationListCtrl.data = data;
+                    });
+                }
+            }
+        }
+    };
+
+
+    //initialisation
+    $scope.search();
+
+    //functions
+    //search by interest
+    $scope.searchByInterest = function (interest) {
+
+        if (interest.selected == true) {
+            interest.selected = false;
+        }
+        else {
+            for (var i in $scope.customerInterests) {
+                $scope.customerInterests[i].selected = false;
+            }
+            interest.selected = true;
+        }
+        $scope.search();
+    };
+
+    //watch on change position
+    $scope.$on('POSITION_CHANGED', function () {
+        $scope.search();
+    });
+
+    //watch in follow mode
+    $scope.$watch('followedMode', function () {
+        $scope.search();
+    });
+
+
+    //position
+    $scope.positions = [
+        {key: 'currentPosition', translation: '--.position.current'}
+    ];
+
+    $scope.currentPositionText = 'currentPosition';
+
+    $scope.selectPosition = function (position) {
+        $scope.currentPosition = position;
+        $scope.displayPositionDetails = false;
+    };
+
+    $timeout(function () {
+        completePositions();
+
+        $scope.$watch('currentPosition', function (o, n) {
+            if (n != null && o != n) {
+                addressService.changeAddress($scope.currentPosition, function (result) {
+
+                    if (result.__type.indexOf('AddressDTO') == -1) {
+                        accountService.getMyself().selectedAddress = null;
+                    }
+                    else {
+                        accountService.getMyself().selectedAddress = result;
+                    }
+                    $timeout(function () {
+                        $scope.$broadcast('POSITION_CHANGED');
+                    }, 1);
+                });
+            }
+        });
+
+        $rootScope.$watch(function () {
+            return accountService.model.myself;
+        }, function watchCallback(newValue, oldValue) {
+            completePositions();
+        });
+
+    }, 1);
+
+    var completePositions = function () {
+        $scope.positions = [
+            {key: 'currentPosition', translation: '--.position.current'}
+        ];
+        if (accountService.getMyself() != null) {
+            console.log('load address');
+            console.log(accountService.getMyself());
+            for (var key in accountService.getMyself().addresses) {
+                $scope.positions.push(
+                    {
+                        key: accountService.getMyself().addresses[key].name,
+                        translation: accountService.getMyself().addresses[key].name
+                    });
+            }
+        }
+        $scope.currentPosition = geolocationService.getLocationText();
+    };
+    //initialisation
+    completePositions();
+
+    //position panel
+    $scope.displayPositionDetails = false;
+    $scope.openPositionDetails = function () {
+        $scope.displayPositionDetails = !$scope.displayPositionDetails;
+    };
+
+    //favoriteBusiness
+    $scope.displayFavoriteBusiness = false;
+    $scope.openFavoriteBusiness = function () {
+        $scope.displayFavoriteBusiness = !$scope.displayFavoriteBusiness;
+    };
+
+    var refreshFollowList = function() {
+        followService.getFollows(function (list) {
+            $scope.follows = list;
+        });
+    };
+    refreshFollowList();
+
+
+    //mask
+    $scope.$watch('displayPositionDetails', function () {
+        $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
+        $scope.displayFavoriteBusiness=false;
+
+    });
+    $scope.$watch('displayFavoriteBusiness', function () {
+        $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
+        $scope.displayPositionDetails=false;
+    });
+
+}]);
+myApp.controller('ForgotPasswordCtrl', ['$scope', 'facebookService', 'accountService', '$location', '$filter', '$flash', function ($scope,facebookService,accountService,$location,$filter,$flash) {
 
     $scope.loading = false;
 
     $scope.dto = {
-        email:email
     };
 
     $scope.fields = {
@@ -382,10 +644,6 @@ myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$moda
             field: $scope.dto,
             fieldName: 'email'
         }
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
     };
 
     //
@@ -423,7 +681,7 @@ myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$moda
             accountService.forgotPassword($scope.dto, function () {
                     $flash.success($filter('translateText')('--.forgotPassword.success'));
                     $scope.loading = false;
-                    $scope.close();
+                    $location.path('/');
                 },
                 function () {
                     $scope.loading = false;
@@ -434,140 +692,10 @@ myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$moda
         }
     };
 
-}]);
-myApp.controller('HelpModalCtrl', ['$scope', '$modalInstance', 'message', function ($scope, $modalInstance,message) {
-
-    $scope.message=message;
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-}]);
-myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance', function ($scope, $flash, $modalInstance) {
-
-    $scope.loading=false;
-
-    $scope.fields = {
-        file: {
-            fieldTitle: "generic.file",
-            disabled:function(){
-                return $scope.loading;
-            }
-        }
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.allFieldValid = function () {
-
-        var validation = true;
-
-        for (var key in $scope.fields) {
-            var obj = $scope.fields[key];
-            if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                obj.firstAttempt = false;
-                validation= false;
-            }
-        }
-        return validation;
-    };
-
-    $scope.save = function () {
-        if ($scope.allFieldValid()) {
-            /*
-
-            var dto = {
-                oldPassword: $scope.fields.oldPassword.field,
-                newEmail: $scope.fields.newEmail.field
-            };
-
-            $scope.loading=true;
-
-            $http({
-                'method': "PUT",
-                'url': "/account/email/"+account.id,
-                'headers': "Content-Type:application/json",
-                'data': dto
-            }).success(function (data, status) {
-                $scope.loading=false;
-                $scope.close();
-                setEmail(data.email);
-            })
-            .error(function (data, status) {
-                $scope.loading=false;
-                $flash.error(data.message);
-            });
-             */
-        }
-    }
 
 
 }]);
-myApp.controller('AccountFusionFacebookModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountFusion', 'accountService', function ($scope, $flash, $modalInstance,accountFusion,accountService) {
-
-    $scope.loading=false;
-
-    $scope.email = accountFusion.email;
-
-    $scope.fields = {
-        password: {
-            name:'password',
-            fieldTitle: "--.generic.password",
-            validationRegex: "^[a-zA-Z0-9-_%]{6,18}$",
-            validationMessage: "--.generic.validation.password",
-            fieldType: 'password',
-            focus: function () {
-                return true;
-            },
-            disabled:function(){
-                return $scope.loading;
-            }
-        }
-    };
-
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.allFieldValid = function () {
-
-        var validation = true;
-
-        for (var key in $scope.fields) {
-            var obj = $scope.fields[key];
-            if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                obj.firstAttempt = false;
-                validation= false;
-            }
-        }
-        return validation;
-    };
-
-    $scope.save = function () {
-
-        if ($scope.allFieldValid()) {
-
-            accountFusion.password = $scope.fields.password.field;
-
-            $scope.loading=true;
-
-            accountService.accountFusion(accountFusion,function(){
-                $scope.loading=false;
-                $scope.close();
-            },
-            function(){
-                $scope.loading=false;
-            });
-        }
-    }
-
-
-}]);
-myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', 'addressService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, addressService, fctToExecute, fctToExecuteParams) {
+myApp.controller('CustomerRegistrationCtrl', ['$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', 'addressService', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location,addressService) {
 
     var facebookAuthentication = null;
 
@@ -579,15 +707,8 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
 
     $scope.customerInterestParam = {};
 
-    $scope.accountParam = {};
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.toBusinessRegistration = function () {
-        $scope.close();
-        modalService.openBusinessRegistrationModal();
+    $scope.accountParam = {
+        mobileVersion:true
     };
 
     $scope.skip = function () {
@@ -597,19 +718,16 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
         else {
             $scope.badgeSelected++;
         }
-
     };
 
     $scope.next = function () {
         var notValid = false;
         if ($scope.badgeSelected == 1) {
-            if (!$scope.accountParam.isValid && facebookAuthentication == null) {
+            if (!$scope.accountParam.isValid) {
                 $scope.accountParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValid"));
             }
-            else if (facebookAuthentication != null) {
-                $scope.badgeSelected++;
-            } else {
+            else {
                 $scope.accountParam.disabled = true;
                 $scope.loading = true;
                 accountService.testEmail($scope.accountParam.dto.email, function (value) {
@@ -681,28 +799,19 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
                     if (data2.status == 'ALREADY_REGISTRERED') {
                         $flash.success('--.customer.registrationModal.alredyRegistred.success');
                         accountService.setMyself(data2.myself);
-                        $scope.close();
+                        $location.path('/');
                     }
                     else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
                         $scope.fusion(data2.accountFusion);
                     }
                     else if (data2.status == 'OK') {
-                        $scope.accountParam.dto.firstname = data2.firstname;
-                        $scope.accountParam.dto.lastname = data2.lastname;
-                        $scope.accountParam.dto.email = data2.email;
-                        $scope.accountParam.dto.gender = data2.gender;
-                        $scope.accountParam.maskPassword();
-                        if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
-                            ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
-                            ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
-                            ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
-                            $scope.accountParam.disabled = false;
-                            $flash.info('--.registration.facebook.someDataEmpty');
-                        }
-                        else {
-                            facebookAuthentication = dto;
-                            $scope.skip();
-                        }
+                        $scope.accountParam.dto.firstname = data2.first_name;
+                        $scope.accountParam.dto.lastname = data2.last_name;
+                        $scope.accountParam.dto.email= data2.email;
+                        $scope.accountParam.dto.gender= data2.gender;
+                        $scope.accountParam.dto.password= '*********';
+                        facebookAuthentication = dto;
+                        $scope.skip();
                     }
                 });
             },
@@ -724,8 +833,8 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
 
     $scope.save = function (skipStep3) {
 
-        if (!skipStep3) {
-            if (!$scope.addressFormParam.isValid) {
+        if(!skipStep3){
+            if(!$scope.addressFormParam.isValid){
                 $scope.addressFormParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
                 return;
@@ -744,18 +853,16 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
         accountService.registration(dto, function () {
                 $scope.loading = false;
                 $flash.success(translationService.get("--.login.flash.success"));
-                if (fctToExecute != null) {
-                    fctToExecute(fctToExecuteParams);
-                }
-                $scope.close();
+                $location.path('/');
             },
             function () {
                 $scope.loading = false;
             });
     }
 
+
 }]);
-myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'businessService', 'modalService', '$location', 'addressService', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, modalService, $location, addressService) {
+myApp.controller('BusinessRegistrationCtrl', ['$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', 'businessService', 'addressService', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location,businessService,addressService) {
 
     var facebookAuthentication = null;
 
@@ -766,26 +873,18 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
     $scope.addressFormParam = {
         addName: false
     };
-    $scope.businessCategoryFormParam = {
-        value:[]
-    };
+    $scope.businessCategoryFormParam = {};
 
     $scope.businessFormParam = {};
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
 
     $scope.next = function () {
         var notValid = false;
         if ($scope.badgeSelected == 1) {
-            if (!$scope.accountParam.isValid && facebookAuthentication == null) {
+            if (!$scope.accountParam.isValid) {
                 $scope.accountParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValid"));
             }
-            else if (facebookAuthentication != null) {
-                $scope.badgeSelected++;
-            } else {
+            else {
                 $scope.accountParam.disabled = true;
                 $scope.loading = true;
                 accountService.testEmail($scope.accountParam.dto.email, function (value) {
@@ -803,12 +902,11 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
             notValid = true;
         }
         else if ($scope.badgeSelected == 2) {
-            notValid = true;
             if (!$scope.addressFormParam.isValid || !$scope.businessFormParam.isValid) {
-
                 $scope.addressFormParam.displayErrorMessage = true;
                 $scope.businessFormParam.displayErrorMessage = true;
                 $flash.error(translationService.get("--.generic.stepNotValid"));
+                notValid = true;
             }
             else {
                 $scope.loading = true;
@@ -852,28 +950,19 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
                     if (data2.status == 'ALREADY_REGISTRERED') {
                         $flash.success('--.customer.registrationModal.alredyRegistred.success');
                         accountService.setMyself(data2.myself);
-                        $scope.close();
+                        $location.path('/');
                     }
                     else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
                         $scope.fusion(data2.accountFusion);
                     }
                     else if (data2.status == 'OK') {
-                        $scope.accountParam.dto.firstname = data2.firstname;
-                        $scope.accountParam.dto.lastname = data2.lastname;
-                        $scope.accountParam.dto.email = data2.email;
-                        $scope.accountParam.dto.gender = data2.gender;
-                        $scope.accountParam.maskPassword();
-                        if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
-                            ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
-                            ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
-                            ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
-                            $scope.accountParam.disabled = false;
-                            $flash.info('--.registration.facebook.someDataEmpty');
-                        }
-                        else {
-                            facebookAuthentication = dto;
-                            $scope.next();
-                        }
+                        $scope.accountParam.dto.firstname = data2.first_name;
+                        $scope.accountParam.dto.lastname = data2.last_name;
+                        $scope.accountParam.dto.email= data2.email;
+                        $scope.accountParam.dto.gender= data2.gender;
+                        $scope.accountParam.dto.password= '*********';
+                        facebookAuthentication = dto;
+                        $scope.skip();
                     }
                 });
             },
@@ -895,6 +984,7 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
 
     $scope.save = function () {
 
+        //todo control address and business
         if (!$scope.businessFormParam.isValid || !$scope.addressFormParam.isValid || !$scope.businessCategoryFormParam.isValid) {
             $scope.businessFormParam.displayErrorMessage = true;
             $scope.addressFormParam.displayErrorMessage = true;
@@ -915,11 +1005,10 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
             };
 
             $scope.loading = true;
-            businessService.registration(dto, function (result) {
+            businessService.registration(dto, function () {
                     $scope.loading = false;
-                    $flash.success(translationService.get("--.registration.business.flash.success"));
-                    $scope.close();
-                    $location.path("/business/"+result.businessId);
+                    $flash.success(translationService.get("--.login.flash.success"));
+                    $location.path("/business_old");
                 },
                 function () {
                     $scope.loading = false;
@@ -927,361 +1016,10 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
         }
     }
 
-}]);
-myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness) {
-
-    $scope.loading = false;
-
-    $scope.update = (dto != null);
-
-    $scope.addressParam = {
-        addName: addName,
-        dto: angular.copy(dto)
-    };
-
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-
-        if (!$scope.addressParam.isValid) {
-            $scope.addressParam.displayErrorMessage = true;
-        }
-        else {
-            $scope.loading = true;
-            if ($scope.update) {
-                if(isBusiness){
-                    businessService.editAddress($scope.addressParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                        },
-                        function () {
-                            $scope.loading = false;
-                        });
-                }
-                else {
-                    accountService.editAddress($scope.addressParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                        },
-                        function () {
-                            $scope.loading = false;
-                        });
-                }
-            }
-            else {
-                accountService.addAddress($scope.addressParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
-            }
-        }
-    }
-
 
 }]);
-myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
+myApp.controller('MenuCtrl', ['$scope', 'facebookService', 'accountService', '$location', function ($scope,facebookService,accountService,$location) {
 
-
-    $scope.customerInterestParam = {
-        result : accountService.getMyself().customerInterests
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-        $scope.loading=true;
-        accountService.editCustomerInterest(
-            {customerInterests:$scope.customerInterestParam.result},
-            function () {
-                $scope.loading = false;
-                $scope.close();
-            },
-            function () {
-                $scope.loading = false;
-            });
-    }
-
-}]);
-myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', function ($scope, $flash, $modalInstance, translationService, dto, promotionService,callback) {
-
-    $scope.loading = false;
-
-    $scope.update = (dto != null);
-
-    $scope.promotionParam = {
-        dto: angular.copy(dto)
-    };
-
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-
-        if (!$scope.promotionParam.isValid) {
-            $scope.promotionParam.displayErrorMessage = true;
-        }
-        else {
-
-            if ($scope.promotionParam.minimalQuantity > $scope.promotionParam.quantity) {
-                $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
-            }
-            else {
-
-                $scope.loading = true;
-                if ($scope.update) {
-                    promotionService.edit($scope.promotionParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                            callback();
-                        },
-                        function () {
-                            $scope.loading = false;
-                        });
-                }
-                else {
-                    promotionService.add($scope.promotionParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                            callback();
-                        },
-                        function () {
-                            $scope.loading = false;
-                        });
-                }
-            }
-        }
-    }
-
-
-}]);
-myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', function ($scope, $flash, $modalInstance,  translationService, dto,businessNotificationService,callback) {
-
-    $scope.loading = false;
-
-    $scope.update = (dto != null);
-
-    $scope.businessNotificationParam= {
-        dto: angular.copy(dto)
-    };
-
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-
-        if (!$scope.businessNotificationParam.isValid) {
-            $scope.businessNotificationParam.displayErrorMessage = true;
-        }
-        else {
-            $scope.loading = true;
-            if ($scope.update) {
-                businessNotificationService.edit($scope.businessNotificationParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                        callback();
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
-            }
-            else {
-                businessNotificationService.add($scope.businessNotificationParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                        callback();
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
-            }
-
-        }
-    }
-
-
-}]);
-myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'field', 'callback', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
-
-    var value = {
-        data: null
-    };
-
-    $scope.text = {
-        fieldTitle: field.name,
-        validationRegex: "^.{1,255}$",
-        validationMessage: ['--.generic.validation.size', '1', '255'],
-        field: value,
-        fieldName: 'data'
-    };
-
-    $scope.loading = false;
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-
-        if ($scope.text.isValid) {
-            callback(value.data);
-            $modalInstance.close();
-        }
-        else {
-            $scope.text.firstAttempt = false;
-        }
-    };
-
-}])
-;
-myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'param', '$compile', 'directiveName', 'save', '$timeout', 'title', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
-
-    $scope.title = title;
-
-    var directive = $compile("<" + directiveName + " ng-info=\"param\"/>")($scope);
-
-    $timeout(function () {
-        $('.inject-data:first').append(directive)
-    }, 1);
-
-
-    $scope.loading = false;
-
-    $scope.param = param;
-
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.setLoading = function(value){
-        $scope.loading = value;
-    };
-
-    $scope.save = function () {
-        var isValid = true;
-        if (param.isValid != undefined) {
-            isValid = param.isValid;
-
-            param.displayErrorMessage = true;
-        }
-        if (isValid) {
-            $scope.loading = true;
-            save($scope.close,$scope.setLoading);
-        }
-    }
-
-
-}]);
-myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$compile', 'title', 'message', 'save', function ($scope, $flash, $modalInstance,  $compile, title,message, save) {
-
-    $scope.message = message;
-
-    $scope.title=title;
-
-    $scope.loading = false;
-
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-
-        save($scope.close);
-    }
-
-
-}]);
-myApp.controller('GalleryModalCtrl', ['$scope', '$flash', '$modalInstance', 'image', 'images', function ($scope, $flash, $modalInstance, image, images) {
-
-
-    $scope.image = image;
-    $scope.images = images;
-    $scope.imageNb = null;
-
-
-    for (var key in $scope.images) {
-        if ($scope.images[key].storedName == $scope.image.storedName) {
-            $scope.imageNb = key - -1;
-        }
-    }
-
-    $scope.previous = function () {
-        for (var key in $scope.images) {
-            if ($scope.images[key].storedName == $scope.image.storedName) {
-                if ($scope.images[key - 1] == undefined) {
-                    $scope.image = $scope.images[$scope.images.length - 1];
-                    $scope.imageNb = $scope.images.length;
-                }
-                else {
-                    $scope.image = $scope.images[key - 1];
-                    $scope.imageNb = key - 1 - -1;
-                }
-                break;
-            }
-        }
-    };
-
-    $scope.next = function () {
-        for (var key in $scope.images) {
-            if ($scope.images[key].storedName == $scope.image.storedName) {
-                var newKey = key - -1;
-                if ($scope.images[newKey] == undefined) {
-                    $scope.image = $scope.images[0];
-                    $scope.imageNb = 1;
-                }
-                else {
-                    $scope.image = $scope.images[newKey];
-                    $scope.imageNb = key - -1 - -1;
-                }
-                break;
-            }
-        }
-    };
-
-}]);
-myApp.controller('WelcomeCtrl', ['$scope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', '$rootScope', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
-
-    $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
-        $scope.advancedSearch = params.display;
-    });
-
-
-
-    //use the model
-    $scope.myself = accountService.getMyself();
-    $scope.accountService = accountService;
-
-
-    //login open modal
-    $scope.login = function () {
-        modalService.openLoginModal();
-    };
-
-    //registration open modal
-    $scope.registration = function () {
-        modalService.openCustomerRegistrationModal();
-    };
-
-    //edit profile
-    $scope.editProfile = function () {
-        modalService.openEditProfileModal();
-
-    };
-
-    //log out
     $scope.logout = function () {
         if (facebookService.isConnected()) {
             facebookService.logout();
@@ -1292,185 +1030,18 @@ myApp.controller('WelcomeCtrl', ['$scope', 'languageService', '$location', 'acco
         });
     };
 
-    //
-    // change lang
-    //
-    $scope.$watch('lang', function () {
-        if (!angular.isUndefined($scope.lang)) {
-            languageService.changeLanguage($scope.lang);
-        }
-    });
-
-    $scope.languageService = languageService;
-
-
-    $scope.positions = [
-        {key: 'currentPosition', translation: '--.position.current'}
-    ];
-
-    $scope.currentPositionText = 'currentPosition';
-
-    $timeout(function () {
-        completePositions();
-
-        $scope.$watch('currentPosition', function (o, n) {
-            if (n != null && o != n) {
-                addressService.changeAddress($scope.currentPosition, function (result) {
-
-                    if (result.__type.indexOf('AddressDTO') == -1) {
-                        accountService.getMyself().selectedAddress = null;
-                    }
-                    else {
-                        accountService.getMyself().selectedAddress = result;
-                    }
-                    $timeout(function () {
-                        $scope.$broadcast('POSITION_CHANGED');
-                    }, 1);
-                });
-            }
-        });
-
-        $rootScope.$watch(function () {
-            return accountService.model.myself;
-        }, function watchCallback(newValue, oldValue) {
-            completePositions();
-        });
-
-    }, 1);
-    var completePositions = function () {
-        $scope.positions = [
-            {key: 'currentPosition', translation: '--.position.current'}
-        ];
-        if (accountService.getMyself() != null) {
-            for (var key in accountService.getMyself().addresses) {
-                $scope.positions.push(
-                    {
-                        key: accountService.getMyself().addresses[key].name,
-                        translation: accountService.getMyself().addresses[key].name
-                    });
-            }
-        }
-        $scope.currentPosition = geolocationService.getLocationText();
-    };
-
-    $rootScope.$watch(function () {
-        return accountService.model.myself;
-    }, function watchCallback(n, o) {
-        completePositions();
-    }, true);
-
 
 }]);
-myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
-
-    //variable
-    $scope.followedMode = false;
-    $scope.businessInfoParam = {};
-    $scope.accountService = accountService.model;
-    customerInterestService.getAll(function (value) {
-        $scope.customerInterests = value;
-    });
-    $scope.publicationListCtrl = {};
-
-    //open registration modal
-    $scope.customerRegistration = function () {
-        modalService.openCustomerRegistrationModal();
-    };
-
-    //functions
-    //search by interest
-    $scope.searchByInterest = function (interest) {
-
-        if (interest.selected == true) {
-            interest.selected = false;
-        }
-        else {
-            for (var i in $scope.customerInterests) {
-                $scope.customerInterests[i].selected = false;
-            }
-            interest.selected = true;
-        }
-        $scope.search();
-    };
-
-    //watch on change position
-    $scope.$on('POSITION_CHANGED', function () {
-        $scope.search();
-    });
-
-    //watch in follow mode
-    $scope.$watch('followedMode', function () {
-        $scope.search();
-    });
-
-    $scope.$on('LOGOUT', function () {
-        if ($scope.followedMode) {
-            $scope.followedMode = false;
-        }
-    });
-
-    //search function
-    $scope.search = function () {
-        if (geolocationService.position != null) {
-
-            var interestSelected = null;
-            for (var i in $scope.customerInterests) {
-                if ($scope.customerInterests[i].selected) {
-                    interestSelected = $scope.customerInterests[i];
-                }
-            }
-
-            $scope.publicationListCtrl.loading = true;
-            if ($scope.followedMode) {
-                if (interestSelected != null) {
-                    searchService.byFollowedAndInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-
-                }
-                else {
-                    searchService.byFollowed(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-                }
-            }
-            else {
-                if (interestSelected != null) {
-                    searchService.byInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-
-                }
-                else {
-                    searchService.default(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-                }
-            }
-        }
-    };
-
-}]);
-myApp.controller('BusinessRegistrationCtrl', ['$scope', 'modalService', function ($scope, modalService) {
-
-
-    $scope.businessRegistration = function(){
-        modalService.openBusinessRegistrationModal();
-    };
-
-    //login open modal
-    $scope.login = function () {
-        modalService.openLoginModal();
-    };
-
-}]);
-myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', 'accountService', function ($scope, modalService, accountService, accountService) {
+myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', function ($scope, modalService, accountService) {
 
     $scope.model = accountService.model;
+
+    $scope.activeTab = 'personal';
+
+    $scope.setActiveTab = function(tab){
+        $scope.activeTab = tab;
+    };
+
 
     $scope.accountParam = {
         updateMode: true,
@@ -1480,10 +1051,6 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', 'ac
 
     $scope.editPassword = function(){
         modalService.openEditPasswordModal();
-    };
-
-    $scope.interestEdit = function(){
-        modalService.openEditCustomerInterest();
     };
 
     $scope.personalEdit = function () {
@@ -1500,9 +1067,6 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', 'ac
         $scope.accountParam.disabled = true;
     };
 
-
-
-
     $scope.addAddress = function () {
         modalService.addressModal(true, null,false);
     };
@@ -1515,50 +1079,86 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', 'ac
         accountService.deleteAddress(address);
     };
 
-}]);
-myApp.controller('BusinessCtrl', ['$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', 'followService', '$timeout', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
-
-
-    if ($routeParams.publicationId != null) {
-        $scope.publicationIdToGo = $routeParams.publicationId;
-    }
-
-
-    $scope.displayError = false;
-    $scope.loading = true;
-    $scope.business = null;
-    $scope.edit = false;
-    $scope.myBusiness = false;
-    $scope.businessId = $routeParams.businessId;
-    //publication
-    $scope.publicationListParam = {
-        businessId: $scope.businessId,
-        scrollTo: $scope.publicationIdToGo,
-        displayRemoveIcon: $scope.edit
+    //interest
+    $scope.interestParam = {
+        result: angular.copy(accountService.getMyself().customerInterests),
+        disabled: true
     };
-    $scope.$watch('edit', function () {
-        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
-    });
+
+    $scope.interestEdit = function(){
+        $scope.interestParam.disabled=false;
+    };
+
+    $scope.interestCancel = function(){
+        $scope.interestParam.disabled=true;
+    };
+
+    $scope.interestSave = function(){
+        accountService.editCustomerInterest(
+            {customerInterests:$scope.interestParam.result},
+            function () {
+                accountService.getMyself().customerInterests = $scope.interestParam.result;
+                $scope.interestParam.disabled=true;
+                $scope.loading = false;
+            },
+            function () {
+                $scope.loading = false;
+            });
+    };
+
+}]);
+myApp.controller('BusinessCtrl', ['$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', function ($scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+
+    $scope.loading = true;
+
     //address
     $scope.googleMapParams = {}
 
-
-    //loading
     businessService.getBusiness($routeParams.businessId,
         function (data) {
             $scope.loading = false;
             $scope.business = data;
-            //edit mode ?
-            $scope.$watch('business.businessStatus', function () {
 
-                    if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
-                        if ($scope.business.businessStatus != 'WAITING_CONFIRMATION') {
-                            $scope.edit = true;
-                        }
-                        $scope.myBusiness = true;
-                    }
+            $scope.interfaceToDisplay = 'home';
+
+            //address
+            $scope.googleMapParams.address = $scope.business.address;
+            $scope.googleMapParams.mobile=true;
+
+            $scope.$watch('interfaceToDisplay', function () {
+                if ($scope.interfaceToDisplay == 'info') {
+                    $timeout(function () {
+                        $scope.googleMapParams.refreshNow();
+                    }, 1);
                 }
-            );
+            });
+
+            $scope.actions = [{
+                icon: '/assets/images/action/home.png',
+                action: function () {
+                    $scope.interfaceToDisplay = 'home'
+                },
+                display: function () {
+                    return true;
+                }
+            }, {
+                icon: '/assets/images/action/info.png',
+                action: function () {
+                    $scope.interfaceToDisplay = 'info'
+                },
+                display: function () {
+                    return true;
+                }
+            }, {
+                icon: '/assets/images/action/gallery.png',
+                action: function () {
+                    $scope.interfaceToDisplay = 'gallery'
+                },
+                display: function () {
+                    return $scope.business.galleryPictures != null && $scope.business.galleryPictures.length > 0
+                }
+            }
+            ];
 
             //distance
             $scope.computeDistance = function () {
@@ -1573,382 +1173,113 @@ myApp.controller('BusinessCtrl', ['$scope', 'modalService', 'businessService', '
                 $scope.computeDistance();
             });
 
-            $scope.publish = function () {
 
-                modalService.messageModal("--.business.page.askPublication.window.title", "--.business.page.askPublication.window.message",
-                    function (close) {
-                        businessService.publishBusiness();
-                        close();
-                        $flash.info(translationService.get("--.business.page.askPublication.window.flash"));
-                        $scope.business.businessStatus = 'WAITING_CONFIRMATION';
-                    });
-            };
-
-            $scope.cancelPublishRequest = function () {
-
-                modalService.messageModal("--.business.page.cancelPublishRequest.window.title", "--.business.page.cancelPublishRequest.window.message",
-                    function (close) {
-                        businessService.cancelPublishRequest();
-                        close();
-                        $flash.info(translationService.get("--.business.page.cancelPublishRequest.window.flash"));
-                        $scope.business.businessStatus = 'NOT_PUBLISHED';
-                    });
-            };
-
-            $scope.stopPublish = function () {
-
-                modalService.messageModal("--.business.page.stopPublication.window.title", "--.business.page.stopPublication.window.message",
-                    function (close) {
-                        businessService.stopPublication();
-                        close();
-                        $flash.info(translationService.get("--.business.page.stopPublication.window.flash"));
-                        $scope.business.businessStatus = 'NOT_PUBLISHED';
-                    });
-            };
-
-
-            //edit name
-            $scope.editbusiness = function () {
-                var business = angular.copy($scope.business);
-                modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
-                    {dto: business},
-                    function (close, setLoading) {
-                        businessService.edit(business, function (data) {
-                            $scope.business.name = data.name;
-                            $scope.business.description = data.description;
-                            $scope.business.phone = data.phone;
-                            $scope.business.website = data.website;
-                            $scope.business.email = data.email;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //edit illustration
-            $scope.editIllustration = function () {
-                modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
-                    {dto: $scope.business, sizex: 80, sizey: 80, fieldName: 'illustration'},
-                    function (close, setLoading) {
-                        businessService.editIllustration($scope.business.illustration, function () {
-                            $scope.business.illustration.link = '/rest/file/' + $scope.business.illustration.id;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //edit landscape
-            $scope.editLandscape = function () {
-                //$scope.business.landscape={}
-                modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
-                    {dto: $scope.business, sizex: 800, sizey: 300, fieldName: 'landscape'},
-                    function (close, setLoading) {
-                        businessService.editLandscape($scope.business.landscape, function () {
-                            //$scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //address
-            $scope.googleMapParams.address = $scope.business.address;
-            $timeout(function(){
-                $scope.googleMapParams.refreshNow();
-            },1);
-
-            //edit address
-            $scope.editAddress = function () {
-                var address = angular.copy($scope.business.address);
-                modalService.basicModal("--.business.edit.address.modal.title", "address-form-ctrl",
-                    {
-                        dto: address,
-                        addName: false
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editAddress(address, function (data) {
-                            $scope.business.address = data;
-                            $scope.centerMap();
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            $scope.categoryLineParams = {
-                categories: $scope.business.categories
-            };
-
-            //edit category
-            $scope.editCategory = function () {
-                var catList = [];
-                for (var key1 in $scope.business.categories) {
-                    var lev2 = $scope.business.categories[key1];
-                    for (var key2 in lev2) {
-                        var lev3 = lev2[key2];
-                        for (var key3 in lev3) {
-                            catList.push(lev3[key3]);
-                        }
-                    }
-                }
-
-                modalService.basicModal("--.business.edit.category.modal.title", "business-category-form-ctrl",
-                    {
-                        value: catList
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editBusinessCategory(catList, function (data) {
-                            $scope.business.categories = data.categories;
-                            $scope.categoryLineParams.categories = $scope.business.categories;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-
-            };
-
-            $scope.follow = function () {
-                if (accountService.getMyself() != null) {
-                    $scope.followed();
-                }
-                else {
-                    modalService.openLoginModal($scope.followed);
-                }
-            };
-
-            $scope.followed = function () {
-                var followed = $scope.business.following;
-                followService.addFollow(!followed, $scope.business.id, function () {
-                    $scope.business.following = !followed;
-                    if ($scope.business.following) {
-                        $scope.business.totalFollowers++;
-                    }
-                    else {
-                        $scope.business.totalFollowers--;
-                    }
-                });
-            };
-
-
-            //schedule
-            $scope.editSchedule = function () {
-                var schedules = angular.copy($scope.business.schedules);
-                modalService.basicModal("--.business.edit.schedule.modal.title", "schedule-form-ctrl",
-                    {
-                        dto: schedules,
-                        disabled: false
-                    },
-                    function (close, setLoading) {
-                        businessService.createSchedule({schedules: schedules}, function (data) {
-                            $scope.business.schedules = schedules;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-
-            };
-
-            $scope.editGallery = function () {
-                var business = angular.copy($scope.business);
-                modalService.basicModal("--.business.edit.address.modal.title", "dir-field-image-mutiple",
-                    {
-                        fieldTitle: "--.business.modal.gallery.title",
-                        validationMessage: '--.error.validation.image',
-                        sizex: 60,
-                        sizey: 60,
-                        field: business,
-                        multiple: true,
-                        fieldName: 'galleryPictures'
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editGallery({list: business.galleryPictures}, function (data) {
-                            $scope.business.galleryPictures = data;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-
-            //edit social network
-            $scope.editSocialNetwork = function () {
-                var socialNetwork = angular.copy($scope.business.socialNetwork);
-                if (socialNetwork == undefined || socialNetwork == null) {
-                    socialNetwork = {};
-                }
-                modalService.basicModal("--.business.edit.address.modal.title", "business-social-network-ctrl",
-                    {
-                        dto: socialNetwork
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editSocialNetwork(socialNetwork, function (data) {
-                            $scope.business.socialNetwork = socialNetwork;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //create publication
-            $scope.createPromotion = function () {
-                modalService.openPromotionModal(null, function () {
-                    $scope.$broadcast('RELOAD_PUBLICATION');
-                });
-
-            };
-            $scope.createNotification = function () {
-                modalService.openBusinessNotificationModal(null, function () {
-                    $scope.$broadcast('RELOAD_PUBLICATION');
-                });
-            };
             $scope.$on('POSITION_CHANGED', function () {
                 $scope.$broadcast('RELOAD_PUBLICATION');
             });
 
             $scope.$on('RELOAD_PUBLICATION', function () {
+                console.log("RELOAD_PUBLICATION");
                 $scope.publicationListParam.refresh();
             });
 
             //initialization
-            if(geolocationService.currentPosition!=null){
+            if (geolocationService.currentPosition != null) {
                 $scope.$broadcast('RELOAD_PUBLICATION');
             }
 
-            $scope.displaySchedule = function () {
-                for (var i in $scope.business.schedules) {
-                    if ($scope.business.schedules[i].length > 0) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-
-        }, function () {
-            $scope.loading = false;
-            $scope.displayError = true;
-
         });
-
-}])
-;
-myApp.controller('SearchPageCtrl', ['$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($scope, searchService, $routeParams, searchBarService,geolocationService) {
-
-    var param = $routeParams.param;
-    searchBarService.setCurrentSearch(param);
-
-    $scope.businessTab = {};
-    $scope.categoryTab = {};
-    $scope.publicationTab = {};
-
-    $scope.results = null;
-
-    $scope.publicationParams = {};
-    $scope.businessParams = {};
-
-
-    $scope.search = function () {
-        searchService.searchByString(param, function (result) {
-
-
-            var selectedCounter = 0;
-            for (var i in searchBarService.searchCriteria) {
-                if (searchBarService.searchCriteria[i].selected) {
-                    if (searchBarService.searchCriteria[i].key == 'business') {
-                        $scope.businessTab.display = true;
-                    }
-                    else if (searchBarService.searchCriteria[i].key == 'category') {
-                        $scope.categoryTab.display = true;
-                    }
-                    else if (searchBarService.searchCriteria[i].key == 'publication') {
-                        $scope.publicationTab.display = true;
-                    }
-                    selectedCounter++;
-                }
-            }
-            if (selectedCounter == 0) {
-                $scope.businessTab.display = true;
-                $scope.categoryTab.display = true;
-                $scope.publicationTab.display = true;
-            }
-
-            $scope.results = result;
-
-            //compute tabs
-            var alreadyOneTabActive = false;
-            if ($scope.businessTab.display) {
-                $scope.businessTab.total = $scope.results.businesses.length;
-                if ($scope.results.businesses.length == 20) {
-                    $scope.businessTab.total += "+";
-                }
-                if (!alreadyOneTabActive && $scope.businessTab.total > 0) {
-                    $scope.businessTab.active = true;
-                    alreadyOneTabActive = true;
-                }
-            }
-            if ($scope.publicationTab.display) {
-                $scope.publicationTab.total = $scope.results.publications.length;
-                if ($scope.results.publications.length == 20) {
-                    $scope.publicationTab.total += "+";
-                }
-                if (!alreadyOneTabActive && $scope.publicationTab.total > 0) {
-                    $scope.publicationTab.active = true;
-                    alreadyOneTabActive = true;
-                }
-            }
-            if ($scope.categoryTab.display) {
-                $scope.categoryTab.total = $scope.results.categoriesMap.length;
-                if ($scope.categoryTab.total >= 20) {
-                    $scope.categoryTab.total += "+";
-                }
-                if (!alreadyOneTabActive && $scope.categoryTab.total > 0) {
-                    $scope.categoryTab.active = true;
-                    alreadyOneTabActive = true;
-                }
-            }
-
-
-            //business
-            $scope.businessParams.data = $scope.results.businesses;
-            $scope.businessParams.loading = false;
-
-            //publication
-            $scope.publicationParams.data = $scope.results.publications;
-            $scope.publicationParams.loading = false;
-
-
-        });
+    $scope.publicationListParam = {
+        businessId: $routeParams.businessId
+        //scrollTo: $scope.publicationIdToGo,
+        //displayRemoveIcon: $scope.edit
     };
 
-    if (geolocationService.position != null) {
-        $scope.search();
-    }
-
-    $scope.$on('POSITION_CHANGED', function () {
-        $scope.search();
-    });
 }]);
-myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout,publicationService) {
+myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'accountService', 'followService', 'modalService', 'facebookService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService, facebookService) {
 
     return {
         restrict: "E",
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/component/publicationListForBusiness/template.html",
+        templateUrl: "/assets/javascripts/directive/component/publicationListMobile/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+                    directiveService.autoScopeImpl(scope);
+
+                    scope.getInfo().loading = true;
+
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                    };
+
+                    scope.$watch("getInfo().data", function () {
+                        scope.publications = scope.getInfo().data;
+                        for (var i in scope.publications) {
+                            scope.publications[i].interval = (scope.publications[i].endDate - new Date());
+                        }
+                    });
+
+                    scope.follow = function (publication) {
+                        if (accountService.getMyself() != null) {
+                            scope.followed(publication);
+                        }
+                        else {
+                            modalService.openLoginModal(scope.followed, publication);
+                        }
+                    };
+
+                    scope.followed = function (publication) {
+                        var followed = publication.following;
+                        followService.addFollow(!followed, publication.businessId, function () {
+                            publication.following = !followed;
+                            if (publication.following) {
+                                publication.totalFollowers++;
+                            }
+                            else {
+                                publication.totalFollowers--;
+                            }
+                            for (var i in scope.publications) {
+                                if (scope.publications[i].businessId == publication.businessId) {
+                                    scope.publications[i].following = publication.following;
+                                    scope.publications[i].totalFollowers = publication.totalFollowers;
+                                }
+                            }
+                        });
+                    };
+
+                    //scope.share = function (publication) {
+                    //    facebookService.share('http://lynk-test.herokuapp.com/publication/'+publication.id);
+                    //};
+
+
+                    //(function(d, s, id) {
+                    //    var js, fjs = d.getElementsByTagName(s)[0];
+                    //    if (d.getElementById(id)) return;
+                    //    js = d.createElement(s); js.id = id;
+                    //    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.4&appId=1446672245627002";
+                    //    fjs.parentNode.insertBefore(js, fjs);
+                    //}(document, 'script', 'facebook-jssdk'));
+
+
+                }
+            }
+        }
+    }
+}]);
+myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout,publicationService) {
+
+    return {
+        restrict: "E",
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
+        templateUrl: "/assets/javascripts/directive/component/publicationListMobileForBusiness/template.html",
         replace: true,
         transclude: true,
         compile: function () {
@@ -1958,7 +1289,6 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
 
 
                     scope.getInfo().refresh = function () {
-
                         searchService.byBusiness(scope.getInfo().businessId, function (data) {
                             scope.publications = data;
                             for (var i in scope.publications) {
@@ -1974,6 +1304,7 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
 
                         });
                     };
+
                     scope.removePublication = function (publication) {
                         publicationService.delete(publication, function () {
                             $rootScope.$broadcast('RELOAD_PUBLICATION');
@@ -1985,80 +1316,20 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
     }
 }])
 ;
-myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'accountService', 'followService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
-
+myApp.directive("mobileTitleCtrl", function () {
     return {
         restrict: "E",
-        scope: directiveService.autoScope({
-            ngInfo: '='
-        }),
-        templateUrl: "/assets/javascripts/directive/component/businessList/template.html",
+        scope: {
+            title: '=',
+            displayMenu: '='
+        },
+        templateUrl: "/assets/javascripts/directive/mobile/title/template.html",
         replace: true,
-        transclude: true,
         compile: function () {
             return {
                 post: function (scope) {
-                    directiveService.autoScopeImpl(scope);
-
-
-                    scope.getInfo().loading = true;
-
-
-                    scope.navigateTo = function (target) {
-                        $location.path(target);
-                    };
-
-                    scope.$watch("getInfo().data", function () {
-                        scope.businesses = scope.getInfo().data;
-                    });
-
-                    scope.follow = function (business) {
-                        if (accountService.getMyself() != null) {
-                            scope.followed(business);
-                        }
-                        else {
-                            modalService.openLoginModal(scope.followed, business);
-                        }
-                    };
-
-
-                    scope.followed = function (business) {
-                        var followed = business.following;
-                        followService.addFollow(!followed, business.id, function () {
-                            business.following = !followed;
-                            if (business.following) {
-                                business.totalFollowers++;
-                            }
-                            else {
-                                business.totalFollowers--;
-                            }
-                        });
-                    }
                 }
             }
         }
     }
-}]);
-myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function ($rootScope, businessService, geolocationService, directiveService, $location) {
-
-    return {
-        restrict: "E",
-        scope: directiveService.autoScope({
-            ngInfo: '='
-        }),
-        templateUrl: "/assets/javascripts/directive/component/categoryLine/template.html",
-        replace: true,
-        transclude: true,
-        compile: function () {
-            return {
-                post: function (scope) {
-                    directiveService.autoScopeImpl(scope);
-
-                    scope.searchCat = function(categoryName){
-                        $location.path('/search/category:'+categoryName);
-                    }
-                }
-            }
-        }
-    }
-}]);
+});
