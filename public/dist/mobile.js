@@ -395,6 +395,39 @@ myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'bus
 
 
 }]);
+myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'field', 'callback', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
+
+    var value = {
+        data: null
+    };
+
+    $scope.text = {
+        fieldTitle: field.name,
+        validationRegex: "^.{1,255}$",
+        validationMessage: ['--.generic.validation.size', '1', '255'],
+        field: value,
+        fieldName: 'data'
+    };
+
+    $scope.loading = false;
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.save = function () {
+
+        if ($scope.text.isValid) {
+            callback(value.data);
+            $modalInstance.close();
+        }
+        else {
+            $scope.text.firstAttempt = false;
+        }
+    };
+
+}])
+;
 myApp.controller('WelcomeCtrl', ['$scope', '$location', 'accountService', '$flash', 'translationService', function ($scope,$location,accountService,$flash,translationService) {
 
     $scope.loginFormParam = {

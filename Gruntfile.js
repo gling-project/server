@@ -199,6 +199,7 @@ module.exports = function (grunt) {
                         'public/javascripts/InitMobile.js',
                         'public/javascripts/modal/ChangePassword/ChangePasswordModal.js',
                         'public/javascripts/modal/AddressModal/AddressModal.js',
+                        'public/javascripts/modal/OneFieldModal/OneFieldModal.js',
                         'public/javascripts/controller/mobile/WelcomeCtrl.js',
                         'public/javascripts/controller/mobile/HomeCtrl.js',
                         'public/javascripts/controller/mobile/ForgotPasswordCtrl.js',
