@@ -11,7 +11,7 @@ echo "CREATE SCHEMA public;" | eval $DB_CONNECTION
 
 echo ""
 echo "Deploy"
-git push heroku master
+./deploy.sh
 
 echo "open in navigator"
 xdg-open http://lynk-test.herokuapp.com/
