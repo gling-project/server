@@ -28,7 +28,8 @@ module.exports = function (grunt) {
                             'public/components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                             'public/components/angucomplete/angucomplete.js',
                             'public/components/underscore/underscore-min.js',
-                            'public/components/mathjs/dist/math.min.js',
+                            //TODO remove ?
+                            //'public/components/mathjs/dist/math.min.js',
                             'public/components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
                             'public/components/angular-i18n/angular-locale_fr-fr.js',
                             'public/components/bootstrap/js/transition.js',
@@ -38,11 +39,13 @@ module.exports = function (grunt) {
                             'public/components/ng-table/ng-table.min.js',
                             'public/components/angular-animate/angular-animate.min.js',
                             'public/components/angularjs-geolocation/dist/angularjs-geolocation.min.js',
+                            //TODO useless ?
                             'public/components/angular-timer/dist/angular-timer.min.js',
                             'public/components/humanize-duration/humanize-duration.js',
-                            'public/components/highcharts/highcharts.js',
-                            'public/components/highcharts/highcharts-more.js',
+                            //'public/components/highcharts/highcharts.js',
+                            //'public/components/highcharts/highcharts-more.js',
                             'public/components/angular-socialshare/angular-socialshare.js',
+                            //TODO ???
                             'public/javascripts/externalDependence/facebook_sdk.js']
                     },
                     {

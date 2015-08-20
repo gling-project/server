@@ -47,6 +47,7 @@ server.pid
 *.iml
 *.eml
 .cache
+/node_modules/
 
 
 ### Eclipse ###

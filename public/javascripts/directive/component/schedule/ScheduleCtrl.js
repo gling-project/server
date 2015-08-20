@@ -1,4 +1,4 @@
-myApp.directive('scheduleCtrl', function (directiveService, generateId, $timeout) {
+myApp.directive('scheduleCtrl', function (directiveService) {
 
     return {
         restrict: "E",
@@ -11,7 +11,6 @@ myApp.directive('scheduleCtrl', function (directiveService, generateId, $timeout
         compile: function () {
             return {
                 pre: function (scope) {
-                    scope.id = generateId.generate();
                 },
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
@@ -45,8 +44,7 @@ myApp.directive('scheduleCtrl', function (directiveService, generateId, $timeout
                     };
 
                     scope.nbPair = function (nb) {
-                        if (nb / 2 == Math.round(nb / 2)) return true;
-                        else return false;
+                        return !(nb % 2);
                     };
 
 

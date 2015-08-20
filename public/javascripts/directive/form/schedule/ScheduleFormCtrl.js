@@ -52,8 +52,7 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
 
 
                     scope.nbPair = function (nb) {
-                        if (nb / 2 == Math.round(nb / 2)) return true;
-                        else return false;
+                        return !(nb % 2);
                     };
 
                     scope.hours = [];
