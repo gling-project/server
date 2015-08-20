@@ -10,6 +10,7 @@ import be.lynk.server.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.Logger;
+import play.Play;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Http;

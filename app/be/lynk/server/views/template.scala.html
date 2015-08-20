@@ -1,4 +1,5 @@
 @(languages: be.lynk.server.dto.ListDTO[be.lynk.server.dto.LangDTO], data: be.lynk.server.dto.InterfaceDataDTO,publication:be.lynk.server.dto.AbstractPublicationDTO)
+@import play.Play
 
 @import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -32,6 +33,13 @@
         }
 
         @header.dependencies_header()
+
+        @if(Play.application().isProd()){
+            ceci est une version en prod
+        }
+        @if(Play.application().isProd() == false){
+            ceci est une version en PAS prod
+        }
 
             @*<!-- map -->*@
         @*<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>*@
