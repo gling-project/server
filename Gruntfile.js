@@ -6,8 +6,10 @@ module.exports = function (grunt) {
         cssmin: {
             generated: {
                 files: [
-                    { dest: 'public/dist/dependencies.min.css',
-                        src: [ 'public/dist/dependencies.css' ] }
+                    {
+                        dest: 'public/dist/dependencies.min.css',
+                        src: ['public/dist/dependencies.css']
+                    }
                 ]
             }
         },
@@ -51,7 +53,7 @@ module.exports = function (grunt) {
                     {
                         dest: 'public/dist/dependencies.css',
 
-                        src: [  'public/components/angucomplete/angucomplete.css',
+                        src: ['public/components/angucomplete/angucomplete.css',
                             'public/components/bootstrap/dist/css/bootstrap.min.css',
                             'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
                             'public/components/messenger/build/css/messenger.css',
@@ -66,59 +68,125 @@ module.exports = function (grunt) {
         uglify: {
             my_target: {
                 files: {
-                    //'public/dist/dependencies.min.js': ['public/dist/dependencies.js'],
-                    //'public/dist/angular.min.js': ['public/javascripts/dist/angular.js']
+                    'public/dist/dependencies.min.js': ['public/dist/dependencies.js'],
+                    'public/dist/common.min.js': ['public/dist/common.js'],
+                    'public/dist/web.min.js': ['public/dist/web.js']
+                }
+            }
+        },
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
+            myApp: {
+                files: {
+                    'public/dist/common.js': [
+                        <!-- directives -->
+                        'public/javascripts/directive/technical/dirEnter/directive.js',
+                        'public/javascripts/directive/field/dirFieldDate/directive.js',
+                        'public/javascripts/directive/field/dirFieldSelect/directive.js',
+                        'public/javascripts/directive/field/dirFieldText/directive.js',
+                        'public/javascripts/directive/field/dirFieldTextArea/directive.js',
+                        'public/javascripts/directive/technical/dirFocusMe/directive.js',
+                        'public/javascripts/directive/technical/dirInputNumber/directive.js',
+                        'public/javascripts/directive/field/dirFieldCheck/directive.js',
+                        'public/javascripts/directive/field/dirFieldDocument/directive.js',
+                        'public/javascripts/directive/field/dirFieldImageMutiple/directive.js',
+                        <!-- form -->
+                        'public/javascripts/directive/form/login/LoginFormCtrl.js',
+                        'public/javascripts/directive/form/address/AddressFormCtrl.js',
+                        'public/javascripts/directive/form/customerInterest/CustomerInterestFormCtrl.js',
+                        'public/javascripts/directive/form/account/AccountFormCtrl.js',
+                        'public/javascripts/directive/form/business/BusinessFormCtrl.js',
+                        'public/javascripts/directive/form/businessCategory/BusinessCategoryFormCtrl.js',
+                        'public/javascripts/directive/form/download/DownloadFormCtrl.js',
+                        'public/javascripts/directive/form/promotion/PromotionFormCtrl.js',
+                        'public/javascripts/directive/form/businessNotification/BusinessNotificationFormCtrl.js',
+                        'public/javascripts/directive/form/schedule/ScheduleFormCtrl.js',
+                        'public/javascripts/directive/form/image/ImageFormCtrl.js',
+                        'public/javascripts/directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js',
+                        <!-- component -->
+                        'public/javascripts/directive/component/publicationList/PublicationListCtrl.js',
+                        'public/javascripts/directive/component/schedule/ScheduleCtrl.js',
+                        'public/javascripts/directive/component/gallery/GalleryCtrl.js',
+                        'public/javascripts/directive/component/googleMapWidget/GoogleMapWidgetCtrl.js',
+                        'public/javascripts/directive/component/searchResult/SearchResultCtrl.js',
+                        'public/javascripts/directive/component/searchBar/SearchBarCtrl.js',
+
+                        <!-- filters -->
+                        'public/javascripts/filter/TranslateTextFilter.js',
+                        'public/javascripts/filter/ZeropadFilter.js',
+                        'public/javascripts/filter/ImageFilter.js',
+
+                        <!-- controllers -->
+                        'public/javascripts/MainCtrl.js',
+
+
+                        <!-- services -->
+                        'public/javascripts/service/DirectiveService.js',
+                        'public/javascripts/service/FlashService.js',
+                        'public/javascripts/service/GenerateIdService.js',
+                        'public/javascripts/service/TranslationService.js',
+                        'public/javascripts/service/ModelService.js',
+                        'public/javascripts/service/FacebookService.js',
+                        'public/javascripts/service/LanguageService.js',
+                        'public/javascripts/service/CustomerInterestService.js',
+                        'public/javascripts/service/AccountService.js',
+                        'public/javascripts/service/BusinessCategoryService.js',
+                        'public/javascripts/service/BusinessService.js',
+                        'public/javascripts/service/ModalService.js',
+                        'public/javascripts/service/PromotionService.js',
+                        'public/javascripts/service/GeolocationService.js',
+                        'public/javascripts/service/BusinessNotificationService.js',
+                        'public/javascripts/service/AddressService.js',
+                        'public/javascripts/service/FollowService.js',
+                        'public/javascripts/service/SearchService.js',
+                        'public/javascripts/service/SearchBarService.js',
+                        'public/javascripts/service/PublicationService.js']
+                    , 'public/dist/web.js': [
+                        'public/components/lodash/lodash.min.js',
+                        'public/components/angular-google-maps/dist/angular-google-maps.min.js',
+                        'public/components/angular-google-maps/dist/angular-google-maps_dev_mapped.min.js',
+
+                        <!-- routes -->
+                        'public/javascripts/routes/web-routes.js',
+
+                        <!-- init -->
+                        'public/javascripts/Init.js',
+
+                        <!-- modals -->
+                        'public/javascripts/modal/LoginModal/LoginModal.js',
+                        'public/javascripts/modal/ChangePassword/ChangePasswordModal.js',
+                        'public/javascripts/modal/ForgotPasswordModal/ForgotPasswordModal.js',
+                        'public/javascripts/modal/HelpModal/HelpModalCtrl.js',
+                        'public/javascripts/modal/DownloadFieldModal/DownloadFieldModal.js',
+                        'public/javascripts/modal/AccountFusionFacebookModal/AccountFusionFacebookModal.js',
+                        'public/javascripts/modal/CustomerRegistrationModal/CustomerRegistrationModal.js',
+                        'public/javascripts/modal/BusinessRegistrationModal/BusinessRegistrationModal.js',
+                        'public/javascripts/modal/AddressModal/AddressModal.js',
+                        'public/javascripts/modal/EditCustomerInterestModal/EditCustomerInterestModal.js',
+                        'public/javascripts/modal/PromotionModal/PromotionModal.js',
+                        'public/javascripts/modal/BusinessNotificationModal/BusinessNotificationModal.js',
+                        'public/javascripts/modal/OneFieldModal/OneFieldModal.js',
+                        'public/javascripts/modal/BasicModal/BasicModal.js',
+                        'public/javascripts/modal/MessageModal/MessageModal.js',
+                        'public/javascripts/modal/GalleryModal/GalleryModal.js',
+
+                        <!-- controllers -->
+                        'public/javascripts/controller/web/WelcomeCtrl.js',
+                        'public/javascripts/controller/web/HomeCtrl.js',
+                        'public/javascripts/controller/web/BusinessRegistrationCtrl.js',
+                        'public/javascripts/controller/web/ProfileCtrl.js',
+                        'public/javascripts/controller/web/BusinessCtrl.js',
+                        'public/javascripts/controller/web/SearchPageCtrl.js',
+
+                        <!-- component -->
+                        'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
+                        'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
+                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js']
                 }
             }
         }
-        //ngAnnotate: {
-        //    options: {
-        //        singleQuotes: true
-        //    },
-        //    myApp: {
-        //        files: {
-        //            'public/javascripts/dist/angular.js': [
-        //                'public/javascripts/controller/MainCtrl.js',
-        //                'public/javascripts/controller/HomeCtrl.js',
-        //                'public/javascripts/controller/AdminRoommateListCtrl.js',
-        //                'public/javascripts/controller/AdminPreferenceCtrl.js',
-        //                'public/javascripts/controller/LateralMenuCtrl.js',
-        //                'public/javascripts/controller/CountResumeCtrl.js',
-        //                'public/javascripts/controller/CountTicketCtrl.js',
-        //                'public/javascripts/controller/ProfileMyProfileCtrl.js',
-        //                'public/javascripts/controller/ShoppingListCtrl.js',
-        //                'public/javascripts/controller/SuperAdminFaqCtrl.js',
-        //                'public/javascripts/controller/RegistrationCtrl.js',
-        //                'public/javascripts/controller/AboutCtrl.js',
-        //                'public/javascripts/controller/LoginCtrl.js',
-        //                'public/javascripts/controller/WelcomeCtrl.js',
-        //                'public/javascripts/modal/CUTicket/CuTicketCtrl.js',
-        //                'public/javascripts/modal/CUShoppingItem/CuShoppingItemCtrl.js',
-        //                'public/javascripts/modal/HelpModal/HelpModalCtrl.js',
-        //                'public/javascripts/modal/ChangeEmail/ChangeEmailModal.js',
-        //                'public/javascripts/modal/ChangePassword/ChangePasswordModal.js',
-        //                'public/javascripts/modal/CreateFaq/CreateFaqModalCtrl.js',
-        //                'public/javascripts/modal/createSurveyModal/CreateSurveyModalCtrl.js',
-        //                'public/javascripts/modal/Calculator/CalculatorModalCtrl.js',
-        //                'public/javascripts/modal/ForgotPassword/ForgotPasswordModal.js',
-        //                'public/javascripts/modal/CommentModal/CommentModal.js',
-        //                'public/javascripts/directive/dirFieldDate/directive.js',
-        //                'public/javascripts/directive/dirFieldText/directive.js',
-        //                'public/javascripts/directive/dirFieldSelect/directive.js',
-        //                'public/javascripts/directive/dirInputNumber/directive.js',
-        //                'public/javascripts/directive/dirUserIcon/directive.js',
-        //                'public/javascripts/directive/dirFocusMe/directive.js',
-        //                'public/javascripts/directive/dirEnter/directive.js',
-        //                'public/javascripts/service/FlashService.js',
-        //                'public/javascripts/service/DirectiveService.js',
-        //                'public/javascripts/service/GenerateIdService.js',
-        //                'public/javascripts/service/TranslationService.js',
-        //                'public/javascripts/filter/TranslateTextFilter.js',
-        //                'public/javascripts/jquery-touchswipe.js',
-        //                'public/javascripts/menu-animation.js']
-        //        }
-        //    }
-        //}
     });
 
     // Load the plugin that provides the "uglify" task.
@@ -131,8 +199,8 @@ module.exports = function (grunt) {
 
     // Default task(s).
     grunt.registerTask('default', ['concat',
-        //'ngAnnotate',
+        'ngAnnotate',
         'uglify'/*,
-        'cssmin'*/]);
+         'cssmin'*/]);
 
 };
