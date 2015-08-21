@@ -20,6 +20,9 @@ public class StoredFile extends AbstractEntity {
     private String storedName;
 
     @Basic
+    private String storedNameOriginalSize;
+
+    @Basic
     private Integer size;
 
     @ManyToOne(optional = false)
@@ -49,6 +52,14 @@ public class StoredFile extends AbstractEntity {
         this.size = size;
         this.account = account;
         this.isImage = isImage;
+    }
+
+    public String getStoredNameOriginalSize() {
+        return storedNameOriginalSize;
+    }
+
+    public void setStoredNameOriginalSize(String storedNameOriginalSize) {
+        this.storedNameOriginalSize = storedNameOriginalSize;
     }
 
     public Integer getFileOrder() {

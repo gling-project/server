@@ -8,25 +8,6 @@
 
         <div ng-class="getInfo().fullSize==true?'col-md-12':'col-md-6'">
             <div ng-class="{'input-group':!!getInfo().money}">
-                <!--<div ng-show="inDownload=== true &amp;&amp; percent != 100" class="field-image-multiple-progress-bar">-->
-                <!--<div ng-style="style">-->
-                <!--<spa></spa>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div ng-show="inDownload=== true && percent != 100" class="field-image-multiple-progress-percentage">-->
-                <!--{{percent}} %-->
-                <!--</div>-->
-                <!--<div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |-->
-                <!--translateText}}-->
-                <!--</div>-->
-                <!--<span class="btn btn-default btn-file field-image-multiple-btn"-->
-                <!--ng-hide="inDownload === true || getInfo().disabled()">-->
-                <!--{{'--.download.button.add' | translateText}}-->
-
-                <!--</span>-->
-
-                <!--<div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}-->
-                <!--</div>-->
 
                 <div ng-repeat="imageContainer in images"
                      class="image-block-container">

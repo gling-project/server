@@ -84,11 +84,11 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                         }
                     };
 
-                    scope.fileCall = null;
+                    //scope.fileCall = null;
                     scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
-                        if (n != null) {
-                            scope.fileCall = "/rest/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
-                        }
+                        //if (n != null) {
+                        //    scope.fileCall = "/rest/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
+                        //}
                         scope.isValid();// = n != null;
                     });
 

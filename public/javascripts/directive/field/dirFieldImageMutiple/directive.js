@@ -63,8 +63,6 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
 
                     scope.onFileSelect = function ($files) {
 
-
-
                         //create a new object
                         var imgContainer = {};
 

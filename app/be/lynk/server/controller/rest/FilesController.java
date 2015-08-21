@@ -8,6 +8,7 @@ import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.file.FileUtil;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -46,14 +47,13 @@ public class FilesController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result uploadWithSize(Integer sizex, Integer sizey) {
 
-        MultipartFormData body = Controller.request().body().asMultipartFormData();
-        List<MultipartFormData.FilePart> files = body.getFiles();
+        MultipartFormData body = request().body().asMultipartFormData();
+        play.mvc.Http.MultipartFormData.FilePart file = body.getFiles().get(0);
 
         StoredFileDTO filesUploadedDTO = null;
 
-        if (files != null) {
+        if (file != null) {
 
-            File file = files.get(0).getFile();
             StoredFile storedFile = fileService.uploadWithSize(file, sizex, sizey, securityController.getCurrentUser());
 
             //complete the result

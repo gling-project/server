@@ -701,11 +701,11 @@ myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$
                         }
                     };
 
-                    scope.fileCall = null;
+                    //scope.fileCall = null;
                     scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
-                        if (n != null) {
-                            scope.fileCall = "/rest/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
-                        }
+                        //if (n != null) {
+                        //    scope.fileCall = "/rest/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
+                        //}
                         scope.isValid();// = n != null;
                     });
 
@@ -784,8 +784,6 @@ myApp.directive("dirFieldImageMutiple", ['directiveService', '$upload', '$flash'
 
 
                     scope.onFileSelect = function ($files) {
-
-
 
                         //create a new object
                         var imgContainer = {};
@@ -3091,9 +3089,14 @@ myApp.filter("zeropad", ['$sce', 'translationService', function ($sce, translati
 }]);
 
 myApp.filter("image", function () {
-    return function (input) {
+    return function (input,orginal) {
         if(input!=null && input!=undefined) {
-            return "https://s3.amazonaws.com/lynk-test/" + input.storedName;
+            if(orginal!=undefined && orginal == true){
+                return "https://s3.amazonaws.com/lynk-test/" + input.storedNameOriginalSize;
+            }
+            else {
+                return "https://s3.amazonaws.com/lynk-test/" + input.storedName;
+            }
         }
         return null;
     };

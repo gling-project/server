@@ -168,8 +168,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (file != null) {
                             //landscape
                             try {
-//                                business.setLandscape(fileService.uploadWithSize(file, 1200, 300, account));
-                                business.setLandscape(fileService.uploadWithSize(file, account));
+                                business.setLandscape(fileService.uploadWithSize(file, file.getName(),1200, null, account));
+//                                business.setLandscape(fileService.uploadWithSize(file,file.getName(), account));
                             } catch (Throwable e) {
                                 e.printStackTrace();
                             }
@@ -186,7 +186,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (file != null) {
                             try {
 //                                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
-                                business.setIllustration(fileService.uploadWithSize(new File(path), account));
+                                File file1 = new File(path);
+                                business.setIllustration(fileService.uploadWithSize(file1,file1.getName(),80,null, account));
                             } catch (Throwable e) {
 
                                 e.printStackTrace();
@@ -279,7 +280,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                             String path = "file/images/publications/" + illustrationPath;
                             File file = new File(path);
                             if (file != null) {
-                                StoredFile storedFile = fileService.uploadWithSize(file, business.getAccount());
+                                StoredFile storedFile = fileService.uploadWithSize(file,file.getName(), 800,null,business.getAccount());
                                 storedFile.setPublication(publication);
                                 publication.getPictures().add(storedFile);
                                 storedFileService.saveOrUpdate(storedFile);

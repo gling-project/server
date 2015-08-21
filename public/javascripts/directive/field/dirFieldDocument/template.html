@@ -22,8 +22,7 @@
                 <span class="btn btn-default btn-file field-document-btn"
                       ng-hide="inDownload === true || getInfo().disabled()">
                     {{((getInfo().field[getInfo().fieldName]!=null)?'--.download.button.update':'--.download.button.new') | translateText}}
-                    <input
-                            name="{{ id }}"
+                    <input  name="{{ id }}"
                             type="file"
                             ng-file-select="onFileSelect($files)"
                             />
@@ -33,12 +32,21 @@
                         type="button"
                         ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage!=true"
                         ng-click="download()"
-                        class="button">{{'--.field.document.download' | translateText}} {{getInfo().field[getInfo().fieldName].name}}
+                        class="button">
+                    {{'--.field.document.download' | translateText}} {{getInfo().field[getInfo().fieldName].name}}
                 </button>
 
                 <img ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage==true"
                      style="border:1px solid #999999"
-                     ng-src="/{{fileCall}}"/>
+                     ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>
+
+                <img ng-show="getInfo().field[getInfo().fieldName]!=null &&
+                getInfo().field[getInfo().fieldName].isImage==true &&
+                getInfo().field[getInfo().fieldName].storedNameOriginalSize!=null"
+                     ng-style="{width:getInfo().posx,height:getInfo().posy}"
+                     style="border:1px solid #999999"
+                     ng-src="{{getInfo().field[getInfo().fieldName] | image:true}}"/>
+
             </div>
         </div>
         <div class="col-md-3 errors" ng-show="displayError()===true">{{getInfo().validationMessage | translateText}}

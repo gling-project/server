@@ -22,6 +22,8 @@ public class StoredFileDTO extends DTO implements KeyTyped<Date>, Comparable<Sto
 
     private String storedName;
 
+    private String storedNameOriginalSize;
+
     private String comment;
 
     private Integer fileOrder = 0;
@@ -72,6 +74,14 @@ public class StoredFileDTO extends DTO implements KeyTyped<Date>, Comparable<Sto
 
     public void setStoredName(String storedName) {
         this.storedName = storedName;
+    }
+
+    public String getStoredNameOriginalSize() {
+        return storedNameOriginalSize;
+    }
+
+    public void setStoredNameOriginalSize(String storedNameOriginalSize) {
+        this.storedNameOriginalSize = storedNameOriginalSize;
     }
 
     @Override
