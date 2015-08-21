@@ -23,6 +23,7 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
                     scope.searchBarService = searchBarService;
 
                     scope.searchResultParam = {
+                        mobile:scope.getInfo().mobile,
                         display: false,
                         cleanSearch: function () {
                             searchBarService.currentSearch = "";
@@ -49,6 +50,7 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
 
 
                     scope.search = function () {
+                        scope.navigateTo('search/' + searchBarService.currentSearch);
                     };
                     
                 }

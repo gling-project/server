@@ -100,11 +100,11 @@ public class FileServiceImpl implements FileService {
                     sizeyTarget = sizey;
                 } else if (sizex != null) {
                     sizexTarget = sizex;
-                    sizeyTarget = originalImage.getMinY();
+                    sizeyTarget = originalImage.getWidth();
 
                 } else {
                     sizeyTarget = sizey;
-                    sizexTarget = originalImage.getMinX();
+                    sizexTarget = originalImage.getHeight();
                 }
                 Logger.info("-------------- RESIZE image : "+fileName);
                 Logger.info("-------------- orignal size : "+originalImage.getMinX()+"/"+originalImage.getMinY()+"=>"+sizexTarget+"/"+sizeyTarget);

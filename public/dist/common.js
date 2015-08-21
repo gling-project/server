@@ -2840,15 +2840,21 @@ myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBar
                             for (var i in scope.getInfo().result.businesses) {
                                 scope.getInfo().result.businesses[i].index = ++counter;
                             }
-                            scope.seeMoreBusinessIndex = ++counter;
+                            if (scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile === false) {
+                                scope.seeMoreBusinessIndex = ++counter;
+                            }
                             for (var i in scope.getInfo().result.publications) {
                                 scope.getInfo().result.publications[i].index = ++counter;
                             }
-                            scope.seeMorePublicationIndex = ++counter;
+                            if (scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile === false) {
+                                scope.seeMorePublicationIndex = ++counter;
+                            }
                             for (var i in scope.getInfo().result.categories) {
                                 scope.getInfo().result.categories[i].index = ++counter;
                             }
-                            scope.seeMoreCategoryIndex = ++counter;
+                            if (scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile === false) {
+                                scope.seeMoreCategoryIndex = ++counter;
+                            }
                             scope.seeMoreIndex = ++counter;
                         }
                         else {
@@ -3007,6 +3013,7 @@ myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationS
                     scope.searchBarService = searchBarService;
 
                     scope.searchResultParam = {
+                        mobile:scope.getInfo().mobile,
                         display: false,
                         cleanSearch: function () {
                             searchBarService.currentSearch = "";
@@ -3033,6 +3040,7 @@ myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationS
 
 
                     scope.search = function () {
+                        scope.navigateTo('search/' + searchBarService.currentSearch);
                     };
                     
                 }

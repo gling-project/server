@@ -1,15 +1,21 @@
-<div id="searchContainer" ng-show="getInfo().display" class="search-result-box" dir-bottom-arrow="down()"
+<div id="searchContainer"
+     ng-show="getInfo().display"
+     class="search-result-box"
+     dir-bottom-arrow="down()"
      dir-top-arrow="top()">
     <div
             ng-show="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0"
             class="search-result-nothing">
         {{'--.search.nothing' | translateText}}
     </div>
-    <div ng-hide="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0">
+    <div
+            ng-hide="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0"
+            class="scrollable-content">
 
         <!-- business -->
         <div ng-show="getInfo().result.businesses.length > 0">
-            <div class="search-result-sub-title">
+            <div ng-hide="getInfo().mobile"
+                 class="search-result-sub-title">
                 {{'--.search.business' | translateText}}
             </div>
             <div class="search-result-business search-result-content"
@@ -21,6 +27,7 @@
                 {{business.name}}
             </div>
             <div class="search-result-content"
+                 ng-hide="getInfo().mobile"
                  ng-click="seeAllBusiness()"
                  ng-mouseenter="select(seeMoreBusinessIndex)"
                  ng-class="{'search-result-selected':indexSelected==seeMoreBusinessIndex}">
@@ -32,32 +39,10 @@
 
         <!-- publication -->
         <div ng-show="getInfo().result.publications.length >0">
-            <div class="search-result-sub-title">
+            <div ng-hide="getInfo().mobile"
+                 class="search-result-sub-title">
                 {{'--.search.publication' | translateText}}
             </div>
-            <!--<div class="search-result-publication search-result-content"-->
-            <!--ng-mouseenter="select(publication.index)"-->
-            <!--ng-click="goToPublication(publication)"-->
-            <!--ng-class="{'search-result-selected':indexSelected==publication.index}"-->
-            <!--ng-repeat="publication in getInfo().result.publications">-->
-            <!--<div class="search-result-publication-business">-->
-            <!--<img ng-src="{{publication.businessIllustration | image}}"/>-->
-            <!--{{publication.businessName}}-->
-            <!--</div>-->
-            <!--<img ng-src="{{publication.pictures[0] | image}}"/>-->
-            <!--{{publication.title}}-->
-            <!--</div>-->
-            <!--<div-->
-            <!--ng-click="seeAllPublication()"-->
-            <!--ng-mouseenter="select(seeMorePublicationIndex)"-->
-            <!--class="search-result-content"-->
-            <!--ng-class="{'search-result-selected':indexSelected==seeMorePublicationIndex}">-->
-            <!--<div class="search-result-show-more link">-->
-            <!--{{'--.search.publication.seeMore' | translateText}}-->
-            <!--</div>-->
-            <!--</div>-->
-
-
             <table>
                 <tr class="search-result-publication search-result-content"
                     ng-mouseenter="select(publication.index)"
@@ -77,6 +62,7 @@
                 </tr>
             </table>
             <div
+                    ng-hide="getInfo().mobile"
                     ng-click="seeAllPublication()"
                     ng-mouseenter="select(seeMorePublicationIndex)"
                     class="search-result-content"
@@ -91,7 +77,8 @@
 
         <!-- category -->
         <div ng-show="getInfo().result.categories.length > 0">
-            <div class="search-result-sub-title">
+            <div ng-hide="getInfo().mobile"
+                 class="search-result-sub-title">
                 {{'--.search.category' | translateText}}
             </div>
             <div class="search-result-category search-result-content"
@@ -106,6 +93,7 @@
                 {{category.subSubCategory.translationName}}
             </div>
             <div ng-click="seeAllCategory()"
+                 ng-hide="getInfo().mobile"
                  class="search-result-content"
                  ng-mouseenter="select(seeMoreCategoryIndex)"
                  ng-class="{'search-result-selected':indexSelected==seeMoreCategoryIndex}">
