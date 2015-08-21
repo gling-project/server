@@ -133,34 +133,34 @@ var test = function (accountService) {
 
 var initializeCommonRoutes = function () {
     myApp
-        .config(function ($routeProvider,$locationProvider) {
+        .config(['$routeProvider', '$locationProvider', function ($routeProvider,$locationProvider) {
             $routeProvider.when('/', {
                 templateUrl: '/assets/javascripts/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
-                    a: function (accountService) {
+                    a: ['accountService', function (accountService) {
                         var status = test(accountService);
-                    }
+                    }]
                 }
             }).when('/profile', {
                 templateUrl: '/assets/javascripts/view/web/profile.html',
                 controller: 'ProfileCtrl',
                 resolve: {
-                    a: function (accountService, $location) {
+                    a: ['accountService', '$location', function (accountService, $location) {
                         if (test(accountService) == 'NOT_CONNECTED') {
                             $location.path('/');
                         }
-                    }
+                    }]
                 }
             }).when('/business_registration', {
                 templateUrl: '/assets/javascripts/view/web/business_registration.html',
                 controller: 'BusinessRegistrationCtrl',
                 resolve: {
-                    a: function (accountService, $location) {
+                    a: ['accountService', '$location', function (accountService, $location) {
                         if (test(accountService) == 'BUSINESS') {
                             $location.path('/business');
                         }
-                    }
+                    }]
                 }
             }).when('/search/:param', {
                 templateUrl: '/assets/javascripts/view/web/search_page.html',
@@ -178,7 +178,7 @@ var initializeCommonRoutes = function () {
 
             // use the HTML5 History API
             $locationProvider.html5Mode(true);
-        });
+        }]);
 };
 var myApp = angular.module('app', [
         'ngAnimate',
@@ -194,7 +194,7 @@ var myApp = angular.module('app', [
         'djds4rce.angular-socialshare']
 );
 
-myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
+myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
 
     $scope.loading = false;
 
@@ -257,8 +257,8 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
         modalService.openCustomerRegistrationModal(fctToExecute, fctToExecuteParams);
     };
 
-});
-myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
+}]);
+myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountService', '$timeout', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
     $scope.loading=false;
 
@@ -357,8 +357,8 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
         }
     };
 
-});
-myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
+}]);
+myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$modalInstance', '$filter', 'email', 'accountService', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
 
     $scope.loading = false;
 
@@ -434,8 +434,8 @@ myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $mo
         }
     };
 
-});
-myApp.controller('HelpModalCtrl', function ($scope, $modalInstance,message) {
+}]);
+myApp.controller('HelpModalCtrl', ['$scope', '$modalInstance', 'message', function ($scope, $modalInstance,message) {
 
     $scope.message=message;
 
@@ -443,8 +443,8 @@ myApp.controller('HelpModalCtrl', function ($scope, $modalInstance,message) {
         $modalInstance.close();
     };
 
-});
-myApp.controller('DownloadFieldModalCtrl', function ($scope, $flash, $modalInstance) {
+}]);
+myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance', function ($scope, $flash, $modalInstance) {
 
     $scope.loading=false;
 
@@ -505,8 +505,8 @@ myApp.controller('DownloadFieldModalCtrl', function ($scope, $flash, $modalInsta
     }
 
 
-});
-myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $flash, $modalInstance,accountFusion,accountService) {
+}]);
+myApp.controller('AccountFusionFacebookModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountFusion', 'accountService', function ($scope, $flash, $modalInstance,accountFusion,accountService) {
 
     $scope.loading=false;
 
@@ -566,8 +566,8 @@ myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $flash, $mo
     }
 
 
-});
-myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, addressService, fctToExecute, fctToExecuteParams) {
+}]);
+myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', 'addressService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, addressService, fctToExecute, fctToExecuteParams) {
 
     var facebookAuthentication = null;
 
@@ -754,8 +754,8 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
             });
     }
 
-});
-myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, modalService, $location, addressService) {
+}]);
+myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'businessService', 'modalService', '$location', 'addressService', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, modalService, $location, addressService) {
 
     var facebookAuthentication = null;
 
@@ -927,8 +927,8 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
         }
     }
 
-});
-myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness) {
+}]);
+myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness) {
 
     $scope.loading = false;
 
@@ -984,8 +984,8 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,bu
     }
 
 
-});
-myApp.controller('EditCustomerInterestModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
+}]);
+myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
 
 
     $scope.customerInterestParam = {
@@ -1009,8 +1009,8 @@ myApp.controller('EditCustomerInterestModalCtrl', function ($scope, $flash, $mod
             });
     }
 
-});
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService,callback) {
+}]);
+myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', function ($scope, $flash, $modalInstance, translationService, dto, promotionService,callback) {
 
     $scope.loading = false;
 
@@ -1063,8 +1063,8 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
     }
 
 
-});
-myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance,  translationService, dto,businessNotificationService,callback) {
+}]);
+myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', function ($scope, $flash, $modalInstance,  translationService, dto,businessNotificationService,callback) {
 
     $scope.loading = false;
 
@@ -1111,8 +1111,8 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
     }
 
 
-});
-myApp.controller('OneFieldModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
+}]);
+myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'field', 'callback', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
 
     var value = {
         data: null
@@ -1143,9 +1143,9 @@ myApp.controller('OneFieldModalCtrl', function ($scope, $flash, facebookService,
         }
     };
 
-})
+}])
 ;
-myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
+myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'param', '$compile', 'directiveName', 'save', '$timeout', 'title', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
 
     $scope.title = title;
 
@@ -1183,8 +1183,8 @@ myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, bus
     }
 
 
-});
-myApp.controller('MessageModalCtrl', function ($scope, $flash, $modalInstance,  $compile, title,message, save) {
+}]);
+myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$compile', 'title', 'message', 'save', function ($scope, $flash, $modalInstance,  $compile, title,message, save) {
 
     $scope.message = message;
 
@@ -1203,8 +1203,8 @@ myApp.controller('MessageModalCtrl', function ($scope, $flash, $modalInstance,  
     }
 
 
-});
-myApp.controller('GalleryModalCtrl', function ($scope, $flash, $modalInstance, image, images) {
+}]);
+myApp.controller('GalleryModalCtrl', ['$scope', '$flash', '$modalInstance', 'image', 'images', function ($scope, $flash, $modalInstance, image, images) {
 
 
     $scope.image = image;
@@ -1251,8 +1251,8 @@ myApp.controller('GalleryModalCtrl', function ($scope, $flash, $modalInstance, i
         }
     };
 
-});
-myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
+}]);
+myApp.controller('WelcomeCtrl', ['$scope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', '$rootScope', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
 
     $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
         $scope.advancedSearch = params.display;
@@ -1360,8 +1360,8 @@ myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, ac
     }, true);
 
 
-});
-myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
+}]);
+myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
 
     //variable
     $scope.followedMode = false;
@@ -1454,8 +1454,8 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         }
     };
 
-});
-myApp.controller('BusinessRegistrationCtrl', function ($scope, modalService) {
+}]);
+myApp.controller('BusinessRegistrationCtrl', ['$scope', 'modalService', function ($scope, modalService) {
 
 
     $scope.businessRegistration = function(){
@@ -1467,8 +1467,8 @@ myApp.controller('BusinessRegistrationCtrl', function ($scope, modalService) {
         modalService.openLoginModal();
     };
 
-});
-myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, accountService) {
+}]);
+myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', 'accountService', function ($scope, modalService, accountService, accountService) {
 
     $scope.model = accountService.model;
 
@@ -1515,8 +1515,8 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
         accountService.deleteAddress(address);
     };
 
-});
-myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
+}]);
+myApp.controller('BusinessCtrl', ['$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', 'followService', '$timeout', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
 
 
     if ($routeParams.publicationId != null) {
@@ -1843,9 +1843,9 @@ myApp.controller('BusinessCtrl', function ($scope, modalService, businessService
 
         });
 
-})
+}])
 ;
-myApp.controller('SearchPageCtrl', function ($scope, searchService, $routeParams, searchBarService,geolocationService) {
+myApp.controller('SearchPageCtrl', ['$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($scope, searchService, $routeParams, searchBarService,geolocationService) {
 
     var param = $routeParams.param;
     searchBarService.setCurrentSearch(param);
@@ -1940,8 +1940,8 @@ myApp.controller('SearchPageCtrl', function ($scope, searchService, $routeParams
     $scope.$on('POSITION_CHANGED', function () {
         $scope.search();
     });
-});
-myApp.directive('publicationListForBusinessCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout,publicationService) {
+}]);
+myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout,publicationService) {
 
     return {
         restrict: "E",
@@ -1983,9 +1983,9 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
             }
         }
     }
-})
+}])
 ;
-myApp.directive('businessListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
+myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'accountService', 'followService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
 
     return {
         restrict: "E",
@@ -2038,8 +2038,8 @@ myApp.directive('businessListCtrl', function ($rootScope, businessService, geolo
             }
         }
     }
-});
-myApp.directive('categoryLineCtrl', function ($rootScope, businessService, geolocationService, directiveService, $location) {
+}]);
+myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function ($rootScope, businessService, geolocationService, directiveService, $location) {
 
     return {
         restrict: "E",
@@ -2061,4 +2061,4 @@ myApp.directive('categoryLineCtrl', function ($rootScope, businessService, geolo
             }
         }
     }
-});
+}]);
