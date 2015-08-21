@@ -257,7 +257,7 @@ module.exports = function (grunt) {
 
 // Default task(s).
     grunt.registerTask('default', [
-        //'html2js',
+        'html2js',
         'concat',
         'ngAnnotate',
         'uglify'
