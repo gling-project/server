@@ -15,6 +15,8 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    console.log("getInfo().mobile:"+scope.getInfo().mobile);
+
 
                     var counter = -1;
                     scope.$watch('getInfo().result', function () {

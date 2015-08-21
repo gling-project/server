@@ -2832,6 +2832,8 @@ myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBar
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    console.log("getInfo().mobile:"+scope.getInfo().mobile);
+
 
                     var counter = -1;
                     scope.$watch('getInfo().result', function () {
@@ -2988,7 +2990,7 @@ myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBar
         }
     }
 }]);
-myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', 'searchService', 'searchBarService', '$timeout', function ($rootScope, businessService, geolocationService, directiveService, searchService, searchService,searchBarService,$timeout) {
+myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', 'searchService', 'searchBarService', '$timeout', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, searchService,searchBarService,$timeout,$location) {
 
     return {
         restrict: "E",
@@ -3041,6 +3043,12 @@ myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationS
 
                     scope.search = function () {
                         scope.navigateTo('search/' + searchBarService.currentSearch);
+                    };
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                        //TODO ? scope.getInfo().display = false;
+                        //TODO ? scope.getInfo().cleanSearch();
                     };
                     
                 }

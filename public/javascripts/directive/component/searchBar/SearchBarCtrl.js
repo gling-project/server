@@ -1,4 +1,4 @@
-myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, searchService,searchBarService,$timeout) {
+myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, searchService,searchBarService,$timeout,$location) {
 
     return {
         restrict: "E",
@@ -51,6 +51,12 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
 
                     scope.search = function () {
                         scope.navigateTo('search/' + searchBarService.currentSearch);
+                    };
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                        //TODO ? scope.getInfo().display = false;
+                        //TODO ? scope.getInfo().cleanSearch();
                     };
                     
                 }
