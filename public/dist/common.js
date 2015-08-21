@@ -2840,19 +2840,19 @@ myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBar
                             for (var i in scope.getInfo().result.businesses) {
                                 scope.getInfo().result.businesses[i].index = ++counter;
                             }
-                            if (scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile === false) {
+                            if (scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile != true) {
                                 scope.seeMoreBusinessIndex = ++counter;
                             }
                             for (var i in scope.getInfo().result.publications) {
                                 scope.getInfo().result.publications[i].index = ++counter;
                             }
-                            if (scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile === false) {
+                            if (scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile != true) {
                                 scope.seeMorePublicationIndex = ++counter;
                             }
                             for (var i in scope.getInfo().result.categories) {
                                 scope.getInfo().result.categories[i].index = ++counter;
                             }
-                            if (scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile === false) {
+                            if (scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile != true) {
                                 scope.seeMoreCategoryIndex = ++counter;
                             }
                             scope.seeMoreIndex = ++counter;

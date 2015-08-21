@@ -107,7 +107,7 @@ public class FileServiceImpl implements FileService {
                     sizexTarget = originalImage.getHeight();
                 }
                 Logger.info("-------------- RESIZE image : "+fileName);
-                Logger.info("-------------- orignal size : "+originalImage.getMinX()+"/"+originalImage.getMinY()+"=>"+sizexTarget+"/"+sizeyTarget);
+                Logger.info("-------------- orignal size : "+originalImage.getWidth()+"/"+originalImage.getHeight()+"=>"+sizexTarget+"/"+sizeyTarget);
                 originalImage = resizeImage(originalImage
 //                        , originalImage.getType()
                         , sizexTarget

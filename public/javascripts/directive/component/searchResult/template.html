@@ -14,7 +14,7 @@
 
         <!-- business -->
         <div ng-show="getInfo().result.businesses.length > 0">
-            <div ng-hide="getInfo().mobile"
+            <div ng-hide="getInfo().mobile === true"
                  class="search-result-sub-title">
                 {{'--.search.business' | translateText}}
             </div>
@@ -27,7 +27,7 @@
                 {{business.name}}
             </div>
             <div class="search-result-content"
-                 ng-hide="getInfo().mobile"
+                 ng-hide="getInfo().mobile === true"
                  ng-click="seeAllBusiness()"
                  ng-mouseenter="select(seeMoreBusinessIndex)"
                  ng-class="{'search-result-selected':indexSelected==seeMoreBusinessIndex}">
@@ -39,7 +39,7 @@
 
         <!-- publication -->
         <div ng-show="getInfo().result.publications.length >0">
-            <div ng-hide="getInfo().mobile"
+            <div ng-hide="getInfo().mobile === true"
                  class="search-result-sub-title">
                 {{'--.search.publication' | translateText}}
             </div>
@@ -62,7 +62,7 @@
                 </tr>
             </table>
             <div
-                    ng-hide="getInfo().mobile"
+                    ng-hide="getInfo().mobile === true"
                     ng-click="seeAllPublication()"
                     ng-mouseenter="select(seeMorePublicationIndex)"
                     class="search-result-content"
@@ -77,7 +77,7 @@
 
         <!-- category -->
         <div ng-show="getInfo().result.categories.length > 0">
-            <div ng-hide="getInfo().mobile"
+            <div ng-hide="getInfo().mobile === true"
                  class="search-result-sub-title">
                 {{'--.search.category' | translateText}}
             </div>
@@ -93,7 +93,7 @@
                 {{category.subSubCategory.translationName}}
             </div>
             <div ng-click="seeAllCategory()"
-                 ng-hide="getInfo().mobile"
+                 ng-hide="getInfo().mobile === true"
                  class="search-result-content"
                  ng-mouseenter="select(seeMoreCategoryIndex)"
                  ng-class="{'search-result-selected':indexSelected==seeMoreCategoryIndex}">
