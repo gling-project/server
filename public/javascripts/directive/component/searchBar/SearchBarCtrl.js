@@ -55,8 +55,7 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
 
                     scope.navigateTo = function (target) {
                         $location.path(target);
-                        //TODO ? scope.getInfo().display = false;
-                        //TODO ? scope.getInfo().cleanSearch();
+                        $rootScope.$broadcast('SEARCH_CLEAN');
                     };
                     
                 }

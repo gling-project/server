@@ -15,8 +15,6 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    console.log("getInfo().mobile:"+scope.getInfo().mobile);
-
 
                     var counter = -1;
                     scope.$watch('getInfo().result', function () {
@@ -72,25 +70,27 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                             scope.$apply();
                         }
                         else if (e.keyCode == 13) {
-                            for (var i in scope.getInfo().result.businesses) {
-                                if (scope.indexSelected == scope.getInfo().result.businesses[i].index) {
-                                    scope.goToBusiness(scope.getInfo().result.businesses[i]);
-                                    break;
+                            if(scope.getInfo().result!=undefined) {
+                                for (var i in scope.getInfo().result.businesses) {
+                                    if (scope.indexSelected == scope.getInfo().result.businesses[i].index) {
+                                        scope.goToBusiness(scope.getInfo().result.businesses[i]);
+                                        break;
+                                    }
                                 }
-                            }
-                            for (var i in scope.getInfo().result.categories) {
-                                if (scope.indexSelected == scope.getInfo().result.categories[i].index) {
-                                    scope.goToCategory(scope.getInfo().result.categories[i]);
-                                    break;
+                                for (var i in scope.getInfo().result.categories) {
+                                    if (scope.indexSelected == scope.getInfo().result.categories[i].index) {
+                                        scope.goToCategory(scope.getInfo().result.categories[i]);
+                                        break;
+                                    }
                                 }
-                            }
-                            for (var i in scope.getInfo().result.publications) {
-                                if (scope.indexSelected == scope.getInfo().result.publications[i].index) {
-                                    scope.goToPublication(scope.getInfo().result.publications[i]);
-                                    break;
+                                for (var i in scope.getInfo().result.publications) {
+                                    if (scope.indexSelected == scope.getInfo().result.publications[i].index) {
+                                        scope.goToPublication(scope.getInfo().result.publications[i]);
+                                        break;
+                                    }
                                 }
+                                scope.$apply();
                             }
-                            scope.$apply();
                         }
                         else if (e.keyCode == 27) {
                             scope.getInfo().display = false;
@@ -164,9 +164,13 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
 
                     scope.navigateTo = function (target) {
                         $location.path(target);
+                        scope.$broadcast('SEARCH_CLEAN');
+                    };
+
+                    scope.$on('SEARCH_CLEAN',function(){
                         scope.getInfo().display = false;
                         scope.getInfo().cleanSearch();
-                    };
+                    });
 
                 }
             }

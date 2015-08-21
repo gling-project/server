@@ -208,6 +208,7 @@ module.exports = function (grunt) {
                         'public/javascripts/controller/mobile/MenuCtrl.js',
                         'public/javascripts/controller/mobile/ProfileCtrl.js',
                         'public/javascripts/controller/mobile/BusinessCtrl.js',
+                        'public/javascripts/controller/mobile/SearchPageCtrl.js',
                         'public/javascripts/directive/component/publicationListMobile/PublicationListMobileCtrl.js',
                         'public/javascripts/directive/component/publicationListMobileForBusiness/PublicationListMobileForBusinessCtrl.js',
                         'public/javascripts/directive/mobile/title/MobileTitleCtrl.js'

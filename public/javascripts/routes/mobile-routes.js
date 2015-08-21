@@ -84,6 +84,16 @@ var initializeCommonRoutes = function () {
                             }
                         }
                     }
+                }).when('/search/:param', {
+                    templateUrl: '/assets/javascripts/view/mobile/search_page.html',
+                    controller: 'SearchPageCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
                 }).when('/forgot_password', {
                     templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
                     controller: 'ForgotPasswordCtrl',
