@@ -18,6 +18,7 @@ import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
+import play.Logger;
 import play.api.libs.Files;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -105,6 +106,8 @@ public class FileServiceImpl implements FileService {
                     sizeyTarget = sizey;
                     sizexTarget = originalImage.getMinX();
                 }
+                Logger.info("-------------- RESIZE image : "+fileName);
+                Logger.info("-------------- orignal size : "+originalImage.getMinX()+"/"+originalImage.getMinY()+"=>"+sizexTarget+"/"+sizeyTarget);
                 originalImage = resizeImage(originalImage
 //                        , originalImage.getType()
                         , sizexTarget
