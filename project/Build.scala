@@ -15,6 +15,7 @@ object ApplicationBuild extends Build {
     javaJdbc,
     javaJpa.exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api"),
     cache,
+    filters,
     "org.springframework" % "spring-context" % "4.1.6.RELEASE",
     "org.springframework" % "spring-context-support" % "4.1.6.RELEASE",
     "org.springframework" % "spring-expression" % "4.1.6.RELEASE",

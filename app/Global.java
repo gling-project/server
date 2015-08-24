@@ -17,6 +17,7 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.Play;
+import play.api.mvc.EssentialFilter;
 import play.i18n.Lang;
 import play.libs.Akka;
 import play.libs.F;
@@ -26,6 +27,7 @@ import play.mvc.SimpleResult;
 import scala.concurrent.duration.Duration;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.exception.MyRuntimeException;
+import play.filters.gzip.GzipFilter;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -77,6 +79,10 @@ public class Global extends GlobalSettings {
                 play.Logger.info("Akka keep-alive won't run because the environment variable 'AwacHostname' does not exist.");
             }
         } // end of app.isProd()
+    }
+
+    public <T extends EssentialFilter> Class<T>[] filters() {
+        return new Class[]{GzipFilter.class};
     }
 
     @Override
