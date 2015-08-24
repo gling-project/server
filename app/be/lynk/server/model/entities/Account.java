@@ -45,12 +45,10 @@ public class Account extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     protected RoleEnum role;
 
-
-    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected LoginCredential loginCredential;
 
-
-    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected FacebookCredential facebookCredential;
 
     @Enumerated(value = EnumType.STRING)

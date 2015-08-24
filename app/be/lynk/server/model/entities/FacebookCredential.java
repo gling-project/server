@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 public class FacebookCredential extends AbstractEntity {
 
-    @OneToOne(optional = false,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToOne(optional = false,cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
     private Account account;
 
     @Basic(optional = false)

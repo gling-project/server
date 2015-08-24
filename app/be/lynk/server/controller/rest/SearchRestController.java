@@ -12,9 +12,11 @@ import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +44,7 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getBusiness(long id) {
 
+
         PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
 
         Business byId = businessService.findById(id);
@@ -59,11 +62,19 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getByDefault() {
 
+        long t = new Date().getTime();
+
+        Logger.info("====== Default search");
+
         PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
 
         List<AbstractPublication> publications = publicationService.findActivePublication();
 
-        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(dto, publications));
+        Logger.info("====== Find : "+(new Date().getTime() - t));
+
+        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(dto, publications,t));
+
+        Logger.info("====== Finalize : "+(new Date().getTime() - t));
 
         return ok(abstractPublicationDTOListDTO);
     }
@@ -266,8 +277,12 @@ public class SearchRestController extends AbstractRestController {
 
     }
 
-
     private List<AbstractPublicationDTO> finalize(PositionDTO dto, List<AbstractPublication> publications) {
+        return finalize(dto,publications,new Date().getTime());
+    }
+
+    private List<AbstractPublicationDTO> finalize(PositionDTO dto, List<AbstractPublication> publications,long t) {
+
         //compute distance
         List<Business> addresses = new ArrayList<>();
         List<AbstractPublicationDTO> l = new ArrayList<>();
@@ -286,7 +301,11 @@ public class SearchRestController extends AbstractRestController {
                 }
             }
 
+            Logger.info("======== Distance Before : "+(new Date().getTime() - t));
+
             Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
+
+            Logger.info("======== Distance After : "+(new Date().getTime() - t));
 
             for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
                 for (AbstractPublication publication : publications) {
@@ -309,6 +328,8 @@ public class SearchRestController extends AbstractRestController {
                     }
                 }
             }
+
+            Logger.info("======== Building After : "+(new Date().getTime() - t));
         }
 
         Collections.sort(l);

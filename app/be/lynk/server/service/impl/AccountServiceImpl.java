@@ -24,7 +24,9 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
         Root<Account> from = cq.from(Account.class);
         cq.select(from);
         cq.where(cb.equal(from.get("email"), email));
-        return getSingleResultOrNull(cq);
+        Account singleResultOrNull = getSingleResultOrNull(cq);
+        return singleResultOrNull;
+
     }
 
     @Override

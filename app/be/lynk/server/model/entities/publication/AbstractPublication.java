@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 public abstract class AbstractPublication extends AbstractEntity implements Comparable<AbstractPublication> {
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false,fetch = FetchType.LAZY)
     private Business business;
 
     @Basic(optional = false)

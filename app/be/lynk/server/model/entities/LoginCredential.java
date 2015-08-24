@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 public class LoginCredential  extends AbstractEntity {
 
-    @OneToOne(optional = false,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToOne(optional = false,cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
     private Account account;
 
     @Basic

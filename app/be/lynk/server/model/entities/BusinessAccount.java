@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 public class BusinessAccount extends Account {
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false, mappedBy = "account")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false, mappedBy = "account",fetch = FetchType.LAZY)
     private Business business;
 
     public BusinessAccount() {

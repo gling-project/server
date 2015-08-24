@@ -19,7 +19,7 @@ import java.util.Set;
 public class Business extends AbstractEntity {
 
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false,fetch = FetchType.LAZY)
     private Account account;
 
     @Basic(optional = false)
@@ -41,7 +41,7 @@ public class Business extends AbstractEntity {
     @Basic
     private String email;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private Address address;
 
     @ManyToMany
