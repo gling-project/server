@@ -208,32 +208,6 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
                 }
             }
 
-//            String subCatS = sheet.getCell(1, rowCounter).getContents();
-//            String subCatSNorm = normalize(subCatS);
-//            String subCatSTranKey = "--.category.sub." + subCatSNorm;
-//            translationMap.get(langFr).put(subCatSTranKey, subCatS);
-//
-//            String subSubCatS = sheet.getCell(2, rowCounter).getContents();
-//            String subSubCatSNorm = normalize(subSubCatS);
-//            String subSubCatSTranKey = "--.category.sub.sub." + subSubCatSNorm;
-//            translationMap.get(langFr).put(subSubCatSTranKey, subSubCatS);
-
-//            BusinessCategory cat = new BusinessCategory(catSNorm, catSTranKey, rowCounter);
-//            BusinessCategory subCat = new BusinessCategory(subCatSNorm, subCatSTranKey, rowCounter);
-//            BusinessCategory subSubCat = new BusinessCategory(subSubCatSNorm, subSubCatSTranKey, rowCounter);
-//
-//            if (get(categories, cat) == null) {
-//                categories.add(cat);
-//            }
-//            if (get(get(categories, cat).getChildren(), subCat) == null) {
-//                get(categories, cat).getChildren().add(subCat);
-//                subCat.setParent(get(categories, cat));
-//            }
-//            get(get(categories, cat).getChildren(), subCat).getChildren().add(subSubCat);
-//            subSubCat.setParent(get(get(categories, cat).getChildren(), subCat));
-
-
-
             //END
             rowCounter++;
         }

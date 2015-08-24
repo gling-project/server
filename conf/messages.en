@@ -4,7 +4,7 @@
 
 ##generic
 --.generic.back=Back
-#--.generic.category=Category
+--.generic.category=Category
 --.generic.close=Close
 #--.generic.date=Date
 --.generic.description=Description
@@ -55,7 +55,7 @@
 --.generic.city=City
 --.generic.country=Country
 --.generic.address=Address
-#--.generic.business=Business
+--.generic.business=Business
 --.generic.edit=Edit
 --.generic.cancel=Cancel
 --.generic.remove=Remove
@@ -64,9 +64,20 @@
 #--.generic.image=Image
 #--.generic.delete=Delete
 --.generic.validation.numberExpected=Only number
---.generic.contact=generic.contact
---.generic.action=generic.action
---.generic.status=generic.status
+--.generic.contact=Contact
+--.generic.action=Action
+--.generic.status=Status
+--.generic.publication=Publication
+--.generic.facebook=Facebook
+--.generic.comment=Comment
+--.generic.twitter=Twitter
+--.generic.validation.facebook=This is not a valid Facebook address (it must begin by https\://facebook.com/)
+--.generic.validation.instagram=This is not a valid Instagram address (it must begin by https\://instagram.com/)
+--.generic.gallery=Gallery
+--.generic.validation.twitter=This is not a valid Twitter address (it must begin by https\://twitter.com/)
+--.generic.title=Title
+--.generic.socialNetwork=Your social network
+--.generic.instagram=Instagram
 
 ## login modal
 --.loginModal.title=Login you
@@ -104,7 +115,7 @@
 
 ## forgot password
 --.forgotPassword.title=Forgot password ?
-#--.forgotPassword.desc=Get your email address and an email will be send with a new password
+--.forgotPassword.desc=Get your email address and an email will be send with a new password.
 --.forgotPassword.success=An email was send with your new password
 
 ## changePasswordModal
@@ -199,6 +210,7 @@
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 --.customer.registrationModal.alredyRegistred.success=This facebook account is already registered. You are now connected\!
+--.registration.facebook.someDataEmpty=Somes data are empty. Please get there before continue.
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Phone number expected
@@ -213,6 +225,9 @@
 --.error.wrongAddress=This address is unknown by Google Map. Please Choose another one
 --.error.business.mustBePublished=error.business.mustBePublished
 --.error.search.wrongCriteria=One search criteria is wrong
+--.error.address.nameNotExists=The name is empty
+--.error.address.wrongOldPassword=The old password is wrong.
+--.error.address.nameAlreadyUsed=The nom was already used. Please choose an other one.
 
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -274,18 +289,18 @@
 --.promotion.unit=Unit (optional)
 --.promotion.startDate=Start date
 --.promotion.offPrice=offPrice?
---.promotion.validation.offPrice=promotion.validation.offPrice
---.promotion.offPercent=promotion.offPercent
---.promotion.validation.minimalQuantityMustBeLowerThanQuantity=promotion.validation.minimalQuantityMustBeLowerThanQuantity
+--.promotion.validation.offPrice=The price of the promotion must be smaller than the original price.
+--.promotion.offPercent=Reduction
+--.promotion.validation.minimalQuantityMustBeLowerThanQuantity=The minimal quantity must be smaller than the total quantity.
 --.promotion.illustration=Illustration (optional)
 --.promotion.originalUnitPrice=Original price
 --.promotion.validation.offPercent=promotion.validation.offPercent
 
 ##  view/web/home.html
---.page.home.title=Home
+#--.page.home.title=Home
 
 ##  view/mobile/login.html
---.page.login.title=Login
+#--.page.login.title=Login
 
 ##  view/mobile/business_registration.html
 --.page.business_registration.title=Sign up
@@ -311,12 +326,15 @@
 
 ##  view/mobile/welcome.html
 --.mobile.welcome.toCustomerRegistration.btn=Sign up now \!
---.mobile.welcome.toLogin.desc=Already a Lynk account ?
---.mobile.welcome.toLogin.btn=Log in now \!
+#--.mobile.welcome.toLogin.desc=Already a Lynk account ?
+#--.mobile.welcome.toLogin.btn=Log in now \!
 --.page.welcome.title=Welcome to Lynk \!
---.mobile.welcome.toBusinessRegistration.desc=Your have a business and want to joint the Lynk community ? Try it for free\!
---.mobile.welcome.toBusinessRegistration.btn=Register your business
---.mobile.welcome.toCustomerRegistration.desc=Not yet an account Lynk ?
+#--.mobile.welcome.toBusinessRegistration.desc=Your have a business and want to joint the Lynk community ? Try it for free\!
+#--.mobile.welcome.toBusinessRegistration.btn=Register your business
+#--.mobile.welcome.toCustomerRegistration.desc=Not yet an account Lynk ?
+--.mobile.welcome.registration.desc=mobile.welcome.registration.desc
+--.mobile.welcome.login.desc=mobile.welcome.login.desc
+--.mobile.welcome.login.btn=Login
 
 
 ##  directive/field/dirFieldDocument/template.html
@@ -336,26 +354,23 @@
 
 ##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
 --.promotion.validation.endDateBeforeStartDate=The end date must be after the start date
+--.promotion.interest=Interest
+--.promotion.interest.help=Help
 
 
 ##  directive/component/searchResult/template.html
---.search.category=search.category
---.search.publication=search.publication
---.search.business.seeMore=search.business.seeMore
---.search.seeMore=search.seeMore
---.search.business=search.business
---.search.nothing=search.nothing
---.search.publication.seeMore=search.publication.seeMore
+--.search.category=Category
+--.search.publication=Publication
+--.search.business.seeMore=See more businesses...
+--.search.seeMore=See more results...
+--.search.business=Businesses
+--.search.nothing=No results
+--.search.publication.seeMore=See more publications...
 
 ##  be/lynk/server/model/SearchCriteriaEnum.java
---.search.criteria.business=search.criteria.business
---.search.criteria.publication=search.criteria.publication
---.search.criteria.category=search.criteria.category
-
-##  be/lynk/server/importer/impl/CategoryImporterImpl.java
---.category.sub.sub.=category.sub.sub.
---.interest.=interest.
---.category.sub.=category.sub.
+--.search.criteria.business=Businesses
+--.search.criteria.publication=Publications
+--.search.criteria.category=Categories
 
 ##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)
 --.registration.business.flash.success=registration.business.flash.success
@@ -373,6 +388,10 @@
 --.business.page.askPublication.window.title=business.page.askPublication.window.title
 --.business.page.askPublication.window.flash=business.page.askPublication.window.flash
 --.business.page.stopPublication.window.flash=business.page.stopPublication.window.flash
+--.business.page.cancelPublishRequest.window.flash=business.page.cancelPublishRequest.window.flash
+--.business.page.cancelPublishRequest.window.message=business.page.cancelPublishRequest.window.message
+--.business.modal.gallery.title=business.modal.gallery.title
+--.business.page.cancelPublishRequest.window.title=business.page.cancelPublishRequest.window.title
 
 ##  view/web/business.html (landscape )
 --.business.page.edit.description.notPublished=business.page.edit.description.notPublished
@@ -385,6 +404,11 @@
 --.business.page.edit.descriptionPublished=business.page.edit.descriptionPublished
 --.business.page.edit.landscape=business.page.edit.landscape
 --.business.page.stopPublication=business.page.stopPublication
+--.business.gallery=business.gallery
+--.business.page.cancelPublishRequest=business.page.cancelPublishRequest
+--.business.publication.btn.notification=business.publication.btn.notification
+--.business.page.edit.gallery=business.page.edit.gallery
+--.business.publication.btn.promotion=business.publication.btn.promotion
 
 ##  directive/form/promotion/template.html
 --.promotion.completePromotion=promotion.completePromotion
@@ -401,4 +425,33 @@
 ##  directive/form/business/BusinessFormCtrl.js (//isActive: !scope.getInfo().updateMode,)
 --.business.contactEmail=business.contactEmail
 --.business.website=business.website
+
+
+##  view/web/search_page.html (business )
+--.list.nothing=list.nothing
+
+##  dist/templateCacheWeb.js (//lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class=date><i class=\"fa fa-calendar\"></i> {{publication.startDate | date:medium}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div></div></div>");)
+--.business.socialNetwork.other=business.socialNetwork.other
+--.search.category.seeMore=search.category.seeMore
+--.publication.promotionData=publication.promotionData
+--.gallery.modal.next=gallery.modal.next
+--.gallery.modal.previous=gallery.modal.previous
+--.business.socialNetwork.form.description=business.socialNetwork.form.description
+
+##  controller/web/WelcomeCtrl.js (//use the model)
+--.position.current=position.current
+
+##  directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js (//www.facebook\.com/.*$)",)
+--.business.socialNetwork.opinion=business.socialNetwork.opinion
+--.business.socialNetwork.delivery=business.socialNetwork.delivery
+--.business.socialNetwork.ecommerce=business.socialNetwork.ecommerce
+--.business.socialNetwork.reservation=business.socialNetwork.reservation
+
+##  view/mobile/forgotPassword.html
+--.mobile.forgotPassword.btn=mobile.forgotPassword.btn
+--.page.forgot_password.title=page.forgot_password.title
+
+##  view/mobile/profile.html (body )
+--.page.profile.title=page.profile.title
+--.customer.profile.address.create=customer.profile.address.create
 
