@@ -22,7 +22,8 @@
     "grunt-ng-annotate": "^0.8.0",
     "grunt-angular-templatecache": "~0.2.5",
     "grunt-html2js": "~0.3.4",
-    "grunt-spritesmith": "~5.0.0"
+    "grunt-spritesmith": "~5.0.0",
+    "grunt-contrib-jasmine": "~0.9.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

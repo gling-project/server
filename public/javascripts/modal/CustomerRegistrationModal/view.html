@@ -5,13 +5,16 @@
 <div class="modal-body modal-login customer-registration" dir-enter="save()">
 
     <div class="wizard">
-        <div ng-class="{'current':badgeSelected==1}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==1}">1</span>
+        <div ng-class="{'current':badgeSelected==1}"><span class="badge"
+                                                           ng-class="{'badge-inverse':badgeSelected==1}">1</span>
             {{'--.customer.registrationModal.personal.title' | translateText}}
         </div>
-        <div ng-class="{'current':badgeSelected==2}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==2}">2</span>
+        <div ng-class="{'current':badgeSelected==2}"><span class="badge"
+                                                           ng-class="{'badge-inverse':badgeSelected==2}">2</span>
             {{'--.customer.registrationModal.interest.title' | translateText}}
         </div>
-        <div ng-class="{'current':badgeSelected==3}"><span class="badge" ng-class="{'badge-inverse':badgeSelected==3}">3</span>
+        <div ng-class="{'current':badgeSelected==3}"><span class="badge"
+                                                           ng-class="{'badge-inverse':badgeSelected==3}">3</span>
             {{'--.customer.registrationModal.personal.address' | translateText}}
         </div>
     </div>
@@ -24,9 +27,13 @@
 
         <table class="horizontal-split">
             <tr>
-                <td><div></div></td>
+                <td>
+                    <div></div>
+                </td>
                 <td>{{'--.generic.or' | translateText}}</td>
-                <td><div></div></td>
+                <td>
+                    <div></div>
+                </td>
             </tr>
         </table>
 
@@ -48,13 +55,36 @@
     </div>
 
 
-
-
 </div>
 <div class="modal-footer">
-    <button ng-show="badgeSelected!=1" style="float:left" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="previous()">{{'--.generic.previous' | translateText}}</button>
-    <button ng-show="badgeSelected!=1" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="skip()">{{'--.generic.skip' | translateText}}</button>
-    <button ng-show="badgeSelected!=3" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="next()">{{'--.generic.next' | translateText}}</button>
-    <button ng-show="badgeSelected==3"ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' | translateText}}</button>
-    <img src="/assets/images/modal-loading.gif" ng-show="loading" />
+    <button
+            ng-show="badgeSelected!=1"
+            id="customer-registration-modal-btn-previous"
+            style="float:left"
+            ng-disabled="loading"
+            type="button"
+            class="btn btn-primary"
+            ng-click="previous()">
+        {{'--.generic.previous' | translateText}}
+    </button>
+    <button
+            id="customer-registration-modal-btn-skip"
+            ng-show="badgeSelected!=1"
+            ng-disabled="loading"
+            type="button"
+            class="btn btn-primary"
+            ng-click="skip()">
+        {{'--.generic.skip' | translateText}}
+    </button>
+    <button
+            id="customer-registration-modal-btn-next"
+            ng-show="badgeSelected!=3" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="next()">
+        {{'--.generic.next' | translateText}}
+    </button>
+    <button
+            id="customer-registration-modal-btn-save"
+            ng-show="badgeSelected==3" ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">
+        {{'--.generic.save' | translateText}}
+    </button>
+    <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
 </div>

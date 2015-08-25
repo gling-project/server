@@ -256,9 +256,19 @@ module.exports = function (grunt) {
 
                 }
             }
+        },
+        jasmine: {
+            pivotal: {
+                src: [
+                    'public/dist/dependencies.min.js',
+                    'public/components/angular-mocks/angular-mocks.js',
+                    'public/dist/web.min.js',
+                    'public/dist/common.min.js',
+                    'public/javascripts/tests/**/*.js'
+                ]
+            }
         }
-    })
-    ;
+    });
 
 // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -268,6 +278,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-spritesmith');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
 
 

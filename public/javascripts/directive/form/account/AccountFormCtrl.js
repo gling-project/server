@@ -95,7 +95,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                             fieldName: 'password'
                         },
                         repeatPassword: {
-                            name: 'password',
+                            name: 'repeatPassword',
                             fieldTitle: "--.registration.form.repeatPassword",
                             validationMessage: "--.generic.validation.wrongRepeatPassword",
                             fieldType: 'password',
