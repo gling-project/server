@@ -32,7 +32,7 @@ public class Address extends AbstractEntity {
     @Basic(optional = false)
     private Double posy;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
     public Address() {

@@ -17,16 +17,16 @@ public class BusinessCategory extends AbstractEntity implements Comparable<Busin
     @Column(unique = true)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false,fetch = FetchType.EAGER)
     private Translation translationName;
 
     @Basic
     private Integer orderIndex;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "parent",orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "parent",orphanRemoval = true,fetch = FetchType.LAZY)
     private List<BusinessCategory> children = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.LAZY)
     private BusinessCategory parent;
 
     @ManyToMany

@@ -20,7 +20,7 @@ public class BusinessSchedule extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Business business;
 
     public List<BusinessSchedulePart> getParts() {

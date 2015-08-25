@@ -23,7 +23,7 @@ public class BusinessSchedulePart extends AbstractEntity{
     @Enumerated(value = EnumType.STRING)
     private AttendanceEnum attendance;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     private BusinessSchedule businessSchedule;
 
     public BusinessSchedulePart() {

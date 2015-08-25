@@ -26,7 +26,7 @@ module.exports = function (grunt) {
                             'public/components/bootstrap/dist/js/bootstrap.min.js',
                             'public/components/messenger/build/js/messenger.min.js',
                             'public/components/moment/min/moment.min.js',
-                            'public/components/angular-bootstrap/ui-bootstrap.min.js',
+                            //'public/components/angular-bootstrap/ui-bootstrap.min.js',
                             'public/components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                             'public/components/angucomplete/angucomplete.js',
                             'public/components/underscore/underscore-min.js',
@@ -244,6 +244,18 @@ module.exports = function (grunt) {
                 src: ['public/javascripts/**/*.html'],
                 dest: 'public/javascripts/dist/templateCacheWeb.js'
             }
+        },
+        sprite:{
+            all: {
+                src: 'public/images/interest/*.png',
+                dest: 'public/images/dist/interest.png',
+                destCss: 'public/dist/sprites.css'
+            },
+            data:{
+                spritesheet:{
+
+                }
+            }
         }
     })
     ;
@@ -255,6 +267,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-usemin');
+    grunt.loadNpmTasks('grunt-spritesmith');
+
 
 
 // Default task(s).
@@ -271,5 +285,8 @@ module.exports = function (grunt) {
         'html2js'
     ]);
 
+    grunt.registerTask('start-sprite', [
+        'sprite'
+    ]);
 }
 ;

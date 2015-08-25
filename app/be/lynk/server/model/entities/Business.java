@@ -51,10 +51,10 @@ public class Business extends AbstractEntity {
             inverseJoinColumns = {@JoinColumn(name = "category")})
     private List<BusinessCategory> businessCategories = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private StoredFile illustration;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},fetch = FetchType.LAZY)
     private StoredFile landscape;
 
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL,orphanRemoval = true)

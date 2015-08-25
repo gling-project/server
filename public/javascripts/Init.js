@@ -9,5 +9,7 @@ var myApp = angular.module('app', [
         'geolocation',
         'timer',
         'uiGmapgoogle-maps',
-        'djds4rce.angular-socialshare']
+        'djds4rce.angular-socialshare'
+        //,'ezfb'
+    ]
 );

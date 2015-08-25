@@ -25,13 +25,13 @@ public class StoredFile extends AbstractEntity {
     @Basic
     private Integer size;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private Account account;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private AbstractPublication publication;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Business businessGalleryPicture;
 
     @Basic

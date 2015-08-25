@@ -191,7 +191,9 @@ var myApp = angular.module('app', [
         'geolocation',
         'timer',
         'uiGmapgoogle-maps',
-        'djds4rce.angular-socialshare']
+        'djds4rce.angular-socialshare'
+        //,'ezfb'
+    ]
 );
 
 myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {

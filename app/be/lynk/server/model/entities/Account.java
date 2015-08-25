@@ -63,7 +63,7 @@ public class Account extends AbstractEntity {
     @Basic(optional = false)
     private Boolean sendNotificationByDefault = true;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Address selectedAddress;
 
 

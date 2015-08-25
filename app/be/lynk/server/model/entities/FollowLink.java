@@ -4,6 +4,7 @@ import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 /**
@@ -12,10 +13,10 @@ import javax.persistence.ManyToOne;
 @Entity
 public class FollowLink extends AbstractEntity{
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private Business business;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private Account account;
 
     @Basic

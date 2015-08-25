@@ -4,6 +4,7 @@ import be.lynk.server.model.entities.technical.AbstractEntity;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 /**
@@ -15,10 +16,10 @@ public class CategoryInterestLink extends AbstractEntity {
     @Basic(optional = false)
     private Integer priority;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private BusinessCategory businessCategory;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private CustomerInterest customerInterest;
 
     public CategoryInterestLink() {

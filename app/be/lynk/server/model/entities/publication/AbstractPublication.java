@@ -44,7 +44,7 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
     @OneToMany(mappedBy = "publication", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
     private List<StoredFile> pictures = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CustomerInterest interest;
 
     public AbstractPublication() {

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 public class TranslationValue extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Translation translation;
 
     @Basic(optional = false)
