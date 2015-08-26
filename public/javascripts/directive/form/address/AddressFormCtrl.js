@@ -41,6 +41,7 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                     scope.fields = {
                         name: {
                             fieldTitle: "--.form.address.field.name",
+                            name:'name',
                             options: names,
                             disabled: function () {
                                 return scope.getInfo().disabled;

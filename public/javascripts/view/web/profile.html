@@ -42,14 +42,26 @@
                                                 ng-class="{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}"></i>
                         </accordion-heading>
                         <div class="address-box">
-                            <div><span>{{'--.generic.street' | translateText}}</span>{{address.street}}</div>
-                            <div><span>{{'--.generic.zip' | translateText}}</span>{{address.zip}}</div>
-                            <div><span>{{'--.generic.city' | translateText}}</span>{{address.city}}</div>
-                            <div><span>{{'--.generic.country' | translateText}}</span>{{address.country}}</div>
+                            <div>
+                                <span>{{'--.generic.street' | translateText}}</span>
+                                <span>{{address.street}}</span>
+                            </div>
+                            <div>
+                                <span>{{'--.generic.zip' | translateText}}</span>
+                                <span>{{address.zip}}</span>
+                            </div>
+                            <div>
+                                <span>{{'--.generic.city' | translateText}}</span>
+                                <span>{{address.city}}</span>
+                            </div>
+                            <div>
+                                <span>{{'--.generic.country' | translateText}}</span>
+                                <span>{{address.country}}</span>
+                            </div>
                         </div>
-                        <button class="btn btn-primary glyphicon glyphicon-edit" ng-click="editAddress(address)">
-                            {{'--.generic.edit' |
-                            translateText}}
+                        <button class="btn btn-primary glyphicon glyphicon-edit"
+                                ng-click="editAddress(address)">
+                            {{'--.generic.edit' | translateText}}
                         </button>
                         <button class="btn btn-primary glyphicon glyphicon-remove" ng-click="deleteAddress(address)">
                             {{'--.generic.remove' |translateText}}
@@ -58,7 +70,10 @@
 
                     </accordion-group>
                 </accordion>
-                <button class="btn btn-primary" ng-click="addAddress()">{{'--.customer.profile.create' | translateText}}
+                <button id="profile-btn-address-add"
+                        class="btn btn-primary"
+                        ng-click="addAddress()">
+                    {{'--.customer.profile.create' | translateText}}
                 </button>
             </div>
         </div>

@@ -190,7 +190,7 @@
                                             <ul class="dropdown-menu dropdown-menu-right"
                                                 role="menu"
                                                 aria-labelledby="dropdownMenu1">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')">
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')" id="welcome-btn-profile">
                                                     {{'--.welcome.myProfile' | translateText}}</a></li>
                                                 <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
                                                     {{'--.welcome.myBusiness' | translateText}}</a></li>
