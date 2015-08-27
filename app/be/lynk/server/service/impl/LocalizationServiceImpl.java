@@ -86,13 +86,27 @@ public class LocalizationServiceImpl implements LocalizationService {
 
     @Override
     public Map<Business, Long> distanceBetweenAddresses(Position origin, List<Business> destinations) {
-        return distanceBetweenAddresses(positionToString(origin), destinations);
+
+        Map<Business, Long> map = new HashMap<>();
+
+        for (Business destination : destinations) {
+            long l=distance(
+                    origin.getX(),
+                    origin.getY(),
+                    destination.getAddress().getPosx(),
+                    destination.getAddress().getPosy(),
+                    null).longValue();
+            map.put(destination, l);
+        }
+        return map;
+
+
+//        return distanceBetweenAddresses(positionToString(origin), destinations);
     }
 
     private Map<Business, Long> distanceBetweenAddresses(String originString, List<Business> destinations) {
 
         Map<Business, Long> map = new HashMap<>();
-
 
         String[] destinationsString = new String[destinations.size()];
         for (int i = 0; i < destinations.size(); i++) {
@@ -131,5 +145,38 @@ public class LocalizationServiceImpl implements LocalizationService {
 
     private String positionToString(Position position) {
         return position.getX() + "," + position.getY();
+    }
+
+    private Double distance(double lat1, double lon1, double lat2, double lon2, Character unit) {
+        if(unit==null){
+            unit='m';
+        }
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if(unit == 'm'){
+            dist = dist * 1.609344 * 1000;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*::  This function converts decimal degrees to radians             :*/
+/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*::  This function converts radians to decimal degrees             :*/
+/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 }
