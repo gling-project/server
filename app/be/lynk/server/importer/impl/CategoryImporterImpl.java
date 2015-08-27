@@ -36,7 +36,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 //        put(Lang.forCode("en"),21);
     }};
     protected static final Map<Lang, Integer> COL_INTEREST_TRANSLATION = new HashMap<Lang, Integer>() {{
-        put(Lang.forCode("fr"), 1);
+        put(Lang.forCode("fr"), 0);
 //        put(Lang.forCode("en"),21);
     }};
 
@@ -73,7 +73,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
             Sheet categorySheet = workbookSheets.get(CATEGORY_STREET);
             Sheet interestSheet = workbookSheets.get(INTEREST_SHEET);
 
-            importInterest(interestSheet, addTranslation);
+            importInterest(interestSheet);
             importCategory(categorySheet, addTranslation);
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,12 +83,8 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
         return "SUCCESS !!! ";
     }
 
-    private Map<Integer, CustomerInterest> importInterest(Sheet sheet, boolean addTranslation) {
+    private Map<Integer, CustomerInterest> importInterest(Sheet sheet) {
 
-        Map<Lang, Map<String, String>> translationMap = new HashMap<>();
-        //TODO add lang ?
-        Lang langFr = Lang.forCode("fr");
-        translationMap.put(langFr, new HashMap<>());
 
         //build interest
         Map<Integer, CustomerInterest> interestMap = new HashMap<>();
@@ -105,12 +101,10 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
             if (interestS != null && interestS.length() > 0) {
                 String interestSNormalized = normalize(interestS);
 
-                String translationKey = "--.interest." + interestSNormalized;
-                translationMap.get(langFr).put(translationKey, interestS);
-
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Integer> langIntegerEntry : COL_INTEREST_TRANSLATION.entrySet()) {
-                    translation.getTranslationValues().add(new TranslationValue(translation, langIntegerEntry.getKey(), sheet.getCell(langIntegerEntry.getValue(), rowCounter).getContents()));
+                    String s = sheet.getCell(langIntegerEntry.getValue(), rowCounter).getContents();
+                    translation.getTranslationValues().add(new TranslationValue(translation, langIntegerEntry.getKey(), s));
                 }
 
                 CustomerInterest customerInterest = new CustomerInterest(interestSNormalized, translation, ++order);

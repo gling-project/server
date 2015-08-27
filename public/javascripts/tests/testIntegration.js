@@ -6,8 +6,8 @@
 describe('Integration test', function () {
     it('Customer test web', function () {
 
-        var target = 'http://lynk-test.herokuapp.com/';
-        //var target = 'http://localhost:9000/';
+        //var target = 'http://lynk-test.herokuapp.com/';
+        var target = 'http://localhost:9000/';
 
         var writeField = function(fieldName,content){
             element(by.name(fieldName)).clear().then(function () {
