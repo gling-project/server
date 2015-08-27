@@ -26,7 +26,10 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
     };
 
     $scope.personalCancel = function () {
-        $scope.accountParam.dto=angular.copy(accountService.getMyself());
+        $scope.accountParam.dto.firstname=accountService.getMyself().firstname;
+        $scope.accountParam.dto.lastname=accountService.getMyself().lastname;
+        $scope.accountParam.dto.email=accountService.getMyself().email;
+        $scope.accountParam.dto.gender=accountService.getMyself().gender;
         $scope.accountParam.disabled = true;
     };
 

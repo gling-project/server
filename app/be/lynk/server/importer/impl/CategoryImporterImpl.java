@@ -31,8 +31,12 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
     protected static final Integer COL_CATEGORY_CAT = 0;
     protected static final Integer COL_CATEGORY_SUB_CAT = 1;
     protected static final Integer COL_CATEGORY_SUB_SUB_CAT = 2;
-    protected static final Map<Lang,Integer> COL_CATEGORY_TRANSLATION = new HashMap<Lang,Integer>(){{
-        put(Lang.forCode("fr"),20);
+    protected static final Map<Lang, Integer> COL_CATEGORY_TRANSLATION = new HashMap<Lang, Integer>() {{
+        put(Lang.forCode("fr"), 20);
+//        put(Lang.forCode("en"),21);
+    }};
+    protected static final Map<Lang, Integer> COL_INTEREST_TRANSLATION = new HashMap<Lang, Integer>() {{
+        put(Lang.forCode("fr"), 1);
 //        put(Lang.forCode("en"),21);
     }};
 
@@ -104,7 +108,12 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
                 String translationKey = "--.interest." + interestSNormalized;
                 translationMap.get(langFr).put(translationKey, interestS);
 
-                CustomerInterest customerInterest = new CustomerInterest(interestSNormalized, translationKey, ++order);
+                Translation translation = new Translation();
+                for (Map.Entry<Lang, Integer> langIntegerEntry : COL_INTEREST_TRANSLATION.entrySet()) {
+                    translation.getTranslationValues().add(new TranslationValue(translation, langIntegerEntry.getKey(), sheet.getCell(langIntegerEntry.getValue(), rowCounter).getContents()));
+                }
+
+                CustomerInterest customerInterest = new CustomerInterest(interestSNormalized, translation, ++order);
                 String iconName = sheet.getCell(COL_INTEREST_NAME_ICON, rowCounter).getContents();
                 if (iconName != null && iconName.length() > 0) {
                     customerInterest.setIconName(iconName);
@@ -166,10 +175,10 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
                 //translation
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Integer> langIntegerEntry : COL_CATEGORY_TRANSLATION.entrySet()) {
-                    translation.getTranslationValues().add(new TranslationValue(translation,langIntegerEntry.getKey(),sheet.getCell(langIntegerEntry.getValue(),rowCounter).getContents()));
+                    translation.getTranslationValues().add(new TranslationValue(translation, langIntegerEntry.getKey(), sheet.getCell(langIntegerEntry.getValue(), rowCounter).getContents()));
                 }
 
-                lastCat=new BusinessCategory(catSNorm, translation, rowCounter);
+                lastCat = new BusinessCategory(catSNorm, translation, rowCounter);
                 categories.add(lastCat);
             } else if (isNotEmpty(sheet.getCell(COL_CATEGORY_SUB_CAT, rowCounter))) {
                 String catS = sheet.getCell(COL_CATEGORY_SUB_CAT, rowCounter).getContents();
@@ -177,10 +186,10 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
                 //translation
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Integer> langIntegerEntry : COL_CATEGORY_TRANSLATION.entrySet()) {
-                    translation.getTranslationValues().add(new TranslationValue(translation,langIntegerEntry.getKey(),sheet.getCell(langIntegerEntry.getValue(),rowCounter).getContents()));
+                    translation.getTranslationValues().add(new TranslationValue(translation, langIntegerEntry.getKey(), sheet.getCell(langIntegerEntry.getValue(), rowCounter).getContents()));
                 }
 
-                lastSubCat=new BusinessCategory(lastCat,catSNorm, translation, rowCounter);
+                lastSubCat = new BusinessCategory(lastCat, catSNorm, translation, rowCounter);
                 categories.add(lastSubCat);
 
             } else if (isNotEmpty(sheet.getCell(COL_CATEGORY_SUB_SUB_CAT, rowCounter))) {
@@ -189,7 +198,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
                 //translation
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Integer> langIntegerEntry : COL_CATEGORY_TRANSLATION.entrySet()) {
-                    translation.getTranslationValues().add(new TranslationValue(translation,langIntegerEntry.getKey(),sheet.getCell(langIntegerEntry.getValue(),rowCounter).getContents()));
+                    translation.getTranslationValues().add(new TranslationValue(translation, langIntegerEntry.getKey(), sheet.getCell(langIntegerEntry.getValue(), rowCounter).getContents()));
                 }
                 BusinessCategory subSubCat = new BusinessCategory(lastSubCat, catSNorm, translation, rowCounter);
                 categories.add(subSubCat);

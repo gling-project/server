@@ -1,20 +1,34 @@
 //delete from session;
-//delete from logincredential where account_id = (select id from account where email ='john@snow.com');
-//delete from address WHERE  account_id  = (select id from account where email ='john@snow.com');
-//delete from account where email ='john@snow.com';
-
+//delete from logincredential where account_id = (select id from account where email ='john@snow.com' or email = 'paul@fire.com');
+//delete from address WHERE  account_id  = (select id from account where email ='john@snow.com' or email = 'paul@fire.com');
+//delete from account where email ='john@snow.com' or email = 'paul@fire.com';
 
 describe('Integration test', function () {
     it('Customer test web', function () {
 
+        var target = 'http://lynk-test.herokuapp.com/';
+        //var target = 'http://localhost:9000/';
+
+        var writeField = function(fieldName,content){
+            element(by.name(fieldName)).clear().then(function () {
+                element(by.name(fieldName)).sendKeys(content);
+            });
+        };
+
 
         //variables
         //customer account
-        var customerFirstName = 'John';
-        var customerLastName = 'Snow';
-        var customerGender = 'Homme';
-        var customerEmail = 'john@snow.com';
-        var customerPassword = 'password';
+        var customerFirstName = 'John',
+            customerLastName = 'Snow',
+            customerGender = 'Homme',
+            customerEmail = 'john@snow.com',
+            customerPassword = 'password',
+            customerFirstName2 = 'Paul',
+            customerLastName2 = 'Fire',
+            customerGender2 = 'Femme',
+            customerEmail2 = 'paul@fire.com',
+            customerPassword2 = 'password2';
+
         //address
         var customerAddressName = 'Mon domicile',
             customerAddressStreet = '1 Grand place',
@@ -25,7 +39,7 @@ describe('Integration test', function () {
             customerAddress2City = 'Brussel',
             customerAddress2Zip = '1000';
 
-        browser.get('http://localhost:9000/');
+        browser.get(target);
 
         //control page name
         expect(browser.getTitle()).toEqual('Gling');
@@ -78,6 +92,9 @@ describe('Integration test', function () {
         element(by.id('dropdownMenu1')).click();
         element(by.id('welcome-btn-profile')).click();
 
+        // Edit Address
+        // ********************
+
         //open add address modal
         element(by.id('profile-btn-address-add')).click();
         element(by.cssContainingText('option', customerAddressName)).click();
@@ -96,15 +113,9 @@ describe('Integration test', function () {
         expect(element(by.css('.address-box > div:nth-child(4) > span:nth-child(2)')).getText()).toEqual(customerAddressCountry);
 
         element(by.css('.address-container .glyphicon-edit')).click();
-        element(by.name('street')).clear().then(function () {
-            element(by.name('street')).sendKeys(customerAddress2Street);
-        });
-        element(by.name('zip')).clear().then(function () {
-            element(by.name('zip')).sendKeys(customerAddress2Zip);
-        });
-        element(by.name('city')).clear().then(function () {
-            element(by.name('city')).sendKeys(customerAddress2City);
-        });
+        writeField('street',customerAddress2Street);
+        writeField('zip',customerAddress2Zip);
+        writeField('city',customerAddress2City);
 
         //save
         element(by.id('profile-btn-save')).click();
@@ -115,6 +126,76 @@ describe('Integration test', function () {
         expect(element(by.css('.address-box > div:nth-child(2) > span:nth-child(2)')).getText()).toEqual(customerAddress2Zip);
         expect(element(by.css('.address-box > div:nth-child(3) > span:nth-child(2)')).getText()).toEqual(customerAddress2City);
 
+        // Edit personal data
+        // ********************
+        //edit
+        element(by.id('profile-personal-btn-edit')).click();
+        //edit data
+        writeField('firstname',customerFirstName2);
+        //cancel
+        element(by.id('profile-personal-btn-cancel')).click();
+        //control
+        expect(element(by.name('firstname')).getAttribute('value')).toEqual(customerFirstName);
+        //edit
+        element(by.id('profile-personal-btn-edit')).click();
+        writeField('firstname',customerFirstName2);
+        writeField('lastname',customerLastName2);
+        element(by.cssContainingText('option', customerGender2)).click();
+        writeField('email',customerEmail2);
+        //save
+        element(by.id('profile-personal-btn-save')).click();
+        //control
+        expect(element(by.name('firstname')).getAttribute('value')).toEqual(customerFirstName2);
+        expect(element(by.name('lastname')).getAttribute('value')).toEqual(customerLastName2);
+        expect(element(by.name('gender')).$('option:checked').getText()).toEqual(customerGender2);
+        expect(element(by.name('email')).getAttribute('value')).toEqual(customerEmail2);
+
+        //reload
+        browser.get(target+'profile');
+        //control
+        expect(element(by.name('firstname')).getAttribute('value')).toEqual(customerFirstName2);
+        expect(element(by.name('lastname')).getAttribute('value')).toEqual(customerLastName2);
+        expect(element(by.name('gender')).$('option:checked').getText()).toEqual(customerGender2);
+        expect(element(by.name('email')).getAttribute('value')).toEqual(customerEmail2);
+
+        // Edit password
+        // ********************
+        //open window
+        element(by.id('profile-personal-btn-edit-password')).click();
+        //change password
+        element(by.id('change-password-input-password')).sendKeys(customerPassword);
+        element(by.id('change-password-input-new-password')).sendKeys(customerPassword2);
+        element(by.id('change-password-input-repeat-password')).sendKeys(customerPassword2);
+        //save
+        element(by.id('change-password-btn-save')).click();
+        //logout
+        element(by.id('dropdownMenu1')).click();
+        element(by.id('welcome-btn-logout')).click();
+        //login
+        element(by.id('welcome-btn-login')).click();
+        element(by.name('email')).sendKeys(customerEmail2);
+        element(by.name('password')).sendKeys(customerPassword2);
+        element(by.id('login-modal-btn-save')).click();
+
+        //navigate to profile
+        element(by.id('dropdownMenu1')).click();
+        element(by.id('welcome-btn-profile')).click();
+
+        // Edit interest
+        // ********************
+        //open window
+        element(by.id('profile-interest-btn-edit')).click();
+
+        //edit
+        element(by.css('.customer_interest_form_container .customer_interest_form:nth-child(2) .interest')).click();
+        var interest1 =  element(by.css('.customer_interest_form_container .customer_interest_form:nth-child(2) .interest')).getText();
+        element(by.css('.customer_interest_form_container .customer_interest_form:nth-child(10) .interest')).click();
+        var interest2 =  element(by.css('.customer_interest_form_container .customer_interest_form:nth-child(10) .interest')).getText();
+        element(by.id('edit-customer-interest-btn-save')).click();
+
+        //control
+        expect(element(by.css('.category-list .category-box:nth-child(1)')).getText()).toEqual(interest1);
+        expect(element(by.css('.category-list .category-box:nth-child(2)')).getText()).toEqual(interest2);
 
     });
 });

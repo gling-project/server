@@ -256,6 +256,7 @@ myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance
 
     $scope.fields = {
         oldPassword: {
+            id:'change-password-input-password',
             name:'password',
             fieldTitle: "--.generic.oldPassword",
             validationRegex: "^[a-zA-Z0-9-_%]{6,18}$",
@@ -271,6 +272,8 @@ myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance
             fieldName: 'oldPassword'
         },
         newPassword: {
+            id:'change-password-input-new-password',
+            name:'newPassword',
             fieldTitle: "--.changePasswordModal.newPassword",
             validationRegex: "^[a-zA-Z0-9-_%]{6,18}$",
             validationMessage: "--.generic.validation.password",
@@ -283,6 +286,8 @@ myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance
             fieldName: 'newPassword'
         },
         repeatPassword: {
+            id:'change-password-input-repeat-password',
+            name:'repeatNewPassword',
             fieldTitle: "--.generic.repeatPassword",
             fieldType: 'password',
             validationMessage: "--.generic.validation.repeatPassword",

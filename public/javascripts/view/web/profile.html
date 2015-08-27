@@ -7,21 +7,30 @@
 
             <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
-            <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="accountParam.disabled"
-                    ng-click="personalEdit()">{{'--.generic.edit' |
-                translateText}}
+            <button class="btn btn-primary glyphicon glyphicon-edit"
+                    id="profile-personal-btn-edit"
+                    ng-show="accountParam.disabled"
+                    ng-click="personalEdit()">{{'--.generic.edit' |translateText}}
             </button>
-            <button class="btn btn-primary" ng-hide="accountParam.disabled" ng-click="personalSave()">
-                {{'--.generic.save' |
-                translateText}}
+            <button class="btn btn-primary"
+                    id="profile-personal-btn-save"
+                    ng-hide="accountParam.disabled"
+                    ng-click="personalSave()">
+                {{'--.generic.save' | translateText}}
             </button>
-            <button class="btn btn-primary" ng-hide="accountParam.disabled" ng-click="personalCancel()">
+            <button
+                    id="profile-personal-btn-cancel"
+                    class="btn btn-primary"
+                    ng-hide="accountParam.disabled" ng-click="personalCancel()">
                 {{'--.generic.cancel' | translateText}}
             </button>
 
             <div ng-show="account.loginAccount==true" class="col-md-3" ng-show="account.loginAccount==true"></div>
-            <button type="button" class="btn btn-primary" ng-click="editPassword()">{{'--.changePasswordModal.title'
-                |translateText}}
+            <button type="button"
+                    id="profile-personal-btn-edit-password"
+                    class="btn btn-primary"
+                    ng-click="editPassword()">
+                {{'--.changePasswordModal.title' | translateText}}
             </button>
         </div>
     </div>
@@ -59,7 +68,8 @@
                                 <span>{{address.country}}</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary glyphicon glyphicon-edit"
+                        <button
+                                class="btn btn-primary glyphicon glyphicon-edit"
                                 ng-click="editAddress(address)">
                             {{'--.generic.edit' | translateText}}
                         </button>
@@ -81,16 +91,19 @@
 
     <div class="panel panel-default main-panel">
         <div class="panel-heading">{{'--.customer.profile.interest' | translateText}}</div>
-        <div class="panel-body">
+        <div class="panel-body category-list">
 
             <div>
-                <div ng-repeat="interest in model.myself.customerInterests" class="category-box">
+                <div ng-repeat="interest in model.myself.customerInterests"
+                     class="category-box">
                     {{interest.translationName |translateText}}
                 </div>
 
-                <button class="btn btn-primary glyphicon glyphicon-edit" ng-show="accountParam.disabled"
-                        ng-click="interestEdit()">{{'--.generic.edit' |
-                    translateText}}
+                <button class="btn btn-primary glyphicon glyphicon-edit"
+                        ng-show="accountParam.disabled"
+                        id="profile-interest-btn-edit"
+                        ng-click="interestEdit()">
+                    {{'--.generic.edit' | translateText}}
                 </button>
             </div>
         </div>

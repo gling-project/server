@@ -15,8 +15,8 @@ public class CustomerInterest extends AbstractEntity implements Comparable<Custo
     @Column(unique = true)
     private String name;
 
-    @Basic
-    private String translationName;
+    @ManyToOne(cascade = CascadeType.ALL,optional = false,fetch = FetchType.EAGER)
+    private Translation translationName;
 
     @Basic
     private Integer orderIndex;
@@ -30,7 +30,7 @@ public class CustomerInterest extends AbstractEntity implements Comparable<Custo
     public CustomerInterest() {
     }
 
-    public CustomerInterest(String name, String translationName, Integer orderIndex) {
+    public CustomerInterest(String name, Translation translationName, Integer orderIndex) {
         this.name = name;
         this.translationName = translationName;
         this.orderIndex = orderIndex;
@@ -52,11 +52,11 @@ public class CustomerInterest extends AbstractEntity implements Comparable<Custo
         this.name = name;
     }
 
-    public String getTranslationName() {
+    public Translation getTranslationName() {
         return translationName;
     }
 
-    public void setTranslationName(String translationName) {
+    public void setTranslationName(Translation translationName) {
         this.translationName = translationName;
     }
 

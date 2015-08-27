@@ -11,11 +11,15 @@
         <dir-field-text ng-info="fields.repeatPassword"></dir-field-text>
 </div>
 <div class="modal-footer">
-    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' |
-        translateText}}
+    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">
+        {{'--.generic.close' | translateText}}
     </button>
-    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' |
-        translateText}}
+    <button ng-disabled="loading"
+            type="button"
+            id="change-password-btn-save"
+            class="btn btn-primary"
+            ng-click="save()">
+        {{'--.generic.save' | translateText}}
     </button>
     <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
 </div>
