@@ -132,8 +132,11 @@
 
                             <div class="container header-option-container" >
 
-                                <h1 style="cursor : pointer" ng-click="navigateTo('/')">
-                                    {{'--.site.name' | translateText}}</h1>
+                                <h1 style="cursor : pointer"
+                                    id="welcome-btn-welcome"
+                                    ng-click="navigateTo('/')">
+                                    {{'--.site.name' | translateText}}
+                                </h1>
 
                                     <!-- seach bar -->
                                     <search-bar-ctrl  ng-info="{mobile:false}"></search-bar-ctrl>
