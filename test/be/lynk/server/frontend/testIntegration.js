@@ -197,5 +197,10 @@ describe('Integration test', function () {
         expect(element(by.css('.category-list .category-box:nth-child(1)')).getText()).toEqual(interest1);
         expect(element(by.css('.category-list .category-box:nth-child(2)')).getText()).toEqual(interest2);
 
+        // Test welcome
+        // ********************
+        //go to welcome
+        element(by.id('welcome-btn-welcome')).click();
+
     });
 });
