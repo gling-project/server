@@ -5,7 +5,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{'--.businessCategory.column.category' | translateText}}</div>
             <div class="panel-body">
-                <button
+                <button name="{{category.name}}"
                         ng-disabled="isDisabled()"
                         ng-repeat="category in categories"
                      class="category-box"
@@ -18,7 +18,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{'--.businessCategory.column.subcategory' | translateText}}</div>
             <div class="panel-body">
-                <button
+                <button name="{{subcategory.name}}"
                         ng-repeat="subcategory in subcategories"
                         ng-disabled="isDisabled()"
                         class="category-box"
@@ -31,7 +31,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{'--.businessCategory.column.subsubcategory' | translateText}}</div>
             <div class="panel-body">
-                <button
+                <button name="{{subsubcategory.name}}"
                         ng-repeat="subsubcategory in subsubcategories"
                         ng-disabled="isDisabled()"
                         class="category-box"

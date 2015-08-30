@@ -150,7 +150,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/welcome.html',
                     controller: 'WelcomeCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/home');
                             }
@@ -161,7 +162,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/home.html',
                     controller: 'HomeCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -172,7 +174,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
                     controller: 'CustomerRegistrationCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -183,7 +186,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/profile.html',
                     controller: 'ProfileCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -193,7 +197,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/business.html',
                     controller: 'BusinessCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -203,7 +208,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/business.html',
                     controller: 'BusinessCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -213,7 +219,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/search_page.html',
                     controller: 'SearchPageCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -223,7 +230,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
                     controller: 'ForgotPasswordCtrl',
                     resolve: {
-                        a: ['accountService', '$location', function (accountService, $location) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -443,7 +451,9 @@ myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 't
 
 }])
 ;
-myApp.controller('WelcomeCtrl', ['$scope', '$location', 'accountService', '$flash', 'translationService', function ($scope,$location,accountService,$flash,translationService) {
+myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountService', '$flash', 'translationService', function ($rootScope,$scope,$location,accountService,$flash,translationService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.loginFormParam = {
         dto: {},
@@ -487,7 +497,9 @@ myApp.controller('WelcomeCtrl', ['$scope', '$location', 'accountService', '$flas
 
 
 }]);
-myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService) {
+myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', function ($rootScope,$scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.displayMask = true;
 
@@ -669,7 +681,9 @@ myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', '
     });
 
 }]);
-myApp.controller('ForgotPasswordCtrl', ['$scope', 'facebookService', 'accountService', '$location', '$filter', '$flash', function ($scope,facebookService,accountService,$location,$filter,$flash) {
+myApp.controller('ForgotPasswordCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$filter', '$flash', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.loading = false;
 
@@ -743,7 +757,9 @@ myApp.controller('ForgotPasswordCtrl', ['$scope', 'facebookService', 'accountSer
 
 
 }]);
-myApp.controller('CustomerRegistrationCtrl', ['$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', 'addressService', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location,addressService) {
+myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', 'addressService', function ($rootScope,$scope,$flash,accountService,facebookService,translationService,modalService,$location,addressService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var facebookAuthentication = null;
 
@@ -910,7 +926,9 @@ myApp.controller('CustomerRegistrationCtrl', ['$scope', '$flash', 'accountServic
 
 
 }]);
-myApp.controller('BusinessRegistrationCtrl', ['$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', 'businessService', 'addressService', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location,businessService,addressService) {
+myApp.controller('BusinessRegistrationCtrl', ['$rootScope', '$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', 'businessService', 'addressService', function ($rootScope,$scope,$flash,accountService,facebookService,translationService,modalService,$location,businessService,addressService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var facebookAuthentication = null;
 
@@ -1066,7 +1084,9 @@ myApp.controller('BusinessRegistrationCtrl', ['$scope', '$flash', 'accountServic
 
 
 }]);
-myApp.controller('MenuCtrl', ['$scope', 'facebookService', 'accountService', '$location', function ($scope,facebookService,accountService,$location) {
+myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', function ($rootScope,$scope,facebookService,accountService,$location) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.logout = function () {
         if (facebookService.isConnected()) {
@@ -1080,7 +1100,9 @@ myApp.controller('MenuCtrl', ['$scope', 'facebookService', 'accountService', '$l
 
 
 }]);
-myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', function ($scope, modalService, accountService) {
+myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accountService', function ($rootScope,$scope, modalService, accountService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.model = accountService.model;
 
@@ -1155,7 +1177,9 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', fun
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', function ($scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.loading = true;
 
@@ -1244,7 +1268,9 @@ myApp.controller('BusinessCtrl', ['$scope', '$routeParams', 'businessService', '
     };
 
 }]);
-myApp.controller('SearchPageCtrl', ['$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($scope, searchService, $routeParams, searchBarService,geolocationService) {
+myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var param = $routeParams.param;
     searchBarService.setCurrentSearch(param);

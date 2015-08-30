@@ -1,4 +1,6 @@
-myApp.controller('BusinessCtrl', function ($scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.loading = true;
 

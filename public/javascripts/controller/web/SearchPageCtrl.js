@@ -1,4 +1,6 @@
-myApp.controller('SearchPageCtrl', function ($scope, searchService, $routeParams, searchBarService,geolocationService) {
+myApp.controller('SearchPageCtrl', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var param = $routeParams.param;
     searchBarService.setCurrentSearch(param);

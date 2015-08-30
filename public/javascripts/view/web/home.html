@@ -38,25 +38,6 @@
 
             <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>
         </div>
-
-        <div style="display: inline-block;width:28%;vertical-align: top">
-            <div class="temp-box"
-                 ng-show="accountService.getMyself()==null">
-                <div>Sign up to follow you favorite shops, benefit to awesome promotion</div>
-                <button class="btn btn-default" style="color: #000000" ng-click="customerRegistration()">Sign up now !
-                </button>
-            </div>
-            <div class="temp-box"
-                 ng-show="accountService.getMyself()==null">
-                <div>You have a business and you want to communique directly with your customer ? Start now for free,
-                    and
-                    discover you pricing !
-                </div>
-                <button class="btn btn-default" style="color: #000000" ng-click="navigateTo('/business_registration')">
-                    {{'--.home.toBusiness.btn' | translateText}}
-                </button>
-            </div>
-        </div>
     </div>
 
 </div>

@@ -21,6 +21,7 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
 
                     scope.fields = {
                         name: {
+                            name:'name',
                             fieldTitle: "--.generic.name",
                             validationRegex: "^.{2,50}$",
                             validationMessage: ['--.generic.validation.size', '2', '250'],
@@ -35,6 +36,7 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                             fieldName: 'name'
                         },
                         description: {
+                            name:'description',
                             fieldTitle: "--.generic.desc",
                             validationRegex: "^.{0,1500}$",
                             validationMessage: ['--.generic.validation.size', '0', '1500'],
@@ -46,6 +48,7 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                             fieldName: 'description'
                         },
                         phone: {
+                            name:'phone',
                             fieldTitle: "--.generic.phone",
                             validationRegex: "^[0-9. *-+]{6,16}$",
                             validationMessage: '--.validation.dto.phone',
@@ -57,8 +60,8 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                             fieldName: 'phone'
                         },
                         email: {
+                            name:'business-email',
                             fieldTitle: "--.business.contactEmail",
-                            name: 'email',
                             validationRegex: /^($|(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)/,
                             validationMessage: '--.validation.dto.notNull',
                             disabled: function () {
@@ -69,6 +72,7 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                             fieldName: 'email'
                         },
                         website: {
+                            name:'website',
                             fieldTitle: "--.business.website",
                             validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
                             validationMessage: '--.validation.dto.url',

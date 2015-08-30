@@ -1,4 +1,6 @@
-myApp.controller('BusinessRegistrationCtrl', function ($scope,$flash,accountService,facebookService,translationService,modalService,$location,businessService,addressService) {
+myApp.controller('BusinessRegistrationCtrl', function ($rootScope,$scope,$flash,accountService,facebookService,translationService,modalService,$location,businessService,addressService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var facebookAuthentication = null;
 

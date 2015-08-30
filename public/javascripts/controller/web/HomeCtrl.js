@@ -1,5 +1,7 @@
 myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
 
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
     //variable
     $scope.followedMode = false;
     $scope.businessInfoParam = {};

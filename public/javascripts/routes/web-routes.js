@@ -16,7 +16,8 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
-                    a: function (accountService) {
+                    a: function (accountService,$rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
                         var status = test(accountService);
                     }
                 }
@@ -24,31 +25,37 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/web/profile.html',
                 controller: 'ProfileCtrl',
                 resolve: {
-                    a: function (accountService, $location) {
+                    a: function (accountService, $location,$rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
                         if (test(accountService) == 'NOT_CONNECTED') {
                             $location.path('/');
                         }
                     }
                 }
-            }).when('/business_registration', {
-                templateUrl: '/assets/javascripts/view/web/business_registration.html',
-                controller: 'BusinessRegistrationCtrl',
-                resolve: {
-                    a: function (accountService, $location) {
-                        if (test(accountService) == 'BUSINESS') {
-                            $location.path('/business');
-                        }
-                    }
-                }
             }).when('/search/:param', {
                 templateUrl: '/assets/javascripts/view/web/search_page.html',
-                controller: 'SearchPageCtrl'
+                controller: 'SearchPageCtrl',
+                resolve: {
+                    a: function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }
+                }
             }).when('/business/:businessId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
-                controller: 'BusinessCtrl'
+                controller: 'BusinessCtrl',
+                resolve: {
+                    a: function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }
+                }
             }).when('/business/:businessId/publication/:publicationId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
-                controller: 'BusinessCtrl'
+                controller: 'BusinessCtrl',
+                resolve: {
+                    a: function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }
+                }
             }).otherwise({
                 redirectTo: '/'
             });

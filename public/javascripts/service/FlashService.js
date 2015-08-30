@@ -1,7 +1,7 @@
 myApp.service("$flash", function($filter) {
 
     Messenger.options = {
-        extraClasses: 'messenger-fixed messenger-on-top messenger-on-center cr-messenger',
+        extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right cr-messenger',
         theme: 'block'
     }
 

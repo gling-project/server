@@ -3,41 +3,42 @@
 //delete from address WHERE  account_id  = (select id from account where email ='john@snow.com' or email = 'paul@fire.com');
 //delete from account where email ='john@snow.com' or email = 'paul@fire.com';
 
-describe('Integration test', function () {
+describe('Customer test', function () {
+
+    //var target = 'http://lynk-test.herokuapp.com/';
+    var target = 'http://localhost:9000/';
+
+    //variables
+    //customer account
+    var customerFirstName = 'John',
+        customerLastName = 'Snow',
+        customerGender = 'Homme',
+        customerEmail = 'john@snow.com',
+        customerPassword = 'password',
+        customerFirstName2 = 'Paul',
+        customerLastName2 = 'Fire',
+        customerGender2 = 'Femme',
+        customerEmail2 = 'paul@fire.com',
+        customerPassword2 = 'password2';
+
+    //address
+    var customerAddressName = 'Mon domicile',
+        customerAddressStreet = '1 Grand place',
+        customerAddressCity = 'Brussel',
+        customerAddressZip = '1000',
+        customerAddressCountry = 'BELGIUM',
+        customerAddress2Street = '3 rue des Bouchers',
+        customerAddress2City = 'Brussel',
+        customerAddress2Zip = '1000';
+
+    //function
+    var writeField = function(fieldName,content){
+        element(by.name(fieldName)).clear().then(function () {
+            element(by.name(fieldName)).sendKeys(content);
+        });
+    };
+
     it('Customer test web', function () {
-
-        //var target = 'http://lynk-test.herokuapp.com/';
-        var target = 'http://localhost:9000/';
-
-        var writeField = function(fieldName,content){
-            element(by.name(fieldName)).clear().then(function () {
-                element(by.name(fieldName)).sendKeys(content);
-            });
-        };
-
-
-        //variables
-        //customer account
-        var customerFirstName = 'John',
-            customerLastName = 'Snow',
-            customerGender = 'Homme',
-            customerEmail = 'john@snow.com',
-            customerPassword = 'password',
-            customerFirstName2 = 'Paul',
-            customerLastName2 = 'Fire',
-            customerGender2 = 'Femme',
-            customerEmail2 = 'paul@fire.com',
-            customerPassword2 = 'password2';
-
-        //address
-        var customerAddressName = 'Mon domicile',
-            customerAddressStreet = '1 Grand place',
-            customerAddressCity = 'Brussel',
-            customerAddressZip = '1000',
-            customerAddressCountry = 'BELGIUM',
-            customerAddress2Street = '3 rue des Bouchers',
-            customerAddress2City = 'Brussel',
-            customerAddress2Zip = '1000';
 
         browser.get(target);
 
@@ -52,12 +53,12 @@ describe('Integration test', function () {
         element(by.id('welcome-btn-registration')).click();
 
         //complete form
-        element(by.name('firstname')).sendKeys(customerFirstName);
-        element(by.name('lastname')).sendKeys(customerLastName);
+        writeField('firstname',customerFirstName);
+        writeField('lastname',customerLastName);
         element(by.cssContainingText('option', customerGender)).click();
-        element(by.name('email')).sendKeys(customerEmail);
-        element(by.name('password')).sendKeys(customerPassword);
-        element(by.name('repeatPassword')).sendKeys(customerPassword);
+        writeField('email',customerEmail);
+        writeField('password',customerPassword);
+        writeField('repeatPassword',customerPassword);
 
         //skip address and interest
         element(by.id('customer-registration-modal-btn-next')).click();
@@ -66,6 +67,7 @@ describe('Integration test', function () {
 
         //control connection
         expect(element(by.id('dropdownMenu1')).getText()).toEqual(customerFirstName + " " + customerLastName);
+        element(by.css('.messenger-close')).click();
 
         //logout
         element(by.id('dropdownMenu1')).click();
@@ -75,11 +77,12 @@ describe('Integration test', function () {
         // Login
         // ********************
         element(by.id('welcome-btn-login')).click();
-        element(by.name('email')).sendKeys(customerEmail);
-        element(by.name('password')).sendKeys(customerPassword);
+        writeField('email',customerEmail);
+        writeField('password',customerPassword);
 
         //login
         element(by.id('login-modal-btn-save')).click();
+        element(by.css('.messenger-close')).click();
 
         //control connection
         expect(element(by.id('dropdownMenu1')).getText()).toEqual(customerFirstName + " " + customerLastName);
@@ -98,9 +101,9 @@ describe('Integration test', function () {
         //open add address modal
         element(by.id('profile-btn-address-add')).click();
         element(by.cssContainingText('option', customerAddressName)).click();
-        element(by.name('street')).sendKeys(customerAddressStreet);
-        element(by.name('zip')).sendKeys(customerAddressZip);
-        element(by.name('city')).sendKeys(customerAddressCity);
+        writeField('street',customerAddressStreet);
+        writeField('zip',customerAddressZip);
+        writeField('city',customerAddressCity);
 
         //save
         element(by.id('profile-btn-save')).click();
@@ -173,9 +176,10 @@ describe('Integration test', function () {
         element(by.id('welcome-btn-logout')).click();
         //login
         element(by.id('welcome-btn-login')).click();
-        element(by.name('email')).sendKeys(customerEmail2);
-        element(by.name('password')).sendKeys(customerPassword2);
+        writeField('email',customerEmail2);
+        writeField('password',customerPassword2);
         element(by.id('login-modal-btn-save')).click();
+        element(by.css('.messenger-close')).click();
 
         //navigate to profile
         element(by.id('dropdownMenu1')).click();

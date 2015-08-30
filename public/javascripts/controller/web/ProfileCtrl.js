@@ -1,4 +1,6 @@
-myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, accountService) {
+myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, $rootScope) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.model = accountService.model;
 

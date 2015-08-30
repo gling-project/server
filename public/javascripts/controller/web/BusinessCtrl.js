@@ -1,5 +1,6 @@
-myApp.controller('BusinessCtrl', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
+myApp.controller('BusinessCtrl', function ($rootScope,$scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
 
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     if ($routeParams.publicationId != null) {
         $scope.publicationIdToGo = $routeParams.publicationId;

@@ -179,7 +179,6 @@ module.exports = function (grunt) {
                         <!-- controllers -->
                         'public/javascripts/controller/web/WelcomeCtrl.js',
                         'public/javascripts/controller/web/HomeCtrl.js',
-                        'public/javascripts/controller/web/BusinessRegistrationCtrl.js',
                         'public/javascripts/controller/web/ProfileCtrl.js',
                         'public/javascripts/controller/web/BusinessCtrl.js',
                         'public/javascripts/controller/web/SearchPageCtrl.js',

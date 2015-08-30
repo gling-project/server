@@ -83,6 +83,11 @@
     </head>
     <body ng-app="app" ng-controller="MainCtrl">
 
+            <!-- progress bar -->
+        <div class="progressBar"
+        ng-style="progressBarCss">
+        </div>
+
             <!-- load data -->
         <script>
         var data =@Html(new ObjectMapper().writeValueAsString(data));

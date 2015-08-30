@@ -71,11 +71,14 @@
 
         <!-- name -->
         <div class="business-page-name">
-            {{business.name}}
+            <span>
+                {{business.name}}
+            </span>
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                        ng-click="editbusiness()">
+                        id="business-btn-name-edit"
+                    ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                    ng-click="editbusiness()">
                     {{'--.business.page.edit.business' | translateText}}
                 </button>
             </div>
@@ -95,9 +98,12 @@
             </button>
 
             <!-- description -->
-            <div class="business-page-description">{{business.description}}
-
+            <div class="business-page-description">
+                <span>
+                    {{business.description}}
+                </span>
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                        id="business-btn-category-edit"
                         ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                         ng-click="editbusiness()">
                     {{'--.business.page.edit.business' | translateText}}
@@ -141,7 +147,6 @@
                 <div class="panel-body">
 
 
-
                     <gallery-ctrl ng-info="{images:business.galleryPictures}"></gallery-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
@@ -162,9 +167,10 @@
 
                     <div class="business-address">
                         <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
-                        <div>Distance:{{business.distance / 1000 | number:2}} Km</div>
+                        <div>{{business.distance / 1000 | number:2}} Km</div>
                     </div>
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            id="business-btn-address-edit"
                             ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                             ng-click="editAddress()">{{'--.generic.edit' | translateText}}
                     </button>
@@ -174,14 +180,22 @@
 
             <!-- contact -->
             <div class="panel panel-default">
-                <div class="panel-heading">{{'--.generic.contact' | translateText}}</div>
+                <div class="panel-heading">
+                    {{'--.generic.contact' | translateText}}</div>
                 <div class="panel-body">
 
-                    <div>{{business.phone}}</div>
-                    <div>
-                        <a href="{{business.website}}" target="_blank">{{business.website}}</a>
+                    <div id="welcome-contact-data-phone">
+                        {{business.phone}}
                     </div>
-                    <div>{{business.email}}</div>
+                    <div>
+                        <a href="{{business.website}}" target="_blank"
+                           id="welcome-contact-data-website">
+                            {{business.website}}
+                        </a>
+                    </div>
+                    <div id="welcome-contact-data-email">
+                        {{business.email}}
+                    </div>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"

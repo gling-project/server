@@ -1,4 +1,4 @@
-myApp.controller('WelcomeCtrl', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
+myApp.controller('WelcomeCtrl', function ($rootScope,$scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
 
     $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
         $scope.advancedSearch = params.display;

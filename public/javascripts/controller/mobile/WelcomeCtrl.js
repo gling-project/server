@@ -1,4 +1,6 @@
-myApp.controller('WelcomeCtrl', function ($scope,$location,accountService,$flash,translationService) {
+myApp.controller('WelcomeCtrl', function ($rootScope,$scope,$location,accountService,$flash,translationService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.loginFormParam = {
         dto: {},

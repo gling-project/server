@@ -11,7 +11,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService,geolocationService) {
+myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout) {
 
     $scope.navigateTo = function (target) {
         $location.path(target);
@@ -59,4 +59,48 @@ myApp.controller('MainCtrl', function ($scope, $locale, translationService, $win
     $scope.openHelp = function (message) {
         modalService.openHelpModal(message);
     };
+
+    //
+    // progress bar
+    //
+    $scope.progressBarWidth = 0;
+    var progressBarMultiplicator = 2;
+
+    $scope.progressBarCss = {
+        width: $scope.progressBarWidth + "%"
+    };
+
+    $rootScope.$on('PROGRESS_BAR_START', function () {
+        $scope.progress();
+    });
+
+    $scope.progress = function () {
+        $scope.progressBarWidth++;
+        if ($scope.progressBarWidth < 50 * progressBarMultiplicator) {
+            $timeout(function () {
+                $scope.progress();
+            }, 1000 / 100 * progressBarMultiplicator);
+        }
+        else if ($scope.progressBarWidth < 75 * progressBarMultiplicator) {
+            $timeout(function () {
+                $scope.progress();
+            }, 3000 / 100 * progressBarMultiplicator);
+        }
+        else if ($scope.progressBarWidth < 100 * progressBarMultiplicator) {
+            $timeout(function () {
+                $scope.progress();
+            }, 10000 / 100 * progressBarMultiplicator);
+        }
+    };
+
+    $rootScope.$on('PROGRESS_BAR_STOP', function () {
+        $scope.progressBarWidth = 100 * progressBarMultiplicator;
+        $timeout(function () {
+            $scope.progressBarWidth = 0;
+        }, 500);
+    });
+
+    $scope.$watch('progressBarWidth',function(){
+        $scope.progressBarCss.width = ($scope.progressBarWidth / progressBarMultiplicator) + '%';
+    });
 });

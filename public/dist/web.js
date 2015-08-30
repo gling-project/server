@@ -138,7 +138,8 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
-                    a: ['accountService', function (accountService) {
+                    a: ['accountService', '$rootScope', function (accountService,$rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
                         var status = test(accountService);
                     }]
                 }
@@ -146,31 +147,37 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/web/profile.html',
                 controller: 'ProfileCtrl',
                 resolve: {
-                    a: ['accountService', '$location', function (accountService, $location) {
+                    a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
                         if (test(accountService) == 'NOT_CONNECTED') {
                             $location.path('/');
                         }
                     }]
                 }
-            }).when('/business_registration', {
-                templateUrl: '/assets/javascripts/view/web/business_registration.html',
-                controller: 'BusinessRegistrationCtrl',
-                resolve: {
-                    a: ['accountService', '$location', function (accountService, $location) {
-                        if (test(accountService) == 'BUSINESS') {
-                            $location.path('/business');
-                        }
-                    }]
-                }
             }).when('/search/:param', {
                 templateUrl: '/assets/javascripts/view/web/search_page.html',
-                controller: 'SearchPageCtrl'
+                controller: 'SearchPageCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
             }).when('/business/:businessId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
-                controller: 'BusinessCtrl'
+                controller: 'BusinessCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
             }).when('/business/:businessId/publication/:publicationId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
-                controller: 'BusinessCtrl'
+                controller: 'BusinessCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
             }).otherwise({
                 redirectTo: '/'
             });
@@ -1259,7 +1266,7 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$flash', '$modalInstance', 'ima
     };
 
 }]);
-myApp.controller('WelcomeCtrl', ['$scope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', '$rootScope', function ($scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
+myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', '$rootScope', function ($rootScope,$scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
 
     $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
         $scope.advancedSearch = params.display;
@@ -1370,6 +1377,8 @@ myApp.controller('WelcomeCtrl', ['$scope', 'languageService', '$location', 'acco
 }]);
 myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
 
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
     //variable
     $scope.followedMode = false;
     $scope.businessInfoParam = {};
@@ -1462,20 +1471,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     };
 
 }]);
-myApp.controller('BusinessRegistrationCtrl', ['$scope', 'modalService', function ($scope, modalService) {
+myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$rootScope', function ($scope, modalService, accountService, $rootScope) {
 
-
-    $scope.businessRegistration = function(){
-        modalService.openBusinessRegistrationModal();
-    };
-
-    //login open modal
-    $scope.login = function () {
-        modalService.openLoginModal();
-    };
-
-}]);
-myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', 'accountService', function ($scope, modalService, accountService, accountService) {
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.model = accountService.model;
 
@@ -1526,8 +1524,9 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', 'ac
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', 'followService', '$timeout', function ($scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', 'followService', '$timeout', function ($rootScope,$scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
 
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     if ($routeParams.publicationId != null) {
         $scope.publicationIdToGo = $routeParams.publicationId;
@@ -1855,7 +1854,9 @@ myApp.controller('BusinessCtrl', ['$scope', 'modalService', 'businessService', '
 
 }])
 ;
-myApp.controller('SearchPageCtrl', ['$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($scope, searchService, $routeParams, searchBarService,geolocationService) {
+myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var param = $routeParams.param;
     searchBarService.setCurrentSearch(param);

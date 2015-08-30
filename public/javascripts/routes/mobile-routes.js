@@ -25,7 +25,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/welcome.html',
                     controller: 'WelcomeCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/home');
                             }
@@ -36,7 +37,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/home.html',
                     controller: 'HomeCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -47,7 +49,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
                     controller: 'CustomerRegistrationCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -58,7 +61,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/profile.html',
                     controller: 'ProfileCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -68,7 +72,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/business.html',
                     controller: 'BusinessCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -78,7 +83,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/business.html',
                     controller: 'BusinessCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -88,7 +94,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/search_page.html',
                     controller: 'SearchPageCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -98,7 +105,8 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
                     controller: 'ForgotPasswordCtrl',
                     resolve: {
-                        a: function (accountService, $location) {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
