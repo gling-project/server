@@ -112,6 +112,12 @@
 
             <!-- publication -->
             <div>
+
+
+                <select ng-model="publicationListParam.type"
+                        ng-options="option.key as option.value | translateText for option in publicationOptions">
+                </select>
+
                 <button class="btn btn-primary"
                         ng-click="createPromotion()"
                         ng-show="edit && business.businessStatus === 'PUBLISHED'">

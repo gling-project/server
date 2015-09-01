@@ -10,6 +10,9 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         $scope.customerInterests = value;
     });
     $scope.publicationListCtrl = {};
+    $scope.currentPage = 0;
+    $scope.allLoaded = false;
+    $scope.loadSemaphore = false;
 
     //open registration modal
     $scope.customerRegistration = function () {
@@ -29,16 +32,22 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             }
             interest.selected = true;
         }
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
         $scope.search();
     };
 
     //watch on change position
     $scope.$on('POSITION_CHANGED', function () {
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
         $scope.search();
     });
 
     //watch in follow mode
     $scope.$watch('followedMode', function () {
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
         $scope.search();
     });
 
@@ -48,9 +57,33 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         }
     });
 
+    //scrolling
+    $('.main-body').on('scroll', function () {
+        var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
+        if ($('.global-content-container').height() - scrollBottom < 200) {
+            $scope.currentPage = $scope.currentPage + 1;
+            $scope.search();
+        }
+    });
+
+
+    var success = function(data){
+        $scope.loadSemaphore=false;
+        $scope.publicationListCtrl.loading = false;
+        if (data == null || data.length == 0) {
+            $scope.allLoaded = true;
+        }
+        else {
+            for (var key in data) {
+                $scope.publicationListCtrl.data.push(data[key])
+            }
+        }
+    };
+
+
     //search function
     $scope.search = function () {
-        if (geolocationService.position != null) {
+        if (geolocationService.position != null && $scope.allLoaded == false) {
 
             var interestSelected = null;
             for (var i in $scope.customerInterests) {
@@ -59,34 +92,43 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
                 }
             }
 
-            $scope.publicationListCtrl.loading = true;
+
+
+            //if this is the first page that asked, remove other publication
+            if ($scope.currentPage == 0) {
+                $scope.publicationListCtrl.loading = true;
+                $scope.publicationListCtrl.data = [];
+            }
+            else {
+                if($scope.loadSemaphore){
+                    return;
+                }
+                $scope.loadSemaphore = true;
+            }
+
             if ($scope.followedMode) {
                 if (interestSelected != null) {
-                    searchService.byFollowedAndInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.byFollowedAndInterest($scope.currentPage,interestSelected.id, function (data) {
+                        success(data);
                     });
 
                 }
                 else {
-                    searchService.byFollowed(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.byFollowed($scope.currentPage,function (data) {
+                        success(data);
                     });
                 }
             }
             else {
                 if (interestSelected != null) {
-                    searchService.byInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.byInterest($scope.currentPage,interestSelected.id, function (data) {
+                        success(data);
                     });
 
                 }
                 else {
-                    searchService.default(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.default($scope.currentPage, function (data) {
+                        success(data);
                     });
                 }
             }

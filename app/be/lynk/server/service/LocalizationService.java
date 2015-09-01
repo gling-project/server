@@ -19,4 +19,6 @@ public interface LocalizationService {
     Long distanceBetweenAddress(Position origin, Address destination);
 
     Map<Business, Long> distanceBetweenAddresses(Position origin, List<Business> destinations);
+
+    Double distance(double lat1, double lon1, double lat2, double lon2, Character unit);
 }

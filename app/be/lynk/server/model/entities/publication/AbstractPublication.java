@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 public abstract class AbstractPublication extends AbstractEntity implements Comparable<AbstractPublication> {
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false,fetch = FetchType.LAZY)
     private Business business;
 
     @Basic(optional = false)
@@ -41,10 +41,10 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
     @Basic(optional = false)
     protected LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "publication", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "publication", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<StoredFile> pictures = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private CustomerInterest interest;
 
     public AbstractPublication() {

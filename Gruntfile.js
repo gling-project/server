@@ -182,6 +182,7 @@ module.exports = function (grunt) {
                         'public/javascripts/controller/web/ProfileCtrl.js',
                         'public/javascripts/controller/web/BusinessCtrl.js',
                         'public/javascripts/controller/web/SearchPageCtrl.js',
+                        'public/javascripts/controller/web/FollowedBusinessPageCtrl.js',
 
                         <!-- component -->
                         'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',

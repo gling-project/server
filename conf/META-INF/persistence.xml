@@ -15,11 +15,18 @@
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/project"/>
             <property name="javax.persistence.jdbc.user" value="play"/>
             <property name="javax.persistence.jdbc.password" value="play"/>
+
+            <property name="hibernate.cache.use_second_level_cache" value="true" />
+            <property name="hibernate.cache.use_query_cache" value="true" />
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
+            <!--<property name="hibernate.cache.infinispan.cachemanager" value="java:/myrmex2/cache" />-->
+            <!--<property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.CMTTransactionFactory"/>-->
+            <!--<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>-->
         </properties>
     </persistence-unit>
 

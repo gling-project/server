@@ -16,10 +16,10 @@ import java.util.Set;
  * Created by florian on 10/11/14.
  */
 @Entity
-public class Business extends AbstractEntity {
+public class Business extends AbstractEntity implements Comparable<Business> {
 
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false, fetch = FetchType.LAZY)
     private Account account;
 
     @Basic(optional = false)
@@ -41,7 +41,7 @@ public class Business extends AbstractEntity {
     @Basic
     private String email;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Address address;
 
     @ManyToMany
@@ -51,16 +51,16 @@ public class Business extends AbstractEntity {
             inverseJoinColumns = {@JoinColumn(name = "category")})
     private List<BusinessCategory> businessCategories = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private StoredFile illustration;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private StoredFile landscape;
 
-    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AbstractPublication> publications;
 
-    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BusinessSchedule> schedules = new ArrayList<>();
 
     @Basic(optional = false)
@@ -75,8 +75,7 @@ public class Business extends AbstractEntity {
     private BusinessSocialNetwork socialNetwork;
 
 
-
-    @OneToMany(mappedBy = "businessGalleryPicture",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "businessGalleryPicture", cascade = CascadeType.ALL)
     private Set<StoredFile> galleryPictures = new HashSet<>();
 
     public Set<StoredFile> getGalleryPictures() {
@@ -229,5 +228,10 @@ public class Business extends AbstractEntity {
                 ", illustration=" + illustration +
                 ", publications=" + publications +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Business o) {
+        return this.getName().compareTo(o.getName());
     }
 }

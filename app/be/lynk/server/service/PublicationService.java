@@ -1,10 +1,14 @@
 package be.lynk.server.service;
 
+import be.lynk.server.model.Position;
+import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.impl.CrudServiceImpl;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -12,13 +16,26 @@ import java.util.List;
  */
 public interface PublicationService extends CrudService<AbstractPublication> {
 
-    List<AbstractPublication> findActivePublication();
+    List<SearchResult> findActivePublication(Position position, Double maxDistance);
 
-    AbstractPublication findLastPublication(Business business);
+    List<SearchResult> findActivePublicationByBusinesses(Position position,
+                                                         Double maxDistance,
+                                                         List<Business> businesses);
 
-    List<AbstractPublication> findActivePublicationByBusinesses(List<Business> business);
+    List<AbstractPublication> search(String criteria, int max);
 
-    List<AbstractPublication> search(String criteria,int max);
+    List<SearchResult> findActivePublicationByBusiness(Business business);
 
-    List<AbstractPublication> findActivePublicationByBusiness(Business byId);
+    List<SearchResult> findArchivedPublicationByBusiness(Business byId);
+
+    List<SearchResult> findFuturePublicationByBusiness(Business byId);
+
+    List<SearchResult> findActivePublicationByInterest(Position position, Double maxDistance, CustomerInterest interest);
+
+    List<SearchResult> findActivePublicationByBusinessesAndInterest(Position position, Double maxDistance, List<Business> businesses, CustomerInterest interest);
+
+    List<AbstractPublication> findBySearchResults(List<SearchResult> searchResults);
+
+
+
 }

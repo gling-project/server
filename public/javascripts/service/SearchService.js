@@ -5,7 +5,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     var canceler = null;
 
-    this.default = function (callbackSuccess, callbackError) {
+    this.default = function (page,callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -14,7 +14,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/default",
+            'url': "/rest/search/publication/default/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
@@ -95,7 +95,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
-    this.byFollowed = function (callbackSuccess, callbackError) {
+    this.byFollowed = function (page,callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -104,7 +104,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/followed",
+            'url': "/rest/search/publication/followed/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
@@ -123,7 +123,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
-    this.byFollowedAndInterest = function (interestId,callbackSuccess, callbackError) {
+    this.byFollowedAndInterest = function (page,interestId,callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -132,7 +132,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/followed/interest/"+interestId,
+            'url': "/rest/search/publication/followed/interest/"+interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
@@ -152,7 +152,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
     };
 
 
-    this.byBusiness = function (businessId, callbackSuccess, callbackError) {
+    this.byBusiness = function (page,businessId, callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -163,10 +163,9 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         console.log(geolocationService.position);
 
         $http({
-            'method': "POST",
-            'url': "/rest/search/publication/business/" + businessId,
+            'method': "GET",
+            'url': "/rest/search/publication/business/" + businessId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise
             }
@@ -183,7 +182,68 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
-    this.byInterest = function (interestId, callbackSuccess, callbackError) {
+
+    this.byBusinessArchived = function (page,businessId, callbackSuccess, callbackError) {
+
+        if (canceler != null) {
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
+        console.log("geolocationService.position");
+        console.log(geolocationService.position);
+
+        $http({
+            'method': "GET",
+            'url': "/rest/search/publication/business/archive/" + businessId+"/"+page,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'config': {
+                timeout: canceler.promise
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+
+    this.byBusinessPrevisualization = function (page,businessId, callbackSuccess, callbackError) {
+
+        if (canceler != null) {
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
+        $http({
+            'method': "GET",
+            'url': "/rest/search/publication/business/previsualization/" + businessId+"/"+page,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'config': {
+                timeout: canceler.promise
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.byInterest = function (page,interestId, callbackSuccess, callbackError) {
+
+        console.log('by interest');
 
         if (canceler != null) {
             canceler.resolve();
@@ -193,7 +253,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/interest/" + interestId,
+            'url': "/rest/search/publication/interest/" + interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {

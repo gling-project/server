@@ -3,6 +3,7 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
 
         this.position = null;
         this.currentPosition = null;
+        this.geoPositionAlreadyComputed=false;
         var self = this;
 
         $http({
@@ -24,7 +25,7 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
         });
 
 
-        if ($window.navigator && $window.navigator.geolocation) {
+        if ($window.navigator && $window.navigator.geolocation && this.geoPositionAlreadyComputed==false) {
 
             $window.navigator.geolocation.getCurrentPosition(
                 function (position) {
@@ -33,6 +34,7 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
                         y: position.coords.longitude
                     };
                     computePosition();
+                    this.geoPositionAlreadyComputed=true;
                     $timeout(function () {
                         $rootScope.$broadcast('POSITION_CHANGED');
                     }, 1);

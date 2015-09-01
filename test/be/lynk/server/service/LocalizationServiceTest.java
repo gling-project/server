@@ -43,6 +43,16 @@ public class LocalizationServiceTest extends AbstractServiceTest {
         } catch (Exception e) {
             Assert.fail();
         }
+    }
+
+    @Test
+    public void testDistance() {
+
+        double lat1 = 71.167782, long1 = 25.781026, lat2 = 71.168790, long2 = 25.782380;
+
+        Double distance = localizationService.distance(lat1, long1, lat2, long2, null);
+
+        Assert.assertEquals(10,121.0,distance);
 
 
     }

@@ -40,6 +40,14 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }
                 }
+            }).when('/my-businesses', {
+                templateUrl: '/assets/javascripts/view/web/followed_business_page.html',
+                controller: 'FollowedBusinessPageCtrl',
+                resolve: {
+                    a: function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }
+                }
             }).when('/business/:businessId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
                 controller: 'BusinessCtrl',

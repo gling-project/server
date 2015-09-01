@@ -311,4 +311,20 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
             }
         }
     }
+
+    public String generateFakePublications(){
+        Business byName = businessService.findByName("Piscine 'Ibiza'").get(0);
+        for(int i=0;i<10000;i++){
+            BusinessNotification p = new BusinessNotification();
+            p.setBusiness(byName);
+            p.setStartDate(LocalDateTime.now().minusDays(1));
+            p.setDescription("descr");
+            p.setTitle("title");
+            p.setEndDate(LocalDateTime.now().plusDays(4));
+
+            publicationService.saveOrUpdate(p);
+        }
+
+        return "success";
+    }
 }

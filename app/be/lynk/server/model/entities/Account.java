@@ -21,7 +21,6 @@ import java.util.Set;
 @Entity
 public class Account extends AbstractEntity {
 
-
     @Basic(optional = false)
     @Enumerated(value = EnumType.STRING)
     protected GenderEnum gender;
@@ -45,10 +44,10 @@ public class Account extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     protected RoleEnum role;
 
-    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     protected LoginCredential loginCredential;
 
-    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     protected FacebookCredential facebookCredential;
 
     @Enumerated(value = EnumType.STRING)
@@ -57,7 +56,7 @@ public class Account extends AbstractEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "account")
     private Set<Address> addresses = new HashSet<>();
 
-    @ManyToMany()
+    @ManyToMany
     private Set<CustomerInterest> customerInterests = new HashSet<>();
 
     @Basic(optional = false)

@@ -18,6 +18,7 @@ import play.mvc.Result;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by florian on 23/03/15.
@@ -34,13 +35,25 @@ public class BusinessRestController extends AbstractController {
     @Autowired
     private StoredFileService storedFileService;
     @Autowired
-    private PublicationService publicationService;
-    @Autowired
     private FollowLinkService followLinkService;
     @Autowired
     private AddressService addressService;
     @Autowired
     private LocalizationService localizationService;
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result getFollowed() {
+
+        List<FollowLink> followLinks = followLinkService.findByAccount(securityController.getCurrentUser());
+
+        List<Business> businesses = followLinks
+                .stream().map(s -> s.getBusiness())
+                .sorted()
+                .collect(Collectors.toList());
+
+        return ok(convertBusiness(businesses));
+    }
 
 
     @Transactional
@@ -67,22 +80,9 @@ public class BusinessRestController extends AbstractController {
         Business business = businessService.findById(id);
 
         //convert
-        BusinessToDisplayDTO map = dozerService.map(business, BusinessToDisplayDTO.class);
+        BusinessToDisplayDTO businessToDisplayDTO = convertBusiness(business);
 
-        //additional data
-        if (securityController.isAuthenticated(ctx())) {
-            map.setFollowing(followLinkService.testByAccountAndBusiness(securityController.getCurrentUser(), business));
-        }
-        map.setTotalFollowers(followLinkService.countByBusiness(business));
-
-        //order gallery
-        Collections.sort(map.getGalleryPictures());
-
-
-        //load last publication
-        publicationService.findLastPublication(business);
-
-        return ok(map);
+        return ok(businessToDisplayDTO);
     }
 
     @Transactional
@@ -344,6 +344,28 @@ public class BusinessRestController extends AbstractController {
         }
 
         return ok(new ListDTO<>(dozerService.map(result, CustomerInterestDTO.class)));
+    }
+
+    private ListDTO<BusinessToDisplayDTO> convertBusiness(List<Business> businesses) {
+        return new ListDTO<>(businesses.stream()
+                .map(b -> convertBusiness(b))
+                .collect(Collectors.toList()));
+    }
+
+    private BusinessToDisplayDTO convertBusiness(Business business) {
+
+        BusinessToDisplayDTO businessToDisplayDTO = dozerService.map(business, BusinessToDisplayDTO.class);
+
+        //additional data
+        if (securityController.isAuthenticated(ctx())) {
+            businessToDisplayDTO.setFollowing(followLinkService.testByAccountAndBusiness(securityController.getCurrentUser(), business));
+        }
+        businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+
+        //order gallery
+        Collections.sort(businessToDisplayDTO.getGalleryPictures());
+
+        return businessToDisplayDTO;
     }
 
 }

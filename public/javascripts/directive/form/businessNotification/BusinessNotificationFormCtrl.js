@@ -27,7 +27,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                     businessService.getInterests(function (data) {
                         scope.interests = data;
                         if (scope.interests.length > 1) {
-                            scope.fields.interests.isActive = function () {
+                            scope.fields.interests.active = function () {
                                 return true;
                             };
                             for (var key in scope.interests) {
@@ -37,6 +37,9 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                     value: interest.translationName
                                 });
                             }
+                        }
+                        else if(scope.interests.length == 1){
+                            scope.getInfo().dto.interest = scope.interests[0];
                         }
                     });
 
@@ -112,7 +115,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: function () {
+                            active: function () {
                                 return false
                             },
                             field: scope.getInfo().dto,

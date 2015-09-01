@@ -162,6 +162,14 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }]
                 }
+            }).when('/my-businesses', {
+                templateUrl: '/assets/javascripts/view/web/followed_business_page.html',
+                controller: 'FollowedBusinessPageCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
             }).when('/business/:businessId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
                 controller: 'BusinessCtrl',
@@ -1387,6 +1395,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         $scope.customerInterests = value;
     });
     $scope.publicationListCtrl = {};
+    $scope.currentPage = 0;
+    $scope.allLoaded = false;
+    $scope.loadSemaphore = false;
 
     //open registration modal
     $scope.customerRegistration = function () {
@@ -1406,16 +1417,22 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             }
             interest.selected = true;
         }
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
         $scope.search();
     };
 
     //watch on change position
     $scope.$on('POSITION_CHANGED', function () {
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
         $scope.search();
     });
 
     //watch in follow mode
     $scope.$watch('followedMode', function () {
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
         $scope.search();
     });
 
@@ -1425,9 +1442,33 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         }
     });
 
+    //scrolling
+    $('.main-body').on('scroll', function () {
+        var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
+        if ($('.global-content-container').height() - scrollBottom < 200) {
+            $scope.currentPage = $scope.currentPage + 1;
+            $scope.search();
+        }
+    });
+
+
+    var success = function(data){
+        $scope.loadSemaphore=false;
+        $scope.publicationListCtrl.loading = false;
+        if (data == null || data.length == 0) {
+            $scope.allLoaded = true;
+        }
+        else {
+            for (var key in data) {
+                $scope.publicationListCtrl.data.push(data[key])
+            }
+        }
+    };
+
+
     //search function
     $scope.search = function () {
-        if (geolocationService.position != null) {
+        if (geolocationService.position != null && $scope.allLoaded == false) {
 
             var interestSelected = null;
             for (var i in $scope.customerInterests) {
@@ -1436,34 +1477,43 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
                 }
             }
 
-            $scope.publicationListCtrl.loading = true;
+
+
+            //if this is the first page that asked, remove other publication
+            if ($scope.currentPage == 0) {
+                $scope.publicationListCtrl.loading = true;
+                $scope.publicationListCtrl.data = [];
+            }
+            else {
+                if($scope.loadSemaphore){
+                    return;
+                }
+                $scope.loadSemaphore = true;
+            }
+
             if ($scope.followedMode) {
                 if (interestSelected != null) {
-                    searchService.byFollowedAndInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.byFollowedAndInterest($scope.currentPage,interestSelected.id, function (data) {
+                        success(data);
                     });
 
                 }
                 else {
-                    searchService.byFollowed(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.byFollowed($scope.currentPage,function (data) {
+                        success(data);
                     });
                 }
             }
             else {
                 if (interestSelected != null) {
-                    searchService.byInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.byInterest($scope.currentPage,interestSelected.id, function (data) {
+                        success(data);
                     });
 
                 }
                 else {
-                    searchService.default(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
+                    searchService.default($scope.currentPage, function (data) {
+                        success(data);
                     });
                 }
             }
@@ -1524,7 +1574,7 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', 'followService', '$timeout', function ($rootScope,$scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', 'followService', '$timeout', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService, $timeout) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1543,13 +1593,22 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
     $scope.publicationListParam = {
         businessId: $scope.businessId,
         scrollTo: $scope.publicationIdToGo,
-        displayRemoveIcon: $scope.edit
+        displayRemoveIcon: $scope.edit,
+        type:'basic'
     };
     $scope.$watch('edit', function () {
         $scope.publicationListParam.displayRemoveIcon = $scope.edit;
     });
     //address
-    $scope.googleMapParams = {}
+    $scope.googleMapParams = {};
+    $scope.publicationOptions = [
+        {key: 'basic', value: '--.business.publication.basic'},
+        {key: 'ARCHIVE', value: '--.business.publication.archive'}
+    ];
+
+    $scope.publicationOptions.push({
+        key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
+    });
 
 
     //loading
@@ -1666,9 +1725,9 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
 
             //address
             $scope.googleMapParams.address = $scope.business.address;
-            $timeout(function(){
+            $timeout(function () {
                 $scope.googleMapParams.refreshNow();
-            },1);
+            }, 1);
 
             //edit address
             $scope.editAddress = function () {
@@ -1827,12 +1886,16 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                 $scope.$broadcast('RELOAD_PUBLICATION');
             });
 
+            $scope.$watch('publicationListParam.type',function(){
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            });
+
             $scope.$on('RELOAD_PUBLICATION', function () {
-                $scope.publicationListParam.refresh();
+                $scope.publicationListParam.refresh($scope.publicationListParam.type);
             });
 
             //initialization
-            if(geolocationService.currentPosition!=null){
+            if (geolocationService.currentPosition != null) {
                 $scope.$broadcast('RELOAD_PUBLICATION');
             }
 
@@ -1843,7 +1906,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     }
                 }
                 return false;
-            }
+            };
 
 
         }, function () {
@@ -1952,7 +2015,33 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
         $scope.search();
     });
 }]);
-myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout,publicationService) {
+myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', function ($rootScope, $scope, businessService) {
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    $scope.businessListParams = {
+        loading: true
+    };
+
+    //loading
+    businessService.getFollowedBusinesses(
+        function (data) {
+
+            $scope.businesses = data;
+
+            $scope.businessListParams.data = $scope.businesses;
+            $scope.businessListParams.loading=false;
+
+
+        }, function () {
+            $scope.loading = false;
+            $scope.displayError = true;
+
+        });
+
+}])
+;
+myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService, modalService) {
 
     return {
         restrict: "E",
@@ -1967,35 +2056,75 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.currentPage = 0;
+                    scope.allLoaded = false;
+                    scope.loadSemaphore = false;
+                    scope.publications = [];
 
-                    scope.getInfo().refresh = function () {
+                    scope.success = function (data) {
+                        scope.loadSemaphore = false;
+                        for (var key in data) {
+                            scope.publications.push(data[key])
+                        }
+                        for (var i in scope.publications) {
+                            scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
+                        }
 
-                        searchService.byBusiness(scope.getInfo().businessId, function (data) {
-                            scope.publications = data;
-                            for (var i in scope.publications) {
-                                scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
+                        $timeout(function () {
+                            if (scope.getInfo().scrollTo != null) {
+                                $('.main-body').scrollTop($("#publication" + scope.getInfo().scrollTo).offset().top);
+                                scope.$apply();
                             }
-
-                            $timeout(function () {
-                                if (scope.getInfo().scrollTo != null) {
-                                    $('.main-body').scrollTop($("#publication" + scope.getInfo().scrollTo).offset().top);
-                                    scope.$apply();
-                                }
-                            }, 1);
-
-                        });
+                        }, 1);
                     };
+
+
+                    //scrolling
+                    $('.main-body').on('scroll', function () {
+                        var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
+                        if ($('.global-content-container').height() - scrollBottom < 200) {
+                            scope.currentPage = scope.currentPage + 1;
+                            scope.search();
+                        }
+                    });
+
+                    scope.getInfo().refresh = function (type) {
+                        scope.currentPage = 0;
+                        scope.publications = [];
+                        scope.type = type;
+                        scope.search();
+                    };
+
+                    scope.search = function () {
+                        if (scope.loadSemaphore == false) {
+                            scope.loadSemaphore = true;
+                            if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
+                                searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            }
+                            else if (scope.type != null && scope.type != undefined && scope.type == 'PREVISUALIZATION') {
+                                searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            }
+                            else {
+                                searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            }
+                        }
+                    };
+
                     scope.removePublication = function (publication) {
-                        publicationService.delete(publication, function () {
-                            $rootScope.$broadcast('RELOAD_PUBLICATION');
-                        });
+                        modalService.messageModal('--.business.publication.remove.confirmationModal.title',
+                            '--.business.publication.remove.confirmationModal.body',
+                            function (close) {
+                                publicationService.delete(publication, function () {
+                                    $rootScope.$broadcast('RELOAD_PUBLICATION');
+                                    close();
+                                });
+                            });
                     }
                 }
             }
         }
     }
-}])
-;
+}]);
 myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'accountService', 'followService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
 
     return {

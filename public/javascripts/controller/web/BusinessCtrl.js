@@ -1,4 +1,4 @@
-myApp.controller('BusinessCtrl', function ($rootScope,$scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService,$timeout) {
+myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService, $timeout) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -17,13 +17,22 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, modalService, busi
     $scope.publicationListParam = {
         businessId: $scope.businessId,
         scrollTo: $scope.publicationIdToGo,
-        displayRemoveIcon: $scope.edit
+        displayRemoveIcon: $scope.edit,
+        type:'basic'
     };
     $scope.$watch('edit', function () {
         $scope.publicationListParam.displayRemoveIcon = $scope.edit;
     });
     //address
-    $scope.googleMapParams = {}
+    $scope.googleMapParams = {};
+    $scope.publicationOptions = [
+        {key: 'basic', value: '--.business.publication.basic'},
+        {key: 'ARCHIVE', value: '--.business.publication.archive'}
+    ];
+
+    $scope.publicationOptions.push({
+        key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
+    });
 
 
     //loading
@@ -140,9 +149,9 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, modalService, busi
 
             //address
             $scope.googleMapParams.address = $scope.business.address;
-            $timeout(function(){
+            $timeout(function () {
                 $scope.googleMapParams.refreshNow();
-            },1);
+            }, 1);
 
             //edit address
             $scope.editAddress = function () {
@@ -301,12 +310,16 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, modalService, busi
                 $scope.$broadcast('RELOAD_PUBLICATION');
             });
 
+            $scope.$watch('publicationListParam.type',function(){
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            });
+
             $scope.$on('RELOAD_PUBLICATION', function () {
-                $scope.publicationListParam.refresh();
+                $scope.publicationListParam.refresh($scope.publicationListParam.type);
             });
 
             //initialization
-            if(geolocationService.currentPosition!=null){
+            if (geolocationService.currentPosition != null) {
                 $scope.$broadcast('RELOAD_PUBLICATION');
             }
 
@@ -317,7 +330,7 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, modalService, busi
                     }
                 }
                 return false;
-            }
+            };
 
 
         }, function () {

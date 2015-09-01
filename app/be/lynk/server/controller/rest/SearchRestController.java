@@ -5,10 +5,10 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.SearchCriteriaEnum;
+import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.*;
-import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +25,9 @@ import java.util.regex.Pattern;
  */
 @org.springframework.stereotype.Controller
 public class SearchRestController extends AbstractRestController {
+
+    private static final Double MAX_DISTANCE = 20.0;
+    private static final int NUMBER_RESULT_BY_PAGE = 20;
 
 
     @Autowired
@@ -42,94 +44,181 @@ public class SearchRestController extends AbstractRestController {
     private BusinessCategoryService businessCategoryService;
 
     @Transactional
-    public Result getBusiness(long id) {
-
-
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+    public Result getBusinessArchive(Integer page, long id) {
 
         Business byId = businessService.findById(id);
 
-        List<AbstractPublication> publications = publicationService.findActivePublicationByBusiness(byId);
+        //load
+        List<SearchResult> searchResults = publicationService.findArchivedPublicationByBusiness(byId);
 
-        List<AbstractPublicationDTO> map = dozerService.map(publications, AbstractPublicationDTO.class);
-
-        Collections.sort(map);
-
-        return ok(new ListDTO<>(map));
+        return selectByPageAndStartDate(page, searchResults);
     }
 
+    @Transactional
+    public Result getBusinessPrevisualization(Integer page, long id) {
+
+        Business byId = businessService.findById(id);
+
+        //load
+        List<SearchResult> searchResults = publicationService.findFuturePublicationByBusiness(byId);
+
+        return selectByPageAndStartDate(page, searchResults);
+    }
 
     @Transactional
-    public Result getByDefault() {
+    public Result getBusiness(Integer page, long id) {
+
+        Business byId = businessService.findById(id);
+
+        //load
+        List<SearchResult> searchResults = publicationService.findActivePublicationByBusiness(byId);
+
+        return selectByPageAndStartDate(page, searchResults);
+    }
+
+    @Transactional
+    public Result getByDefault(Integer page) {
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        Position position = dozerService.map(dto, Position.class);
+
+        List<SearchResult> searchResults = publicationService.findActivePublication(position, MAX_DISTANCE);
+
+        return selectByPageAndAlgotithme(page, searchResults, position);
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
+    public Result getByFollowed(Integer page) {
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        Position position = dozerService.map(dto, Position.class);
+
+        Account currentUser = securityController.getCurrentUser();
+
+        List<Business> businesses = followLinkService.findBusinessByAccount(currentUser);
+
+
+        List<SearchResult> finalList = publicationService.findActivePublicationByBusinesses(position, MAX_DISTANCE, businesses);
+
+        return selectByPageAndAlgotithme(page, finalList,position);
+    }
+
+    @Transactional
+    public Result getByInterest(Integer page, long id) {
+
+        //load interest
+        CustomerInterest interest = customerInterestService.findById(id);
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        Position position = dozerService.map(dto, Position.class);
+
+        List<SearchResult> publications = publicationService.findActivePublicationByInterest(position, MAX_DISTANCE, interest);
+
+        return selectByPageAndAlgotithme(page, publications, position);
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.USER)
+    public Result getByInterestAndFollowed(Integer page, long id) {
+
+        //load interest
+        CustomerInterest interest = customerInterestService.findById(id);
+
+        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+
+        Position position = dozerService.map(dto, Position.class);
+
+        List<Business> businesses = followLinkService.findBusinessByAccount(securityController.getCurrentUser());
+
+        List<SearchResult> publications = publicationService.findActivePublicationByBusinessesAndInterest(position, MAX_DISTANCE, businesses, interest);
+
+        return selectByPageAndAlgotithme(page, publications, position);
+    }
+
+    private Result selectByPageAndStartDate(Integer page, List<SearchResult> searchResults) {
+
+        //sort
+        Collections.sort(searchResults, new Comparator<SearchResult>() {
+            @Override
+            public int compare(SearchResult o1, SearchResult o2) {
+                return o2.getStartDate().compareTo(
+                        o2.getStartDate());
+            }
+        });
+
+        //limit
+        int min = page * NUMBER_RESULT_BY_PAGE;
+        int max = (page + 1) * NUMBER_RESULT_BY_PAGE;
+        if (searchResults.size() <= min) {
+            return ok(new ListDTO<>());
+        }
+        if (searchResults.size() < max) {
+            max = searchResults.size() - 1;
+        }
+        List<SearchResult> finalResult = searchResults.subList(min, max);
+
+        //load publication
+        List<AbstractPublication> publications = publicationService.findBySearchResults(finalResult);
+
+        List<AbstractPublicationDTO> publication = dozerService.map(publications, AbstractPublicationDTO.class);
+
+        Collections.sort(publication);
+
+        return ok(new ListDTO<>(publication));
+    }
+
+    private Result selectByPageAndAlgotithme(Integer page, List<SearchResult> searchResults, Position position) {
 
         long t = new Date().getTime();
+        String s = "";
 
-        Logger.info("====== Default search");
+        s += "====== Default selectByPageAndAlgotithme\n";
 
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
 
-        List<AbstractPublication> publications = publicationService.findActivePublication();
+        s += "====== Find : " + (new Date().getTime() - t) + "\n";
 
-        Logger.info("====== Find : "+(new Date().getTime() - t));
+        //compute distance
+        for (SearchResult publication : searchResults) {
+            publication.setDistance(localizationService.distance(position.getX(), position.getY(), publication.getPosx(), publication.getPosy(), null));
+        }
 
-        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(dto, publications,t));
+        s += "====== DISTANCE : " + (new Date().getTime() - t) + "\n";
 
-        Logger.info("====== Finalize : "+(new Date().getTime() - t));
+        //sort
+        Collections.sort(searchResults);
+
+        s += "====== SORT : " + (new Date().getTime() - t) + "\n";
+
+        //select
+        int min = page * NUMBER_RESULT_BY_PAGE;
+        int max = (page + 1) * NUMBER_RESULT_BY_PAGE;
+        if (searchResults.size() <= min) {
+            return ok(new ListDTO<>());
+        }
+        if (searchResults.size() < max) {
+            max = searchResults.size() - 1;
+        }
+        List<SearchResult> finalResult = searchResults.subList(min, max);
+
+        s += "====== SELECT : " + (new Date().getTime() - t) + "\n";
+
+        //load publication
+        List<AbstractPublication> publications = publicationService.findBySearchResults(finalResult);
+
+        s += "====== LOAD : " + (new Date().getTime() - t) + "\n";
+
+
+        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(position, publications, t));
+
+        s += "====== Finalize : " + (new Date().getTime() - t) + "\n";
+
+        Logger.info(s);
 
         return ok(abstractPublicationDTOListDTO);
-    }
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.USER)
-    public Result getByFollowed() {
-
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
-
-
-        Account currentUser = securityController.getCurrentUser();
-        List<Business> byAccount = followLinkService.findBusinessByAccount(currentUser);
-
-
-        List<AbstractPublication> finalList = publicationService.findActivePublicationByBusinesses(byAccount);
-
-
-        return ok(new ListDTO<>(finalize(dto, finalList)));
-    }
-
-
-    @Transactional
-    public Result getByInterest(long id) {
-
-        //load interest
-        CustomerInterest byId = customerInterestService.findById(id);
-
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
-
-        List<AbstractPublication> publications = publicationService.findActivePublication();
-
-        List<AbstractPublication> finalList = sortByInterest(publications, byId);
-
-
-        return ok(new ListDTO<>(finalize(dto, finalList)));
-    }
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.USER)
-    public Result getByInterestAndFollowed(long id) {
-
-        //load interest
-        CustomerInterest byId = customerInterestService.findById(id);
-
-        Account currentUser = securityController.getCurrentUser();
-        List<Business> byAccount = followLinkService.findBusinessByAccount(currentUser);
-
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
-
-        List<AbstractPublication> publications = publicationService.findActivePublicationByBusinesses(byAccount);
-
-        List<AbstractPublication> finalList = sortByInterest(publications, byId);
-
-        return ok(new ListDTO<>(finalize(dto, finalList)));
     }
 
     @Transactional
@@ -140,6 +229,8 @@ public class SearchRestController extends AbstractRestController {
         int max = 20;
 
         SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
+
+        Position position = dozerService.map(searchDTO.getPosition(), Position.class);
 
         //parse criteria
         SearchElement searchElement = new SearchElement(searchDTO.getSearch());
@@ -171,7 +262,7 @@ public class SearchRestController extends AbstractRestController {
                         searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
                         break;
                     case PUBLICATION:
-                        searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
+                        searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
                         break;
                 }
             }
@@ -190,7 +281,7 @@ public class SearchRestController extends AbstractRestController {
                         finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 4))));
             }
             searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
-            searchResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
+            searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
         }
         return ok(searchResultDTO);
     }
@@ -205,6 +296,8 @@ public class SearchRestController extends AbstractRestController {
         SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
 
         List<AbstractPublication> finalList = new ArrayList<>();
+
+        Position position = dozerService.map(searchDTO.getPosition(), Position.class);
 
         //parse criteria
         SearchElement searchElement = new SearchElement(searchDTO.getSearch());
@@ -224,14 +317,14 @@ public class SearchRestController extends AbstractRestController {
                         searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
                         break;
                     case PUBLICATION:
-                        searchLittleResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
+                        searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
                         break;
                 }
             }
         } else {
             searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
             searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
-            searchLittleResultDTO.setPublications(finalize(searchDTO.getPosition(), publicationService.search(searchElement.getText(), max)));
+            searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
         }
 
         return ok(searchLittleResultDTO);
@@ -255,17 +348,18 @@ public class SearchRestController extends AbstractRestController {
                     if (addressLongEntry.getKey().equals(business)) {
 
                         BusinessToDisplayDTO businessToDisplayDTO = dozerService.map(business, BusinessToDisplayDTO.class);
+
                         businessToDisplayDTO.setDistance(addressLongEntry.getValue());
                         finalResult.add(businessToDisplayDTO);
 
-                        //follow ?
+                        //additional data
                         if (securityController.isAuthenticated(ctx())) {
-                            Account account = securityController.getCurrentUser();
-                            if (account.getType().equals(AccountTypeEnum.CUSTOMER)) {
-                                businessToDisplayDTO.setFollowing(followLinkService.testByAccountAndBusiness(account, business));
-                            }
+                            businessToDisplayDTO.setFollowing(followLinkService.testByAccountAndBusiness(securityController.getCurrentUser(), business));
                         }
                         businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+
+                        //order gallery
+                        Collections.sort(businessToDisplayDTO.getGalleryPictures());
                     }
                 }
             }
@@ -277,11 +371,11 @@ public class SearchRestController extends AbstractRestController {
 
     }
 
-    private List<AbstractPublicationDTO> finalize(PositionDTO dto, List<AbstractPublication> publications) {
-        return finalize(dto,publications,new Date().getTime());
+    private List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications) {
+        return finalize(position, publications, new Date().getTime());
     }
 
-    private List<AbstractPublicationDTO> finalize(PositionDTO dto, List<AbstractPublication> publications,long t) {
+    private List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications, long t) {
 
         //compute distance
         List<Business> addresses = new ArrayList<>();
@@ -301,11 +395,11 @@ public class SearchRestController extends AbstractRestController {
                 }
             }
 
-            Logger.info("======== Distance Before : "+(new Date().getTime() - t));
+            Logger.info("======== Distance Before : " + (new Date().getTime() - t));
 
-            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), addresses);
+            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(position, Position.class), addresses);
 
-            Logger.info("======== Distance After : "+(new Date().getTime() - t));
+            Logger.info("======== Distance After : " + (new Date().getTime() - t));
 
             for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
                 for (AbstractPublication publication : publications) {
@@ -329,7 +423,7 @@ public class SearchRestController extends AbstractRestController {
                 }
             }
 
-            Logger.info("======== Building After : "+(new Date().getTime() - t));
+            Logger.info("======== Building After : " + (new Date().getTime() - t));
         }
 
         Collections.sort(l);

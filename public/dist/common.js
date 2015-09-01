@@ -1663,7 +1663,7 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                     businessService.getInterests(function (data) {
                         scope.interests = data;
                         if (scope.interests.length > 1) {
-                            scope.fields.interests.isActive = function () {
+                            scope.fields.interests.active = function () {
                                 return true;
                             };
                             for (var key in scope.interests) {
@@ -1673,6 +1673,9 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                                     value: interest.translationName
                                 });
                             }
+                        }
+                        else if(scope.interests.length == 1){
+                            scope.getInfo().dto.interest = scope.interests[0];
                         }
                     });
 
@@ -1836,7 +1839,7 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: function () {
+                            active: function () {
                                 return false
                             },
                             field: scope.getInfo().dto,
@@ -1947,7 +1950,7 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                     businessService.getInterests(function (data) {
                         scope.interests = data;
                         if (scope.interests.length > 1) {
-                            scope.fields.interests.isActive = function () {
+                            scope.fields.interests.active = function () {
                                 return true;
                             };
                             for (var key in scope.interests) {
@@ -1957,6 +1960,9 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                                     value: interest.translationName
                                 });
                             }
+                        }
+                        else if(scope.interests.length == 1){
+                            scope.getInfo().dto.interest = scope.interests[0];
                         }
                     });
 
@@ -2032,7 +2038,7 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: function () {
+                            active: function () {
                                 return false
                             },
                             field: scope.getInfo().dto,
@@ -3990,6 +3996,24 @@ myApp.service("businessService", ['$flash', '$http', 'accountService', function 
             });
     };
 
+    this.getFollowedBusinesses = function (callbackSuccess, callbackError) {
+        $http({
+            'method': "GET",
+            'url': "/rest/business/followed",
+            'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
     this.registration = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "POST",
@@ -4573,6 +4597,7 @@ myApp.service("geolocationService", ['geolocation', '$http', 'accountService', '
 
         this.position = null;
         this.currentPosition = null;
+        this.geoPositionAlreadyComputed=false;
         var self = this;
 
         $http({
@@ -4594,7 +4619,7 @@ myApp.service("geolocationService", ['geolocation', '$http', 'accountService', '
         });
 
 
-        if ($window.navigator && $window.navigator.geolocation) {
+        if ($window.navigator && $window.navigator.geolocation && this.geoPositionAlreadyComputed==false) {
 
             $window.navigator.geolocation.getCurrentPosition(
                 function (position) {
@@ -4603,6 +4628,7 @@ myApp.service("geolocationService", ['geolocation', '$http', 'accountService', '
                         y: position.coords.longitude
                     };
                     computePosition();
+                    this.geoPositionAlreadyComputed=true;
                     $timeout(function () {
                         $rootScope.$broadcast('POSITION_CHANGED');
                     }, 1);
@@ -4843,7 +4869,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
 
     var canceler = null;
 
-    this.default = function (callbackSuccess, callbackError) {
+    this.default = function (page,callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -4852,7 +4878,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/default",
+            'url': "/rest/search/publication/default/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
@@ -4933,7 +4959,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             });
     };
 
-    this.byFollowed = function (callbackSuccess, callbackError) {
+    this.byFollowed = function (page,callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -4942,7 +4968,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/followed",
+            'url': "/rest/search/publication/followed/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
@@ -4961,7 +4987,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             });
     };
 
-    this.byFollowedAndInterest = function (interestId,callbackSuccess, callbackError) {
+    this.byFollowedAndInterest = function (page,interestId,callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -4970,7 +4996,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/followed/interest/"+interestId,
+            'url': "/rest/search/publication/followed/interest/"+interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
@@ -4990,7 +5016,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
     };
 
 
-    this.byBusiness = function (businessId, callbackSuccess, callbackError) {
+    this.byBusiness = function (page,businessId, callbackSuccess, callbackError) {
 
         if (canceler != null) {
             canceler.resolve();
@@ -5001,10 +5027,9 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
         console.log(geolocationService.position);
 
         $http({
-            'method': "POST",
-            'url': "/rest/search/publication/business/" + businessId,
+            'method': "GET",
+            'url': "/rest/search/publication/business/" + businessId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise
             }
@@ -5021,7 +5046,68 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             });
     };
 
-    this.byInterest = function (interestId, callbackSuccess, callbackError) {
+
+    this.byBusinessArchived = function (page,businessId, callbackSuccess, callbackError) {
+
+        if (canceler != null) {
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
+        console.log("geolocationService.position");
+        console.log(geolocationService.position);
+
+        $http({
+            'method': "GET",
+            'url': "/rest/search/publication/business/archive/" + businessId+"/"+page,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'config': {
+                timeout: canceler.promise
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+
+    this.byBusinessPrevisualization = function (page,businessId, callbackSuccess, callbackError) {
+
+        if (canceler != null) {
+            canceler.resolve();
+        }
+        canceler = $q.defer();
+
+        $http({
+            'method': "GET",
+            'url': "/rest/search/publication/business/previsualization/" + businessId+"/"+page,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'config': {
+                timeout: canceler.promise
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.byInterest = function (page,interestId, callbackSuccess, callbackError) {
+
+        console.log('by interest');
 
         if (canceler != null) {
             canceler.resolve();
@@ -5031,7 +5117,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
 
         $http({
             'method': "POST",
-            'url': "/rest/search/publication/interest/" + interestId,
+            'url': "/rest/search/publication/interest/" + interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': geolocationService.position,
             'config': {
@@ -5164,7 +5250,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "                            draggable:false,\n" +
     "                            scrollwheel: false}\" zoom=15><ui-gmap-marker idkey=1 coords={latitude:getInfo().address.posx,longitude:getInfo().address.posy}></ui-gmap-marker></ui-gmap-google-map></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationList/template.html",
-    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"getInfo().loading===true\" ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><img class=\"link illustration\" ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"><div class=publication-list-business-data><div><span class=link ng-click=\"navigateTo('/business/'+publication.businessId)\">{{publication.businessName}}</span></div><div><button ng-click=follow(publication) class=follow-button><img src=/assets/images/haert.png ng-show=\"publication.following\"> <img src=/assets/images/haert-off.png ng-hide=\"publication.following\"></button> {{publication.totalFollowers}}</div><div class=distance><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div><br></div><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class=date><i class=\"fa fa-calendar\"></i> {{publication.startDate | date:medium}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div></div></div>");
+    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><img class=\"link illustration\" ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"><div class=publication-list-business-data><div><span class=link ng-click=\"navigateTo('/business/'+publication.businessId)\">{{publication.businessName}}</span></div><div><button ng-click=follow(publication) class=follow-button><img src=/assets/images/haert.png ng-show=\"publication.following\"> <img src=/assets/images/haert-off.png ng-hide=\"publication.following\"></button> {{publication.totalFollowers}}</div><div class=distance><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div><br></div><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class=date><i class=\"fa fa-calendar\"></i> {{publication.startDate | date:medium}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListForBusiness/template.html",
     "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" id=publication{{publication.id}} class=\"publication-box publication-promotion publication-list-publication-data\" ng-click=click()><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><div class=date><i class=\"fa fa-calendar\"></i> {{publication.startDate | date:medium}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div><button ng-show=getInfo().displayRemoveIcon type=button class=\"btn btn-primary\" ng-click=removePublication(publication)>{{'--.generic.remove' | translateText}}</button></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobile/template.html",
@@ -5277,9 +5363,11 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/view/mobile/welcome.html",
     "<mobile-title-ctrl title=\"'--.page.welcome.title'\" display-menu=false></mobile-title-ctrl><div class=app-body><div class=\"app-content modal-login\"><div class=scrollable><div class=\"section customer-registration scrollable-content\"><h2>Welcome to Lynk</h2><div>{{'--.mobile.welcome.login.desc' | translateText}}</div><login-form-ctrl ng-info=loginFormParam></login-form-ctrl><div class=generic-center><button ng-click=save() ng-disabled=loading type=button class=\"btn btn-primary\">{{'--.mobile.welcome.login.btn' | translateText}}</button></div><div class=link style=\"display: inline-block\" ng-click=\"navigateTo('/forgot_password')\">{{'--.login.form.button.forgotPassword' | translateText}}</div><div class=mobile_welcome_registration_title>{{'--.mobile.welcome.registration.desc' | translateText}}</div><div class=generic-center><button class=\"btn btn-primary\" ng-click=\"navigateTo('/customer_registration')\">{{'--.mobile.welcome.toCustomerRegistration.btn' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/web/business.html",
-    "<div ng-show=\"myBusiness === true\"><div ng-show=\"business.businessStatus === 'NOT_PUBLISHED'\">{{'--.business.page.edit.description.notPublished' | translateText}}</div><div ng-show=\"business.businessStatus === 'WAITING_CONFIRMATION'\">{{'--.business.page.edit.description.waitConfirmation' | translateText}}</div><div ng-show=\"business.businessStatus === 'PUBLISHED'\">{{'--.business.page.edit.descriptionPublished' | translateText}}</div><div class=onoffswitch-container><div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitchFromBusiness checked ng-model=edit><label class=onoffswitch-label for=myonoffswitchFromBusiness><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div><div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div></div><button ng-show=\"business.businessStatus === 'NOT_PUBLISHED'\" ng-click=publish() class=\"btn btn-primary\">{{'--.business.page.publication' | translateText}}</button> <button ng-show=\"business.businessStatus === 'WAITING_CONFIRMATION'\" ng-click=cancelPublishRequest() class=\"btn btn-primary\">{{'--.business.page.cancelPublishRequest' | translateText}}</button> <button ng-show=\"business.businessStatus === 'PUBLISHED'\" ng-click=stopPublish() class=\"btn btn-primary\">{{'--.business.page.stopPublication' | translateText}}</button></div><div class=business-page><div class=business-page-header ng-style=\"{'background-image':'url('+(business.landscape | image)+')' }\"><div class=\"edit-button-container landscape-edit\"><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editLandscape()>{{'--.business.page.edit.landscape' | translateText}}</button></div><div class=business-page-illustration-container><img class=business-illustration ng-src=\"{{business.illustration | image}}\"><div class=edit-button-container><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm\" ng-show=edit ng-click=editIllustration()>{{'--.business.page.edit.illustration' | translateText}}</button></div></div><div class=business-page-name><span>{{business.name}}</span><div class=edit-button-container><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" id=business-btn-name-edit ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div></div></div><div class=business-page-body><div class=business-page-body-center><category-line-ctrl ng-info=categoryLineParams></category-line-ctrl><button ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-click=editCategory()>{{'--.generic.edit' | translateText}}</button><div class=business-page-description><span>{{business.description}}</span> <button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" id=business-btn-category-edit ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div><div><button class=\"btn btn-primary\" ng-click=createPromotion() ng-show=\"edit && business.businessStatus === 'PUBLISHED'\">{{'--.business.publication.btn.promotion' | translateText}}</button> <button class=\"btn btn-primary\" ng-click=createNotification() ng-show=\"edit && business.businessStatus === 'PUBLISHED'\">{{'--.business.publication.btn.notification' | translateText}}</button><publication-list-for-business-ctrl ng-info=publicationListParam></publication-list-for-business-ctrl></div></div><div class=business-page-body-right><div style=\"text-align: center;margin: 10px\"><button ng-click=follow() class=follow-button><img src=/assets/images/haert.png ng-show=\"business.following\"> <img src=/assets/images/haert-off.png ng-hide=\"business.following\"></button> {{business.totalFollowers}}</div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.business.gallery' | translateText}}</div><div class=panel-body><gallery-ctrl ng-info={images:business.galleryPictures}></gallery-ctrl><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editGallery()>{{'--.business.page.edit.gallery' | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.generic.address' | translateText}}</div><div class=panel-body><google-map-widget-ctrl ng-info=googleMapParams></google-map-widget-ctrl><div class=business-address><div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div><div>{{business.distance / 1000 | number:2}} Km</div></div><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" id=business-btn-address-edit ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editAddress()>{{'--.generic.edit' | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.generic.contact' | translateText}}</div><div class=panel-body><div id=welcome-contact-data-phone>{{business.phone}}</div><div><a href={{business.website}} target=_blank id=welcome-contact-data-website>{{business.website}}</a></div><div id=welcome-contact-data-email>{{business.email}}</div><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div></div><div class=\"panel panel-default business-social-panel\" ng-show=\"edit === true || business.facebookLink!=null || business.twitterLink!=null || business.googleplusLink!=null || business.foursquareLink!=null\"><div class=panel-heading>{{'--.generic.socialNetwork' | translateText}}</div><div class=panel-body><div ng-show=!!business.socialNetwork.facebookLink class=business-social-network-box><a href={{business.socialNetwork.facebookLink}} title={{business.socialNetwork.facebookLink}} target=_blank><img src=/assets/images/social_network/facebook.png></a></div><div ng-show=!!business.socialNetwork.twitterLink class=business-social-network-box><a href={{business.socialNetwork.twitterLink}} title={{business.socialNetwork.twitterLink}} target=_blank><img src=/assets/images/social_network/twitter.png></a></div><div ng-show=!!business.socialNetwork.instagramLink class=business-social-network-box><a href={{business.socialNetwork.instagramLink}} title={{business.socialNetwork.instagramLink}} target=_blank><img src=/assets/images/social_network/instagram.png></a></div><div ng-show=!!business.socialNetwork.deliveryLink class=business-social-network-box><a href={{business.socialNetwork.deliveryLink}} title={{business.socialNetwork.deliveryLink}} target=_blank><img src=/assets/images/social_network/delivery.png></a></div><div ng-show=!!business.socialNetwork.reservationLink class=business-social-network-box><a href={{business.socialNetwork.reservationLink}} title={{business.socialNetwork.reservationLink}} target=_blank><img src=/assets/images/social_network/reservation.png></a></div><div ng-show=!!business.socialNetwork.opinionLink class=business-social-network-box><a href={{business.socialNetwork.opinionLink}} title={{business.socialNetwork.opinionLink}} target=_blank><img src=/assets/images/social_network/opinion.png></a></div><div ng-show=!!business.socialNetwork.ecommerceLink class=business-social-network-box><a href={{business.socialNetwork.ecommerceLink}} title={{business.socialNetwork.ecommerceLink}} target=_blank><img src=/assets/images/social_network/e_commerce.png></a></div><br><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editSocialNetwork()>{{'--.business.page.edit.business' | translateText}}</button></div></div><div class=\"panel panel-default\" ng-show=\"edit === true || displaySchedule()\"><div class=panel-heading>{{'--.business.profile.businessSchedule' | translateText}}</div><div class=panel-body><schedule-ctrl ng-info={dto:business.schedules}></schedule-ctrl><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editSchedule()>{{'--.generic.edit' | translateText}}</button></div></div></div></div></div>");
+    "<div ng-show=\"myBusiness === true\"><div ng-show=\"business.businessStatus === 'NOT_PUBLISHED'\">{{'--.business.page.edit.description.notPublished' | translateText}}</div><div ng-show=\"business.businessStatus === 'WAITING_CONFIRMATION'\">{{'--.business.page.edit.description.waitConfirmation' | translateText}}</div><div ng-show=\"business.businessStatus === 'PUBLISHED'\">{{'--.business.page.edit.descriptionPublished' | translateText}}</div><div class=onoffswitch-container><div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitchFromBusiness checked ng-model=edit><label class=onoffswitch-label for=myonoffswitchFromBusiness><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div><div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div></div><button ng-show=\"business.businessStatus === 'NOT_PUBLISHED'\" ng-click=publish() class=\"btn btn-primary\">{{'--.business.page.publication' | translateText}}</button> <button ng-show=\"business.businessStatus === 'WAITING_CONFIRMATION'\" ng-click=cancelPublishRequest() class=\"btn btn-primary\">{{'--.business.page.cancelPublishRequest' | translateText}}</button> <button ng-show=\"business.businessStatus === 'PUBLISHED'\" ng-click=stopPublish() class=\"btn btn-primary\">{{'--.business.page.stopPublication' | translateText}}</button></div><div class=business-page><div class=business-page-header ng-style=\"{'background-image':'url('+(business.landscape | image)+')' }\"><div class=\"edit-button-container landscape-edit\"><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editLandscape()>{{'--.business.page.edit.landscape' | translateText}}</button></div><div class=business-page-illustration-container><img class=business-illustration ng-src=\"{{business.illustration | image}}\"><div class=edit-button-container><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm\" ng-show=edit ng-click=editIllustration()>{{'--.business.page.edit.illustration' | translateText}}</button></div></div><div class=business-page-name><span>{{business.name}}</span><div class=edit-button-container><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" id=business-btn-name-edit ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div></div></div><div class=business-page-body><div class=business-page-body-center><category-line-ctrl ng-info=categoryLineParams></category-line-ctrl><button ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-click=editCategory()>{{'--.generic.edit' | translateText}}</button><div class=business-page-description><span>{{business.description}}</span> <button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" id=business-btn-category-edit ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div><div><select ng-model=publicationListParam.type ng-options=\"option.key as option.value | translateText for option in publicationOptions\"></select><button class=\"btn btn-primary\" ng-click=createPromotion() ng-show=\"edit && business.businessStatus === 'PUBLISHED'\">{{'--.business.publication.btn.promotion' | translateText}}</button> <button class=\"btn btn-primary\" ng-click=createNotification() ng-show=\"edit && business.businessStatus === 'PUBLISHED'\">{{'--.business.publication.btn.notification' | translateText}}</button><publication-list-for-business-ctrl ng-info=publicationListParam></publication-list-for-business-ctrl></div></div><div class=business-page-body-right><div style=\"text-align: center;margin: 10px\"><button ng-click=follow() class=follow-button><img src=/assets/images/haert.png ng-show=\"business.following\"> <img src=/assets/images/haert-off.png ng-hide=\"business.following\"></button> {{business.totalFollowers}}</div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.business.gallery' | translateText}}</div><div class=panel-body><gallery-ctrl ng-info={images:business.galleryPictures}></gallery-ctrl><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editGallery()>{{'--.business.page.edit.gallery' | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.generic.address' | translateText}}</div><div class=panel-body><google-map-widget-ctrl ng-info=googleMapParams></google-map-widget-ctrl><div class=business-address><div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div><div>{{business.distance / 1000 | number:2}} Km</div></div><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" id=business-btn-address-edit ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editAddress()>{{'--.generic.edit' | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.generic.contact' | translateText}}</div><div class=panel-body><div id=welcome-contact-data-phone>{{business.phone}}</div><div><a href={{business.website}} target=_blank id=welcome-contact-data-website>{{business.website}}</a></div><div id=welcome-contact-data-email>{{business.email}}</div><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div></div><div class=\"panel panel-default business-social-panel\" ng-show=\"edit === true || business.facebookLink!=null || business.twitterLink!=null || business.googleplusLink!=null || business.foursquareLink!=null\"><div class=panel-heading>{{'--.generic.socialNetwork' | translateText}}</div><div class=panel-body><div ng-show=!!business.socialNetwork.facebookLink class=business-social-network-box><a href={{business.socialNetwork.facebookLink}} title={{business.socialNetwork.facebookLink}} target=_blank><img src=/assets/images/social_network/facebook.png></a></div><div ng-show=!!business.socialNetwork.twitterLink class=business-social-network-box><a href={{business.socialNetwork.twitterLink}} title={{business.socialNetwork.twitterLink}} target=_blank><img src=/assets/images/social_network/twitter.png></a></div><div ng-show=!!business.socialNetwork.instagramLink class=business-social-network-box><a href={{business.socialNetwork.instagramLink}} title={{business.socialNetwork.instagramLink}} target=_blank><img src=/assets/images/social_network/instagram.png></a></div><div ng-show=!!business.socialNetwork.deliveryLink class=business-social-network-box><a href={{business.socialNetwork.deliveryLink}} title={{business.socialNetwork.deliveryLink}} target=_blank><img src=/assets/images/social_network/delivery.png></a></div><div ng-show=!!business.socialNetwork.reservationLink class=business-social-network-box><a href={{business.socialNetwork.reservationLink}} title={{business.socialNetwork.reservationLink}} target=_blank><img src=/assets/images/social_network/reservation.png></a></div><div ng-show=!!business.socialNetwork.opinionLink class=business-social-network-box><a href={{business.socialNetwork.opinionLink}} title={{business.socialNetwork.opinionLink}} target=_blank><img src=/assets/images/social_network/opinion.png></a></div><div ng-show=!!business.socialNetwork.ecommerceLink class=business-social-network-box><a href={{business.socialNetwork.ecommerceLink}} title={{business.socialNetwork.ecommerceLink}} target=_blank><img src=/assets/images/social_network/e_commerce.png></a></div><br><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editSocialNetwork()>{{'--.business.page.edit.business' | translateText}}</button></div></div><div class=\"panel panel-default\" ng-show=\"edit === true || displaySchedule()\"><div class=panel-heading>{{'--.business.profile.businessSchedule' | translateText}}</div><div class=panel-body><schedule-ctrl ng-info={dto:business.schedules}></schedule-ctrl><button class=\"btn btn-primary btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editSchedule()>{{'--.generic.edit' | translateText}}</button></div></div></div></div></div>");
+  $templateCache.put("/assets/javascripts/view/web/followed_business_page.html",
+    "<div class=followed-business><business-list-ctrl ng-info=businessListParams></business-list-ctrl></div>");
   $templateCache.put("/assets/javascripts/view/web/home.html",
-    "<div class=content-block><div style=\"vertical-align: top\"><div style=\"display: inline-block;width:71%;vertical-align: top\"><div class=\"home-interest-switch home-interest-box\" ng-show=\"accountService.myself != null\"><div><label class=\"glyphicon glyphicon-home\"></label></div><div><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitch checked ng-model=followedMode><label class=onoffswitch-label for=myonoffswitch><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div></div><div><label class=\"glyphicon glyphicon-heart-empty\"></label></div></div><div class=home-interest-box><button class=home-interest ng-repeat=\"interest in customerInterests\" ng-show=\"interest.iconName!=null\" ng-click=searchByInterest(interest) ng-class=\"{'selected':interest.selected === true}\"><img ng-src=/assets/images/interest/{{interest.iconName}} style=\"width:50px\"></button></div><publication-list-ctrl ng-info=publicationListCtrl></publication-list-ctrl></div></div></div>");
+    "<div class=content-block><div style=\"vertical-align: top\"><div style=\"display: inline-block;width:71%;vertical-align: top\"><div class=\"home-interest-switch home-interest-box\" ng-show=\"accountService.myself != null\"><div><label class=\"glyphicon glyphicon-home\"></label></div><div><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitch checked ng-model=followedMode><label class=onoffswitch-label for=myonoffswitch><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div></div><div><label class=\"glyphicon glyphicon-heart-empty\"></label></div></div><div class=home-interest-box><button class=\"home-interest button-with-label\" ng-repeat=\"interest in customerInterests\" ng-show=\"interest.iconName!=null\" ng-click=searchByInterest(interest) ng-class=\"{'selected':interest.selected === true}\"><p>{{interest.translationName}}</p><img ng-src=/assets/images/interest/{{interest.iconName}} style=\"width:50px\"></button></div><publication-list-ctrl ng-info=publicationListCtrl></publication-list-ctrl></div></div></div>");
   $templateCache.put("/assets/javascripts/view/web/profile.html",
     "<div class=profile-page><div class=\"panel panel-default main-panel panel-personal-information\"><div class=panel-heading>{{'--.customer.profile.personalInformation' | translateText}}</div><div class=panel-body><account-form-ctrl ng-info=accountParam></account-form-ctrl><button class=\"btn btn-primary glyphicon glyphicon-edit\" id=profile-personal-btn-edit ng-show=accountParam.disabled ng-click=personalEdit()>{{'--.generic.edit' |translateText}}</button> <button class=\"btn btn-primary\" id=profile-personal-btn-save ng-hide=accountParam.disabled ng-click=personalSave()>{{'--.generic.save' | translateText}}</button> <button id=profile-personal-btn-cancel class=\"btn btn-primary\" ng-hide=accountParam.disabled ng-click=personalCancel()>{{'--.generic.cancel' | translateText}}</button><div ng-show=\"account.loginAccount==true\" class=col-md-3 ng-show=\"account.loginAccount==true\"></div><button type=button id=profile-personal-btn-edit-password class=\"btn btn-primary\" ng-click=editPassword()>{{'--.changePasswordModal.title' | translateText}}</button></div></div><div class=\"panel panel-default main-panel\"><div class=panel-heading>{{'--.customer.profile.myAddresses' | translateText}}</div><div class=panel-body><div><accordion><accordion-group class=address-container ng-repeat=\"address in model.myself.addresses\" is-open=address.isOpen><accordion-heading>{{address.name}} <i class=\"pull-right glyphicon\" ng-class=\"{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}\"></i></accordion-heading><div class=address-box><div><span>{{'--.generic.street' | translateText}}</span> <span>{{address.street}}</span></div><div><span>{{'--.generic.zip' | translateText}}</span> <span>{{address.zip}}</span></div><div><span>{{'--.generic.city' | translateText}}</span> <span>{{address.city}}</span></div><div><span>{{'--.generic.country' | translateText}}</span> <span>{{address.country}}</span></div></div><button class=\"btn btn-primary glyphicon glyphicon-edit\" ng-click=editAddress(address)>{{'--.generic.edit' | translateText}}</button> <button class=\"btn btn-primary glyphicon glyphicon-remove\" ng-click=deleteAddress(address)>{{'--.generic.remove' |translateText}}</button></accordion-group></accordion><button id=profile-btn-address-add class=\"btn btn-primary\" ng-click=addAddress()>{{'--.customer.profile.create' | translateText}}</button></div></div></div><div class=\"panel panel-default main-panel\"><div class=panel-heading>{{'--.customer.profile.interest' | translateText}}</div><div class=\"panel-body category-list\"><div><div ng-repeat=\"interest in model.myself.customerInterests\" class=category-box>{{interest.translationName |translateText}}</div><button class=\"btn btn-primary glyphicon glyphicon-edit\" ng-show=accountParam.disabled id=profile-interest-btn-edit ng-click=interestEdit()>{{'--.generic.edit' | translateText}}</button></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/web/search_page.html",

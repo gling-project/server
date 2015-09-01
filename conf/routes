@@ -3,7 +3,7 @@
 # ~~~~
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                                         controllers.Assets.at(path="/public", file)
+GET           /assets/*file                                                                       controllers.Assets.at(path="/public", file)
 
 #
 # REST routes
@@ -11,101 +11,105 @@ GET           /assets/*file                                         controllers.
 
 ## registration and login
 ## tested by LoginRestControllerTest
-POST          /rest/login                                           @be.lynk.server.controller.rest.LoginRestController.login()
-POST          /rest/login/facebook                                  @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
-POST          /rest/account/fusion                                  @be.lynk.server.controller.rest.LoginRestController.fusion()
-POST          /rest/registration/customer                           @be.lynk.server.controller.rest.LoginRestController.customerRegistration()
-POST          /rest/registration/business                           @be.lynk.server.controller.rest.LoginRestController.businessRegistration()
-GET           /rest/logout                                          @be.lynk.server.controller.rest.LoginRestController.logout()
-GET           /rest/email/test/:email                               @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
-POST          /rest/address/test                                    @be.lynk.server.controller.rest.LoginRestController.testAddress()
-POST          /rest/facebook/test                                   @be.lynk.server.controller.rest.LoginRestController.testFacebookAccount()
-PUT           /rest/language/:code                                  @be.lynk.server.controller.rest.LoginRestController.changeLanguage(code:String)
-PUT           /rest/forgot/password                                 @be.lynk.server.controller.rest.LoginRestController.forgotPassword()
+POST          /rest/login                                                                         @be.lynk.server.controller.rest.LoginRestController.login()
+POST          /rest/login/facebook                                                                @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
+POST          /rest/account/fusion                                                                @be.lynk.server.controller.rest.LoginRestController.fusion()
+POST          /rest/registration/customer                                                         @be.lynk.server.controller.rest.LoginRestController.customerRegistration()
+POST          /rest/registration/business                                                         @be.lynk.server.controller.rest.LoginRestController.businessRegistration()
+GET           /rest/logout                                                                        @be.lynk.server.controller.rest.LoginRestController.logout()
+GET           /rest/email/test/:email                                                             @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
+POST          /rest/address/test                                                                  @be.lynk.server.controller.rest.LoginRestController.testAddress()
+POST          /rest/facebook/test                                                                 @be.lynk.server.controller.rest.LoginRestController.testFacebookAccount()
+PUT           /rest/language/:code                                                                @be.lynk.server.controller.rest.LoginRestController.changeLanguage(code:String)
+PUT           /rest/forgot/password                                                               @be.lynk.server.controller.rest.LoginRestController.forgotPassword()
 
 ## customer interest
-GET           /rest/customerInterest                                @be.lynk.server.controller.rest.CustomerRestController.getAllCustomerInterest()
+GET           /rest/customerInterest                                                              @be.lynk.server.controller.rest.CustomerRestController.getAllCustomerInterest()
 
 ##businessCategory
-GET           /rest/businessCategory                                @be.lynk.server.controller.rest.BusinessRestController.getAllBusinessCategory()
+GET           /rest/businessCategory                                                              @be.lynk.server.controller.rest.BusinessRestController.getAllBusinessCategory()
 
 ##account
-GET           /rest/myself                                          @be.lynk.server.controller.rest.AccountRestController.myself()
-PUT           /rest/account/$id<[0-9]+>                             @be.lynk.server.controller.rest.AccountRestController.editAccount(id:Long)
-PUT           /rest/account/password/$id<[0-9]+>                    @be.lynk.server.controller.rest.AccountRestController.changePassword(id:Long)
-POST          /rest/address                                         @be.lynk.server.controller.rest.AccountRestController.addAddress()
-PUT           /rest/address/current                                 @be.lynk.server.controller.rest.AccountRestController.setCurrentAddress()
-PUT           /rest/address/$id<[0-9]+>                             @be.lynk.server.controller.rest.AccountRestController.editAddress(id:Long)
-DELETE        /rest/address/$id<[0-9]+>                             @be.lynk.server.controller.rest.AccountRestController.deleteAddress(id:Long)
-POST          /rest/address/distance/$id<[0-9]+>                    @be.lynk.server.controller.rest.AccountRestController.getDistance(id:Long)
-PUT           /rest/customer/interest/$id<[0-9]+>                   @be.lynk.server.controller.rest.AccountRestController.editCustomerInterest(id:Long)
+GET           /rest/myself                                                                        @be.lynk.server.controller.rest.AccountRestController.myself()
+PUT           /rest/account/$id<[0-9]+>                                                           @be.lynk.server.controller.rest.AccountRestController.editAccount(id:Long)
+PUT           /rest/account/password/$id<[0-9]+>                                                  @be.lynk.server.controller.rest.AccountRestController.changePassword(id:Long)
+POST          /rest/address                                                                       @be.lynk.server.controller.rest.AccountRestController.addAddress()
+PUT           /rest/address/current                                                               @be.lynk.server.controller.rest.AccountRestController.setCurrentAddress()
+PUT           /rest/address/$id<[0-9]+>                                                           @be.lynk.server.controller.rest.AccountRestController.editAddress(id:Long)
+DELETE        /rest/address/$id<[0-9]+>                                                           @be.lynk.server.controller.rest.AccountRestController.deleteAddress(id:Long)
+POST          /rest/address/distance/$id<[0-9]+>                                                  @be.lynk.server.controller.rest.AccountRestController.getDistance(id:Long)
+PUT           /rest/customer/interest/$id<[0-9]+>                                                 @be.lynk.server.controller.rest.AccountRestController.editCustomerInterest(id:Long)
 
 ## business
-GET           /rest/business/$id<[0-9]+>                            @be.lynk.server.controller.rest.BusinessRestController.getPublicData(id:Long)
+GET           /rest/business/$id<[0-9]+>                                                          @be.lynk.server.controller.rest.BusinessRestController.getPublicData(id:Long)
 #only for superadmiin
-GET           /rest/business/all                                    @be.lynk.server.controller.rest.BusinessRestController.getAll()
-GET           /rest/business/interests                               @be.lynk.server.controller.rest.BusinessRestController.getInterests()
-PUT           /rest/business                                        @be.lynk.server.controller.rest.BusinessRestController.update()
-PUT           /rest/business/social_network                         @be.lynk.server.controller.rest.BusinessRestController.updateSocialNetwork()
-PUT           /rest/business/address                                @be.lynk.server.controller.rest.BusinessRestController.editAddress()
-PUT           /rest/business/category                               @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory()
-PUT           /rest/business/illustration                           @be.lynk.server.controller.rest.BusinessRestController.editIllustration()
-PUT           /rest/business/landscape                              @be.lynk.server.controller.rest.BusinessRestController.editLandscape()
-POST          /rest/business/ask_publication                        @be.lynk.server.controller.rest.BusinessRestController.askPublication()
-POST          /rest/business/stop_publish                           @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
-POST          /rest/business/cancel_publication_request             @be.lynk.server.controller.rest.BusinessRestController.cancelPublicationRequest()
-POST          /rest/business/edit/gallery                           @be.lynk.server.controller.rest.BusinessRestController.editGallery()
+GET           /rest/business/all                                                                  @be.lynk.server.controller.rest.BusinessRestController.getAll()
+GET           /rest/business/interests                                                            @be.lynk.server.controller.rest.BusinessRestController.getInterests()
+GET           /rest/business/followed                                                             @be.lynk.server.controller.rest.BusinessRestController.getFollowed()
+PUT           /rest/business                                                                      @be.lynk.server.controller.rest.BusinessRestController.update()
+PUT           /rest/business/social_network                                                       @be.lynk.server.controller.rest.BusinessRestController.updateSocialNetwork()
+PUT           /rest/business/address                                                              @be.lynk.server.controller.rest.BusinessRestController.editAddress()
+PUT           /rest/business/category                                                             @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory()
+PUT           /rest/business/illustration                                                         @be.lynk.server.controller.rest.BusinessRestController.editIllustration()
+PUT           /rest/business/landscape                                                            @be.lynk.server.controller.rest.BusinessRestController.editLandscape()
+POST          /rest/business/ask_publication                                                      @be.lynk.server.controller.rest.BusinessRestController.askPublication()
+POST          /rest/business/stop_publish                                                         @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
+POST          /rest/business/cancel_publication_request                                           @be.lynk.server.controller.rest.BusinessRestController.cancelPublicationRequest()
+POST          /rest/business/edit/gallery                                                         @be.lynk.server.controller.rest.BusinessRestController.editGallery()
 
 
 ## business schedule
-POST          /rest/business/schedule                               @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
+POST          /rest/business/schedule                                                             @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
 
 ## promotion
-POST          /rest/promotion                                       @be.lynk.server.controller.rest.PromotionRestController.create()
-PUT           /rest/promotion/$id<[0-9]+>                           @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
+POST          /rest/promotion                                                                     @be.lynk.server.controller.rest.PromotionRestController.create()
+PUT           /rest/promotion/$id<[0-9]+>                                                         @be.lynk.server.controller.rest.PromotionRestController.update(id:Long)
 
 ## notificaiton
-POST          /rest/businessNotification                            @be.lynk.server.controller.rest.BusinessNotificationRestController.create()
-PUT           /rest/businessNotification/$id<[0-9]+>                @be.lynk.server.controller.rest.BusinessNotificationRestController.update(id:Long)
+POST          /rest/businessNotification                                                          @be.lynk.server.controller.rest.BusinessNotificationRestController.create()
+PUT           /rest/businessNotification/$id<[0-9]+>                                              @be.lynk.server.controller.rest.BusinessNotificationRestController.update(id:Long)
 
 ## publication
-DELETE        /rest/publication/$id<[0-9]+>                         @be.lynk.server.controller.rest.PublicationRestController.delete(id:Long)
+DELETE        /rest/publication/$id<[0-9]+>                                                       @be.lynk.server.controller.rest.PublicationRestController.delete(id:Long)
 
 ## follow
-POST          /rest/follow                                          @be.lynk.server.controller.rest.FollowController.followBusiness()
-GET           /rest/follow                                          @be.lynk.server.controller.rest.FollowController.getMyFollows()
+POST          /rest/follow                                                                        @be.lynk.server.controller.rest.FollowController.followBusiness()
+GET           /rest/follow                                                                        @be.lynk.server.controller.rest.FollowController.getMyFollows()
 
 #session
-GET           /rest/session                                         @be.lynk.server.controller.rest.AccountRestController.mySession()
+GET           /rest/session                                                                       @be.lynk.server.controller.rest.AccountRestController.mySession()
 
 #search
-POST          /rest/search/publication/default                      @be.lynk.server.controller.rest.SearchRestController.getByDefault()
-POST          /rest/search/publication/business/:id                 @be.lynk.server.controller.rest.SearchRestController.getBusiness(id:Long)
-POST          /rest/search/publication/interest/:id                 @be.lynk.server.controller.rest.SearchRestController.getByInterest(id:Long)
-POST          /rest/search/publication/followed                     @be.lynk.server.controller.rest.SearchRestController.getByFollowed()
-POST          /rest/search/publication/followed/interest/:id        @be.lynk.server.controller.rest.SearchRestController.getByInterestAndFollowed(id:Long)
-POST          /rest/search/text/little                              @be.lynk.server.controller.rest.SearchRestController.getByStringLittle()
-POST          /rest/search/text                                     @be.lynk.server.controller.rest.SearchRestController.getByString()
+POST          /rest/search/publication/default/$page<[0-9]+>                                      @be.lynk.server.controller.rest.SearchRestController.getByDefault(page:Integer)
+GET           /rest/search/publication/business/archive/$id<[0-9]+>/$page<[0-9]+>                 @be.lynk.server.controller.rest.SearchRestController.getBusinessArchive(page:Integer,id:Long)
+GET           /rest/search/publication/business/previsualization/$id<[0-9]+>/$page<[0-9]+>        @be.lynk.server.controller.rest.SearchRestController.getBusinessPrevisualization(page:Integer,id:Long)
+GET           /rest/search/publication/business/$id<[0-9]+>/$page<[0-9]+>                         @be.lynk.server.controller.rest.SearchRestController.getBusiness(page:Integer,id:Long)
+POST          /rest/search/publication/interest/$id<[0-9]+>/$page<[0-9]+>                         @be.lynk.server.controller.rest.SearchRestController.getByInterest(page:Integer,id:Long)
+POST          /rest/search/publication/followed/$page<[0-9]+>                                     @be.lynk.server.controller.rest.SearchRestController.getByFollowed(page:Integer)
+POST          /rest/search/publication/followed/interest/$id<[0-9]+>/$page<[0-9]+>                @be.lynk.server.controller.rest.SearchRestController.getByInterestAndFollowed(page:Integer,id:Long)
+POST          /rest/search/text/little                                                            @be.lynk.server.controller.rest.SearchRestController.getByStringLittle()
+POST          /rest/search/text                                                                   @be.lynk.server.controller.rest.SearchRestController.getByString()
 
 #file
-POST          /rest/file                                            @be.lynk.server.controller.rest.FilesController.upload()
-POST          /rest/file/:sizex/:sizey                              @be.lynk.server.controller.rest.FilesController.uploadWithSize(sizex:Integer,sizey:Integer)
-GET           /rest/file/:storedFileId                              @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
+POST          /rest/file                                                                          @be.lynk.server.controller.rest.FilesController.upload()
+POST          /rest/file/:sizex/:sizey                                                            @be.lynk.server.controller.rest.FilesController.uploadWithSize(sizex:Integer,sizey:Integer)
+GET           /rest/file/:storedFileId                                                            @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 
 
 ## ADMIN
-GET           /rest/business/confirmPublication/$id<[0-9]+>         @be.lynk.server.controller.rest.SuperAdminRestController.confirmPublication(id:Long)
+GET           /rest/business/confirmPublication/$id<[0-9]+>                                       @be.lynk.server.controller.rest.SuperAdminRestController.confirmPublication(id:Long)
 
 
 #############
 ## importer
 ############
-POST          /rest/import_demo                                     @be.lynk.server.controller.rest.SuperAdminRestController.importDemoDate()
-POST          /rest/import_category                                 @be.lynk.server.controller.rest.SuperAdminRestController.importCategoryTranslation()
+POST          /rest/import_demo                                                                   @be.lynk.server.controller.rest.SuperAdminRestController.importDemoDate()
+POST          /rest/generate_publication                                                          @be.lynk.server.controller.rest.SuperAdminRestController.generateFakePublications()
+POST          /rest/import_category                                                               @be.lynk.server.controller.rest.SuperAdminRestController.importCategoryTranslation()
 
 
 ##welcome
-GET           /admin/                                               @be.lynk.server.controller.MainController.admin()
-GET           /mobile/                                              @be.lynk.server.controller.MainController.mobile()
-GET           /                                                     @be.lynk.server.controller.MainController.mainPage2()
-GET           /*url                                                 @be.lynk.server.controller.MainController.mainPage(url)
+GET           /admin/                                                                             @be.lynk.server.controller.MainController.admin()
+GET           /mobile/                                                                            @be.lynk.server.controller.MainController.mobile()
+GET           /                                                                                   @be.lynk.server.controller.MainController.mainPage2()
+GET           /*url                                                                               @be.lynk.server.controller.MainController.mainPage(url)

@@ -9,8 +9,7 @@
         {{'--.list.nothing' | translateText}}
     </div>
 
-    <div ng-hide="getInfo().loading===true"
-         ng-repeat="publication in publications"
+    <div ng-repeat="publication in publications"
          class="publication-box publication-publication"
          ng-click="click()">
 

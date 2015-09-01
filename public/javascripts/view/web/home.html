@@ -27,15 +27,19 @@
 
             <!-- interest -->
             <div class="home-interest-box">
-                <button class="home-interest" ng-repeat="interest in customerInterests"
+                <button class="home-interest button-with-label" ng-repeat="interest in customerInterests"
                         ng-show="interest.iconName!=null"
                         ng-click="searchByInterest(interest)"
                         ng-class="{'selected':interest.selected === true}">
 
-                    <img ng-src="/assets/images/interest/{{interest.iconName}}" style="width:50px"/>
+                    <p>{{interest.translationName}}</p>
+
+                    <img
+                            ng-src="/assets/images/interest/{{interest.iconName}}"
+                            style="width:50px"/>
                 </button>
             </div>
-
+            <!-- publication list -->
             <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>
         </div>
     </div>

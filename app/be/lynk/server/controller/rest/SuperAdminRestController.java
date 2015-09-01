@@ -36,6 +36,30 @@ public class SuperAdminRestController extends AbstractRestController {
     private DemoImporter demoImporter;
 
     @Transactional
+    public Result generateFakePublications() {
+        Account account;
+        if (!securityController.isAuthenticated(ctx())) {
+            //extract DTO
+            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+
+            account = accountService.findByEmail(dto.getEmail());
+
+            if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
+                //if there is no account for this email or the password doesn't the right, throw an exception
+                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+            }
+        }
+        else{
+            account=securityController.getCurrentUser();
+        }
+        if(!account.getRole().equals(RoleEnum.SUPERADMIN)){
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        return ok(demoImporter.generateFakePublications());
+    }
+
+    @Transactional
     public Result importDemoDate() {
 
         Account account;

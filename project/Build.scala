@@ -23,7 +23,7 @@ object ApplicationBuild extends Build {
     "org.springframework" % "spring-test" % "4.1.6.RELEASE",
     //    "org.springframework.security" % "spring-security-core" % "4.1.6.RELEASE",
     "org.hibernate" % "hibernate-entitymanager" % "4.3.5.Final",
-    //    "org.hibernate" % "hibernate-ehcache" % "4.3.5.Final",
+    "org.hibernate" % "hibernate-ehcache" % "4.3.5.Final",
     "org.apache.commons" % "commons-lang3" % "3.1",
     "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api" % "1.0.0.Final",
     "org.postgresql" % "postgresql" % "9.3-1101-jdbc41",
@@ -52,9 +52,10 @@ object ApplicationBuild extends Build {
     "net.imagej" % "ij" % "1.50a"
   )
 
-  val main = play.Project(name, version, appDependencies)/*.settings(
-    lessEntryPoints <<= baseDirectory(_ / "app" / "assets" / "stylesheets" ** "*.less")
-  )*/
+  val main = play.Project(name, version, appDependencies)
+  /*.settings(
+      lessEntryPoints <<= baseDirectory(_ / "app" / "assets" / "stylesheets" ** "*.less")
+    )*/
   javaOptions ++= Seq("-Xmx512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
 
 

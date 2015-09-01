@@ -96,7 +96,8 @@ public class CommonSecurityController extends Security.Authenticator {
 
         //by session
         if (Http.Context.current().session().get(SESSION_IDENTIFIER_STORE) != null) {
-            return USER_SERVICE.findByEmail(Http.Context.current().session().get(SESSION_IDENTIFIER_STORE));
+            Account byEmail = USER_SERVICE.findByEmail(Http.Context.current().session().get(SESSION_IDENTIFIER_STORE));
+            return byEmail;
         }
 
         //by request

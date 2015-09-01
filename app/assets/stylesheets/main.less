@@ -27,6 +27,7 @@
 @import 'widget/_business-mobile-page';
 @import 'widget/_messenger';
 @import 'widget/_progress_bar';
+@import 'widget/_followed-business';
 @import '_TEMP';
 
 //
@@ -381,6 +382,30 @@ a {
 
 .generic-block {
     display: block !important;
+}
+
+.button-with-label{
+    position: relative;
+    &:hover{
+        p{
+            display: block;
+        }
+    }
+    p{
+        position: absolute;
+        background-color: #333333;
+        color: rgb(244, 244, 244);
+        display: none;
+        padding: 2px 4px;
+        font-size: 12px;
+        bottom: -20px;
+        left: 50%;
+        opacity: 100;
+        /* width: auto; */
+        white-space: nowrap;
+        overflow: hidden;
+        z-index: 10;
+    }
 }
 
 

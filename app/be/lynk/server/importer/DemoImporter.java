@@ -6,4 +6,6 @@ package be.lynk.server.importer;
 public interface DemoImporter {
 
     String importStart(boolean b);
+
+    String generateFakePublications();
 }

@@ -5,6 +5,7 @@ import be.lynk.server.dto.*;
 import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class MainController extends AbstractController {
 
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private LocalizationService localizationService;
 
     @Transactional
     public Result admin() {
@@ -67,6 +70,16 @@ public class MainController extends AbstractController {
     }
 
     public Result generateDefaultPage(String url, boolean forceMobile) {
+
+//        double  lat1 = 71.167782, long1 = 25.781026,
+//                lat2 = 71.168790, long2 = 25.782380;
+//
+//        71.169400, 25.780906
+//        71.167285, 25.780881
+
+//        Double distance = localizationService.distance(lat1, long1, lat2, long2, null);
+
+//        Logger.info("distance:"+distance);
 
         String facebookAppId = AppUtil.getFacebookAppId();
 

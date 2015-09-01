@@ -147,7 +147,9 @@ public class LocalizationServiceImpl implements LocalizationService {
         return position.getX() + "," + position.getY();
     }
 
-    private Double distance(double lat1, double lon1, double lat2, double lon2, Character unit) {
+
+    @Override
+    public Double distance(double lat1, double lon1, double lat2, double lon2, Character unit) {
         if(unit==null){
             unit='m';
         }

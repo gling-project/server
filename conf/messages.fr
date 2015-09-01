@@ -335,7 +335,7 @@
 --.promotion.validation.endDateBeforeStartDate=La date de fin doit être arpès la date de début
 ###--.validation.dto.notNull=Ce champs ne peut être vide
 --.promotion.interest=Intérêt
---.promotion.interest.help=Aide
+--.promotion.interest.help=Sélectionnez un intérêt se raprochant le plus de votre publication.
 
 ## day
 day_abrv_monday=Lu
