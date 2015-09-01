@@ -6,18 +6,22 @@ import be.lynk.server.dto.*;
 import be.lynk.server.dto.post.CustomerRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.Position;
-import be.lynk.server.model.entities.*;
+import be.lynk.server.model.entities.Account;
+import be.lynk.server.model.entities.Address;
+import be.lynk.server.model.entities.CustomerInterest;
+import be.lynk.server.model.entities.Session;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.LocalizationServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
-import be.lynk.server.util.message.ErrorMessageEnum;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by florian on 26/03/15.
@@ -179,8 +183,6 @@ public class
         currentUser.getAddresses().add(address);
 
         accountService.saveOrUpdate(currentUser);
-
-        Logger.info("my new address : " + address);
 
         return ok(dozerService.map(address, AddressDTO.class));
     }

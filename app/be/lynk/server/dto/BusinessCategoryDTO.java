@@ -1,13 +1,10 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.entities.technical.AbstractEntity;
 import play.modules.mongodb.jackson.KeyTyped;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by florian on 18/05/15.

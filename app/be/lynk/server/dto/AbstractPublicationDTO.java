@@ -2,14 +2,8 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.PublicationType;
-import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.CustomerInterest;
-import be.lynk.server.model.entities.StoredFile;
-import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import play.modules.mongodb.jackson.KeyTyped;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

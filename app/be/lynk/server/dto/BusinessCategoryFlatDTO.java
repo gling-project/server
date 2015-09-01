@@ -2,10 +2,6 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by florian on 18/05/15.
  */

@@ -1,6 +1,5 @@
 package be.lynk.server.controller.technical.businessStatus;
 
-import be.lynk.server.controller.technical.security.role.RoleEnum;
 import play.mvc.With;
 
 import java.lang.annotation.*;

@@ -1,6 +1,5 @@
 package be.lynk.server.service.impl;
 
-import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.service.CustomerInterestService;
 import org.springframework.stereotype.Service;

@@ -4,9 +4,7 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.ListDTO;
 import be.lynk.server.dto.PromotionDTO;
-import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
@@ -18,12 +16,8 @@ import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by florian on 23/05/15.

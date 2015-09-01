@@ -6,7 +6,6 @@ import be.lynk.server.service.EmailSenderService;
 import be.lynk.server.service.EmailService;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.service.VelocityGeneratorService;
-import be.lynk.server.util.message.EmailMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import play.i18n.Lang;

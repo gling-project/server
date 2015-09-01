@@ -1,6 +1,5 @@
 package be.lynk.server.dto;
 
-import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.PublicationType;
 import play.modules.mongodb.jackson.KeyTyped;
 

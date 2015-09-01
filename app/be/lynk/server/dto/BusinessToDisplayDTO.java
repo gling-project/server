@@ -2,16 +2,9 @@ package be.lynk.server.dto;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.entities.StoredFile;
-import be.lynk.server.util.constants.ValidationRegex;
 import play.modules.mongodb.jackson.KeyTyped;
 
-import javax.persistence.Basic;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**

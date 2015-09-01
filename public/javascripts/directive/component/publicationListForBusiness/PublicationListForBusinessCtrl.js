@@ -40,8 +40,11 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                     $('.main-body').on('scroll', function () {
                         var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
                         if ($('.global-content-container').height() - scrollBottom < 200) {
-                            scope.currentPage = scope.currentPage + 1;
-                            scope.search();
+                            if (scope.loadSemaphore == false) {
+                                scope.loadSemaphore = true;
+                                scope.currentPage = scope.currentPage + 1;
+                                scope.search();
+                            }
                         }
                     });
 
@@ -53,17 +56,14 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                     };
 
                     scope.search = function () {
-                        if (scope.loadSemaphore == false) {
-                            scope.loadSemaphore = true;
-                            if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
-                                searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
-                            }
-                            else if (scope.type != null && scope.type != undefined && scope.type == 'PREVISUALIZATION') {
-                                searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().businessId, scope.success);
-                            }
-                            else {
-                                searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
-                            }
+                        if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
+                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
+                        }
+                        else if (scope.type != null && scope.type != undefined && scope.type == 'PREVISUALIZATION') {
+                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().businessId, scope.success);
+                        }
+                        else {
+                            searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
                         }
                     };
 

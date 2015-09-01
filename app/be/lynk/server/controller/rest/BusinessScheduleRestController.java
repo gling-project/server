@@ -16,7 +16,6 @@ import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

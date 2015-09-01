@@ -1,6 +1,5 @@
 package be.lynk.server.importer.impl;
 
-import be.lynk.server.model.entities.BusinessCategory;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -8,7 +7,6 @@ import jxl.WorkbookSettings;
 import java.io.File;
 import java.text.Normalizer;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

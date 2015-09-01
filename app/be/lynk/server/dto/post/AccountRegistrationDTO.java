@@ -1,7 +1,5 @@
 package be.lynk.server.dto.post;
 
-import be.lynk.server.dto.AddressDTO;
-import be.lynk.server.dto.FacebookAuthenticationDTO;
 import be.lynk.server.dto.LangDTO;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.GenderEnum;

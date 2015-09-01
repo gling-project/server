@@ -3,7 +3,6 @@ package be.lynk.server.dto;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.GenderEnum;
-import be.lynk.server.model.entities.Address;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.constants.ValidationRegex;
 import play.modules.mongodb.jackson.KeyTyped;
@@ -12,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by florian on 11/11/14.

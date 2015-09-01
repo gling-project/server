@@ -1,6 +1,5 @@
 package be.lynk.server.model.entities.converter;
 
-import play.Logger;
 import play.i18n.Lang;
 
 import javax.persistence.AttributeConverter;

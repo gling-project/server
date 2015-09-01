@@ -1,4 +1,5 @@
 #launch test
+#webdriver-manager start
 
 export PGPASSWORD='florian';
 DB_CONNECTION="psql -h 127.0.0.1 -U florian -d lynk -w"

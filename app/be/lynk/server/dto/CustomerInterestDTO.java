@@ -1,11 +1,8 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.entities.technical.AbstractEntity;
 import play.modules.mongodb.jackson.KeyTyped;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
 import java.util.Date;
 
 /**

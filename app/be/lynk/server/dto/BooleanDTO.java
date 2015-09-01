@@ -1,9 +1,7 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import com.fasterxml.jackson.databind.JsonNode;
 import play.modules.mongodb.jackson.KeyTyped;
-import play.mvc.Content;
 
 import java.util.Date;
 

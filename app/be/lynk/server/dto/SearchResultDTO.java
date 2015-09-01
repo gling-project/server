@@ -3,9 +3,7 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by florian on 21/07/15.

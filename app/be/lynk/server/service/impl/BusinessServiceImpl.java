@@ -1,14 +1,16 @@
 package be.lynk.server.service.impl;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
-import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
 import be.lynk.server.service.BusinessService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**

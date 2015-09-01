@@ -10,11 +10,8 @@ import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
-import be.lynk.server.util.KeyGenerator;
-import be.lynk.server.util.file.FileUtil;
 import jxl.Cell;
 import jxl.NumberCell;
-import jxl.NumberFormulaCell;
 import jxl.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +19,6 @@ import play.Logger;
 import play.i18n.Lang;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +67,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final Integer COL_PUBLICATION_PRICE_O = 10;
     private static final Integer COL_PUBLICATION_PERCENT = 11;
     private static final Integer COL_PUBLICATION_PRICE_F = 12;
+    private static final Integer COL_PUBLICATION_INTEREST = 13;
 
     @Autowired
     private BusinessCategoryService businessCategoryService;
@@ -84,6 +81,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private StoredFileService storedFileService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
     @Override
     public String importStart(boolean b) {
@@ -168,7 +167,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (file != null) {
                             //landscape
                             try {
-                                business.setLandscape(fileService.uploadWithSize(file, file.getName(),1200, null, account));
+                                business.setLandscape(fileService.uploadWithSize(file, file.getName(), 1200, null, account));
 //                                business.setLandscape(fileService.uploadWithSize(file,file.getName(), account));
                             } catch (Throwable e) {
                                 e.printStackTrace();
@@ -187,7 +186,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                             try {
 //                                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
                                 File file1 = new File(path);
-                                business.setIllustration(fileService.uploadWithSize(file1,file1.getName(),80,null, account));
+                                business.setIllustration(fileService.uploadWithSize(file1, file1.getName(), 80, null, account));
                             } catch (Throwable e) {
 
                                 e.printStackTrace();
@@ -258,6 +257,19 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 String title = sheet.getCell(COL_PUBLICATION_TITLE, rowCounter).getContents();
                 String desc = sheet.getCell(COL_PUBLICATION_DESC, rowCounter).getContents();
 
+                //interest
+                String interestS = sheet.getCell(COL_PUBLICATION_INTEREST, rowCounter).getContents();
+                if (interestS != null && interestS.length() > 0) {
+                    // loading interest
+                    interestS = normalize(interestS);
+                    CustomerInterest interest = customerInterestService.findByName(interestS);
+                    if(interest==null){
+                        throw new RuntimeException("cannot found interest "+interestS);
+                    }
+                    publication.setInterest(interest);
+                }
+
+
                 if (title != null && title.length() >= 2 && title.length() <= 100) {
                     publication.setTitle(title);
                     publication.setDescription(desc);
@@ -280,7 +292,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                             String path = "file/images/publications/" + illustrationPath;
                             File file = new File(path);
                             if (file != null) {
-                                StoredFile storedFile = fileService.uploadWithSize(file,file.getName(), 800,null,business.getAccount());
+                                StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), 800, null, business.getAccount());
                                 storedFile.setPublication(publication);
                                 publication.getPictures().add(storedFile);
                                 storedFileService.saveOrUpdate(storedFile);
@@ -312,9 +324,9 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
         }
     }
 
-    public String generateFakePublications(){
+    public String generateFakePublications() {
         Business byName = businessService.findByName("Piscine 'Ibiza'").get(0);
-        for(int i=0;i<10000;i++){
+        for (int i = 0; i < 10000; i++) {
             BusinessNotification p = new BusinessNotification();
             p.setBusiness(byName);
             p.setStartDate(LocalDateTime.now().minusDays(1));

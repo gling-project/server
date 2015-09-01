@@ -16,7 +16,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -93,13 +95,13 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
         switch (publicationTiming) {
             case FUTURE:
-                request += " AND p.startDate > NOW()";
+                request += " AND p.startDate > NOW() ";
                 break;
             case PASSED:
-                request += " AND p.endDate < NOW()";
+                request += " AND p.endDate < NOW() ";
                 break;
             case NOW:
-                request += " AND p.startDate < NOW() and  p.endDate > NOW()";
+                request += " AND p.startDate < NOW() and  p.endDate > NOW() ";
                 break;
         }
 
@@ -111,7 +113,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
             if (businesses.size() == 0) {
                 return new ArrayList<>();
             }
-            request += " AND b in :businesses";
+            request += " AND b in :businesses ";
         }
 
         if (interest != null) {

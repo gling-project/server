@@ -2,7 +2,10 @@ package be.lynk.server.model.entities;
 
 import be.lynk.server.util.AccountTypeEnum;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 /**
  * Created by florian on 17/05/15.

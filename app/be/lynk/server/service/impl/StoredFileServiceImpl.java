@@ -8,7 +8,6 @@ import play.db.jpa.JPA;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 @Repository
 public class StoredFileServiceImpl extends CrudServiceImpl<StoredFile> implements StoredFileService {

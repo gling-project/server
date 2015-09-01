@@ -1,12 +1,8 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.technical.AbstractEntity;
 import play.modules.mongodb.jackson.KeyTyped;
 
-import javax.persistence.*;
-import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.List;
 

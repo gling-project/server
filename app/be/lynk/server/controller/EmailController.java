@@ -3,7 +3,6 @@ package be.lynk.server.controller;
 import be.lynk.server.controller.technical.AbstractController;
 import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.Account;
-import be.lynk.server.service.EmailSenderService;
 import be.lynk.server.service.EmailService;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.message.EmailMessageEnum;

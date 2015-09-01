@@ -5,10 +5,7 @@ import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
-import be.lynk.server.model.entities.publication.Promotion;
-import be.lynk.server.service.impl.CrudServiceImpl;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**

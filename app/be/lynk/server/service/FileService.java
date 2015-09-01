@@ -2,7 +2,6 @@ package be.lynk.server.service;
 
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.StoredFile;
-import play.mvc.Result;
 
 import java.io.File;
 

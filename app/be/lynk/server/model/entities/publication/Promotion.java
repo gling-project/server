@@ -1,6 +1,7 @@
 package be.lynk.server.model.entities.publication;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
 
 /**
  * Created by florian on 23/05/15.

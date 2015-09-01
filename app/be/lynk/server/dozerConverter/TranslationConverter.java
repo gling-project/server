@@ -1,12 +1,9 @@
 package be.lynk.server.dozerConverter;
 
-import be.lynk.server.dto.LangDTO;
 import be.lynk.server.model.entities.Translation;
 import be.lynk.server.model.entities.TranslationValue;
 import org.dozer.CustomConverter;
 import org.dozer.DozerConverter;
-import play.Application;
-import play.Play;
 import play.i18n.Lang;
 import play.mvc.Http;
 

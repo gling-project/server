@@ -7,7 +7,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
-import play.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -88,8 +87,6 @@ public class HttpRequest {
                 wr.close();
             }
 
-            Logger.info("Send request... (" + url + ")");
-
             //Get Response
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -100,8 +97,6 @@ public class HttpRequest {
                 response.append('\r');
             }
             rd.close();
-
-            Logger.info("Request finish ! : " + response.toString());
 
             return response.toString();
 

@@ -5,7 +5,6 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.publication.AbstractPublication;
-import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;

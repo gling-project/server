@@ -1,8 +1,8 @@
 package be.lynk.server.util.file;
 
+import be.lynk.server.plugin.S3Plugin;
 import com.amazonaws.services.s3.model.*;
 import play.Logger;
-import be.lynk.server.plugin.S3Plugin;
 
 import java.io.File;
 import java.io.FileInputStream;

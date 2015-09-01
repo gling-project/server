@@ -1,8 +1,6 @@
 package be.lynk.server.service.impl;
 
 import be.lynk.server.model.entities.BusinessCategory;
-import be.lynk.server.model.entities.Translation;
-import be.lynk.server.model.entities.TranslationValue;
 import be.lynk.server.service.BusinessCategoryService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
@@ -10,7 +8,6 @@ import play.i18n.Lang;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.List;
 

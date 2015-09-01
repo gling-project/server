@@ -1,7 +1,6 @@
 package be.lynk.server.util.dozer;
 
 import org.dozer.util.DozerClassLoader;
-import play.Application;
 import play.Play;
 
 import java.net.URL;

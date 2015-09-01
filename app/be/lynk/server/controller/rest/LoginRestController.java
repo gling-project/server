@@ -15,7 +15,6 @@ import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
@@ -310,7 +309,6 @@ public class LoginRestController extends AbstractRestController {
             if (securityController.isAuthenticated(ctx())) {
                 Account account = securityController.getCurrentUser();
                 account.setLang(lang);
-                Logger.info("account=" + account);
                 accountService.saveOrUpdate(account);
             }
         }

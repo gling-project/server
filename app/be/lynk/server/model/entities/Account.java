@@ -10,9 +10,7 @@ import be.lynk.server.util.KeyGenerator;
 import play.i18n.Lang;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

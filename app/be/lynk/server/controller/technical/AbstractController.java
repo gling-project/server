@@ -1,30 +1,25 @@
 package be.lynk.server.controller.technical;
 
 import be.lynk.server.controller.technical.security.CommonSecurityController;
-import be.lynk.server.dto.post.LoginDTO;
-import be.lynk.server.model.entities.Account;
+import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.DozerService;
-import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
-import be.lynk.server.util.message.ErrorMessageEnum;
-import play.mvc.Result;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -113,7 +108,6 @@ public abstract class AbstractController extends Controller {
         if (userAgent.indexOf("Mobile") != -1) {
             mobile = true;
         }
-        Logger.info("httpUserAgent:" + userAgent + ", mobile ? " + mobile);
         return mobile;
     }
 

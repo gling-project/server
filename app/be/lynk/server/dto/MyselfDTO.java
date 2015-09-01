@@ -1,7 +1,5 @@
 package be.lynk.server.dto;
 
-import be.lynk.server.model.entities.Address;
-import be.lynk.server.model.entities.CustomerInterest;
 import play.modules.mongodb.jackson.KeyTyped;
 
 import java.util.Date;

@@ -8,13 +8,13 @@ import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.service.AccountService;
 import be.lynk.server.service.impl.AccountServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.api.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Http;
 import play.mvc.Results;
 import play.mvc.Security;
-import be.lynk.server.util.message.ErrorMessageEnum;
 import play.mvc.SimpleResult;
 
 /**

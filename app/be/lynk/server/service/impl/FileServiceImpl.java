@@ -1,29 +1,18 @@
 package be.lynk.server.service.impl;
 
-import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.file.FileUtil;
-import ij.IJ;
 import ij.ImagePlus;
 import ij.io.FileInfo;
-import ij.io.Opener;
-import ij.process.ImageProcessor;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Rendering;
-import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.*;
 import play.Logger;
-import play.api.libs.Files;
-import play.mvc.Controller;
-import play.mvc.Http;
-import play.mvc.Result;
-import play.mvc.Results;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -31,7 +20,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by florian on 7/07/15.
@@ -106,8 +94,8 @@ public class FileServiceImpl implements FileService {
                     sizeyTarget = sizey;
                     sizexTarget = originalImage.getHeight();
                 }
-                Logger.info("-------------- RESIZE image : "+fileName);
-                Logger.info("-------------- orignal size : "+originalImage.getWidth()+"/"+originalImage.getHeight()+"=>"+sizexTarget+"/"+sizeyTarget);
+//                Logger.info("-------------- RESIZE image : "+fileName);
+//                Logger.info("-------------- orignal size : "+originalImage.getWidth()+"/"+originalImage.getHeight()+"=>"+sizexTarget+"/"+sizeyTarget);
                 originalImage = resizeImage(originalImage
 //                        , originalImage.getType()
                         , sizexTarget

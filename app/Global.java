@@ -52,33 +52,33 @@ public class Global extends GlobalSettings {
         play.Logger.info("Spring Startup @" + new Date(ctx.getStartupDate()));
 
 
-        // run keepalive only in prod environment to avoid calls during test and dev targets
-        if (app.isProd()) {
-            final String hostname = System.getenv().get("Hostname");
-            if (hostname != null) {
-
-                Akka.system().scheduler().schedule(
-                        Duration.create(10, TimeUnit.SECONDS),
-                        Duration.create(10, TimeUnit.MINUTES),
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    play.Logger.info("Getting " + hostname + " for keep-alive ...");
-                                    HttpClient httpClient = new DefaultHttpClient();
-                                    HttpGet httpGet = new HttpGet(hostname);
-                                    HttpResponse response = httpClient.execute(httpGet);
-                                    play.Logger.info("Got " + hostname + " for keep-alive.");
-                                } catch (Exception e) {
-                                    play.Logger.info("Getting " + hostname + " for keep-alive ended with an exception", e);
-                                }
-                            }
-                        },
-                        Akka.system().dispatchers().defaultGlobalDispatcher()
-                );
-            } else {
-                play.Logger.info("Akka keep-alive won't run because the environment variable 'AwacHostname' does not exist.");
-            }
-        } // end of app.isProd()
+//        // run keepalive only in prod environment to avoid calls during test and dev targets
+//        if (app.isProd()) {
+//            final String hostname = System.getenv().get("Hostname");
+//            if (hostname != null) {
+//
+//                Akka.system().scheduler().schedule(
+//                        Duration.create(10, TimeUnit.SECONDS),
+//                        Duration.create(10, TimeUnit.MINUTES),
+//                        new Runnable() {
+//                            public void run() {
+//                                try {
+//                                    play.Logger.info("Getting " + hostname + " for keep-alive ...");
+//                                    HttpClient httpClient = new DefaultHttpClient();
+//                                    HttpGet httpGet = new HttpGet(hostname);
+//                                    HttpResponse response = httpClient.execute(httpGet);
+//                                    play.Logger.info("Got " + hostname + " for keep-alive.");
+//                                } catch (Exception e) {
+//                                    play.Logger.info("Getting " + hostname + " for keep-alive ended with an exception", e);
+//                                }
+//                            }
+//                        },
+//                        Akka.system().dispatchers().defaultGlobalDispatcher()
+//                );
+//            } else {
+//                play.Logger.info("Akka keep-alive won't run because the environment variable 'AwacHostname' does not exist.");
+//            }
+//        } // end of app.isProd()
     }
 
     public <T extends EssentialFilter> Class<T>[] filters() {

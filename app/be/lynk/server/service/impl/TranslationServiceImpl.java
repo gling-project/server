@@ -3,6 +3,9 @@ package be.lynk.server.service.impl;
 import be.lynk.server.dto.TranslationsDTO;
 import be.lynk.server.model.entities.Translation;
 import be.lynk.server.model.entities.TranslationValue;
+import be.lynk.server.service.TranslationService;
+import be.lynk.server.util.message.EmailMessageEnum;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.stereotype.Repository;
 import play.api.Play;
 import play.api.i18n.MessagesPlugin;
@@ -11,9 +14,6 @@ import play.i18n.Messages;
 import scala.Option;
 import scala.collection.JavaConverters;
 import scala.collection.immutable.Map;
-import be.lynk.server.service.TranslationService;
-import be.lynk.server.util.message.EmailMessageEnum;
-import be.lynk.server.util.message.ErrorMessageEnum;
 
 /**
  * Created by florian on 11/11/14.

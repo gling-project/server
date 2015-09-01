@@ -1,23 +1,23 @@
 package be.lynk.server.importer.impl;
 
+import be.lynk.server.importer.CategoryImporter;
+import be.lynk.server.model.entities.*;
+import be.lynk.server.service.BusinessCategoryService;
+import be.lynk.server.service.CategoryInterestLinkService;
+import be.lynk.server.service.CustomerInterestService;
+import jxl.Cell;
+import jxl.Sheet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import play.i18n.Lang;
+
 import java.io.*;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import be.lynk.server.importer.CategoryImporter;
-import be.lynk.server.model.entities.*;
-import be.lynk.server.service.BusinessCategoryService;
-import be.lynk.server.service.CategoryInterestLinkService;
-import be.lynk.server.service.CustomerInterestService;
-import jxl.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import play.i18n.Lang;
 
 /**
  * Created by florian on 5/06/15.

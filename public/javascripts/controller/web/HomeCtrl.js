@@ -61,14 +61,18 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $('.main-body').on('scroll', function () {
         var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
         if ($('.global-content-container').height() - scrollBottom < 200) {
-            $scope.currentPage = $scope.currentPage + 1;
-            $scope.search();
+
+            if ($scope.loadSemaphore == false) {
+                $scope.loadSemaphore = true;
+                $scope.currentPage = $scope.currentPage + 1;
+                $scope.search();
+            }
         }
     });
 
 
-    var success = function(data){
-        $scope.loadSemaphore=false;
+    var success = function (data) {
+        $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
         if (data == null || data.length == 0) {
             $scope.allLoaded = true;
@@ -93,35 +97,28 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             }
 
 
-
             //if this is the first page that asked, remove other publication
             if ($scope.currentPage == 0) {
                 $scope.publicationListCtrl.loading = true;
                 $scope.publicationListCtrl.data = [];
             }
-            else {
-                if($scope.loadSemaphore){
-                    return;
-                }
-                $scope.loadSemaphore = true;
-            }
 
             if ($scope.followedMode) {
                 if (interestSelected != null) {
-                    searchService.byFollowedAndInterest($scope.currentPage,interestSelected.id, function (data) {
+                    searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
                         success(data);
                     });
 
                 }
                 else {
-                    searchService.byFollowed($scope.currentPage,function (data) {
+                    searchService.byFollowed($scope.currentPage, function (data) {
                         success(data);
                     });
                 }
             }
             else {
                 if (interestSelected != null) {
-                    searchService.byInterest($scope.currentPage,interestSelected.id, function (data) {
+                    searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
                         success(data);
                     });
 

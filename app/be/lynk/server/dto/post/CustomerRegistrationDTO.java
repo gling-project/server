@@ -1,10 +1,10 @@
 package be.lynk.server.dto.post;
 
-import be.lynk.server.dto.*;
+import be.lynk.server.dto.AddressDTO;
+import be.lynk.server.dto.CustomerInterestDTO;
+import be.lynk.server.dto.FacebookAuthenticationDTO;
 import be.lynk.server.dto.technical.DTO;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 

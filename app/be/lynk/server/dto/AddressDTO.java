@@ -3,7 +3,6 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 import play.modules.mongodb.jackson.KeyTyped;
 
-import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;

@@ -7,7 +7,6 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Repository;
 import play.Logger;
-import play.api.Play;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;

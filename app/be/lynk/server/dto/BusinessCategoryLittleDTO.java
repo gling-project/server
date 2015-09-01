@@ -4,7 +4,6 @@ import be.lynk.server.dto.technical.DTO;
 import play.modules.mongodb.jackson.KeyTyped;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by florian on 18/05/15.

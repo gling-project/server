@@ -1,7 +1,5 @@
 package be.lynk.server.model;
 
-import be.lynk.server.controller.rest.SearchRestController;
-
 /**
  * Created by florian on 19/07/15.
  */

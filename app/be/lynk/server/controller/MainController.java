@@ -10,11 +10,8 @@ import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
-import play.Logger;
-import play.Play;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
-import play.mvc.Http;
 import play.mvc.Result;
 
 import java.util.ArrayList;
@@ -52,7 +49,6 @@ public class MainController extends AbstractController {
             accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
             accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
             interfaceDataDTO.setMySelf(accountDTO);
-            Logger.info(currentUser + "<=>" + accountDTO);
         }
 
 
@@ -109,7 +105,7 @@ public class MainController extends AbstractController {
             accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
             accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
             interfaceDataDTO.setMySelf(accountDTO);
-            Logger.info(currentUser + "<=>" + accountDTO);
+
         }
 
 
@@ -133,7 +129,6 @@ public class MainController extends AbstractController {
         ListDTO<LangDTO> langDTOListDTO = new ListDTO<>();
         for (Lang lang : Lang.availables()) {
             LangDTO langDTO = dozerService.map(lang, LangDTO.class);
-            Logger.info(lang + "<=>" + langDTO);
             langDTOListDTO.addElement(langDTO);
         }
         return langDTOListDTO;

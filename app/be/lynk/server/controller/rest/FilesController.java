@@ -6,24 +6,15 @@ import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
-import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.file.FileUtil;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Result;
 import play.mvc.Results;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class FilesController extends AbstractRestController {
@@ -71,8 +62,6 @@ public class FilesController extends AbstractRestController {
 
         //get the storedFile
         StoredFile storedFile = storedFileService.findById(storedFileId);
-
-        Logger.info(storedFile + "");
 
         if (storedFile == null) {
             throw new RuntimeException("File " + storedFileId + " was not found");

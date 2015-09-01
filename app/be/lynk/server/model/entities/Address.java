@@ -2,10 +2,10 @@ package be.lynk.server.model.entities;
 
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by florian on 17/05/15.

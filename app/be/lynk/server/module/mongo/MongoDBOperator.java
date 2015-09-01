@@ -1,11 +1,8 @@
 package be.lynk.server.module.mongo;
 
-import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.DTO;
 import net.vz.mongodb.jackson.JacksonDBCollection;
 import org.springframework.stereotype.Component;
-import play.Application;
-import play.Play;
 import play.libs.F;
 import play.modules.mongodb.jackson.MongoDB;
 

@@ -3,7 +3,6 @@ package be.lynk.server.dozerConverter;
 import be.lynk.server.dto.LangDTO;
 import org.dozer.CustomConverter;
 import org.dozer.DozerConverter;
-import play.Logger;
 import play.i18n.Lang;
 
 /**
@@ -26,7 +25,6 @@ public class LangConverter extends DozerConverter<Lang, LangDTO> implements Cust
         dto.setCode(lang.code());
         dto.setLanguage(lang.language());
 
-        Logger.info("LangConverter :"+lang+"/"+dto);
         return dto;
     }
 

@@ -79,18 +79,24 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getByDefault(Integer page) {
 
+        Logger.info("Serach Default page "+page);
+
+        long t = new Date().getTime();
+
         PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
 
         Position position = dozerService.map(dto, Position.class);
 
         List<SearchResult> searchResults = publicationService.findActivePublication(position, MAX_DISTANCE);
 
-        return selectByPageAndAlgotithme(page, searchResults, position);
+        return selectByPageAndAlgotithme(t,page, searchResults, position);
     }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result getByFollowed(Integer page) {
+
+        long t = new Date().getTime();
 
         PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
 
@@ -103,11 +109,13 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> finalList = publicationService.findActivePublicationByBusinesses(position, MAX_DISTANCE, businesses);
 
-        return selectByPageAndAlgotithme(page, finalList,position);
+        return selectByPageAndAlgotithme(t,page, finalList, position);
     }
 
     @Transactional
     public Result getByInterest(Integer page, long id) {
+
+        long t = new Date().getTime();
 
         //load interest
         CustomerInterest interest = customerInterestService.findById(id);
@@ -118,12 +126,14 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByInterest(position, MAX_DISTANCE, interest);
 
-        return selectByPageAndAlgotithme(page, publications, position);
+        return selectByPageAndAlgotithme(t,page, publications, position);
     }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result getByInterestAndFollowed(Integer page, long id) {
+
+        long t = new Date().getTime();
 
         //load interest
         CustomerInterest interest = customerInterestService.findById(id);
@@ -136,7 +146,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByBusinessesAndInterest(position, MAX_DISTANCE, businesses, interest);
 
-        return selectByPageAndAlgotithme(page, publications, position);
+        return selectByPageAndAlgotithme(t,page, publications, position);
     }
 
     private Result selectByPageAndStartDate(Integer page, List<SearchResult> searchResults) {
@@ -171,9 +181,9 @@ public class SearchRestController extends AbstractRestController {
         return ok(new ListDTO<>(publication));
     }
 
-    private Result selectByPageAndAlgotithme(Integer page, List<SearchResult> searchResults, Position position) {
+    private Result selectByPageAndAlgotithme(long t,Integer page, List<SearchResult> searchResults, Position position) {
 
-        long t = new Date().getTime();
+
         String s = "";
 
         s += "====== Default selectByPageAndAlgotithme\n";
@@ -394,12 +404,7 @@ public class SearchRestController extends AbstractRestController {
                     addresses.add(publication.getBusiness());
                 }
             }
-
-            Logger.info("======== Distance Before : " + (new Date().getTime() - t));
-
             Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(position, Position.class), addresses);
-
-            Logger.info("======== Distance After : " + (new Date().getTime() - t));
 
             for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
                 for (AbstractPublication publication : publications) {
@@ -422,8 +427,6 @@ public class SearchRestController extends AbstractRestController {
                     }
                 }
             }
-
-            Logger.info("======== Building After : " + (new Date().getTime() - t));
         }
 
         Collections.sort(l);
