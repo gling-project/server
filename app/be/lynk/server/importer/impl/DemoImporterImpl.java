@@ -37,37 +37,37 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
      * BUSINESS COLUMNS *
      */
     private static final Boolean WITH_PICTURE = true;
-    private static final Integer COL_BUSINESS_NAME = 0;
-    private static final Integer COL_BUSINESS_DESC = 1;
-    private static final Integer COL_BUSINESS_PHONE = 2;
-    private static final Integer COL_BUSINESS_STREET = 3;
-    private static final Integer COL_BUSINESS_CITY = 4;
-    private static final Integer COL_BUSINESS_ZIP = 5;
-    private static final Integer COL_BUSINESS_COUNTRY = 6;
+    private static final Letter COL_BUSINESS_NAME = Letter.A;
+    private static final Letter COL_BUSINESS_DESC = Letter.B;
+    private static final Letter COL_BUSINESS_PHONE = Letter.C;
+    private static final Letter COL_BUSINESS_STREET = Letter.D;
+    private static final Letter COL_BUSINESS_CITY = Letter.E;
+    private static final Letter COL_BUSINESS_ZIP = Letter.F;
+    private static final Letter COL_BUSINESS_COUNTRY = Letter.G;
 
-    private static final Integer COL_BUSINESS_LANDSCAPE = 9;
-    private static final Integer COL_BUSINESS_LOGO = 10;
-    private static final Integer COL_BUSINESS_CAT = 14;
-    private static final Integer COL_BUSINESS_EMAIL = 15;
+    private static final Letter COL_BUSINESS_LANDSCAPE = Letter.J;
+    private static final Letter COL_BUSINESS_LOGO = Letter.K;
+    private static final Letter COL_BUSINESS_CAT = Letter.O;
+    private static final Letter COL_BUSINESS_EMAIL = Letter.P;
     private static final int FIRST_COLUMN_INTEREST = 1;
 
     /**
      * PUBLICATION COLUMNS *
      */
-    private static final Integer COL_PUBLICATION_BUSINESS = 0;
-    private static final Integer COL_PUBLICATION_TYPE = 1;
-    private static final Integer COL_PUBLICATION_TITLE = 2;
-    private static final Integer COL_PUBLICATION_DESC = 3;
-    private static final Integer COL_PUBLICATION_START_HOUR = 4;
-    private static final Integer COL_PUBLICATION_END_HOUR = 5;
-    private static final Integer COL_PUBLICATION_LOGO = 6;
-    private static final Integer COL_PUBLICATION_Q = 7;
-    private static final Integer COL_PUBLICATION_MIN_Q = 8;
-    private static final Integer COL_PUBLICATION_UNIT = 9;
-    private static final Integer COL_PUBLICATION_PRICE_O = 10;
-    private static final Integer COL_PUBLICATION_PERCENT = 11;
-    private static final Integer COL_PUBLICATION_PRICE_F = 12;
-    private static final Integer COL_PUBLICATION_INTEREST = 13;
+    private static final Letter COL_PUBLICATION_BUSINESS = Letter.A;
+    private static final Letter COL_PUBLICATION_TYPE = Letter.B;
+    private static final Letter COL_PUBLICATION_TITLE = Letter.C;
+    private static final Letter COL_PUBLICATION_DESC = Letter.D;
+    private static final Letter COL_PUBLICATION_START_HOUR = Letter.E;
+    private static final Letter COL_PUBLICATION_END_HOUR = Letter.F;
+    private static final Letter COL_PUBLICATION_LOGO = Letter.G;
+    private static final Letter COL_PUBLICATION_Q = Letter.H;
+    private static final Letter COL_PUBLICATION_MIN_Q = Letter.I;
+    private static final Letter COL_PUBLICATION_UNIT = Letter.J;
+    private static final Letter COL_PUBLICATION_PRICE_O = Letter.K;
+    private static final Letter COL_PUBLICATION_PERCENT = Letter.L;
+    private static final Letter COL_PUBLICATION_PRICE_F = Letter.M;
+    private static final Letter COL_PUBLICATION_INTEREST = Letter.N;
 
     @Autowired
     private BusinessCategoryService businessCategoryService;
@@ -106,27 +106,27 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
         int rowCounter = FIRST_COLUMN_INTEREST;
 
         while (sheet.getRows() > rowCounter) {
-            String bName = sheet.getCell(COL_BUSINESS_NAME, rowCounter).getContents();
+            String bName = getString(sheet,COL_BUSINESS_NAME, rowCounter);
 
             if (bName != null && bName.length() > 0) {
 
                 Business business = new Business();
                 business.setName(bName);
-                business.setDescription(sheet.getCell(COL_BUSINESS_DESC, rowCounter).getContents());
-                business.setPhone(sheet.getCell(COL_BUSINESS_PHONE, rowCounter).getContents());
+                business.setDescription(getString(sheet,COL_BUSINESS_DESC, rowCounter));
+                business.setPhone(getString(sheet,COL_BUSINESS_PHONE, rowCounter));
                 business.setBusinessStatus(BusinessStatus.PUBLISHED);
                 business.setAddress(new Address(
-                        sheet.getCell(COL_BUSINESS_STREET, rowCounter).getContents(),
-                        sheet.getCell(COL_BUSINESS_ZIP, rowCounter).getContents(),
-                        sheet.getCell(COL_BUSINESS_CITY, rowCounter).getContents(),
-                        sheet.getCell(COL_BUSINESS_COUNTRY, rowCounter).getContents()
+                        getString(sheet,COL_BUSINESS_STREET, rowCounter),
+                        getString(sheet,COL_BUSINESS_ZIP, rowCounter),
+                        getString(sheet,COL_BUSINESS_CITY, rowCounter),
+                        getString(sheet,COL_BUSINESS_COUNTRY, rowCounter)
                 ));
-                business.setEmail(sheet.getCell(COL_BUSINESS_EMAIL, rowCounter).getContents());
+                business.setEmail(getString(sheet,COL_BUSINESS_EMAIL, rowCounter));
                 BusinessAccount account = new BusinessAccount();
                 account.setFirstname(bName);
                 account.setLastname(bName);
                 account.setGender(GenderEnum.MALE);
-                account.setEmail(sheet.getCell(COL_BUSINESS_EMAIL, rowCounter).getContents());
+                account.setEmail(getString(sheet,COL_BUSINESS_EMAIL, rowCounter));
                 account.setLoginCredential(new LoginCredential(account, false, "password"));
                 account.setBusiness(business);
                 account.setRole(RoleEnum.BUSINESS);
@@ -142,8 +142,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 }
 
 
-//            for (String s : sheet.getCell(COL_BUSINESS_CAT, rowCounter).getContents().split("/")) {
-                String s = sheet.getCell(COL_BUSINESS_CAT, rowCounter).getContents();
+//            for (String s : getString(sheet,COL_BUSINESS_CAT, rowCounter).split("/")) {
+                String s = getString(sheet,COL_BUSINESS_CAT, rowCounter);
                 BusinessCategory byName = businessCategoryService.findByName(normalize(s));
                 if (byName == null) {
                     Logger.warn("Cannot found the category " + s);
@@ -160,7 +160,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
 
                 if (WITH_PICTURE) {
-                    String landscapePath = sheet.getCell(COL_BUSINESS_LANDSCAPE, rowCounter).getContents();
+                    String landscapePath = getString(sheet,COL_BUSINESS_LANDSCAPE, rowCounter);
                     if (landscapePath != null && landscapePath.length() > 0) {
                         String path = "file/images/commerces/" + landscapePath;
                         File file = new File(path);
@@ -178,7 +178,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
                 //illustration
                 if (WITH_PICTURE) {
-                    String illustrationPath = sheet.getCell(COL_BUSINESS_LOGO, rowCounter).getContents();
+                    String illustrationPath = getString(sheet,COL_BUSINESS_LOGO, rowCounter);
                     if (illustrationPath != null && illustrationPath.length() > 0) {
                         String path = "file/images/commerces/" + illustrationPath;
                         File file = new File(path);
@@ -212,7 +212,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
 
             //load business
-            String businessName = sheet.getCell(COL_PUBLICATION_BUSINESS, rowCounter).getContents();
+            String businessName = getString(sheet,COL_PUBLICATION_BUSINESS, rowCounter);
             if (businessName != null && businessName.length() > 0) {
                 List<Business> businesses = businessService.findByName(businessName);
                 if (businesses.size() != 1) {
@@ -221,7 +221,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 Business business = businesses.get(0);
 
                 //type
-                String type = sheet.getCell(COL_PUBLICATION_TYPE, rowCounter).getContents();
+                String type = getString(sheet,COL_PUBLICATION_TYPE, rowCounter);
 
                 AbstractPublication publication;
 
@@ -239,11 +239,11 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         promotion.setOffPercent(number);
                     }
                     promotion.setOriginalPrice(getNumber(sheet, COL_PUBLICATION_PRICE_O, rowCounter));
-                    promotion.setUnit(sheet.getCell(COL_PUBLICATION_UNIT, rowCounter).getContents());
+                    promotion.setUnit(getString(sheet,COL_PUBLICATION_UNIT, rowCounter));
                     //compute %
                     if (promotion.getOffPercent() == null &&
                             promotion.getOriginalPrice() != null &&
-                            sheet.getCell(COL_PUBLICATION_PRICE_F, rowCounter).getContents() != null) {
+                            getString(sheet,COL_PUBLICATION_PRICE_F, rowCounter) != null) {
                         Double v = getNumber(sheet, COL_PUBLICATION_PRICE_F, rowCounter);
                         if (v != null) {
                             promotion.setOffPercent(v / promotion.getOriginalPrice());
@@ -254,11 +254,11 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                     throw new RuntimeException("Unknow type " + type);
                 }
 
-                String title = sheet.getCell(COL_PUBLICATION_TITLE, rowCounter).getContents();
-                String desc = sheet.getCell(COL_PUBLICATION_DESC, rowCounter).getContents();
+                String title = getString(sheet,COL_PUBLICATION_TITLE, rowCounter);
+                String desc = getString(sheet,COL_PUBLICATION_DESC, rowCounter);
 
                 //interest
-                String interestS = sheet.getCell(COL_PUBLICATION_INTEREST, rowCounter).getContents();
+                String interestS = getString(sheet,COL_PUBLICATION_INTEREST, rowCounter);
                 if (interestS != null && interestS.length() > 0) {
                     // loading interest
                     interestS = normalize(interestS);
@@ -287,7 +287,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
                     //illustration
                     try {
-                        String illustrationPath = sheet.getCell(COL_PUBLICATION_LOGO, rowCounter).getContents();
+                        String illustrationPath = getString(sheet,COL_PUBLICATION_LOGO, rowCounter);
                         if (illustrationPath != null && illustrationPath.length() > 0) {
                             String path = "file/images/publications/" + illustrationPath;
                             File file = new File(path);
@@ -306,21 +306,6 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 }
             }
             rowCounter++;
-        }
-    }
-
-    private Double getNumber(Sheet sheet, Integer colPublicationMinQ, int row) {
-        Cell cell = sheet.getCell(colPublicationMinQ, row);
-        try {
-            NumberCell contents = (NumberCell) cell;
-            return contents.getValue();
-        } catch (ClassCastException | NumberFormatException e) {
-            String contents = cell.getContents();
-            try {
-                return Double.parseDouble(contents);
-            } catch (NumberFormatException e1) {
-                return null;
-            }
         }
     }
 
