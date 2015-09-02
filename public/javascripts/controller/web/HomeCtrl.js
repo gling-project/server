@@ -34,6 +34,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         }
         $scope.currentPage = 0;
         $scope.allLoaded = false;
+        console.log('---- search after searchByInterest');
         $scope.search();
     };
 
@@ -41,14 +42,19 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.$on('POSITION_CHANGED', function () {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
+        console.log('---- search after POSITION_CHANGED');
         $scope.search();
     });
 
+
     //watch in follow mode
-    $scope.$watch('followedMode', function () {
-        $scope.currentPage = 0;
-        $scope.allLoaded = false;
-        $scope.search();
+    $scope.$watch('followedMode', function (o,n) {
+        if(o!=n) {
+            $scope.currentPage = 0;
+            $scope.allLoaded = false;
+            console.log('---- search after followedMode');
+            $scope.search();
+        }
     });
 
     $scope.$on('LOGOUT', function () {
@@ -58,9 +64,9 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     });
 
     //scrolling
-    $('.main-body').on('scroll', function () {
-        var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
-        if ($('.global-content-container').height() - scrollBottom < 200) {
+    $(window).on('scroll', function () {
+        var scrollBottom = $(window).scrollTop() + $(window).height();
+        if ($('.container-content').height() - scrollBottom < 200) {
 
             if ($scope.loadSemaphore == false) {
                 $scope.loadSemaphore = true;
@@ -72,6 +78,9 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
 
 
     var success = function (data) {
+        if($scope.currentPage==0){
+            $scope.publicationListCtrl.data=[];
+        }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
         if (data == null || data.length == 0) {
@@ -131,5 +140,13 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             }
         }
     };
+
+    //initialize
+    if(geolocationService.position!=null){
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
+        console.log('---- search after INITIALIZE');
+        $scope.search();
+    }
 
 });

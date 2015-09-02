@@ -259,7 +259,6 @@ myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'tran
     };
 
     $scope.toForgotPassword = function () {
-        console.log($scope.loginFormParam.dto);
         modalService.openForgotPasswordModal($scope.loginFormParam.dto.email);
         $scope.close();
     };
@@ -1274,115 +1273,6 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$flash', '$modalInstance', 'ima
     };
 
 }]);
-myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', '$rootScope', function ($rootScope,$scope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService, $rootScope) {
-
-    $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
-        $scope.advancedSearch = params.display;
-    });
-
-
-
-    //use the model
-    $scope.myself = accountService.getMyself();
-    $scope.accountService = accountService;
-
-
-    //login open modal
-    $scope.login = function () {
-        modalService.openLoginModal();
-    };
-
-    //registration open modal
-    $scope.registration = function () {
-        modalService.openCustomerRegistrationModal();
-    };
-
-    //edit profile
-    $scope.editProfile = function () {
-        modalService.openEditProfileModal();
-
-    };
-
-    //log out
-    $scope.logout = function () {
-        if (facebookService.isConnected()) {
-            facebookService.logout();
-        }
-        $scope.$broadcast('LOGOUT');
-        accountService.logout(function () {
-            $location.path('/');
-        });
-    };
-
-    //
-    // change lang
-    //
-    $scope.$watch('lang', function () {
-        if (!angular.isUndefined($scope.lang)) {
-            languageService.changeLanguage($scope.lang);
-        }
-    });
-
-    $scope.languageService = languageService;
-
-
-    $scope.positions = [
-        {key: 'currentPosition', translation: '--.position.current'}
-    ];
-
-    $scope.currentPositionText = 'currentPosition';
-
-    $timeout(function () {
-        completePositions();
-
-        $scope.$watch('currentPosition', function (o, n) {
-            if (n != null && o != n) {
-                addressService.changeAddress($scope.currentPosition, function (result) {
-
-                    if (result.__type.indexOf('AddressDTO') == -1) {
-                        accountService.getMyself().selectedAddress = null;
-                    }
-                    else {
-                        accountService.getMyself().selectedAddress = result;
-                    }
-                    $timeout(function () {
-                        $scope.$broadcast('POSITION_CHANGED');
-                    }, 1);
-                });
-            }
-        });
-
-        $rootScope.$watch(function () {
-            return accountService.model.myself;
-        }, function watchCallback(newValue, oldValue) {
-            completePositions();
-        });
-
-    }, 1);
-    var completePositions = function () {
-        $scope.positions = [
-            {key: 'currentPosition', translation: '--.position.current'}
-        ];
-        if (accountService.getMyself() != null) {
-            for (var key in accountService.getMyself().addresses) {
-                $scope.positions.push(
-                    {
-                        key: accountService.getMyself().addresses[key].name,
-                        translation: accountService.getMyself().addresses[key].name
-                    });
-            }
-        }
-        $scope.currentPosition = geolocationService.getLocationText();
-    };
-
-    $rootScope.$watch(function () {
-        return accountService.model.myself;
-    }, function watchCallback(n, o) {
-        completePositions();
-    }, true);
-
-
-}]);
 myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
@@ -1419,6 +1309,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         }
         $scope.currentPage = 0;
         $scope.allLoaded = false;
+        console.log('---- search after searchByInterest');
         $scope.search();
     };
 
@@ -1426,14 +1317,19 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.$on('POSITION_CHANGED', function () {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
+        console.log('---- search after POSITION_CHANGED');
         $scope.search();
     });
 
+
     //watch in follow mode
-    $scope.$watch('followedMode', function () {
-        $scope.currentPage = 0;
-        $scope.allLoaded = false;
-        $scope.search();
+    $scope.$watch('followedMode', function (o,n) {
+        if(o!=n) {
+            $scope.currentPage = 0;
+            $scope.allLoaded = false;
+            console.log('---- search after followedMode');
+            $scope.search();
+        }
     });
 
     $scope.$on('LOGOUT', function () {
@@ -1443,9 +1339,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     });
 
     //scrolling
-    $('.main-body').on('scroll', function () {
-        var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
-        if ($('.global-content-container').height() - scrollBottom < 200) {
+    $(window).on('scroll', function () {
+        var scrollBottom = $(window).scrollTop() + $(window).height();
+        if ($('.container-content').height() - scrollBottom < 200) {
 
             if ($scope.loadSemaphore == false) {
                 $scope.loadSemaphore = true;
@@ -1457,6 +1353,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
 
     var success = function (data) {
+        if($scope.currentPage==0){
+            $scope.publicationListCtrl.data=[];
+        }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
         if (data == null || data.length == 0) {
@@ -1516,6 +1415,14 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             }
         }
     };
+
+    //initialize
+    if(geolocationService.position!=null){
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
+        console.log('---- search after INITIALIZE');
+        $scope.search();
+    }
 
 }]);
 myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$rootScope', function ($scope, modalService, accountService, $rootScope) {
@@ -1586,26 +1493,24 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
     $scope.edit = false;
     $scope.myBusiness = false;
     $scope.businessId = $routeParams.businessId;
+
+    //publication timing
+    $scope.publicationOptions = [
+        {key: 'BASIC', value: '--.business.publication.basic'},
+        {key: 'ARCHIVE', value: '--.business.publication.archive'}
+    ];
     //publication
     $scope.publicationListParam = {
         businessId: $scope.businessId,
         scrollTo: $scope.publicationIdToGo,
         displayRemoveIcon: $scope.edit,
-        type:'basic'
+        type:'BASIC'
     };
     $scope.$watch('edit', function () {
         $scope.publicationListParam.displayRemoveIcon = $scope.edit;
     });
     //address
     $scope.googleMapParams = {};
-    $scope.publicationOptions = [
-        {key: 'basic', value: '--.business.publication.basic'},
-        {key: 'ARCHIVE', value: '--.business.publication.archive'}
-    ];
-
-    $scope.publicationOptions.push({
-        key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
-    });
 
 
     //loading
@@ -1621,6 +1526,14 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                             $scope.edit = true;
                         }
                         $scope.myBusiness = true;
+                    }
+
+                    if($scope.myBusiness){
+
+                        $scope.publicationOptions.push({
+                            key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
+                        });
+
                     }
                 }
             );
@@ -1883,8 +1796,10 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                 $scope.$broadcast('RELOAD_PUBLICATION');
             });
 
-            $scope.$watch('publicationListParam.type',function(){
-                $scope.$broadcast('RELOAD_PUBLICATION');
+            $scope.$watch('publicationListParam.type',function(o,n){
+                if(o!=n) {
+                    $scope.$broadcast('RELOAD_PUBLICATION');
+                }
             });
 
             $scope.$on('RELOAD_PUBLICATION', function () {
@@ -2059,6 +1974,11 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                     scope.publications = [];
 
                     scope.success = function (data) {
+
+                        if(scope.currentPage==0){
+                            scope.publications = [];
+                        }
+
                         scope.loadSemaphore = false;
                         for (var key in data) {
                             scope.publications.push(data[key])
@@ -2077,12 +1997,13 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
 
 
                     //scrolling
-                    $('.main-body').on('scroll', function () {
-                        var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
-                        if ($('.global-content-container').height() - scrollBottom < 200) {
+                    $(window).on('scroll', function () {
+                        var scrollBottom = $(window).scrollTop() + $(window).height();
+                        if ($('.container-content').height() - scrollBottom < 200) {
                             if (scope.loadSemaphore == false) {
                                 scope.loadSemaphore = true;
                                 scope.currentPage = scope.currentPage + 1;
+
                                 scope.search();
                             }
                         }

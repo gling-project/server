@@ -19,6 +19,11 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                     scope.publications = [];
 
                     scope.success = function (data) {
+
+                        if(scope.currentPage==0){
+                            scope.publications = [];
+                        }
+
                         scope.loadSemaphore = false;
                         for (var key in data) {
                             scope.publications.push(data[key])
@@ -37,12 +42,13 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
 
 
                     //scrolling
-                    $('.main-body').on('scroll', function () {
-                        var scrollBottom = $('.main-body').scrollTop() + $('.main-body').height();
-                        if ($('.global-content-container').height() - scrollBottom < 200) {
+                    $(window).on('scroll', function () {
+                        var scrollBottom = $(window).scrollTop() + $(window).height();
+                        if ($('.container-content').height() - scrollBottom < 200) {
                             if (scope.loadSemaphore == false) {
                                 scope.loadSemaphore = true;
                                 scope.currentPage = scope.currentPage + 1;
+
                                 scope.search();
                             }
                         }

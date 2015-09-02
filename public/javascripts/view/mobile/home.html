@@ -5,29 +5,31 @@
     <div class='app-content'>
 
         <div class="body-mask"
-                ng-show="displayMask"></div>
+             ng-show="displayMask"></div>
 
         <div class="scrollable">
-            <div class="scrollable-content">
+            <div class="scrollable-content scrollable-content-body">
 
-                <!-- interest -->
-                <div style="overflow: auto">
-                    <div class="home-interest-box"
-                         style="width:700px"
-                         ng-style="{width:(customerInterests.length * 34 + 20) + 'px'}">
-                        <button class="home-interest" ng-repeat="interest in customerInterests"
-                                ng-show="interest.iconName!=null"
-                                ng-click="searchByInterest(interest)"
-                                ng-class="{'selected':interest.selected === true}">
+                <div class="scrollable-content-inner">
 
-                            <img ng-src="/assets/images/interest/{{interest.iconName}}" style="width:50px"/>
-                        </button>
+                    <!-- interest -->
+                    <div style="overflow: auto">
+                        <div class="home-interest-box"
+                             style="width:700px"
+                             ng-style="{width:(customerInterests.length * 34 + 20) + 'px'}">
+                            <button class="home-interest" ng-repeat="interest in customerInterests"
+                                    ng-show="interest.iconName!=null"
+                                    ng-click="searchByInterest(interest)"
+                                    ng-class="{'selected':interest.selected === true}">
+
+                                <img ng-src="/assets/images/interest/{{interest.iconName}}" style="width:50px"/>
+                            </button>
+                        </div>
                     </div>
+
+
+                    <publication-list-mobile-ctrl ng-info="publicationListCtrl"></publication-list-mobile-ctrl>
                 </div>
-
-
-                <publication-list-mobile-ctrl ng-info="publicationListCtrl"></publication-list-mobile-ctrl>
-
             </div>
 
         </div>

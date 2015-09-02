@@ -72,7 +72,6 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
             });
 
             $scope.$on('RELOAD_PUBLICATION', function () {
-                console.log("RELOAD_PUBLICATION");
                 $scope.publicationListParam.refresh();
             });
 

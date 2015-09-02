@@ -1,0 +1,106 @@
+<div
+        class="navigation-bar"
+        ng-class="{'header-with-advanced-search':advancedSearch}">
+
+    <div class="container header-option-container" >
+
+        <h1 style="cursor : pointer"
+            id="welcome-btn-welcome"
+            ng-click="navigateTo('/')">
+            {{'--.site.name' | translateText}}
+        </h1>
+
+        <!-- seach bar -->
+        <search-bar-ctrl  ng-info="{mobile:false}"></search-bar-ctrl>
+
+
+        <!-- not connected menu -->
+        <div class="profile-buttons-container" ng-show="accountService.getMyself()==null">
+            <!-- lang -->
+            <select class="form-control" ng-model="languageService.currentLanguage" ng-options="lang.code as lang.language for lang in languageService.languages">
+            </select>
+            <button
+                    type="button"
+                    id="welcome-btn-login"
+                    class="btn btn-primary"
+                    ng-click="login()">
+                {{'--.welcome.login' | translateText}}
+            </button>
+            {{'--.generic.or' | translateText}}
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="welcome-btn-registration"
+                    ng-click="registration()">
+                {{'--.welcome.signIn' | translateText}}
+            </button>
+        </div>
+
+        <!-- connected menu -->
+        <div class="profile-buttons-container" ng-show="accountService.getMyself()!=null" style="display : inline-block">
+            <div class="dropdown" ng-show="accountService.getMyself()!=null" style="display : inline-block">
+
+                <!-- lang -->
+                <select
+                        class="form-control"
+                        ng-model="languageService.currentLanguage"
+                        ng-options="lang.code as lang.language for lang in languageService.languages"
+                        style="display: inline-block;width:80px">
+                </select>
+
+                <!-- connection button -->
+                <div class="menu-connection-button-container">
+                    <button
+                            class="btn btn-default dropdown-toggle"
+                            type="button"
+                            id="dropdownMenu1"
+                            data-toggle="dropdown"
+                            aria-expanded="true"
+                            style="max-width: 200px;">
+                        {{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}}
+                        <span class="caret"></span>
+                    </button>
+
+                    <!-- connected menu -->
+                    <ul class="dropdown-menu dropdown-menu-right"
+                        role="menu"
+                        aria-labelledby="dropdownMenu1">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')" id="welcome-btn-profile">
+                                {{'--.welcome.myProfile' | translateText}}
+                            </a>
+                        </li>
+                        <li role="presentation" id="welcome-btn-my-businesses">
+                            <a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/my-businesses')">
+                                {{'--.welcome.myBusinesses' | translateText}}
+                            </a>
+                        </li>
+                        <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation" id="welcome-btn-business">
+                            <a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
+                                {{'--.welcome.myBusiness' | translateText}}
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="" ng-click="logout()" id="welcome-btn-logout">
+                                {{'--.generic.logout' | translateText}}
+                            </a>
+                        </li>
+                        <li>
+                            <ul></ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- position choice -->
+                <img src="/assets/images/menu/icon_home.png" />
+                <select
+                        class="form-control"
+                        ng-model="currentPosition"
+                        ng-options="position.key as position.translation | translateText for position in positions"
+                        style="display: inline-block;width: 120px">
+                </select>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -28,7 +28,6 @@
 @import 'widget/_messenger';
 @import 'widget/_progress_bar';
 @import 'widget/_followed-business';
-@import '_TEMP';
 
 //
 // color
@@ -75,8 +74,7 @@ h1 {
 }
 
 html, body {
-    height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 body {
@@ -84,39 +82,26 @@ body {
     background-color: @color-body-bg;
 }
 
-.main-container {
-    margin-top: 65px;
+.container-content {
+    width: 1000px;
+    margin: auto;
+    top: 75px;
+    position: relative;
 }
 
-.main-container-with-advanced-search {
-    margin-top: 165px !important;
-}
+//.container-content-with-advanced-search {
+//    margin-top: 165px !important;
+//}
 
-.my-page-header {
-    height: 80px;
-    text-align: center;
-    margin-bottom: 20px;
-    background-color: #eeeeee;
-    padding-top: 5px;
-    & > * {
-        display: inline-block;
-    }
-    & > h1 {
-        vertical-align: middle;
-        margin-left: 15px;
-        font-weight: bold;
-    }
-}
-
-.error_icon {
-    display: none;
+.header-option-container {
+    margin-top: 10px;
 }
 
 .header-with-advanced-search {
     height: 165px !important;
-    .header-option-container{
+    .header-option-container {
         position: fixed;
-        top:100px;
+        top: 100px;
     }
 }
 
@@ -288,24 +273,6 @@ button {
     padding-top: 5px;
 }
 
-.custom-panel {
-    display: inline-block;
-    vertical-align: top;
-    background-color: #ffffff;
-    border: 1px solid rgba(58, 58, 58, 0.61);
-    margin: 10px;
-
-    & > h4 {
-        display: block;
-        padding: 10px;
-        background-color: #eee;
-        margin: 0px 0px 10px;
-        border-bottom: 2px solid rgba(58, 58, 58, 0.61);
-    }
-    & > div {
-        padding: 15px;
-    }
-}
 
 .btn-file {
     position: relative;
@@ -384,14 +351,14 @@ a {
     display: block !important;
 }
 
-.button-with-label{
+.button-with-label {
     position: relative;
-    &:hover{
-        p{
+    &:hover {
+        p {
             display: block;
         }
     }
-    p{
+    p {
         position: absolute;
         background-color: #333333;
         color: rgb(244, 244, 244);

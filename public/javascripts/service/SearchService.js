@@ -159,9 +159,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         }
         canceler = $q.defer();
 
-        console.log("geolocationService.position");
-        console.log(geolocationService.position);
-
         $http({
             'method': "GET",
             'url': "/rest/search/publication/business/" + businessId+"/"+page,
@@ -189,9 +186,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             canceler.resolve();
         }
         canceler = $q.defer();
-
-        console.log("geolocationService.position");
-        console.log(geolocationService.position);
 
         $http({
             'method': "GET",
@@ -242,8 +236,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
     };
 
     this.byInterest = function (page,interestId, callbackSuccess, callbackError) {
-
-        console.log('by interest');
 
         if (canceler != null) {
             canceler.resolve();

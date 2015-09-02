@@ -13,26 +13,24 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     $scope.edit = false;
     $scope.myBusiness = false;
     $scope.businessId = $routeParams.businessId;
+
+    //publication timing
+    $scope.publicationOptions = [
+        {key: 'BASIC', value: '--.business.publication.basic'},
+        {key: 'ARCHIVE', value: '--.business.publication.archive'}
+    ];
     //publication
     $scope.publicationListParam = {
         businessId: $scope.businessId,
         scrollTo: $scope.publicationIdToGo,
         displayRemoveIcon: $scope.edit,
-        type:'basic'
+        type:'BASIC'
     };
     $scope.$watch('edit', function () {
         $scope.publicationListParam.displayRemoveIcon = $scope.edit;
     });
     //address
     $scope.googleMapParams = {};
-    $scope.publicationOptions = [
-        {key: 'basic', value: '--.business.publication.basic'},
-        {key: 'ARCHIVE', value: '--.business.publication.archive'}
-    ];
-
-    $scope.publicationOptions.push({
-        key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
-    });
 
 
     //loading
@@ -48,6 +46,14 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                             $scope.edit = true;
                         }
                         $scope.myBusiness = true;
+                    }
+
+                    if($scope.myBusiness){
+
+                        $scope.publicationOptions.push({
+                            key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
+                        });
+
                     }
                 }
             );
@@ -310,8 +316,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                 $scope.$broadcast('RELOAD_PUBLICATION');
             });
 
-            $scope.$watch('publicationListParam.type',function(){
-                $scope.$broadcast('RELOAD_PUBLICATION');
+            $scope.$watch('publicationListParam.type',function(o,n){
+                if(o!=n) {
+                    $scope.$broadcast('RELOAD_PUBLICATION');
+                }
             });
 
             $scope.$on('RELOAD_PUBLICATION', function () {

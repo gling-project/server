@@ -185,6 +185,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
     @Override
     public List<AbstractPublication> findBySearchResults(List<SearchResult> searchResults) {
+        if(searchResults.size()==0){
+            return new ArrayList<>();
+        }
         List<Long> ids = searchResults.stream().map(s -> s.getPublicationId()).collect(Collectors.toList());
 
         String request = "SELECT p FROM AbstractPublication p where p.id in :idList";

@@ -46,7 +46,6 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
     };
 
     $scope.toForgotPassword = function () {
-        console.log($scope.loginFormParam.dto);
         modalService.openForgotPasswordModal($scope.loginFormParam.dto.email);
         $scope.close();
     };

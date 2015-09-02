@@ -467,22 +467,15 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountSe
 
         if ($scope.loginFormParam.isValid) {
 
-            console.log('valid')
-
             $scope.loading = true;
 
             accountService.login($scope.loginFormParam.dto,
                 function () {
-                    console.log('success')
-
                     $flash.success(translationService.get("--.login.flash.success"));
                     $scope.loading = false;
-                    //logout facebook in case
-                    //facebookService.logout();
                     $location.path('/home');
                 },
                 function () {
-                    console.log('faild')
                     $scope.loading = false;
                 });
         }
@@ -514,53 +507,40 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
 
     //search function
     $scope.publicationListCtrl = {};
-    $scope.search = function () {
-        if (geolocationService.position != null) {
+    $scope.currentPage = 0;
+    $scope.allLoaded = false;
+    $scope.loadSemaphore = false;
 
-            var interestSelected = null;
-            for (var i in $scope.customerInterests) {
-                if ($scope.customerInterests[i].selected) {
-                    interestSelected = $scope.customerInterests[i];
-                }
+
+
+    //scrolling
+    $('.scrollable-content-body').on('scroll', function () {
+        var scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();
+        if ($('.scrollable-content-inner').height() - scrollBottom < 200) {
+
+            if ($scope.loadSemaphore == false) {
+                $scope.loadSemaphore = true;
+                $scope.currentPage = $scope.currentPage + 1;
+                $scope.search();
             }
+        }
+    });
 
-            $scope.publicationListCtrl.loading = true;
-            if ($scope.followedMode) {
-                if (interestSelected != null) {
-                    searchService.byFollowedAndInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-
-                }
-                else {
-                    searchService.byFollowed(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-                }
-            }
-            else {
-                if (interestSelected != null) {
-                    searchService.byInterest(interestSelected.id, function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-
-                }
-                else {
-                    searchService.default(function (data) {
-                        $scope.publicationListCtrl.loading = false;
-                        $scope.publicationListCtrl.data = data;
-                    });
-                }
+    var success = function (data) {
+        if($scope.currentPage==0){
+            $scope.publicationListCtrl.data=[];
+        }
+        $scope.loadSemaphore = false;
+        $scope.publicationListCtrl.loading = false;
+        if (data == null || data.length == 0) {
+            $scope.allLoaded = true;
+        }
+        else {
+            for (var key in data) {
+                $scope.publicationListCtrl.data.push(data[key])
             }
         }
     };
-
-
-    //initialisation
-    $scope.search();
 
     //functions
     //search by interest
@@ -575,17 +555,26 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
             }
             interest.selected = true;
         }
+        console.log('SERACH AFTER searchByInterest ');
         $scope.search();
     };
 
     //watch on change position
     $scope.$on('POSITION_CHANGED', function () {
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
+        console.log('SERACH AFTER POSITION_CHANGED');
         $scope.search();
     });
 
     //watch in follow mode
-    $scope.$watch('followedMode', function () {
-        $scope.search();
+    $scope.$watch('followedMode', function (o,n) {
+        if(o!=n) {
+            $scope.currentPage = 0;
+            $scope.allLoaded = false;
+            console.log('SERACH AFTER followedMode');
+            $scope.search();
+        }
     });
 
 
@@ -634,8 +623,6 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
             {key: 'currentPosition', translation: '--.position.current'}
         ];
         if (accountService.getMyself() != null) {
-            console.log('load address');
-            console.log(accountService.getMyself());
             for (var key in accountService.getMyself().addresses) {
                 $scope.positions.push(
                     {
@@ -679,6 +666,68 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
         $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
         $scope.displayPositionDetails=false;
     });
+
+
+
+
+    $scope.search = function () {
+
+        console.log('search : '+$scope.currentPage);
+
+        if (geolocationService.position != null) {
+
+            var interestSelected = null;
+            for (var i in $scope.customerInterests) {
+                if ($scope.customerInterests[i].selected) {
+                    interestSelected = $scope.customerInterests[i];
+                }
+            }
+
+            //if this is the first page that asked, remove other publication
+            if ($scope.currentPage == 0) {
+                $scope.publicationListCtrl.loading = true;
+                $scope.publicationListCtrl.data = [];
+            }
+
+            if ($scope.followedMode) {
+                if (interestSelected != null) {
+                    searchService.byFollowedAndInterest($scope.currentPage,interestSelected.id, function (data) {
+                        success(data);
+                    });
+
+                }
+                else {
+                    searchService.byFollowed($scope.currentPage,function (data) {
+                        success(data);
+                    });
+                }
+            }
+            else {
+                if (interestSelected != null) {
+                    searchService.byInterest($scope.currentPage,interestSelected.id, function (data) {
+                        success(data);
+                    });
+
+                }
+                else {
+                    searchService.default($scope.currentPage,function (data) {
+                        success(data);
+                    });
+                }
+            }
+        }
+    };
+
+
+
+    //initialize
+    if(geolocationService.position!=null){
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
+        console.log('---- search after INITIALIZE');
+        $scope.search();
+    }
+
 
 }]);
 myApp.controller('ForgotPasswordCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$filter', '$flash', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash) {
@@ -1251,7 +1300,6 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
             });
 
             $scope.$on('RELOAD_PUBLICATION', function () {
-                console.log("RELOAD_PUBLICATION");
                 $scope.publicationListParam.refresh();
             });
 
@@ -1442,7 +1490,7 @@ myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', '
         }
     }
 }]);
-myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout,publicationService) {
+myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService) {
 
     return {
         restrict: "E",
@@ -1457,29 +1505,52 @@ myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'business
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    //scrolling
+                    $('.scrollable-content-body').on('scroll', function () {
+                        var scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();
+                        if ($('.scrollable-content-inner').height() - scrollBottom < 200) {
 
-                    scope.getInfo().refresh = function () {
-                        searchService.byBusiness(scope.getInfo().businessId, function (data) {
-                            scope.publications = data;
-                            for (var i in scope.publications) {
-                                scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
+                            if (scope.loadSemaphore == false) {
+                                scope.loadSemaphore = true;
+                                scope.currentPage = scope.currentPage + 1;
+                                scope.search();
                             }
+                        }
+                    });
 
-                            $timeout(function () {
-                                if (scope.getInfo().scrollTo != null) {
-                                    $('.main-body').scrollTop($("#publication" + scope.getInfo().scrollTo).offset().top);
-                                    scope.$apply();
-                                }
-                            }, 1);
 
-                        });
+                    scope.getInfo().refresh = function (type) {
+                        scope.currentPage = 0;
+                        scope.publications = [];
+                        scope.type = type;
+                        scope.search();
                     };
 
-                    scope.removePublication = function (publication) {
-                        publicationService.delete(publication, function () {
-                            $rootScope.$broadcast('RELOAD_PUBLICATION');
-                        });
-                    }
+                    scope.search = function () {
+                        searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
+                    };
+
+                    scope.success = function (data) {
+
+                        if(scope.currentPage==0){
+                            scope.publications = [];
+                        }
+
+                        scope.loadSemaphore = false;
+                        for (var key in data) {
+                            scope.publications.push(data[key])
+                        }
+                        for (var i in scope.publications) {
+                            scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
+                        }
+
+                        $timeout(function () {
+                            if (scope.getInfo().scrollTo != null) {
+                                $('.main-body').scrollTop($("#publication" + scope.getInfo().scrollTo).offset().top);
+                                scope.$apply();
+                            }
+                        }, 1);
+                    };
                 }
             }
         }

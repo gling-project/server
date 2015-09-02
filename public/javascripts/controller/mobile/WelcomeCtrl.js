@@ -14,22 +14,15 @@ myApp.controller('WelcomeCtrl', function ($rootScope,$scope,$location,accountSer
 
         if ($scope.loginFormParam.isValid) {
 
-            console.log('valid')
-
             $scope.loading = true;
 
             accountService.login($scope.loginFormParam.dto,
                 function () {
-                    console.log('success')
-
                     $flash.success(translationService.get("--.login.flash.success"));
                     $scope.loading = false;
-                    //logout facebook in case
-                    //facebookService.logout();
                     $location.path('/home');
                 },
                 function () {
-                    console.log('faild')
                     $scope.loading = false;
                 });
         }
