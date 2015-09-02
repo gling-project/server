@@ -177,7 +177,6 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/GalleryModal/GalleryModal.js',
 
                         <!-- controllers -->
-                        'public/javascripts/controller/web/WelcomeCtrl.js',
                         'public/javascripts/controller/web/HomeCtrl.js',
                         'public/javascripts/controller/web/ProfileCtrl.js',
                         'public/javascripts/controller/web/BusinessCtrl.js',
@@ -187,7 +186,8 @@ module.exports = function (grunt) {
                         <!-- component -->
                         'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
                         'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
-                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js'],
+                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
+                        'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js'],
                     'public/dist/mobile.js':[
                         'public/components/lodash/lodash.min.js',
                         'public/components/angular-google-maps/dist/angular-google-maps.min.js',
