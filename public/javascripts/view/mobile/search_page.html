@@ -1,5 +1,59 @@
+<!-- header -->
 <header-search-ctrl></header-search-ctrl>
 
-<div>
+<!-- body -->
+<div class='app-body'>
+    <div class='app-content'>
 
+        <div class="body-mask"
+             ng-show="displayMask"></div>
+
+        <div class="scrollable">
+            <div class="scrollable-content scrollable-content-body">
+
+                <div ng-show="results == null" class="loading">
+                    <img src="/assets/images/big_loading.gif"/>
+                </div>
+
+                <div ng-hide="results==null">
+                    <tabset>
+                        <!-- business -->
+                        <tab ng-show="businessTab.display" active="businessTab.active">
+                            <tab-heading>
+                                {{'--.generic.business' | translateText}} ({{businessTab.total}})
+                            </tab-heading>
+                            <business-list-mobile-ctrl ng-info="businessParams"></business-list-mobile-ctrl>
+                        </tab>
+                        <!-- publication -->
+                        <tab ng-show="publicationTab.display" active="publicationTab.active">
+                            <tab-heading>
+                                {{'--.generic.publication' | translateText}} ({{publicationTab.total}})
+                            </tab-heading>
+                            <publication-list-ctrl ng-info="publicationParams"></publication-list-ctrl>
+                        </tab>
+                        <!-- category -->
+                        <tab ng-show="categoryTab.display" active="categoryTab.active">
+                            <tab-heading>
+                                {{'--.generic.category' | translateText}} ({{categoryTab.total}})
+                            </tab-heading>
+
+                            <div ng-show="results.categoriesMap == 0">
+                                {{'--.list.nothing' | translateText}}
+                            </div>
+
+                            <div ng-repeat="businessesByCategory in results.categoriesMap">
+                                {{businessesByCategory.category.category.translationName}}
+                                <span class="transition" ng-show="category.subCategory!=null">>></span>
+                                {{businessesByCategory.category.subCategory.translationName}}
+                                <span class="transition" ng-show="category.subSubCategory!=null">>></span>
+                                {{businessesByCategory.category.subSubCategory.translationName}}
+                                <business-list-ctrl ng-info="{data:businessesByCategory.businesses,loading:false}"></business-list-ctrl>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>

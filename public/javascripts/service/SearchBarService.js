@@ -19,7 +19,7 @@ myApp.service("searchBarService", function ($timeout, $rootScope) {
     $rootScope.$watch(function () {
         return self.searchCriteria;
     }, function watchCallback(newValue, oldValue) {
-        if (!suspendBinding) {
+        if (!suspendBinding && newValue != oldValue) {
             suspendBinding = true;
             self.currentSearch = '';
             var first = true;

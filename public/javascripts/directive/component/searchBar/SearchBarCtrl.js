@@ -31,6 +31,7 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
                     };
 
                     scope.$watch('searchBarService.currentSearch', function (o, n) {
+
                         if (searchBarService.displaySearchResult && o != n && searchBarService.currentSearch != "" && searchBarService.currentSearch.length >= 2) {
                             var searchS = angular.copy(searchBarService.currentSearch);
                             $timeout(function () {
