@@ -28,7 +28,8 @@ public enum ErrorMessageEnum {
     SEARCH_WRONG_CRITERIA("--.error.search.wrongCriteria"),
     WRONG_ADDRESS_NAME_ALREADY_USED("--.error.address.nameAlreadyUsed"),
     WRONG_ADDRESS_NAME("--.error.address.nameNotExists"),
-    WRONG_OLD_PASSWORD("--.error.address.wrongOldPassword");
+    WRONG_OLD_PASSWORD("--.error.address.wrongOldPassword"),
+    ADDRESS_WRONG_NAME_TECHNICAL_NAME("--.error.address.TechnicalName");
 
     private final String key;
 

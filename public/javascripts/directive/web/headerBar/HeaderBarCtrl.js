@@ -62,30 +62,44 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                     scope.languageService = languageService;
 
 
-                    scope.positions = [
-                        {key: 'currentPosition', translation: '--.position.current'}
+                    scope.positionBasicData =[
+                        {key: 'currentPosition', translation: '--.position.current'},
+                        {key: 'createNewAddress', translation: '--.position.newAddress'}
                     ];
+
+                    scope.positions =angular.copy(scope.positionBasicData);
 
                     scope.currentPositionText = 'currentPosition';
 
                     $timeout(function () {
                         completePositions();
 
-                        scope.$watch('currentPosition', function (o, n) {
+                        scope.$watch('currentPosition', function (n,o) {
                             if (n != null && o != n) {
-                                addressService.changeAddress(scope.currentPosition, function (result) {
+                                if(scope.currentPosition == 'createNewAddress'){
+                                    scope.currentPosition=o;
+                                    modalService.addressModal(true,null,false,function(data){
+                                        $timeout(function () {
+                                            scope.currentPosition = data.name;
+                                        },1);
+                                    });
+                                }
+                                else if(scope.currentPosition != scope.positionCurrenltyComputed){
+                                    scope.positionCurrenltyComputed = scope.currentPosition;
+                                    addressService.changeAddress(scope.currentPosition, function (result) {
 
-                                    if (result.__type.indexOf('AddressDTO') == -1) {
-                                        accountService.getMyself().selectedAddress = null;
-                                    }
-                                    else {
-                                        accountService.getMyself().selectedAddress = result;
-                                    }
-                                    $timeout(function () {
-                                        $rootScope.$broadcast('POSITION_CHANGED');
-                                        console.log("POSITION_CHANGED");
-                                    }, 1);
-                                });
+                                        if (result.__type.indexOf('AddressDTO') == -1) {
+                                            accountService.getMyself().selectedAddress = null;
+                                        }
+                                        else {
+                                            accountService.getMyself().selectedAddress = result;
+                                        }
+                                        $timeout(function () {
+                                            $rootScope.$broadcast('POSITION_CHANGED');
+                                            console.log("POSITION_CHANGED");
+                                        }, 1);
+                                    });
+                                }
                             }
                         });
 
@@ -98,12 +112,10 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                     }, 1);
 
                     var completePositions = function () {
-                        scope.positions = [
-                            {key: 'currentPosition', translation: '--.position.current'}
-                        ];
+                        scope.positions = angular.copy(scope.positionBasicData);
                         if (accountService.getMyself() != null) {
                             for (var key in accountService.getMyself().addresses) {
-                                scope.positions.push(
+                                scope.positions.splice(scope.positions.length - 1 ,0,
                                     {
                                         key: accountService.getMyself().addresses[key].name,
                                         translation: accountService.getMyself().addresses[key].name
@@ -111,6 +123,7 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                             }
                         }
                         scope.currentPosition = geolocationService.getLocationText();
+                        scope.positionCurrenltyComputed=scope.currentPosition;
                     };
 
                     $rootScope.$watch(function () {

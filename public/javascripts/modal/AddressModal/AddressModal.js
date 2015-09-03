@@ -1,4 +1,4 @@
-myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness) {
+myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness,callback) {
 
     $scope.loading = false;
 
@@ -14,6 +14,15 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,bu
         $modalInstance.close();
     };
 
+    $scope.success = function(data){
+        $scope.loading = false;
+        $scope.close();
+
+        if(callback!=null && callback != undefined){
+            callback(data);
+        }
+    };
+
     $scope.save = function () {
 
         if (!$scope.addressParam.isValid) {
@@ -23,18 +32,16 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,bu
             $scope.loading = true;
             if ($scope.update) {
                 if(isBusiness){
-                    businessService.editAddress($scope.addressParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
+                    businessService.editAddress($scope.addressParam.dto, function (data) {
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;
                         });
                 }
                 else {
-                    accountService.editAddress($scope.addressParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
+                    accountService.editAddress($scope.addressParam.dto, function (data) {
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;
@@ -42,9 +49,8 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,bu
                 }
             }
             else {
-                accountService.addAddress($scope.addressParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
+                accountService.addAddress($scope.addressParam.dto, function (data) {
+                        $scope.success(data);
                     },
                     function () {
                         $scope.loading = false;

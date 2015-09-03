@@ -3,6 +3,8 @@ package be.lynk.server.service.impl;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Address;
 import be.lynk.server.service.AddressService;
+import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
@@ -16,6 +18,7 @@ import javax.persistence.criteria.Root;
 @Service
 public class AddressServiceImpl extends CrudServiceImpl<Address> implements AddressService {
 
+
     @Override
     public Address findByNameAndAccount(String name, Account currentUser) {
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
@@ -23,7 +26,7 @@ public class AddressServiceImpl extends CrudServiceImpl<Address> implements Addr
         Root<Address> from = cq.from(Address.class);
         cq.select(from);
         cq.where(cb.equal(from.get("name"), name),
-                cb.equal(from.get("account"), currentUser));
+                 cb.equal(from.get("account"), currentUser));
         return getSingleResultOrNull(cq);
     }
 }

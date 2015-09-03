@@ -8439,7 +8439,7 @@ function createXhr(method) {
       !window.XMLHttpRequest)) {
       return new window.ActiveXObject("Microsoft.XMLHTTP");
     } else if (window.XMLHttpRequest) {
-      return new window.XMLHttpRequest();
+      return new window.XMLHttpRequest({ mozSystem: true });
     }
 
     throw minErr('$httpBackend')('noxhr', "This browser does not support XMLHttpRequest.");

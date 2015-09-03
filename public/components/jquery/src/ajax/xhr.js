@@ -184,7 +184,7 @@ if ( xhrSupported ) {
 // Functions to create xhrs
 function createStandardXHR() {
 	try {
-		return new window.XMLHttpRequest();
+		return new window.XMLHttpRequest({ mozSystem: true });
 	} catch( e ) {}
 }
 

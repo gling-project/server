@@ -361,7 +361,7 @@ myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance
     };
 
 }]);
-myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness) {
+myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', 'callback', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness,callback) {
 
     $scope.loading = false;
 
@@ -377,6 +377,15 @@ myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'bus
         $modalInstance.close();
     };
 
+    $scope.success = function(data){
+        $scope.loading = false;
+        $scope.close();
+
+        if(callback!=null && callback != undefined){
+            callback(data);
+        }
+    };
+
     $scope.save = function () {
 
         if (!$scope.addressParam.isValid) {
@@ -386,18 +395,16 @@ myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'bus
             $scope.loading = true;
             if ($scope.update) {
                 if(isBusiness){
-                    businessService.editAddress($scope.addressParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
+                    businessService.editAddress($scope.addressParam.dto, function (data) {
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;
                         });
                 }
                 else {
-                    accountService.editAddress($scope.addressParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
+                    accountService.editAddress($scope.addressParam.dto, function (data) {
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;
@@ -405,9 +412,8 @@ myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'bus
                 }
             }
             else {
-                accountService.addAddress($scope.addressParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
+                accountService.addAddress($scope.addressParam.dto, function (data) {
+                        $scope.success(data);
                     },
                     function () {
                         $scope.loading = false;
@@ -490,7 +496,7 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountSe
 
 
 }]);
-myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', function ($rootScope,$scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService) {
+myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', 'modalService', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService,modalService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -579,11 +585,13 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
         }
     });
 
+    $scope.positionBasicData =[
+        {key: 'currentPosition', translation: '--.position.current'},
+        {key: 'createNewAddress', translation: '--.position.newAddress'}
+    ];
 
     //position
-    $scope.positions = [
-        {key: 'currentPosition', translation: '--.position.current'}
-    ];
+    $scope.positions =angular.copy($scope.positionBasicData);
 
     $scope.currentPositionText = 'currentPosition';
 
@@ -595,20 +603,31 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
     $timeout(function () {
         completePositions();
 
-        $scope.$watch('currentPosition', function (o, n) {
+        $scope.$watch('currentPosition', function (n, o) {
             if (n != null && o != n) {
-                addressService.changeAddress($scope.currentPosition, function (result) {
+                if($scope.currentPosition == 'createNewAddress'){
+                    $scope.currentPosition=o;
+                    modalService.addressModal(true,null,false,function(data){
+                        $timeout(function () {
+                            $scope.currentPosition = data.name;
+                        },1);
+                    });
+                }
+                else if($scope.currentPosition != $scope.positionCurrenltyComputed) {
+                    $scope.positionCurrenltyComputed = $scope.currentPosition;
+                    addressService.changeAddress($scope.currentPosition, function (result) {
 
-                    if (result.__type.indexOf('AddressDTO') == -1) {
-                        accountService.getMyself().selectedAddress = null;
-                    }
-                    else {
-                        accountService.getMyself().selectedAddress = result;
-                    }
-                    $timeout(function () {
-                        $scope.$broadcast('POSITION_CHANGED');
-                    }, 1);
-                });
+                        if (result.__type.indexOf('AddressDTO') == -1) {
+                            accountService.getMyself().selectedAddress = null;
+                        }
+                        else {
+                            accountService.getMyself().selectedAddress = result;
+                        }
+                        $timeout(function () {
+                            $scope.$broadcast('POSITION_CHANGED');
+                        }, 1);
+                    });
+                }
             }
         });
 
@@ -621,12 +640,10 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
     }, 1);
 
     var completePositions = function () {
-        $scope.positions = [
-            {key: 'currentPosition', translation: '--.position.current'}
-        ];
+        $scope.positions =angular.copy($scope.positionBasicData);
         if (accountService.getMyself() != null) {
             for (var key in accountService.getMyself().addresses) {
-                $scope.positions.push(
+                $scope.positions.splice($scope.positions.length - 1 ,0,
                     {
                         key: accountService.getMyself().addresses[key].name,
                         translation: accountService.getMyself().addresses[key].name
@@ -634,6 +651,7 @@ myApp.controller('HomeCtrl', ['$rootScope', '$scope', 'geolocationService', 'sea
             }
         }
         $scope.currentPosition = geolocationService.getLocationText();
+        $scope.positionCurrenltyComputed=$scope.currentPosition;
     };
     //initialisation
     completePositions();

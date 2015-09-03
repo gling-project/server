@@ -155,7 +155,7 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.addressModal = function (addName, address, isBusiness) {
+    this.addressModal = function (addName, address, isBusiness,callback) {
         var resolve = {
             dto: function () {
                 return address;
@@ -165,6 +165,9 @@ myApp.service("modalService", function ($modal) {
             },
             isBusiness: function () {
                 return isBusiness;
+            },
+            callback:function(){
+                return callback;
             }
         };
         $modal.open({

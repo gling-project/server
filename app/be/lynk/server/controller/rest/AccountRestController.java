@@ -32,17 +32,17 @@ public class
 
     //service
     @Autowired
-    private AccountService accountService;
+    private AccountService          accountService;
     @Autowired
-    private LoginCredentialService loginCredentialService;
+    private LoginCredentialService  loginCredentialService;
     @Autowired
-    private AddressService addressService;
+    private AddressService          addressService;
     @Autowired
     private CustomerInterestService customerInterestService;
     @Autowired
     private LocalizationServiceImpl localizationService;
     @Autowired
-    private SessionService sessionService;
+    private SessionService          sessionService;
 
 
     @Transactional
@@ -178,6 +178,10 @@ public class
         if (addressService.findByNameAndAccount(address.getName(), currentUser) != null) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME_ALREADY_USED);
         }
+        if (address.getName().equals("createNewAddress") ||
+                address.getName().equals("currentPosition")) {
+            throw new MyRuntimeException(ErrorMessageEnum.ADDRESS_WRONG_NAME_TECHNICAL_NAME);
+        }
 
         address.setAccount(currentUser);
         currentUser.getAddresses().add(address);
@@ -288,7 +292,6 @@ public class
         AddressDTO addressDTO = null;
 
 
-
         if (newAddressDTO.getAddressName().equals("currentPosition")) {
             currentUser.setSelectedAddress(null);
         } else {
@@ -297,11 +300,11 @@ public class
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME);
             }
             currentUser.setSelectedAddress(address);
-            addressDTO = dozerService.map(address,AddressDTO.class);
+            addressDTO = dozerService.map(address, AddressDTO.class);
         }
 
         accountService.saveOrUpdate(currentUser);
-        if(addressDTO==null){
+        if (addressDTO == null) {
             return ok(new ResultDTO());
         }
         return ok(addressDTO);
