@@ -26,6 +26,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             }
         })
             .error(function (data, status) {
+                console.log('DATA');
+                console.log(data);
                 $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
