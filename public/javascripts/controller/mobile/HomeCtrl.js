@@ -64,6 +64,8 @@ myApp.controller('HomeCtrl', function ($rootScope,$scope, geolocationService, se
             interest.selected = true;
         }
         console.log('SERACH AFTER searchByInterest ');
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
         $scope.search();
     };
 
