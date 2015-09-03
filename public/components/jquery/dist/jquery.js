@@ -9740,7 +9740,7 @@ if ( xhrSupported ) {
 // Functions to create xhrs
 function createStandardXHR() {
 	try {
-		return new window.XMLHttpRequest({ mozSystem: true });
+		return new window.XMLHttpRequest();
 	} catch( e ) {}
 }
 

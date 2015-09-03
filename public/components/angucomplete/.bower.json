@@ -24,11 +24,11 @@
     "angular-mocks": ">=1.2.0",
     "jquery": "~2.1.0"
   },
-  "_release": "00094e960b",
+  "_release": "3bf6ab2da5",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "00094e960b3c2ac822371816bdbd73e95ab92996"
+    "commit": "3bf6ab2da56d514c22800f9dbdfeced66cff03f4"
   },
   "_source": "git://github.com/darylrowland/angucomplete.git",
   "_target": "*",
