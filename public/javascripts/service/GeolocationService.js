@@ -8,11 +8,13 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
 
         $http({
             'method': "GET",
-            'url': "http://ipinfo.io/json",
+            'url': "https://www.telize.com/geoip",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (self.currentPosition == null) {
-                var pos = data.loc.split(',');
+                var pos = [2];
+                pos[0] = data.latitude;
+                pos[1] = data.longitude;
                 self.currentPosition = {
                     x: pos[0],
                     y: pos[1]

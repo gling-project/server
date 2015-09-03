@@ -19,6 +19,7 @@ import play.Logger;
 import play.Play;
 import play.api.mvc.EssentialFilter;
 import play.i18n.Lang;
+import play.libs.F.Promise;
 import play.libs.Akka;
 import play.libs.F;
 import play.mvc.Http;
@@ -28,7 +29,9 @@ import scala.concurrent.duration.Duration;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import play.filters.gzip.GzipFilter;
+import play.mvc.Action;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +42,8 @@ public class Global extends GlobalSettings {
 
     //services
     private TranslationService translationService = new TranslationServiceImpl();
+
+    private static final String SSL_HEADER = "x-forwarded-proto";
 
     private ApplicationContext ctx;
 
@@ -89,7 +94,7 @@ public class Global extends GlobalSettings {
     public <A> A getControllerInstance(Class<A> clazz) {
 //        return ctx.getBean(clazz);
 
-        play.Logger.debug("Spring getControllerInstance called @" + new Date(ctx.getStartupDate())+" for class "+clazz.getName());
+        play.Logger.debug("Spring getControllerInstance called @" + new Date(ctx.getStartupDate()) + " for class " + clazz.getName());
 //        //return applicationContext.getBean(clazz);
 //
         // filter clazz annotation to avoid messing win non Spring annotation
@@ -112,8 +117,7 @@ public class Global extends GlobalSettings {
         Lang language;
         if (request.getHeader(CommonSecurityController.REQUEST_HEADER_LANGUAGE) != null) {
             language = Lang.forCode(request.getHeader(CommonSecurityController.REQUEST_HEADER_LANGUAGE));
-        }
-        else {
+        } else {
             language = Lang.availables().get(0);
         }
 
@@ -133,5 +137,35 @@ public class Global extends GlobalSettings {
             exceptionsDTO = new ExceptionDTO(t.getCause().getMessage());
         }
         return F.Promise.<SimpleResult>pure(Results.internalServerError(exceptionsDTO));
+    }
+
+
+    @Override
+    public Action onRequest(Http.Request request, Method actionMethod) {
+        // Analytics analytics = AnalyticsUtil.start(request);
+        Action action;
+
+        // ENFORCE HTTPS on production
+        if (Play.isProd() && !isHttpsRequest(request)) {
+            action = new Action() {
+                @Override
+                public Promise<SimpleResult> call(Http.Context ctx) throws Throwable {
+                    return Promise.<SimpleResult>pure(Results.redirect("https://" + ctx.request().host() + ctx.request().uri()));
+                }
+            };
+        } else {
+            action = super.onRequest(request, actionMethod);
+        }
+
+        //AnalyticsUtil.end(analytics);
+        return action;
+    }
+
+
+    private static boolean isHttpsRequest(Http.Request request) {
+        // heroku passes header on
+        return request.getHeader(SSL_HEADER) != null
+                && request.getHeader(SSL_HEADER)
+                          .contains("https");
     }
 }
