@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import play.Logger;
 import play.modules.mongodb.jackson.KeyTyped;
 import play.mvc.Content;
 
@@ -37,6 +38,7 @@ public class DTO implements Content ,KeyTyped<Date> {
                 T dto = mapper.readValue(jp, type);
 
                 if (dto == null) {
+                    Logger.error("ERROR into DTO convertion : DTO is null");
                     throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
                 }
 
@@ -44,10 +46,12 @@ public class DTO implements Content ,KeyTyped<Date> {
                 return dto;
 
             } catch (IOException e) {
+                Logger.error("ERROR into DTO convertion : "+data.asText());
                 e.printStackTrace();
                 throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
             }
         }
+        Logger.error("ERROR into DTO convertion : Data is null");
         throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
     }
 
