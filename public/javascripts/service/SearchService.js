@@ -15,18 +15,21 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         $http({
             'method': "POST",
             'url': "/rest/search/publication/default/"+page,
-            'headers': "Content-Type:application/json;charset=utf-8",
+            'headers': "Content-Type:application/json; charset=utf-8",
+            'dataType':"json",
             'data': geolocationService.position,
             'config': {
                 timeout: canceler.promise
             }
         }).success(function (data, status) {
+            console.log('Success !! DATA');
+            console.log(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
         })
             .error(function (data, status) {
-                console.log('DATA');
+                console.log('error !! DATA');
                 console.log(data);
                 $flash.error(data.message);
                 if (callbackError != null) {
