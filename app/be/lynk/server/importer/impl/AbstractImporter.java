@@ -78,7 +78,7 @@ public class AbstractImporter {
         private final int value;
 
         Letter(int value) {
-            this.value = value - 1;
+            this.value = value ;
         }
 
         public int getValue() {

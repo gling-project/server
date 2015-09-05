@@ -16,12 +16,21 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
                     scope.$watch('getInfo().address', function () {
 
                         scope.getInfo().refreshNow = function () {
-                            scope.centerMap();
+                            scope.getInfo().centerMap();
+                        };
+
+                        scope.getInfo().setAddress = function(address){
+                            scope.getInfo().address = address;
+                            scope.getInfo().centerMap();
                         };
 
                         if (scope.getInfo().address != null) {
+
+
                             //test
-                            scope.centerMap = function () {
+                            scope.getInfo().centerMap = function () {
+                                console.log("centerMap !! : ");
+                                console.log(scope.getInfo().address);
                                 scope.map = {
                                     center: {
                                         latitude: scope.getInfo().address.posx,

@@ -21,8 +21,6 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                     };
 
                     scope.isValid = function () {
-
-                        //scope.getInfo().isValid = true;//scope.isActive()==false  || scope.getInfo().field!=null;
                         scope.getInfo().isValid = (scope.getInfo().optional!=null && scope.getInfo().optional()) || scope.isActive() == false || scope.getInfo().field[scope.getInfo().fieldName] != null;
                     };
                     scope.isValid();
@@ -60,6 +58,9 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                             if(scope.getInfo().sizex !=null && scope.getInfo().sizex != undefined){
                                 url += "/"+scope.getInfo().sizex+"/"+scope.getInfo().sizey;
                             }
+                            console.log("scope.getInfo()");
+                            console.log(scope.getInfo());
+                            console.log(url);
 
                             scope.upload = $upload.upload({
                                 url: url,
@@ -86,18 +87,8 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
 
                     //scope.fileCall = null;
                     scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
-                        //if (n != null) {
-                        //    scope.fileCall = "/rest/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
-                        //}
                         scope.isValid();// = n != null;
                     });
-
-                    scope.download = function () {
-                        if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
-                            var url = "/rest/file/" + scope.getInfo().field[scope.getInfo().fieldName].id;
-                            $window.open(url);
-                        }
-                    };
                 }
             };
         }

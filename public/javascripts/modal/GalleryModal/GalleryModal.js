@@ -5,6 +5,9 @@ myApp.controller('GalleryModalCtrl', function ($scope, $flash, $modalInstance, i
     $scope.images = images;
     $scope.imageNb = null;
 
+    $scope.close = function () {
+        $modalInstance.close();
+    };
 
     for (var key in $scope.images) {
         if ($scope.images[key].storedName == $scope.image.storedName) {

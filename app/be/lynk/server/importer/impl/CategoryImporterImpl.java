@@ -38,9 +38,10 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
     }};
     protected static final Map<Lang, Letter> COL_INTEREST_TRANSLATION = new HashMap<Lang, Letter>() {{
         put(Lang.forCode("fr"), Letter.A);
+        put(Lang.forCode("en"), Letter.B);
     }};
 
-    private static final Letter COL_INTEREST_NAME      = Letter.A;
+    private static final Letter COL_INTEREST_NAME      = Letter.D;
     private static final Letter COL_INTEREST_NAME_ICON = Letter.C;
 
     private static final String  CATEGORY_STREET       = "Général - Catégories B.";

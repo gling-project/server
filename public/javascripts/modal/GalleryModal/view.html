@@ -1,4 +1,11 @@
-<div class="modal-body gallery-modal" dir-enter="save()">
+<div class="modal-header">
+    <button name="modal-btn-close"
+            class="btn glyphicon glyphicon-remove"
+            style="float:right"
+            ng-click="close()">
+    </button>
+    <h4 class="modal-title">{{'--.gallery.title' | translateText}}</h4>
+</div><div class="modal-body gallery-modal">
 
     <div>
         <img class="gallery-picture"
@@ -9,21 +16,34 @@
         {{image.comment}}
     </div>
 
-    <div ng-show="images.length > 1">
-        <button type=button"
-                class="btn btn-primary"
-                ng-click="previous()">
-            {{'--.gallery.modal.previous' | translateText}}
-        </button>
 
-        {{imageNb}} / {{images.length}}
+    <table ng-show="images.length > 1" style="width: 100%">
+        <tr>
+            <td>
+                <button type=button"
+                        id="gallery-modal-btn-previous"
+                        class="btn btn-primary"
+                        ng-click="previous()">
+                    {{'--.gallery.modal.previous' | translateText}}
+                </button>
+            </td>
+            <td>
 
-        <button type=button"
-                style="float: right"
-                class="btn btn-primary"
-                ng-click="next()">
-            {{'--.gallery.modal.next' | translateText}}
-        </button>
-    </div>
+        <span id="gallery-modal-span-number-page">
+            {{imageNb}} / {{images.length}}
+        </span>
+            </td>
+            <td>
+
+                <button type=button"
+                        id="gallery-modal-btn-next"
+                        style="float: right"
+                        class="btn btn-primary"
+                        ng-click="next()">
+                    {{'--.gallery.modal.next' | translateText}}
+                </button>
+            </td>
+        </tr>
+    </table>
 
 </div>

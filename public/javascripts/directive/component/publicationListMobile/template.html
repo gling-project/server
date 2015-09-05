@@ -13,92 +13,106 @@
 
     <!-- publication -->
     <div ng-hide="getInfo().loading===true"
+
          ng-repeat="publication in publications"
          class="publication-box publication-publication"
          ng-click="click()">
 
-        <img
-                class="link illustration"
-                ng-click="navigateTo('/business/'+publication.businessId)"
-                ng-src="{{publication.businessIllustration | image}}"/>
+        <div style="border-bottom: 1px solid black">
 
-        <div class="publication-list-business-data">
-            <div>
-                <span class="link" ng-click="navigateTo('/business/'+publication.businessId)">{{publication.businessName}}</span>
+            <img
+                    class="link illustration"
+                    style="vertical-align: top"
+                    ng-click="navigateTo('/business/'+publication.businessId)"
+                    ng-src="{{publication.businessIllustration | image}}"/>
+
+            <div class="publication-list-business-data">
+                <div>
+                    <span class="link" ng-click="navigateTo('/business/'+publication.businessId)">{{publication.businessName}}</span>
+                </div>
+
+                <!-- distance -->
+                <div class="distance">
+                    <i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km
+                </div>
+
             </div>
-
-            <!--<div>-->
-                <!--&lt;!&ndash; following &ndash;&gt;-->
-                <!--<button ng-click="follow(publication)" class="follow-button">-->
-                    <!--<img src="/assets/images/haert.png" ng-show="publication.following"/>-->
-                    <!--<img src="/assets/images/haert-off.png" ng-hide="publication.following"/>-->
-                <!--</button>-->
-                <!--{{publication.totalFollowers}}-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash; distance &ndash;&gt;-->
-            <!--<div class="distance"><i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km</div>-->
-            <!--<br/>-->
         </div>
 
         <div class="publication-list-publication-data">
 
-            <!--&lt;!&ndash; promotion &ndash;&gt;-->
-            <!--<div class="publication-reduction">-->
-                <!--<div ng-show="publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1">-->
-                    <!--- {{publication.offPercent * 100|number:0}} % !-->
-                <!--</div>-->
-                <!--<div ng-show="publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)">-->
-                    <!--Plus que {{ publication.interval |date:'H'}} h !-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="publication-reduction">
+                <div
 
-            <!--&lt;!&ndash; share facebook &ndash;&gt;-->
-            <!--<a facebook-->
-               <!--class="facebookShare"-->
-               <!--data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}"-->
-               <!--data-shares='shares'>{{ shares }}</a>-->
-            <!--&lt;!&ndash;<button ng-click="share(publication)">Share</button>&ndash;&gt;-->
-            <!--&lt;!&ndash;<a facebook-feed-share class="facebookShare" data-url='http://google.com' data-shares='shares', data-description="Example text">{{ shares }}</a>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div gplus class="g-plus" data-size="tall" data-annotation="bubble" data-href='http://google.com' data-action='share'></div>&ndash;&gt;-->
+                        style="
+  display: inline-block;
+  background-color: red;
+  padding: 2px;
+  margin: 2px;"
 
-            <!--&lt;!&ndash; start date &ndash;&gt;-->
-            <!--<div class="date"><i class="fa fa-calendar"></i> {{publication.startDate | date:medium}}</div>-->
-            <!--&lt;!&ndash; name &ndash;&gt;-->
+                        ng-show="publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1">
+                    - {{publication.offPercent * 100|number:0}} % !
+                </div>
+                <div style="
+                     display: inline-block;
+                     background-color: red;
+                     padding: 2px;
+                     margin: 2px;"
+
+                     ng-show="publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)">
+                    Plus que {{ publication.interval |date:'H'}} h !
+                </div>
+            </div>
+
             <div class="publication-box-name">{{publication.title}}</div>
-            <!--&lt;!&ndash; description &ndash;&gt;-->
-            <!--<div class="publication-box-description">{{publication.description}}</div>-->
+            <div class="publication-box-name">{{publication.description}}</div>
 
-            <!--&lt;!&ndash; promotion data &ndash;&gt;-->
-            <!--<div ng-show="publication.type == 'PROMOTION'"-->
-                 <!--class="publication-box-promotion-data">-->
-                <!--{{'--.publication.promotionData' | translateText}}-->
-                <!--<table>-->
-                    <!--<tr ng-show="publication.quantity!=null">-->
-                        <!--<td>{{'--.promotion.quantity' | translateText}}</td>-->
-                        <!--<td>{{publication.quantity}} {{publication.unit}}</td>-->
-                    <!--</tr>-->
-                    <!--<tr ng-show="publication.originalPrice!=null">-->
-                        <!--<td>{{'--.promotion.originalUnitPrice' | translateText}}</td>-->
-                        <!--<td>{{publication.originalPrice | number:2}} €</td>-->
-                    <!--</tr>-->
-                    <!--<tr ng-show="publication.originalPrice!=null">-->
-                        <!--<td>{{'--.promotion.offPrice' | translateText}}</td>-->
-                        <!--<td>{{(publication.originalPrice * (1 - publication.offPercent))  | number:2 }} €</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>{{'--.promotion.offPercent' | translateText}}</td>-->
-                        <!--<td> - {{(publication.offPercent * 100) | number:2 }} %</td>-->
-                    <!--</tr>-->
-                <!--</table>-->
-            <!--</div>-->
+            <!-- promotion data -->
+            <div ng-show="publication.type == 'PROMOTION'"
+                 class="publication-box-promotion-data">
+                <table style="background-color: white;border: 1px solid #000000">
+                    <tr>
+                        <td>end date</td>
+                        <td>{{publication.endDate | date:'medium'}}</td>
+                    </tr>
+                    <tr ng-show="publication.quantity!=null">
+                        <td>{{'--.promotion.quantity' | translateText}}</td>
+                        <td>{{publication.quantity}} {{publication.unit}}</td>
+                    </tr>
+                    <tr ng-show="publication.originalPrice!=null">
+                        <td>{{'--.promotion.originalUnitPrice' | translateText}}</td>
+                        <td>{{publication.originalPrice | number:2}} €</td>
+                    </tr>
+                    <tr ng-show="publication.originalPrice!=null">
+                        <td>{{'--.promotion.offPrice' | translateText}}</td>
+                        <td>{{(publication.originalPrice * (1 - publication.offPercent))  | number:2 }} €</td>
+                    </tr>
+                    <tr>
+                        <td>{{'--.promotion.offPercent' | translateText}}</td>
+                        <td> - {{(publication.offPercent * 100) | number:2 }} %</td>
+                    </tr>
+                </table>
+            </div>
 
+            <!-- image -->
+            <div class="publication-box-picture-container">
+                <gallery-ctrl ng-info="{images:publication.pictures}"></gallery-ctrl>
+            </div>
 
-            <!--&lt;!&ndash; pictures &ndash;&gt;-->
-            <!--&lt;!&ndash; pictures &ndash;&gt;-->
-            <!--<div class="publication-box-picture-container">-->
-                <!--<gallery-ctrl ng-info="{images:publication.pictures}"></gallery-ctrl>-->
-            <!--</div>-->
+            <a facebook
+               class="facebookShare"
+               data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}"
+               data-shares='shares'>{{ shares }}</a>
+
+            <!-- interest icon -->
+            <img style="height: 25px;"
+                 ng-src="/assets/images/interest/{{publication.interest.iconName}}"/>
+
+            <!-- start date -->
+            <div style="display: inline"
+                 class="date">{{publication.startDate | date:medium}}
+            </div>
+
         </div>
     </div>
 

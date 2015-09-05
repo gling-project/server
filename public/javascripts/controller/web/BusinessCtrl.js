@@ -171,7 +171,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                         //scope.business
                         businessService.editAddress(address, function (data) {
                             $scope.business.address = data;
-                            $scope.centerMap();
+                            $scope.googleMapParams.setAddress(data);
                             close();
                         }, function () {
                             setLoading(false);
@@ -261,8 +261,6 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     {
                         fieldTitle: "--.business.modal.gallery.title",
                         validationMessage: '--.error.validation.image',
-                        sizex: 60,
-                        sizey: 60,
                         field: business,
                         multiple: true,
                         fieldName: 'galleryPictures'

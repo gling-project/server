@@ -56,6 +56,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     //build field + dto binding
                     scope.fields = {
                         title: {
+                            name:'title',
                             fieldTitle: "--.generic.title",
                             validationRegex: "^.{2,100}$",
                             validationMessage: ['--.generic.validation.size', '2', '100'],
@@ -66,6 +67,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'title'
                         },
                         description: {
+                            name:'description',
                             fieldTitle: "--.generic.description",
                             validationRegex: "^.{0,1000}$",
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
@@ -76,6 +78,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'description'
                         },
                         startDate: {
+                            name:'startDate',
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
@@ -85,6 +88,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'startDate'
                         },
                         endDate: {
+                            name:'endDate',
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
@@ -98,6 +102,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'endDate'
                         },
                         illustration: {
+                            name:'illustration',
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
                             sizex: 60,
@@ -113,6 +118,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'pictures'
                         },
                         quantity: {
+                            name:'quantity',
                             fieldTitle: "--.promotion.quantity",
                             numbersOnly: 'integer',
                             validationRegex: "^[0-9,.]{1,9}$",
@@ -127,6 +133,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'quantity'
                         },
                         minimalQuantity: {
+                            name:'minimalQuantity',
                             fieldTitle: "--.promotion.minimalQuantity",
                             numbersOnly: 'integer',
                             validationRegex: "^[0-9,.]{1,9}$",
@@ -142,6 +149,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'minimalQuantity'
                         },
                         unit: {
+                            name:'unit',
                             fieldTitle: "--.promotion.unit",
                             validationRegex: "^.{0,30}$",
                             validationMessage: ['--.generic.validation.max', '30'],
@@ -155,6 +163,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'unit'
                         },
                         originalPrice: {
+                            name:'originalPrice',
                             fieldTitle: "--.promotion.originalUnitPrice",
                             numbersOnly: 'double',
                             validationMessage: '--.generic.validation.numberExpected',
@@ -172,6 +181,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'originalPrice'
                         },
                         offPercent: {
+                            name:'offPercent',
                             fieldTitle: "--.promotion.offPercent",
                             numbersOnly: 'percent',
                             validationFct: function () {
@@ -186,6 +196,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'offPercent'
                         },
                         offPrice: {
+                            name:'offPrice',
                             fieldTitle: "--.promotion.offPrice",
                             numbersOnly: 'double',
                             validationMessage: '--.promotion.validation.offPrice',
@@ -203,6 +214,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'offPrice'
                         },
                         interests: {
+                            name:'interests',
                             fieldTitle: "--.promotion.interest",
                             details: '--.promotion.interest.help',
                             validationMessage: '--.error.validation.not_null',

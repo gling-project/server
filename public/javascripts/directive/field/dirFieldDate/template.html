@@ -1,18 +1,32 @@
-<div class="row form-group has-feedback" ng-class="{'error' : displayError()===true}" ng-click="logField()"  ng-hide="isActive() === false">
+<div class="row form-group has-feedback" ng-class="{'error' : displayError()===true}" ng-click="logField()"
+     ng-hide="isActive() === false">
     <div>
-        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">{{getInfo().fieldTitle | translateText}}</label>
+        <label class="control-label col-md-3" ng-show="getInfo().fieldTitle">{{getInfo().fieldTitle |
+            translateText}}</label>
+
         <div class="col-md-6">
             <div class="dropdown"></div>
             <a id="{{id}}" role="button" data-toggle="dropdown" data-target="#" href="" class="dropdown-toggle">
-            <div class="input-group">
-                <input ng-disabled="getInfo().disabled()" type="text" ng-model="resultFormated" class="form-control"/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-            </div>
-            <ul role="menu" aria-labelledby="dLabel" class="dropdown-menu date_input">
-                <datetimepicker data-ng-model="result" data-datetimepicker-config="{ dropdownSelector: '{{idHtag}}',minView:'{{getInfo().minimalDelay}}' }"></datetimepicker>
-            </ul></a>
+                <div class="input-group">
+                    <input ng-disabled="getInfo().disabled()"
+                           name="{{getInfo().name}}"
+                           type="text"
+                           ng-model="resultFormated"
+                           class="form-control"/>
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar">
+                    </i>
+                </span>
+                </div>
+                <ul role="menu" aria-labelledby="dLabel" class="dropdown-menu date_input">
+                    <datetimepicker data-ng-model="result"
+                                    data-datetimepicker-config="{ dropdownSelector: '{{idHtag}}',minView:'{{getInfo().minimalDelay}}' }"></datetimepicker>
+                </ul>
+            </a>
         </div>
         <div ng-transclude></div>
-        <div class="col-md-3 errors" ng-show="displayError()===true">{{getInfo().validationMessage | translateText}}</div>
+        <div class="col-md-3 errors" ng-show="displayError()===true">{{getInfo().validationMessage | translateText}}
+        </div>
     </div>
     <div class="col-md-3 hidden-sm hidden-xs"></div>
     <div class="col-md-6 help" ng-show="getInfo().details!=null">{{getInfo().details | translateText}}</div>

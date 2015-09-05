@@ -3,34 +3,22 @@
 --.account.fusion.description=There is an account with the email {0}. If it's you, you can add your Facebook account to this My project account and keep your information. Otherwise, you cannot use this email to create an account.
 
 ##generic
---.generic.back=Back
 --.generic.category=Category
 --.generic.close=Close
-#--.generic.date=Date
 --.generic.description=Description
 --.generic.firstname=First name
 --.generic.lastname=Last name
 --.generic.name=Name
 ##--.generic.nameAbrv=Acronym
-#--.generic.navigation=Navigation
 --.generic.oldPassword=Old password
-#--.generic.price=Price
 --.generic.repeatPassword=Repeat your password
 --.generic.save=Save
 --.generic.submit=Submit
-#--.generic.total=Total
-#--.generic.value=Value
 --.generic.valid=Valid
 --.generic.validation.size=Between {0} and {1} characters
-#--.generic.validation.date=Select a date
-#--.generic.validation.notNull=This field is required
 --.generic.validation.password=Between 6 and 18 letters or number or _-%
 --.generic.validation.repeatPassword=The both password are not the same
 --.generic.validation.email=Please get a correct email
-#--.generic.yourName=Your name
-#--.generic.yourNameAbrv=Your acronym
-#--.generic.creator=Creator
-#--.generic.yourLanguage=Your language
 --.generic.email=Email
 --.generic.or=Or
 --.generic.yourPassword=Your password
@@ -61,8 +49,6 @@
 --.generic.remove=Remove
 --.generic.login.btn=Logging
 --.generic.validation.max=Maximum {0} characters
-#--.generic.image=Image
-#--.generic.delete=Delete
 --.generic.validation.numberExpected=Only number
 --.generic.contact=Contact
 --.generic.action=Action
@@ -86,32 +72,20 @@
 --.welcome.login=Log you
 --.welcome.signIn=Sign up
 --.welcome.search=Search...
-#--.welcome.editProfile=Edit my profile
 
 ## registration
-#--.registration.form.title=Registration
 --.registration.form.yourEmail=Your email address
 --.registration.form.password=Choose a password
 --.registration.form.password.help=Between 6 and 18 letters, numbers or -_%
 --.registration.form.repeatPassword=Repeat your password
-#--.registration.form.validation.repeatPassword=Passwords are different
-#--.registration.form.email.alreadyExists=This email address is already used
 --.registration.form.keepSessionOpen=Keep my session open
-#--.registration.form.nameAbrv.help=Choose a acronym for your name (maximum 3 letters)
 
 ## login
-#--.login.form.title=Login you
-#--.login.form.submit=Login
 --.login.form.button.forgotPassword=Forgot your password ?
-#--.login.form.wrongCredential=Wrong email and / or password
 
 ## form
-#--.error.required=This field is required
-#--.error.minLength=Minimum %s characters
-#--.error.maxLength=Maximum %s characters
 
 ## menu
-#--.menu.home=Home
 
 ## forgot password
 --.forgotPassword.title=Forgot password ?
@@ -123,7 +97,6 @@
 --.changePasswordModal.title=Change your password
 
 ## changeEmailModal
-#--.changeEmailModal.title=Change your email
 --.changeEmailModal.email=Your new email
 
 ## field doc
@@ -168,19 +141,13 @@
 
 
 ##  modal/RegistrationModal/view.html
-#--.registrationModal.title=Sign up
 
 ##  modal/DownloadFieldModal/view.html
 --.downloadModal.title=Download file
 
 ##  view/business_registration.html
---.business.registration.newBusiness=I want to join the Lÿnk community \!
---.business.registration.title=You want to join the Lÿnk community? Sign up your shop now \!
---.business.registration.oldBusiness=I already have an account and I want to log in me
 
 ##  view/business_welcome.html
-#--.business.welcome.title=Welcome to your business page
-#--.business.profile.businessCategory=Business category
 
 ##  modal/LoginModal/view.html (add the google+ button here )
 --.loginModal.facebook.btn=Log in with Facebook
@@ -189,7 +156,6 @@
 --.loginModal.toBusinessRegistration=Sign up as business
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
-#--.editProfileModal.title=Edit your personal information
 
 
 
@@ -205,8 +171,6 @@
 --.registrationModal.toBusinessRegistration=You want register a business? Follow this link \!
 
 ##  view/home.html
---.home.toBusiness.btn=I am a business
-#--.home.main.description=Welcome to Lÿnk \!\! ....
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 --.customer.registrationModal.alredyRegistred.success=This facebook account is already registered. You are now connected\!
@@ -228,6 +192,7 @@
 --.error.address.nameNotExists=The name is empty
 --.error.address.wrongOldPassword=The old password is wrong.
 --.error.address.nameAlreadyUsed=The nom was already used. Please choose an other one.
+--.error.address.TechnicalName=error.address.TechnicalName
 
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -243,7 +208,6 @@
 --.form.address.field.street=Street / number
 --.form.address.field.zip=Zip code
 --.form.address.field.city=City
-#--.address.form.name.help=Lÿnk
 --.address.type.home=My home
 --.address.type.other=Other...
 --.address.type.work=My office
@@ -283,7 +247,6 @@
 
 ##  directive/form/promotion/PromotionFormCtrl.js
 --.promotion.minimalQuantity=Minimal quantity
-#--.promotion.price=Price
 --.promotion.endDate=End date
 --.promotion.quantity=Quantity
 --.promotion.unit=Unit (optional)
@@ -297,24 +260,16 @@
 --.promotion.validation.offPercent=promotion.validation.offPercent
 
 ##  view/web/home.html
-#--.page.home.title=Home
 
 ##  view/mobile/login.html
-#--.page.login.title=Login
 
 ##  view/mobile/business_registration.html
 --.page.business_registration.title=Sign up
 
 ##  view/web/business_welcome.html
-#--.business.welcome.addPromotion=Add a promotion
-#--.business.profile.promotion=Promotion
-#--.business.profile.image=Image
-#--.business.welcome.addBusinessNotification=Post a new notificaiton
-#--.business.profile.businessNotification=Notifications
 --.business.profile.businessSchedule=Schedules
 
 ##  modal/PromotionModal/view.html
-#--.promotion.modal.title=Promotion
 --.promotion.modal.title.create=Create a new promotion
 --.promotion.modal.title.update=Update a promotion
 
@@ -326,12 +281,7 @@
 
 ##  view/mobile/welcome.html
 --.mobile.welcome.toCustomerRegistration.btn=Sign up now \!
-#--.mobile.welcome.toLogin.desc=Already a Lynk account ?
-#--.mobile.welcome.toLogin.btn=Log in now \!
 --.page.welcome.title=Welcome to Lynk \!
-#--.mobile.welcome.toBusinessRegistration.desc=Your have a business and want to joint the Lynk community ? Try it for free\!
-#--.mobile.welcome.toBusinessRegistration.btn=Register your business
-#--.mobile.welcome.toCustomerRegistration.desc=Not yet an account Lynk ?
 --.mobile.welcome.registration.desc=mobile.welcome.registration.desc
 --.mobile.welcome.login.desc=mobile.welcome.login.desc
 --.mobile.welcome.login.btn=Login
@@ -392,6 +342,9 @@
 --.business.page.cancelPublishRequest.window.message=business.page.cancelPublishRequest.window.message
 --.business.modal.gallery.title=business.modal.gallery.title
 --.business.page.cancelPublishRequest.window.title=business.page.cancelPublishRequest.window.title
+--.business.publication.archive=business.publication.archive
+--.business.publication.previsualization=business.publication.previsualization
+--.business.publication.basic=business.publication.basic
 
 ##  view/web/business.html (landscape )
 --.business.page.edit.description.notPublished=business.page.edit.description.notPublished
@@ -437,6 +390,7 @@
 --.gallery.modal.next=gallery.modal.next
 --.gallery.modal.previous=gallery.modal.previous
 --.business.socialNetwork.form.description=business.socialNetwork.form.description
+--.welcome.myBusinesses=welcome.myBusinesses
 
 ##  controller/web/WelcomeCtrl.js (//use the model)
 --.position.current=position.current
@@ -454,4 +408,12 @@
 ##  view/mobile/profile.html (body )
 --.page.profile.title=page.profile.title
 --.customer.profile.address.create=customer.profile.address.create
+
+
+##  controller/mobile/HomeCtrl.js (//search function)
+--.position.newAddress=position.newAddress
+
+##  directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js (//scrolling)
+--.business.publication.remove.confirmationModal.title=business.publication.remove.confirmationModal.title
+--.business.publication.remove.confirmationModal.body=business.publication.remove.confirmationModal.body
 

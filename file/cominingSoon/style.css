@@ -1,0 +1,29 @@
+@font-face {
+    font-family: brandon;
+    src: url(Brandon_bld.ttf);
+    font-weight: bold;
+}
+
+body {
+    font-family: "brandon";
+    background-color: #18295a;
+    margin: 0;
+    font-size: 26px;
+}
+
+.content {
+    background-image: url('img/coming_soon_back.png');
+    width: 1200px;
+    height: 1000px;
+    margin: auto;
+    color: white;
+}
+
+.content > div {
+    text-align: center;
+
+}
+
+.big{
+    font-size: 36px !important;
+}

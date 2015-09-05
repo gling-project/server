@@ -26,21 +26,29 @@
                 </button>
                 {{business.totalFollowers}}
             </div>
-            <div class="distance"><i class="fa fa-globe"></i> {{business.distance / 1000 | number:2}} km</div>
-            <br/>
-        </div>
-
-        <div class="business-list-body">
-
-            <category-line-ctrl ng-info="{categories:business.categories}"></category-line-ctrl>
-
-            {{business.description}}
-
-            <div style="float: right">
-                <google-map-widget-ctrl ng-info="{address:business.address}"></google-map-widget-ctrl>
+            <div class="distance">{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}
+                <i class="fa fa-globe"></i> {{business.distance / 1000 | number:2}} km
             </div>
+            <div>
+                <br/>
+            </div>
+
+            <div class="business-list-body">
+
+                <category-line-ctrl ng-info="{categories:business.categories}"></category-line-ctrl>
+
+                {{business.description}}
+
+
+                <button class="btn btn-primary"
+                        style="float: right"
+                        ng-click="navigateTo('/business/'+business.id)">
+                    {{'--.generic.seeMore' | translateText}}
+                </button>
+
+
+            </div>
+
         </div>
 
     </div>
-
-</div>

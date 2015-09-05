@@ -1,6 +1,28 @@
 <div class="followed-business">
 
-    <business-list-ctrl ng-info="businessListParams"></business-list-ctrl>
+
+    <input type="text">Search
+
+    <div ng-repeat="business in businesses" style="padding: 10px;margin: 10px;border: 1px solid black;">
+
+
+        <div style="float: right">
+            <input type="checkbox">Receive notification
+        </div>
+
+        <category-line-ctrl ng-info="{categories:business.categories}"></category-line-ctrl>
+
+        <img class="illustration" ng-src="{{business.illustration | image}}"/>
+        {{business.name}}
+
+        <div style="display: inline-block">
+            <button ng-click="follow(business)" class="follow-button">
+                <img src="/assets/images/haert.png" ng-show="business.following"/>
+                <img src="/assets/images/haert-off.png" ng-hide="business.following"/>
+            </button>
+            {{business.totalFollowers}}
+        </div>
+    </div>
 
 
 </div>

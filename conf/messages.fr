@@ -4,7 +4,6 @@
 --.validation.dto.password=Entre 6 et 18 lettre, chiffres ou _-%
 
 ##  generic
-#--.generic.yourLanguage=Votre langue
 --.generic.firstname=Prénom
 --.generic.save=Sauver
 --.generic.submit=Soumettre
@@ -29,7 +28,6 @@
 --.generic.next=Suivant
 --.generic.desc=Description
 --.generic.name=Nom
---.generic.back=Retour
 --.generic.stepNotValid=Merci de complèter cette étape avant de passer à la suivant
 --.generic.home=Accueil
 --.generic.skip=Passer
@@ -49,7 +47,6 @@
 --.generic.login.btn=Connexion
 --.generic.validation.max=Maximum {0} caractères
 ###--.generic.image=Image
-#--.generic.delete=Delete
 --.generic.validation.numberExpected=Uniquement un nombre
 --.generic.contact=Contact
 --.generic.valid=Valider
@@ -58,15 +55,11 @@
 --.generic.publication=Publication
 --.generic.facebook=Facebook
 --.generic.category=Catégorie
-#--.generic.validation.googleplus=Ceci n'est pas une adresse Google+ valie (elle doit commencer par https://plus.google.com/)
-#--.generic.foursquare=Four Square
 --.generic.twitter=Twitter
 --.generic.validation.facebook=Ceci n'est pas une adresse Facebook valie (elle doit commencer par https\://facebook.com/)
 --.generic.validation.twitter=Ceci n'est pas une adresse Twitter valie (elle doit commencer par https\://twitter.com/)
 --.generic.title=Titre
 --.generic.socialNetwork=Vos réseaux sociaux
-#--.generic.googleplus=Google+
-#--.generic.validation.foursquare=Ceci n'est pas une adresse Foursquare valie (elle doit commencer par https://fr.foursquare.com/)
 --.generic.comment=Commentaire
 --.generic.validation.instagram=Ceci n'est pas une adresse Instagram valie (elle doit commencer par https\://instagram.com/)
 --.generic.gallery=Gallerie
@@ -88,10 +81,8 @@
 
 ##  modal/RegistrationModal/view.html
 --.loginModal.title=Connection
-#--.registrationModal.title=registrationModal.title
 
 ##  modal/DownloadFieldModal/view.html
-#--.changeEmailModal.title=Changez votre adresse email
 --.downloadModal.title=Télécharger un fichier
 
 ##  modal/HelpModal/view.html
@@ -110,7 +101,6 @@
 
 ##  be/flo/project/views/template.scala.html (load data )
 --.welcome.myProfile=Mon profile
-#--.menu.home=Home
 --.welcome.signIn=Enregistrement
 --.welcome.login=Connection
 
@@ -133,7 +123,6 @@
 --.error.validation.not_null=Le champs {0} ne peut pas être vide
 --.error.validation.size=Le champs {0} doit faire entre {1} et {2} caractères
 --.error.wrong_old_password=Ce n'est pas votre ancien mot de passe
-#--.error.validation.string_expected=A type string is expected for the pattern annotation, but the field {0} is a {1}
 --.error.facebook.authentication_fail=L'authentification Facebook a échoué
 --.error.not_connected=Vous n'êtes pas connecté
 --.error.wrong_password_or_login=Mauvais email ou mot de passe
@@ -159,16 +148,12 @@
 --.registrationModal.toBusinessRegistration=Vous voulez enregistrer un commerce ? Suivez ce lien !
 
 ##  view/home.html
---.home.toBusiness.btn=Je suis un commerçant
-#--.home.main.description=Bienvenu dans Lÿnk ! ...
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
-#--.customer.registrationModal.account.notValid=customer.registrationModal.account.notValid
 --.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté !
 --.registration.facebook.someDataEmpty=Certaines données sont manquantes. Merci de les complétez-les avant de passer à la suite.
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
-#--.editProfileModal.title=Editez vos informations personnelles
 
 ##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Numéro de téléphone attendu
@@ -185,20 +170,16 @@
 --.error.address.nameNotExists=Le nom est manquant
 --.error.address.wrongOldPassword=L'ancien mot de passe ne correspond pas.
 --.error.address.nameAlreadyUsed=Ce nom a déjà été utilisé. Merci d'en choisir un nouveau.
+--.error.address.TechnicalName=error.address.TechnicalName
 
 ##  view/business_registration.html
---.business.registration.newBusiness=Je veux rejoindre la communauté Lÿnk !
---.business.registration.title=Vous voulez rejoindre la communauté Lÿnk ? Enregistrez votre magasin maintenat!
---.business.registration.oldBusiness=J'ai déjà un compte et je veux me connecter
 
 ##  directive/form/business/BusinessFormCtrl.js
-#--.validation.dto.notNul=validation.dto.notNul
 --.business.website=Adresse de votre site web (optionel)
 --.business.contactEmail=Adresse email de contact (optionel)
 --.validation.dto.notNull=Ce champs ne peut être vide
 
 ##  view/business_welcome.html
-#--.business.welcome.title=Bienvenue sur la page de votre magasin
 ###--.business.profile.businessCategory=Type de commerce
 
 ##  modal/BusinessRegistrationModal/view.html
@@ -214,7 +195,6 @@
 --.form.address.field.street=Rue / numéro
 --.form.address.field.zip=Code postal
 --.form.address.field.city=Ville
-#--.address.form.name.help=address.form.name.help
 --.address.type.home=Mon domicile
 --.address.type.other=Autre...
 --.address.type.work=Mon bureau
@@ -263,7 +243,6 @@
 
 ##  directive/form/promotion/PromotionFormCtrl.js
 --.promotion.minimalQuantity=Quantité minimum
-#--.promotion.price=Prix
 --.promotion.endDate=Date de fin
 --.promotion.quantity=Quantité
 --.promotion.unit=Unité (optionel)
@@ -279,24 +258,15 @@
 --.promotion.simplePromotion=Créer une promotion simplifiée
 
 ##  view/web/home.html
-#--.page.home.title=Home
 
 ##  view/mobile/login.html
-#--.page.login.title=Connexion
 
 ##  view/mobile/business_registration.html
 --.page.business_registration.title=Inscription
 
 ##  view/web/business_welcome.html
-#--.business.welcome.addPromotion=Ajouter une promotion
-#--.business.profile.promotion=Promotion
-#--.business.profile.image=Image
-#--.business.welcome.addBusinessNotification=Publier une nouvelle annonce
-#--.business.profile.businessNotification=Annonces
-#--.profile.businessCategory=Type de commerce
 
 ##  modal/PromotionModal/view.html
-#--.promotion.modal.title=Promotion
 --.promotion.modal.title.create=Céer une nouvelle promotion
 --.promotion.modal.title.update=Editer une promotion
 
@@ -397,10 +367,10 @@ day_abrv_sunday=Di
 --.business.page.cancelPublishRequest.window.message=Etes-vous sûr de vouloir annuler votre requête de publication? Vous pourrez resoumettre votre commerce à tout moment.
 --.business.modal.gallery.title=Gallerie
 --.business.page.cancelPublishRequest.window.title=Annuler la requête de publication
+--.business.publication.archive=business.publication.archive
+--.business.publication.previsualization=business.publication.previsualization
+--.business.publication.basic=business.publication.basic
 
-#--.generic.image=Image
-#--.validation.dto.notNull=Ce champs ne peut être vide
-#--.business.profile.businessCategory=Type de commerce
 
 
 
@@ -428,34 +398,18 @@ day_abrv_sunday=Di
 --.list.nothing=Aucun résultat trouvé.
 
 ##  directive/field/dirFieldImageMutiple/template.html
-#--.download.button.add=Ajouter une autre image
 
 ##  directive/component/publicationListForBusiness/template.html (start date )
 --.publication.promotionData=Détails de la promotion
 
 
-#--.interest.mhabiller=M'habiller
-#--.interest.voyager=Voyager
-#--.interest.me_cultiver=Me cultiver
-#--.interest.faire_du_shopping_plaisir=Faire du shopping "plaisir"
-#--.interest.manger=Manger
-#--.interest.soccuper_denfants=S'occuper d'enfants
-#--.interest.decorer_ma_maison=Décorer ma maison
-#--.interest.prendre_soin_de_moi=Prendre soin de moi
-#--.interest.sortir=Sortir
-#--.interest.prendre_soin_de_mes_animaux=Prendre soin de mes animaux
-#--.interest.faire_des_courses=Faire des courses
-#--.interest.prendre_un_verre=Prendre un verre
-#--.interest.se_loger=Se loger
-#--.interest.faire_du_sport=Faire du sport
 
---.mobile.welcome.registration.desc=Vous n'avez pas encore de compte ? Inscrivez-vous en quelques secondes et découvrez Gling !
---.mobile.welcome.login.desc=Vous possédez déjà un compte Gling? Connectez-vous!
 
 ##  dist/templateCacheWeb.js (//lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class=date><i class=\"fa fa-calendar\"></i> {{publication.startDate | date:medium}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div></div></div>");)
 --.business.socialNetwork.other=Autre
 --.gallery.modal.next=Suivant
 --.gallery.modal.previous=Précédent
+--.welcome.myBusinesses=welcome.myBusinesses
 
 ##  controller/web/WelcomeCtrl.js (//use the model)
 --.position.current=Position actuelle
@@ -475,4 +429,12 @@ day_abrv_sunday=Di
 --.page.profile.title=Mon profile
 --.customer.profile.address.create=Créer une nouvelle adresse.
 
+
+
+##  controller/mobile/HomeCtrl.js (//search function)
+--.position.newAddress=position.newAddress
+
+##  directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js (//scrolling)
+--.business.publication.remove.confirmationModal.title=business.publication.remove.confirmationModal.title
+--.business.publication.remove.confirmationModal.body=business.publication.remove.confirmationModal.body
 

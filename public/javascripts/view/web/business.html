@@ -27,6 +27,7 @@
 
     <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
             ng-click="publish()"
+            id="business-btn-publish"
             class="btn btn-primary">
         {{'--.business.page.publication' | translateText}}
     </button>
@@ -50,6 +51,7 @@
         <!-- landscape -->
         <div class="edit-button-container landscape-edit">
             <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    id="business-btn-landscape-edit"
                     ng-show="edit"
                     ng-click="editLandscape()">
                 {{'--.business.page.edit.landscape' | translateText}}
@@ -62,6 +64,7 @@
 
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
+                        id="business-btn-illustration-edit"
                         ng-show="edit"
                         ng-click="editIllustration()">
                     {{'--.business.page.edit.illustration' | translateText}}
@@ -74,11 +77,12 @@
             <span>
                 {{business.name}}
             </span>
+
             <div class="edit-button-container">
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                         id="business-btn-name-edit"
-                    ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                    ng-click="editbusiness()">
+                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                        ng-click="editbusiness()">
                     {{'--.business.page.edit.business' | translateText}}
                 </button>
             </div>
@@ -93,6 +97,7 @@
             <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
 
             <button ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                    id="business-btn-category-edit"
                     class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                     ng-click="editCategory()">{{'--.generic.edit' | translateText}}
             </button>
@@ -103,7 +108,6 @@
                     {{business.description}}
                 </span>
                 <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                        id="business-btn-category-edit"
                         ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                         ng-click="editbusiness()">
                     {{'--.business.page.edit.business' | translateText}}
@@ -112,13 +116,12 @@
 
             <!-- publication -->
             <div>
-
-
                 <select ng-model="publicationListParam.type"
                         ng-options="option.key as option.value | translateText for option in publicationOptions">
                 </select>
 
-                <button class="btn btn-primary"
+                <button id="business-btn-promotion-add"
+                        class="btn btn-primary"
                         ng-click="createPromotion()"
                         ng-show="edit && business.businessStatus === 'PUBLISHED'">
                     {{'--.business.publication.btn.promotion' | translateText}}
@@ -156,6 +159,7 @@
                     <gallery-ctrl ng-info="{images:business.galleryPictures}"></gallery-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            id="welcome-btn-gallery-edit"
                             ng-show="edit"
                             ng-click="editGallery()">
                         {{'--.business.page.edit.gallery' | translateText}}
@@ -187,7 +191,8 @@
             <!-- contact -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{'--.generic.contact' | translateText}}</div>
+                    {{'--.generic.contact' | translateText}}
+                </div>
                 <div class="panel-body">
 
                     <div id="welcome-contact-data-phone">
@@ -204,6 +209,7 @@
                     </div>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            id="business-btn-contact-edit"
                             ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                             ng-click="editbusiness()">
                         {{'--.business.page.edit.business' | translateText}}
@@ -220,7 +226,8 @@
 
 
                     <div ng-show="!!business.socialNetwork.facebookLink" class="business-social-network-box">
-                        <a href="{{business.socialNetwork.facebookLink}}"
+                        <a id="welcome-link-facebook"
+                           href="{{business.socialNetwork.facebookLink}}"
                            title="{{business.socialNetwork.facebookLink}}"
                            target="_blank">
                             <img src="/assets/images/social_network/facebook.png">
@@ -228,7 +235,8 @@
                     </div>
 
                     <div ng-show="!!business.socialNetwork.twitterLink" class="business-social-network-box">
-                        <a href="{{business.socialNetwork.twitterLink}}"
+                        <a id="welcome-link-twitter"
+                           href="{{business.socialNetwork.twitterLink}}"
                            title="{{business.socialNetwork.twitterLink}}"
                            target="_blank">
                             <img src="/assets/images/social_network/twitter.png">
@@ -236,7 +244,8 @@
                     </div>
 
                     <div ng-show="!!business.socialNetwork.instagramLink" class="business-social-network-box">
-                        <a href="{{business.socialNetwork.instagramLink}}"
+                        <a id="welcome-link-instagram"
+                           href="{{business.socialNetwork.instagramLink}}"
                            title="{{business.socialNetwork.instagramLink}}"
                            target="_blank">
                             <img src="/assets/images/social_network/instagram.png">
@@ -244,7 +253,8 @@
                     </div>
 
                     <div ng-show="!!business.socialNetwork.deliveryLink" class="business-social-network-box">
-                        <a href="{{business.socialNetwork.deliveryLink}}"
+                        <a id="welcome-link-delivery"
+                           href="{{business.socialNetwork.deliveryLink}}"
                            title="{{business.socialNetwork.deliveryLink}}"
                            target="_blank">
                             <img src="/assets/images/social_network/delivery.png">
@@ -279,6 +289,7 @@
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="edit"
+                            id="business-btn-social-network-edit"
                             ng-click="editSocialNetwork()">
                         {{'--.business.page.edit.business' | translateText}}
                     </button>
@@ -294,6 +305,7 @@
                     <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            id="business-btn-schedule-edit"
                             ng-show="edit"
                             ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
                     </button>

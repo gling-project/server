@@ -34,8 +34,8 @@
 
 
 
-        @if(true){
-            @* @if(Play.application().isProd() == false) { *@
+        @* @if(true){ *@
+        @if(Play.application().isProd() == false) {
 
              @header.dependencies_header()
 
@@ -86,8 +86,8 @@
             @header.header()
         }
 
-        @if(false){
-        @* @if(Play.application().isProd()){ *@
+         @* @if(false){*@
+         @if(Play.application().isProd()){
 
             <script src="@routes.Assets.at("dist/dependencies.min.js")" type="text/javascript"></script>
 

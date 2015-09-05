@@ -31,21 +31,20 @@
                 <button
                         type="button"
                         ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage!=true"
-                        ng-click="download()"
                         class="button">
                     {{'--.field.document.download' | translateText}} {{getInfo().field[getInfo().fieldName].name}}
                 </button>
 
-                <img ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage==true"
-                     style="border:1px solid #999999"
-                     ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>
+                    <!--<img ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage==true"-->
+                         <!--style="border:1px solid #999999"-->
+                     <!--ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>-->
 
                 <img ng-show="getInfo().field[getInfo().fieldName]!=null &&
                 getInfo().field[getInfo().fieldName].isImage==true &&
-                getInfo().field[getInfo().fieldName].storedNameOriginalSize!=null"
+                getInfo().field[getInfo().fieldName].storedName!=null"
                      ng-style="{width:getInfo().posx,height:getInfo().posy}"
                      style="border:1px solid #999999"
-                     ng-src="{{getInfo().field[getInfo().fieldName] | image:true}}"/>
+                     ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>
 
             </div>
         </div>

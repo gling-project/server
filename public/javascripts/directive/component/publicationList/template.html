@@ -22,15 +22,15 @@
             <div>
                 <span class="link" ng-click="navigateTo('/business/'+publication.businessId)">{{publication.businessName}}</span>
             </div>
-            <div>
+            <!--<div>-->
 
-                <!-- following -->
-                <button ng-click="follow(publication)" class="follow-button">
-                    <img src="/assets/images/haert.png" ng-show="publication.following"/>
-                    <img src="/assets/images/haert-off.png" ng-hide="publication.following"/>
-                </button>
-                {{publication.totalFollowers}}
-            </div>
+                <!--&lt;!&ndash; following &ndash;&gt;-->
+                <!--<button ng-click="follow(publication)" class="follow-button">-->
+                    <!--<img src="/assets/images/haert.png" ng-show="publication.following"/>-->
+                    <!--<img src="/assets/images/haert-off.png" ng-hide="publication.following"/>-->
+                <!--</button>-->
+                <!--{{publication.totalFollowers}}-->
+            <!--</div>-->
 
             <!-- distance -->
             <div class="distance"><i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km</div>
@@ -58,8 +58,9 @@
             <!--<a facebook-feed-share class="facebookShare" data-url='http://google.com' data-shares='shares', data-description="Example text">{{ shares }}</a>-->
             <!--<div gplus class="g-plus" data-size="tall" data-annotation="bubble" data-href='http://google.com' data-action='share'></div>-->
 
-            <!-- start date -->
-            <div class="date"><i class="fa fa-calendar"></i> {{publication.startDate | date:medium}}</div>
+            <!-- end date -->
+            <div class="date" ng-show="publication.type == 'PROMOTION'">{{publication.endDate | date:'medium'}}</div>
+
             <!-- name -->
             <div class="publication-box-name">{{publication.title}}</div>
             <!-- description -->
@@ -95,6 +96,13 @@
             <div class="publication-box-picture-container">
                 <gallery-ctrl ng-info="{images:publication.pictures}"></gallery-ctrl>
             </div>
+
+            <!-- start date -->
+            <div class="date">{{publication.startDate | date:medium}}</div>
+
+            <!-- interest icon -->
+            <img style="height: 40px;float: right"
+                    ng-src="/assets/images/interest/{{publication.interest.iconName}}"/>
         </div>
     </div>
 

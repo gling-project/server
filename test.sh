@@ -1,6 +1,8 @@
 #launch test
 #webdriver-manager start
 
+#pg_dump lynk  > ./test/be/lynk/server/frontend/sql/test.sql
+
 export PGPASSWORD='florian';
 DB_CONNECTION="psql -h 127.0.0.1 -U florian -d lynk -w"
 
