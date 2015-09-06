@@ -22,6 +22,9 @@ public class FollowLink extends AbstractEntity {
     protected LocalDateTime followedFrom;
     @Basic
     private   Boolean       notification;
+    @Basic(optional = false)
+    @Column(columnDefinition = "boolean default true")
+    private   Boolean       followingNotification;
 
     public FollowLink() {
     }
@@ -30,6 +33,15 @@ public class FollowLink extends AbstractEntity {
         this.business = business;
         this.account = account;
         this.followedFrom = LocalDateTime.now();
+        this.followingNotification=true;
+    }
+
+    public Boolean getFollowingNotification() {
+        return followingNotification;
+    }
+
+    public void setFollowingNotification(Boolean followingNotification) {
+        this.followingNotification = followingNotification;
     }
 
     public LocalDateTime getFollowedFrom() {

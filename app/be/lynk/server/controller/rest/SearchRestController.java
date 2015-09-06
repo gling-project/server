@@ -26,18 +26,18 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class SearchRestController extends AbstractRestController {
 
-    private static final Double MAX_DISTANCE = 20.0;
-    private static final int NUMBER_RESULT_BY_PAGE = 20;
+    private static final Double MAX_DISTANCE          = 20.0;
+    private static final int    NUMBER_RESULT_BY_PAGE = 20;
 
 
     @Autowired
-    private BusinessService businessService;
+    private BusinessService         businessService;
     @Autowired
-    private LocalizationService localizationService;
+    private LocalizationService     localizationService;
     @Autowired
-    private PublicationService publicationService;
+    private PublicationService      publicationService;
     @Autowired
-    private FollowLinkService followLinkService;
+    private FollowLinkService       followLinkService;
     @Autowired
     private CustomerInterestService customerInterestService;
     @Autowired
@@ -79,7 +79,7 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getByDefault(Integer page) {
 
-        Logger.info("Serach Default page "+page);
+        Logger.info("Serach Default page " + page);
 
         long t = new Date().getTime();
 
@@ -89,7 +89,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> searchResults = publicationService.findActivePublication(position, MAX_DISTANCE);
 
-        return selectByPageAndAlgotithme(t,page, searchResults, position);
+        return selectByPageAndAlgotithme(t, page, searchResults, position);
     }
 
     @Transactional
@@ -109,7 +109,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> finalList = publicationService.findActivePublicationByBusinesses(position, MAX_DISTANCE, businesses);
 
-        return selectByPageAndAlgotithme(t,page, finalList, position);
+        return selectByPageAndAlgotithme(t, page, finalList, position);
     }
 
     @Transactional
@@ -126,7 +126,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByInterest(position, MAX_DISTANCE, interest);
 
-        return selectByPageAndAlgotithme(t,page, publications, position);
+        return selectByPageAndAlgotithme(t, page, publications, position);
     }
 
     @Transactional
@@ -146,7 +146,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByBusinessesAndInterest(position, MAX_DISTANCE, businesses, interest);
 
-        return selectByPageAndAlgotithme(t,page, publications, position);
+        return selectByPageAndAlgotithme(t, page, publications, position);
     }
 
     private Result selectByPageAndStartDate(Integer page, List<SearchResult> searchResults) {
@@ -181,7 +181,7 @@ public class SearchRestController extends AbstractRestController {
         return ok(new ListDTO<>(publication));
     }
 
-    private Result selectByPageAndAlgotithme(long t,Integer page, List<SearchResult> searchResults, Position position) {
+    private Result selectByPageAndAlgotithme(long t, Integer page, List<SearchResult> searchResults, Position position) {
 
 
         String s = "";
@@ -364,7 +364,12 @@ public class SearchRestController extends AbstractRestController {
 
                         //additional data
                         if (securityController.isAuthenticated(ctx())) {
-                            businessToDisplayDTO.setFollowing(followLinkService.testByAccountAndBusiness(securityController.getCurrentUser(), business));
+                            FollowLink followLink = followLinkService.findByAccountAndBusiness(securityController.getCurrentUser(), business);
+                            if (followLink != null) {
+                                businessToDisplayDTO.setFollowing(true);
+                                businessToDisplayDTO.setFollowingFrom(dozerService.map(followLink.getFollowedFrom(), Date.class));
+                                businessToDisplayDTO.setFollowingNotification(followLink.getFollowingNotification());
+                            }
                         }
                         businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
 
@@ -437,7 +442,7 @@ public class SearchRestController extends AbstractRestController {
 
     private static class SearchElement {
 
-        private Pattern pattern = Pattern.compile("^(([^:]*):)?([^:]*)$");
+        private Pattern pattern  = Pattern.compile("^(([^:]*):)?([^:]*)$");
         private Pattern pattern2 = Pattern.compile("([a-z]+)(\\||$)");
 
         private List<String> parameters = new ArrayList<>();

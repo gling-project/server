@@ -74,6 +74,7 @@ DELETE        /rest/publication/$id<[0-9]+>                                     
 
 ## follow
 POST          /rest/follow                                                                        @be.lynk.server.controller.rest.FollowController.followBusiness()
+POST          /rest/follow/notification                                                           @be.lynk.server.controller.rest.FollowController.followNotification()
 GET           /rest/follow                                                                        @be.lynk.server.controller.rest.FollowController.getMyFollows()
 
 #session

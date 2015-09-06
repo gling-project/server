@@ -44,6 +44,10 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
 
     private Boolean following;
 
+    private Date followingFrom;
+
+    private Boolean followingNotification;
+
     private Integer totalFollowers;
 
     private BusinessSocialNetworkDTO socialNetwork;
@@ -53,6 +57,22 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
     private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
 
     public BusinessToDisplayDTO() {
+    }
+
+    public Boolean getFollowingNotification() {
+        return followingNotification;
+    }
+
+    public void setFollowingNotification(Boolean followingNotification) {
+        this.followingNotification = followingNotification;
+    }
+
+    public Date getFollowingFrom() {
+        return followingFrom;
+    }
+
+    public void setFollowingFrom(Date followingFrom) {
+        this.followingFrom = followingFrom;
     }
 
     public BusinessSocialNetworkDTO getSocialNetwork() {
@@ -207,7 +227,6 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
     public void setAddress(AddressDTO address) {
         this.address = address;
     }
-
 
 
     @Override

@@ -13,7 +13,9 @@
          class="business-box business-business"
          ng-click="click()">
 
-        <img class="illustration" ng-src="{{business.illustration | image}}"/>
+        <img class="illustration"
+             ng-click="navigateTo('/business/'+business.id)"
+             ng-src="{{business.illustration | image}}"/>
 
         <div class="business-data">
             <div>

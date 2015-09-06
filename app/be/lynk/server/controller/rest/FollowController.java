@@ -4,6 +4,7 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.FollowDTO;
 import be.lynk.server.dto.FollowFormDTO;
+import be.lynk.server.dto.FollowNotificationDTO;
 import be.lynk.server.dto.ListDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
@@ -25,9 +26,26 @@ import java.util.stream.Collectors;
 public class FollowController extends AbstractRestController {
 
     @Autowired
-    private BusinessService businessService;
+    private BusinessService   businessService;
     @Autowired
     private FollowLinkService followLinkService;
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result followNotification() {
+
+
+        FollowNotificationDTO dto = extractDTOFromRequest(FollowNotificationDTO.class);
+
+        Business business = businessService.findById(dto.getBusinessId());
+
+        FollowLink followLink = followLinkService.findByAccountAndBusiness(securityController.getCurrentUser(), business);
+        followLink.setFollowingNotification(dto.getSendNotification());
+
+        followLinkService.saveOrUpdate(followLink);
+
+        return ok();
+    }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
@@ -56,11 +74,11 @@ public class FollowController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result getMyFollows() {
 
-        List<FollowLink> followLinks = followLinkService.findByAccount( securityController.getCurrentUser());
+        List<FollowLink> followLinks = followLinkService.findByAccount(securityController.getCurrentUser());
 
         List<FollowDTO> followDTOs = followLinks.stream().map(followLink ->
-                new FollowDTO(followLink.getBusiness().getName(), followLink.getBusiness().getId(), followLink.getNotification())).collect(Collectors.toList()
-        );
+                                                                      new FollowDTO(followLink.getBusiness().getName(), followLink.getBusiness().getId(), followLink.getNotification())).collect(Collectors.toList()
+                                                                                                                                                                                                );
 
         return ok(new ListDTO<>(followDTOs));
     }

@@ -1,28 +1,42 @@
 <div class="followed-business">
 
 
-    <input type="text">Search
+    <table ng-table="tableParams" class="table">
+        <tr ng-repeat="business in $data">
+            <td data-title="'--.followedBusiness.table.business' | translateText" sortable="'name'">
+                <img class="illustration"
+                     ng-click="navigateTo('/business/'+business.id)"
+                     ng-src="{{business.illustration | image}}"/>
+                <span class="link" ng-click="navigateTo('/business/'+business.id)">{{business.name}}</span>
+                <br/>
+                <button class="btn btn-xs btn-primary"
+                        ng-click="stopFollow(business)">Arrêter de suivre</button>
+            </td>
+            <td data-title="'--.followedBusiness.table.categories' | translateText">
 
-    <div ng-repeat="business in businesses" style="padding: 10px;margin: 10px;border: 1px solid black;">
+                <span ng-repeat="(catLev1Key,lev2) in business.categories">
+                    <span ng-repeat="(catLev2Key, lev3) in lev2">
+                        <span ng-repeat="catLev3 in lev3">
+                            {{catLev3.translationName |translateText}}
+                        </span>
+                    </span>
+                </span>
 
-
-        <div style="float: right">
-            <input type="checkbox">Receive notification
-        </div>
-
-        <category-line-ctrl ng-info="{categories:business.categories}"></category-line-ctrl>
-
-        <img class="illustration" ng-src="{{business.illustration | image}}"/>
-        {{business.name}}
-
-        <div style="display: inline-block">
-            <button ng-click="follow(business)" class="follow-button">
-                <img src="/assets/images/haert.png" ng-show="business.following"/>
-                <img src="/assets/images/haert-off.png" ng-hide="business.following"/>
-            </button>
-            {{business.totalFollowers}}
-        </div>
-    </div>
+            </td>
+            <td data-title="'--.followedBusiness.table.followingFrom' | translateText"
+                sortable="'followingFrom'"
+                style="text-align: center">
+                {{business.followingFrom | date}}
+            </td>
+            <td data-title="'--.followedBusiness.table.notification' | translateText" sortable="'followingNotification'"
+                style="text-align: center">
+                <div><input ng-click="setNotification(business)"
+                        type="checkbox"
+                        ng-model="business.followingNotification">
+                </div>
+            </td>
+        </tr>
+    </table>
 
 
 </div>

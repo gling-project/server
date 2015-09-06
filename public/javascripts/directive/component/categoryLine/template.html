@@ -15,8 +15,8 @@
                         <td>
                         <span ng-repeat="catLev3 in lev3">
                             <span class="transition" ng-show="$index>0">/</span>
-                            <a ng-click="searchCat(catLev3.translationName)">{{catLev3.translationName |
-                                translateText}} </a>
+                            <a ng-click="searchCat(catLev3.translationName)">
+                                {{catLev3.translationName | translateText}} </a>
                         </span>
                         </td>
                     </tr>

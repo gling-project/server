@@ -358,7 +358,13 @@ public class BusinessRestController extends AbstractController {
 
         //additional data
         if (securityController.isAuthenticated(ctx())) {
-            businessToDisplayDTO.setFollowing(followLinkService.testByAccountAndBusiness(securityController.getCurrentUser(), business));
+            FollowLink followLink = followLinkService.findByAccountAndBusiness(securityController.getCurrentUser(), business);
+            if(followLink!=null){
+                businessToDisplayDTO.setFollowing(true);
+                businessToDisplayDTO.setFollowingFrom(dozerService.map(followLink.getFollowedFrom(), Date.class));
+                businessToDisplayDTO.setFollowingNotification(followLink.getFollowingNotification());
+            }
+
         }
         businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
 
