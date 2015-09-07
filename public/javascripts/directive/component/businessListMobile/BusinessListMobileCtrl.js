@@ -1,4 +1,4 @@
-myApp.directive('businessListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
+myApp.directive('businessListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -24,29 +24,6 @@ myApp.directive('businessListMobileCtrl', function ($rootScope, businessService,
                     scope.$watch("getInfo().data", function () {
                         scope.businesses = scope.getInfo().data;
                     });
-
-                    scope.follow = function (business) {
-                        if (accountService.getMyself() != null) {
-                            scope.followed(business);
-                        }
-                        else {
-                            modalService.openLoginModal(scope.followed, business);
-                        }
-                    };
-
-
-                    scope.followed = function (business) {
-                        var followed = business.following;
-                        followService.addFollow(!followed, business.id, function () {
-                            business.following = !followed;
-                            if (business.following) {
-                                business.totalFollowers++;
-                            }
-                            else {
-                                business.totalFollowers--;
-                            }
-                        });
-                    }
                 }
             }
         }

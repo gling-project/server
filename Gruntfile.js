@@ -113,6 +113,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/googleMapWidget/GoogleMapWidgetCtrl.js',
                         'public/javascripts/directive/component/searchResult/SearchResultCtrl.js',
                         'public/javascripts/directive/component/searchBar/SearchBarCtrl.js',
+                        'public/javascripts/directive/component/followWidget/FollowWidgetCtrl.js',
 
                         <!-- filters -->
                         'public/javascripts/filter/TranslateTextFilter.js',

@@ -1486,7 +1486,7 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', 'followService', '$timeout', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, followService, $timeout) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1700,29 +1700,6 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     });
 
             };
-
-            $scope.follow = function () {
-                if (accountService.getMyself() != null) {
-                    $scope.followed();
-                }
-                else {
-                    modalService.openLoginModal($scope.followed);
-                }
-            };
-
-            $scope.followed = function () {
-                var followed = $scope.business.following;
-                followService.addFollow(!followed, $scope.business.id, function () {
-                    $scope.business.following = !followed;
-                    if ($scope.business.following) {
-                        $scope.business.totalFollowers++;
-                    }
-                    else {
-                        $scope.business.totalFollowers--;
-                    }
-                });
-            };
-
 
             //schedule
             $scope.editSchedule = function () {
@@ -2078,7 +2055,7 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
         }
     }
 }]);
-myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'accountService', 'followService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
+myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -2104,29 +2081,6 @@ myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocati
                     scope.$watch("getInfo().data", function () {
                         scope.businesses = scope.getInfo().data;
                     });
-
-                    scope.follow = function (business) {
-                        if (accountService.getMyself() != null) {
-                            scope.followed(business);
-                        }
-                        else {
-                            modalService.openLoginModal(scope.followed, business);
-                        }
-                    };
-
-
-                    scope.followed = function (business) {
-                        var followed = business.following;
-                        followService.addFollow(!followed, business.id, function () {
-                            business.following = !followed;
-                            if (business.following) {
-                                business.totalFollowers++;
-                            }
-                            else {
-                                business.totalFollowers--;
-                            }
-                        });
-                    }
                 }
             }
         }

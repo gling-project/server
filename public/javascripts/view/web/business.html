@@ -142,16 +142,10 @@
         <div class="business-page-body-right">
 
             <!-- follow  TODO TEMP-->
-            <div style="text-align: center;margin: 10px;">
-                <button ng-click="follow()" class="follow-button">
-                    <img src="/assets/images/haert.png" ng-show="business.following"/>
-                    <img src="/assets/images/haert-off.png" ng-hide="business.following"/>
-                </button>
-                {{business.totalFollowers}}
-            </div>
+            <follow-widget-ctrl ng-info="{business:business}"></follow-widget-ctrl>
 
             <!-- gallery -->
-            <div class="panel panel-default">
+            <div class="panel panel-default" ng-show="business.galleryPictures !=null && business.galleryPictures.length > 0">
                 <div class="panel-heading">{{'--.business.gallery' | translateText}}</div>
                 <div class="panel-body">
 

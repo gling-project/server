@@ -1435,7 +1435,7 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
         $scope.search();
     });
 }]);
-myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'accountService', 'followService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService) {
+myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -1461,35 +1461,12 @@ myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geo
                     scope.$watch("getInfo().data", function () {
                         scope.businesses = scope.getInfo().data;
                     });
-
-                    scope.follow = function (business) {
-                        if (accountService.getMyself() != null) {
-                            scope.followed(business);
-                        }
-                        else {
-                            modalService.openLoginModal(scope.followed, business);
-                        }
-                    };
-
-
-                    scope.followed = function (business) {
-                        var followed = business.following;
-                        followService.addFollow(!followed, business.id, function () {
-                            business.following = !followed;
-                            if (business.following) {
-                                business.totalFollowers++;
-                            }
-                            else {
-                                business.totalFollowers--;
-                            }
-                        });
-                    }
                 }
             }
         }
     }
 }]);
-myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'accountService', 'followService', 'modalService', 'facebookService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService, facebookService) {
+myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -1517,34 +1494,6 @@ myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', '
                             scope.publications[i].interval = (scope.publications[i].endDate - new Date());
                         }
                     });
-
-                    scope.follow = function (publication) {
-                        if (accountService.getMyself() != null) {
-                            scope.followed(publication);
-                        }
-                        else {
-                            modalService.openLoginModal(scope.followed, publication);
-                        }
-                    };
-
-                    scope.followed = function (publication) {
-                        var followed = publication.following;
-                        followService.addFollow(!followed, publication.businessId, function () {
-                            publication.following = !followed;
-                            if (publication.following) {
-                                publication.totalFollowers++;
-                            }
-                            else {
-                                publication.totalFollowers--;
-                            }
-                            for (var i in scope.publications) {
-                                if (scope.publications[i].businessId == publication.businessId) {
-                                    scope.publications[i].following = publication.following;
-                                    scope.publications[i].totalFollowers = publication.totalFollowers;
-                                }
-                            }
-                        });
-                    };
 
                     //scope.share = function (publication) {
                     //    facebookService.share('http://lynk-test.herokuapp.com/publication/'+publication.id);

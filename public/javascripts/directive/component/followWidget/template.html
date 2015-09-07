@@ -1,0 +1,11 @@
+<div class=follow-widget">
+    <div>
+        <button ng-click="follow()">
+            <img src="/assets/images/haert.png" ng-show="getInfo().business.following"/>
+            <img src="/assets/images/haert-off.png" ng-hide="getInfo().business.following"/>
+        </button>
+        <span ng-hide="getInfo().maskTotal===true">
+            {{getInfo().business.totalFollowers}}
+        </span>
+    </div>
+</div>

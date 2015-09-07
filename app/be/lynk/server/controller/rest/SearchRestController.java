@@ -284,7 +284,7 @@ public class SearchRestController extends AbstractRestController {
                 searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
                         dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
                         finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 20))));
-            } else {
+            } else if(categories.size()>0){
                 //for each, load max 4 businesses
                 searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
                         dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),

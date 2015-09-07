@@ -21,13 +21,9 @@
             <div>
                 <span class="link" ng-click="navigateTo('/business/'+business.id)">{{business.name}}</span>
             </div>
-            <div>
-                <button ng-click="follow(business)" class="follow-button">
-                    <img src="/assets/images/haert.png" ng-show="business.following"/>
-                    <img src="/assets/images/haert-off.png" ng-hide="business.following"/>
-                </button>
-                {{business.totalFollowers}}
-            </div>
+
+            <!-- follow -->
+            <follow-widget-ctrl ng-info="{business:business}"></follow-widget-ctrl>
             <div class="distance">{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}
                 <i class="fa fa-globe"></i> {{business.distance / 1000 | number:2}} km
             </div>

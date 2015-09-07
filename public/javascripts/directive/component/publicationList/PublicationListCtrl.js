@@ -1,4 +1,4 @@
-myApp.directive('publicationListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService, facebookService) {
+myApp.directive('publicationListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",

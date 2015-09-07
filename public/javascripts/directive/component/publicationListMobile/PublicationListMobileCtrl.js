@@ -1,4 +1,4 @@
-myApp.directive('publicationListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, accountService, followService, modalService, facebookService) {
+myApp.directive('publicationListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -26,34 +26,6 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
                             scope.publications[i].interval = (scope.publications[i].endDate - new Date());
                         }
                     });
-
-                    scope.follow = function (publication) {
-                        if (accountService.getMyself() != null) {
-                            scope.followed(publication);
-                        }
-                        else {
-                            modalService.openLoginModal(scope.followed, publication);
-                        }
-                    };
-
-                    scope.followed = function (publication) {
-                        var followed = publication.following;
-                        followService.addFollow(!followed, publication.businessId, function () {
-                            publication.following = !followed;
-                            if (publication.following) {
-                                publication.totalFollowers++;
-                            }
-                            else {
-                                publication.totalFollowers--;
-                            }
-                            for (var i in scope.publications) {
-                                if (scope.publications[i].businessId == publication.businessId) {
-                                    scope.publications[i].following = publication.following;
-                                    scope.publications[i].totalFollowers = publication.totalFollowers;
-                                }
-                            }
-                        });
-                    };
 
                     //scope.share = function (publication) {
                     //    facebookService.share('http://lynk-test.herokuapp.com/publication/'+publication.id);
