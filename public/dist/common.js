@@ -3145,16 +3145,23 @@ myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService'
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    //var url = 'https://lynk-test.herokuapp.com/business/'+scope.getInfo().publication.businessId+'/publication/'+scope.getInfo().publication.id'
+                    var url = 'https://lynk-test.herokuapp.com/business/'+scope.getInfo().publication.businessId+'/publication/'+scope.getInfo().publication.id;
 
-                    var url = 'http://lynk-test.herokuapp.com/business/1/publication/4';
+                    //var url = 'http://lynk-test.herokuapp.com/business/1/publication/4';
 
-                    var i = 1;
-                    
+                    //var i = 1;
+
 
                     scope.openPopup = function(){
                         window.open('https://www.facebook.com/sharer/sharer.php?u='+url, "Share on Facebook", "width=500,height=500");
                     };
+
+                    scope.getIllustration = function(){
+                        if(scope.getInfo().publication.pictures.length>0){
+                            return scope.getInfo().publication.pictures.get(O);
+                        }
+                        return scope.getInfo().businessIllustration;
+                    }
 
                 }
             }
@@ -5365,7 +5372,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/categoryLine/template.html",
     "<div><table class=category-line-tree><tr ng-repeat=\"(catLev1Key,lev2) in getInfo().categories\"><td><a ng-click=searchCat(catLev1Key)>{{catLev1Key | translateText}}</a> <span class=transition>>></span></td><td><table><tr ng-repeat=\"(catLev2Key, lev3) in lev2\"><td><a ng-click=searchCat(catLev2Key)>{{catLev2Key | translateText}}</a> <span class=transition>>></span></td><td><span ng-repeat=\"catLev3 in lev3\"><span class=transition ng-show=\"$index>0\">/</span> <a ng-click=searchCat(catLev3.translationName)>{{catLev3.translationName | translateText}}</a></span></td></tr></table></td></tr></table></div>");
   $templateCache.put("/assets/javascripts/directive/component/facebookSharePublication/template.html",
-    "<a ng-click=openPopup(); class=\"facebookShare ng-isolate-scope\"><div class=facebookButton><div class=pluginButton><div class=pluginButtonContainer><div class=pluginButtonImage><button type=button><i class=\"pluginButtonIcon img sp_plugin-button-2x sx_plugin-button-2x_favblue\"></i></button></div><span class=pluginButtonLabel>Share</span></div></div></div></a>");
+    "<div><a ng-click=openPopup(); class=\"facebookShare ng-isolate-scope\"><div class=facebookButton><div class=pluginButton><div class=pluginButtonContainer><div class=pluginButtonImage><button type=button><i class=\"pluginButtonIcon img sp_plugin-button-2x sx_plugin-button-2x_favblue\"></i></button></div><span class=pluginButtonLabel>Share</span></div></div></div></a> <a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{getInfo().publication.businessId}}/publication/{{getInfo().publication.id}}></a> <a facebook-feed-share class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{getInfo().publication.businessId}}/publication/{{getInfo().publication.id}} data-picture=\"{{getIllustration() | image}}\" data-name={{getInfo().publication.title}} data-description={{getInfo().publication.description}}></a></div>");
   $templateCache.put("/assets/javascripts/directive/component/followWidget/template.html",
     "<div class=follow-widget><div><button ng-click=follow()><img src=/assets/images/haert.png ng-show=\"getInfo().business.following\"> <img src=/assets/images/haert-off.png ng-hide=\"getInfo().business.following\"></button> <span ng-hide=\"getInfo().maskTotal===true\">{{getInfo().business.totalFollowers}}</span></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/gallery/template.html",
