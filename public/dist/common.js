@@ -3149,6 +3149,9 @@ myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService'
 
                     var url = 'http://lynk-test.herokuapp.com/business/1/publication/4';
 
+                    var i = 1;
+                    
+
                     scope.openPopup = function(){
                         window.open('https://www.facebook.com/sharer/sharer.php?u='+url, "Share on Facebook", "width=500,height=500");
                     };
