@@ -25,9 +25,9 @@ myApp.directive('facebookSharePublicationCtrl', function ($rootScope, businessSe
 
                     scope.getIllustration = function(){
                         if(scope.getInfo().publication.pictures.length>0){
-                            return scope.getInfo().publication.pictures[O];
+                            return scope.getInfo().publication.pictures[0];
                         }
-                        return scope.getInfo().businessIllustration;
+                        return scope.getInfo().publication.businessIllustration;
                     }
 
                 }

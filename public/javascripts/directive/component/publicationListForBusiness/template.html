@@ -75,6 +75,12 @@
             <img style="height: 40px;float: right"
                  ng-src="/assets/images/interest/{{publication.interest.iconName}}"/>
 
+            <!-- remove -->
+            <button class="btn btn-primary"
+                    ng-click="removePublication(publication)">
+                {{'--.generic.remove' | translateText}}
+            </button>
+
         </div>
     </div>
 

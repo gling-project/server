@@ -1,4 +1,4 @@
-myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback) {
+myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,$filter) {
 
     $scope.loading = false;
 
@@ -13,16 +13,29 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
         $modalInstance.close();
     };
 
+
+    $scope.getIllustration = function(publication){
+        if(publication.pictures.length>0){
+            return publication.pictures[O];
+        }
+        return publication.businessIllustration;
+    };
+
     $scope.success = function (data, share) {
         console.log(data);
 
         $scope.loading = false;
 
         if (share) {
-            console.log('plop');
-            var url = 'http://lynk-test.herokuapp.com/business/' + data.businessId + '/publication/' + data.id;
 
-            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, "Share on Facebook", "width=500,height=500");
+            FB.ui({
+                method: 'feed',
+                link: 'http://lynk-test.herokuapp.com/business/'+data.businessId+"/publication/"+data.id,
+                picture:  $filter('image')($scope.getIllustration(data)),
+                name: data.title,
+                caption: "www.gling.be",
+                description: data.description
+            });
         }
 
         $scope.close();

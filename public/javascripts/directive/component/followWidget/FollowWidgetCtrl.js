@@ -23,6 +23,9 @@ myApp.directive('followWidgetCtrl', function (accountService,modalService,follow
                         }
                     };
 
+                    //TEMP
+                    scope.getInfo().maskTotal = true;
+
                     scope.followed = function () {
                         var followed = scope.getInfo().business.following;
                         followService.addFollow(!followed, scope.getInfo().business.id, function () {
