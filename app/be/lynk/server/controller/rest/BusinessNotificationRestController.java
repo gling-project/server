@@ -5,6 +5,7 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotati
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessNotificationDTO;
+import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
@@ -65,7 +66,15 @@ public class BusinessNotificationRestController extends AbstractRestController {
             storedFileService.saveOrUpdate(originalStoredFile);
         }
 
-        return ok(new ResultDTO());
+
+        BusinessNotificationDTO publicationDTO = dozerService.map(publicationService.findById(businessNotification.getId()), BusinessNotificationDTO.class);
+
+        publicationDTO.setBusinessName(businessNotification.getBusiness().getName());
+        publicationDTO.setBusinessIllustration(dozerService.map(businessNotification.getBusiness().getIllustration(), StoredFileDTO.class));
+        publicationDTO.setBusinessId(businessNotification.getBusiness().getId());
+
+
+        return ok(publicationDTO);
     }
 
     @Transactional

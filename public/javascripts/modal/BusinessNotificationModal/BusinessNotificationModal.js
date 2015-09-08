@@ -14,6 +14,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
     };
 
     $scope.success = function (data, share) {
+        console.log(data);
 
         $scope.loading = false;
 

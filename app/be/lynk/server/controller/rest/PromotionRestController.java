@@ -5,6 +5,7 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotati
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.PromotionDTO;
+import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
@@ -66,7 +67,15 @@ public class PromotionRestController extends AbstractRestController {
 
             storedFileService.saveOrUpdate(originalStoredFile);
         }
-        return ok(dozerService.map(promotion, PromotionDTO.class));
+
+        PromotionDTO publicationDTO = dozerService.map(promotion, PromotionDTO.class);
+
+        publicationDTO.setBusinessName(promotion.getBusiness().getName());
+        publicationDTO.setBusinessIllustration(dozerService.map(promotion.getBusiness().getIllustration(), StoredFileDTO.class));
+        publicationDTO.setBusinessId(promotion.getBusiness().getId());
+
+
+        return ok(publicationDTO);
     }
 
     @Transactional

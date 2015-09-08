@@ -11,7 +11,7 @@ myApp.directive("dirEnter", function() {
     };
 });
 
-myApp.directive("dirFieldDate", function (directiveService, $filter, generateId) {
+myApp.directive("dirFieldDate", ['directiveService', '$filter', 'generateId', function (directiveService, $filter, generateId) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -93,9 +93,9 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
             };
         }
     };
-});
+}]);
 
-myApp.directive("dirFieldSelect", function (directiveService, $timeout, modalService) {
+myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService', function (directiveService, $timeout, modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -169,9 +169,9 @@ myApp.directive("dirFieldSelect", function (directiveService, $timeout, modalSer
             };
         }
     };
-});
+}]);
 
-myApp.directive("dirFieldText", function (directiveService, $timeout, modalService) {
+myApp.directive("dirFieldText", ['directiveService', '$timeout', 'modalService', function (directiveService, $timeout, modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -275,9 +275,9 @@ myApp.directive("dirFieldText", function (directiveService, $timeout, modalServi
             };
         }
     };
-});
+}]);
 
-myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalService,$timeout) {
+myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalService', '$timeout', function (directiveService, $timeout,modalService,$timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -378,7 +378,7 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
             };
         }
     };
-});
+}]);
 
 myApp.directive("dirFocusMe", function() {
     return {
@@ -396,7 +396,7 @@ myApp.directive("dirFocusMe", function() {
     };
 });
 
-myApp.directive("numbersOnly", function($filter, translationService, $locale) {
+myApp.directive("numbersOnly", ['$filter', 'translationService', '$locale', function($filter, translationService, $locale) {
     return {
         restrict: 'A',
         require: "ngModel",
@@ -525,9 +525,9 @@ myApp.directive("numbersOnly", function($filter, translationService, $locale) {
             });
         }
     };
-});
+}]);
 
-myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
+myApp.directive("dirFieldCheck", ['directiveService', '$timeout', function (directiveService, $timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -585,9 +585,9 @@ myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
             };
         }
     };
-});
+}]);
 
-myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, $filter,generateId,$window) {
+myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$filter', 'generateId', '$window', function(directiveService, $upload, $flash, $filter,generateId,$window) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -679,8 +679,8 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
             };
         }
     };
-});
-myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $flash, $filter, generateId, $window) {
+}]);
+myApp.directive("dirFieldImageMutiple", ['directiveService', '$upload', '$flash', '$filter', 'generateId', '$window', function (directiveService, $upload, $flash, $filter, generateId, $window) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -795,8 +795,8 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
             };
         }
     };
-});
-myApp.directive('loginFormCtrl', function ($flash, facebookService, translationService, directiveService, $timeout, accountService) {
+}]);
+myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationService', 'directiveService', '$timeout', 'accountService', function ($flash, facebookService, translationService, directiveService, $timeout, accountService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -902,8 +902,8 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
             }
         }
     }
-});
-myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout, $filter, translationService,modalService) {
+}]);
+myApp.directive('addressFormCtrl', ['$flash', 'directiveService', '$timeout', '$filter', 'translationService', 'modalService', function ($flash, directiveService, $timeout, $filter, translationService,modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -1038,8 +1038,8 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
             }
         }
     }
-});
-myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, customerInterestService, $timeout) {
+}]);
+myApp.directive('customerInterestFormCtrl', ['$flash', 'directiveService', 'customerInterestService', '$timeout', function ($flash, directiveService, customerInterestService, $timeout) {
         return {
             restrict: "E",
             scope: directiveService.autoScope({
@@ -1095,10 +1095,10 @@ myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, 
                 }
             }
         }
-    }
+    }]
 )
 ;
-myApp.directive('accountFormCtrl', function ($flash, directiveService, languageService) {
+myApp.directive('accountFormCtrl', ['$flash', 'directiveService', 'languageService', function ($flash, directiveService, languageService) {
 
     return {
         restrict: "E",
@@ -1291,9 +1291,9 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
     }
 
 
-})
+}])
 ;
-myApp.directive('businessFormCtrl', function ($flash, directiveService) {
+myApp.directive('businessFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
 
     return {
         restrict: "E",
@@ -1413,8 +1413,8 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
     }
 
 
-});
-myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, businessCategoryService, $timeout) {
+}]);
+myApp.directive('businessCategoryFormCtrl', ['$flash', 'directiveService', 'businessCategoryService', '$timeout', function ($flash, directiveService, businessCategoryService, $timeout) {
 
     return {
         restrict: "E",
@@ -1553,9 +1553,9 @@ myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, 
     }
 
 
-})
+}])
 ;
-myApp.directive('downloadFormCtrl', function ($flash, directiveService, $timeout) {
+myApp.directive('downloadFormCtrl', ['$flash', 'directiveService', '$timeout', function ($flash, directiveService, $timeout) {
 
     return {
         restrict: "E",
@@ -1615,8 +1615,8 @@ myApp.directive('downloadFormCtrl', function ($flash, directiveService, $timeout
             }
         }
     }
-});
-myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout,businessService) {
+}]);
+myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 'businessService', function ($flash, directiveService, $timeout,businessService) {
 
     return {
         restrict: "E",
@@ -1923,9 +1923,9 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
     }
 
 
-})
+}])
 ;
-myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService) {
+myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', 'businessService', function ($flash, directiveService, businessService) {
 
     return {
         restrict: "E",
@@ -2081,9 +2081,9 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
     }
 
 
-})
+}])
 ;
-myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
+myApp.directive('scheduleFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
 
     return {
         restrict: "E",
@@ -2320,9 +2320,9 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
             }
         }
     }
-})
+}])
 ;
-myApp.directive('imageFormCtrl', function ($flash, directiveService) {
+myApp.directive('imageFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
 
     return {
         restrict: "E",
@@ -2355,9 +2355,9 @@ myApp.directive('imageFormCtrl', function ($flash, directiveService) {
     }
 
 
-})
+}])
 ;
-myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService,languageService) {
+myApp.directive('businessSocialNetworkCtrl', ['$flash', 'directiveService', 'languageService', function ( $flash, directiveService,languageService) {
 
     return {
         restrict: "E",
@@ -2526,8 +2526,8 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
     }
 
 
-});
-myApp.directive('publicationListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+}]);
+myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -2601,8 +2601,8 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
             }
         }
     }
-});
-myApp.directive('scheduleCtrl', function (directiveService) {
+}]);
+myApp.directive('scheduleCtrl', ['directiveService', function (directiveService) {
 
     return {
         restrict: "E",
@@ -2739,9 +2739,9 @@ myApp.directive('scheduleCtrl', function (directiveService) {
             }
         }
     }
-})
+}])
 ;
-myApp.directive('galleryCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location,  modalService) {
+myApp.directive('galleryCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location,  modalService) {
 
     return {
         restrict: "E",
@@ -2763,8 +2763,8 @@ myApp.directive('galleryCtrl', function ($rootScope, businessService, geolocatio
             }
         }
     }
-});
-myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, geolocationService, directiveService, $window) {
+}]);
+myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$window', function ($rootScope, businessService, geolocationService, directiveService, $window) {
 
     return {
         restrict: "E",
@@ -2842,8 +2842,8 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
             }
         }
     }
-});
-myApp.directive('searchResultCtrl', function (directiveService, $location, searchBarService) {
+}]);
+myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBarService', function (directiveService, $location, searchBarService) {
 
     return {
         restrict: "E",
@@ -3021,8 +3021,8 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
             }
         }
     }
-});
-myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, searchService,searchBarService,$timeout,$location) {
+}]);
+myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', 'searchService', 'searchBarService', '$timeout', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, searchService,searchBarService,$timeout,$location) {
 
     return {
         restrict: "E",
@@ -3087,8 +3087,8 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
             }
         }
     }
-});
-myApp.directive('followWidgetCtrl', function (accountService,modalService,followService,directiveService) {
+}]);
+myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followService', 'directiveService', function (accountService,modalService,followService,directiveService) {
 
     return {
         restrict: "E",
@@ -3129,15 +3129,15 @@ myApp.directive('followWidgetCtrl', function (accountService,modalService,follow
             }
         }
     }
-});
-myApp.directive('facebookSharePublicationCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+}]);
+myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/component/businessList/template.html",
+        templateUrl: "/assets/javascripts/directive/component/facebookSharePublication/template.html",
         replace: true,
         transclude: true,
         compile: function () {
@@ -3145,7 +3145,9 @@ myApp.directive('facebookSharePublicationCtrl', function ($rootScope, businessSe
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    'https://lynk-test.herokuapp.com/business/'+scope.getInfo().publication.businessId+'/publication/'+scope.getInfo().publication.id'
+                    //var url = 'https://lynk-test.herokuapp.com/business/'+scope.getInfo().publication.businessId+'/publication/'+scope.getInfo().publication.id'
+
+                    var url = 'https://lynk-test.herokuapp.com/business/1/publication/4';
 
                     scope.openPopup = function(){
                         window.open('https://www.facebook.com/sharer/sharer.php?u='+url, "Share on Facebook", "width=500,height=500");
@@ -3155,8 +3157,8 @@ myApp.directive('facebookSharePublicationCtrl', function ($rootScope, businessSe
             }
         }
     }
-});
-myApp.filter("translateText", function ($sce, translationService) {
+}]);
+myApp.filter("translateText", ['$sce', 'translationService', function ($sce, translationService) {
     return function (input, params) {
         var text;
 
@@ -3186,9 +3188,9 @@ myApp.filter("translateText", function ($sce, translationService) {
         }
         return input;
     };
-});
+}]);
 
-myApp.filter("zeropad", function ($sce, translationService) {
+myApp.filter("zeropad", ['$sce', 'translationService', function ($sce, translationService) {
     return function (n) {
         var len = 2;
         var num = parseInt(n, 10);
@@ -3202,7 +3204,7 @@ myApp.filter("zeropad", function ($sce, translationService) {
         }
         return num;
     };
-});
+}]);
 
 myApp.filter("image", function () {
     return function (input,orginal) {
@@ -3231,7 +3233,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout) {
+myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout) {
 
     $scope.navigateTo = function (target) {
         $location.path(target);
@@ -3323,8 +3325,8 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     $scope.$watch('progressBarWidth',function(){
         $scope.progressBarCss.width = ($scope.progressBarWidth / progressBarMultiplicator) + '%';
     });
-});
-myApp.service("directiveService", function($sce) {
+}]);
+myApp.service("directiveService", ['$sce', function($sce) {
     this.autoScope = function(s) {
         var k, res, v;
         res = {};
@@ -3375,9 +3377,9 @@ myApp.service("directiveService", function($sce) {
             return $sce.trustAsHtml(v);
         };
     };
-});
+}]);
 
-myApp.service("$flash", function($filter) {
+myApp.service("$flash", ['$filter', function($filter) {
 
     Messenger.options = {
         extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right cr-messenger',
@@ -3417,9 +3419,9 @@ myApp.service("$flash", function($filter) {
         };
         return;
     }
-});
+}]);
 
-myApp.service("generateId", function($rootScope) {
+myApp.service("generateId", ['$rootScope', function($rootScope) {
     this.generate = function() {
         var i, possible, text;
         text = "";
@@ -3431,9 +3433,9 @@ myApp.service("generateId", function($rootScope) {
         }
         return text;
     };
-});
+}]);
 
-myApp.service("translationService", function ($rootScope, $filter, $http,$locale) {
+myApp.service("translationService", ['$rootScope', '$filter', '$http', '$locale', function ($rootScope, $filter, $http,$locale) {
     var svc;
     svc = this;
     svc.elements = null;
@@ -3459,9 +3461,9 @@ myApp.service("translationService", function ($rootScope, $filter, $http,$locale
             return exception.message;
         }
     };
-});
+}]);
 
-myApp.service("modelService", function($rootScope) {
+myApp.service("modelService", ['$rootScope', function($rootScope) {
 
     this.MY_SELF="MYSELF";
     this.APP_ID="APP_ID";
@@ -3479,8 +3481,8 @@ myApp.service("modelService", function($rootScope) {
     this.remove = function(key){
         delete this.model[key];
     };
-});
-myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB) {
+}]);
+myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languageService', '$FB', function ($http, accountService, $locale, languageService,$FB) {
 
 
     this.facebookAppId;
@@ -3653,8 +3655,8 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
     };
 
 
-});
-myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
+}]);
+myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', function ($flash, $window, $http,$rootScope) {
 
     this.languages;
     this.languagesStructured = [];
@@ -3697,9 +3699,9 @@ myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
                 });
         }
     }
-});
+}]);
 
-myApp.service("customerInterestService", function ($sce, $http, $flash) {
+myApp.service("customerInterestService", ['$sce', '$http', '$flash', function ($sce, $http, $flash) {
 
 
     var customerInterests = null;
@@ -3734,8 +3736,8 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
 
     }
 
-});
-myApp.service("accountService", function ($flash, $http) {
+}]);
+myApp.service("accountService", ['$flash', '$http', function ($flash, $http) {
 
     var self = this;
 
@@ -4023,8 +4025,8 @@ myApp.service("accountService", function ($flash, $http) {
     this.setMyself = function (dto) {
         this.model.myself = dto;
     };
-});
-myApp.service("businessCategoryService", function ($sce,$http,$flash) {
+}]);
+myApp.service("businessCategoryService", ['$sce', '$http', '$flash', function ($sce,$http,$flash) {
 
 
     var businessCategory = null;
@@ -4059,8 +4061,8 @@ myApp.service("businessCategoryService", function ($sce,$http,$flash) {
 
     }
 
-});
-myApp.service("businessService", function ($flash, $http, accountService) {
+}]);
+myApp.service("businessService", ['$flash', '$http', 'accountService', function ($flash, $http, accountService) {
 
 
     this.getBusiness = function (id, callbackSuccess, callbackError) {
@@ -4367,8 +4369,8 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             });
     };
 
-});
-myApp.service("modalService", function ($modal) {
+}]);
+myApp.service("modalService", ['$modal', function ($modal) {
 
 
     this.basicModal = function (title, directiveName, param, save) {
@@ -4634,8 +4636,8 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-});
-myApp.service("promotionService", function ($http, $flash, $rootScope) {
+}]);
+myApp.service("promotionService", ['$http', '$flash', '$rootScope', function ($http, $flash, $rootScope) {
 
     this.add = function (dto, callbackSuccess, callbackError) {
 
@@ -4679,8 +4681,8 @@ myApp.service("promotionService", function ($http, $flash, $rootScope) {
 
     };
 
-});
-myApp.service("geolocationService", function (geolocation, $http, accountService, $timeout, $rootScope, $window) {
+}]);
+myApp.service("geolocationService", ['geolocation', '$http', 'accountService', '$timeout', '$rootScope', '$window', function (geolocation, $http, accountService, $timeout, $rootScope, $window) {
 
 
         this.position = null;
@@ -4779,11 +4781,11 @@ myApp.service("geolocationService", function (geolocation, $http, accountService
                 return accountService.getMyself().selectedAddress.name;
             }
         };
-    }
+    }]
 )
 ;
 
-myApp.service("businessNotificationService", function ($http, $flash, $rootScope) {
+myApp.service("businessNotificationService", ['$http', '$flash', '$rootScope', function ($http, $flash, $rootScope) {
 
     this.REFRESH_BUSINESS_NOTIFICAITON = "REFRESH_BUSINESS_NOTIFICAITON";
 
@@ -4832,8 +4834,8 @@ myApp.service("businessNotificationService", function ($http, $flash, $rootScope
             });
 
     };
-});
-myApp.service("addressService", function ($flash, $http, geolocationService) {
+}]);
+myApp.service("addressService", ['$flash', '$http', 'geolocationService', function ($flash, $http, geolocationService) {
 
 
     this.testAddress = function (dto, callbackSuccess, callbackError) {
@@ -4901,8 +4903,8 @@ myApp.service("addressService", function ($flash, $http, geolocationService) {
         }
     };
 
-});
-myApp.service("followService", function ($flash, $http) {
+}]);
+myApp.service("followService", ['$flash', '$http', function ($flash, $http) {
 
     var self = this;
 
@@ -4977,8 +4979,8 @@ myApp.service("followService", function ($flash, $http) {
                 }
             });
     };
-});
-myApp.service("searchService", function ($http, $flash, $rootScope, geolocationService, $q) {
+}]);
+myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationService', '$q', function ($http, $flash, $rootScope, geolocationService, $q) {
 
 
     this.currentSearch = "";
@@ -5250,8 +5252,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
 
     };
-});
-myApp.service("searchBarService", function ($timeout, $rootScope) {
+}]);
+myApp.service("searchBarService", ['$timeout', '$rootScope', function ($timeout, $rootScope) {
 
     this.currentSearch = "";
     this.searchCriteria = data.searchCriterias;
@@ -5327,8 +5329,8 @@ myApp.service("searchBarService", function ($timeout, $rootScope) {
         }
     });
 
-});
-myApp.service("publicationService", function ($http, $flash, $rootScope) {
+}]);
+myApp.service("publicationService", ['$http', '$flash', '$rootScope', function ($http, $flash, $rootScope) {
 
     this.delete = function (dto, callbackSuccess, callbackError) {
 
@@ -5350,7 +5352,7 @@ myApp.service("publicationService", function ($http, $flash, $rootScope) {
 
     };
 
-});
+}]);
 angular.module('app').run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("/assets/javascripts/directive/component/businessList/template.html",
