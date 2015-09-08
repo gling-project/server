@@ -19,7 +19,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
         $scope.loading = false;
 
         if (share) {
-            var url = 'http://lynk-test.herokuapp.com/business/' + data.businessId + '/publication/' + data.id;
+            var url = 'https://lynk-test.herokuapp.com/business/' + data.businessId + '/publication/' + data.id;
 
             window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, "Share on Facebook", "width=500,height=500");
         }
