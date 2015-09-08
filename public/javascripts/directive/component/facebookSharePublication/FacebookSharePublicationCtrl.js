@@ -15,11 +15,6 @@ myApp.directive('facebookSharePublicationCtrl', function ($rootScope, businessSe
 
                     var url = 'https://lynk-test.herokuapp.com/business/'+scope.getInfo().publication.businessId+'/publication/'+scope.getInfo().publication.id;
 
-                    //var url = 'http://lynk-test.herokuapp.com/business/1/publication/4';
-
-                    //var i = 1;
-
-
                     scope.openPopup = function(){
                         window.open('https://www.facebook.com/sharer/sharer.php?u='+url, "Share on Facebook", "width=500,height=500");
                     };
