@@ -74,7 +74,9 @@ public class SearchRestController extends AbstractRestController {
         //load
         List<SearchResult> searchResults = publicationService.findActivePublicationByBusiness(byId);
 
-        return selectByPageAndStartDate(page, searchResults);
+        Result result = selectByPageAndStartDate(page, searchResults);
+
+        return result;
     }
 
     @Transactional
@@ -168,7 +170,7 @@ public class SearchRestController extends AbstractRestController {
             return ok(new ListDTO<>());
         }
         if (searchResults.size() < max) {
-            max = searchResults.size() - 1;
+            max = searchResults.size() ;
         }
         List<SearchResult> finalResult = searchResults.subList(min, max);
 
