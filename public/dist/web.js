@@ -1036,7 +1036,7 @@ myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal',
     }
 
 }]);
-myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', function ($scope, $flash, $modalInstance, translationService, dto, promotionService,callback) {
+myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback) {
 
     $scope.loading = false;
 
@@ -1051,7 +1051,22 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
         $modalInstance.close();
     };
 
-    $scope.save = function () {
+
+    $scope.success = function (data, share) {
+
+        $scope.loading = false;
+
+        if (share) {
+            var url = 'http://lynk-test.herokuapp.com/business/' + data.businessId + '/publication/' + data.id;
+
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, "Share on Facebook", "width=500,height=500");
+        }
+
+        $scope.close();
+        callback();
+    };
+
+    $scope.save = function (share) {
 
         if (!$scope.promotionParam.isValid) {
             $scope.promotionParam.displayErrorMessage = true;
@@ -1065,20 +1080,16 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
 
                 $scope.loading = true;
                 if ($scope.update) {
-                    promotionService.edit($scope.promotionParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                            callback();
+                    promotionService.edit($scope.promotionParam.dto, function (data) {
+                            $scope.success(data, share);
                         },
                         function () {
                             $scope.loading = false;
                         });
                 }
                 else {
-                    promotionService.add($scope.promotionParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                            callback();
+                    promotionService.add($scope.promotionParam.dto, function (data) {
+                            $scope.success(data, share);
                         },
                         function () {
                             $scope.loading = false;
@@ -1090,13 +1101,13 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
 
 
 }]);
-myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', function ($scope, $flash, $modalInstance,  translationService, dto,businessNotificationService,callback) {
+myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback) {
 
     $scope.loading = false;
 
     $scope.update = (dto != null);
 
-    $scope.businessNotificationParam= {
+    $scope.businessNotificationParam = {
         dto: angular.copy(dto)
     };
 
@@ -1105,7 +1116,22 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
         $modalInstance.close();
     };
 
-    $scope.save = function () {
+    $scope.success = function (data, share) {
+
+        $scope.loading = false;
+
+        if (share) {
+            console.log('plop');
+            var url = 'http://lynk-test.herokuapp.com/business/' + data.businessId + '/publication/' + data.id;
+
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, "Share on Facebook", "width=500,height=500");
+        }
+
+        $scope.close();
+        callback();
+    };
+
+    $scope.save = function (share) {
 
         if (!$scope.businessNotificationParam.isValid) {
             $scope.businessNotificationParam.displayErrorMessage = true;
@@ -1113,20 +1139,16 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
         else {
             $scope.loading = true;
             if ($scope.update) {
-                businessNotificationService.edit($scope.businessNotificationParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                        callback();
+                businessNotificationService.edit($scope.businessNotificationParam.dto, function (data) {
+                        $scope.success(data, share);
                     },
                     function () {
                         $scope.loading = false;
                     });
             }
             else {
-                businessNotificationService.add($scope.businessNotificationParam.dto, function () {
-                        $scope.loading = false;
-                        $scope.close();
-                        callback();
+                businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
+                        $scope.success(data, share);
                     },
                     function () {
                         $scope.loading = false;

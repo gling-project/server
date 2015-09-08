@@ -26,13 +26,7 @@
             </div>
 
             <!-- share facebook -->
-            <a facebook
-               class="facebookShare"
-               data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}">
-                {{ shares }}</a>
-            <!--<button ng-click="share(publication)">Share</button>-->
-            <!--<a facebook-feed-share class="facebookShare" data-url='http://google.com' data-shares='shares', data-description="Example text">{{ shares }}</a>-->
-            <!--<div gplus class="g-plus" data-size="tall" data-annotation="bubble" data-href='http://google.com' data-action='share'></div>-->
+            <facebook-share-publication-ctrl ng-info="{publication:publication}"></facebook-share-publication-ctrl>
 
             <!-- end date -->
             <div class="date" ng-show="publication.type == 'PROMOTION'">{{publication.endDate | date:'medium'}}</div>

@@ -8,6 +8,19 @@
 </div>
 <div class="modal-footer">
     <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' | translateText}}</button>
-    <button ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">{{'--.generic.save' | translateText}}</button>
+    <button ng-disabled="loading"
+            id="promotion-modal-btn-save"
+            type="button"
+            class="btn btn-primary"
+            ng-click="save(false)">
+        {{'--.generic.save' | translateText}}
+    </button>
+    <button ng-disabled="loading"
+            id="promotion-modal-btn-save-and-share"
+            type="button"
+            class="btn btn-primary"
+            ng-click="save(true)">
+        {{'--.publication.modal.publicAndShare' | translateText}}
+    </button>
     <img src="/assets/images/modal-loading.gif" ng-show="loading" />
 </div>

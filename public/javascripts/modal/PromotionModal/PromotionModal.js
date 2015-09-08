@@ -1,4 +1,4 @@
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService,callback) {
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback) {
 
     $scope.loading = false;
 
@@ -13,7 +13,22 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
         $modalInstance.close();
     };
 
-    $scope.save = function () {
+
+    $scope.success = function (data, share) {
+
+        $scope.loading = false;
+
+        if (share) {
+            var url = 'http://lynk-test.herokuapp.com/business/' + data.businessId + '/publication/' + data.id;
+
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, "Share on Facebook", "width=500,height=500");
+        }
+
+        $scope.close();
+        callback();
+    };
+
+    $scope.save = function (share) {
 
         if (!$scope.promotionParam.isValid) {
             $scope.promotionParam.displayErrorMessage = true;
@@ -27,20 +42,16 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
 
                 $scope.loading = true;
                 if ($scope.update) {
-                    promotionService.edit($scope.promotionParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                            callback();
+                    promotionService.edit($scope.promotionParam.dto, function (data) {
+                            $scope.success(data, share);
                         },
                         function () {
                             $scope.loading = false;
                         });
                 }
                 else {
-                    promotionService.add($scope.promotionParam.dto, function () {
-                            $scope.loading = false;
-                            $scope.close();
-                            callback();
+                    promotionService.add($scope.promotionParam.dto, function (data) {
+                            $scope.success(data, share);
                         },
                         function () {
                             $scope.loading = false;

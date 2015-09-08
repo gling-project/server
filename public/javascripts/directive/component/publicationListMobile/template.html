@@ -98,10 +98,7 @@
                 <gallery-ctrl ng-info="{images:publication.pictures}"></gallery-ctrl>
             </div>
 
-            <a facebook
-               class="facebookShare"
-               data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}">
-                {{ shares }}</a>
+            <facebook-share-publication-ctrl ng-info="{publication:publication}"></facebook-share-publication-ctrl>
 
             <!-- interest icon -->
             <img style="height: 25px;"

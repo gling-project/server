@@ -15,7 +15,6 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
 
                     scope.getInfo().loading = true;
 
-
                     scope.navigateTo = function (target) {
                         $location.path(target);
                     };

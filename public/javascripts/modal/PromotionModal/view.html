@@ -17,8 +17,15 @@
             id="promotion-modal-btn-save"
             type="button"
             class="btn btn-primary"
-            ng-click="save()">
+            ng-click="save(false)">
         {{'--.generic.save' | translateText}}
+    </button>
+    <button ng-disabled="loading"
+            id="promotion-modal-btn-save-and-share"
+            type="button"
+            class="btn btn-primary"
+            ng-click="save(true)">
+        {{'--.publication.modal.publicAndShare' | translateText}}
     </button>
     <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
 </div>

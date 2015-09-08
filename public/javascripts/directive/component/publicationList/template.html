@@ -18,21 +18,21 @@
         <!--&lt;!&ndash; illustration &ndash;&gt;-->
         <!--<div style="float:left;width:  60px;height: 60px; border-radius: 10px;border: 1px solid #28FDA7;display:inline-block;overflow: hidden">-->
 
-            <!--<img style="width: 80px;height: 80px;"-->
-                    <!--ng-click="navigateTo('/business/'+publication.businessId)"-->
-                    <!--ng-src="{{publication.businessIllustration | image}}"/>-->
+        <!--<img style="width: 80px;height: 80px;"-->
+        <!--ng-click="navigateTo('/business/'+publication.businessId)"-->
+        <!--ng-src="{{publication.businessIllustration | image}}"/>-->
 
         <!--</div>-->
 
         <!--<div style="display: block">-->
-            <!--<div style="border-bottom: 1px solid #28FDA7;vertical-align: top;display: block;line-height: 40px">-->
-                <!--Poupette Coquette-->
-            <!--</div>-->
-            <!--<div style="vertical-align: top;display: block;padding-top: 15px;">-->
-                <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
-                <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
-                <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
-            <!--</div>-->
+        <!--<div style="border-bottom: 1px solid #28FDA7;vertical-align: top;display: block;line-height: 40px">-->
+        <!--Poupette Coquette-->
+        <!--</div>-->
+        <!--<div style="vertical-align: top;display: block;padding-top: 15px;">-->
+        <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
+        <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
+        <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
+        <!--</div>-->
         <!--</div>-->
 
         <img
@@ -73,17 +73,7 @@
             </div>
 
             <!-- share facebook -->
-            <a facebook
-               class="facebookShare"
-               data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}">
-            </a>
-
-            <a facebook-feed-share
-               class="facebookShare"
-               data-url='http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}'
-               data-shares='shares',
-               data-description="{{publication.title}}">
-            </a>
+            <facebook-share-publication-ctrl ng-info="{publication:publication}"></facebook-share-publication-ctrl>
 
 
             <!-- end date -->
