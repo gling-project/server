@@ -24,12 +24,12 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     //
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
-                            startDate: new Date(),
-                            minimalQuantity: 1
+                            startDate: new Date()
+                            //minimalQuantity: 1
                         };
                     }
                     else {
-                        scope.completePromotion = scope.getInfo().dto.quantity != null;
+                        scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
 
 
@@ -117,51 +117,51 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             multiple:true,
                             fieldName: 'pictures'
                         },
-                        quantity: {
-                            name:'quantity',
-                            fieldTitle: "--.promotion.quantity",
-                            numbersOnly: 'integer',
-                            validationRegex: "^[0-9,.]{1,9}$",
-                            validationMessage: '--.generic.validation.numberExpected',
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'quantity'
-                        },
-                        minimalQuantity: {
-                            name:'minimalQuantity',
-                            fieldTitle: "--.promotion.minimalQuantity",
-                            numbersOnly: 'integer',
-                            validationRegex: "^[0-9,.]{1,9}$",
-                            validationMessage: '--.promotion.validation.minimalQuantityMustBeLowerThanQuantity',
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: 1,
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'minimalQuantity'
-                        },
-                        unit: {
-                            name:'unit',
-                            fieldTitle: "--.promotion.unit",
-                            validationRegex: "^.{0,30}$",
-                            validationMessage: ['--.generic.validation.max', '30'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'unit'
-                        },
+                        //quantity: {
+                        //    name:'quantity',
+                        //    fieldTitle: "--.promotion.quantity",
+                        //    numbersOnly: 'integer',
+                        //    validationRegex: "^[0-9,.]{1,9}$",
+                        //    validationMessage: '--.generic.validation.numberExpected',
+                        //    disabled: function () {
+                        //        return scope.getInfo().disabled;
+                        //    },
+                        //    active: function () {
+                        //        return scope.completePromotion;
+                        //    },
+                        //    field: scope.getInfo().dto,
+                        //    fieldName: 'quantity'
+                        //},
+                        //minimalQuantity: {
+                        //    name:'minimalQuantity',
+                        //    fieldTitle: "--.promotion.minimalQuantity",
+                        //    numbersOnly: 'integer',
+                        //    validationRegex: "^[0-9,.]{1,9}$",
+                        //    validationMessage: '--.promotion.validation.minimalQuantityMustBeLowerThanQuantity',
+                        //    disabled: function () {
+                        //        return scope.getInfo().disabled;
+                        //    },
+                        //    field: 1,
+                        //    active: function () {
+                        //        return scope.completePromotion;
+                        //    },
+                        //    field: scope.getInfo().dto,
+                        //    fieldName: 'minimalQuantity'
+                        //},
+                        //unit: {
+                        //    name:'unit',
+                        //    fieldTitle: "--.promotion.unit",
+                        //    validationRegex: "^.{0,30}$",
+                        //    validationMessage: ['--.generic.validation.max', '30'],
+                        //    disabled: function () {
+                        //        return scope.getInfo().disabled;
+                        //    },
+                        //    active: function () {
+                        //        return scope.completePromotion;
+                        //    },
+                        //    field: scope.getInfo().dto,
+                        //    fieldName: 'unit'
+                        //},
                         originalPrice: {
                             name:'originalPrice',
                             fieldTitle: "--.promotion.originalUnitPrice",

@@ -1,4 +1,4 @@
-myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, $rootScope) {
+myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, $rootScope,$window) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -19,12 +19,18 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
     };
 
     $scope.personalEdit = function () {
+        $scope.oldLang = angular.copy($scope.accountParam.dto.lang);
         $scope.accountParam.disabled = false;
     };
 
     $scope.personalSave = function () {
         $scope.accountParam.disabled = true;
-        accountService.editAccount($scope.accountParam.dto);
+        accountService.editAccount($scope.accountParam.dto,function(){
+
+            if($scope.oldLang != $scope.accountParam.dto.lang){
+                $window.location.reload();
+            }
+        });
     };
 
     $scope.personalCancel = function () {

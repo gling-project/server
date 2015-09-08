@@ -31,35 +31,46 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
     }
 
     @Override
-    public List<Business> search(String criteria,int max) {
+    public List<Business> search(String criteria, int page, int maxResult) {
 
-        criteria=normalizeForSearch(criteria);
+        criteria = normalizeForSearch(criteria);
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Business> cq = cb.createQuery(Business.class);
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
         cq.where(cb.like(from.get("searchableName"), criteria),
-                cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
-        
+                 cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+
+        cq.orderBy(cb.asc(from.get("searchableName")));
+
         return JPA.em().createQuery(cq)
-                .setMaxResults(max)
-                .getResultList();
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
+                  .getResultList();
     }
 
     @Override
-    public List<Business> findByCategory(BusinessCategory businessCategory, int max) {
+    public List<Business> findByCategory(BusinessCategory businessCategory, int maxResult) {
+        return findByCategory(businessCategory, 0, maxResult);
+    }
+
+    @Override
+    public List<Business> findByCategory(BusinessCategory businessCategory, int page, int maxResult) {
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Business> cq = cb.createQuery(Business.class);
         Root<Business> from = cq.from(Business.class);
-        Join<Business,BusinessCategory> businessCategories = from.join("businessCategories");
+        Join<Business, BusinessCategory> businessCategories = from.join("businessCategories");
         cq.select(from);
         cq.where(cb.equal(businessCategories, businessCategory),
-                cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+                 cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+
+        cq.orderBy(cb.asc(from.get("searchableName")));
 
         return JPA.em().createQuery(cq)
-                .setMaxResults(max)
-                .getResultList();
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
+                  .getResultList();
     }
 }

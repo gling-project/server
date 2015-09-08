@@ -7,6 +7,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.default = function (page,callbackSuccess, callbackError) {
 
+        console.log('Default search page '+page);
+
         if (canceler != null) {
             canceler.resolve();
         }
@@ -22,15 +24,11 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
                 timeout: canceler.promise
             }
         }).success(function (data, status) {
-            console.log('Success !! DATA');
-            console.log(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
         })
             .error(function (data, status) {
-                console.log('error !! DATA');
-                console.log(data);
                 $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
@@ -69,7 +67,9 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
-    this.searchByString = function (searchText, callbackSuccess, callbackError) {
+    this.searchByString = function (page,searchText, callbackSuccess, callbackError) {
+
+        console.log("search by string : "+searchText+"/"+page);
 
         if (canceler != null) {
             canceler.resolve();
@@ -81,6 +81,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'url': "/rest/search/text",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': {
+                page:page,
                 search: searchText,
                 position: geolocationService.position
             },

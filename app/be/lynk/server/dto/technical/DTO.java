@@ -17,10 +17,11 @@ import java.util.Date;
 /**
  * Created by florian on 10/11/14.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true,value = {"parsingDate"})
 public class DTO implements Content ,KeyTyped<Date> {
 
     @javax.persistence.Id
+    @JsonIgnoreProperties
     protected Date parsingDate =new Date();
 
     protected Long currentAccountId;

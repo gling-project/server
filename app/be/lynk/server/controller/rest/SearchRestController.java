@@ -9,6 +9,7 @@ import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.*;
+import be.lynk.server.util.StringUtil;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +90,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> searchResults = publicationService.findActivePublication(position, MAX_DISTANCE);
 
-        return selectByPageAndAlgotithme(t, page, searchResults, position);
+        return selectByPageAndAlgorithme(t, page, searchResults, position);
     }
 
     @Transactional
@@ -109,7 +110,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> finalList = publicationService.findActivePublicationByBusinesses(position, MAX_DISTANCE, businesses);
 
-        return selectByPageAndAlgotithme(t, page, finalList, position);
+        return selectByPageAndAlgorithme(t, page, finalList, position);
     }
 
     @Transactional
@@ -126,7 +127,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByInterest(position, MAX_DISTANCE, interest);
 
-        return selectByPageAndAlgotithme(t, page, publications, position);
+        return selectByPageAndAlgorithme(t, page, publications, position);
     }
 
     @Transactional
@@ -146,7 +147,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByBusinessesAndInterest(position, MAX_DISTANCE, businesses, interest);
 
-        return selectByPageAndAlgotithme(t, page, publications, position);
+        return selectByPageAndAlgorithme(t, page, publications, position);
     }
 
     private Result selectByPageAndStartDate(Integer page, List<SearchResult> searchResults) {
@@ -181,12 +182,12 @@ public class SearchRestController extends AbstractRestController {
         return ok(new ListDTO<>(publication));
     }
 
-    private Result selectByPageAndAlgotithme(long t, Integer page, List<SearchResult> searchResults, Position position) {
+    private Result selectByPageAndAlgorithme(long t, Integer page, List<SearchResult> searchResults, Position position) {
 
 
         String s = "";
 
-        s += "====== Default selectByPageAndAlgotithme\n";
+        s += "====== Default selectByPageAndAlgorithme\n";
 
 
         s += "====== Find : " + (new Date().getTime() - t) + "\n";
@@ -255,43 +256,29 @@ public class SearchRestController extends AbstractRestController {
                 switch (searchCriteriaEnum) {
                     case CATEGORY:
                         //1 recover cat
-                        List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(), max);
-                        if (categories.size() == 1) {
-                            //load 20 possible businesses
-                            searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
-                                    dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
-                                    finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 20))));
-                        } else {
-                            //for each, load max 4 businesses
-                            searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
-                                    dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
-                                    finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 4))));
+                        List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(),null);
+
+                        if (categories.size() > 0) {
+                            createCategorySearchResult(categories, searchDTO, searchResultDTO, searchDTO.getPage(), (categories.size() == 1 && categories.get(0).getChildren().size() == 0), true);
                         }
                         break;
                     case BUSINESS:
-                        searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
+                        searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME));
                         break;
                     case PUBLICATION:
-                        searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
+                        searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max)));
                         break;
                 }
             }
         } else {
             //1 recover cat
-            List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(), max);
-            if (categories.size() == 1) {
-                //load 20 possible businesses
-                searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
-                        dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
-                        finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 20))));
-            } else if(categories.size()>0){
-                //for each, load max 4 businesses
-                searchResultDTO.getCategoriesMap().add(new SearchResultDTO.BusinessesByCategory(
-                        dozerService.map(categories.get(0), BusinessCategoryFlatDTO.class),
-                        finalizeBusiness(searchDTO.getPosition(), businessService.findByCategory(categories.get(0), 4))));
+            List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(),null);
+            if (categories.size() > 0) {
+                createCategorySearchResult(categories, searchDTO, searchResultDTO, searchDTO.getPage(), (categories.size() == 1 && categories.get(0).getChildren().size() == 0), true);
             }
-            searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
-            searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
+            List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME);
+            searchResultDTO.setBusinesses(businessToDisplayDTOs);
+            searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max)));
         }
         return ok(searchResultDTO);
     }
@@ -321,26 +308,26 @@ public class SearchRestController extends AbstractRestController {
 
                 switch (searchCriteriaEnum) {
                     case CATEGORY:
-                        searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
+                        searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(),  max), BusinessCategoryFlatDTO.class));
                         break;
                     case BUSINESS:
-                        searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
+                        searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
                         break;
                     case PUBLICATION:
-                        searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
+                        searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max)));
                         break;
                 }
             }
         } else {
             searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
-            searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), max)));
-            searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), max)));
+            searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
+            searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max)));
         }
 
         return ok(searchLittleResultDTO);
     }
 
-    private List<BusinessToDisplayDTO> finalizeBusiness(PositionDTO dto, List<Business> businesses) {
+    private List<BusinessToDisplayDTO> finalizeBusiness(PositionDTO dto, List<Business> businesses, OrderType orderType) {
         //compute distance
         List<BusinessToDisplayDTO> finalResult = new ArrayList<>();
 
@@ -380,9 +367,27 @@ public class SearchRestController extends AbstractRestController {
             }
         }
 
-        Collections.sort(finalResult);
+        switch (orderType) {
 
-        return finalResult;//
+            case NAME:
+                Collections.sort(finalResult, new Comparator<BusinessToDisplayDTO>() {
+                    @Override
+                    public int compare(BusinessToDisplayDTO o1, BusinessToDisplayDTO o2) {
+                        return StringUtil.normalize(o1.getName()).compareTo(StringUtil.normalize(o2.getName()));
+                    }
+                });
+                break;
+            case DISTANCE:
+                finalResult.stream().sorted(new Comparator<BusinessToDisplayDTO>() {
+                    @Override
+                    public int compare(BusinessToDisplayDTO o1, BusinessToDisplayDTO o2) {
+                        return o1.getDistance().compareTo(o2.getDistance());
+                    }
+                });
+                break;
+        }
+
+        return finalResult;
 
     }
 
@@ -497,6 +502,75 @@ public class SearchRestController extends AbstractRestController {
             }
         }
         return finalList;
+    }
+
+    private void createCategorySearchResult(List<BusinessCategory> categories, SearchDTO searchDTO, SearchResultDTO searchResultDTO, int page, boolean onlyOneResult, boolean targetedCategory) {
+        for (BusinessCategory category : categories) {
+
+            boolean lastLevelCategory = category.getChildren().size() == 0;
+            if (lastLevelCategory && onlyOneResult) {
+                //TODO load 20 + by scrolling
+                List<Business> businesses = businessService.findByCategory(category, page, 20);
+                List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(searchDTO.getPosition(), businesses, OrderType.NAME);
+
+                completeCategoryMap(true, searchResultDTO, category, businessToDisplayDTOs);
+
+            } else if (lastLevelCategory) {
+
+                List<Business> businesses = businessService.findByCategory(category, 0, 4);
+                List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(searchDTO.getPosition(), businesses, OrderType.NAME);
+
+                completeCategoryMap(targetedCategory, searchResultDTO, category, businessToDisplayDTOs);
+            } else {
+                BusinessCategoryDTO sCat = null;
+                BusinessCategoryDTO cat = null;
+                if (category.getParent() != null) {
+                    sCat = dozerService.map(category, BusinessCategoryDTO.class);
+                    cat = dozerService.map(category.getParent(), BusinessCategoryDTO.class);
+                } else {
+                    cat = dozerService.map(category, BusinessCategoryDTO.class);
+                }
+                if (!searchResultDTO.getCategoriesMap().containsKey(cat.getTranslationName())) {
+                    searchResultDTO.getCategoriesMap().put(cat.getTranslationName(), new HashMap<>());
+                }
+                if (sCat != null && !searchResultDTO.getCategoriesMap().get(cat.getTranslationName()).containsKey(sCat.getTranslationName())) {
+                    searchResultDTO.getCategoriesMap().get(cat.getTranslationName()).put(sCat.getTranslationName(), new HashMap<>());
+                }
+                createCategorySearchResult(category.getChildren(), searchDTO, searchResultDTO, page, onlyOneResult, false);
+            }
+        }
+    }
+
+    private void completeCategoryMap(
+            boolean forceAdding,
+            SearchResultDTO searchResultDTO,
+            BusinessCategory category,
+            List<BusinessToDisplayDTO> businessToDisplayDTOs) {
+
+        if (businessToDisplayDTOs.size() == 0 && !forceAdding) {
+            return;
+        }
+
+        BusinessCategoryDTO ssCat = dozerService.map(category, BusinessCategoryDTO.class);
+        BusinessCategoryDTO sCat = dozerService.map(category.getParent(), BusinessCategoryDTO.class);
+        BusinessCategoryDTO cat = dozerService.map(category.getParent().getParent(), BusinessCategoryDTO.class);
+
+        //map level final
+        if (!searchResultDTO.getCategoriesMap().containsKey(cat.getTranslationName())) {
+            searchResultDTO.getCategoriesMap().put(cat.getTranslationName(), new HashMap<>());
+        }
+        if (!searchResultDTO.getCategoriesMap().get(cat.getTranslationName()).containsKey(sCat.getTranslationName())) {
+            searchResultDTO.getCategoriesMap().get(cat.getTranslationName()).put(sCat.getTranslationName(), new HashMap<>());
+        }
+        if (!searchResultDTO.getCategoriesMap().get(cat.getTranslationName()).get(sCat.getTranslationName()).containsKey(ssCat.getTranslationName())) {
+            searchResultDTO.getCategoriesMap().get(cat.getTranslationName()).get(sCat.getTranslationName()).put(ssCat.getTranslationName(), businessToDisplayDTOs);
+        } else {
+            searchResultDTO.getCategoriesMap().get(cat.getTranslationName()).get(sCat.getTranslationName()).get(ssCat.getTranslationName()).addAll(businessToDisplayDTOs);
+        }
+    }
+
+    public static enum OrderType {
+        NAME, DISTANCE
     }
 
 

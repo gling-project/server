@@ -29,8 +29,6 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
 
                             //test
                             scope.getInfo().centerMap = function () {
-                                console.log("centerMap !! : ");
-                                console.log(scope.getInfo().address);
                                 scope.map = {
                                     center: {
                                         latitude: scope.getInfo().address.posx,

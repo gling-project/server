@@ -1355,7 +1355,7 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
 
 
     $scope.search = function () {
-        searchService.searchByString(param, function (result) {
+        searchService.searchByString(0,param, function (result) {
 
 
             var selectedCounter = 0;

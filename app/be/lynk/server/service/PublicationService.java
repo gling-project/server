@@ -19,7 +19,7 @@ public interface PublicationService extends CrudService<AbstractPublication> {
                                                          Double maxDistance,
                                                          List<Business> businesses);
 
-    List<AbstractPublication> search(String criteria, int max);
+    List<AbstractPublication> search(String criteria, int page,int max);
 
     List<SearchResult> findActivePublicationByBusiness(Business business);
 

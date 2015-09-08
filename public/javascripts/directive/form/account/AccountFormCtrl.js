@@ -1,4 +1,4 @@
-myApp.directive('accountFormCtrl', function ($flash, directiveService) {
+myApp.directive('accountFormCtrl', function ($flash, directiveService, languageService) {
 
     return {
         restrict: "E",
@@ -24,16 +24,37 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                         scope.getInfo().dto = {
                             gender: null
                         };
-                    };
+                    }
+                    ;
+
 
                     scope.passwordActive = true;
+
+                    var langOptions = [];
+
+                    for (var key in languageService.languages) {
+                        if (languageService.languages[key].code == scope.getInfo().dto.lang.code) {
+                            langOptions.push({
+                                key: scope.getInfo().dto.lang,
+                                value: scope.getInfo().dto.lang.code
+                            });
+                        }
+                        else {
+                            langOptions.push({
+                                key: languageService.languages[key],
+                                value: languageService.languages[key].code
+                            });
+                        }
+                    }
+
+
+                    console.log(angular.copy(scope.getInfo().dto));
+                    console.log(langOptions);
 
                     scope.fields = {
                         gender: {
                             name: 'gender',
                             fieldTitle: "--.generic.gender",
-                            validationRegex: "^.+$",
-                            validationMessage: '--.error.validation.not_null',
                             options: [
                                 {key: 'MALE', value: '--.generic.male'},
                                 {key: 'FEMALE', value: '--.generic.female'}
@@ -65,6 +86,17 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'lastname'
+                        },
+                        language: {
+                            name: 'language',
+                            fieldTitle: "--.generic.favoriteLanguage",
+                            validationMessage: '--.error.validation.not_null',
+                            options: langOptions,
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'lang'
                         },
                         email: {
                             fieldType: "email",
@@ -125,7 +157,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService) {
                     };
 
                     scope.getInfo().maskPassword = function () {
-                        scope.passwordActive=false;
+                        scope.passwordActive = false;
                     };
 
                     //

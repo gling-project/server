@@ -5,6 +5,7 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.service.BusinessCategoryService;
 import be.lynk.server.service.CategoryInterestLinkService;
 import be.lynk.server.service.CustomerInterestService;
+import be.lynk.server.util.StringUtil;
 import jxl.Cell;
 import jxl.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +101,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
             String interestS = getString(sheet, COL_INTEREST_NAME, rowCounter);
             if (interestS != null && interestS.length() > 0) {
-                String interestSNormalized = normalize(interestS);
+                String interestSNormalized = StringUtil.normalize(interestS);
 
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Letter> langIntegerEntry : COL_INTEREST_TRANSLATION.entrySet()) {
@@ -134,7 +135,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
         for(int i=COL_CATEGORY_INTEREST_START.getValue();i<=COL_CATEGORY_INTEREST_END.getValue();i++){
             String interestS = sheet.getCell(i, 0).getContents();
-            String interestSNormalized = normalize(interestS);
+            String interestSNormalized = StringUtil.normalize(interestS);
 
             CustomerInterest customerInterest = customerInterestService.findByName(interestSNormalized);
 
@@ -164,7 +165,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
             if (isNotEmpty(getCell(sheet, COL_CATEGORY_CAT, rowCounter))) {
                 String catS = getString(sheet, COL_CATEGORY_CAT, rowCounter);
-                String catSNorm = normalize(catS);
+                String catSNorm = StringUtil.normalize(catS);
                 //translation
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Letter> langIntegerEntry : COL_CATEGORY_TRANSLATION.entrySet()) {
@@ -175,7 +176,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
                 categories.add(lastCat);
             } else if (isNotEmpty(getCell(sheet, COL_CATEGORY_SUB_CAT, rowCounter))) {
                 String catS = getString(sheet, COL_CATEGORY_SUB_CAT, rowCounter);
-                String catSNorm = normalize(catS);
+                String catSNorm = StringUtil.normalize(catS);
                 //translation
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Letter> langIntegerEntry : COL_CATEGORY_TRANSLATION.entrySet()) {
@@ -187,7 +188,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
             } else if (isNotEmpty(getCell(sheet, COL_CATEGORY_SUB_SUB_CAT, rowCounter))) {
                 String catS = getString(sheet, COL_CATEGORY_SUB_SUB_CAT, rowCounter);
-                String catSNorm = normalize(catS);
+                String catSNorm = StringUtil.normalize(catS);
                 //translation
                 Translation translation = new Translation();
                 for (Map.Entry<Lang, Letter> langIntegerEntry : COL_CATEGORY_TRANSLATION.entrySet()) {

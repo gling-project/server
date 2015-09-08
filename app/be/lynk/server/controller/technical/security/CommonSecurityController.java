@@ -24,17 +24,19 @@ import play.mvc.SimpleResult;
 public class CommonSecurityController extends Security.Authenticator {
 
     //recover the language into the http request
-    public static final String REQUEST_HEADER_LANGUAGE = "language";
+    public static final String REQUEST_HEADER_LANGUAGE                  = "language";
     //recover the email into the session
-    public static final String SESSION_IDENTIFIER_STORE = "email";
+    public static final String SESSION_IDENTIFIER_STORE                 = "email";
     //name of the cookie for the automatic reconnection
-    public static final String COOKIE_KEEP_SESSION_OPEN = "session_key";
+    public static final String COOKIE_KEEP_SESSION_OPEN                 = "session_key";
+    //not first visit cookie
+    public static final String COOKIE_ALREADY_VISITED                   = "ALREADY_VISITED";
     //recover the session key into the http request
-    public static final String REQUEST_HEADER_AUTHENTICATION_KEY = "authenticationKey";
+    public static final String REQUEST_HEADER_AUTHENTICATION_KEY        = "authenticationKey";
     //recover the session key into the http request
-    public static final String REQUEST_HEADER_SOURCE = "applicationSource";
+    public static final String REQUEST_HEADER_SOURCE                    = "applicationSource";
     //error for failed authentication
-    public static final String FAILED_AUTHENTICATION_CAUSE = "FAILED_AUTHENTICATION_CAUSE";
+    public static final String FAILED_AUTHENTICATION_CAUSE              = "FAILED_AUTHENTICATION_CAUSE";
     //error for wrong rights
     public static final String FAILED_AUTHENTICATION_CAUSE_WRONG_RIGHTS = "WRONG_RIGHT";
 
@@ -105,6 +107,23 @@ public class CommonSecurityController extends Security.Authenticator {
             String authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
             return USER_SERVICE.findByAuthenticationKey(authentication);
         }
+
+        //by coockie
+        if (Http.Context.current().request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) != null) {
+            String key = Http.Context.current().request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN).value();
+
+            String keyElements[] = key.split(":");
+
+            Account account = USER_SERVICE.findById(Long.parseLong(keyElements[0]));
+
+            if (account != null && USER_SERVICE.controlAuthenticationKey(keyElements[1], account)) {
+                //connection
+                storeAccount(Http.Context.current(), account);
+                return account;
+            }
+
+        }
+
         throw new MyRuntimeException(ErrorMessageEnum.NOT_CONNECTED);
     }
 
@@ -175,13 +194,13 @@ public class CommonSecurityController extends Security.Authenticator {
 
         if (account.getLoginCredential() != null &&
                 account.getLoginCredential().isKeepSessionOpen()) {
-            context.response().setCookie(COOKIE_KEEP_SESSION_OPEN, getCookieKey(), 2592000);
+            context.response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
         } else {
             context.response().discardCookie(COOKIE_KEEP_SESSION_OPEN);
         }
     }
 
-    public String getCookieKey() {
+    public String generateCookieKey() {
         if (getCurrentUser() != null) {
             return getCurrentUser().getId() + ":" + getCurrentUser().getAuthenticationKey();
         }

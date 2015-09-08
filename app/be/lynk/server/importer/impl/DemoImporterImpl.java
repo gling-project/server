@@ -10,6 +10,7 @@ import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
+import be.lynk.server.util.StringUtil;
 import jxl.Cell;
 import jxl.NumberCell;
 import jxl.Sheet;
@@ -30,57 +31,57 @@ import java.util.Map;
 public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
     private static final String ACCOUNTS_WORKBOOK_PATH = "file/demo_data.xls";
-    private static final String BUSINESS_SHEET = "Commerces";
-    private static final String PUBLICATION_SHEET = "Publications";
+    private static final String BUSINESS_SHEET         = "Commerces";
+    private static final String PUBLICATION_SHEET      = "Publications";
 
     /**
      * BUSINESS COLUMNS *
      */
-    private static final Boolean WITH_PICTURE = true;
-    private static final Letter COL_BUSINESS_NAME = Letter.A;
-    private static final Letter COL_BUSINESS_DESC = Letter.B;
-    private static final Letter COL_BUSINESS_PHONE = Letter.C;
-    private static final Letter COL_BUSINESS_STREET = Letter.D;
-    private static final Letter COL_BUSINESS_CITY = Letter.E;
-    private static final Letter COL_BUSINESS_ZIP = Letter.F;
-    private static final Letter COL_BUSINESS_COUNTRY = Letter.G;
+    private static final Boolean WITH_PICTURE         = true;
+    private static final Letter  COL_BUSINESS_NAME    = Letter.A;
+    private static final Letter  COL_BUSINESS_DESC    = Letter.B;
+    private static final Letter  COL_BUSINESS_PHONE   = Letter.C;
+    private static final Letter  COL_BUSINESS_STREET  = Letter.D;
+    private static final Letter  COL_BUSINESS_CITY    = Letter.E;
+    private static final Letter  COL_BUSINESS_ZIP     = Letter.F;
+    private static final Letter  COL_BUSINESS_COUNTRY = Letter.G;
 
     private static final Letter COL_BUSINESS_LANDSCAPE = Letter.J;
-    private static final Letter COL_BUSINESS_LOGO = Letter.K;
-    private static final Letter COL_BUSINESS_CAT = Letter.O;
-    private static final Letter COL_BUSINESS_EMAIL = Letter.P;
-    private static final int FIRST_COLUMN_INTEREST = 1;
+    private static final Letter COL_BUSINESS_LOGO      = Letter.K;
+    private static final Letter COL_BUSINESS_CAT       = Letter.O;
+    private static final Letter COL_BUSINESS_EMAIL     = Letter.P;
+    private static final int    FIRST_COLUMN_INTEREST  = 1;
 
     /**
      * PUBLICATION COLUMNS *
      */
-    private static final Letter COL_PUBLICATION_BUSINESS = Letter.A;
-    private static final Letter COL_PUBLICATION_TYPE = Letter.B;
-    private static final Letter COL_PUBLICATION_TITLE = Letter.C;
-    private static final Letter COL_PUBLICATION_DESC = Letter.D;
+    private static final Letter COL_PUBLICATION_BUSINESS   = Letter.A;
+    private static final Letter COL_PUBLICATION_TYPE       = Letter.B;
+    private static final Letter COL_PUBLICATION_TITLE      = Letter.C;
+    private static final Letter COL_PUBLICATION_DESC       = Letter.D;
     private static final Letter COL_PUBLICATION_START_HOUR = Letter.E;
-    private static final Letter COL_PUBLICATION_END_HOUR = Letter.F;
-    private static final Letter COL_PUBLICATION_LOGO = Letter.G;
-    private static final Letter COL_PUBLICATION_Q = Letter.H;
-    private static final Letter COL_PUBLICATION_MIN_Q = Letter.I;
-    private static final Letter COL_PUBLICATION_UNIT = Letter.J;
-    private static final Letter COL_PUBLICATION_PRICE_O = Letter.K;
-    private static final Letter COL_PUBLICATION_PERCENT = Letter.L;
-    private static final Letter COL_PUBLICATION_PRICE_F = Letter.M;
-    private static final Letter COL_PUBLICATION_INTEREST = Letter.N;
+    private static final Letter COL_PUBLICATION_END_HOUR   = Letter.F;
+    private static final Letter COL_PUBLICATION_LOGO       = Letter.G;
+    private static final Letter COL_PUBLICATION_Q          = Letter.H;
+    private static final Letter COL_PUBLICATION_MIN_Q      = Letter.I;
+    private static final Letter COL_PUBLICATION_UNIT       = Letter.J;
+    private static final Letter COL_PUBLICATION_PRICE_O    = Letter.K;
+    private static final Letter COL_PUBLICATION_PERCENT    = Letter.L;
+    private static final Letter COL_PUBLICATION_PRICE_F    = Letter.M;
+    private static final Letter COL_PUBLICATION_INTEREST   = Letter.N;
 
     @Autowired
     private BusinessCategoryService businessCategoryService;
     @Autowired
-    private BusinessService businessService;
+    private BusinessService         businessService;
     @Autowired
-    private LocalizationService localizationService;
+    private LocalizationService     localizationService;
     @Autowired
-    private PublicationService publicationService;
+    private PublicationService      publicationService;
     @Autowired
-    private StoredFileService storedFileService;
+    private StoredFileService       storedFileService;
     @Autowired
-    private FileService fileService;
+    private FileService             fileService;
     @Autowired
     private CustomerInterestService customerInterestService;
 
@@ -106,27 +107,27 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
         int rowCounter = FIRST_COLUMN_INTEREST;
 
         while (sheet.getRows() > rowCounter) {
-            String bName = getString(sheet,COL_BUSINESS_NAME, rowCounter);
+            String bName = getString(sheet, COL_BUSINESS_NAME, rowCounter);
 
             if (bName != null && bName.length() > 0) {
 
                 Business business = new Business();
                 business.setName(bName);
-                business.setDescription(getString(sheet,COL_BUSINESS_DESC, rowCounter));
-                business.setPhone(getString(sheet,COL_BUSINESS_PHONE, rowCounter));
+                business.setDescription(getString(sheet, COL_BUSINESS_DESC, rowCounter));
+                business.setPhone(getString(sheet, COL_BUSINESS_PHONE, rowCounter));
                 business.setBusinessStatus(BusinessStatus.PUBLISHED);
                 business.setAddress(new Address(
-                        getString(sheet,COL_BUSINESS_STREET, rowCounter),
-                        getString(sheet,COL_BUSINESS_ZIP, rowCounter),
-                        getString(sheet,COL_BUSINESS_CITY, rowCounter),
-                        getString(sheet,COL_BUSINESS_COUNTRY, rowCounter)
+                        getString(sheet, COL_BUSINESS_STREET, rowCounter),
+                        getString(sheet, COL_BUSINESS_ZIP, rowCounter),
+                        getString(sheet, COL_BUSINESS_CITY, rowCounter),
+                        getString(sheet, COL_BUSINESS_COUNTRY, rowCounter)
                 ));
-                business.setEmail(getString(sheet,COL_BUSINESS_EMAIL, rowCounter));
+                business.setEmail(getString(sheet, COL_BUSINESS_EMAIL, rowCounter));
                 BusinessAccount account = new BusinessAccount();
                 account.setFirstname(bName);
                 account.setLastname(bName);
                 account.setGender(GenderEnum.MALE);
-                account.setEmail(getString(sheet,COL_BUSINESS_EMAIL, rowCounter));
+                account.setEmail(getString(sheet, COL_BUSINESS_EMAIL, rowCounter));
                 account.setLoginCredential(new LoginCredential(account, false, "password"));
                 account.setBusiness(business);
                 account.setRole(RoleEnum.BUSINESS);
@@ -143,8 +144,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
 
 //            for (String s : getString(sheet,COL_BUSINESS_CAT, rowCounter).split("/")) {
-                String s = getString(sheet,COL_BUSINESS_CAT, rowCounter);
-                BusinessCategory byName = businessCategoryService.findByName(normalize(s));
+                String s = getString(sheet, COL_BUSINESS_CAT, rowCounter);
+                BusinessCategory byName = businessCategoryService.findByName(StringUtil.normalize(s));
                 if (byName == null) {
                     Logger.warn("Cannot found the category " + s);
                 } else {
@@ -160,7 +161,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
 
                 if (WITH_PICTURE) {
-                    String landscapePath = getString(sheet,COL_BUSINESS_LANDSCAPE, rowCounter);
+                    String landscapePath = getString(sheet, COL_BUSINESS_LANDSCAPE, rowCounter);
                     if (landscapePath != null && landscapePath.length() > 0) {
                         String path = "file/images/commerces/" + landscapePath;
                         File file = new File(path);
@@ -178,7 +179,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
                 //illustration
                 if (WITH_PICTURE) {
-                    String illustrationPath = getString(sheet,COL_BUSINESS_LOGO, rowCounter);
+                    String illustrationPath = getString(sheet, COL_BUSINESS_LOGO, rowCounter);
                     if (illustrationPath != null && illustrationPath.length() > 0) {
                         String path = "file/images/commerces/" + illustrationPath;
                         File file = new File(path);
@@ -212,7 +213,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
 
             //load business
-            String businessName = getString(sheet,COL_PUBLICATION_BUSINESS, rowCounter);
+            String businessName = getString(sheet, COL_PUBLICATION_BUSINESS, rowCounter);
             if (businessName != null && businessName.length() > 0) {
                 List<Business> businesses = businessService.findByName(businessName);
                 if (businesses.size() != 1) {
@@ -221,7 +222,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 Business business = businesses.get(0);
 
                 //type
-                String type = getString(sheet,COL_PUBLICATION_TYPE, rowCounter);
+                String type = getString(sheet, COL_PUBLICATION_TYPE, rowCounter);
 
                 AbstractPublication publication;
 
@@ -239,11 +240,11 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         promotion.setOffPercent(number);
                     }
                     promotion.setOriginalPrice(getNumber(sheet, COL_PUBLICATION_PRICE_O, rowCounter));
-                    promotion.setUnit(getString(sheet,COL_PUBLICATION_UNIT, rowCounter));
+                    promotion.setUnit(getString(sheet, COL_PUBLICATION_UNIT, rowCounter));
                     //compute %
                     if (promotion.getOffPercent() == null &&
                             promotion.getOriginalPrice() != null &&
-                            getString(sheet,COL_PUBLICATION_PRICE_F, rowCounter) != null) {
+                            getString(sheet, COL_PUBLICATION_PRICE_F, rowCounter) != null) {
                         Double v = getNumber(sheet, COL_PUBLICATION_PRICE_F, rowCounter);
                         if (v != null) {
                             promotion.setOffPercent(v / promotion.getOriginalPrice());
@@ -254,17 +255,17 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                     throw new RuntimeException("Unknow type " + type);
                 }
 
-                String title = getString(sheet,COL_PUBLICATION_TITLE, rowCounter);
-                String desc = getString(sheet,COL_PUBLICATION_DESC, rowCounter);
+                String title = getString(sheet, COL_PUBLICATION_TITLE, rowCounter);
+                String desc = getString(sheet, COL_PUBLICATION_DESC, rowCounter);
 
                 //interest
-                String interestS = getString(sheet,COL_PUBLICATION_INTEREST, rowCounter);
+                String interestS = getString(sheet, COL_PUBLICATION_INTEREST, rowCounter);
                 if (interestS != null && interestS.length() > 0) {
                     // loading interest
-                    interestS = normalize(interestS);
+                    interestS = StringUtil.normalize(interestS);
                     CustomerInterest interest = customerInterestService.findByName(interestS);
-                    if(interest==null){
-                        throw new RuntimeException("cannot found interest "+interestS);
+                    if (interest == null) {
+                        throw new RuntimeException("cannot found interest " + interestS);
                     }
                     publication.setInterest(interest);
                 }
@@ -287,7 +288,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
                     //illustration
                     try {
-                        String illustrationPath = getString(sheet,COL_PUBLICATION_LOGO, rowCounter);
+                        String illustrationPath = getString(sheet, COL_PUBLICATION_LOGO, rowCounter);
                         if (illustrationPath != null && illustrationPath.length() > 0) {
                             String path = "file/images/publications/" + illustrationPath;
                             File file = new File(path);
@@ -310,14 +311,43 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     }
 
     public String generateFakePublications() {
-        Business byName = businessService.findByName("Piscine 'Ibiza'").get(0);
-        for (int i = 0; i < 10000; i++) {
+
+        for (int i = 0; i < 1000; i++) {
+
+            //account
+            Business business = new Business();
+            business.setName("business " + i);;
+            business.setDescription("business " + i+" - escription");
+            business.setPhone("00000000");
+            business.setBusinessStatus(BusinessStatus.PUBLISHED);
+            business.setAddress(new Address("4 Place des Bienfaiteurs", "1030", "BXL", "BELGIUM"));
+            business.getAddress().setPosx(50.8357006);
+            business.getAddress().setPosy(4.4397416);
+            business.getBusinessCategories().add(businessCategoryService.findByName("servicespubliques_communal_urbanisme"));
+            business.setEmail("bus" + i + "@aze.com");
+            BusinessAccount account = new BusinessAccount();
+            account.setFirstname("bus" + i + "firstName");
+            account.setLastname("bus" + i + "LastName");
+            account.setGender(GenderEnum.MALE);
+            account.setEmail("bus" + i + "@aze.com");
+            account.setLoginCredential(new LoginCredential(account, false, "password"));
+            account.setBusiness(business);
+            account.setRole(RoleEnum.BUSINESS);
+            account.setType(AccountTypeEnum.BUSINESS);
+            account.setLang(Lang.forCode("fr"));
+
+            business.setAccount(account);
+
+            businessService.saveOrUpdate(business);
+
+
+            //publication
             BusinessNotification p = new BusinessNotification();
-            p.setBusiness(byName);
-            p.setStartDate(LocalDateTime.now().minusDays(1));
+            p.setBusiness(business);
+            p.setStartDate(LocalDateTime.now().minusDays(1).plusMinutes(i));
             p.setDescription("descr");
-            p.setTitle("title");
-            p.setEndDate(LocalDateTime.now().plusDays(4));
+            p.setTitle("title " + i);
+            p.setEndDate(LocalDateTime.now().plusDays(4).plusMinutes(i));
 
             publicationService.saveOrUpdate(p);
         }

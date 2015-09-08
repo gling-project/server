@@ -95,7 +95,7 @@ myApp.directive("dirFieldDate", ['directiveService', '$filter', 'generateId', fu
     };
 }]);
 
-myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService', function (directiveService, $timeout,modalService) {
+myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService', function (directiveService, $timeout, modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -113,33 +113,19 @@ myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService
 
                     directiveService.autoScopeImpl(scope);
 
-                    if(scope.getInfo().autoCompleteValue==undefined){
-                        scope.getInfo().autoCompleteValue=[];
+                    if (scope.getInfo().autoCompleteValue == undefined) {
+                        scope.getInfo().autoCompleteValue = [];
                     }
 
-                    scope.isActive = function(){
+                    scope.isActive = function () {
 
-                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
                     };
 
                     scope.errorMessage = "";
-                    scope.isValidationDefined = (scope.getInfo().validationRegex != null) || (scope.getInfo().validationFct != null);
                     scope.hideIsValidIcon = !!scope.getInfo().hideIsValidIcon;
                     scope.fieldType = (scope.getInfo().fieldType != null) ? scope.getInfo().fieldType : "text";
 
-                    if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
-                        scope.getInfo().field[scope.getInfo().fieldName] = "";
-                    }
-                    if (scope.getInfo().isValid == null) {
-                        scope.getInfo().isValid = !scope.isValidationDefined;
-                    }
-                    if (scope.isValidationDefined) {
-                        scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
-                            if (n !== o) {
-                                return scope.isValid();
-                            }
-                        });
-                    }
                     scope.isValid = function () {
 
                         var isValid;
@@ -147,24 +133,18 @@ myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService
                             scope.getInfo().isValid = true;
                             return;
                         }
-                        if (!scope.getInfo().field[scope.getInfo().fieldName]) {
-                            scope.getInfo().field[scope.getInfo().fieldName] = "";
-                        }
 
-                        isValid = true;
-                        if (typeof scope.getInfo().field[scope.getInfo().fieldName] !== 'string') {
-                            scope.getInfo().field[scope.getInfo().fieldName] += "";
-                        }
-                        if (scope.getInfo().validationRegex != null) {
-                            isValid = scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
-                        }
-                        if (scope.getInfo().validationFct != null) {
-                            isValid = isValid && scope.getInfo().validationFct();
-                        }
+                        isValid = scope.getInfo().optional === true || scope.getInfo().field[scope.getInfo().fieldName] != null;
+
                         scope.getInfo().isValid = isValid;
                     };
 
                     scope.isValid();
+
+                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                        return scope.isValid();
+                    });
+
                     scope.logField = function () {
                         return console.log(scope.getInfo());
                     };
@@ -185,14 +165,6 @@ myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService
                         }
                         return false;
                     };
-
-
-                    scope.openCalculator= function(){
-                        modalService.openCalculatorModal(new function(result){
-                            scope.getInfo().field[scope.getInfo().fieldName]=result;
-                        });
-                    };
-
                 }
             };
         }
@@ -675,9 +647,6 @@ myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$
                             if(scope.getInfo().sizex !=null && scope.getInfo().sizex != undefined){
                                 url += "/"+scope.getInfo().sizex+"/"+scope.getInfo().sizey;
                             }
-                            console.log("scope.getInfo()");
-                            console.log(scope.getInfo());
-                            console.log(url);
 
                             scope.upload = $upload.upload({
                                 url: url,
@@ -1129,7 +1098,7 @@ myApp.directive('customerInterestFormCtrl', ['$flash', 'directiveService', 'cust
     }]
 )
 ;
-myApp.directive('accountFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
+myApp.directive('accountFormCtrl', ['$flash', 'directiveService', 'languageService', function ($flash, directiveService, languageService) {
 
     return {
         restrict: "E",
@@ -1155,16 +1124,37 @@ myApp.directive('accountFormCtrl', ['$flash', 'directiveService', function ($fla
                         scope.getInfo().dto = {
                             gender: null
                         };
-                    };
+                    }
+                    ;
+
 
                     scope.passwordActive = true;
+
+                    var langOptions = [];
+
+                    for (var key in languageService.languages) {
+                        if (languageService.languages[key].code == scope.getInfo().dto.lang.code) {
+                            langOptions.push({
+                                key: scope.getInfo().dto.lang,
+                                value: scope.getInfo().dto.lang.code
+                            });
+                        }
+                        else {
+                            langOptions.push({
+                                key: languageService.languages[key],
+                                value: languageService.languages[key].code
+                            });
+                        }
+                    }
+
+
+                    console.log(angular.copy(scope.getInfo().dto));
+                    console.log(langOptions);
 
                     scope.fields = {
                         gender: {
                             name: 'gender',
                             fieldTitle: "--.generic.gender",
-                            validationRegex: "^.+$",
-                            validationMessage: '--.error.validation.not_null',
                             options: [
                                 {key: 'MALE', value: '--.generic.male'},
                                 {key: 'FEMALE', value: '--.generic.female'}
@@ -1196,6 +1186,17 @@ myApp.directive('accountFormCtrl', ['$flash', 'directiveService', function ($fla
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'lastname'
+                        },
+                        language: {
+                            name: 'language',
+                            fieldTitle: "--.generic.favoriteLanguage",
+                            validationMessage: '--.error.validation.not_null',
+                            options: langOptions,
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'lang'
                         },
                         email: {
                             fieldType: "email",
@@ -1256,7 +1257,7 @@ myApp.directive('accountFormCtrl', ['$flash', 'directiveService', function ($fla
                     };
 
                     scope.getInfo().maskPassword = function () {
-                        scope.passwordActive=false;
+                        scope.passwordActive = false;
                     };
 
                     //
@@ -1641,12 +1642,12 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                     //
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
-                            startDate: new Date(),
-                            minimalQuantity: 1
+                            startDate: new Date()
+                            //minimalQuantity: 1
                         };
                     }
                     else {
-                        scope.completePromotion = scope.getInfo().dto.quantity != null;
+                        scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
 
 
@@ -1734,51 +1735,51 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             multiple:true,
                             fieldName: 'pictures'
                         },
-                        quantity: {
-                            name:'quantity',
-                            fieldTitle: "--.promotion.quantity",
-                            numbersOnly: 'integer',
-                            validationRegex: "^[0-9,.]{1,9}$",
-                            validationMessage: '--.generic.validation.numberExpected',
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'quantity'
-                        },
-                        minimalQuantity: {
-                            name:'minimalQuantity',
-                            fieldTitle: "--.promotion.minimalQuantity",
-                            numbersOnly: 'integer',
-                            validationRegex: "^[0-9,.]{1,9}$",
-                            validationMessage: '--.promotion.validation.minimalQuantityMustBeLowerThanQuantity',
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: 1,
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'minimalQuantity'
-                        },
-                        unit: {
-                            name:'unit',
-                            fieldTitle: "--.promotion.unit",
-                            validationRegex: "^.{0,30}$",
-                            validationMessage: ['--.generic.validation.max', '30'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'unit'
-                        },
+                        //quantity: {
+                        //    name:'quantity',
+                        //    fieldTitle: "--.promotion.quantity",
+                        //    numbersOnly: 'integer',
+                        //    validationRegex: "^[0-9,.]{1,9}$",
+                        //    validationMessage: '--.generic.validation.numberExpected',
+                        //    disabled: function () {
+                        //        return scope.getInfo().disabled;
+                        //    },
+                        //    active: function () {
+                        //        return scope.completePromotion;
+                        //    },
+                        //    field: scope.getInfo().dto,
+                        //    fieldName: 'quantity'
+                        //},
+                        //minimalQuantity: {
+                        //    name:'minimalQuantity',
+                        //    fieldTitle: "--.promotion.minimalQuantity",
+                        //    numbersOnly: 'integer',
+                        //    validationRegex: "^[0-9,.]{1,9}$",
+                        //    validationMessage: '--.promotion.validation.minimalQuantityMustBeLowerThanQuantity',
+                        //    disabled: function () {
+                        //        return scope.getInfo().disabled;
+                        //    },
+                        //    field: 1,
+                        //    active: function () {
+                        //        return scope.completePromotion;
+                        //    },
+                        //    field: scope.getInfo().dto,
+                        //    fieldName: 'minimalQuantity'
+                        //},
+                        //unit: {
+                        //    name:'unit',
+                        //    fieldTitle: "--.promotion.unit",
+                        //    validationRegex: "^.{0,30}$",
+                        //    validationMessage: ['--.generic.validation.max', '30'],
+                        //    disabled: function () {
+                        //        return scope.getInfo().disabled;
+                        //    },
+                        //    active: function () {
+                        //        return scope.completePromotion;
+                        //    },
+                        //    field: scope.getInfo().dto,
+                        //    fieldName: 'unit'
+                        //},
                         originalPrice: {
                             name:'originalPrice',
                             fieldTitle: "--.promotion.originalUnitPrice",
@@ -2795,8 +2796,6 @@ myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geoloc
 
                             //test
                             scope.getInfo().centerMap = function () {
-                                console.log("centerMap !! : ");
-                                console.log(scope.getInfo().address);
                                 scope.map = {
                                     center: {
                                         latitude: scope.getInfo().address.posx,
@@ -4963,6 +4962,8 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
 
     this.default = function (page,callbackSuccess, callbackError) {
 
+        console.log('Default search page '+page);
+
         if (canceler != null) {
             canceler.resolve();
         }
@@ -4978,15 +4979,11 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
                 timeout: canceler.promise
             }
         }).success(function (data, status) {
-            console.log('Success !! DATA');
-            console.log(data);
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
         })
             .error(function (data, status) {
-                console.log('error !! DATA');
-                console.log(data);
                 $flash.error(data.message);
                 if (callbackError != null) {
                     callbackError(data, status);
@@ -5025,7 +5022,9 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             });
     };
 
-    this.searchByString = function (searchText, callbackSuccess, callbackError) {
+    this.searchByString = function (page,searchText, callbackSuccess, callbackError) {
+
+        console.log("search by string : "+searchText+"/"+page);
 
         if (canceler != null) {
             canceler.resolve();
@@ -5037,6 +5036,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'url': "/rest/search/text",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': {
+                page:page,
                 search: searchText,
                 position: geolocationService.position
             },
@@ -5277,7 +5277,7 @@ myApp.service("searchBarService", ['$timeout', '$rootScope', function ($timeout,
         return self.currentSearch;
     }, function watchCallback(newValue, oldValue) {
 
-        if (!suspendBinding) {
+        if (!suspendBinding && newValue!=null && newValue != "") {
             suspendBinding = true;
 
             for (var j in self.searchCriteria) {
@@ -5335,7 +5335,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/categoryLine/template.html",
     "<div><table class=category-line-tree><tr ng-repeat=\"(catLev1Key,lev2) in getInfo().categories\"><td><a ng-click=searchCat(catLev1Key)>{{catLev1Key | translateText}}</a> <span class=transition>>></span></td><td><table><tr ng-repeat=\"(catLev2Key, lev3) in lev2\"><td><a ng-click=searchCat(catLev2Key)>{{catLev2Key | translateText}}</a> <span class=transition>>></span></td><td><span ng-repeat=\"catLev3 in lev3\"><span class=transition ng-show=\"$index>0\">/</span> <a ng-click=searchCat(catLev3.translationName)>{{catLev3.translationName | translateText}}</a></span></td></tr></table></td></tr></table></div>");
   $templateCache.put("/assets/javascripts/directive/component/followWidget/template.html",
-    "<div class=follow-widget&quot;><div><button ng-click=follow()><img src=/assets/images/haert.png ng-show=\"getInfo().business.following\"> <img src=/assets/images/haert-off.png ng-hide=\"getInfo().business.following\"></button> <span ng-hide=\"getInfo().maskTotal===true\">{{getInfo().business.totalFollowers}}</span></div></div>");
+    "<div class=follow-widget><div><button ng-click=follow()><img src=/assets/images/haert.png ng-show=\"getInfo().business.following\"> <img src=/assets/images/haert-off.png ng-hide=\"getInfo().business.following\"></button> <span ng-hide=\"getInfo().maskTotal===true\">{{getInfo().business.totalFollowers}}</span></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/gallery/template.html",
     "<div class=gallery-component><img ng-repeat=\"image in getInfo().images\" ng-click=openGallery(image) class=gallery-picture ng-src=\"{{image | image}}\"></div>");
   $templateCache.put("/assets/javascripts/directive/component/googleMapWidget/template.html",
@@ -5343,9 +5343,9 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "                            draggable:false,\n" +
     "                            scrollwheel: false}\" zoom=15><ui-gmap-marker idkey=1 coords={latitude:getInfo().address.posx,longitude:getInfo().address.posy}></ui-gmap-marker></ui-gmap-google-map></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationList/template.html",
-    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><img class=\"link illustration\" ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"><div class=publication-list-business-data><div><span class=link ng-click=\"navigateTo('/business/'+publication.businessId)\">{{publication.businessName}}</span></div><div class=distance><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div><br></div><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class=date ng-show=\"publication.type == 'PROMOTION'\">{{publication.endDate | date:'medium'}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div><div class=date>{{publication.startDate | date:medium}}</div><img style=\"height: 40px;float: right\" ng-src=\"/assets/images/interest/{{publication.interest.iconName}}\"></div></div></div>");
+    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><img class=\"link illustration\" ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"><div class=publication-list-business-data><div><span class=link ng-click=\"navigateTo('/business/'+publication.businessId)\">{{publication.businessName}}</span></div><div class=distance><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div><br></div><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}></a> <a facebook-feed-share class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares data-description={{publication.title}}></a><div class=date ng-show=\"publication.type == 'PROMOTION'\">{{publication.endDate | date:'medium'}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div><div class=date>{{publication.startDate | date:medium}}</div><img style=\"height: 40px;float: right\" ng-src=\"/assets/images/interest/{{publication.interest.iconName}}\"></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListForBusiness/template.html",
-    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" id=publication{{publication.id}} class=\"publication-box publication-promotion publication-list-publication-data\" ng-click=click()><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class=date ng-show=\"publication.type == 'PROMOTION'\">{{publication.endDate | date:'medium'}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div><div class=date>{{publication.startDate | date:medium}}</div><img style=\"height: 40px;float: right\" ng-src=\"/assets/images/interest/{{publication.interest.iconName}}\"></div></div></div>");
+    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" id=publication{{publication.id}} class=\"publication-box publication-promotion publication-list-publication-data\" ng-click=click()><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}>{{ shares }}</a><div class=date ng-show=\"publication.type == 'PROMOTION'\">{{publication.endDate | date:'medium'}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div><div class=date>{{publication.startDate | date:medium}}</div><img style=\"height: 40px;float: right\" ng-src=\"/assets/images/interest/{{publication.interest.iconName}}\"></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobile/template.html",
     "<div class=publication-list-mobile><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"getInfo().loading===true\" ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><div style=\"border-bottom: 1px solid black\"><img class=\"link illustration\" ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"><div class=publication-list-business-data><div><span class=link ng-click=\"navigateTo('/business/'+publication.businessId)\">{{publication.businessName}}</span></div><div class=distance><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div></div></div><div class=publication-list-publication-data><div class=publication-reduction><div style=\"display: inline-block;\n" +
     "  background-color: red;\n" +
@@ -5353,7 +5353,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "  margin: 2px\" ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div style=\"display: inline-block;\n" +
     "                     background-color: red;\n" +
     "                     padding: 2px;\n" +
-    "                     margin: 2px\" ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-name>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data><table style=\"background-color: white;border: 1px solid #000000\"><tr><td>end date</td><td>{{publication.endDate | date:'medium'}}</td></tr><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a> <img style=\"height: 25px\" ng-src=\"/assets/images/interest/{{publication.interest.iconName}}\"><div style=\"display: inline\" class=date>{{publication.startDate | date:medium}}</div></div></div></div>");
+    "                     margin: 2px\" ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-name>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data><table style=\"background-color: white;border: 1px solid #000000\"><tr><td>end date</td><td>{{publication.endDate | date:'medium'}}</td></tr><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div><a facebook class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}>{{ shares }}</a> <img style=\"height: 25px\" ng-src=\"/assets/images/interest/{{publication.interest.iconName}}\"><div style=\"display: inline\" class=date>{{publication.startDate | date:medium}}</div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobileForBusiness/template.html",
     "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" id=publication{{publication.id}} class=\"publication-box publication-promotion publication-list-publication-data\" ng-click=click()><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><div class=date><i class=\"fa fa-calendar\"></i> {{publication.startDate | date:medium}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div><button ng-show=getInfo().displayRemoveIcon type=button class=\"btn btn-primary\" ng-click=removePublication(publication)>{{'--.generic.remove' | translateText}}</button></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/schedule/template.html",
@@ -5374,7 +5374,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/field/dirFieldImageMutiple/template.html",
     "<div class=\"input-text field_text row field-image-multiple\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=\"form-group row\"><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle |translateText}}</label><div ng-class=\"getInfo().fullSize==true?'col-md-12':'col-md-6'\"><div ng-class=\"{'input-group':!!getInfo().money}\"><div ng-repeat=\"imageContainer in images\" class=image-block-container><div class=image-block><div ng-show=\"imageContainer.percent>0 && imageContainer.percent < 100\">{{imageContainer.percent}} %</div><div class=image-container><img ng-src=\"{{imageContainer.image| image}}\"></div><div class=\"image-remove glyphicon glyphicon-remove\" ng-click=remove(imageContainer)></div></div>{{'--.generic.comment' | translateText}}<textarea ng-model=imageContainer.image.comment></textarea></div><div class=\"add-image-button image-block\"><input name=\"{{ id }}\" type=file ng-file-select=\"onFileSelect($files)\"></div></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldSelect/template.html",
-    "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div ng-class=\"{'input-group':!!getInfo().money}\"><button class=\"calculator btn btn-sm btn-default glyphicon glyphicon-th-list\" ng-click=openCalculator()></button><select ng-disabled=getInfo().disabled() name={{getInfo().name}} ng-model=getInfo().field[getInfo().fieldName] dir-focus-me=getInfo().focus() ng-options=\"option.key as option.value | translateText for option in getInfo().options\" class=form-control></select></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-xs\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
+    "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div ng-class=\"{'input-group':!!getInfo().money}\"><select ng-disabled=getInfo().disabled() name={{getInfo().name}} ng-model=getInfo().field[getInfo().fieldName] dir-focus-me=getInfo().focus() ng-options=\"option.key as option.value | translateText for option in getInfo().options\" class=form-control></select></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-xs\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldText/template.html",
     "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div ng-class=\"{'input-group':!!getInfo().money}\"><button class=\"calculator btn btn-sm btn-default fa fa-calculator\" ng-click=openCalculator()></button> <input type={{fieldType}} id={{getInfo().id}} name={{getInfo().name}} ng-disabled=getInfo().disabled() ng-model=getInfo().field[getInfo().fieldName] numbers-only={{getInfo().numbersOnly}} ng-class=\"{input_number: getInfo().numbersOnly === 'integer' || getInfo().numbersOnly === 'double',\n" +
     "                       'money':!!getInfo().money}\" placeholder={{getInfo().placeholder}} dir-focus-me=getInfo().focus() class=form-control ng-show=\"getInfo().fieldType != 'textarea'\" typeahead=\"c as c for c in getInfo().autoCompleteValue | filter:$viewValue | limitTo:10\" typeahead-min-length=\"1\"> <span ng-show=!!getInfo().money class=input-group-addon>{{getInfo().money}}</span></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-md\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
@@ -5382,7 +5382,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div ng-class=\"{'input-group':!!getInfo().money}\"><button class=\"calculator btn btn-sm btn-default fa fa-calculator\" ng-click=openCalculator()></button><textarea name={{getInfo().name}} ng-disabled=getInfo().disabled() ng-model=getInfo().field[getInfo().fieldName] ng-class=\"{input_number: getInfo().numbersOnly === 'integer' || getInfo().numbersOnly === 'double',\n" +
     "                       'money':!!getInfo().money}\" placeholder={{getInfo().placeholder}} dir-focus-me=getInfo().focus() class=form-control></textarea></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-xs\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
   $templateCache.put("/assets/javascripts/directive/form/account/template.html",
-    "<div class=form><dir-field-text ng-info=fields.firstname></dir-field-text><dir-field-text ng-info=fields.lastname></dir-field-text><dir-field-select ng-info=fields.gender></dir-field-select><dir-field-text ng-info=fields.email></dir-field-text><dir-field-text ng-info=fields.password></dir-field-text><dir-field-text ng-info=fields.repeatPassword></dir-field-text><dir-field-check ng-info=fields.keepSessionOpen></dir-field-check></div>");
+    "<div class=form><dir-field-text ng-info=fields.firstname></dir-field-text><dir-field-text ng-info=fields.lastname></dir-field-text><dir-field-select ng-info=fields.gender></dir-field-select><dir-field-select ng-info=fields.language></dir-field-select><dir-field-text ng-info=fields.email></dir-field-text><dir-field-text ng-info=fields.password></dir-field-text><dir-field-text ng-info=fields.repeatPassword></dir-field-text><dir-field-check ng-info=fields.keepSessionOpen></dir-field-check></div>");
   $templateCache.put("/assets/javascripts/directive/form/address/template.html",
     "<div class=form><dir-field-select ng-info=fields.name></dir-field-select><dir-field-text ng-info=fields.street></dir-field-text><dir-field-text ng-info=fields.zip></dir-field-text><dir-field-text ng-info=fields.city></dir-field-text></div>");
   $templateCache.put("/assets/javascripts/directive/form/business/template.html",
@@ -5402,7 +5402,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/form/login/template.html",
     "<div class=\"form login-form\"><div class=facebook-login-btn-container><button ng-click=fb_login(); class=\"facebook-login-btn btn btn-primary\"><img src=\"/assets/images/facebook/login_icon.png\"> <span>{{'--.loginModal.facebook.btn' |translateText}}</span></button></div><table class=horizontal-split><tr><td><div></div></td><td>{{'--.generic.or' | translateText}}</td><td><div></div></td></tr></table><dir-field-text ng-info=fields.email></dir-field-text><dir-field-text ng-info=fields.password></dir-field-text><dir-field-check ng-info=fields.keepSessionOpen></dir-field-check></div>");
   $templateCache.put("/assets/javascripts/directive/form/promotion/template.html",
-    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date ng-info=fields.startDate></dir-field-date><dir-field-date ng-info=fields.endDate></dir-field-date><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><div class=row><div class=form-group><label class=\"control-label col-xs-5\">{{'--.promotion.simplePromotion' | translateText}}</label><div class=col-xs-2><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitchFromPromotionForm checked ng-model=completePromotion><label class=onoffswitch-label for=myonoffswitchFromPromotionForm><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div></div><label class=\"control-label col-xs-5\">{{'--.promotion.completePromotion' | translateText}}</label></div></div><dir-field-text ng-info=fields.quantity></dir-field-text><dir-field-text ng-info=fields.minimalQuantity></dir-field-text><dir-field-text ng-info=fields.unit></dir-field-text><dir-field-text ng-info=fields.originalPrice></dir-field-text><dir-field-text ng-info=fields.offPercent></dir-field-text><dir-field-text ng-info=fields.offPrice></dir-field-text></div>");
+    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date ng-info=fields.startDate></dir-field-date><dir-field-date ng-info=fields.endDate></dir-field-date><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><div class=row><div class=form-group><label class=\"control-label col-xs-5\">{{'--.promotion.simplePromotion' | translateText}}</label><div class=col-xs-2><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitchFromPromotionForm checked ng-model=completePromotion><label class=onoffswitch-label for=myonoffswitchFromPromotionForm><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div></div><label class=\"control-label col-xs-5\">{{'--.promotion.completePromotion' | translateText}}</label></div></div><dir-field-text ng-info=fields.originalPrice></dir-field-text><dir-field-text ng-info=fields.offPercent></dir-field-text><dir-field-text ng-info=fields.offPrice></dir-field-text></div>");
   $templateCache.put("/assets/javascripts/directive/form/schedule/template.html",
     "<div class=schedule-form><div ng-show=\"startSection!=null\" class=schedule-info ng-style=infoStyle>{{selectedTiming}}</div><div><div class=schedule-form-radio><div class=attendance-close id=schedule-edit-btn-attendance-close ng-click=\"selectAttendance('CLOSE')\"><input type=radio ng-model=attendance_selected value=\"CLOSE\"> {{'--.schedule.closed' | translateText}}</div><div class=attendance-light id=schedule-edit-btn-attendance-light ng-click=\"selectAttendance('LIGHT')\"><input type=radio ng-model=attendance_selected value=\"LIGHT\"> {{'--.schedule.light' | translateText}}</div><div class=attendance-moderate id=schedule-edit-btn-attendance-moderate ng-click=\"selectAttendance('MODERATE')\"><input type=radio ng-model=attendance_selected value=\"MODERATE\"> {{'--.schedule.moderate' | translateText}}</div><div class=attendance-heavy id=schedule-edit-btn-attendance-heavy ng-click=\"selectAttendance('IMPORTANT')\"><input type=radio ng-model=attendance_selected value=\"IMPORTANT\"> {{'--.schedule.heavy' | translateText}}</div></div><table class=editable><tr><td></td><td ng-repeat=\"hour in hours\"><div class=hour-block-info><div>{{hour.text}}</div></div></td></tr><tr ng-repeat=\"day in days\"><td>{{day}}</td><td ng-repeat=\"section in sections[day]\"><button class=hour-block ng-class=attendance_class[section.attendance] ng-mousedown=select(day,section) ng-mouseover=progress($event,day,section)></button></td></tr></table></div></div>");
   $templateCache.put("/assets/javascripts/directive/mobile/headerSearch/template.html",
@@ -5410,7 +5410,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/mobile/title/template.html",
     "<div class=\"navbar navbar-app navbar-absolute-top\"><div class=\"navbar-brand navbar-brand-center\">{{title | translateText}}</div><div class=\"btn-group pull-left\" ng-show=displayMenu><div class=\"btn btn-navbar\"><div ui-toggle=uiSidebarLeft class=nav-button><i class=\"fa fa-bars\"></i></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/web/headerBar/template.html",
-    "<div class=navigation-bar ng-class=\"{'header-with-advanced-search':advancedSearch}\"><div class=\"container header-option-container\"><h1 style=\"cursor : pointer\" id=welcome-btn-welcome ng-click=\"navigateTo('/')\">{{'--.site.name' | translateText}}</h1><search-bar-ctrl ng-info={mobile:false}></search-bar-ctrl><div class=profile-buttons-container ng-show=\"accountService.getMyself()==null\"><select class=form-control ng-model=languageService.currentLanguage ng-options=\"lang.code as lang.language for lang in languageService.languages\"></select><button type=button id=welcome-btn-login class=\"btn btn-primary\" ng-click=login()>{{'--.welcome.login' | translateText}}</button> {{'--.generic.or' | translateText}} <button type=button class=\"btn btn-primary\" id=welcome-btn-registration ng-click=registration()>{{'--.welcome.signIn' | translateText}}</button></div><div class=profile-buttons-container ng-show=\"accountService.getMyself()!=null\" style=\"display : inline-block\"><div class=dropdown ng-show=\"accountService.getMyself()!=null\" style=\"display : inline-block\"><select class=form-control ng-model=languageService.currentLanguage ng-options=\"lang.code as lang.language for lang in languageService.languages\" style=\"display: inline-block;width:80px\"></select><div class=menu-connection-button-container><button class=\"btn btn-default dropdown-toggle\" type=button id=dropdownMenu1 data-toggle=dropdown aria-expanded=true style=\"max-width: 200px\">{{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}} <span class=caret></span></button><ul class=\"dropdown-menu dropdown-menu-right\" role=menu aria-labelledby=dropdownMenu1><li role=presentation><a role=menuitem tabindex=-1 href=\"\" ng-click=\"navigateTo('/profile')\" id=welcome-btn-profile>{{'--.welcome.myProfile' | translateText}}</a></li><li role=presentation id=welcome-btn-my-businesses><a role=menuitem tabindex=-1 href=\"\" ng-click=\"navigateTo('/my-businesses')\">{{'--.welcome.myBusinesses' | translateText}}</a></li><li ng-show=\"accountService.getMyself().type == 'BUSINESS'\" role=presentation id=welcome-btn-business><a role=menuitem tabindex=-1 href=\"\" ng-click=\"navigateTo('/business/'+accountService.getMyself().businessId)\">{{'--.welcome.myBusiness' | translateText}}</a></li><li role=presentation><a role=menuitem tabindex=-1 href=\"\" ng-click=logout() id=welcome-btn-logout>{{'--.generic.logout' | translateText}}</a></li><li><ul></ul></li></ul></div><img src=\"/assets/images/menu/icon_home.png\"><select class=form-control ng-model=currentPosition ng-options=\"position.key as position.translation | translateText for position in positions\" style=\"display: inline-block;width: 120px\"></select></div></div></div></div>");
+    "<div class=navigation-bar ng-class=\"{'header-with-advanced-search':advancedSearch}\"><div class=\"container header-option-container\"><h1 style=\"cursor : pointer\" id=welcome-btn-welcome ng-click=\"navigateTo('/')\">{{'--.site.name' | translateText}}</h1><search-bar-ctrl ng-info={mobile:false}></search-bar-ctrl><div class=profile-buttons-container ng-show=\"accountService.getMyself()==null\"><select class=form-control ng-model=languageService.currentLanguage ng-options=\"lang.code as lang.language for lang in languageService.languages\"></select><button type=button id=welcome-btn-login class=\"btn btn-primary\" ng-click=login()>{{'--.welcome.login' | translateText}}</button> {{'--.generic.or' | translateText}} <button type=button class=\"btn btn-primary\" id=welcome-btn-registration ng-click=registration()>{{'--.welcome.signIn' | translateText}}</button></div><div class=profile-buttons-container ng-show=\"accountService.getMyself()!=null\" style=\"display : inline-block\"><div class=dropdown ng-show=\"accountService.getMyself()!=null\" style=\"display : inline-block\"><div class=menu-connection-button-container><button class=\"btn btn-default dropdown-toggle\" type=button id=dropdownMenu1 data-toggle=dropdown aria-expanded=true style=\"max-width: 200px\">{{accountService.getMyself().firstname}} {{accountService.getMyself().lastname}} <span class=caret></span></button><ul class=\"dropdown-menu dropdown-menu-right\" role=menu aria-labelledby=dropdownMenu1><li role=presentation><a role=menuitem tabindex=-1 href=\"\" ng-click=\"navigateTo('/profile')\" id=welcome-btn-profile>{{'--.welcome.myProfile' | translateText}}</a></li><li role=presentation id=welcome-btn-my-businesses><a role=menuitem tabindex=-1 href=\"\" ng-click=\"navigateTo('/my-businesses')\">{{'--.welcome.myBusinesses' | translateText}}</a></li><li ng-show=\"accountService.getMyself().type == 'BUSINESS'\" role=presentation id=welcome-btn-business><a role=menuitem tabindex=-1 href=\"\" ng-click=\"navigateTo('/business/'+accountService.getMyself().businessId)\">{{'--.welcome.myBusiness' | translateText}}</a></li><li role=presentation><a role=menuitem tabindex=-1 href=\"\" ng-click=logout() id=welcome-btn-logout>{{'--.generic.logout' | translateText}}</a></li><li><ul></ul></li></ul></div><img src=\"/assets/images/menu/icon_home.png\"><select class=form-control ng-model=currentPosition ng-options=\"position.key as position.translation | translateText for position in positions\" style=\"display: inline-block;width: 120px\"></select></div></div></div></div>");
   $templateCache.put("/assets/javascripts/modal/AccountFusionFacebookModal/view.html",
     "<div class=modal-header><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{'--.account.fusion.modal.title' | translateText}}</h4></div><div class=modal-body dir-enter=save()>{{\"--.account.fusion.description\" | translateText : email }}<dir-field-text ng-info=fields.password></dir-field-text></div><div class=modal-footer><button ng-disabled=loading type=button class=\"btn btn-default\" ng-click=close()>{{'--.generic.close' | translateText}}</button> <button ng-disabled=loading type=button class=\"btn btn-primary\" ng-click=save()>{{'--.generic.save' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
   $templateCache.put("/assets/javascripts/modal/AddressModal/view.html",
@@ -5472,5 +5472,5 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/view/web/profile.html",
     "<div class=profile-page><div class=\"panel panel-default main-panel panel-personal-information\"><div class=panel-heading>{{'--.customer.profile.personalInformation' | translateText}}</div><div class=panel-body><account-form-ctrl ng-info=accountParam></account-form-ctrl><button class=\"btn btn-primary glyphicon glyphicon-edit\" id=profile-personal-btn-edit ng-show=accountParam.disabled ng-click=personalEdit()>{{'--.generic.edit' |translateText}}</button> <button class=\"btn btn-primary\" id=profile-personal-btn-save ng-hide=accountParam.disabled ng-click=personalSave()>{{'--.generic.save' | translateText}}</button> <button id=profile-personal-btn-cancel class=\"btn btn-primary\" ng-hide=accountParam.disabled ng-click=personalCancel()>{{'--.generic.cancel' | translateText}}</button><div ng-show=\"account.loginAccount==true\" class=col-md-3 ng-show=\"account.loginAccount==true\"></div><button type=button id=profile-personal-btn-edit-password class=\"btn btn-primary\" ng-click=editPassword()>{{'--.changePasswordModal.title' | translateText}}</button></div></div><div class=\"panel panel-default main-panel\"><div class=panel-heading>{{'--.customer.profile.myAddresses' | translateText}}</div><div class=panel-body><div><accordion><accordion-group class=address-container ng-repeat=\"address in model.myself.addresses\" is-open=address.isOpen><accordion-heading>{{address.name}} <i class=\"pull-right glyphicon\" ng-class=\"{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}\"></i></accordion-heading><div class=address-box><div><span>{{'--.generic.street' | translateText}}</span> <span>{{address.street}}</span></div><div><span>{{'--.generic.zip' | translateText}}</span> <span>{{address.zip}}</span></div><div><span>{{'--.generic.city' | translateText}}</span> <span>{{address.city}}</span></div><div><span>{{'--.generic.country' | translateText}}</span> <span>{{address.country}}</span></div></div><button class=\"btn btn-primary glyphicon glyphicon-edit\" ng-click=editAddress(address)>{{'--.generic.edit' | translateText}}</button> <button class=\"btn btn-primary glyphicon glyphicon-remove\" ng-click=deleteAddress(address)>{{'--.generic.remove' |translateText}}</button></accordion-group></accordion><button id=profile-btn-address-add class=\"btn btn-primary\" ng-click=addAddress()>{{'--.customer.profile.create' | translateText}}</button></div></div></div><div class=\"panel panel-default main-panel\"><div class=panel-heading>{{'--.customer.profile.interest' | translateText}}</div><div class=\"panel-body category-list\"><div><div ng-repeat=\"interest in model.myself.customerInterests\" class=category-box>{{interest.translationName |translateText}}</div><button class=\"btn btn-primary glyphicon glyphicon-edit\" ng-show=accountParam.disabled id=profile-interest-btn-edit ng-click=interestEdit()>{{'--.generic.edit' | translateText}}</button></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/web/search_page.html",
-    "<div><div ng-show=\"results == null\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-hide=\"results==null\"><tabset><tab ng-show=businessTab.display active=businessTab.active><tab-heading>{{'--.generic.business' | translateText}} ({{businessTab.total}})</tab-heading><business-list-ctrl ng-info=businessParams></business-list-ctrl></tab><tab ng-show=publicationTab.display active=publicationTab.active><tab-heading>{{'--.generic.publication' | translateText}} ({{publicationTab.total}})</tab-heading><publication-list-ctrl ng-info=publicationParams></publication-list-ctrl></tab><tab ng-show=categoryTab.display active=categoryTab.active><tab-heading>{{'--.generic.category' | translateText}} ({{categoryTab.total}})</tab-heading><div ng-show=\"results.categoriesMap == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"businessesByCategory in results.categoriesMap\">{{businessesByCategory.category.category.translationName}} <span class=transition ng-show=\"category.subCategory!=null\">>></span> {{businessesByCategory.category.subCategory.translationName}} <span class=transition ng-show=\"category.subSubCategory!=null\">>></span> {{businessesByCategory.category.subSubCategory.translationName}}<business-list-ctrl ng-info={data:businessesByCategory.businesses,loading:false}></business-list-ctrl></div></tab></tabset></div></div>");
+    "<div><div ng-show=\"results == null\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-hide=\"results==null\"><tabset><tab ng-show=businessTab.display active=businessTab.active><tab-heading>{{'--.generic.business' | translateText}} ({{businessTab.totalToDisplay}})</tab-heading><business-list-ctrl ng-info={data:businessTab.data}></business-list-ctrl></tab><tab ng-show=publicationTab.display active=publicationTab.active><tab-heading>{{'--.generic.publication' | translateText}} ({{publicationTab.totalToDisplay}})</tab-heading><publication-list-ctrl ng-info={data:publicationTab.data}></publication-list-ctrl></tab><tab ng-show=categoryTab.display active=categoryTab.active><tab-heading>{{'--.generic.category' | translateText}} ({{categoryTab.totalToDisplay}})</tab-heading><div ng-show=\"categoryTab == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"(cat,value) in categoryTab.data\"><div class=link ng-click=\"navigateTo('/search/category:'+cat)\">-{{cat | translateText}}</div><div ng-repeat=\"(sCat,value2) in value\"><div class=link ng-click=\"navigateTo('/search/category:'+sCat)\">--{{sCat | translateText}}</div><div ng-repeat=\"(ssCat,value3) in value2\"><div class=link ng-click=\"navigateTo('/search/category:'+ssCat)\">---{{ssCat | translateText}}</div><business-list-ctrl ng-info={data:value3,loading:false}></business-list-ctrl></div></div></div></tab></tabset></div></div>");
 }]);

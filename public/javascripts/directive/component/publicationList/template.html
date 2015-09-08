@@ -9,14 +9,37 @@
         {{'--.list.nothing' | translateText}}
     </div>
 
+    <!-- publication -->
     <div ng-repeat="publication in publications"
          class="publication-box publication-publication"
          ng-click="click()">
+
+
+        <!--&lt;!&ndash; illustration &ndash;&gt;-->
+        <!--<div style="float:left;width:  60px;height: 60px; border-radius: 10px;border: 1px solid #28FDA7;display:inline-block;overflow: hidden">-->
+
+            <!--<img style="width: 80px;height: 80px;"-->
+                    <!--ng-click="navigateTo('/business/'+publication.businessId)"-->
+                    <!--ng-src="{{publication.businessIllustration | image}}"/>-->
+
+        <!--</div>-->
+
+        <!--<div style="display: block">-->
+            <!--<div style="border-bottom: 1px solid #28FDA7;vertical-align: top;display: block;line-height: 40px">-->
+                <!--Poupette Coquette-->
+            <!--</div>-->
+            <!--<div style="vertical-align: top;display: block;padding-top: 15px;">-->
+                <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
+                <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
+                <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <img
                 class="link illustration"
                 ng-click="navigateTo('/business/'+publication.businessId)"
                 ng-src="{{publication.businessIllustration | image}}"/>
+
 
         <div class="publication-list-business-data">
             <div>
@@ -24,12 +47,12 @@
             </div>
             <!--<div>-->
 
-                <!--&lt;!&ndash; following &ndash;&gt;-->
-                <!--<button ng-click="follow(publication)" class="follow-button">-->
-                    <!--<img src="/assets/images/haert.png" ng-show="publication.following"/>-->
-                    <!--<img src="/assets/images/haert-off.png" ng-hide="publication.following"/>-->
-                <!--</button>-->
-                <!--{{publication.totalFollowers}}-->
+            <!--&lt;!&ndash; following &ndash;&gt;-->
+            <!--<button ng-click="follow(publication)" class="follow-button">-->
+            <!--<img src="/assets/images/haert.png" ng-show="publication.following"/>-->
+            <!--<img src="/assets/images/haert-off.png" ng-hide="publication.following"/>-->
+            <!--</button>-->
+            <!--{{publication.totalFollowers}}-->
             <!--</div>-->
 
             <!-- distance -->
@@ -52,11 +75,16 @@
             <!-- share facebook -->
             <a facebook
                class="facebookShare"
-               data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}"
-               data-shares='shares'>{{ shares }}</a>
-            <!--<button ng-click="share(publication)">Share</button>-->
-            <!--<a facebook-feed-share class="facebookShare" data-url='http://google.com' data-shares='shares', data-description="Example text">{{ shares }}</a>-->
-            <!--<div gplus class="g-plus" data-size="tall" data-annotation="bubble" data-href='http://google.com' data-action='share'></div>-->
+               data-url="http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}">
+            </a>
+
+            <a facebook-feed-share
+               class="facebookShare"
+               data-url='http://lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}}'
+               data-shares='shares',
+               data-description="{{publication.title}}">
+            </a>
+
 
             <!-- end date -->
             <div class="date" ng-show="publication.type == 'PROMOTION'">{{publication.endDate | date:'medium'}}</div>
@@ -81,7 +109,7 @@
                     </tr>
                     <tr ng-show="publication.originalPrice!=null">
                         <td>{{'--.promotion.offPrice' | translateText}}</td>
-                        <td>{{(publication.originalPrice * (1 - publication.offPercent))  | number:2 }} €</td>
+                        <td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td>
                     </tr>
                     <tr>
                         <td>{{'--.promotion.offPercent' | translateText}}</td>
@@ -102,7 +130,7 @@
 
             <!-- interest icon -->
             <img style="height: 40px;float: right"
-                    ng-src="/assets/images/interest/{{publication.interest.iconName}}"/>
+                 ng-src="/assets/images/interest/{{publication.interest.iconName}}"/>
         </div>
     </div>
 

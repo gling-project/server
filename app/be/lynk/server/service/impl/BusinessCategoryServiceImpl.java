@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 import play.i18n.Lang;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -44,26 +45,20 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
     }
 
     @Override
-    public List<BusinessCategory> search(String criteria, Lang lang,int max) {
+    public List<BusinessCategory> search(String criteria, Lang lang, Integer resultByPage) {
 
         criteria = normalizeForSearch(criteria);
 
         String s = "select c from BusinessCategory c, Translation t, TranslationValue v where c.translationName = t and v.translation=t and v.lang=:lang and v.searchableContent like :criteria";
 
-        return JPA.em().createQuery(s)
-                .setParameter("lang", lang)
-                .setParameter("criteria", criteria)
-                .setMaxResults(max)
-                .getResultList();
+        Query query = JPA.em().createQuery(s)
+                         .setParameter("lang", lang)
+                         .setParameter("criteria", criteria);
 
-//        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-//        CriteriaQuery<BusinessCategory> cq = cb.createQuery(BusinessCategory.class);
-//        Root<BusinessCategory> from = cq.from(BusinessCategory.class);
-//        Path<Translation> translation = from.get("translationName");
-//        Path<TranslationValue> translationValue = translation.get("translationValues");
-//        cq.select(from);
-//        cq.where(cb.like(translationValue.get("content"), criteria),
-//                cb.equal(translationValue.get("lang"), lang));
-//        return JPA.em().createQuery(criteria).getResultList();
+        if (resultByPage != null) {
+            query.setMaxResults(resultByPage);
+        }
+
+        return query.getResultList();
     }
 }

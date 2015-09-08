@@ -49,7 +49,7 @@ myApp.service("searchBarService", function ($timeout, $rootScope) {
         return self.currentSearch;
     }, function watchCallback(newValue, oldValue) {
 
-        if (!suspendBinding) {
+        if (!suspendBinding && newValue!=null && newValue != "") {
             suspendBinding = true;
 
             for (var j in self.searchCriteria) {

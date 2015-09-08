@@ -1,6 +1,7 @@
 package be.lynk.server.controller;
 
 import be.lynk.server.controller.technical.AbstractController;
+import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.dto.*;
 import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class MainController extends AbstractController {
     String accessKey = Configuration.root().getString("app.status");
 
     @Autowired
-    private PublicationService publicationService;
+    private PublicationService  publicationService;
     @Autowired
     private LocalizationService localizationService;
 
@@ -65,56 +67,67 @@ public class MainController extends AbstractController {
         return generateDefaultPage(url, false);
     }
 
+    @Transactional
+    public Result toWelcomePage() {
+        if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
+            addAlreadyVisitedCookie();
+        }
+        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage()));
+    }
+
+
     public Result generateDefaultPage(String url, boolean forceMobile) {
 
-//        double  lat1 = 71.167782, long1 = 25.781026,
-//                lat2 = 71.168790, long2 = 25.782380;
-//
-//        71.169400, 25.780906
-//        71.167285, 25.780881
-
-//        Double distance = localizationService.distance(lat1, long1, lat2, long2, null);
-
-//        Logger.info("distance:"+distance);
-
-        String facebookAppId = AppUtil.getFacebookAppId();
-
-        AbstractPublicationDTO publicationDTO = null;
-        if (url != null && url.contains("publication/")) {
-            Pattern p = Pattern.compile("publication/([0-9]+)");
-            Matcher matcher = p.matcher(url);
-            if (matcher.find()) {
-                AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
-                publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
-
-                publicationDTO.setBusinessName(publication.getBusiness().getName());
-                publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
-                publicationDTO.setBusinessId(publication.getBusiness().getId());
-            }
-        }
-
-        //try with param
-        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
-        interfaceDataDTO.setLangId(lang().code());
-        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
-        interfaceDataDTO.setAppId(facebookAppId);
-        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
-        if (securityController.isAuthenticated(ctx())) {
-            Account currentUser = securityController.getCurrentUser();
-            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
-            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
-            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
-            interfaceDataDTO.setMySelf(accountDTO);
-
-        }
-
-
-        if (isMobileDevice() || forceMobile) {
-            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+        if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
+            addAlreadyVisitedCookie();
+            return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage()));
         } else {
-            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, publicationDTO));
-        }
 
+            String facebookAppId = AppUtil.getFacebookAppId();
+
+            AbstractPublicationDTO publicationDTO = null;
+            if (url != null && url.contains("publication/")) {
+                Pattern p = Pattern.compile("publication/([0-9]+)");
+                Matcher matcher = p.matcher(url);
+                if (matcher.find()) {
+                    AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
+                    publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
+
+                    publicationDTO.setBusinessName(publication.getBusiness().getName());
+                    publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+                    publicationDTO.setBusinessId(publication.getBusiness().getId());
+                }
+            }
+
+            //try with param
+            InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
+            interfaceDataDTO.setLangId(lang().code());
+            interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
+            interfaceDataDTO.setAppId(facebookAppId);
+            interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+            if (securityController.isAuthenticated(ctx())) {
+                Account currentUser = securityController.getCurrentUser();
+
+                if (!currentUser.getLang().code().equals(interfaceDataDTO.getLangId())) {
+                    changeLang(currentUser.getLang().code());
+                    interfaceDataDTO.setLangId(currentUser.getLang().code());
+                }
+
+                MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
+                accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
+                accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
+                interfaceDataDTO.setMySelf(accountDTO);
+
+            }
+
+
+            if (isMobileDevice() || forceMobile) {
+                return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+            } else {
+                return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, publicationDTO));
+            }
+
+        }
 
     }
 
@@ -141,6 +154,11 @@ public class MainController extends AbstractController {
         }
 
         return finalList;
+    }
+
+
+    private void addAlreadyVisitedCookie() {
+        ctx().response().setCookie(CommonSecurityController.COOKIE_ALREADY_VISITED, "true", 2592000);
     }
 
 }

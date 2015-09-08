@@ -119,7 +119,6 @@ public class BusinessCategory extends AbstractEntity implements Comparable<Busin
         BusinessCategory that = (BusinessCategory) o;
 
         if (!name.equals(that.name)) return false;
-        if (parent != null ? !parent.equals(that.parent) : that.parent != null) return false;
 
         return true;
     }

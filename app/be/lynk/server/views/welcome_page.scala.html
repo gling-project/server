@@ -1,0 +1,35 @@
+@(languages: be.lynk.server.dto.ListDTO[be.lynk.server.dto.LangDTO])
+
+@import com.fasterxml.jackson.databind.ObjectMapper
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@Messages("--.site.name")</title>
+        <meta charset="utf-8"/>
+        <base href="/">
+            <!-- main -->
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap.min.css")">
+            <!-- 19 ko -->
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap-theme.min.css")">
+
+    </head>
+    <body >
+
+            <!-- load data -->
+        <script>
+        var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;
+        </script>
+
+        <div class="global-container">
+
+            <div>je suis une Welcome page</div>
+
+            <a href="/" class="btn btn-primary">Start with Gling !</a>
+
+        </div>
+    </body>
+</html>

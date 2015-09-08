@@ -15,13 +15,7 @@ public class AbstractImporter {
     public static final String CP1252_ENCODING = "Cp1252";
 
 
-    protected String normalize(String s) {
-        return Normalizer.normalize(s, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .toLowerCase()
-                .replaceAll("( |-)", "_")
-                .replaceAll("('|&|/|\")", "");
-    }
+
 
     protected static Map<String, Sheet> getWorkbookSheets(String path) {
         WorkbookSettings ws = new WorkbookSettings();

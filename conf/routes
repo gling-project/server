@@ -110,6 +110,7 @@ POST          /rest/import_category                                             
 
 
 ##welcome
+GET           /welcome/                                                                           @be.lynk.server.controller.MainController.toWelcomePage()
 GET           /admin/                                                                             @be.lynk.server.controller.MainController.admin()
 GET           /mobile/                                                                            @be.lynk.server.controller.MainController.mobile()
 GET           /                                                                                   @be.lynk.server.controller.MainController.mainPage2()

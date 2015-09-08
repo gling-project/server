@@ -162,7 +162,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
 
     @Override
-    public List<AbstractPublication> search(String criteria, int max) {
+    public List<AbstractPublication> search(String criteria, int page,int maxResult) {
 
         criteria = normalizeForSearch(criteria);
 
@@ -176,9 +176,11 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(business.get("businessStatus"), BusinessStatus.PUBLISHED)
         );
+        cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)
-                .setMaxResults(max)
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
                 .getResultList();
     }
 

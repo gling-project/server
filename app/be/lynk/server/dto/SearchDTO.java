@@ -7,9 +7,19 @@ import be.lynk.server.dto.technical.DTO;
  */
 public class SearchDTO extends DTO {
 
+    private Integer page;
+
     private String search;
 
     private PositionDTO position;
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
 
     public String getSearch() {
         return search;

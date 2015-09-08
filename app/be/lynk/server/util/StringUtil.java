@@ -1,6 +1,7 @@
 package be.lynk.server.util;
 
 import java.text.DecimalFormat;
+import java.text.Normalizer;
 
 /**
  * Created by florian on 18/11/14.
@@ -17,5 +18,14 @@ public class StringUtil {
         return df.format(value);
 
     }
+
+    public static String normalize(String s) {
+        return Normalizer.normalize(s, Normalizer.Form.NFD)
+                         .replaceAll("[^\\p{ASCII}]", "")
+                         .toLowerCase()
+                         .replaceAll("( |-)", "_")
+                         .replaceAll("('|&|/|\")", "");
+    }
+
 
 }
