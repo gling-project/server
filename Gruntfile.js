@@ -257,7 +257,7 @@ module.exports = function (grunt) {
             }
         }
         ,
-        html2js: [{
+        html2js: {
             options: {
                 base: 'public',
                 module: 'app',
@@ -277,13 +277,19 @@ module.exports = function (grunt) {
                     removeScriptTypeAttributes: true,
                     removeStyleLinkTypeAttributes: true
                 }
-            }
-            ,
+            },
             main: {
                 src: ['public/javascripts/**/*.html'],
                 dest: 'public/javascripts/dist/templateCacheWeb.js'
+            },
+            town: {
+                src: ['public/javascripts/directive/town/publicationListForTown/template.html',
+                    'public/javascripts/directive/town/townBusiness/template.html',
+                    'public/javascripts/modal/GalleryModal/view.html'
+                ],
+                dest: 'public/javascripts/dist/templateCacheWeb-town.js'
             }
-        }],
+        },
         sprite: {
             all: {
                 src: 'public/images/interest/*.png',
