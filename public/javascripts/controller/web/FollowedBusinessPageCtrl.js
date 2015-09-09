@@ -12,6 +12,12 @@ myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, busin
 
             $scope.businesses = data;
 
+            $scope.$watch("filter.$", function (o,n) {
+                if(n!=o) {
+                    $scope.tableParams.reload();
+                }
+            });
+
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
                 count: 10,          // count per page
@@ -22,8 +28,13 @@ myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, busin
                 counts: [], // hides page sizes
                 total: $scope.businesses.length, // length of data
                 getData: function ($defer, params) {
-                    // use build-in angular filter
-                    var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
+
+                    var filteredData = $filter('filter')($scope.businesses, $scope.filter);
+                    var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+
+                    //var filteredData = $filter('filter')(data, $scope.filter);
+                    //// use build-in angular filter
+                    //var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
 
                     $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                 }

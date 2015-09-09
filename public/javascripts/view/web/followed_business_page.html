@@ -1,5 +1,11 @@
 <div class="followed-business">
 
+    <div class="generic-inline-block">
+        {{'--.generic.search'| translateText}}
+    </div>
+    <div class="generic-inline-block">
+        <input class="form-control" type="text" ng-model="filter.$"/>
+    </div>
 
     <table ng-table="tableParams" class="table">
         <tr ng-repeat="business in $data">
@@ -10,7 +16,8 @@
                 <span class="link" ng-click="navigateTo('/business/'+business.id)">{{business.name}}</span>
                 <br/>
                 <button class="btn btn-xs btn-primary"
-                        ng-click="stopFollow(business)">Arrêter de suivre</button>
+                        ng-click="stopFollow(business)">Arrêter de suivre
+                </button>
             </td>
             <td data-title="'--.followedBusiness.table.categories' | translateText">
 
@@ -31,8 +38,8 @@
             <td data-title="'--.followedBusiness.table.notification' | translateText" sortable="'followingNotification'"
                 style="text-align: center">
                 <div><input ng-click="setNotification(business)"
-                        type="checkbox"
-                        ng-model="business.followingNotification">
+                            type="checkbox"
+                            ng-model="business.followingNotification">
                 </div>
             </td>
         </tr>

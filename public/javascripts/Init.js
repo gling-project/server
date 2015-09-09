@@ -13,3 +13,11 @@ var myApp = angular.module('app', [
         //,'ezfb'
     ]
 );
+
+app.config(['$locationProvider', function ($locationProvider) {
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);

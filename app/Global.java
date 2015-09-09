@@ -140,32 +140,32 @@ public class Global extends GlobalSettings {
     }
 
 
-//    @Override
-//    public Action onRequest(Http.Request request, Method actionMethod) {
-//        // Analytics analytics = AnalyticsUtil.start(request);
-//        Action action;
-//
-//        // ENFORCE HTTPS on production
-//        if (Play.isProd() && !isHttpsRequest(request)) {
-//            action = new Action() {
-//                @Override
-//                public Promise<SimpleResult> call(Http.Context ctx) throws Throwable {
-//                    return Promise.<SimpleResult>pure(Results.redirect("https://" + ctx.request().host() + ctx.request().uri()));
-//                }
-//            };
-//        } else {
-//            action = super.onRequest(request, actionMethod);
-//        }
-//
-//        //AnalyticsUtil.end(analytics);
-//        return action;
-//    }
-//
-//
-//    private static boolean isHttpsRequest(Http.Request request) {
-//        // heroku passes header on
-//        return request.getHeader(SSL_HEADER) != null
-//                && request.getHeader(SSL_HEADER)
-//                          .contains("https");
-//    }
+    @Override
+    public Action onRequest(Http.Request request, Method actionMethod) {
+        // Analytics analytics = AnalyticsUtil.start(request);
+        Action action;
+
+        // ENFORCE HTTPS on production
+        if (Play.isProd() && !isHttpsRequest(request)) {
+            action = new Action() {
+                @Override
+                public Promise<SimpleResult> call(Http.Context ctx) throws Throwable {
+                    return Promise.<SimpleResult>pure(Results.redirect("https://" + ctx.request().host() + ctx.request().uri()));
+                }
+            };
+        } else {
+            action = super.onRequest(request, actionMethod);
+        }
+
+        //AnalyticsUtil.end(analytics);
+        return action;
+    }
+
+
+    private static boolean isHttpsRequest(Http.Request request) {
+        // heroku passes header on
+        return request.getHeader(SSL_HEADER) != null
+                && request.getHeader(SSL_HEADER)
+                          .contains("https");
+    }
 }
