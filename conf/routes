@@ -100,6 +100,10 @@ GET           /rest/file/:storedFileId                                          
 ## ADMIN
 GET           /rest/business/confirmPublication/$id<[0-9]+>                                       @be.lynk.server.controller.rest.SuperAdminRestController.confirmPublication(id:Long)
 
+## town
+GET           /rest/town/business/zip/$zip<[0-9]+>                                                @be.lynk.server.controller.rest.TownRestController.getBusinessesByZip(zip:Integer)
+GET           /rest/town/publication/business/$id<[0-9]+>/$page<[0-9]+>                           @be.lynk.server.controller.rest.TownRestController.getPublicationByBusiness(id:Long,page:Integer)
+
 
 #############
 ## importer
@@ -110,6 +114,7 @@ POST          /rest/import_category                                             
 
 
 ##welcome
+GET           /town/                                                                              @be.lynk.server.controller.MainController.toTown()
 GET           /welcome/                                                                           @be.lynk.server.controller.MainController.toWelcomePage()
 GET           /admin/                                                                             @be.lynk.server.controller.MainController.admin()
 GET           /mobile/                                                                            @be.lynk.server.controller.MainController.mobile()

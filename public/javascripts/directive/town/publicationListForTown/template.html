@@ -1,0 +1,23 @@
+<div class="town-business-publication-list">
+
+    <div class="town-business-publication-list-element"
+         ng-repeat="publication in publications">
+        <div class="title">{{publication.title}}
+            <span ng-show="publication.type === 'PROMOTION'">{{publication.endDate | date:'medium'}}</span>
+        </div>
+        <table class="body">
+            <tr>
+                <td>
+                    {{publication.description}}
+                </td>
+                <td ng-show="publication.pictures.length > 0">
+                    <img ng-click="openGallery(publication.pictures[0],publication)"
+                            ng-src="{{publication.pictures[0] | image}}"/>
+                </td>
+            </tr>
+        </table>
+        <div class="publicationDate">{{publication.endDate | date:'medium'}}</div>
+    </div>
+
+
+</div>

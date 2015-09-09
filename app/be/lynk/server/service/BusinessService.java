@@ -16,4 +16,6 @@ public interface BusinessService extends CrudService<Business>{
     List<Business> findByCategory(BusinessCategory businessCategory, int maxResult);
 
     List<Business> findByCategory(BusinessCategory businessCategory, int page,int maxResult);
+
+    List<Business> findByZip(String zip);
 }

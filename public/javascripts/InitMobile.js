@@ -12,3 +12,11 @@ var myApp = angular.module('app', [
         'uiGmapgoogle-maps',
         'djds4rce.angular-socialshare']
 );
+
+app.config(['$locationProvider', function ($locationProvider) {
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);

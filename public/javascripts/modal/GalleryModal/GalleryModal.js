@@ -1,4 +1,4 @@
-myApp.controller('GalleryModalCtrl', function ($scope, $flash, $modalInstance, image, images) {
+myApp.controller('GalleryModalCtrl', function ($scope, $modalInstance, image, images) {
 
 
     $scope.image = image;

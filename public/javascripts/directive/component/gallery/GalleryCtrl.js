@@ -1,4 +1,4 @@
-myApp.directive('galleryCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location,  modalService) {
+myApp.directive('galleryCtrl', function ($rootScope,   directiveService, modalService) {
 
     return {
         restrict: "E",

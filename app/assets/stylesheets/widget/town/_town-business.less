@@ -1,0 +1,90 @@
+@color-grey : #DDDDDD;
+
+.town-business-list {
+
+    .town-business-list-element {
+
+        background-color: @color-grey;
+        cursor: pointer;
+        display: inline-block;
+        margin: 10px;
+        padding: 2px;
+        vertical-align: top;
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+        &:hover {
+            background-color: #AAAAAA;
+        }
+    }
+}
+
+.town-business-details {
+    margin-top: 10px;
+
+    .town-business-details-left {
+        display: inline-block;
+        width: 49%;
+        vertical-align: text-top;
+        padding-right: 30px;
+        .town-business-details-header {
+            & > * {
+                display: inline-block;
+                vertical-align: text-top;
+            }
+            img {
+                width: 160px;
+                height: 160px;
+                border: 1px solid @color-grey;
+            }
+            & > div{
+                width: 160px;
+            }
+            .business-header-name {
+                font-size: 24px;
+            }
+            .business-header-details {
+                color: #777777;
+            }
+        }
+        .business-description {
+            padding: 10px;
+        }
+    }
+
+    .town-business-details-right {
+        display: inline-block;
+        width: 49%;
+        vertical-align: text-top;
+    }
+
+}
+
+.town-business-publication-list {
+    .town-business-publication-list-element {
+        //        border: 1px solid #999999;
+        border-radius: 10px;
+        background-color: #bbe0cc;
+        padding: 10px 10px;
+        margin: 5px 5px;
+        .title {
+            font-size: 16px;
+        }
+        .body {
+            font-weight: bold;
+            img {
+                width: 160px;
+                border: 1px solid @color-grey;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .publicationDate {
+        font-size: 10px;
+        text-align: right;
+        padding-top: 4px;
+    }
+}

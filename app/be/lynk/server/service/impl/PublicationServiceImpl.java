@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 @Service
 public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication> implements PublicationService {
 
-    private static final Double EARTH_RADIUS = 6371.0;
-    private static final Boolean OPT1 = false;
+    private static final Double  EARTH_RADIUS = 6371.0;
+    private static final Boolean OPT1         = false;
 
     private static enum PublicationTiming {FUTURE, PASSED, NOW}
 
@@ -124,7 +124,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         request += " ORDER BY p.startDate DESC ";
 
         TypedQuery<SearchResult> query = JPA.em().createQuery(request, SearchResult.class)
-                .setParameter("businessStatus", BusinessStatus.PUBLISHED);
+                                            .setParameter("businessStatus", BusinessStatus.PUBLISHED);
 
         if (position != null && maxDistance != null) {
 
@@ -143,9 +143,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
             double lonMax = Math.toDegrees(lonMaxR);
 
             query.setParameter("latmin", latMin)
-                    .setParameter("latmax", latMax)
-                    .setParameter("lonmin", lonMin)
-                    .setParameter("lonmax", lonMax);
+                 .setParameter("latmax", latMax)
+                 .setParameter("lonmin", lonMin)
+                 .setParameter("lonmax", lonMax);
         }
         if (businesses != null) {
             query.setParameter("businesses", businesses);
@@ -162,7 +162,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
 
     @Override
-    public List<AbstractPublication> search(String criteria, int page,int maxResult) {
+    public List<AbstractPublication> search(String criteria, int page, int maxResult) {
 
         criteria = normalizeForSearch(criteria);
 
@@ -175,19 +175,19 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 , cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(business.get("businessStatus"), BusinessStatus.PUBLISHED)
-        );
+                );
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)
-                .setFirstResult(page * maxResult)
-                .setMaxResults(maxResult)
-                .getResultList();
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
+                  .getResultList();
     }
 
 
     @Override
     public List<AbstractPublication> findBySearchResults(List<SearchResult> searchResults) {
-        if(searchResults.size()==0){
+        if (searchResults.size() == 0) {
             return new ArrayList<>();
         }
         List<Long> ids = searchResults.stream().map(s -> s.getPublicationId()).collect(Collectors.toList());
@@ -195,7 +195,33 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         String request = "SELECT p FROM AbstractPublication p where p.id in :idList";
 
         return JPA.em().createQuery(request, AbstractPublication.class)
-                .setParameter("idList", ids)
-                .getResultList();
+                  .setParameter("idList", ids)
+                  .getResultList();
+    }
+
+    /**
+     * Only active.
+     * Only with a publication time more than 25h
+     *
+     * @param business
+     * @param page
+     * @return
+     */
+    @Override
+    public List<AbstractPublication> findByBusinessForTown(Business business, Integer page,Integer maxResult) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        cq.select(from);
+        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("business"), business));
+        cq.orderBy(cb.desc(from.get("startDate")));
+
+        return JPA.em().createQuery(cq)
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
+                  .getResultList();
     }
 }

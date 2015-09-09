@@ -2741,7 +2741,7 @@ myApp.directive('scheduleCtrl', ['directiveService', function (directiveService)
     }
 }])
 ;
-myApp.directive('galleryCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location,  modalService) {
+myApp.directive('galleryCtrl', ['$rootScope', 'directiveService', 'modalService', function ($rootScope,   directiveService, modalService) {
 
     return {
         restrict: "E",

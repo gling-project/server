@@ -257,6 +257,14 @@ var myApp = angular.module('app', [
         'uiGmapgoogle-maps',
         'djds4rce.angular-socialshare']
 );
+
+app.config(['$locationProvider', function ($locationProvider) {
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
 myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountService', '$timeout', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
     $scope.loading=false;

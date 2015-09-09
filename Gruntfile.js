@@ -9,6 +9,10 @@ module.exports = function (grunt) {
                     {
                         dest: 'public/dist/dependencies.min.css',
                         src: ['public/dist/dependencies.css']
+                    },
+                    {
+                        dest: 'public/dist/town.min.css',
+                        src: ['public/dist/town.css']
                     }
                 ]
             }
@@ -61,6 +65,16 @@ module.exports = function (grunt) {
                             'public/components/font-awesome/css/font-awesome.min.css',
                             'public/components/ng-table/ng-table.min.css',
                             'public/components/angular-socialshare/angular-socialshare.css']
+                    },
+                    {
+                        dest: 'public/dist/town.css',
+
+                        src: [
+                            'public/components/bootstrap/dist/css/bootstrap.min.css',
+                            'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
+                            'public/components/messenger/build/css/messenger.css',
+                            'public/components/font-awesome/css/font-awesome.min.css',
+                            'public/css/components/font-awesome/css/font-awesome.min.css']
                     }
                 ]
             }
@@ -71,7 +85,8 @@ module.exports = function (grunt) {
                     'public/dist/dependencies.min.js': ['public/dist/dependencies.js'],
                     'public/dist/common.min.js': ['public/dist/common.js'],
                     'public/dist/web.min.js': ['public/dist/web.js'],
-                    'public/dist/mobile.min.js': ['public/dist/mobile.js']
+                    'public/dist/mobile.min.js': ['public/dist/mobile.js'],
+                    'public/dist/town.min.js': ['public/dist/town.js']
                 }
             }
         },
@@ -190,7 +205,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
                         'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
                         'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js'],
-                    'public/dist/mobile.js':[
+                    'public/dist/mobile.js': [
                         'public/components/lodash/lodash.min.js',
                         'public/components/angular-google-maps/dist/angular-google-maps.min.js',
                         'public/components/angular-google-maps/dist/angular-google-maps_dev_mapped.min.js',
@@ -216,19 +231,40 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/publicationListMobileForBusiness/PublicationListMobileForBusinessCtrl.js',
                         'public/javascripts/directive/mobile/headerSearch/HeaderSearchCtrl.js',
                         'public/javascripts/directive/mobile/title/MobileTitleCtrl.js'
+                    ],
+                    'public/dist/town.js': [
+                        'public/components/jquery/dist/jquery.min.js',
+                        'public/components/angular/angular.min.js',
+                        'public/components/bootstrap/dist/js/bootstrap.min.js',
+                        'public/components/messenger/build/js/messenger.min.js',
+                        'public/components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+                        'public/components/angular-i18n/angular-locale_fr-fr.js',
+                        'public/components/bootstrap/js/transition.js',
+                        'public/javascripts/InitTown.js',
+                        'public/javascripts/service/town/TownService.js',
+                        'public/javascripts/service/FlashService.js',
+                        'public/javascripts/service/DirectiveService.js',
+                        'public/javascripts/service/TranslationService.js',
+                        'public/javascripts/filter/ImageFilter.js',
+                        'public/javascripts/filter/TranslateTextFilter.js',
+                        'public/javascripts/modal/GalleryModal/GalleryModal.js',
+                        'public/javascripts/TownMainCtrl.js',
+                        'public/javascripts/directive/town/townBusiness/TownBusinessCtrl.js',
+                        'public/javascripts/directive/town/publicationListForTown/PublicationListForTownCtrl.js',
+                        'public/javascripts/dist/templateCacheWeb-town.js'
                     ]
                 }
             }
         }
         ,
-        html2js: {
+        html2js: [{
             options: {
                 base: 'public',
                 module: 'app',
-                existingModule:true,
+                existingModule: true,
                 singleModule: true,
                 useStrict: true,
-                rename:function (moduleName) {
+                rename: function (moduleName) {
                     return moduleName.replace('javascripts/', '/assets/javascripts/');
                 },
                 htmlmin: {
@@ -247,17 +283,15 @@ module.exports = function (grunt) {
                 src: ['public/javascripts/**/*.html'],
                 dest: 'public/javascripts/dist/templateCacheWeb.js'
             }
-        },
-        sprite:{
+        }],
+        sprite: {
             all: {
                 src: 'public/images/interest/*.png',
                 dest: 'public/images/dist/interest.png',
                 destCss: 'public/dist/sprites.css'
             },
-            data:{
-                spritesheet:{
-
-                }
+            data: {
+                spritesheet: {}
             }
         },
         jasmine: {
@@ -284,14 +318,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
 
-
 // Default task(s).
     grunt.registerTask('default', [
         'html2js',
         'concat',
         'ngAnnotate',
         'uglify'
-        // ,'cssmin'
+        , 'cssmin'
     ]);
 
 // cache task(s).

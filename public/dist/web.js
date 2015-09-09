@@ -1286,7 +1286,7 @@ myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$co
 
 
 }]);
-myApp.controller('GalleryModalCtrl', ['$scope', '$flash', '$modalInstance', 'image', 'images', function ($scope, $flash, $modalInstance, image, images) {
+myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'images', function ($scope, $modalInstance, image, images) {
 
 
     $scope.image = image;

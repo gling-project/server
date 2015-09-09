@@ -33,6 +33,5 @@ public interface PublicationService extends CrudService<AbstractPublication> {
 
     List<AbstractPublication> findBySearchResults(List<SearchResult> searchResults);
 
-
-
+    List<AbstractPublication> findByBusinessForTown(Business business, Integer page,Integer maxResult);
 }
