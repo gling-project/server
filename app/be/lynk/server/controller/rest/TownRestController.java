@@ -28,6 +28,12 @@ public class TownRestController extends AbstractRestController {
     @Transactional
     public Result getPublicationByBusiness(Long id, Integer page) {
 
+        response().setHeader("Access-Control-Allow-Origin", "*");
+        response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+        response().setHeader("Access-Control-Max-Age", "3600");
+        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
+        response().setHeader("Access-Control-Allow-Credentials", "true");
+
         Business business = businessService.findById(id);
 
         List<AbstractPublication> abstractPublications = publicationService.findByBusinessForTown(business, page,20);
@@ -37,6 +43,12 @@ public class TownRestController extends AbstractRestController {
 
     @Transactional
     public Result getBusinessesByZip(Integer zip) {
+
+        response().setHeader("Access-Control-Allow-Origin", "*");
+        response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+        response().setHeader("Access-Control-Max-Age", "3600");
+        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
+        response().setHeader("Access-Control-Allow-Credentials", "true");
 
         List<Business> businessList = businessService.findByZip(zip.toString());
 
