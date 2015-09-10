@@ -14,27 +14,6 @@
          class="publication-box publication-publication"
          ng-click="click()">
 
-
-        <!--&lt;!&ndash; illustration &ndash;&gt;-->
-        <!--<div style="float:left;width:  60px;height: 60px; border-radius: 10px;border: 1px solid #28FDA7;display:inline-block;overflow: hidden">-->
-
-        <!--<img style="width: 80px;height: 80px;"-->
-        <!--ng-click="navigateTo('/business/'+publication.businessId)"-->
-        <!--ng-src="{{publication.businessIllustration | image}}"/>-->
-
-        <!--</div>-->
-
-        <!--<div style="display: block">-->
-        <!--<div style="border-bottom: 1px solid #28FDA7;vertical-align: top;display: block;line-height: 40px">-->
-        <!--Poupette Coquette-->
-        <!--</div>-->
-        <!--<div style="vertical-align: top;display: block;padding-top: 15px;">-->
-        <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
-        <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
-        <!--<div style="display:inline-block;border: 1px solid #28FDA7;border-radius: 5px;padding: 5px 10px">Button</div>-->
-        <!--</div>-->
-        <!--</div>-->
-
         <img
                 class="link illustration"
                 ng-click="navigateTo('/business/'+publication.businessId)"
@@ -45,15 +24,6 @@
             <div>
                 <span class="link" ng-click="navigateTo('/business/'+publication.businessId)">{{publication.businessName}}</span>
             </div>
-            <!--<div>-->
-
-            <!--&lt;!&ndash; following &ndash;&gt;-->
-            <!--<button ng-click="follow(publication)" class="follow-button">-->
-            <!--<img src="/assets/images/haert.png" ng-show="publication.following"/>-->
-            <!--<img src="/assets/images/haert-off.png" ng-hide="publication.following"/>-->
-            <!--</button>-->
-            <!--{{publication.totalFollowers}}-->
-            <!--</div>-->
 
             <!-- distance -->
             <div class="distance"><i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km</div>

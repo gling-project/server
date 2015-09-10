@@ -21,7 +21,7 @@ module.exports = function (grunt) {
             generated: {
                 files: [
                     {
-                        dest: 'public/dist/styleDependencies.js',
+                        dest: 'public/dist/dependencies.js',
 
                         src: [
                             'public/components/jquery/dist/jquery.min.js',
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
                             'public/javascripts/externalDependence/facebook_sdk.js']
                     },
                     {
-                        dest: 'public/dist/dependencies.css',
+                        dest: 'public/dist/styleDependencies.css',
 
                         src: ['public/components/angucomplete/angucomplete.css',
                             'public/components/bootstrap/dist/css/bootstrap.min.css',
