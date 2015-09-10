@@ -5365,6 +5365,17 @@ myApp.service("publicationService", ['$http', '$flash', '$rootScope', function (
     };
 
 }]);
+myApp.service("constantService", function () {
+
+    this.BUSINESS_ILLUSTRATION_X = 200;
+    this.BUSINESS_ILLUSTRATION_Y = 200;
+    this.BUSINESS_LANDSCAPE_X = 1000;
+    this.BUSINESS_LANDSCAPE_Y = 300;
+    this.PUBLICATION_ILLUSTRATION_X = 600;
+    this.PUBLICATION_ILLUSTRATION_Y = null;
+
+
+});
 angular.module('app').run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("/assets/javascripts/directive/component/businessList/template.html",
