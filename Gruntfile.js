@@ -11,8 +11,8 @@ module.exports = function (grunt) {
                         src: ['public/dist/dependencies.css']
                     },
                     {
-                        dest: 'public/dist/town.min.css',
-                        src: ['public/dist/town.css']
+                        dest: 'public/dist/townStyle.min.css',
+                        src: ['public/dist/townStyle.css']
                     }
                 ]
             }
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
                             'public/components/angular-socialshare/angular-socialshare.css']
                     },
                     {
-                        dest: 'public/dist/town.css',
+                        dest: 'public/dist/townStyle.css',
 
                         src: [
                             'public/components/bootstrap/dist/css/bootstrap.min.css',
@@ -310,6 +310,35 @@ module.exports = function (grunt) {
                     'public/javascripts/tests/**/*.js'
                 ]
             }
+        },timestamp: {
+            default: {
+                files: [{
+                    // Use dynamic extend name
+                    expand: true,
+                    // Open source dir
+                    cwd: 'public/dist/',
+                    // Match files
+                    src: ['*.min.css', '*.min.js'],
+                    // Output files
+                    dest: 'public/dist/',
+                    // Set extend middle name
+                    ext: '.final'
+                }],
+                options: {
+                    // Timestamp display text
+                    'timestampName': 'Timetamp',
+                    // Date format
+                    'timestampFormat': 'yyyy/mm/dd HH:MM:ss',
+                    // Add timestamp at the end of the files' content(.css/.js).
+                    'timestampType': 'md5',
+                    // Timestamp type like time(2014/04/02 22:17:07) | md5/sha1/ha256/sha512).
+                    'fileEndStamp': true,
+                    // Add timestamp at images of CSS style.
+                    'cssImgStamp': true,
+                    // Rename file name with timestamp inside.
+                    'fileNameStamp': false
+                }
+            }
         }
     });
 
@@ -322,6 +351,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-timestamp');
 
 
 // Default task(s).
@@ -329,8 +359,9 @@ module.exports = function (grunt) {
         'html2js',
         'concat',
         'ngAnnotate',
-        'uglify'
-        , 'cssmin'
+        'uglify',
+        'cssmin',
+        'timestamp'
     ]);
 
 // cache task(s).
@@ -340,6 +371,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('start-sprite', [
         'sprite'
+    ]);
+
+    grunt.registerTask('time', [
+        'timestamp'
     ]);
 }
 ;

@@ -23,7 +23,8 @@
     "grunt-angular-templatecache": "~0.2.5",
     "grunt-html2js": "~0.3.4",
     "grunt-spritesmith": "~5.0.0",
-    "grunt-contrib-jasmine": "~0.9.1"
+    "grunt-contrib-jasmine": "~0.9.1",
+    "grunt-timestamp": "0.0.8"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
