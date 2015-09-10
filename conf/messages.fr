@@ -445,3 +445,5 @@ day_abrv_sunday=Di
 --.followedBusiness.table.followingFrom=Suivi depuis
 --.followedBusiness.table.notification=Recevoir les notifications
 --.followedBusiness.table.categories=Catégories
+
+--.gallery.title=Galerie

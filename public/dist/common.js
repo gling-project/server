@@ -1723,8 +1723,8 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             name:'illustration',
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            sizex: 60,
-                            sizey: 60,
+                            sizex: 800,
+                            sizey: null,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -2019,8 +2019,8 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            sizex: 60,
-                            sizey: 60,
+                            sizex: 800,
+                            sizey: null,
                             optional: function () {
                                 return true;
                             },

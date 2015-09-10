@@ -92,8 +92,8 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            sizex: 60,
-                            sizey: 60,
+                            sizex: 800,
+                            sizey: null,
                             optional: function () {
                                 return true;
                             },

@@ -30,9 +30,12 @@ import java.util.Map;
 @Component
 public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
-    private static final String ACCOUNTS_WORKBOOK_PATH = "file/demo_data.xls";
-    private static final String BUSINESS_SHEET         = "Commerces";
-    private static final String PUBLICATION_SHEET      = "Publications";
+    private static final String ACCOUNTS_WORKBOOK_PATH       = "file/demo_data.xls";
+    private static final String BUSINESS_SHEET               = "Commerces";
+    private static final String PUBLICATION_SHEET            = "Publications";
+    private static final int    BUSINESS_ILLUSTRATION_HEIGHT = 200;
+    private static final int    PUBLICATION_PICTURE_WIDTH    = 800;
+    private static final int    BUSINESS_LANDSCAPE_WIDTH     = 1200;
 
     /**
      * BUSINESS COLUMNS *
@@ -168,7 +171,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (file != null) {
                             //landscape
                             try {
-                                business.setLandscape(fileService.uploadWithSize(file, file.getName(), 1200, null, account));
+                                business.setLandscape(fileService.uploadWithSize(file, file.getName(), BUSINESS_LANDSCAPE_WIDTH, null, account));
 //                                business.setLandscape(fileService.uploadWithSize(file,file.getName(), account));
                             } catch (Throwable e) {
                                 e.printStackTrace();
@@ -185,9 +188,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         File file = new File(path);
                         if (file != null) {
                             try {
-//                                business.setIllustration(fileService.uploadWithSize(new File(path), 80, 80, account));
                                 File file1 = new File(path);
-                                business.setIllustration(fileService.uploadWithSize(file1, file1.getName(), 80, null, account));
+                                business.setIllustration(fileService.uploadWithSize(file1, file1.getName(), null, BUSINESS_ILLUSTRATION_HEIGHT, account));
                             } catch (Throwable e) {
 
                                 e.printStackTrace();
@@ -293,7 +295,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                             String path = "file/images/publications/" + illustrationPath;
                             File file = new File(path);
                             if (file != null) {
-                                StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), 800, null, business.getAccount());
+                                StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), PUBLICATION_PICTURE_WIDTH, null, business.getAccount());
                                 storedFile.setPublication(publication);
                                 publication.getPictures().add(storedFile);
                                 storedFileService.saveOrUpdate(storedFile);
@@ -316,8 +318,9 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
             //account
             Business business = new Business();
-            business.setName("business " + i);;
-            business.setDescription("business " + i+" - escription");
+            business.setName("business " + i);
+            ;
+            business.setDescription("business " + i + " - escription");
             business.setPhone("00000000");
             business.setBusinessStatus(BusinessStatus.PUBLISHED);
             business.setAddress(new Address("4 Place des Bienfaiteurs", "1030", "BXL", "BELGIUM"));

@@ -541,6 +541,23 @@ myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
             });
     };
 
+    this.getTranslations = function (callbackSuccess, callbackError) {
+        $http({
+            'method': "GET",
+            'url': "https://lynk-test.herokuapp.com/rest/town/translations",
+            'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
 
 
 }]);
@@ -775,19 +792,18 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'imag
 //
 // main ctrl
 //
-myApp.controller('TownMainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$location', function ($rootScope, $scope, $locale, translationService,$location) {
+myApp.controller('TownMainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$location', 'townService', function ($rootScope, $scope, $locale, translationService,$location,townService) {
 
     $scope.navigateTo = function (target) {
         $location.path(target);
     };
 
-    //
-    // initialize translations
-    // load from data var and insert into into translationService
-    //
-    if ("translations" in window && translations != undefined && translations != null) {
-        translationService.set(translations);
-    }
+    console.log('TownMainCtrl');
+    townService.getTranslations(function(data){
+        console.log('insert');
+        console.log(data);
+        translationService.set(data);
+    });
 
 }]);
 myApp.directive("townBusinessCtrl", ['townService', function (townService) {

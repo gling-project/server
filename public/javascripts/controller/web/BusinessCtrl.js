@@ -127,7 +127,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
             //edit illustration
             $scope.editIllustration = function () {
                 modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
-                    {dto: $scope.business, sizex: 80, sizey: 80, fieldName: 'illustration'},
+                    {dto: $scope.business, sizex: null, sizey: 200, fieldName: 'illustration'},
                     function (close, setLoading) {
                         businessService.editIllustration($scope.business.illustration, function () {
                             $scope.business.illustration.link = '/rest/file/' + $scope.business.illustration.id;
@@ -142,7 +142,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
             $scope.editLandscape = function () {
                 //$scope.business.landscape={}
                 modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
-                    {dto: $scope.business, sizex: 800, sizey: 300, fieldName: 'landscape'},
+                    {dto: $scope.business, sizex: 1200, sizey: 300, fieldName: 'landscape'},
                     function (close, setLoading) {
                         businessService.editLandscape($scope.business.landscape, function () {
                             //$scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";

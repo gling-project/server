@@ -9,18 +9,17 @@
 //
 // main ctrl
 //
-myApp.controller('TownMainCtrl', function ($rootScope, $scope, $locale, translationService,$location) {
+myApp.controller('TownMainCtrl', function ($rootScope, $scope, $locale, translationService,$location,townService) {
 
     $scope.navigateTo = function (target) {
         $location.path(target);
     };
 
-    //
-    // initialize translations
-    // load from data var and insert into into translationService
-    //
-    if ("translations" in window && translations != undefined && translations != null) {
-        translationService.set(translations);
-    }
+    console.log('TownMainCtrl');
+    townService.getTranslations(function(data){
+        console.log('insert');
+        console.log(data);
+        translationService.set(data);
+    });
 
 });
