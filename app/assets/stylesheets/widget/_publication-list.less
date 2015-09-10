@@ -7,30 +7,44 @@
     margin-left: 60px;
     font-family: "myFont";
 
-    .publication-badge {
-        background-color: @publication-text-color;
-        height: 50px;
-        width: 70px;
-        position: absolute;
-        border-radius: 5px;
-        &:after {
-            width: 0px;
-            height: 0px;
-            border-radius: 5px;
-            border-top: 30px inset transparent;
-            border-bottom: 30px inset transparent;
-            border-left: 30px solid @publication-text-color;
-            position: absolute;
-            content: "";
-            top: 0;
-            right: -20px;
-            z-index: 2;
-        }
-    }
+
 
     .publication-box {
 
+
+        .publication-badge {
+            background-image: url('/assets/images/publication_badge.png');
+            height: 53px;
+            width: 87px;
+            position: absolute;
+            border-radius: 5px;
+            background-repeat: no-repeat;
+            top: 20px;
+            left: -70px;
+            color: white;
+            line-height: 53px;
+            padding-left: 8px;
+            vertical-align: middle;
+            font-size: 20px;
+            font-weight: bold;
+            //        &:after {
+            //            width: 0px;
+            //            height: 0px;
+            //            border-radius: 5px;
+            //            border-top: 30px inset transparent;
+            //            border-bottom: 30px inset transparent;
+            //            border-left: 30px solid @publication-text-color;
+            //            position: absolute;
+            //            content: "";
+            //            top: 0;
+            //            right: -20px;
+            //            z-index: 2;
+            //        }
+        }
+
+
         width: 600px;
+        position: relative;
         border: @border-size solid @publication-border-color;
         border-radius: 10px;
         background-color: white;
@@ -155,6 +169,7 @@
             .publication-body-two {
                 display: inline-block;
                 width: 49%;
+                min-height: 234px;
             }
 
             .publication-data {
@@ -178,9 +193,11 @@
                     }
                 }
                 .publication-data-body {
-                    border-top: @border-size solid @publication-border-color;
-                    padding: 5px;
-                    font-size: 16px;
+                    &.publication-data-body-border{
+                        border-top: @border-size solid @publication-border-color;
+                    }
+                    padding: 10px;
+                    font-size: 18px;
                 }
             }
 
@@ -188,7 +205,7 @@
                 padding: 20px 0px 20px 0px;
                 text-align: center;
                 & > div {
-                    width: 220px;
+                    max-width: 220px;
                     height: 185px;
                     overflow: hidden;
                     text-align: center;

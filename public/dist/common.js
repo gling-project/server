@@ -294,14 +294,12 @@ myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalServi
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-
-                    if(scope.getInfo().autoCompleteValue==undefined){
-                        scope.getInfo().autoCompleteValue=[];
+                    if (scope.getInfo().autoCompleteValue == undefined) {
+                        scope.getInfo().autoCompleteValue = [];
                     }
 
-                    scope.isActive = function(){
-
-                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                    scope.isActive = function () {
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
                     };
 
                     scope.errorMessage = "";
@@ -317,11 +315,16 @@ myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalServi
                     }
                     if (scope.isValidationDefined) {
                         scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
-                            if (n !== o) {
-                                return scope.isValid();
-                            }
+                            return scope.isValid();
                         });
                     }
+
+                    scope.$watch('getInfo().active()', function (o, n) {
+                        if (o != n) {
+                            scope.isValid();
+                        }
+                    }, true);
+
                     scope.isValid = function () {
 
                         var isValid;
@@ -329,7 +332,7 @@ myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalServi
                             scope.getInfo().isValid = true;
                             return;
                         }
-                        if (!scope.getInfo().field[scope.getInfo().fieldName]) {
+                        if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
                             scope.getInfo().field[scope.getInfo().fieldName] = "";
                         }
 
@@ -338,15 +341,15 @@ myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalServi
                             scope.getInfo().field[scope.getInfo().fieldName] += "";
                         }
                         if (scope.getInfo().validationRegex != null) {
-                            isValid = !!scope.getInfo().field[scope.getInfo().fieldName] && scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
+                            isValid = scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
                         }
                         if (scope.getInfo().validationFct != null) {
                             isValid = isValid && scope.getInfo().validationFct();
                         }
                         scope.getInfo().isValid = isValid;
                     };
-
                     scope.isValid();
+
                     scope.logField = function () {
                         return console.log(scope.getInfo());
                     };
@@ -369,9 +372,9 @@ myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalServi
                     };
 
 
-                    scope.openCalculator= function(){
-                        modalService.openCalculatorModal(new function(result){
-                            scope.getInfo().field[scope.getInfo().fieldName]=result;
+                    scope.openCalculator = function () {
+                        modalService.openCalculatorModal(new function (result) {
+                            scope.getInfo().field[scope.getInfo().fieldName] = result;
                         });
                     };
                 }
@@ -1686,8 +1689,8 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                         },
                         description: {
                             name:'description',
-                            fieldTitle: "--.generic.description",
-                            validationRegex: "^.{0,1000}$",
+                            fieldTitle: "--.publication.description",
+                            validationRegex: "^($|.{0,1000}$)",
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -1982,8 +1985,8 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                             fieldName: 'title'
                         },
                         description: {
-                            fieldTitle: "--.generic.description",
-                            validationRegex: "^.{0,1000}$",
+                            fieldTitle: "--.publication.description",
+                            validationRegex: "^($|.{0,1000}$)",
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -2527,7 +2530,7 @@ myApp.directive('businessSocialNetworkCtrl', ['$flash', 'directiveService', 'lan
 
 
 }]);
-myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
 
     return {
         restrict: "E",
@@ -2541,6 +2544,10 @@ myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geoloc
             return {
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
+
+                    scope.click = function () {
+                        console.log(scope.publication);
+                    };
 
                     scope.getInfo().loading = true;
 
@@ -2562,48 +2569,17 @@ myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geoloc
                         return null;
                     };
 
-                    //scope.follow = function (publication) {
-                    //    if (accountService.getMyself() != null) {
-                    //        scope.followed(publication);
-                    //    }
-                    //    else {
-                    //        modalService.openLoginModal(scope.followed, publication);
-                    //    }
-                    //};
-                    //
-                    //scope.followed = function (publication) {
-                    //    var followed = publication.following;
-                    //    followService.addFollow(!followed, publication.businessId, function () {
-                    //        publication.following = !followed;
-                    //        if (publication.following) {
-                    //            publication.totalFollowers++;
-                    //        }
-                    //        else {
-                    //            publication.totalFollowers--;
-                    //        }
-                    //        for (var i in scope.publications) {
-                    //            if (scope.publications[i].businessId == publication.businessId) {
-                    //                scope.publications[i].following = publication.following;
-                    //                scope.publications[i].totalFollowers = publication.totalFollowers;
-                    //            }
-                    //        }
-                    //    });
-                    //};
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
 
-                    //scope.share = function (publication) {
-                    //    facebookService.share('http://lynk-test.herokuapp.com/publication/'+publication.id);
-                    //};
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
 
-
-                    //(function(d, s, id) {
-                    //    var js, fjs = d.getElementsByTagName(s)[0];
-                    //    if (d.getElementById(id)) return;
-                    //    js = d.createElement(s); js.id = id;
-                    //    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.4&appId=1446672245627002";
-                    //    fjs.parentNode.insertBefore(js, fjs);
-                    //}(document, 'script', 'facebook-jssdk'));
-
-
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
                 }
             }
         }
@@ -5379,7 +5355,7 @@ myApp.service("constantService", function () {
     this.BUSINESS_LANDSCAPE_X = 1000;
     this.BUSINESS_LANDSCAPE_Y = 300;
     this.PUBLICATION_ILLUSTRATION_X = 600;
-    this.PUBLICATION_ILLUSTRATION_Y = null;
+    this.PUBLICATION_ILLUSTRATION_Y = 0;
 
 
 });
@@ -5402,7 +5378,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "                            draggable:false,\n" +
     "                            scrollwheel: false}\" zoom=15><ui-gmap-marker idkey=1 coords={latitude:getInfo().address.posx,longitude:getInfo().address.posy}></ui-gmap-marker></ui-gmap-google-map></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationList/template.html",
-    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=publication-box ng-click=click()><table class=publication-header><tr><td rowspan=2><div class=publication-business-illustration><img ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"></div></td><td class=publication-header-business><div ng-click=\"navigateTo('/business/'+publication.businessId)\"><span>{{publication.businessName}}</span></div></td></tr><tr><td class=publication-header-title><div class=publication-header-title-top><i ng-show=\"getInterestClass(publication)!=null\" class={{getInterestClass(publication)}}></i> {{publication.title}}</div><div class=publication-header-data-box><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div></td></tr></table><div class=publication-body><div class=publication-data><div class=publication-data-header></div><div class=publication-data-body></div></div><div class=publication-gallery><div><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div></div><div class=publication-footer><div class=publication-footer-date>Publié le {{publication.startDate | date:medium}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={publication:publication}></facebook-share-publication-ctrl></div></div></div></div>");
+    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=publication-box ng-click=click()><div class=publication-badge ng-show=\"publication.type === 'PROMOTION'\">- {{publication.offPercent * 100 | number:0}}%</div><table class=publication-header><tr><td rowspan=2><div class=publication-business-illustration><img ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"></div></td><td class=publication-header-business><div ng-click=\"navigateTo('/business/'+publication.businessId)\"><span>{{publication.businessName}}</span></div></td></tr><tr><td class=publication-header-title><div class=publication-header-title-top><i ng-show=\"getInterestClass(publication)!=null\" class={{getInterestClass(publication)}}></i> {{publication.title}}</div><div class=publication-header-data-box><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div><div class=\"publication-header-data-box publication-box-price\" ng-show=\"publication.type=='PROMOTION' && publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></div></td></tr></table><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><div ng-show=\"publication.type === 'PROMOTION'\" class=publication-data-header><div class=\"glyphicon glyphicon-calendar\"><span><div>Promotion jusqu'au</div><div>{{publication.endDate | date:'medium'}}</div></span></div><div class=publication-data-body ng-class=\"{'publication-data-body-border' : publication.type === 'PROMOTION'}\" ng-show=\"publication.description !=null && publication.description.length > 0\">{{publication.description}}</div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \"><div ng-click=openGallery(publication.pictures[0],publication)><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div><div ng-show=\"publication.pictures.length>1 && descriptionIsEmpty(publication) === true\" ng-click=openGallery(publication.pictures[1],publication)><img ng-src=\"{{publication.pictures[1] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 2\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 2}}</span></div></div></div></div><div class=publication-footer><div class=publication-footer-date>Publié le {{publication.startDate | date:medium}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={publication:publication}></facebook-share-publication-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListForBusiness/template.html",
     "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" id=publication{{publication.id}} class=\"publication-box publication-promotion publication-list-publication-data\" ng-click=click()><div class=publication-list-publication-data><div class=publication-reduction><div ng-show=\"publication.type == 'PROMOTION' && publication.offPercent * 100 >= 1\">- {{publication.offPercent * 100|number:0}} % !</div><div ng-show=\"publication.type == 'PROMOTION' && publication.interval < (24 * 60 * 60 * 1000)\">Plus que {{ publication.interval |date:'H'}} h !</div></div><facebook-share-publication-ctrl ng-info={publication:publication}></facebook-share-publication-ctrl><div class=date ng-show=\"publication.type == 'PROMOTION'\">{{publication.endDate | date:'medium'}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div><div class=date>{{publication.startDate | date:medium}}</div><img style=\"height: 40px;float: right\" ng-src=\"/assets/images/interest/{{publication.interest.iconName}}\"> <button class=\"btn btn-primary\" ng-click=removePublication(publication)>{{'--.generic.remove' | translateText}}</button></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobile/template.html",

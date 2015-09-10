@@ -15,8 +15,9 @@
          ng-click="click()">
 
         <!-- badge -->
-        <div class="publication-badge">
-            10%
+        <div class="publication-badge"
+                ng-show="publication.type === 'PROMOTION'">
+            - {{publication.offPercent * 100 | number:0}}%
         </div>
 
         <!-- header -->
@@ -78,6 +79,7 @@
                     </span>
                 </div>
                 <div class="publication-data-body"
+                     ng-class="{'publication-data-body-border' : publication.type === 'PROMOTION'}"
                         ng-show="publication.description !=null && publication.description.length > 0">
                     {{publication.description}}
                 </div>
