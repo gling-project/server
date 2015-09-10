@@ -7,12 +7,12 @@ module.exports = function (grunt) {
             generated: {
                 files: [
                     {
-                        dest: 'public/dist/dependencies.min.css',
-                        src: ['public/dist/dependencies.css']
+                        dest: 'public/dist/styleDependencies.min.css',
+                        src: ['public/dist/styleDependencies.css']
                     },
                     {
-                        dest: 'public/dist/townStyle.min.css',
-                        src: ['public/dist/townStyle.css']
+                        dest: 'public/dist/styleTown.min.css',
+                        src: ['public/dist/styleTown.css']
                     }
                 ]
             }
@@ -21,7 +21,7 @@ module.exports = function (grunt) {
             generated: {
                 files: [
                     {
-                        dest: 'public/dist/dependencies.js',
+                        dest: 'public/dist/styleDependencies.js',
 
                         src: [
                             'public/components/jquery/dist/jquery.min.js',
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
                             'public/components/angular-socialshare/angular-socialshare.css']
                     },
                     {
-                        dest: 'public/dist/townStyle.css',
+                        dest: 'public/dist/styleTown.css',
 
                         src: [
                             'public/components/bootstrap/dist/css/bootstrap.min.css',
