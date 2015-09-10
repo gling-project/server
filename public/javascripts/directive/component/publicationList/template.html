@@ -14,6 +14,11 @@
          class="publication-box"
          ng-click="click()">
 
+        <!-- badge -->
+        <div class="publication-badge">
+            10%
+        </div>
+
         <!-- header -->
         <table class="publication-header">
             <tr>
@@ -40,25 +45,69 @@
                         </i>
                         {{publication.title}}
                     </div>
+
+                    <!-- distance -->
                     <div class="publication-header-data-box">
                         <i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km
+                    </div>
+
+                    <!-- price -->
+                    <div class="publication-header-data-box publication-box-price"
+                         ng-show="publication.type=='PROMOTION' && publication.originalPrice!=null">
+                        <span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span>
+                        <span>{{publication.originalPrice | number:2}} €</span>
                     </div>
                 </td>
             </tr>
         </table>
+
+        <!-- body -->
         <div class="publication-body">
-            <div class="publication-data">
-                <div class="publication-data-header">
+            <div class="publication-data"
+                 ng-class="{'publication-body-two':publication.pictures.length>0}"
+                 ng-hide="descriptionIsEmpty(publication) === true">
 
+                <div ng-show="publication.type === 'PROMOTION'"
+                     class="publication-data-header">
+                    <div class="glyphicon glyphicon-calendar"/>
+
+                    <span>
+                        <div>Promotion jusqu'au</div><div>
+                        {{publication.endDate |  date:'medium'}}
+                    </div>
+                    </span>
                 </div>
-                <div class="publication-data-body">
-
+                <div class="publication-data-body"
+                        ng-show="publication.description !=null && publication.description.length > 0">
+                    {{publication.description}}
                 </div>
 
             </div>
-            <div class="publication-gallery">
-                <div>
-                    <gallery-ctrl ng-info="{images:publication.pictures}"></gallery-ctrl>
+
+            <div class="publication-gallery"
+                 ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true}"
+                 ng-show="publication.pictures.length > 0 ">
+                <div ng-click="openGallery(publication.pictures[0],publication)">
+
+                    <img ng-src="{{publication.pictures[0] | image}}"
+                         class="publication-illustration">
+
+                    <div ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true"
+                         class="publication-illustration-plus-icon">
+                        <span>+{{publication.pictures.length - 1}}</span>
+                    </div>
+                </div>
+
+                <div ng-show="publication.pictures.length>1 && descriptionIsEmpty(publication) === true"
+                     ng-click="openGallery(publication.pictures[1],publication)">
+
+                    <img ng-src="{{publication.pictures[1] | image}}"
+                         class="publication-illustration">
+
+                    <div ng-show="publication.pictures.length > 2"
+                         class="publication-illustration-plus-icon">
+                        <span>+{{publication.pictures.length - 2}}</span>
+                    </div>
                 </div>
             </div>
         </div>

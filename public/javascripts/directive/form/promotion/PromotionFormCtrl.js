@@ -68,8 +68,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                         },
                         description: {
                             name:'description',
-                            fieldTitle: "--.generic.description",
-                            validationRegex: "^.{0,1000}$",
+                            fieldTitle: "--.publication.description",
+                            validationRegex: "^($|.{0,1000}$)",
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;

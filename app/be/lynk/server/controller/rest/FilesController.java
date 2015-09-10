@@ -38,6 +38,13 @@ public class FilesController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result uploadWithSize(Integer sizex, Integer sizey) {
 
+        if(sizex==0){
+            sizex=null;
+        }
+        if(sizey==0){
+            sizey=null;
+        }
+
         MultipartFormData body = request().body().asMultipartFormData();
         play.mvc.Http.MultipartFormData.FilePart file = body.getFiles().get(0);
 

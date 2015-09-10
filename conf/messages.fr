@@ -448,3 +448,4 @@ day_abrv_sunday=Di
 --.followedBusiness.table.categories=Catégories
 
 --.gallery.title=Galerie
+--.publication.description=Description (optionnelle)

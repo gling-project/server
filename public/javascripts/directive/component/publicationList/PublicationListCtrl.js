@@ -1,4 +1,4 @@
-myApp.directive('publicationListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+myApp.directive('publicationListCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
 
     return {
         restrict: "E",
@@ -12,6 +12,10 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
             return {
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
+
+                    scope.click = function () {
+                        console.log(scope.publication);
+                    };
 
                     scope.getInfo().loading = true;
 
@@ -33,48 +37,17 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
                         return null;
                     };
 
-                    //scope.follow = function (publication) {
-                    //    if (accountService.getMyself() != null) {
-                    //        scope.followed(publication);
-                    //    }
-                    //    else {
-                    //        modalService.openLoginModal(scope.followed, publication);
-                    //    }
-                    //};
-                    //
-                    //scope.followed = function (publication) {
-                    //    var followed = publication.following;
-                    //    followService.addFollow(!followed, publication.businessId, function () {
-                    //        publication.following = !followed;
-                    //        if (publication.following) {
-                    //            publication.totalFollowers++;
-                    //        }
-                    //        else {
-                    //            publication.totalFollowers--;
-                    //        }
-                    //        for (var i in scope.publications) {
-                    //            if (scope.publications[i].businessId == publication.businessId) {
-                    //                scope.publications[i].following = publication.following;
-                    //                scope.publications[i].totalFollowers = publication.totalFollowers;
-                    //            }
-                    //        }
-                    //    });
-                    //};
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
 
-                    //scope.share = function (publication) {
-                    //    facebookService.share('http://lynk-test.herokuapp.com/publication/'+publication.id);
-                    //};
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
 
-
-                    //(function(d, s, id) {
-                    //    var js, fjs = d.getElementsByTagName(s)[0];
-                    //    if (d.getElementById(id)) return;
-                    //    js = d.createElement(s); js.id = id;
-                    //    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.4&appId=1446672245627002";
-                    //    fjs.parentNode.insertBefore(js, fjs);
-                    //}(document, 'script', 'facebook-jssdk'));
-
-
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
                 }
             }
         }

@@ -15,14 +15,12 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-
-                    if(scope.getInfo().autoCompleteValue==undefined){
-                        scope.getInfo().autoCompleteValue=[];
+                    if (scope.getInfo().autoCompleteValue == undefined) {
+                        scope.getInfo().autoCompleteValue = [];
                     }
 
-                    scope.isActive = function(){
-
-                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                    scope.isActive = function () {
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
                     };
 
                     scope.errorMessage = "";
@@ -38,11 +36,16 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
                     }
                     if (scope.isValidationDefined) {
                         scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
-                            if (n !== o) {
-                                return scope.isValid();
-                            }
+                            return scope.isValid();
                         });
                     }
+
+                    scope.$watch('getInfo().active()', function (o, n) {
+                        if (o != n) {
+                            scope.isValid();
+                        }
+                    }, true);
+
                     scope.isValid = function () {
 
                         var isValid;
@@ -50,7 +53,7 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
                             scope.getInfo().isValid = true;
                             return;
                         }
-                        if (!scope.getInfo().field[scope.getInfo().fieldName]) {
+                        if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
                             scope.getInfo().field[scope.getInfo().fieldName] = "";
                         }
 
@@ -59,15 +62,15 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
                             scope.getInfo().field[scope.getInfo().fieldName] += "";
                         }
                         if (scope.getInfo().validationRegex != null) {
-                            isValid = !!scope.getInfo().field[scope.getInfo().fieldName] && scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
+                            isValid = scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
                         }
                         if (scope.getInfo().validationFct != null) {
                             isValid = isValid && scope.getInfo().validationFct();
                         }
                         scope.getInfo().isValid = isValid;
                     };
-
                     scope.isValid();
+
                     scope.logField = function () {
                         return console.log(scope.getInfo());
                     };
@@ -90,9 +93,9 @@ myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalSe
                     };
 
 
-                    scope.openCalculator= function(){
-                        modalService.openCalculatorModal(new function(result){
-                            scope.getInfo().field[scope.getInfo().fieldName]=result;
+                    scope.openCalculator = function () {
+                        modalService.openCalculatorModal(new function (result) {
+                            scope.getInfo().field[scope.getInfo().fieldName] = result;
                         });
                     };
                 }
