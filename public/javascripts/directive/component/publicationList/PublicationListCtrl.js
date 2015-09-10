@@ -26,6 +26,13 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
                         }
                     });
 
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
                     //scope.follow = function (publication) {
                     //    if (accountService.getMyself() != null) {
                     //        scope.followed(publication);

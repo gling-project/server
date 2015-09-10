@@ -1,0 +1,130 @@
+@font-face {
+	font-family: 'glingicon';
+	src:url('fonts/glingicon.eot?-7zuw9x');
+	src:url('fonts/glingicon.eot?#iefix-7zuw9x') format('embedded-opentype'),
+		url('fonts/glingicon.ttf?-7zuw9x') format('truetype'),
+		url('fonts/glingicon.woff?-7zuw9x') format('woff'),
+		url('fonts/glingicon.svg?-7zuw9x#glingicon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="gling-icon-"], [class*=" gling-icon-"] {
+	font-family: 'glingicon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.gling-icon-shop:before {
+	content: "\e600";
+}
+.gling-icon-people:before {
+	content: "\e601";
+}
+.gling-icon-profil:before {
+	content: "\e602";
+}
+.gling-icon-heart:before {
+	content: "\e603";
+}
+.gling-icon-star:before {
+	content: "\e604";
+}
+.gling-icon-mail:before {
+	content: "\e605";
+}
+.gling-icon-promo:before {
+	content: "\e606";
+}
+.gling-icon-earth:before {
+	content: "\e607";
+}
+.gling-icon-phone:before {
+	content: "\e608";
+}
+.gling-icon-clock:before {
+	content: "\e609";
+}
+.gling-icon-glass:before {
+	content: "\e60a";
+}
+.gling-icon-bell2:before {
+	content: "\e60b";
+}
+.gling-icon-bell:before {
+	content: "\e60c";
+}
+.gling-icon-calendar:before {
+	content: "\e60d";
+}
+.gling-icon-facebook:before {
+	content: "\e60e";
+}
+.gling-icon-play:before {
+	content: "\e60f";
+}
+.gling-icon-technology:before {
+	content: "\e610";
+}
+.gling-icon-music:before {
+	content: "\e611";
+}
+.gling-icon-garden:before {
+	content: "\e612";
+}
+.gling-icon-read:before {
+	content: "\e613";
+}
+.gling-icon-doityourself:before {
+	content: "\e614";
+}
+.gling-icon-baby:before {
+	content: "\e615";
+}
+.gling-icon-sleep:before {
+	content: "\e616";
+}
+.gling-icon-travel:before {
+	content: "\e617";
+}
+.gling-icon-pets:before {
+	content: "\e618";
+}
+.gling-icon-sport:before {
+	content: "\e619";
+}
+.gling-icon-welness:before {
+	content: "\e61a";
+}
+.gling-icon-decor:before {
+	content: "\e61b";
+}
+.gling-icon-clothe:before {
+	content: "\e61c";
+}
+.gling-icon-supermarket:before {
+	content: "\e61d";
+}
+.gling-icon-shopping:before {
+	content: "\e61e";
+}
+.gling-icon-culture:before {
+	content: "\e61f";
+}
+.gling-icon-goingout:before {
+	content: "\e620";
+}
+.gling-icon-drink:before {
+	content: "\e621";
+}
+.gling-icon-eat:before {
+	content: "\e622";
+}
