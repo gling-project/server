@@ -5,7 +5,9 @@ import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.KeyGenerator;
+import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.file.FileUtil;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import ij.ImagePlus;
 import ij.io.FileInfo;
 import net.coobird.thumbnailator.Thumbnails;
@@ -82,34 +84,73 @@ public class FileServiceImpl implements FileService {
 
             try {
                 BufferedImage originalImage = ImageIO.read(file);
-                int sizexTarget, sizeyTarget;
-                if (sizex != null && sizey != null) {
-                    sizexTarget = sizex;
-                    sizeyTarget = sizey;
-                } else if (sizex != null) {
-                    sizexTarget = sizex;
-                    sizeyTarget = originalImage.getWidth();
+                int sizexPicture = originalImage.getWidth(),
+                        sizeyPicture = originalImage.getHeight();
 
-                } else {
-                    sizeyTarget = sizey;
-                    sizexTarget = originalImage.getHeight();
+                //1) sizeX and sizeY are the minimal size :
+                if ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey)) {
+                    throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
                 }
-//                Logger.info("-------------- RESIZE image : "+fileName);
-//                Logger.info("-------------- orignal size : "+originalImage.getWidth()+"/"+originalImage.getHeight()+"=>"+sizexTarget+"/"+sizeyTarget);
-                originalImage = resizeImage(originalImage
-//                        , originalImage.getType()
-                        , sizexTarget
-                        , sizeyTarget
-                        , RenderingHints.VALUE_RENDER_QUALITY
-                        , true);
+
+                if (sizex != null && sizey != null) {
+
+                    if (sizex != sizexPicture || sizey != sizeyPicture) {
+                        //=> two dimension
+                        //1) compute proportion
+                        double xProportion = (double) sizexPicture / (double) sizex;
+                        double yProportion = (double) sizeyPicture / (double) sizey;
+
+                        //2 start to resize with the lower proportion
+                        double proportionToResize = (xProportion < yProportion) ? xProportion : yProportion;
+                        int targetedX = (int) ((xProportion < yProportion) ? sizex : sizexPicture / proportionToResize);
+                        int targetedY = (int) ((xProportion < yProportion) ? sizeyPicture / proportionToResize : sizey);
+
+                        //3 resize
+                        originalImage = resizeImage(originalImage
+                                , targetedX
+                                , targetedY
+                                , RenderingHints.VALUE_RENDER_QUALITY
+                                , true);
+
+                        //4 cut
+                        if ((xProportion < yProportion)) {
+                            if (targetedY != sizey) {
+                                originalImage = cropImage(originalImage, null, sizey);
+                            }
+                        } else {
+                            if (targetedX != sizex) {
+                                originalImage = cropImage(originalImage, sizex, null);
+                            }
+                        }
+                    }
+                } else {
+                    if (sizex != null && sizex != sizexPicture) {
+                        //1 compute proportion
+                        double xProportion = (double) sizexPicture / (double) sizex;
+
+                        //2 resize
+                        originalImage = resizeImage(originalImage
+                                , sizex
+                                , (int) (sizeyPicture / xProportion)
+                                , RenderingHints.VALUE_RENDER_QUALITY
+                                , true);
+                    } else if (sizey != null && sizey != sizeyPicture) {
+                        //1 compute proportion
+                        double yProportion = (double) sizeyPicture / (double) sizey;
+
+                        //2 resize
+                        originalImage = resizeImage(originalImage
+                                , (int) (sizexPicture / yProportion)
+                                , sizey
+                                , RenderingHints.VALUE_RENDER_QUALITY
+                                , true);
+                    }
+                }
                 ImageIO.write(originalImage, type, file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        //int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
-
 
         //and save
         storedFileService.saveOrUpdate(storedFile);
@@ -168,7 +209,6 @@ public class FileServiceImpl implements FileService {
                     .width(targetWidth)
                     .antialiasing(Antialiasing.ON)
                     .rendering(Rendering.QUALITY)
-//                    .scalingMode(ScalingMode.BICUBIC)
                     .asBufferedImage();
         } catch (IOException e) {
             e.printStackTrace();
@@ -243,5 +283,32 @@ public class FileServiceImpl implements FileService {
             storageKey = KeyGenerator.generateRandomKey(100);
         }
         return storageKey;
+    }
+
+    private BufferedImage cropImage(BufferedImage src, Integer width, Integer height) {
+        int x, y, w, h;
+        if (width != null && height != null) {
+            int difference = src.getWidth() - width;
+            int difference2 = src.getHeight() - height;
+            return src.getSubimage(
+                    difference / 2,
+                    difference2 / 2,
+                    src.getWidth() - difference / 2,
+                    src.getHeight() - difference2 / 2);
+
+        } else if (width != null) {
+            int difference = src.getWidth() - width;
+            x = difference / 2;
+            y = 0;
+            w = width;
+            h = src.getHeight();
+        } else {
+            int difference = src.getHeight() - height;
+            x = 0;
+            y = difference / 2;
+            w = src.getWidth();
+            h = height;
+        }
+        return src.getSubimage(x, y, w, h);
     }
 }

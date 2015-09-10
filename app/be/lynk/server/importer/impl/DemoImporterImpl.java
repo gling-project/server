@@ -30,12 +30,15 @@ import java.util.Map;
 @Component
 public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
-    private static final String ACCOUNTS_WORKBOOK_PATH       = "file/demo_data.xls";
-    private static final String BUSINESS_SHEET               = "Commerces";
-    private static final String PUBLICATION_SHEET            = "Publications";
-    private static final int    BUSINESS_ILLUSTRATION_HEIGHT = 200;
-    private static final int    PUBLICATION_PICTURE_WIDTH    = 800;
-    private static final int    BUSINESS_LANDSCAPE_WIDTH     = 1200;
+    private static final String  ACCOUNTS_WORKBOOK_PATH       = "file/demo_data.xls";
+    private static final String  BUSINESS_SHEET               = "Commerces";
+    private static final String  PUBLICATION_SHEET            = "Publications";
+    private static final Integer BUSINESS_ILLUSTRATION_HEIGHT = 200;
+    private static final Integer BUSINESS_ILLUSTRATION_WIDTH  = 200;
+    private static final Integer BUSINESS_LANDSCAPE_WIDTH     = 1000;
+    private static final Integer BUSINESS_LANDSCAPE_HEIGHT    = 300;
+    private static final Integer PUBLICATION_PICTURE_WIDTH    = 600;
+    private static final Integer PUBLICATION_PICTURE_HEIGHT   = null;
 
     /**
      * BUSINESS COLUMNS *
@@ -171,7 +174,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (file != null) {
                             //landscape
                             try {
-                                business.setLandscape(fileService.uploadWithSize(file, file.getName(), BUSINESS_LANDSCAPE_WIDTH, null, account));
+                                business.setLandscape(fileService.uploadWithSize(file, file.getName(), BUSINESS_LANDSCAPE_WIDTH, BUSINESS_LANDSCAPE_HEIGHT, account));
 //                                business.setLandscape(fileService.uploadWithSize(file,file.getName(), account));
                             } catch (Throwable e) {
                                 e.printStackTrace();
@@ -189,7 +192,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (file != null) {
                             try {
                                 File file1 = new File(path);
-                                business.setIllustration(fileService.uploadWithSize(file1, file1.getName(), null, BUSINESS_ILLUSTRATION_HEIGHT, account));
+                                business.setIllustration(fileService.uploadWithSize(file1, file1.getName(), BUSINESS_ILLUSTRATION_WIDTH, BUSINESS_ILLUSTRATION_HEIGHT, account));
                             } catch (Throwable e) {
 
                                 e.printStackTrace();
@@ -295,7 +298,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                             String path = "file/images/publications/" + illustrationPath;
                             File file = new File(path);
                             if (file != null) {
-                                StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), PUBLICATION_PICTURE_WIDTH, null, business.getAccount());
+                                StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), PUBLICATION_PICTURE_WIDTH, PUBLICATION_PICTURE_HEIGHT, business.getAccount());
                                 storedFile.setPublication(publication);
                                 publication.getPictures().add(storedFile);
                                 storedFileService.saveOrUpdate(storedFile);

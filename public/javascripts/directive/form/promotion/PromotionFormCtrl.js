@@ -1,4 +1,4 @@
-myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout,businessService) {
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout,businessService,constantService) {
 
     return {
         restrict: "E",
@@ -105,8 +105,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             name:'illustration',
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            sizex: 800,
-                            sizey: null,
+                            sizex: constantService.PUBLICATION_ILLUSTRATION_X,
+                            sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

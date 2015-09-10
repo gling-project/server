@@ -29,7 +29,8 @@ public enum ErrorMessageEnum {
     WRONG_ADDRESS_NAME_ALREADY_USED("--.error.address.nameAlreadyUsed"),
     WRONG_ADDRESS_NAME("--.error.address.nameNotExists"),
     WRONG_OLD_PASSWORD("--.error.address.wrongOldPassword"),
-    ADDRESS_WRONG_NAME_TECHNICAL_NAME("--.error.address.TechnicalName");
+    ADDRESS_WRONG_NAME_TECHNICAL_NAME("--.error.address.TechnicalName"),
+    ERROR_PICTURE_WRONG_SIZE("--.error.picture.wrongSize");
 
     private final String key;
 

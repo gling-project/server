@@ -1616,7 +1616,7 @@ myApp.directive('downloadFormCtrl', ['$flash', 'directiveService', '$timeout', f
         }
     }
 }]);
-myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 'businessService', function ($flash, directiveService, $timeout,businessService) {
+myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 'businessService', 'constantService', function ($flash, directiveService, $timeout,businessService,constantService) {
 
     return {
         restrict: "E",
@@ -1723,8 +1723,8 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             name:'illustration',
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            sizex: 800,
-                            sizey: null,
+                            sizex: constantService.PUBLICATION_ILLUSTRATION_X,
+                            sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -1925,7 +1925,7 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
 
 }])
 ;
-myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', 'businessService', function ($flash, directiveService, businessService) {
+myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', 'businessService', 'constantService', function ($flash, directiveService, businessService,constantService) {
 
     return {
         restrict: "E",
@@ -2019,8 +2019,8 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            sizex: 800,
-                            sizey: null,
+                            sizex: constantService.PUBLICATION_ILLUSTRATION_X,
+                            sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
                             optional: function () {
                                 return true;
                             },

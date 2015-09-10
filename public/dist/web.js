@@ -1548,7 +1548,7 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'constantService', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,constantService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1677,7 +1677,10 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
             //edit illustration
             $scope.editIllustration = function () {
                 modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
-                    {dto: $scope.business, sizex: null, sizey: 200, fieldName: 'illustration'},
+                    {dto: $scope.business,
+                        sizex: constantService.BUSINESS_ILLUSTRATION_X,
+                        sizey: constantService.BUSINESS_ILLUSTRATION_Y,
+                        fieldName: 'illustration'},
                     function (close, setLoading) {
                         businessService.editIllustration($scope.business.illustration, function () {
                             $scope.business.illustration.link = '/rest/file/' + $scope.business.illustration.id;
@@ -1692,7 +1695,10 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
             $scope.editLandscape = function () {
                 //$scope.business.landscape={}
                 modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
-                    {dto: $scope.business, sizex: 1200, sizey: 300, fieldName: 'landscape'},
+                    {dto: $scope.business,
+                        sizex: constantService.BUSINESS_LANDSCAPE_X,
+                        sizey: constantService.BUSINESS_LANDSCAPE_Y,
+                        fieldName: 'landscape'},
                     function (close, setLoading) {
                         businessService.editLandscape($scope.business.landscape, function () {
                             //$scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
