@@ -1,47 +1,53 @@
 <div class="content-block">
 
-    <div style="vertical-align: top">
+    <div class="home-interest-switch home-interest-box" ng-show="accountService.myself != null">
 
-        <div style="display: inline-block;width:71%;vertical-align: top">
-
-            <div class="home-interest-switch home-interest-box" ng-show="accountService.myself != null">
-
-                <!-- switch -->
-                <div>
-                    <label class="glyphicon glyphicon-home"></label>
-                </div>
-                <div>
-                    <div class="onoffswitch">
-                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-                               checked ng-model="followedMode">
-                        <label class="onoffswitch-label" for="myonoffswitch">
-                            <span class="onoffswitch-inner"></span>
-                            <span class="onoffswitch-switch"></span>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <label class="glyphicon glyphicon-heart-empty"></label>
-                </div>
+        <!-- switch -->
+        <div>
+            <label class="glyphicon glyphicon-home"></label>
+        </div>
+        <div>
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+                       checked ng-model="followedMode">
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
             </div>
-
-            <!-- interest -->
-            <div class="home-interest-box">
-                <button class="home-interest button-with-label" ng-repeat="interest in customerInterests"
-                        ng-show="interest.iconName!=null"
-                        ng-click="searchByInterest(interest)"
-                        ng-class="{'selected':interest.selected === true}">
-
-                    <p>{{interest.translationName}}</p>
-
-                    <img
-                            ng-src="/assets/images/interest/{{interest.iconName}}"
-                            style="width:50px"/>
-                </button>
-            </div>
-            <!-- publication list -->
-            <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>
+        </div>
+        <div>
+            <label class="glyphicon glyphicon-heart-empty"></label>
         </div>
     </div>
+
+    <!-- interest -->
+    <div class="home-interest-box">
+
+        <button
+                ng-click="left()">
+            Left
+        </button>
+
+        <button class="home-interest button-with-label" ng-repeat="interest in customerInterestsTodisplay"
+                ng-show="interest.iconName!=null"
+                ng-click="searchByInterest(interest)"
+                ng-class="{'selected':interest.selected === true}">
+
+        <button ng-click="right()">
+            right
+        </button>
+
+
+
+            <p>{{interest.translationName}}</p>
+
+            <img
+                    ng-src="/assets/images/interest/{{interest.iconName}}"
+                    style="width:50px"/>
+        </button>
+    </div>
+    <!-- publication list -->
+    <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>
 
 </div>

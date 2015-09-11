@@ -14,6 +14,18 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
 
+
+
+    $scope.customerInterestsTodisplay = [];
+
+
+    //selection mode
+    $scope.left = function(){
+
+    }
+
+
+
     //open registration modal
     $scope.customerRegistration = function () {
         modalService.openCustomerRegistrationModal();
@@ -104,6 +116,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
                     interestSelected = $scope.customerInterests[i];
                 }
             }
+
 
 
             //if this is the first page that asked, remove other publication

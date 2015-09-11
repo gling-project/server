@@ -1,54 +1,77 @@
 //@publication-border-color: @color-green-light;
-@publication-border-color: #4dfbcd;
+@publication-border-color: #3e4192;
+@publication-border-color-hover: #4dfbcd;
+@publication-border-color-followed: #4dfbcd;
+@publication-border-color-followed-hover: #3e4192;
 @publication-text-color: #3e4192;
+@publication-text-color-selected: #4dfbcd;
 @border-size: 2px;
 
 .publication-list {
     margin-left: 60px;
     font-family: "myFont";
 
-
-
     .publication-box {
 
+        &.publication-bordered,
+        .publication-bordered {
+            border: @border-size solid @publication-border-color;
+        }
+        .publication-bordered-hover:hover {
+            border: @border-size solid @publication-border-color-hover;
+        }
+        .publication-bordered-bottom {
+            border-bottom: @border-size solid @publication-border-color;
+        }
+        .publication-bordered-bottom-hover:hover {
+            border-bottom: @border-size solid @publication-border-color-hover;
+        }
+        .publication-color-background {
+            color: @publication-text-color;
+        }
+
+        &.publication-followed {
+            &.publication-bordered,
+            .publication-bordered {
+                border: @border-size solid @publication-border-color-followed;
+            }
+            .publication-bordered-hover:hover {
+                border: @border-size solid @publication-border-color-followed-hover;
+            }
+            .publication-bordered-bottom {
+                border-bottom: @border-size solid @publication-border-color-followed;
+            }
+            .publication-bordered-bottom-hover:hover {
+                border-bottom: @border-size solid @publication-border-color-followed-hover;
+            }
+            .publication-color-background {
+                color: @publication-text-color-selected;
+            }
+        }
 
         .publication-badge {
-            background-image: url('/assets/images/publication_badge.png');
             height: 53px;
             width: 87px;
             position: absolute;
             border-radius: 5px;
-            background-repeat: no-repeat;
+            background: url('/assets/images/publication_badge.png') no-repeat;
             top: 20px;
-            left: -70px;
+            left: -68px;
             color: white;
             line-height: 53px;
             padding-left: 8px;
             vertical-align: middle;
             font-size: 20px;
             font-weight: bold;
-            //        &:after {
-            //            width: 0px;
-            //            height: 0px;
-            //            border-radius: 5px;
-            //            border-top: 30px inset transparent;
-            //            border-bottom: 30px inset transparent;
-            //            border-left: 30px solid @publication-text-color;
-            //            position: absolute;
-            //            content: "";
-            //            top: 0;
-            //            right: -20px;
-            //            z-index: 2;
-            //        }
+            text-align: right;
+            padding-right: 33px;
         }
-
 
         width: 600px;
         position: relative;
-        border: @border-size solid @publication-border-color;
         border-radius: 10px;
         background-color: white;
-        margin-bottom: 30px;
+        margin: 15px auto;
 
         .publication-header {
             width: 100%;
@@ -61,7 +84,6 @@
             }
 
             & > * {
-                //                display: inline-block;
                 vertical-align: top;
             }
 
@@ -70,12 +92,7 @@
                 width: 140px;
                 height: 140px;
                 overflow: hidden;
-                border: @border-size solid @publication-border-color;
                 margin: 25px 20px 20px 25px;
-
-                &:hover {
-                    border: @border-size solid @publication-text-color;
-                }
 
                 img {
                     cursor: pointer;
@@ -90,16 +107,15 @@
                 & > div {
                     font-size: 24px;
                     height: 100%;
-                    border-bottom: @border-size solid @publication-border-color;
                     cursor: pointer;
-                    &:hover {
-                        border-bottom: @border-size solid @publication-text-color;
-                    }
                     span {
                         top: 15px;
                         position: relative;
                         font-weight: bold;
                         color: @publication-text-color;
+                        i{
+                            color: @publication-border-color-followed;
+                        }
                     }
                 }
             }
@@ -114,7 +130,6 @@
                         font-size: 30px;
                         float: right;
                         margin-right: 8px;
-                        background-color: @publication-border-color;
                         padding: 10px;
                         border-radius: 30px;
                         color: white;
@@ -125,7 +140,6 @@
                 }
 
                 .publication-header-data-box {
-                    border: @border-size solid @publication-border-color;
                     border-radius: 10px;
                     display: inline-block;
                     float: right;
@@ -161,19 +175,19 @@
             margin-right: 15px;
             & > * {
                 vertical-align: top;
-                border: @border-size solid @publication-border-color;
                 border-radius: 10px;
-//                min-height: 229px;
+                margin: 0px 2px;
             }
 
             .publication-body-two {
                 display: inline-block;
-                width: 49%;
+                width: 48%;
                 min-height: 234px;
             }
 
             .publication-data {
                 .publication-data-header {
+                    font-size: 18px;
                     padding: 3px 10px;
                     color: @publication-text-color;
                     & > span {
@@ -186,38 +200,28 @@
                         }
                     }
                     & > i {
-                        //                        float: left;
-                        //                        vertical-align: top;
-                        //                        top: 10px;
                         font-size: 18px;
                     }
                 }
                 .publication-data-body {
-                    &.publication-data-body-border{
-                        border-top: @border-size solid @publication-border-color;
-                    }
                     padding: 10px;
                     font-size: 18px;
                 }
             }
 
             .publication-gallery {
-                padding: 20px 0px 20px 0px;
+                overflow: hidden;
                 text-align: center;
-                & > div {
-                    max-width: 220px;
-                    height: 185px;
-                    overflow: hidden;
-                    text-align: center;
-                    background-color: #eeeeee;
-                    border: 1px solid rgba(200, 200, 200, 1);
-                    cursor: pointer;
-                    display: inline-block;
-                    margin: 0px 10px;
-                    &:hover {
-                        border: 1px solid @publication-text-color;
-                    }
-                }
+                height: 225px;
+                background-color: #eeeeee;
+                cursor: pointer;
+                //                & > div {
+                //                    max-width: 220px;
+                //                    overflow: hidden;
+                //                    text-align: center;
+                //                    display: inline-block;
+                //                    margin: 0px 10px;
+                //                }
 
                 .publication-illustration {
                     height: 100%;
@@ -225,8 +229,8 @@
 
                 .publication-illustration-plus-icon {
                     position: relative;
-                    bottom: 72px;
-                    right: -146px;
+                    bottom: 74px;
+                    right: -190px;
                     height: 70px;
                     width: 70px;
                     background-color: rgba(255, 255, 255, 0.7);
@@ -252,7 +256,6 @@
             }
             .publication-footer-date {
                 float: right;
-                border-bottom: @border-size solid @publication-border-color;
                 padding-right: 20px;
                 color: @publication-text-color;
             }

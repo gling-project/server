@@ -11,8 +11,6 @@ import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.StringUtil;
-import jxl.Cell;
-import jxl.NumberCell;
 import jxl.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -67,7 +65,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final Letter COL_PUBLICATION_DESC       = Letter.D;
     private static final Letter COL_PUBLICATION_START_HOUR = Letter.E;
     private static final Letter COL_PUBLICATION_END_HOUR   = Letter.F;
-    private static final Letter COL_PUBLICATION_LOGO       = Letter.G;
+    private static final Letter COL_PUBLICATION_PICTURES   = Letter.G;
     private static final Letter COL_PUBLICATION_Q          = Letter.H;
     private static final Letter COL_PUBLICATION_MIN_Q      = Letter.I;
     private static final Letter COL_PUBLICATION_UNIT       = Letter.J;
@@ -293,15 +291,17 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
                     //illustration
                     try {
-                        String illustrationPath = getString(sheet, COL_PUBLICATION_LOGO, rowCounter);
+                        String illustrationPath = getString(sheet, COL_PUBLICATION_PICTURES, rowCounter);
                         if (illustrationPath != null && illustrationPath.length() > 0) {
-                            String path = "file/images/publications/" + illustrationPath;
-                            File file = new File(path);
-                            if (file != null) {
-                                StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), PUBLICATION_PICTURE_WIDTH, PUBLICATION_PICTURE_HEIGHT, business.getAccount());
-                                storedFile.setPublication(publication);
-                                publication.getPictures().add(storedFile);
-                                storedFileService.saveOrUpdate(storedFile);
+                            for (String s : illustrationPath.split(";")) {
+                                String path = "file/images/publications/" + s;
+                                File file = new File(path);
+                                if (file != null) {
+                                    StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), PUBLICATION_PICTURE_WIDTH, PUBLICATION_PICTURE_HEIGHT, business.getAccount());
+                                    storedFile.setPublication(publication);
+                                    publication.getPictures().add(storedFile);
+                                    storedFileService.saveOrUpdate(storedFile);
+                                }
                             }
                         }
                     } catch (Throwable e) {

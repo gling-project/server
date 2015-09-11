@@ -11,7 +11,8 @@
 
     <!-- publication -->
     <div ng-repeat="publication in publications"
-         class="publication-box"
+         class="publication-box publication-bordered"
+         ng-class="{'publication-followed':publication.following === true}"
          ng-click="click()">
 
         <!-- badge -->
@@ -24,14 +25,22 @@
         <table class="publication-header">
             <tr>
                 <td rowspan="2">
-                    <div class="publication-business-illustration">
+
+                    <!-- illustration -->
+                    <div class="publication-business-illustration publication-bordered publication-bordered-hover">
                         <img ng-click="navigateTo('/business/'+publication.businessId)"
                              ng-src="{{publication.businessIllustration | image}}"/>
                     </div>
                 </td>
                 <td class="publication-header-business">
-                    <div ng-click="navigateTo('/business/'+publication.businessId)">
+
+                    <!-- business name -->
+                    <div ng-click="navigateTo('/business/'+publication.businessId)"
+                         class="publication-bordered-bottom-hover publication-bordered-bottom">
                         <span>
+                            <i ng-show="publication.following === true"
+                               class="gling-icon-bell">
+                            </i>
                             {{publication.businessName}}
                         </span>
                     </div>
@@ -40,20 +49,25 @@
             </tr>
             <tr>
                 <td class="publication-header-title">
+
+                    <!-- publication title -->
                     <div class="publication-header-title-top">
+
+                        <!-- interest -->
                         <i ng-show="getInterestClass(publication)!=null"
-                           class="{{getInterestClass(publication)}}">
+                           class="{{getInterestClass(publication)}} publication-color-background">
                         </i>
+
                         {{publication.title}}
                     </div>
 
                     <!-- distance -->
-                    <div class="publication-header-data-box">
+                    <div class="publication-header-data-box publication-bordered">
                         <i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km
                     </div>
 
                     <!-- price -->
-                    <div class="publication-header-data-box publication-box-price"
+                    <div class="publication-header-data-box publication-box-price  publication-bordered"
                          ng-show="publication.type=='PROMOTION' && publication.originalPrice!=null">
                         <span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span>
                         <span>{{publication.originalPrice | number:2}} €</span>
@@ -62,13 +76,55 @@
             </tr>
         </table>
 
-        <!-- body -->
+        <!--&lt;!&ndash; body &ndash;&gt;-->
+        <!--<table style="width: 100%">-->
+        <!--<tr>-->
+        <!--<td ng-hide="descriptionIsEmpty(publication) === true" style="width: 50%">-->
+
+        <!--<div ng-show="publication.type === 'PROMOTION'"-->
+        <!--ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"-->
+        <!--class="publication-data-header">-->
+        <!--<div class="glyphicon glyphicon-calendar"></div>-->
+
+        <!--<span>-->
+        <!--<div>Promotion jusqu'au</div><div>-->
+        <!--{{publication.endDate | date:'medium'}}-->
+        <!--</div>-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--<div class="publication-data-body"-->
+        <!--ng-show="publication.description !=null && publication.description.length > 0">-->
+        <!--{{publication.description}}-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--<td ng-show="publication.pictures.length > 0 ">-->
+        <!--<img ng-src="{{publication.pictures[0] | image}}"-->
+        <!--class="publication-illustration">-->
+
+        <!--<div ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true"-->
+        <!--class="publication-illustration-plus-icon">-->
+        <!--<span>+{{publication.pictures.length - 1}}</span>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--<td ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true">-->
+        <!--<img ng-src="{{publication.pictures[1] | image}}"-->
+        <!--class="publication-illustration">-->
+
+        <!--<div-->
+        <!--class="publication-illustration-plus-icon">-->
+        <!--<span>+{{publication.pictures.length - 2}}</span>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</table>-->
+
         <div class="publication-body">
-            <div class="publication-data"
+            <div class="publication-data publication-bordered"
                  ng-class="{'publication-body-two':publication.pictures.length>0}"
                  ng-hide="descriptionIsEmpty(publication) === true">
 
                 <div ng-show="publication.type === 'PROMOTION'"
+                     ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"
                      class="publication-data-header">
                     <div class="glyphicon glyphicon-calendar"></div>
 
@@ -79,44 +135,48 @@
                     </span>
                 </div>
                 <div class="publication-data-body"
-                     ng-class="{'publication-data-body-border' : publication.type === 'PROMOTION'}"
                      ng-show="publication.description !=null && publication.description.length > 0">
                     {{publication.description}}
                 </div>
 
             </div>
 
-            <div class="publication-gallery"
+            <!-- gallery -->
+            <!-- picture 1 -->
+            <div class="publication-gallery publication-bordered  publication-bordered-hover"
                  ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true}"
-                 ng-show="publication.pictures.length > 0 ">
-                <div ng-click="openGallery(publication.pictures[0],publication)">
+                 ng-show="publication.pictures.length > 0 "
+                 ng-click="openGallery(publication.pictures[0],publication)">
 
-                    <img ng-src="{{publication.pictures[0] | image}}"
-                         class="publication-illustration">
+                <img ng-src="{{publication.pictures[0] | image}}"
+                     class="publication-illustration">
 
-                    <div ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true"
-                         class="publication-illustration-plus-icon">
-                        <span>+{{publication.pictures.length - 1}}</span>
-                    </div>
-                </div>
-
-                <div ng-show="publication.pictures.length>1 && descriptionIsEmpty(publication) === true"
-                     ng-click="openGallery(publication.pictures[1],publication)">
-
-                    <img ng-src="{{publication.pictures[1] | image}}"
-                         class="publication-illustration">
-
-                    <div ng-show="publication.pictures.length > 2"
-                         class="publication-illustration-plus-icon">
-                        <span>+{{publication.pictures.length - 2}}</span>
-                    </div>
+                <div ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true"
+                     class="publication-illustration-plus-icon">
+                    <span>+{{publication.pictures.length - 1}}</span>
                 </div>
             </div>
+
+            <!-- picture 2 -->
+            <div class="publication-gallery publication-bordered  publication-bordered-hover"
+                 ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true}"
+                 ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true"
+                 ng-click="openGallery(publication.pictures[1],publication)">
+
+                <img ng-src="{{publication.pictures[1] | image}}"
+                     class="publication-illustration">
+
+                <div
+                        class="publication-illustration-plus-icon">
+                    <span>+{{publication.pictures.length - 2}}</span>
+                </div>
+            </div>
+
         </div>
         <div class="publication-footer">
 
 
-            <div class="publication-footer-date">
+            <div class="publication-footer-date publication-bordered-bottom">
                 Publié le {{publication.startDate | date:medium}}
             </div>
 
