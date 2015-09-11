@@ -130,7 +130,7 @@
 
                     <span>
                         <div>Promotion jusqu'au</div><div>
-                        {{publication.endDate | date:'medium'}}
+                        {{publication.endDate | date:'dd-MM-yyyy hh:mm'}}
                     </div>
                     </span>
                 </div>
@@ -144,7 +144,7 @@
             <!-- gallery -->
             <!-- picture 1 -->
             <div class="publication-gallery publication-bordered  publication-bordered-hover"
-                 ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true}"
+                 ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}"
                  ng-show="publication.pictures.length > 0 "
                  ng-click="openGallery(publication.pictures[0],publication)">
 
@@ -158,8 +158,7 @@
             </div>
 
             <!-- picture 2 -->
-            <div class="publication-gallery publication-bordered  publication-bordered-hover"
-                 ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true}"
+            <div class="publication-gallery publication-bordered  publication-bordered-hover publication-body-two publication-body-two-right"
                  ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true"
                  ng-click="openGallery(publication.pictures[1],publication)">
 
@@ -177,7 +176,7 @@
 
 
             <div class="publication-footer-date publication-bordered-bottom">
-                Publié le {{publication.startDate | date:medium}}
+                Publié le {{publication.startDate | date:'medium'}}
             </div>
 
             <div class="publication-footer-facebook">

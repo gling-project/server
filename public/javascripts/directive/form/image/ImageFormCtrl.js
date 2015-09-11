@@ -19,8 +19,7 @@ myApp.directive('imageFormCtrl', function ($flash, directiveService) {
                     scope.imageParam = {
                         fieldTitle: "",
                         validationMessage: '--.error.validation.image',
-                        sizex: scope.getInfo().sizex,
-                        sizey: scope.getInfo().sizey,
+                        target: scope.getInfo().target,
                         field: scope.getInfo().dto,
                         fieldName:scope.getInfo().fieldName,
                         fullSize:true

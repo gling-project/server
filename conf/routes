@@ -94,6 +94,9 @@ POST          /rest/search/text                                                 
 #file
 POST          /rest/file                                                                          @be.lynk.server.controller.rest.FilesController.upload()
 POST          /rest/file/:sizex/:sizey                                                            @be.lynk.server.controller.rest.FilesController.uploadWithSize(sizex:Integer,sizey:Integer)
+POST          /rest/file/business_illustration                                                    @be.lynk.server.controller.rest.FilesController.uploadForBusinessIllustration()
+POST          /rest/file/business_landscape                                                       @be.lynk.server.controller.rest.FilesController.uploadForBusinessLandscape()
+POST          /rest/file/publication_picture                                                       @be.lynk.server.controller.rest.FilesController.uploadForPublicationPicture()
 GET           /rest/file/:storedFileId                                                            @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 
 

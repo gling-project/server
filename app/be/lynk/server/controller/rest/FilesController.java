@@ -6,6 +6,7 @@ import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.file.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
@@ -26,6 +27,24 @@ public class FilesController extends AbstractRestController {
     private StoredFileService storedFileService;
 
     @Transactional(readOnly = false)
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result uploadForBusinessIllustration() {
+        return uploadWithSize(Constant.BUSINESS_ILLUSTRATION_WIDTH,Constant.BUSINESS_ILLUSTRATION_HEIGHT);
+    }
+
+    @Transactional(readOnly = false)
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result uploadForBusinessLandscape() {
+        return uploadWithSize(Constant.BUSINESS_LANDSCAPE_WIDTH,Constant.BUSINESS_LANDSCAPE_HEIGHT);
+    }
+
+    @Transactional(readOnly = false)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result uploadForPublicationPicture() {
+        return uploadWithSize(Constant.PUBLICATION_PICTURE_WIDTH,Constant.PUBLICATION_PICTURE_HEIGHT);
+    }
+
+    @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result upload() {
         return uploadWithSize(null, null);
@@ -38,12 +57,12 @@ public class FilesController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result uploadWithSize(Integer sizex, Integer sizey) {
 
-        if(sizex==0){
-            sizex=null;
-        }
-        if(sizey==0){
-            sizey=null;
-        }
+//        if(sizex==0){
+//            sizex=null;
+//        }
+//        if(sizey==0){
+//            sizey=null;
+//        }
 
         MultipartFormData body = request().body().asMultipartFormData();
         play.mvc.Http.MultipartFormData.FilePart file = body.getFiles().get(0);

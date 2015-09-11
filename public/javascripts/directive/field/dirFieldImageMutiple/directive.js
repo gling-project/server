@@ -73,10 +73,7 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
                             file = $files[i];
 
 
-                            var url = "/rest/file";
-                            if (scope.getInfo().sizex != null && scope.getInfo().sizex != undefined) {
-                                url += "/" + scope.getInfo().sizex + "/" + scope.getInfo().sizey;
-                            }
+                            var url = "/rest/file/"+scope.getInfo().target;
 
                             scope.images.push(imgContainer);
                             scope.upload = $upload.upload({

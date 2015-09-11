@@ -22,12 +22,14 @@
                 <span class="btn btn-default btn-file field-document-btn"
                       ng-hide="inDownload === true || getInfo().disabled()">
                     {{((getInfo().field[getInfo().fieldName]!=null)?'--.download.button.update':'--.download.button.new') | translateText}}
-                    <input  name="{{ id }}"
-                            type="file"
-                            ng-file-select="onFileSelect($files)"
+                    <input name="{{ id }}"
+                           type="file"
+                           ng-file-select="onFileSelect($files)"
                             />
                 </span>
-                <div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}</div>
+
+                <div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}
+                </div>
                 <button
                         type="button"
                         ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage!=true"
@@ -35,15 +37,15 @@
                     {{'--.field.document.download' | translateText}} {{getInfo().field[getInfo().fieldName].name}}
                 </button>
 
-                    <!--<img ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage==true"-->
-                         <!--style="border:1px solid #999999"-->
-                     <!--ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>-->
+                <!--<img ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage==true"-->
+                <!--style="border:1px solid #999999"-->
+                <!--ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>-->
 
                 <img ng-show="getInfo().field[getInfo().fieldName]!=null &&
                 getInfo().field[getInfo().fieldName].isImage==true &&
                 getInfo().field[getInfo().fieldName].storedName!=null"
                      ng-style="{width:getInfo().posx,height:getInfo().posy}"
-                     style="border:1px solid #999999"
+                     style="border:1px solid #999999;max-width: 850px;"
                      ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>
 
             </div>

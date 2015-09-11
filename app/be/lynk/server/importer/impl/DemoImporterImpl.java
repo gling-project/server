@@ -11,6 +11,7 @@ import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.StringUtil;
+import be.lynk.server.util.constants.Constant;
 import jxl.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import play.Logger;
 import play.i18n.Lang;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +33,6 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
     private static final String  ACCOUNTS_WORKBOOK_PATH       = "file/demo_data.xls";
     private static final String  BUSINESS_SHEET               = "Commerces";
     private static final String  PUBLICATION_SHEET            = "Publications";
-    private static final Integer BUSINESS_ILLUSTRATION_HEIGHT = 200;
-    private static final Integer BUSINESS_ILLUSTRATION_WIDTH  = 200;
-    private static final Integer BUSINESS_LANDSCAPE_WIDTH     = 1000;
-    private static final Integer BUSINESS_LANDSCAPE_HEIGHT    = 300;
-    private static final Integer PUBLICATION_PICTURE_WIDTH    = 600;
-    private static final Integer PUBLICATION_PICTURE_HEIGHT   = null;
 
     /**
      * BUSINESS COLUMNS *
@@ -168,11 +164,11 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                     String landscapePath = getString(sheet, COL_BUSINESS_LANDSCAPE, rowCounter);
                     if (landscapePath != null && landscapePath.length() > 0) {
                         String path = "file/images/commerces/" + landscapePath;
-                        File file = new File(path);
+                        File file = copyFileUsingFileStreams(new File(path));
                         if (file != null) {
                             //landscape
                             try {
-                                business.setLandscape(fileService.uploadWithSize(file, file.getName(), BUSINESS_LANDSCAPE_WIDTH, BUSINESS_LANDSCAPE_HEIGHT, account));
+                                business.setLandscape(fileService.uploadWithSize(file, file.getName(), Constant.BUSINESS_LANDSCAPE_WIDTH, Constant.BUSINESS_LANDSCAPE_HEIGHT, account));
 //                                business.setLandscape(fileService.uploadWithSize(file,file.getName(), account));
                             } catch (Throwable e) {
                                 e.printStackTrace();
@@ -186,11 +182,10 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                     String illustrationPath = getString(sheet, COL_BUSINESS_LOGO, rowCounter);
                     if (illustrationPath != null && illustrationPath.length() > 0) {
                         String path = "file/images/commerces/" + illustrationPath;
-                        File file = new File(path);
+                        File file = copyFileUsingFileStreams(new File(path));
                         if (file != null) {
                             try {
-                                File file1 = new File(path);
-                                business.setIllustration(fileService.uploadWithSize(file1, file1.getName(), BUSINESS_ILLUSTRATION_WIDTH, BUSINESS_ILLUSTRATION_HEIGHT, account));
+                                business.setIllustration(fileService.uploadWithSize(file, file.getName(), Constant.BUSINESS_ILLUSTRATION_WIDTH, Constant.BUSINESS_ILLUSTRATION_HEIGHT, account));
                             } catch (Throwable e) {
 
                                 e.printStackTrace();
@@ -295,9 +290,9 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         if (illustrationPath != null && illustrationPath.length() > 0) {
                             for (String s : illustrationPath.split(";")) {
                                 String path = "file/images/publications/" + s;
-                                File file = new File(path);
+                                File file = copyFileUsingFileStreams(new File(path));
                                 if (file != null) {
-                                    StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), PUBLICATION_PICTURE_WIDTH, PUBLICATION_PICTURE_HEIGHT, business.getAccount());
+                                    StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), Constant.PUBLICATION_PICTURE_WIDTH, Constant.PUBLICATION_PICTURE_HEIGHT, business.getAccount());
                                     storedFile.setPublication(publication);
                                     publication.getPictures().add(storedFile);
                                     storedFileService.saveOrUpdate(storedFile);

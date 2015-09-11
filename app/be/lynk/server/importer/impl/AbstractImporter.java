@@ -1,8 +1,11 @@
 package be.lynk.server.importer.impl;
 
+import be.lynk.server.util.exception.MyRuntimeException;
 import jxl.*;
 
-import java.io.File;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +16,6 @@ import java.util.Map;
 public class AbstractImporter {
 
     public static final String CP1252_ENCODING = "Cp1252";
-
-
 
 
     protected static Map<String, Sheet> getWorkbookSheets(String path) {
@@ -72,7 +73,7 @@ public class AbstractImporter {
         private final int value;
 
         Letter(int value) {
-            this.value = value ;
+            this.value = value;
         }
 
         public int getValue() {
@@ -99,6 +100,33 @@ public class AbstractImporter {
                 return Double.parseDouble(contents);
             } catch (NumberFormatException e1) {
                 return null;
+            }
+        }
+    }
+
+
+    protected File copyFileUsingFileStreams(File source) {
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            File dest = File.createTempFile("temp-file-name", ".tmp");
+            input = new FileInputStream(source);
+            output = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+
+            return dest;
+        } catch (Exception e) {
+            throw new MyRuntimeException(e.getMessage());
+        } finally {
+            try {
+                input.close();
+                output.close();
+            } catch (IOException e) {
+                throw new MyRuntimeException(e.getMessage());
             }
         }
     }

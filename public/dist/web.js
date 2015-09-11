@@ -1561,7 +1561,7 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'constantService', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,constantService) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'constantService', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, constantService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1587,7 +1587,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
         businessId: $scope.businessId,
         scrollTo: $scope.publicationIdToGo,
         displayRemoveIcon: $scope.edit,
-        type:'BASIC'
+        type: 'BASIC'
     };
     $scope.$watch('edit', function () {
         $scope.publicationListParam.displayRemoveIcon = $scope.edit;
@@ -1611,7 +1611,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                         $scope.myBusiness = true;
                     }
 
-                    if($scope.myBusiness){
+                    if ($scope.myBusiness) {
 
                         $scope.publicationOptions.push({
                             key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
@@ -1690,10 +1690,11 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
             //edit illustration
             $scope.editIllustration = function () {
                 modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
-                    {dto: $scope.business,
-                        sizex: constantService.BUSINESS_ILLUSTRATION_X,
-                        sizey: constantService.BUSINESS_ILLUSTRATION_Y,
-                        fieldName: 'illustration'},
+                    {
+                        dto: $scope.business,
+                        target: 'business_illustration',
+                        fieldName: 'illustration'
+                    },
                     function (close, setLoading) {
                         businessService.editIllustration($scope.business.illustration, function () {
                             $scope.business.illustration.link = '/rest/file/' + $scope.business.illustration.id;
@@ -1708,13 +1709,14 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
             $scope.editLandscape = function () {
                 //$scope.business.landscape={}
                 modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
-                    {dto: $scope.business,
-                        sizex: constantService.BUSINESS_LANDSCAPE_X,
-                        sizey: constantService.BUSINESS_LANDSCAPE_Y,
-                        fieldName: 'landscape'},
+                    {
+                        dto: $scope.business,
+                        target: 'business_landscape',
+                        fieldName: 'landscape'
+                    },
                     function (close, setLoading) {
                         businessService.editLandscape($scope.business.landscape, function () {
-                            //$scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
+                            $scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
                             close();
                         }, function () {
                             setLoading(false);
@@ -1860,8 +1862,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                 $scope.$broadcast('RELOAD_PUBLICATION');
             });
 
-            $scope.$watch('publicationListParam.type',function(o,n){
-                if(o!=n) {
+            $scope.$watch('publicationListParam.type', function (o, n) {
+                if (o != n) {
                     $scope.$broadcast('RELOAD_PUBLICATION');
                 }
             });
