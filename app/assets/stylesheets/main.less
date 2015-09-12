@@ -28,12 +28,13 @@
 @import 'widget/_messenger';
 @import 'widget/_progress_bar';
 @import 'widget/_followed-business';
+@import 'widget/_navigation-bar';
 
 
 //gling official color
 @color-green-dark:#33CC99;
-@color-green-light:#28FDA7;
-@color-blue-dark:#1E1C51;
+@color-green-light:#00f9b7;
+@color-blue-dark:#2c265c;
 @color-blue-light:#9ECAEE;
 
 //
@@ -98,6 +99,8 @@ html, body {
 body {
     color: @color-body-text;
     background-color: @color-body-bg;
+    font-family: "myFont";
+    font-size: 16px;
 }
 
 .container-content {
@@ -116,64 +119,6 @@ body {
     .header-option-container {
         position: fixed;
         top: 100px;
-    }
-}
-
-.navigation-bar {
-    //    height: 50px;
-    background-color: @color-header-bg;
-    width: 100%;
-    position: fixed;
-    z-index: 11;
-    height: 65px;
-    top: 0;
-
-    & > .container {
-        vertical-align: middle;
-        & > * {
-            vertical-align: middle;
-            display: inline-block;
-        }
-    }
-
-    .sidebar-button {
-        float: left;
-        margin-right: 20px;
-        button {
-            width: 60px;
-            color: rgba(226, 226, 226, 1);
-            background-color: transparent;
-            border: none;
-            font-size: 28px;
-            font-weight: normal;
-            height: 48px;
-        }
-    }
-
-    .profile-buttons-container {
-        display: inline-block;
-        color: @color-header-title;
-        float: right;
-        margin-right: 25px;
-
-        & > select {
-            display: inline-block;
-            width: 70px;
-            vertical-align: middle;
-            margin-bottom: 5px;
-            margin-right: 20px;
-        }
-    }
-
-    h1 {
-        display: inline-block;
-        color: @color-header-title;
-        margin: 0 25px;
-        font-size: 30px;
-    }
-
-    h1 {
-        font-size: 24px;
     }
 }
 
@@ -379,18 +324,19 @@ a {
     }
     p {
         position: absolute;
-        background-color: #333333;
-        color: rgb(244, 244, 244);
+        background-color: #2c265c;
+        color: #f4f4f4;
         display: none;
-        padding: 2px 4px;
+        padding: 4px 6px;
         font-size: 12px;
-        bottom: -20px;
-        left: 50%;
+        bottom: -34px;
+        left: -50%;
         opacity: 100;
-        /* width: auto; */
+        width: auto;
         white-space: nowrap;
         overflow: hidden;
         z-index: 10;
+        border-radius: 6px;
     }
 }
 
@@ -411,4 +357,70 @@ a {
 
 .facebookCount{
     display: none !important;
+}
+
+.gling-button{
+    background-color: @color-green-light;
+    color: white;
+    margin-right: 10px;
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    min-height: 40px;
+    outline: none;
+    &:hover:enabled{
+        background-color: @color-green-dark;
+    }
+    &:disabled{
+        color: rgba(255, 255, 255, 0.65);
+    }
+
+    &.selected {
+        background-color: @color-blue-dark;
+        &:hover:enabled{
+            background-color: @color-blue-dark;
+        }
+    }
+}
+
+.btn,
+.dropdown-menu,
+.form-control{
+    font-size: 16px;
+}
+
+
+.gling-button-light{
+    background-color: white;
+    color: @color-blue-dark;
+    margin-right: 10px;
+    border: 2px solid @color-green-light;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+    min-height: 40px;
+//    &:hover:enabled{
+//        background-color: @color-green-light;
+//        color: white;
+//    }
+//    &:disabled{
+//        color: rgba(255, 255, 255, 0.65);
+//    }
+//
+//    &.selected {
+//        background-color: @color-blue-dark;
+//        &:hover:enabled{
+//            background-color: @color-blue-dark;
+//        }
+//    }
+}
+
+.btn,
+.dropdown-menu,
+.form-control{
+    font-size: 16px;
 }

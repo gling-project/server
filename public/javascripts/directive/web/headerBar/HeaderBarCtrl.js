@@ -71,18 +71,27 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
 
                     scope.currentPositionText = 'currentPosition';
 
+                    scope.createNewAddress = function(o){
+                        scope.currentPosition=o;
+                        modalService.addressModal(true,null,false,function(data){
+                            $timeout(function () {
+                                scope.currentPosition = data.name;
+                            },1);
+                        });
+                    };
+
                     $timeout(function () {
                         completePositions();
 
                         scope.$watch('currentPosition', function (n,o) {
                             if (n != null && o != n) {
                                 if(scope.currentPosition == 'createNewAddress'){
-                                    scope.currentPosition=o;
-                                    modalService.addressModal(true,null,false,function(data){
-                                        $timeout(function () {
-                                            scope.currentPosition = data.name;
-                                        },1);
-                                    });
+                                    if (accountService.getMyself(o) != null) {
+                                        scope.createNewAddress();
+                                    }
+                                    else {
+                                        modalService.openLoginModal(scope.createNewAddress,o);
+                                    }
                                 }
                                 else if(scope.currentPosition != scope.positionCurrenltyComputed){
                                     scope.positionCurrenltyComputed = scope.currentPosition;

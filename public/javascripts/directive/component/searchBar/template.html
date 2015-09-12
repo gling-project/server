@@ -13,24 +13,14 @@
     </div>
 
     <input
-            dir-bottom-arrow="down()" dir-top-arrow="top()"
+            dir-bottom-arrow="down()"
+            dir-top-arrow="top()"
             type="text"
             dir-enter="search()"
             ng-model="searchBarService.currentSearch"
-            class="search-bar"
+            class="gling-button-light search-bar"
             placeholder="{{'--.welcome.search' | translateText}}"/>
 
     <search-result-ctrl ng-info="searchResultParam"></search-result-ctrl>
 
-    <!--<button ng-show="getInfo().mobile"-->
-            <!--style="margin-left: 5px;"-->
-            <!--ng-click="displayAdvancedSearch()"-->
-            <!--class="glyphicon glyphicon-plus generic-cursor">-->
-    <!--</button>-->
-
-    <!--<button ng-hide="getInfo().mobile"-->
-            <!--class="search-advanced"-->
-            <!--ng-click="displayAdvancedSearch()">-->
-        <!--{{'--.welcome.search.advanced.link' | translateText}}-->
-    <!--</button>-->
 </div>

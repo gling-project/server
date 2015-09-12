@@ -64,6 +64,7 @@
 --.generic.validation.instagram=L'adresse reprise n'est pas une adresse Instagram valide! (elle doit commencer par https\://instagram.com/)
 --.generic.gallery=Galerie
 --.generic.instagram=Instagram
+--.generic.top=Haut
 	
 ##  modal/RegistrationModal/RegistrationModal.js	
 --.registration.form.keepSessionOpen=Garder ma session ouverte.

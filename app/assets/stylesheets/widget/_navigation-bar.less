@@ -1,0 +1,52 @@
+.navigation-bar {
+    //    height: 50px;
+    background-color: @color-blue-dark;
+    width: 100%;
+    position: fixed;
+    z-index: 11;
+    height: 65px;
+    top: 0;
+
+    & > .container {
+        vertical-align: middle;
+        & > * {
+            vertical-align: middle;
+            display: inline-block;
+        }
+    }
+
+    .sidebar-button {
+        float: left;
+        margin-right: 20px;
+        button {
+            width: 60px;
+            color: rgba(226, 226, 226, 1);
+            background-color: transparent;
+            border: none;
+            font-size: 28px;
+            font-weight: normal;
+            height: 48px;
+        }
+    }
+
+    .profile-buttons-container {
+        display: inline-block;
+        color: @color-header-title;
+        float: right;
+
+        & > select {
+            display: inline-block;
+            width: 70px;
+            vertical-align: middle;
+            margin-bottom: 5px;
+            margin-right: 20px;
+        }
+    }
+
+    h1 {
+        display: inline-block;
+        color: @color-green-light;
+        margin: 0 25px;
+        font-size: 36px;
+    }
+}

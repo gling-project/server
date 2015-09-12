@@ -1337,32 +1337,56 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'imag
     };
 
 }]);
-myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
+myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$window', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $window) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    $scope.computeList = function () {
+        $scope.interestDisplayed = $scope.customerInterests.slice($scope.interestDisplayFirst, $scope.interestDisplayMax + $scope.interestDisplayFirst);
+    };
 
     //variable
     $scope.followedMode = false;
     $scope.businessInfoParam = {};
     $scope.accountService = accountService.model;
+    $scope.interestDisplayed = [];
+    $scope.interestDisplayFirst = 0;
+    $scope.interestDisplayMax = 12;
     customerInterestService.getAll(function (value) {
         $scope.customerInterests = value;
+
+        $scope.computeList();
     });
     $scope.publicationListCtrl = {};
     $scope.currentPage = 0;
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
 
+    //to top
+    $scope.toTop = function () {
+        $(window).scrollTop(0);
+    };
 
-
-    $scope.customerInterestsTodisplay = [];
-
+    $scope.displayToTopButton = $(window).scrollTop() > 500;
+    angular.element($window).bind("scroll", function () {
+        $scope.displayToTopButton = $(window).scrollTop() > 500;
+        $scope.$apply();
+    });
 
     //selection mode
-    $scope.left = function(){
+    $scope.left = function () {
+        if ($scope.interestDisplayFirst > 0) {
+            $scope.interestDisplayFirst--;
+            $scope.computeList();
+        }
+    };
 
-    }
-
+    $scope.right = function () {
+        if ($scope.interestDisplayFirst < $scope.customerInterests.length - $scope.interestDisplayMax) {
+            $scope.interestDisplayFirst++;
+            $scope.computeList();
+        }
+    };
 
 
     //open registration modal
@@ -1399,8 +1423,8 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
 
     //watch in follow mode
-    $scope.$watch('followedMode', function (o,n) {
-        if(o!=n) {
+    $scope.$watch('followedMode', function (o, n) {
+        if (o != n) {
             $scope.currentPage = 0;
             $scope.allLoaded = false;
             console.log('---- search after followedMode');
@@ -1429,8 +1453,8 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
 
     var success = function (data) {
-        if($scope.currentPage==0){
-            $scope.publicationListCtrl.data=[];
+        if ($scope.currentPage == 0) {
+            $scope.publicationListCtrl.data = [];
         }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
@@ -1455,7 +1479,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
                     interestSelected = $scope.customerInterests[i];
                 }
             }
-
 
 
             //if this is the first page that asked, remove other publication
@@ -1494,7 +1517,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     };
 
     //initialize
-    if(geolocationService.position!=null){
+    if (geolocationService.position != null) {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
         console.log('---- search after INITIALIZE');
@@ -2446,18 +2469,27 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
 
                     scope.currentPositionText = 'currentPosition';
 
+                    scope.createNewAddress = function(o){
+                        scope.currentPosition=o;
+                        modalService.addressModal(true,null,false,function(data){
+                            $timeout(function () {
+                                scope.currentPosition = data.name;
+                            },1);
+                        });
+                    };
+
                     $timeout(function () {
                         completePositions();
 
                         scope.$watch('currentPosition', function (n,o) {
                             if (n != null && o != n) {
                                 if(scope.currentPosition == 'createNewAddress'){
-                                    scope.currentPosition=o;
-                                    modalService.addressModal(true,null,false,function(data){
-                                        $timeout(function () {
-                                            scope.currentPosition = data.name;
-                                        },1);
-                                    });
+                                    if (accountService.getMyself(o) != null) {
+                                        scope.createNewAddress();
+                                    }
+                                    else {
+                                        modalService.openLoginModal(scope.createNewAddress,o);
+                                    }
                                 }
                                 else if(scope.currentPosition != scope.positionCurrenltyComputed){
                                     scope.positionCurrenltyComputed = scope.currentPosition;

@@ -1,10 +1,19 @@
 <div class="content-block">
 
+    <!-- to top -->
+    <div ng-click="toTop()"
+         ng-show="displayToTopButton === true"
+         class="home-to-top">
+        <i class="glyphicon glyphicon-arrow-up"/>
+        <br/>
+        {{'--.generic.top' | translateText}}
+    </div>
+
     <div class="home-interest-switch home-interest-box" ng-show="accountService.myself != null">
 
         <!-- switch -->
         <div>
-            <label class="glyphicon glyphicon-home"></label>
+            <label class="gling-button gling-icon-home home-interest"></label>
         </div>
         <div>
             <div class="onoffswitch">
@@ -17,35 +26,35 @@
             </div>
         </div>
         <div>
-            <label class="glyphicon glyphicon-heart-empty"></label>
+            <label class="gling-button gling-icon-bell home-interest"></labe l>
         </div>
     </div>
 
     <!-- interest -->
     <div class="home-interest-box">
 
-        <button
-                ng-click="left()">
-            Left
-        </button>
+        <div class="home-interest-box-background">
 
-        <button class="home-interest button-with-label" ng-repeat="interest in customerInterestsTodisplay"
-                ng-show="interest.iconName!=null"
-                ng-click="searchByInterest(interest)"
-                ng-class="{'selected':interest.selected === true}">
+            <button ng-click="left()"
+                    class="gling-button home-interest home-interest-arrow gling-icon-arrow_left"
+                    ng-disabled="interestDisplayFirst <= 0">
+            </button>
 
-        <button ng-click="right()">
-            right
-        </button>
+            <button class="gling-button home-interest button-with-label {{'gling-icon-' + interest.name}}"
+                    ng-repeat="interest in interestDisplayed"
+                    ng-show="interest.iconName!=null"
+                    ng-click="searchByInterest(interest)"
+                    ng-class="{'selected':interest.selected === true}">
+                <p>{{interest.translationName}}</p>
+            </button>
+
+            <button ng-click="right()"
+                    class="gling-button home-interest home-interest-arrow gling-icon-arrow_right"
+                    ng-disabled="interestDisplayFirst >= customerInterests.length - interestDisplayMax">
+            </button>
+        </div>
 
 
-
-            <p>{{interest.translationName}}</p>
-
-            <img
-                    ng-src="/assets/images/interest/{{interest.iconName}}"
-                    style="width:50px"/>
-        </button>
     </div>
     <!-- publication list -->
     <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>

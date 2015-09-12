@@ -63,7 +63,7 @@
 
                     <!-- distance -->
                     <div class="publication-header-data-box publication-bordered">
-                        <i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km
+                        <i class="glyphicon gling-icon-earth"></i> {{publication.distance / 1000 | number:2}} km
                     </div>
 
                     <!-- price -->
@@ -76,48 +76,6 @@
             </tr>
         </table>
 
-        <!--&lt;!&ndash; body &ndash;&gt;-->
-        <!--<table style="width: 100%">-->
-        <!--<tr>-->
-        <!--<td ng-hide="descriptionIsEmpty(publication) === true" style="width: 50%">-->
-
-        <!--<div ng-show="publication.type === 'PROMOTION'"-->
-        <!--ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"-->
-        <!--class="publication-data-header">-->
-        <!--<div class="glyphicon glyphicon-calendar"></div>-->
-
-        <!--<span>-->
-        <!--<div>Promotion jusqu'au</div><div>-->
-        <!--{{publication.endDate | date:'medium'}}-->
-        <!--</div>-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<div class="publication-data-body"-->
-        <!--ng-show="publication.description !=null && publication.description.length > 0">-->
-        <!--{{publication.description}}-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--<td ng-show="publication.pictures.length > 0 ">-->
-        <!--<img ng-src="{{publication.pictures[0] | image}}"-->
-        <!--class="publication-illustration">-->
-
-        <!--<div ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true"-->
-        <!--class="publication-illustration-plus-icon">-->
-        <!--<span>+{{publication.pictures.length - 1}}</span>-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--<td ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true">-->
-        <!--<img ng-src="{{publication.pictures[1] | image}}"-->
-        <!--class="publication-illustration">-->
-
-        <!--<div-->
-        <!--class="publication-illustration-plus-icon">-->
-        <!--<span>+{{publication.pictures.length - 2}}</span>-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--</table>-->
-
         <div class="publication-body">
             <div class="publication-data publication-bordered"
                  ng-class="{'publication-body-two':publication.pictures.length>0}"
@@ -126,7 +84,7 @@
                 <div ng-show="publication.type === 'PROMOTION'"
                      ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"
                      class="publication-data-header">
-                    <div class="glyphicon glyphicon-calendar"></div>
+                    <div class="glyphicon gling-icon-calendar"></div>
 
                     <span>
                         <div>Promotion jusqu'au</div><div>
