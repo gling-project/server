@@ -4,7 +4,7 @@
     <div ng-click="toTop()"
          ng-show="displayToTopButton === true"
          class="home-to-top">
-        <i class="glyphicon glyphicon-arrow-up"/>
+        <span class="glyphicon glyphicon-arrow-up"></span>
         <br/>
         {{'--.generic.top' | translateText}}
     </div>
@@ -18,7 +18,7 @@
         <div>
             <div class="onoffswitch">
                 <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-                       checked ng-model="followedMode">
+                       checked ng-model="followedMode"/>
                 <label class="onoffswitch-label" for="myonoffswitch">
                     <span class="onoffswitch-inner"></span>
                     <span class="onoffswitch-switch"></span>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div>
-            <label class="gling-button gling-icon-bell home-interest"></labe l>
+            <label class="gling-button gling-icon-bell home-interest"></label>
         </div>
     </div>
 

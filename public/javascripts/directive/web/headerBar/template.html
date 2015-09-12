@@ -52,22 +52,18 @@
              ng-show="accountService.getMyself()!=null" style="display : inline-block">
             <div class="dropdown" ng-show="accountService.getMyself()!=null" style="display : inline-block">
 
-
-
-
-
                 <!-- connection button -->
                 <div class="menu-connection-button-container">
-                    <button
-                            class="dropdown-toggle gling-button-light"
-                            type="button"
-                            id="dropdownMenu1"
-                            data-toggle="dropdown"
-                            aria-expanded="true"
-                            style="max-width: 200px;">
+                    <div class="menu-connection-name">
                         {{accountService.getMyself().firstname}}
-                        <span class="caret"></span>
-                    </button>
+                    </div>
+
+                    <div class="gling-icon-profil menu-connection-icon"
+                         data-toggle="dropdown"
+                         id="dropdownMenu1"
+                         aria-expanded="true">
+                        <span></span>
+                    </div>
 
                     <!-- connected menu -->
                     <ul class="dropdown-menu dropdown-menu-right"

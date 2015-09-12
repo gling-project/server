@@ -30,12 +30,11 @@
 @import 'widget/_followed-business';
 @import 'widget/_navigation-bar';
 
-
 //gling official color
-@color-green-dark:#33CC99;
-@color-green-light:#00f9b7;
-@color-blue-dark:#2c265c;
-@color-blue-light:#9ECAEE;
+@color-green-dark: #33CC99;
+@color-green-light: #00f9b7;
+@color-blue-dark: #2c265c;
+@color-blue-light: #9ECAEE;
 
 //
 // color
@@ -232,7 +231,6 @@ button {
     padding-top: 5px;
 }
 
-
 .btn-file {
     position: relative;
     overflow: hidden;
@@ -267,8 +265,30 @@ a {
     position: relative;
     display: inline;
 
+    .menu-connection-name {
+        max-width: 200px;
+        display: inline-block;
+        color: white;
+        font-size: 30px;
+        margin-right: 20px;
+    }
+    .menu-connection-icon {
+        font-size: 30px;
+        display: inline-block;
+        cursor: pointer;
+        & > span{
+            display: inline-block;
+            border-top: 4px solid;
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+            margin-left: 2px;
+            margin-top: 15px;
+            vertical-align: top;
+        }
+    }
+
     & > ul {
-        left: 0 !important;
+        min-width: 200px;
         top: 23px !important;
     }
 }
@@ -354,12 +374,11 @@ a {
     cursor: pointer;
 }
 
-
-.facebookCount{
+.facebookCount {
     display: none !important;
 }
 
-.gling-button{
+.gling-button {
     background-color: @color-green-light;
     color: white;
     margin-right: 10px;
@@ -370,16 +389,16 @@ a {
     font-weight: bold;
     min-height: 40px;
     outline: none;
-    &:hover:enabled{
+    &:hover:enabled {
         background-color: @color-green-dark;
     }
-    &:disabled{
+    &:disabled {
         color: rgba(255, 255, 255, 0.65);
     }
 
     &.selected {
         background-color: @color-blue-dark;
-        &:hover:enabled{
+        &:hover:enabled {
             background-color: @color-blue-dark;
         }
     }
@@ -387,12 +406,11 @@ a {
 
 .btn,
 .dropdown-menu,
-.form-control{
+.form-control {
     font-size: 16px;
 }
 
-
-.gling-button-light{
+.gling-button-light {
     background-color: white;
     color: @color-blue-dark;
     margin-right: 10px;
@@ -403,24 +421,24 @@ a {
     outline: none;
     cursor: pointer;
     min-height: 40px;
-//    &:hover:enabled{
-//        background-color: @color-green-light;
-//        color: white;
-//    }
-//    &:disabled{
-//        color: rgba(255, 255, 255, 0.65);
-//    }
-//
-//    &.selected {
-//        background-color: @color-blue-dark;
-//        &:hover:enabled{
-//            background-color: @color-blue-dark;
-//        }
-//    }
+    //    &:hover:enabled{
+    //        background-color: @color-green-light;
+    //        color: white;
+    //    }
+    //    &:disabled{
+    //        color: rgba(255, 255, 255, 0.65);
+    //    }
+    //
+    //    &.selected {
+    //        background-color: @color-blue-dark;
+    //        &:hover:enabled{
+    //            background-color: @color-blue-dark;
+    //        }
+    //    }
 }
 
 .btn,
 .dropdown-menu,
-.form-control{
+.form-control {
     font-size: 16px;
 }
