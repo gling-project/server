@@ -276,7 +276,7 @@ a {
         font-size: 30px;
         display: inline-block;
         cursor: pointer;
-        & > span{
+        & > span {
             display: inline-block;
             border-top: 4px solid;
             border-right: 4px solid transparent;
@@ -418,6 +418,7 @@ a {
     border-radius: 20px;
     padding: 5px 10px;
     font-size: 16px;
+    -moz-appearance: none;
     outline: none;
     cursor: pointer;
     min-height: 40px;
@@ -441,4 +442,16 @@ a {
 .dropdown-menu,
 .form-control {
     font-size: 16px;
+}
+
+.panel {
+    border-radius: 20px;
+    border: 1px solid @color-blue-dark;
+    overflow: hidden;
+    .panel-heading {
+        background: @color-blue-dark none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
 }

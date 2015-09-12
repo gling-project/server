@@ -45,76 +45,91 @@
     </button>
 </div>
 <div class="business-page">
-    <div class="business-page-header"
-         ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
+    <div class="business-page-header">
+        <div class="business-page-header-landscape"
+             ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
 
-        <!-- landscape -->
-        <div class="edit-button-container landscape-edit">
-            <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                    id="business-btn-landscape-edit"
-                    ng-show="edit"
-                    ng-click="editLandscape()">
-                {{'--.business.page.edit.landscape' | translateText}}
-            </button>
-        </div>
-
-        <!-- illustration -->
-        <div class="business-page-illustration-container">
-            <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
-
-            <div class="edit-button-container">
-                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
-                        id="business-btn-illustration-edit"
+            <!-- landscape -->
+            <div class="edit-button-container landscape-edit">
+                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                        id="business-btn-landscape-edit"
                         ng-show="edit"
-                        ng-click="editIllustration()">
-                    {{'--.business.page.edit.illustration' | translateText}}
+                        ng-click="editLandscape()">
+                    {{'--.business.page.edit.landscape' | translateText}}
                 </button>
             </div>
-        </div>
 
-        <!-- name -->
-        <div class="business-page-name">
-            <span style="-webkit-text-fill-color: white;
-   -webkit-text-stroke-width: 1px;
-   -webkit-text-stroke-color: black;">
+            <!-- illustration -->
+            <div class="business-page-illustration-container">
+                <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
+
+                <div class="edit-button-container">
+                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
+                            id="business-btn-illustration-edit"
+                            ng-show="edit"
+                            ng-click="editIllustration()">
+                        {{'--.business.page.edit.illustration' | translateText}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- name -->
+            <div class="business-page-name">
+            <span>
                 {{business.name}}
             </span>
 
-            <div class="edit-button-container">
-                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                        id="business-btn-name-edit"
-                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                        ng-click="editbusiness()">
-                    {{'--.business.page.edit.business' | translateText}}
-                </button>
+                <div class="edit-button-container">
+                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            id="business-btn-name-edit"
+                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                            ng-click="editbusiness()">
+                        {{'--.business.page.edit.business' | translateText}}
+                    </button>
+                </div>
             </div>
+        </div>
+
+        <div class="business-page-bottom">
+
+            <div class="business-right-column">
+                <!-- description -->
+                <div class="business-page-description">
+
+                    <!-- categoru -->
+                    <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
+
+                    <button ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                            id="business-btn-category-edit"
+                            class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            ng-click="editCategory()">{{'--.generic.edit' | translateText}}
+                    </button>
+
+                    <!-- description -->
+                <span>
+                    {{business.description}}
+                </span>
+                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                            ng-click="editbusiness()">
+                        {{'--.business.page.edit.business' | translateText}}
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- follow  TODO TEMP-->
+            <follow-widget-ctrl ng-info="{business:business}"></follow-widget-ctrl>
+
+
         </div>
 
     </div>
     <div class="business-page-body">
 
+
         <div class="business-page-body-center">
 
-            <!-- categoru -->
-            <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
-
-            <button ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                    id="business-btn-category-edit"
-                    class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                    ng-click="editCategory()">{{'--.generic.edit' | translateText}}
-            </button>
-
-            <!-- description -->
-            <div class="business-page-description">
-                <span>
-                    {{business.description}}
-                </span>
-                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                        ng-click="editbusiness()">
-                    {{'--.business.page.edit.business' | translateText}}
-                </button>
-            </div>
 
             <!-- publication -->
             <div>
@@ -143,11 +158,10 @@
 
         <div class="business-page-body-right">
 
-            <!-- follow  TODO TEMP-->
-            <follow-widget-ctrl ng-info="{business:business}"></follow-widget-ctrl>
 
             <!-- gallery -->
-            <div class="panel panel-default" ng-show="business.galleryPictures !=null && business.galleryPictures.length > 0">
+            <div class="panel panel-default"
+                 ng-show="business.galleryPictures !=null && business.galleryPictures.length > 0">
                 <div class="panel-heading">{{'--.business.gallery' | translateText}}</div>
                 <div class="panel-body">
 

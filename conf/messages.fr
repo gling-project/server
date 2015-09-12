@@ -403,6 +403,8 @@ day_abrv_sunday=Di
 	
 ##  directive/component/publicationListForBusiness/template.html (start date )	
 --.publication.promotionData=Détails de la promotion
+--.publication.promotionTo=Promotion jusqu'au
+--.publication.publishTo=Publié le
 	
 	
 	

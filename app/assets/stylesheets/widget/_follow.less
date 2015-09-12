@@ -3,12 +3,21 @@
     & > div {
         text-align: center;
         margin: 10px;
-        background-color: @color-blue-dark;
+        border: 2px solid  @color-blue-dark;
         color: white;
-        border-radius: 15px;
+        border-radius: 50px;
         padding: 6px 10px;
         display: inline-block;
         vertical-align: top;
+        background-color: white;
+
+        button{
+            font-size: 48px;
+            color: @color-green-light;
+            .selected{
+                color: @color-blue-dark !important;
+            }
+        }
 
         button {
             background: none;

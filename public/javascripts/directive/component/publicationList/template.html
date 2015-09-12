@@ -87,9 +87,10 @@
                     <div class="glyphicon gling-icon-calendar"></div>
 
                     <span>
-                        <div>Promotion jusqu'au</div><div>
-                        {{publication.endDate | date:'dd-MM-yyyy hh:mm'}}
-                    </div>
+                        <div>{{'--.publication.promotionTo' | translateText}}</div>
+                        <div>
+                            {{publication.endDate | date:'dd-MM-yyyy hh:mm'}}
+                        </div>
                     </span>
                 </div>
                 <div class="publication-data-body"
@@ -134,7 +135,7 @@
 
 
             <div class="publication-footer-date publication-bordered-bottom">
-                Publié le {{publication.startDate | date:'dd-MM-yyyy hh:mm'}}
+                {{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd-MM-yyyy hh:mm'}}
             </div>
 
             <div class="publication-footer-facebook">
