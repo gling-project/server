@@ -1362,16 +1362,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
 
-    //to top
-    $scope.toTop = function () {
-        $(window).scrollTop(0);
-    };
-
-    $scope.displayToTopButton = $(window).scrollTop() > 500;
-    angular.element($window).bind("scroll", function () {
-        $scope.displayToTopButton = $(window).scrollTop() > 500;
-        $scope.$apply();
-    });
 
     //selection mode
     $scope.left = function () {
@@ -2337,6 +2327,25 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                                 });
                             });
                     }
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
+
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
+
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
                 }
             }
         }

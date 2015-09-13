@@ -37,7 +37,7 @@
                     <!-- business name -->
                     <div ng-click="navigateTo('/business/'+publication.businessId)"
                          class="publication-bordered-bottom-hover publication-bordered-bottom">
-                        <span>
+                        <span class="publication-main-title">
                             <i ng-show="publication.following === true"
                                class="gling-icon-bell">
                             </i>
@@ -55,19 +55,19 @@
 
                         <!-- interest -->
                         <i ng-show="getInterestClass(publication)!=null"
-                           class="{{getInterestClass(publication)}} publication-color-background">
+                           class="publication-interest {{getInterestClass(publication)}} publication-color-background">
                         </i>
 
                         {{publication.title}}
                     </div>
 
                     <!-- distance -->
-                    <div class="publication-header-data-box publication-bordered">
+                    <div class="publication-bubble publication-bordered">
                         <i class="glyphicon gling-icon-earth"></i> {{publication.distance / 1000 | number:2}} km
                     </div>
 
                     <!-- price -->
-                    <div class="publication-header-data-box publication-box-price  publication-bordered"
+                    <div class="publication-bubble publication-box-price  publication-bordered"
                          ng-show="publication.type=='PROMOTION' && publication.originalPrice!=null">
                         <span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span>
                         <span>{{publication.originalPrice | number:2}} €</span>

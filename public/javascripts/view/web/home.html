@@ -1,13 +1,6 @@
 <div class="content-block">
 
-    <!-- to top -->
-    <div ng-click="toTop()"
-         ng-show="displayToTopButton === true"
-         class="home-to-top">
-        <span class="glyphicon glyphicon-arrow-up"></span>
-        <br/>
-        {{'--.generic.top' | translateText}}
-    </div>
+    <to-top-ctrl></to-top-ctrl>
 
     <div class="home-interest-switch home-interest-box" ng-show="accountService.myself != null">
 

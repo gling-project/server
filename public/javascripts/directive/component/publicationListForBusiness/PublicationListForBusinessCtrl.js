@@ -83,6 +83,25 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                                 });
                             });
                     }
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
+
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
+
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
                 }
             }
         }

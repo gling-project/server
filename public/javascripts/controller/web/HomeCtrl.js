@@ -23,16 +23,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
 
-    //to top
-    $scope.toTop = function () {
-        $(window).scrollTop(0);
-    };
-
-    $scope.displayToTopButton = $(window).scrollTop() > 500;
-    angular.element($window).bind("scroll", function () {
-        $scope.displayToTopButton = $(window).scrollTop() > 500;
-        $scope.$apply();
-    });
 
     //selection mode
     $scope.left = function () {
