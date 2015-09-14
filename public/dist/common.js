@@ -1126,31 +1126,12 @@ myApp.directive('accountFormCtrl', ['$flash', 'directiveService', 'languageServi
                             gender: null
                         };
                     }
-                    ;
-
 
                     scope.passwordActive = true;
 
                     var langOptions = [];
 
-                    for (var key in languageService.languages) {
-                        if (languageService.languages[key].code == scope.getInfo().dto.lang.code) {
-                            langOptions.push({
-                                key: scope.getInfo().dto.lang,
-                                value: scope.getInfo().dto.lang.code
-                            });
-                        }
-                        else {
-                            langOptions.push({
-                                key: languageService.languages[key],
-                                value: languageService.languages[key].code
-                            });
-                        }
-                    }
 
-
-                    console.log(angular.copy(scope.getInfo().dto));
-                    console.log(langOptions);
 
                     scope.fields = {
                         gender: {
@@ -1256,6 +1237,18 @@ myApp.directive('accountFormCtrl', ['$flash', 'directiveService', 'languageServi
                             fieldName: 'keepSessionOpen'
                         }
                     };
+
+                    var langs = languageService.getLanguages();
+                    for (var key in langs) {
+                        var lang = langs[key];
+                        langOptions.push({
+                            key: lang,
+                            value: lang.code
+                        });
+                        if (lang.code == languageService.currentLanguage) {
+                            scope.getInfo().dto.lang = lang;
+                        }
+                    }
 
                     scope.getInfo().maskPassword = function () {
                         scope.passwordActive = false;
@@ -3650,12 +3643,12 @@ myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languag
 
 
 }]);
-myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', function ($flash, $window, $http,$rootScope) {
+myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', function ($flash, $window, $http, $rootScope) {
 
     this.languages;
     this.languagesStructured = [];
     this.currentLanguage;
-    var self= this;
+    var self = this;
 
     this.setLanguages = function (currentLanguage, languages) {
         this.currentLanguage = currentLanguage;
@@ -3670,16 +3663,16 @@ myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', fu
         }
     };
 
-    $rootScope.$watch(function() {
+    $rootScope.$watch(function () {
         return self.currentLanguage;
     }, function watchCallback(newValue, oldValue) {
-        if(newValue != oldValue) {
-            self.changeLanguage(self.currentLanguage,true);
+        if (newValue != oldValue) {
+            self.changeLanguage(self.currentLanguage, true);
         }
     });
 
-    this.changeLanguage = function (lang,forced) {
-        if (lang != this.currentLanguage ||forced) {
+    this.changeLanguage = function (lang, forced) {
+        if (lang != this.currentLanguage || forced) {
 
             $http({
                 'method': "PUT",
@@ -3693,6 +3686,10 @@ myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', fu
                 });
         }
     }
+
+    this.getLanguages = function () {
+        return angular.copy(this.languages);
+    };
 }]);
 
 myApp.service("customerInterestService", ['$sce', '$http', '$flash', function ($sce, $http, $flash) {
@@ -5379,7 +5376,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/publicationList/template.html",
     "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=\"publication-box publication-bordered\" ng-class=\"{'publication-followed':publication.following === true}\" ng-click=click()><div class=publication-badge ng-show=\"publication.type === 'PROMOTION'\">- {{publication.offPercent * 100 | number:0}}%</div><table class=publication-header><tr><td rowspan=2><div class=\"publication-business-illustration publication-bordered publication-bordered-hover\"><img ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"></div></td><td class=publication-header-business><div ng-click=\"navigateTo('/business/'+publication.businessId)\" class=\"publication-bordered-bottom-hover publication-bordered-bottom\"><span class=publication-main-title><i ng-show=\"publication.following === true\" class=gling-icon-bell></i> {{publication.businessName}}</span></div></td></tr><tr><td class=publication-header-title><div class=publication-header-title-top><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest {{getInterestClass(publication)}} publication-color-background\"></i> {{publication.title}}</div><div class=\"publication-bubble publication-bordered\"><i class=\"glyphicon gling-icon-earth\"></i> {{publication.distance / 1000 | number:2}} km</div><div class=\"publication-bubble publication-box-price publication-bordered\" ng-show=\"publication.type=='PROMOTION' && publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></div></td></tr></table><div class=publication-body><div class=\"publication-data publication-bordered\" ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><div ng-show=\"publication.type === 'PROMOTION'\" ng-class=\"{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}\" class=publication-data-header><div class=\"glyphicon gling-icon-calendar\"></div><span><div>{{'--.publication.promotionTo' | translateText}}</div><div>{{publication.endDate | date:'dd-MM-yyyy hh:mm'}}</div></span></div><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\">{{publication.description}}</div></div><div class=\"publication-gallery publication-bordered publication-bordered-hover\" ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div><div class=\"publication-gallery publication-bordered publication-bordered-hover publication-body-two publication-body-two-right\" ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) === true\" ng-click=openGallery(publication.pictures[1],publication)><img ng-src=\"{{publication.pictures[1] | image}}\" class=publication-illustration><div class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 2}}</span></div></div></div><div class=publication-footer><div class=\"publication-footer-date publication-bordered-bottom\">{{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd-MM-yyyy hh:mm'}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={publication:publication}></facebook-share-publication-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListForBusiness/template.html",
-    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=\"publication-box publication-bordered\" ng-class=\"{'publication-followed':publication.following === true}\" ng-click=click()><div class=publication-badge ng-show=\"publication.type === 'PROMOTION'\">- {{publication.offPercent * 100 | number:0}}%</div><div class=publication-header-without-business-version><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest {{getInterestClass(publication)}} publication-color-background\"></i><div class=\"publication-bubble publication-box-price publication-bordered\" ng-show=\"publication.type=='PROMOTION' && publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></div><span class=publication-main-title>{{publication.title}}</span></div><div class=publication-body><div class=\"publication-data publication-bordered\" ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><div ng-show=\"publication.type === 'PROMOTION'\" ng-class=\"{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}\" class=publication-data-header><div class=\"glyphicon gling-icon-calendar\"></div><span><div>{{'--.publication.promotionTo' | translateText}}</div><div>{{publication.endDate | date:'dd-MM-yyyy hh:mm'}}</div></span></div><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\">{{publication.description}}</div></div><div class=\"publication-gallery publication-bordered publication-bordered-hover\" ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div><div class=\"publication-gallery publication-bordered publication-bordered-hover publication-body-two publication-body-two-right\" ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) === true\" ng-click=openGallery(publication.pictures[1],publication)><img ng-src=\"{{publication.pictures[1] | image}}\" class=publication-illustration><div class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 2}}</span></div></div></div><div class=publication-footer><div class=\"publication-footer-date publication-bordered-bottom\">{{'--.publication.publishTo' | translateText}}{{publication.startDate | date:'dd-MM-yyyy hh:mm'}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={publication:publication}></facebook-share-publication-ctrl></div></div></div></div>");
+    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=\"publication-box publication-bordered\" ng-class=\"{'publication-followed':publication.following === true}\" ng-click=click()><div class=publication-badge ng-show=\"publication.type === 'PROMOTION'\">- {{publication.offPercent * 100 | number:0}}%</div><div class=publication-header-without-business-version><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest {{getInterestClass(publication)}} publication-color-background\"></i><div class=\"publication-bubble publication-box-price publication-bordered\" ng-show=\"publication.type=='PROMOTION' && publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></div><span class=publication-main-title>{{publication.title}}</span></div><div class=publication-body><div class=\"publication-data publication-bordered\" ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><div ng-show=\"publication.type === 'PROMOTION'\" ng-class=\"{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}\" class=publication-data-header><div class=\"glyphicon gling-icon-calendar\"></div><span><div>{{'--.publication.promotionTo' | translateText}}</div><div>{{publication.endDate | date:'dd-MM-yyyy hh:mm'}}</div></span></div><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\">{{publication.description}}</div></div><div class=\"publication-gallery publication-bordered publication-bordered-hover\" ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div><div class=\"publication-gallery publication-bordered publication-bordered-hover publication-body-two publication-body-two-right\" ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) === true\" ng-click=openGallery(publication.pictures[1],publication)><img ng-src=\"{{publication.pictures[1] | image}}\" class=publication-illustration><div class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 2}}</span></div></div></div><div class=publication-footer><div class=\"publication-footer-date publication-bordered-bottom\">{{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd-MM-yyyy hh:mm'}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={publication:publication}></facebook-share-publication-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobile/template.html",
     "<div class=publication-list-mobile><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"getInfo().loading===true\" ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><div style=\"border-bottom: 1px solid black\"><img class=\"link illustration\" ng-click=\"navigateTo('/business/'+publication.businessId)\" ng-src=\"{{publication.businessIllustration | image}}\"><div class=publication-list-business-data><div><span class=link ng-click=\"navigateTo('/business/'+publication.businessId)\">{{publication.businessName}}</span></div><div class=distance><i class=\"fa fa-globe\"></i> {{publication.distance / 1000 | number:2}} km</div></div></div><div class=publication-list-publication-data><div class=publication-reduction><div style=\"display: inline-block;\n" +
     "  background-color: red;\n" +
