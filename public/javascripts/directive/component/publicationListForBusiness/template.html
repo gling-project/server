@@ -37,62 +37,6 @@
             <span class="publication-main-title">{{publication.title}}</span>
         </div>
 
-
-        <!-- header -->
-        <!--<table class="publication-header">-->
-        <!--<tr>-->
-        <!--<td rowspan="2">-->
-
-        <!--&lt;!&ndash; illustration &ndash;&gt;-->
-        <!--<div class="publication-business-illustration publication-bordered publication-bordered-hover">-->
-        <!--<img ng-click="navigateTo('/business/'+publication.businessId)"-->
-        <!--ng-src="{{publication.businessIllustration | image}}"/>-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--<td class="publication-header-business">-->
-
-        <!--&lt;!&ndash; business name &ndash;&gt;-->
-        <!--<div ng-click="navigateTo('/business/'+publication.businessId)"-->
-        <!--class="publication-bordered-bottom-hover publication-bordered-bottom">-->
-        <!--<span>-->
-        <!--<i ng-show="publication.following === true"-->
-        <!--class="gling-icon-bell">-->
-        <!--</i>-->
-        <!--{{publication.businessName}}-->
-        <!--</span>-->
-        <!--</div>-->
-
-        <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<td class="publication-header-title">-->
-
-        <!--&lt;!&ndash; publication title &ndash;&gt;-->
-        <!--<div class="publication-header-title-top">-->
-
-        <!--&lt;!&ndash; interest &ndash;&gt;-->
-        <!--<i ng-show="getInterestClass(publication)!=null"-->
-        <!--class="{{getInterestClass(publication)}} publication-color-background">-->
-        <!--</i>-->
-
-        <!--{{publication.title}}-->
-        <!--</div>-->
-
-        <!--&lt;!&ndash; distance &ndash;&gt;-->
-        <!--<div class="publication-header-data-box publication-bordered">-->
-        <!--<i class="glyphicon gling-icon-earth"></i> {{publication.distance / 1000 | number:2}} km-->
-        <!--</div>-->
-
-        <!--&lt;!&ndash; price &ndash;&gt;-->
-        <!--<div class="publication-header-data-box publication-box-price  publication-bordered"-->
-        <!--ng-show="publication.type=='PROMOTION' && publication.originalPrice!=null">-->
-        <!--<span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span>-->
-        <!--<span>{{publication.originalPrice | number:2}} €</span>-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--</table>-->
-
         <div class="publication-body">
             <div class="publication-data publication-bordered"
                  ng-class="{'publication-body-two':publication.pictures.length>0}"
@@ -152,7 +96,7 @@
 
 
             <div class="publication-footer-date publication-bordered-bottom">
-                {{'--.publication.publishTo' | translateText}}{{publication.startDate | date:'dd-MM-yyyy hh:mm'}}
+                {{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd-MM-yyyy hh:mm'}}
             </div>
 
             <div class="publication-footer-facebook">

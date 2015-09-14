@@ -25,31 +25,12 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                             gender: null
                         };
                     }
-                    ;
-
 
                     scope.passwordActive = true;
 
                     var langOptions = [];
 
-                    for (var key in languageService.languages) {
-                        if (languageService.languages[key].code == scope.getInfo().dto.lang.code) {
-                            langOptions.push({
-                                key: scope.getInfo().dto.lang,
-                                value: scope.getInfo().dto.lang.code
-                            });
-                        }
-                        else {
-                            langOptions.push({
-                                key: languageService.languages[key],
-                                value: languageService.languages[key].code
-                            });
-                        }
-                    }
 
-
-                    console.log(angular.copy(scope.getInfo().dto));
-                    console.log(langOptions);
 
                     scope.fields = {
                         gender: {
@@ -155,6 +136,18 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                             fieldName: 'keepSessionOpen'
                         }
                     };
+
+                    var langs = languageService.getLanguages();
+                    for (var key in langs) {
+                        var lang = langs[key];
+                        langOptions.push({
+                            key: lang,
+                            value: lang.code
+                        });
+                        if (lang.code == languageService.currentLanguage) {
+                            scope.getInfo().dto.lang = lang;
+                        }
+                    }
 
                     scope.getInfo().maskPassword = function () {
                         scope.passwordActive = false;

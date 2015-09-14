@@ -1,9 +1,9 @@
-myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
+myApp.service("languageService", function ($flash, $window, $http, $rootScope) {
 
     this.languages;
     this.languagesStructured = [];
     this.currentLanguage;
-    var self= this;
+    var self = this;
 
     this.setLanguages = function (currentLanguage, languages) {
         this.currentLanguage = currentLanguage;
@@ -18,16 +18,16 @@ myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
         }
     };
 
-    $rootScope.$watch(function() {
+    $rootScope.$watch(function () {
         return self.currentLanguage;
     }, function watchCallback(newValue, oldValue) {
-        if(newValue != oldValue) {
-            self.changeLanguage(self.currentLanguage,true);
+        if (newValue != oldValue) {
+            self.changeLanguage(self.currentLanguage, true);
         }
     });
 
-    this.changeLanguage = function (lang,forced) {
-        if (lang != this.currentLanguage ||forced) {
+    this.changeLanguage = function (lang, forced) {
+        if (lang != this.currentLanguage || forced) {
 
             $http({
                 'method': "PUT",
@@ -41,4 +41,8 @@ myApp.service("languageService", function ($flash, $window, $http,$rootScope) {
                 });
         }
     }
+
+    this.getLanguages = function () {
+        return angular.copy(this.languages);
+    };
 });
