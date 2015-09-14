@@ -77,7 +77,10 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                                 return scope.getInfo().disabled;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'lang'
+                            fieldName: 'lang',
+                            active:function(){
+                                return false;
+                            }
                         },
                         email: {
                             fieldType: "email",

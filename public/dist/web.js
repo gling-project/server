@@ -1339,6 +1339,9 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'imag
 }]);
 myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$window', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $window) {
 
+    //back to the top of the page
+    $(window).scrollTop(0);
+
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.computeList = function () {
@@ -1517,6 +1520,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 }]);
 myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$rootScope', '$window', function ($scope, modalService, accountService, $rootScope,$window) {
 
+    //back to the top of the page
+    $(window).scrollTop(0);
+
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.model = accountService.model;
@@ -1575,6 +1581,10 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
 
 }]);
 myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'constantService', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, constantService) {
+
+    //back to the top of the page
+    $(window).scrollTop(0);
+
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1910,6 +1920,9 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
 ;
 myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
 
+    //back to the top of the page
+    $(window).scrollTop(0);
+
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var param = $routeParams.param;
@@ -1991,8 +2004,8 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
                     for (var cat2 in $scope.results.categoriesMap[cat]) {
                         for (var cat3 in $scope.results.categoriesMap[cat][cat2]) {
                             $scope.categoryTab.total += $scope.results.categoriesMap[cat][cat2][cat3].length;
-                            if($scope.results.categoriesMap[cat][cat2][cat3].length == 20){
-                                $scope.categoryTab.loadCategory=true;
+                            if ($scope.results.categoriesMap[cat][cat2][cat3].length == 20) {
+                                $scope.categoryTab.loadCategory = true;
                             }
                         }
                     }
@@ -2097,7 +2110,7 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
                             searchService.searchByString(tabToLoad.currentPage, s, function (data) {
                                 $scope.loadSemaphore = false;
                                 var total = $scope.fusionCategories(data.categoriesMap);
-                                if(total==0){
+                                if (total == 0) {
                                     tabToLoad.allLoaded = true;
                                 }
                             });
@@ -2177,6 +2190,9 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
     });
 }]);
 myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', 'ngTableParams', '$filter', 'followService', function ($rootScope, $scope, businessService,ngTableParams,$filter,followService) {
+
+    //back to the top of the page
+    $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 

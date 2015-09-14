@@ -140,7 +140,7 @@
 .gling-icon-culture:before {
 	content: "\e623";
 }
-.gling-icon-going_out:before {
+.gling-icon-goingout:before {
 	content: "\e624";
 }
 .gling-icon-drink:before {

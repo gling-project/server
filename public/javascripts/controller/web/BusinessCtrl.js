@@ -1,5 +1,9 @@
 myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, constantService) {
 
+    //back to the top of the page
+    $(window).scrollTop(0);
+
+
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     if ($routeParams.publicationId != null) {

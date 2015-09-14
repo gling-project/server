@@ -1,5 +1,8 @@
 myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, businessService,ngTableParams,$filter,followService) {
 
+    //back to the top of the page
+    $(window).scrollTop(0);
+
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.businessListParams = {

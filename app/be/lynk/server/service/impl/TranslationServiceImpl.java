@@ -21,6 +21,8 @@ import scala.collection.immutable.Map;
 @Repository
 public class TranslationServiceImpl implements TranslationService {
 
+    private static final String LANG_BASE = "fr";
+
     @Override
     public TranslationsDTO getTranslations(Lang lang) {
 
@@ -35,9 +37,9 @@ public class TranslationServiceImpl implements TranslationService {
             }
         }
 
-        if(!lang.code().equals("en")) {
+        if(!lang.code().equals(LANG_BASE)) {
 
-            Option<Map<String, String>> mapDefaultLanguage = Play.current().plugin(MessagesPlugin.class).get().api().messages().get("en");
+            Option<Map<String, String>> mapDefaultLanguage = Play.current().plugin(MessagesPlugin.class).get().api().messages().get(LANG_BASE);
 
             java.util.Map<String, String> mapAsJavaDefault = JavaConverters.mapAsJavaMapConverter(mapDefaultLanguage.get()).asJava();
 

@@ -2,7 +2,7 @@
         class="navigation-bar"
         ng-class="{'header-with-advanced-search':advancedSearch}">
 
-    <div class="container header-option-container" >
+    <div class="container header-option-container">
 
         <h1 style="cursor : pointer"
             id="welcome-btn-welcome"
@@ -11,7 +11,7 @@
         </h1>
 
         <!-- seach bar -->
-        <search-bar-ctrl  ng-info="{mobile:false}"></search-bar-ctrl>
+        <search-bar-ctrl ng-info="{mobile:false}"></search-bar-ctrl>
 
 
         <!-- position choice -->
@@ -19,17 +19,17 @@
                 class="gling-button-light"
                 ng-model="currentPosition"
                 ng-options="position.key as position.translation | translateText for position in positions"
-                style="display: inline-block;width: 120px">
+                style="display: inline-block;width: 150px">
         </select>
 
 
         <!-- not connected menu -->
         <div class="profile-buttons-container" ng-show="accountService.getMyself()==null">
             <!-- lang -->
-            <select class="gling-button-light"
-                    ng-model="languageService.currentLanguage"
-                    ng-options="lang.code as lang.language for lang in languageService.languages">
-            </select>
+            <!--<select class="gling-button-light"-->
+            <!--ng-model="languageService.currentLanguage"-->
+            <!--ng-options="lang.code as lang.language for lang in languageService.languages">-->
+            <!--</select>-->
             <button
                     type="button"
                     id="welcome-btn-login"
@@ -37,7 +37,9 @@
                     ng-click="login()">
                 {{'--.welcome.login' | translateText}}
             </button>
-            {{'--.generic.or' | translateText}}
+            <span>
+                {{'--.generic.or' | translateText}}
+            </span>
             <button
                     type="button"
                     class="gling-button"
@@ -70,7 +72,8 @@
                         role="menu"
                         aria-labelledby="dropdownMenu1">
                         <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')" id="welcome-btn-profile">
+                            <a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/profile')"
+                               id="welcome-btn-profile">
                                 {{'--.welcome.myProfile' | translateText}}
                             </a>
                         </li>
@@ -79,8 +82,10 @@
                                 {{'--.welcome.myBusinesses' | translateText}}
                             </a>
                         </li>
-                        <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation" id="welcome-btn-business">
-                            <a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
+                        <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"
+                            id="welcome-btn-business">
+                            <a role="menuitem" tabindex="-1" href=""
+                               ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
                                 {{'--.welcome.myBusiness' | translateText}}
                             </a>
                         </li>

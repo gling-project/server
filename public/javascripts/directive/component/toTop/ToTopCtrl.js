@@ -18,7 +18,6 @@ myApp.directive('toTopCtrl', function ($window) {
                     scope.displayToTopButton = $(window).scrollTop() > 100;
                     angular.element($window).bind("scroll", function () {
                         scope.displayToTopButton = $(window).scrollTop() > 100;
-                        console.log(scope.displayToTopButton);
                         scope.$apply();
                     });
                 }

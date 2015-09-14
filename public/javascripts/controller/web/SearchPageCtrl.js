@@ -1,5 +1,8 @@
 myApp.controller('SearchPageCtrl', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
 
+    //back to the top of the page
+    $(window).scrollTop(0);
+
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     var param = $routeParams.param;
@@ -81,8 +84,8 @@ myApp.controller('SearchPageCtrl', function ($rootScope, $scope, searchService, 
                     for (var cat2 in $scope.results.categoriesMap[cat]) {
                         for (var cat3 in $scope.results.categoriesMap[cat][cat2]) {
                             $scope.categoryTab.total += $scope.results.categoriesMap[cat][cat2][cat3].length;
-                            if($scope.results.categoriesMap[cat][cat2][cat3].length == 20){
-                                $scope.categoryTab.loadCategory=true;
+                            if ($scope.results.categoriesMap[cat][cat2][cat3].length == 20) {
+                                $scope.categoryTab.loadCategory = true;
                             }
                         }
                     }
@@ -187,7 +190,7 @@ myApp.controller('SearchPageCtrl', function ($rootScope, $scope, searchService, 
                             searchService.searchByString(tabToLoad.currentPage, s, function (data) {
                                 $scope.loadSemaphore = false;
                                 var total = $scope.fusionCategories(data.categoriesMap);
-                                if(total==0){
+                                if (total == 0) {
                                     tabToLoad.allLoaded = true;
                                 }
                             });

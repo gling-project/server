@@ -1,5 +1,8 @@
 myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $window) {
 
+    //back to the top of the page
+    $(window).scrollTop(0);
+
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.computeList = function () {
