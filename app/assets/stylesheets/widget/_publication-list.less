@@ -1,11 +1,11 @@
 //@publication-border-color: @color-green-light;
-@publication-border-color: @color-green-light;
+@publication-border-color: @color-blue-dark;
 @publication-border-color-hover: @color-blue-dark;
 @publication-border-color-followed: @color-blue-dark;
 @publication-border-color-followed-hover: @color-green-light;
 @publication-text-color: @color-blue-dark;
 @publication-text-color-selected: @color-green-light;
-@border-size: 2px;
+@border-size: 1px;
 
 .publication-list {
     font-family: "myFont";
@@ -146,7 +146,7 @@
                 font-size: 18px;
                 padding-top: 10px;
 
-                div:first-child {
+                .publication-header-title-top {
                     min-height: 50px;
                     i {
                         margin-right: 8px;
@@ -171,6 +171,7 @@
         .publication-body {
             margin-left: 25px;
             margin-right: 25px;
+            margin-bottom: 20px;
             & > * {
                 vertical-align: top;
                 border-radius: 10px;
@@ -259,6 +260,7 @@
             float: right;
             padding: 8px 12px;
             font-size: 14px;
+            margin-bottom: 5px;
             margin-right: 25px;
             color: @publication-text-color;
             top: 20px;
@@ -270,6 +272,8 @@
             }
 
             &.publication-box-price {
+                background-color: @publication-text-color !important;
+                color: white !important;
                 span:first-child {
                     font-size: 16px;
                     font-weight: bold;
@@ -282,7 +286,6 @@
         }
 
         .publication-footer {
-            margin-top: 20px;
             height: 25px;
             margin-bottom: 20px;
             .publication-footer-facebook {

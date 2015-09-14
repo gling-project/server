@@ -1,6 +1,6 @@
 <to-top-ctrl></to-top-ctrl>
 
-<div>
+<div class="search-page">
 
     <div ng-show="results == null" class="loading">
         <img src="/assets/images/big_loading.gif"/>
@@ -33,11 +33,17 @@
                 </div>
 
                 <div ng-repeat="(cat,value) in categoryTab.data">
-                    <div class="link" ng-click="navigateTo('/search/category:'+cat)">-{{cat | translateText}}</div>
+                    <div class="search-category link search-category-lev1" ng-click="navigateTo('/search/category:'+cat)">
+                        {{cat | translateText}}
+                    </div>
                     <div ng-repeat="(sCat,value2) in value">
-                        <div class="link" ng-click="navigateTo('/search/category:'+sCat)">--{{sCat | translateText}}</div>
+                        <div class="search-category link search-category-lev2" ng-click="navigateTo('/search/category:'+sCat)">
+                            {{sCat | translateText}}
+                        </div>
                         <div ng-repeat="(ssCat,value3) in value2">
-                            <div class="link" ng-click="navigateTo('/search/category:'+ssCat)">---{{ssCat | translateText}}</div>
+                            <div class="search-category link search-category-lev3" ng-click="navigateTo('/search/category:'+ssCat)">
+                                {{ssCat | translateText}}
+                            </div>
                             <business-list-ctrl
                                     ng-info="{data:value3,loading:false}"></business-list-ctrl>
                         </div>

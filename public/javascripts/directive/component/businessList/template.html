@@ -61,10 +61,12 @@
             <div class="publication-data publication-bordered"
                  ng-hide="business.description == null">
 
-                <category-line-ctrl ng-info="{categories:business.categories}"></category-line-ctrl>
+                <div class="publication-data-body">
 
-                {{business.description}}
+                    <category-line-ctrl ng-info="{categories:business.categories}"></category-line-ctrl>
 
+                    {{business.description}}
+                </div>
             </div>
 
         </div>
