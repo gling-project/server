@@ -1,48 +1,69 @@
 @(languages: be.lynk.server.dto.ListDTO[be.lynk.server.dto.LangDTO])
 
-@import com.fasterxml.jackson.databind.ObjectMapper
+    @import com.fasterxml.jackson.databind.ObjectMapper
 
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <title>@Messages("--.site.name")</title>
-        <meta charset="utf-8"/>
-        <base href="/">
-            <!-- main -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <html>
+        <head>
+            <title>@Messages("--.site.name")</title>
+            <meta charset="utf-8"/>
+            <base href="/">
+                <!-- main -->
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap.min.css")">
-            <!-- 19 ko -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap-theme.min.css")">
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap.min.css")">
+                <!-- 19 ko -->
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap-theme.min.css")">
 
 
-            <!-- main -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/welcome-page.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/glingicon.css")">
-    </head>
-    <body >
+                <!-- main -->
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/welcome-page.css")">
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/glingicon.css")">
+        </head>
+        <body >
 
-            <!-- load data -->
-        <script>
-        var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;
-        </script>
+                <!-- load data -->
+            <script>
+            var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;
+            </script>
 
-        <div class="global-container">
+            <div class="global-container">
+                <div class="header">
+                    <div class="gling-icon-logoapp logo"></div>
+                    <p>What's up in my shops</p>
 
-            <div class="header">
-                <span class="gling-icon-logoapp logo"></span>
-                <p>What's up in my shops</p>
+                </div>
+
+                <div class="header-bottom">
+                    <button class="gling-button">Start to Gling</button>
+                </div>
+
+                <div class="text-block ">
+                    <div class="center">
+                        <div class="gling-icon-people icon"></div>
+                    </div>
+                    Vous aimez vos commerces ?<br/> <br/>
+                    Bienvenue dans votre nouveau réseau exclusivement consacré à vos commerces de proximité favoris !<br/>
+                    Restaurants, boutiques de vêtements, théâtres, magasins de décoration,… Gling rassemble tous les types d’établissements et vous permet d’avoir instantanément accès à leurs nouveautés, promotions, événements et autres actualités pertinentes les concernant.<br/>
+                    Centrez vos recherches selon vos envies du moment, localisez-vous à la maison ou au travail et découvrez en quelques clics des informations exclusives !
+                    <div class="action">
+                        <button class="gling-button">Enregistrez-vous dés maintenant et profiter pleinement de toutes les fonctionnalités de Gling</button>
+                    </div>
+                </div>
+
+                <div class="text-block">
+                    <div class="center">
+                        <div class="gling-icon-shop icon"></div>
+                    </div>
+                    Vous êtes un commerce ?<br/> <br/>
+                    Bienvenue dans votre nouveau réseau exclusivement consacré à la communication vers vos clients !<br/>
+                    Créez en quelques clics votre profil de commerce et sélectionnez les types d’informations que vous souhaitez publier. Gardez un contact immédiat et instantané en permettant à vos clients de vous suivre au quotidien où qu’ils soient. Renforcez le lien de fidélité avec vos clients existants et faites découvrir votre commerce à leurs amis !<br/>
+                    <div class="action">
+                        <button class="gling-button">Enregistrez votre commerce dés maintenant</button>
+                    </div>
+                </div>
 
             </div>
-
-            <div class="header-bottom"></div>
-
-            <div>je suis une Welcome page</div>
-
-            <a href="/" class="btn btn-primary" id="welcome-page-switch">Start with Gling !</a>
-
-
-        </div>
-    </body>
-</html>
+        </body>
+    </html>

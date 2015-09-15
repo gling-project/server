@@ -130,6 +130,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/searchBar/SearchBarCtrl.js',
                         'public/javascripts/directive/component/followWidget/FollowWidgetCtrl.js',
                         'public/javascripts/directive/component/facebookSharePublication/FacebookSharePublicationCtrl.js',
+                        'public/javascripts/directive/component/helpPopup/HelpPopupCtrl.js',
 
                         <!-- filters -->
                         'public/javascripts/filter/TranslateTextFilter.js',
