@@ -1,6 +1,6 @@
 # DEV
-export PGPASSWORD='florian';
-DB_CONNECTION="heroku pg:psql --app lynk-test DATABASE"
+    export PGPASSWORD='florian';
+    DB_CONNECTION="heroku pg:psql --app lynk-test DATABASE"
 
 echo "[DROP SCHEMA]"
 echo "DROP SCHEMA public CASCADE;" | eval $DB_CONNECTION

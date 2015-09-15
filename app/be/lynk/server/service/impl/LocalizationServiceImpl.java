@@ -19,6 +19,7 @@ import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixRow;
 import org.springframework.stereotype.Service;
 import play.Configuration;
+import play.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,6 +46,8 @@ public class LocalizationServiceImpl implements LocalizationService {
         try {
             GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
             if (!geocoderResponse.getStatus().equals(GeocoderStatus.OK)) {
+                Logger.error("wrong status from google map : "+geocoderResponse.getStatus());
+                Logger.error(geocoderResponse.getResults()+"");
                 throw new Exception();
             }
             address.setPosx(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue());
