@@ -1,9 +1,19 @@
-myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $window) {
+myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout,addressService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+
+    $scope.displaySharePositionAdvertissement = function(){
+        return geolocationService.sharePosition == false && accountService.getMyself().selectedAddress==null;
+    };
+    $rootScope.$watch(function(){
+        return geolocationService.sharePosition;
+    },function(n){
+        $scope.sharePosition=n;
+    });
 
     $scope.computeList = function () {
         $scope.interestDisplayed = $scope.customerInterests.slice($scope.interestDisplayFirst, $scope.interestDisplayMax + $scope.interestDisplayFirst);
@@ -223,6 +233,27 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             }
         }
     };
+
+    $scope.createNewAddress = function(){
+        if (accountService.getMyself() != null) {
+            $scope.createNewAddressLaunch();
+        }
+        else {
+            modalService.openLoginModal($scope.createNewAddressLaunch);
+        }
+    };
+
+    $scope.createNewAddressLaunch = function(){
+
+        modalService.addressModal(true,null,false,function(data){
+            $timeout(function () {
+                addressService.changeAddress(data.name,function(data){
+                    accountService.getMyself().selectedAddress = data;
+                });
+            },1);
+        });
+    };
+
 
     //initialize
     if (geolocationService.position != null) {

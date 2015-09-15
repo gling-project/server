@@ -5,6 +5,11 @@
 <div class="modal-body modal-login customer-registration" dir-enter="save()">
 
 
+    <div class="modal-description">{{'--.customer.registrationModal.personal.desc' | translateText}}<br/>
+        <span class="modal-login-link link" ng-click="toBusinessRegistration()">{{'--.registrationModal.toBusinessRegistration' | translateText}}</span>
+    </div>
+
+
     <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
     <table class="horizontal-split">

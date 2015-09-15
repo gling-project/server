@@ -2,6 +2,15 @@
 
     <to-top-ctrl></to-top-ctrl>
 
+    <div class="help-div" ng-show="displaySharePositionAdvertissement() && openGeolocationPopup !== true">
+        <button class="help-popup-close glyphicon glyphicon-remove"
+                ng-click="openGeolocationPopup=true"></button>
+        Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/>
+        <a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>
+        Si vous ne voulez pas partager votre position, vous pouvez aussi
+        <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
+    </div>
+
 
     <div class="home-interest-switch home-interest-box">
 
@@ -44,8 +53,9 @@
         <div class="home-interest-box-background">
 
             <button ng-click="left()"
-                    class="gling-button home-interest home-interest-arrow gling-icon-arrow_left"
+                    class="gling-button home-interest home-interest-arrow gling-icon-arrow_left button-with-label"
                     ng-disabled="interestDisplayFirst <= 0">
+                <p>{{'--.home.interest.arrow.label' | translateText}}</p>
             </button>
 
             <button class="gling-button home-interest button-with-label {{'gling-icon-' + interest.name}}"
@@ -57,8 +67,9 @@
             </button>
 
             <button ng-click="right()"
-                    class="gling-button home-interest home-interest-arrow gling-icon-arrow_right"
+                    class="gling-button home-interest home-interest-arrow gling-icon-arrow_right button-with-label"
                     ng-disabled="interestDisplayFirst >= customerInterests.length - interestDisplayMax">
+                <p>{{'--.home.interest.arrow.label' | translateText}}</p>
             </button>
         </div>
 

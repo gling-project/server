@@ -134,7 +134,8 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     {
                         dto: $scope.business,
                         target: 'business_illustration',
-                        fieldName: 'illustration'
+                        fieldName: 'illustration',
+                        details: '--.business.logo.edit.modal.description'
                     },
                     function (close, setLoading) {
                         businessService.editIllustration($scope.business.illustration, function () {
@@ -153,7 +154,8 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     {
                         dto: $scope.business,
                         target: 'business_landscape',
-                        fieldName: 'landscape'
+                        fieldName: 'landscape',
+                        details: '--.business.landscape.edit.modal.description'
                     },
                     function (close, setLoading) {
                         businessService.editLandscape($scope.business.landscape, function () {
@@ -252,7 +254,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                         validationMessage: '--.error.validation.image',
                         field: business,
                         multiple: true,
-                        target:'galley_picture',
+                        target: 'galley_picture',
                         fieldName: 'galleryPictures'
                     },
                     function (close, setLoading) {
@@ -273,7 +275,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                 if (socialNetwork == undefined || socialNetwork == null) {
                     socialNetwork = {};
                 }
-                modalService.basicModal("--.business.edit.address.modal.title", "business-social-network-ctrl",
+                modalService.basicModal("--.business.edit.socialNetwork.modal.title", "business-social-network-ctrl",
                     {
                         dto: socialNetwork
                     },
@@ -326,6 +328,45 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     }
                 }
                 return false;
+            };
+
+            $scope.displaySocialNetwork = function () {
+                var s = $scope.business.socialNetwork;
+                if (s == null) {
+                    return false;
+                }
+                return s.facebookLink != null ||
+                    s.twitterLink != null ||
+                    s.instagramLink != null ||
+                    s.deliveryLink != null ||
+                    s.opinionLink != null ||
+                    s.reservationLink != null;
+            };
+
+            $scope.computeProgression = function () {
+                var total = 0;
+                if ($scope.business.description != null) {
+                    total++;
+                }
+                if ($scope.business.landscape != null) {
+                    total++;
+                }
+                if ($scope.business.galleryPictures.length > 0) {
+                    total++;
+                }
+                if ($scope.displaySocialNetwork()) {
+                    total++;
+                }
+                if ($scope.displaySchedule()) {
+                    total++;
+                }
+                return total;
+            };
+
+            $scope.getProgressionStyle = function () {
+                var s = 'width:' + (300 * ($scope.computeProgression() / 5)) + 'px';
+                console.log(s);
+                return s;
             };
 
 

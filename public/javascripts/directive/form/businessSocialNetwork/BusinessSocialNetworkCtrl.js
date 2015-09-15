@@ -70,6 +70,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                         },
                         delivery: {
                             name:'delivery',
+                            details:'--.business.social.edit.modal.delivery.desc',
                             fieldTitle: "--.business.socialNetwork.delivery",
                             fieldImage:'assets/social_network/delivery.png',
                             validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
@@ -102,6 +103,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                         },
                         opinion: {
                             name:'opinion',
+                            details:'--.business.social.edit.modal.opinion.desc',
                             fieldTitle: "--.business.socialNetwork.opinion",
                             fieldImage:'assets/social_network/opinion.png',
                             validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",

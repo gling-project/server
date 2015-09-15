@@ -9,7 +9,7 @@
 --.generic.submit=Soumettre
 --.generic.password=Mot de passe
 --.generic.lastname=Nom
---.generic.or=Ou
+--.generic.or=ou
 --.generic.male=Homme
 --.generic.validation.repeatPassword=Les deux mots de passe ne pas peuvent être identiques.
 --.generic.validation.email=Merci d'entrer une adresse email valide.
@@ -43,7 +43,7 @@
 --.generic.edit=Editer
 --.generic.cancel=Annuler
 --.generic.remove=Supprimer
---.generic.description=Description
+#--.generic.description=Description
 --.generic.login.btn=Connexion
 --.generic.validation.max=Maximum {0} caractères
 ###--.generic.image=Image
@@ -59,7 +59,7 @@
 --.generic.validation.facebook=L'adresse indiquée n'est pas une adresse Facebook valide! (elle doit commencer par https\://facebook.com/)
 --.generic.validation.twitter=L'adresse indiquée n'est pas une adresse Twitter valide! (elle doit commencer par https\://twitter.com/)
 --.generic.title=Titre
---.generic.socialNetwork=Liens utiles
+--.generic.socialNetwork=Lien(s) utile(s)
 --.generic.comment=Commentaires
 --.generic.validation.instagram=L'adresse reprise n'est pas une adresse Instagram valide! (elle doit commencer par https\://instagram.com/)
 --.generic.gallery=Galerie
@@ -137,9 +137,9 @@
 	
 	
 	
-##  modal/CustomerRegistrationModal/view.html	
+##  modal/CustomerRegistrationModal/view.html
 --.customer.registrationModal.interest.title=Intérêts
---.customer.registrationModal.interest.desc=Sélectionnez vos centres d'intérêts. Ils nous permettront de vous proposer des nouveautés et promotions qui vous correspondent! Vous pouvez également cliquer sur 'passer' et sélectionner vos intérêts plus tard.
+--.customer.registrationModal.interest.desc=Sélectionnez vos centres d'intérêts. Ils nous permettront de mieux vous proposer des nouveautés et promotions qui vous correspondent! Vous pouvez également cliquer sur 'passer' et sélectionner vos intérêts plus tard.
 --.loginModal.facebook.btn=Connection avec Facebook
 --.customer.registrationModal.address.desc=Encodez une adresse (domicile, lieu de travail, sport). Vous pourrez utiliser cette adresse pour localiser des magasins aux alentours. Vous pouvez également cliquer sur 'passer' et encoder votre adresse plus tard.
 --.customer.registrationModal.title=Créer un nouveau compte
@@ -147,7 +147,7 @@
 --.customer.registrationModal.personal.address=Adresse
 --.customer.registrationModal.personal.title=Personnelle
 --.registrationModal.facebook.btn=Enregistrez-vous avec Facebook.
---.registrationModal.toBusinessRegistration=Vous désirez enregistrer votre commerce? Cliquez ici!
+--.registrationModal.toBusinessRegistration=Vous êtes commerçant? Cliquez ici!
 	
 ##  view/home.html	
 	
@@ -184,12 +184,12 @@
 ##  view/business_welcome.html	
 ###--.business.profile.businessCategory=Type de commerce
 	
-##  modal/BusinessRegistrationModal/view.html	
+##  modal/BusinessRegistrationModal/view.html
 --.business.registrationModal.category.title=Catégorie de commerce
---.business.registrationModal.business.desc=Rentrez les informations de votre commerce.
+--.business.registrationModal.business.desc=Indiquez ici les informations relatives à votre commerce
 --.business.registrationModal.title=Créez votre commerce.
 --.business.registrationModal.business.title=Information du commerce.
---.business.registrationModal.category.desc=Sélectionnez la categorie de votre commerce.
+--.business.registrationModal.category.desc=Indiquer ici la catégorie relevante pour votre commerce. Vous pouvez choisir plusieurs catégories en sein d'un même groupe.
 --.business.registrationModal.address.subtitle=Encodez l'adresse de votre commerce.
 	
 ##  directive/form/address/AddressFormCtrl.js	
@@ -210,7 +210,7 @@
 	
 ##  modal/LoginModal/view.html	
 --.loginModal.toBusinessRegistration=S'enregistrer en tant de commerçant.
---.loginModal.toCustomerRegistration=S'enregistrer en tant que client.
+--.loginModal.toCustomerRegistration=S'enregistrer en tant que consommateur.
 --.loginModal.notRegisterYet=Pas encore enregistré(e)?
 ######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
 ######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
@@ -221,7 +221,7 @@
 --.welcome.myBusiness=Mon commerce
 --.welcome.search=Que cherchez-vous?
 --.site.name=Gling
---.welcome.search.advanced.link=Recherche avancée
+#--.welcome.search.advanced.link=Recherche avancée
 --.welcome.serach.advanced.criteria=Critères
 	
 ##  view/profile.html	
@@ -256,8 +256,8 @@
 --.promotion.illustration=Photo (en option)
 --.promotion.originalUnitPrice=Prix initial
 --.promotion.validation.offPercent=La réduction doit être comprise entre 1 et 99%.
---.promotion.completePromotion=Créer une promotion 'déstockage'.
---.promotion.simplePromotion=Créer une promotion 'pourcentage'.
+--.promotion.completePromotion=Créer une promotion en affichant un prix.
+--.promotion.simplePromotion=Créer une promotion sans afficher de prix.
 	
 ##  view/web/home.html	
 	
@@ -323,14 +323,15 @@ day_abrv_sunday=Di
 ##  view/web/business.html (landscape )	
 --.business.page.edit.illustration=Editer le logo
 --.business.page.edit.business=Editer les informations
---.business.page.edit.landscape=Editer l'image de fond
+--.business.page.edit.landscape=Editer la photo de couverture
 --.business.profile.businessSchedule=Horaires
 --.business.page.edit.editSwitchEdit=Vison édition
 --.business.page.edit.editSwitchDisplay=Vision client
 --.business.page.publication=Publier ma page!
---.business.page.edit.descriptionPublished=Bienvenue sur votre page de commerce! Votre page est désormais publiée, mais vous ne pouvez modifier librement que certaines informations. Si vous désirez changer votre adresse ou le nom de votre commerce, vous devrez redemander à ce qu'il soit validé. Dans ce cas, votre commerce ne sera plus visible publiquement jusqu'à ce que notre équipe confirme vos modifications.
---.business.page.edit.description.waitConfirmation=Bienvenue sur votre page de commerce! Votre page est maintenant en attente de validation  par notre équipe. Si vous attendez cette confirmation depuis plus de 5 jours ouvrables, veuillez prendre directement contact avec nous via l'adresse email hello@gling.be.
---.business.page.edit.description.notPublished=Bienvenue sur votre page de commerce! Vous pouvez éditer vos informations à l'aide des boutons 'Editer' de la page. Une fois les modifications apportées, vous pouvez publier votre page avec le bouton ci-dessous. Votre commerce sera désormais visible pour tous les utilisateurs de Gling. Pour découvrir l'aspect visuel de votre page tel que le client la verra, vous pouvez utiliser l'interrupteur ci-dessous. N'hésitez pas à nous contacter si vous avez des questions via l'adresse email hello@gling.be.
+--.business.page.edit.description=Bienvenue sur votre page de commerce! C'est ici que vous pourrez changer les informations concernant votre commerce, publier de nouvelles promotions, actualités, etc.
+--.business.page.edit.descriptionPublished= Votre page est actuellement publique. Vous pouvez la rendre privée, si vous désirez changer des informations crutiales telles que l'adresse où le nom.
+--.business.page.edit.description.waitConfirmation=Votre page est en attente de confirmation. Un membre de notre équipe prendra contact avec vous dans les prochains jours pour valider votre identité.
+--.business.page.edit.description.notPublished=Votre page n'est actuellement pas publique, cela veut dire que personne ne peut consulter votre page ou vos publications. Avant de publier votre page, pensez à regarder si vous avez mis un maximum d'informations sur votre commerce (voir 'Ma progression' à droite). Si vous êtes près à rendre votre page publique, cliquez simplement sur 'Rendre ma page publique' ci-dessous. Un membre de notre équipe prendra contact avec vous dans les prochains jours pour valider votre identité.
 --.business.page.stopPublication.window.flash=Votre commerce est maintenant en mode édition. N'oubliez pas de le publier à nouveau à l'aide du bouton 'publier' une fois vos modifications finalisées.
 --.business.page.stopPublication.window.message=En passant en mode édition, votre commerce et ses annonces ne seront plus visible tant que vous n'aurez pas validé vos modifications. Êtes-vous certain(e) de vouloir continuer ?
 --.business.page.askPublication.window.flash=Votre commerce est maintenant en attente de validation par notre équipe.
@@ -394,7 +395,7 @@ day_abrv_sunday=Di
 	
 	
 ##  directive/form/businessSocialNetwork/template.html	
---.business.socialNetwork.form.description=Ajoutez ici les liens vers les autres plateformes sur lesquels êtes présents.
+--.business.socialNetwork.form.description=Ajoutez ici les liens vers les autres plateformes sur lesquelles votre établissement est également présent.
 	
 ##  view/web/search_page.html (business )	
 --.list.nothing=Aucun résultat trouvé.
@@ -419,8 +420,8 @@ day_abrv_sunday=Di
 --.position.current=Ma position
 	
 ##  directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js (//www.facebook\.com/.*$)",)	
---.business.socialNetwork.opinion=Commentaires & Avis (Yelp, Cityplug,…)
---.business.socialNetwork.delivery=Livraison (Take Eat Easy, Pizza.be,…)
+--.business.socialNetwork.opinion=Commentaires & Avis
+--.business.socialNetwork.delivery=Livraison
 --.business.socialNetwork.ecommerce=Vente en ligne
 --.business.socialNetwork.reservation=Réservation
 	
@@ -438,20 +439,21 @@ day_abrv_sunday=Di
 ##  controller/mobile/HomeCtrl.js (//search function)	
 --.position.newAddress=Créer une nouvelle adresse…
 	
-
-
-##  directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js (//scrolling)
+	
+	
+##  directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js (//scrolling)	
 --.business.publication.remove.confirmationModal.title=Supprimer un publication
 --.business.publication.remove.confirmationModal.body=Êtes-vous sûr de vouloir supprimer cette publication?
-
-##  view/web/followed_business_page.html
+	
+##  view/web/followed_business_page.html	
 --.followedBusiness.table.business=Commerce
 --.followedBusiness.table.followingFrom=Suivi depuis
 --.followedBusiness.table.notification=Recevoir les notifications
 --.followedBusiness.table.categories=Catégories
-
+	
 --.gallery.title=Galerie
 --.publication.description=Description (optionnelle)
+
 
 --.loginModal.fctToExecute.help=Vous devez vous enregistrez pour continuer
 --.home.interest-switch.help=Triez selon votre position ou vos commerces favoris
@@ -463,3 +465,21 @@ day_abrv_sunday=Di
 
 
 --.legal.title=Je suis les mentions légales
+--.help.title=Je suis une aide
+--.business.registrationModal.personal.desc=Indiquez ici vos informations personnelles
+
+--.headerBar.logo.label=Home
+--.home.interest.arrow.label=Découvrir d'autres centres d'intérêts.
+--.business.schedule.edit.modal.description=Indiquez ici vos heures d'ouvertures et d'affluence le cas échéant.
+--.business.logo.edit.modal.description=Insérez votre logo en choisissant de préférence une version de forme carrée afin de correspondre au mieux au design de la page. La photo doit faire au minimum 200 pixels par 200 pixels
+--.business.landscape.edit.modal.description=Insérez votre photo de fond. La photo doit faire au minimum 1000 pixels de large et 300 pixels de haut
+--.business.social.edit.modal.delivery.desc=Ex. Take Eat Easy, Pizza.be,…
+--.business.social.edit.modal.opinion.desc=Ex. Yelp, Cityplug,…
+--.business.edit.socialNetwork.modal.title=Lien(s) utile(s)
+
+--.business.page.management.title=Mon commerce
+--.business.management.progression=Ma progression
+--.business.management.progression.desc=Comment puis-je améliorer ma page de commerce ?
+--.business.status.NOT_PUBLISHED=Non publique
+--.business.status.PUBLISHED=Publique
+--.business.status.WAITING_CONFIRMATION=En attente de confirmation

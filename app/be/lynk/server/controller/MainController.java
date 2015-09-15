@@ -34,6 +34,10 @@ public class MainController extends AbstractController {
     @Autowired
     private LocalizationService localizationService;
 
+    public Result help(String url) {
+        return ok(be.lynk.server.views.html.help.render());
+    }
+
     public Result legal(String url) {
         return ok(be.lynk.server.views.html.legal.render());
     }

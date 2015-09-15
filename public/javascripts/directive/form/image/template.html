@@ -1,5 +1,9 @@
 <div class="form">
 
+
+    <div class="modal-description"  ng-show="getInfo().details!=null">{{getInfo().details | translateText}}</div>
+
+
     <dir-field-document ng-info="imageParam"></dir-field-document>
 
 </div>

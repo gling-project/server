@@ -1,4 +1,4 @@
-myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
+myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
     return {
         restrict: "E",
         scope: {},
@@ -10,13 +10,6 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
 
                     scope.currentLang = languageService.currentLang;
 
-                    scope.sharePosition = geolocationService.sharePosition;
-
-                    $rootScope.$watch(function(){
-                        return geolocationService.sharePosition;
-                    },function(n,o){
-                        scope.sharePosition=n;
-                    });
 
                     //use the model
                     scope.myself = accountService.getMyself();
@@ -26,11 +19,6 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                     scope.navigateTo = function (target) {
                         $location.path(target);
                     };
-
-
-                    scope.$on('DISPLAY_ADVANCED_SEARCH', function (event, params) {
-                        scope.advancedSearch = params.display;
-                    });
 
 
                     //login open modal
@@ -72,38 +60,56 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                     scope.languageService = languageService;
 
 
-                    scope.positionBasicData =[
+                    scope.positionBasicData = [
                         {key: 'currentPosition', translation: '--.position.current'},
                         {key: 'createNewAddress', translation: '--.position.newAddress'}
                     ];
 
-                    scope.positions =angular.copy(scope.positionBasicData);
+                    scope.positions = angular.copy(scope.positionBasicData);
 
                     scope.currentPositionText = 'currentPosition';
 
-                    scope.createNewAddress = function(o){
-                        scope.currentPosition=o;
-                        modalService.addressModal(true,null,false,function(data){
+                    //$scope.$broadcast('CHANGE_ADDRESS',{address:data});
+
+                    $rootScope.$on('CHANGE_ADDRESS', function (data) {
+                        scope.currentPosition = data.address.name;
+                    });
+
+                    scope.createNewAddress = function (o) {
+                        scope.currentPosition = o;
+                        modalService.addressModal(true, null, false, function (data) {
                             $timeout(function () {
                                 scope.currentPosition = data.name;
-                            },1);
+                            }, 1);
                         });
                     };
+
+                    $rootScope.$watch(function () {
+                        return accountService.getMyself().selectedAddress;
+                    }, function (n,o) {
+                        if(n!=o) {
+                            if(accountService.getMyself().selectedAddress==null){
+                                scope.currentPosition = 'currentPosition';
+                                return;
+                            }
+                            scope.currentPosition = accountService.getMyself().selectedAddress.name;
+                        }
+                    });
 
                     $timeout(function () {
                         completePositions();
 
-                        scope.$watch('currentPosition', function (n,o) {
+                        scope.$watch('currentPosition', function (n, o) {
                             if (n != null && o != n) {
-                                if(scope.currentPosition == 'createNewAddress'){
+                                if (scope.currentPosition == 'createNewAddress') {
                                     if (accountService.getMyself(o) != null) {
                                         scope.createNewAddress();
                                     }
                                     else {
-                                        modalService.openLoginModal(scope.createNewAddress,o);
+                                        modalService.openLoginModal(scope.createNewAddress, o);
                                     }
                                 }
-                                else if(scope.currentPosition != scope.positionCurrenltyComputed){
+                                else if (scope.currentPosition != scope.positionCurrenltyComputed) {
                                     scope.positionCurrenltyComputed = scope.currentPosition;
                                     addressService.changeAddress(scope.currentPosition, function (result) {
 
@@ -134,7 +140,7 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                         scope.positions = angular.copy(scope.positionBasicData);
                         if (accountService.getMyself() != null) {
                             for (var key in accountService.getMyself().addresses) {
-                                scope.positions.splice(scope.positions.length - 1 ,0,
+                                scope.positions.splice(scope.positions.length - 1, 0,
                                     {
                                         key: accountService.getMyself().addresses[key].name,
                                         translation: accountService.getMyself().addresses[key].name
@@ -142,7 +148,7 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                             }
                         }
                         scope.currentPosition = geolocationService.getLocationText();
-                        scope.positionCurrenltyComputed=scope.currentPosition;
+                        scope.positionCurrenltyComputed = scope.currentPosition;
                     };
 
                     $rootScope.$watch(function () {

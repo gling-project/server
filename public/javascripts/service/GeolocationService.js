@@ -6,48 +6,6 @@ myApp.service("geolocationService", function ($rootScope, geolocation, $http, ac
         this.geoPositionAlreadyComputed = false;
         var self = this;
         this.sharePosition = false;
-        console.log("$window.navigator catch : " + navigator.geolocation != null);
-        console.log(navigator.geolocation);
-
-
-        //1) test compatibility
-        if (navigator.geolocation) {
-            console.log('Geolocation is supported!');
-        }
-        else {
-            console.log('Geolocation is not supported for this Browser/OS version yet.');
-        }
-
-
-        navigator.geolocation.watchPosition(function (position) {
-            console.log("------------- this is the position");
-            console.log(position);
-            self.sharePosition=true;
-        }, function (error) {
-            console.log("------------- this is an error !! ");
-            console.log(error);
-        }, {
-            maximumAge: 5 * 60 * 1000,
-            timeout: 2 * 1000
-        });
-
-        //
-
-        //$rootScope.$watch(function () {
-        //    return navigator.geolocation;
-        //}, function (o, n) {
-        //    console.log("$window.navigator catch : " + n);
-        //    this.sharePosition = n;
-        //});
-
-        //navigator.geolocation.watchPosition(function (position) {
-        //        console.log("i'm tracking you!");
-        //        console.log(position);
-        //    },
-        //    function (error) {
-        //        if (error.code == error.PERMISSION_DENIED)
-        //            console.log("you denied me :-(");
-        //    });
 
 
         $http({
@@ -80,10 +38,15 @@ myApp.service("geolocationService", function ($rootScope, geolocation, $http, ac
                         y: position.coords.longitude
                     };
                     computePosition();
+                    self.sharePosition = true;
                     this.geoPositionAlreadyComputed = true;
                     $timeout(function () {
                         $rootScope.$broadcast('POSITION_CHANGED');
                     }, 1);
+                }, function () {
+                }, {
+                    maximumAge: 5 * 60 * 1000,
+                    timeout: 2 * 1000
                 });
         }
 

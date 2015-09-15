@@ -606,9 +606,9 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
         $modalInstance.close();
     };
 
-    $scope.toCustomerRegistration = function () {
+    $scope.toBusinessRegistration = function () {
         $scope.close();
-        modalService.openCustomerRegistrationModal();
+        modalService.openBusinessRegistrationModal();
     };
 
     //
@@ -1255,12 +1255,22 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'imag
     };
 
 }]);
-myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$window', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $window) {
+myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout,addressService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+
+    $scope.displaySharePositionAdvertissement = function(){
+        return geolocationService.sharePosition == false && accountService.getMyself().selectedAddress==null;
+    };
+    $rootScope.$watch(function(){
+        return geolocationService.sharePosition;
+    },function(n){
+        $scope.sharePosition=n;
+    });
 
     $scope.computeList = function () {
         $scope.interestDisplayed = $scope.customerInterests.slice($scope.interestDisplayFirst, $scope.interestDisplayMax + $scope.interestDisplayFirst);
@@ -1481,6 +1491,27 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         }
     };
 
+    $scope.createNewAddress = function(){
+        if (accountService.getMyself() != null) {
+            $scope.createNewAddressLaunch();
+        }
+        else {
+            modalService.openLoginModal($scope.createNewAddressLaunch);
+        }
+    };
+
+    $scope.createNewAddressLaunch = function(){
+
+        modalService.addressModal(true,null,false,function(data){
+            $timeout(function () {
+                addressService.changeAddress(data.name,function(data){
+                    accountService.getMyself().selectedAddress = data;
+                });
+            },1);
+        });
+    };
+
+
     //initialize
     if (geolocationService.position != null) {
         $scope.currentPage = 0;
@@ -1688,7 +1719,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     {
                         dto: $scope.business,
                         target: 'business_illustration',
-                        fieldName: 'illustration'
+                        fieldName: 'illustration',
+                        details: '--.business.logo.edit.modal.description'
                     },
                     function (close, setLoading) {
                         businessService.editIllustration($scope.business.illustration, function () {
@@ -1707,7 +1739,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     {
                         dto: $scope.business,
                         target: 'business_landscape',
-                        fieldName: 'landscape'
+                        fieldName: 'landscape',
+                        details: '--.business.landscape.edit.modal.description'
                     },
                     function (close, setLoading) {
                         businessService.editLandscape($scope.business.landscape, function () {
@@ -1806,7 +1839,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                         validationMessage: '--.error.validation.image',
                         field: business,
                         multiple: true,
-                        target:'galley_picture',
+                        target: 'galley_picture',
                         fieldName: 'galleryPictures'
                     },
                     function (close, setLoading) {
@@ -1827,7 +1860,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                 if (socialNetwork == undefined || socialNetwork == null) {
                     socialNetwork = {};
                 }
-                modalService.basicModal("--.business.edit.address.modal.title", "business-social-network-ctrl",
+                modalService.basicModal("--.business.edit.socialNetwork.modal.title", "business-social-network-ctrl",
                     {
                         dto: socialNetwork
                     },
@@ -1880,6 +1913,45 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     }
                 }
                 return false;
+            };
+
+            $scope.displaySocialNetwork = function () {
+                var s = $scope.business.socialNetwork;
+                if (s == null) {
+                    return false;
+                }
+                return s.facebookLink != null ||
+                    s.twitterLink != null ||
+                    s.instagramLink != null ||
+                    s.deliveryLink != null ||
+                    s.opinionLink != null ||
+                    s.reservationLink != null;
+            };
+
+            $scope.computeProgression = function () {
+                var total = 0;
+                if ($scope.business.description != null) {
+                    total++;
+                }
+                if ($scope.business.landscape != null) {
+                    total++;
+                }
+                if ($scope.business.galleryPictures.length > 0) {
+                    total++;
+                }
+                if ($scope.displaySocialNetwork()) {
+                    total++;
+                }
+                if ($scope.displaySchedule()) {
+                    total++;
+                }
+                return total;
+            };
+
+            $scope.getProgressionStyle = function () {
+                var s = 'width:' + (300 * ($scope.computeProgression() / 5)) + 'px';
+                console.log(s);
+                return s;
             };
 
 
@@ -2394,7 +2466,7 @@ myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocati
         }
     }
 }]);
-myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', function (accountService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
+myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', function (addressService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
     return {
         restrict: "E",
         scope: {},
@@ -2406,13 +2478,6 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
 
                     scope.currentLang = languageService.currentLang;
 
-                    scope.sharePosition = geolocationService.sharePosition;
-
-                    $rootScope.$watch(function(){
-                        return geolocationService.sharePosition;
-                    },function(n,o){
-                        scope.sharePosition=n;
-                    });
 
                     //use the model
                     scope.myself = accountService.getMyself();
@@ -2422,11 +2487,6 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
                     scope.navigateTo = function (target) {
                         $location.path(target);
                     };
-
-
-                    scope.$on('DISPLAY_ADVANCED_SEARCH', function (event, params) {
-                        scope.advancedSearch = params.display;
-                    });
 
 
                     //login open modal
@@ -2468,38 +2528,56 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
                     scope.languageService = languageService;
 
 
-                    scope.positionBasicData =[
+                    scope.positionBasicData = [
                         {key: 'currentPosition', translation: '--.position.current'},
                         {key: 'createNewAddress', translation: '--.position.newAddress'}
                     ];
 
-                    scope.positions =angular.copy(scope.positionBasicData);
+                    scope.positions = angular.copy(scope.positionBasicData);
 
                     scope.currentPositionText = 'currentPosition';
 
-                    scope.createNewAddress = function(o){
-                        scope.currentPosition=o;
-                        modalService.addressModal(true,null,false,function(data){
+                    //$scope.$broadcast('CHANGE_ADDRESS',{address:data});
+
+                    $rootScope.$on('CHANGE_ADDRESS', function (data) {
+                        scope.currentPosition = data.address.name;
+                    });
+
+                    scope.createNewAddress = function (o) {
+                        scope.currentPosition = o;
+                        modalService.addressModal(true, null, false, function (data) {
                             $timeout(function () {
                                 scope.currentPosition = data.name;
-                            },1);
+                            }, 1);
                         });
                     };
+
+                    $rootScope.$watch(function () {
+                        return accountService.getMyself().selectedAddress;
+                    }, function (n,o) {
+                        if(n!=o) {
+                            if(accountService.getMyself().selectedAddress==null){
+                                scope.currentPosition = 'currentPosition';
+                                return;
+                            }
+                            scope.currentPosition = accountService.getMyself().selectedAddress.name;
+                        }
+                    });
 
                     $timeout(function () {
                         completePositions();
 
-                        scope.$watch('currentPosition', function (n,o) {
+                        scope.$watch('currentPosition', function (n, o) {
                             if (n != null && o != n) {
-                                if(scope.currentPosition == 'createNewAddress'){
+                                if (scope.currentPosition == 'createNewAddress') {
                                     if (accountService.getMyself(o) != null) {
                                         scope.createNewAddress();
                                     }
                                     else {
-                                        modalService.openLoginModal(scope.createNewAddress,o);
+                                        modalService.openLoginModal(scope.createNewAddress, o);
                                     }
                                 }
-                                else if(scope.currentPosition != scope.positionCurrenltyComputed){
+                                else if (scope.currentPosition != scope.positionCurrenltyComputed) {
                                     scope.positionCurrenltyComputed = scope.currentPosition;
                                     addressService.changeAddress(scope.currentPosition, function (result) {
 
@@ -2530,7 +2608,7 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
                         scope.positions = angular.copy(scope.positionBasicData);
                         if (accountService.getMyself() != null) {
                             for (var key in accountService.getMyself().addresses) {
-                                scope.positions.splice(scope.positions.length - 1 ,0,
+                                scope.positions.splice(scope.positions.length - 1, 0,
                                     {
                                         key: accountService.getMyself().addresses[key].name,
                                         translation: accountService.getMyself().addresses[key].name
@@ -2538,7 +2616,7 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
                             }
                         }
                         scope.currentPosition = geolocationService.getLocationText();
-                        scope.positionCurrenltyComputed=scope.currentPosition;
+                        scope.positionCurrenltyComputed = scope.currentPosition;
                     };
 
                     $rootScope.$watch(function () {

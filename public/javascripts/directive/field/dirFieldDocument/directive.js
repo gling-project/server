@@ -12,6 +12,11 @@ myApp.directive("dirFieldDocument", function(directiveService, $upload, $flash, 
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    console.log('getInfo()');
+                    console.log(scope.getInfo());
+
+
+
                     scope.id = generateId.generate();
                     scope.errorMessage = "";
 

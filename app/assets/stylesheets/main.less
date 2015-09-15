@@ -32,14 +32,17 @@
 @import 'widget/_toTop';
 @import 'widget/_search-page';
 
+//33CC99
+//28FDA7
+
 //gling official color
-@color-green-dark: #33CC99;
+@color-green-dark: #00B49B;
 //@color-green-light: #00f9b7;
 //@color-green-light: #4dfbcd;
 //@color-green-light: #33CC99;
 //@color-green-light: #19d2aa;
 //power point
-@color-green-light: #19cfa7;
+@color-green-light: #1AD2AA;
 //gling.be
 //@color-green-light: #28fca7;
 //@color-blue-dark: #2c265c;
@@ -334,6 +337,10 @@ a {
     text-align: center;
 }
 
+.generic-bold{
+    font-weight: bold;
+}
+
 .generic-inline-block {
     display: inline-block;
     vertical-align: top;
@@ -456,7 +463,7 @@ a {
     font-size: 16px;
 }
 
-.panel {
+.panel-gling {
     border-radius: 20px;
     border: 1px solid @color-blue-dark;
     overflow: hidden;
@@ -479,6 +486,7 @@ a {
     position: absolute;
     width: 300px;
     background-color: @color-help;
+    z-index: 1;
     font-size: 16px;
     padding: 10px;
     border: 1px solid #000000;
@@ -498,4 +506,34 @@ a {
             color: @color-help;
         }
     }
+}
+.help-div{
+    background-color: @color-help;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #000000;
+    margin: 5px;
+
+    .help-popup-close{
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 12px;
+        border-radius: 20px;
+        width: 22px;
+        height: 22px;
+        float: right;
+        &:hover,
+        &:focus{
+            background-color: #000000;
+            color: @color-help;
+        }
+    }
+}
+
+.modal-description {
+    background-color: #efefef;
+    margin: 5px;
+    padding: 3px 25px;
+    width: 90%;
 }

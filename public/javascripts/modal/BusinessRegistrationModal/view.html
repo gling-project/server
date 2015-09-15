@@ -20,6 +20,12 @@
     </div>
 
     <div ng-show="badgeSelected==1">
+
+        <div class="modal-description">
+            {{'--.business.registrationModal.personal.desc' | translateText}}
+        </div>
+
+
         <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
         <table class="horizontal-split">
@@ -43,12 +49,14 @@
 
     </div>
     <div ng-show="badgeSelected==2">
+
         <div class="modal-description">{{'--.business.registrationModal.business.desc' | translateText}}</div>
         <business-form-ctrl ng-info="businessFormParam"></business-form-ctrl>
         <div class="modal-subtitle">{{'--.business.registrationModal.address.subtitle' | translateText}}</div>
         <address-form-ctrl ng-info="addressFormParam"></address-form-ctrl>
     </div>
     <div ng-show="badgeSelected==3">
+
         <div class="modal-description">{{'--.business.registrationModal.category.desc' | translateText}}</div>
         <business-category-form-ctrl ng-info="businessCategoryFormParam"></business-category-form-ctrl>
     </div>

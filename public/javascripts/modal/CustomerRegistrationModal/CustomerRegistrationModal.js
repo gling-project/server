@@ -8,9 +8,9 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         $modalInstance.close();
     };
 
-    $scope.toCustomerRegistration = function () {
+    $scope.toBusinessRegistration = function () {
         $scope.close();
-        modalService.openCustomerRegistrationModal();
+        modalService.openBusinessRegistrationModal();
     };
 
     //

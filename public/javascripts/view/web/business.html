@@ -1,31 +1,125 @@
 <to-top-ctrl></to-top-ctrl>
 
-<div ng-show="myBusiness === true">
+<!-- management part -->
+<div ng-show="myBusiness === true" class="panel panel-gling business-management">
 
-    <div ng-show="business.businessStatus === 'NOT_PUBLISHED'">{{'--.business.page.edit.description.notPublished' |
-        translateText}}
-    </div>
-    <div ng-show="business.businessStatus === 'WAITING_CONFIRMATION'">
-        {{'--.business.page.edit.description.waitConfirmation' | translateText}}
-    </div>
-    <div ng-show="business.businessStatus === 'PUBLISHED'">{{'--.business.page.edit.descriptionPublished' |
-        translateText}}
-    </div>
+    <h3>{{'--.business.page.management.title' | translateText}}</h3>
 
-    <!-- show edit buttons or not -->
-    <div class="onoffswitch-container">
-        <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
-        <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchFromBusiness"
-                   checked
-                   ng-model="edit">
-            <label class="onoffswitch-label" for="myonoffswitchFromBusiness">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-            </label>
+    <!-- progress -->
+    <div class="business-management-progress">
+        <h4>{{'--.business.management.progression' | translateText}}</h4>
+
+        <div class="business-management-progress-bar">
+            <div ng-style="{'width':(300 * (computeProgression()/5))+'px'}">
+
+            </div>
+            <span>{{computeProgression()}} / 5</span>
         </div>
-        <div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div>
+
+        <span>{{'--.business.management.progression.desc' | translateText}}</span><br/><br/>
+
+        <!-- description -->
+        <div class="business-management-progress-el">
+            <input type="checkbox"
+                   ng-checked="business.description!=null"/>
+            <span ng-class="{'completed':business.description!=null}"
+                  ng-click="editbusiness()"
+                  class="link">
+                Ajouter une description
+            </span>
+        </div>
+
+        <!-- landscape -->
+        <div class="business-management-progress-el">
+            <input type="checkbox" ng-checked="business.landscape!=null"/>
+            <span ng-class="{'completed':business.landscape!=null}"
+                  ng-click="editLandscape()"
+                  class="link">
+                Ajouter une image de fond
+            </span>
+        </div>
+
+        <!-- gallery -->
+        <div class="business-management-progress-el">
+            <input type="checkbox" ng-checked="business.galleryPictures.length>0"/>
+            <span ng-class="{'completed':business.galleryPictures.length>0}"
+                  ng-click="editGallery()"
+                  class="link">
+                Ajouter une galerie de photos représentative de votre commerce, vos produits phares
+            </span>
+        </div>
+
+        <!-- social -->
+        <div class="business-management-progress-el">
+            <input type="checkbox"
+                   ng-checked="displaySocialNetwork()"/>
+            <span ng-class="{'completed':displaySocialNetwork()}"
+                  ng-click="editSocialNetwork()"
+                  class="link">
+                Ajouter des liens vers les réseaux sociaux sur lesquels votre commerce est présent
+            </span>
+        </div>
+
+
+        <!-- schedule -->
+        <div class="business-management-progress-el">
+            <input type="checkbox"
+                   ng-checked="displaySchedule()"/>
+            <span ng-class="{'completed':displaySchedule()}"
+                  ng-click="editSchedule()"
+                  class="link">
+                Ajouter vos heures d'ouverture et d'affluence
+            </span>
+        </div>
+
+        <br/>
+
+        <a href="/help/business/data" target="_blank">Besoin d'aide? Suivez notre guide conseil pour obtenir un maximum de Gling !</a>
+
+        <h4>Créer une publication</h4>
+
+        <button id="business-btn-promotion-add"
+                class="btn btn-primary"
+                ng-click="createPromotion()"
+                ng-disabled="business.businessStatus !== 'PUBLISHED'">
+            {{'--.business.publication.btn.promotion' | translateText}}
+        </button>
+        <button class="btn btn-primary"
+                ng-click="createNotification()"
+                ng-disabled="business.businessStatus !== 'PUBLISHED'">
+            {{'--.business.publication.btn.notification' | translateText}}
+        </button>
+
+
+        <div ng-hide="business.businessStatus==='PUBLISHED'">
+            Vous ne pouvez pas encore créer de publication pour l'instant car votre page n'est pas encore publique.
+            Pour rendre votre page publique, cliquez sur le bouton 'Publier ma page!' et attendez qu'un membre de notre
+            équipe valide votre demande.
+        </div>
+
+
     </div>
+
+    <div>{{'--.business.page.edit.description' | translateText}}</div>
+
+
+    <!-- Status -->
+    <h4>
+        <i ng-class="'business-status-'+business.businessStatus"/>
+        Status de votre page : {{'--.business.status.'+business.businessStatus | translateText}}
+    </h4>
+
+    <p>
+        <span ng-show="business.businessStatus === 'NOT_PUBLISHED'">
+            {{'--.business.page.edit.description.notPublished' |translateText}}
+        </span>
+        <span ng-show="business.businessStatus === 'WAITING_CONFIRMATION'">
+            {{'--.business.page.edit.description.waitConfirmation' | translateText}}
+        </span>
+        <span ng-show="business.businessStatus === 'PUBLISHED'">
+            {{'--.business.page.edit.descriptionPublished' |translateText}}
+        </span>
+    </p>
 
     <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
             ng-click="publish()"
@@ -46,6 +140,24 @@
         {{'--.business.page.stopPublication' | translateText}}
     </button>
 </div>
+
+
+
+<!-- show edit buttons or not -->
+<div class="onoffswitch-container">
+    <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
+    <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchFromBusiness"
+               checked
+               ng-model="edit">
+        <label class="onoffswitch-label" for="myonoffswitchFromBusiness">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+    <div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div>
+</div>
+
 <div class="business-page">
     <div class="business-page-header">
         <div class="business-page-header-landscape"
@@ -139,18 +251,6 @@
                         ng-options="option.key as option.value | translateText for option in publicationOptions">
                 </select>
 
-                <button id="business-btn-promotion-add"
-                        class="btn btn-primary"
-                        ng-click="createPromotion()"
-                        ng-show="edit && business.businessStatus === 'PUBLISHED'">
-                    {{'--.business.publication.btn.promotion' | translateText}}
-                </button>
-                <button class="btn btn-primary"
-                        ng-click="createNotification()"
-                        ng-show="edit && business.businessStatus === 'PUBLISHED'">
-                    {{'--.business.publication.btn.notification' | translateText}}
-                </button>
-
                 <publication-list-for-business-ctrl
                         ng-info="publicationListParam"></publication-list-for-business-ctrl>
 
@@ -162,7 +262,7 @@
 
 
             <!-- gallery -->
-            <div class="panel panel-default"
+            <div class="panel panel-gling"
                  ng-show="edit === true || (business.galleryPictures !=null && business.galleryPictures.length > 0)">
                 <div class="panel-heading">{{'--.business.gallery' | translateText}}</div>
                 <div class="panel-body">
@@ -180,7 +280,7 @@
             </div>
 
             <!-- address -->
-            <div class="panel panel-default">
+            <div class="panel panel-gling">
                 <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
                 <div class="panel-body">
 
@@ -201,7 +301,7 @@
 
 
             <!-- contact -->
-            <div class="panel panel-default">
+            <div class="panel panel-gling">
                 <div class="panel-heading">
                     {{'--.generic.contact' | translateText}}
                 </div>
@@ -231,8 +331,8 @@
             </div>
 
             <!-- social network -->
-            <div class="panel panel-default business-social-panel"
-                 ng-show="edit === true || business.facebookLink!=null || business.twitterLink!=null || business.instagramLink!=null || business.deliveryLink!=null || business.socialNetwork.opinionLink!=null || business.socialNetwork.reservationLink!=null">
+            <div class="panel panel-gling business-social-panel"
+                 ng-show="edit === true || displaySocialNetwork()">
                 <div class="panel-heading">{{'--.generic.socialNetwork' | translateText}}</div>
                 <div class="panel-body">
 
@@ -240,7 +340,7 @@
                     <div ng-show="!!business.socialNetwork.facebookLink" class="business-social-network-box">
                         <a id="welcome-link-facebook"
                            href="{{business.socialNetwork.facebookLink}}"
-                           title="{{business.socialNetwork.facebookLink}}"
+                           title="Facebook"
                            target="_blank">
                             <img src="/assets/images/social_network/facebook.png">
                         </a>
@@ -249,7 +349,7 @@
                     <div ng-show="!!business.socialNetwork.twitterLink" class="business-social-network-box">
                         <a id="welcome-link-twitter"
                            href="{{business.socialNetwork.twitterLink}}"
-                           title="{{business.socialNetwork.twitterLink}}"
+                           title="Twitter"
                            target="_blank">
                             <img src="/assets/images/social_network/twitter.png">
                         </a>
@@ -258,7 +358,7 @@
                     <div ng-show="!!business.socialNetwork.instagramLink" class="business-social-network-box">
                         <a id="welcome-link-instagram"
                            href="{{business.socialNetwork.instagramLink}}"
-                           title="{{business.socialNetwork.instagramLink}}"
+                           title="Instagram"
                            target="_blank">
                             <img src="/assets/images/social_network/instagram.png">
                         </a>
@@ -267,7 +367,7 @@
                     <div ng-show="!!business.socialNetwork.deliveryLink" class="business-social-network-box">
                         <a id="welcome-link-delivery"
                            href="{{business.socialNetwork.deliveryLink}}"
-                           title="{{business.socialNetwork.deliveryLink}}"
+                           title="{{'--.business.socialNetwork.delivery' | translateText}}"
                            target="_blank">
                             <img src="/assets/images/social_network/delivery.png">
                         </a>
@@ -275,7 +375,7 @@
 
                     <div ng-show="!!business.socialNetwork.reservationLink" class="business-social-network-box">
                         <a href="{{business.socialNetwork.reservationLink}}"
-                           title="{{business.socialNetwork.reservationLink}}"
+                           title="{{'--.business.socialNetwork.reservation' | translateText}}"
                            target="_blank">
                             <img src="/assets/images/social_network/reservation.png">
                         </a>
@@ -283,7 +383,7 @@
 
                     <div ng-show="!!business.socialNetwork.opinionLink" class="business-social-network-box">
                         <a href="{{business.socialNetwork.opinionLink}}"
-                           title="{{business.socialNetwork.opinionLink}}"
+                           title="{{'--.business.socialNetwork.opinion' | translateText}}"
                            target="_blank">
                             <img src="/assets/images/social_network/opinion.png">
                         </a>
@@ -291,7 +391,7 @@
 
                     <div ng-show="!!business.socialNetwork.ecommerceLink" class="business-social-network-box">
                         <a href="{{business.socialNetwork.ecommerceLink}}"
-                           title="{{business.socialNetwork.ecommerceLink}}"
+                           title="{{'--.business.socialNetwork.ecommerce' | translateText}}"
                            target="_blank">
                             <img src="/assets/images/social_network/e_commerce.png">
                         </a>
@@ -310,7 +410,7 @@
             </div>
 
             <!-- schedule -->
-            <div class="panel panel-default" ng-show="edit === true || displaySchedule()">
+            <div class="panel panel-gling" ng-show="edit === true || displaySchedule()">
                 <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
                 <div class="panel-body">
 

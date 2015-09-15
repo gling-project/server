@@ -127,5 +127,6 @@ GET           /welcome/                                                         
 GET           /admin/                                                                             @be.lynk.server.controller.MainController.admin()
 GET           /mobile/                                                                            @be.lynk.server.controller.MainController.mobile()
 GET           /legal/*url                                                                         @be.lynk.server.controller.MainController.legal(url)
+GET           /help/*url                                                                          @be.lynk.server.controller.MainController.help(url)
 GET           /                                                                                   @be.lynk.server.controller.MainController.mainPage2()
 GET           /*url                                                                               @be.lynk.server.controller.MainController.mainPage(url)

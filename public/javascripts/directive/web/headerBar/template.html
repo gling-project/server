@@ -1,22 +1,14 @@
 <div class="navigation-bar"
      ng-class="{'header-with-advanced-search':advancedSearch}">
 
-    <div class="help-popup" ng-show="openGeolocationPopup !== true">
-        <button class="help-popup-close glyphicon glyphicon-remove"
-                ng-click="openGeolocationPopup=true"></button>
-        Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/>
-        <a href="legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>
-        Si vous ne voulez pas partager votre position, vous pouvez aussi
-        <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
-    </div>
-
 
     <div class="container header-option-container">
 
         <h1 style="cursor : pointer"
             id="welcome-btn-welcome"
-            class="gling-icon-logoapp gling-icon-logogling"
+            class="gling-icon-logoapp gling-icon-logogling button-with-label"
             ng-click="navigateTo('/')">
+            <p>{{'--.headerBar.logo.label'}}</p>
         </h1>
 
         <!-- seach bar -->
