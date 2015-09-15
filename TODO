@@ -2,36 +2,38 @@
 ok- enlever (temporairement) les langues
 ok- 'ou' entre connection et enregistration pas centré.
 ok- date avec mois en lettre mais sans seconde.
-- activer 'accepter de partager la position' depuis le site: tant qu'elle n'est pas activé, faire une recherche par le temps
+ok- activer 'accepter de partager la position' depuis le site: tant qu'elle n'est pas activé, faire une recherche par le temps
 ok- scroll lors du passage d'une page à l'autre
 ok- pas de border sur le nom du commrce sous FF
 - publicaiont : pas
 ok - arrière fond commerce en gris
 ok - bug fenetre enregistrement
 - désectionner les intérêts lorsqu'on clique sur gling
-- '+3' sur les photos : fond en gris
+TODO- '+3' sur les photos : fond en gris
 ok- changer la maison par une icone position
 ok- recherche (mini) : commerce false
-- ajouter les icones d'intérêt dans l'inscription
+- ajouter les icones d'intérêt dans le form de sélection + profile
 ok- home : 'position' et 'follow' doivent devenir des boutons
 ok - (localisation/following) dispo même pas connecté + phrase au-dessus de (localisation/following) et intérêt + phrase explicative qd fenetre conneciton s'ouvre depuis une action
-- changer la couleur des deux lignes + badges
+ok - changer la couleur des deux lignes + badges
 ok - changer les coulerus de la cloche (bleu : inactif, vers:actif) + ajouter un texte
 - recharger les publications après connection
 ok - changer la couleur de la cloche sur les publications
 ok - photo non réduite !!
 - plus de scroll quand je recheche une publication
 - dans mon profile, quand j'édite mes infos, bouton 'éditer' de mes intérêts disparait
-- problème position des boutons sur mon commerce
+- problème position des boutons sur mon commerce : les mettres en bas à droite dans les images + virer les textes.
 - bug DL illustration dans mon commerce
-- le commerçant peut éditer ces informations de contact + description. (seul le nom et l'adresse ne peuveut être changée)
+TODO- le commerçant peut éditer ces informations de contact + description. (seul le nom et l'adresse ne peuveut être changée)
 - truc facebook ne permet pas de publier en tant que page
 ok- remettre buton supprimer la publication
 ok- galleri photo pour commerce disparu
-- changer la couleur de hover des boutons
+ok- changer la couleur de hover des boutons
 -  généraliser les boutons
-- trier les intérêts en fonction des choix de l'utilisateur
+ok- trier les intérêts en fonction des choix de l'utilisateur
 ok- une seule étape d'enregistrement
 - rien de nouveau au niveau de la séleciton de ces intérêts pour le moment
 - 'promo jusqu'au' => expire dans X jours / X heure /X minutes + virer le picto => expire dans en bleu, x jour en vert
 - ajouter des popup avec les heures sur les horaires quand on survole
+- mettre un hover sur following (dans commerce par exemple)
+- ajouter un bouton follow-me dans 'publications' commerces
