@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication> implements PublicationService {
 
-    private static final Double  EARTH_RADIUS = 6371.0;
+
     private static final Boolean OPT1         = false;
 
     private static enum PublicationTiming {FUTURE, PASSED, NOW}
@@ -128,24 +128,12 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
         if (position != null && maxDistance != null) {
 
-            double r = maxDistance / EARTH_RADIUS;
+            double[] maxCoordinate = computeMaxCoordinate(position, maxDistance);
 
-            double lat = Math.toRadians(position.getX());
-            double lon = Math.toRadians(position.getY());
-            double latMinR = lat - r;
-            double latMaxR = lat + r;
-            double latMin = Math.toDegrees(latMinR);
-            double latMax = Math.toDegrees(latMaxR);
-            double lonDelta = Math.asin(Math.sin(r) / Math.cos(lat));
-            double lonMinR = lon - lonDelta;
-            double lonMaxR = lon + lonDelta;
-            double lonMin = Math.toDegrees(lonMinR);
-            double lonMax = Math.toDegrees(lonMaxR);
-
-            query.setParameter("latmin", latMin)
-                 .setParameter("latmax", latMax)
-                 .setParameter("lonmin", lonMin)
-                 .setParameter("lonmax", lonMax);
+            query.setParameter("latmin", maxCoordinate[0])
+                 .setParameter("latmax", maxCoordinate[1])
+                 .setParameter("lonmin", maxCoordinate[2])
+                 .setParameter("lonmax", maxCoordinate[3]);
         }
         if (businesses != null) {
             query.setParameter("businesses", businesses);

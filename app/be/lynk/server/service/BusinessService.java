@@ -1,7 +1,9 @@
 package be.lynk.server.service;
 
+import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
+import be.lynk.server.model.entities.CustomerInterest;
 
 import java.util.List;
 
@@ -18,4 +20,9 @@ public interface BusinessService extends CrudService<Business>{
     List<Business> findByCategory(BusinessCategory businessCategory, int page,int maxResult);
 
     List<Business> findByZip(String zip);
+
+    public List<Business> findByDistance(Position position,int maxDistance);
+
+    List<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance);
+
 }

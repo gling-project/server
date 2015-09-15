@@ -1,14 +1,6 @@
-myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, addressService, fctToExecute, fctToExecuteParams) {
+myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, fctToExecute, fctToExecuteParams) {
 
     var facebookAuthentication = null;
-
-    $scope.badgeSelected = 1;
-
-    $scope.addressFormParam = {
-        addName: true
-    };
-
-    $scope.customerInterestParam = {};
 
     $scope.accountParam = {};
 
@@ -16,75 +8,9 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         $modalInstance.close();
     };
 
-    $scope.toBusinessRegistration = function () {
+    $scope.toCustomerRegistration = function () {
         $scope.close();
-        modalService.openBusinessRegistrationModal();
-    };
-
-    $scope.skip = function () {
-        if ($scope.badgeSelected == 3) {
-            $scope.save(true);
-        }
-        else {
-            $scope.badgeSelected++;
-        }
-
-    };
-
-    $scope.next = function () {
-        var notValid = false;
-        if ($scope.badgeSelected == 1) {
-            if (!$scope.accountParam.isValid && facebookAuthentication == null) {
-                $scope.accountParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValid"));
-            }
-            else if (facebookAuthentication != null) {
-                $scope.badgeSelected++;
-            } else {
-                $scope.accountParam.disabled = true;
-                $scope.loading = true;
-                accountService.testEmail($scope.accountParam.dto.email, function (value) {
-                    $scope.accountParam.disabled = false;
-                    $scope.loading = false;
-                    if (value) {
-                        $flash.error(translationService.get("--.error.email_already_used"));
-                    }
-                    else {
-                        $scope.badgeSelected++;
-                    }
-                });
-            }
-            //control email
-            notValid = true;
-        }
-        else if ($scope.badgeSelected == 2) {
-            if (!$scope.customerInterestParam.isValid) {
-                $scope.customerInterestParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
-                notValid = true;
-            }
-        }
-        else {
-            if (!$scope.addressFormParam.isValid) {
-                $scope.addressFormParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
-                notValid = true;
-            }
-            else {
-                $scope.loading = true;
-                addressService.testAddress($scope.addressFormParam.dto,
-                    function () {
-                        $scope.loading = false;
-                        $scope.badgeSelected++;
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
-            }
-        }
-        if (!notValid) {
-            $scope.badgeSelected++;
-        }
+        modalService.openCustomerRegistrationModal();
     };
 
     //
@@ -132,7 +58,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                         }
                         else {
                             facebookAuthentication = dto;
-                            $scope.skip();
+                            $scope.save();
                         }
                     }
                 });
@@ -149,40 +75,31 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         modalService.openFacebookFusionModal(accountFusion);
     };
 
-    $scope.previous = function () {
-        $scope.badgeSelected--;
-    };
+    $scope.save = function () {
 
-    $scope.save = function (skipStep3) {
-
-        if (!skipStep3) {
-            if (!$scope.addressFormParam.isValid) {
-                $scope.addressFormParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
-                return;
-            }
+        if (!$scope.accountParam.isValid && facebookAuthentication == null) {
+            $scope.accountParam.displayErrorMessage = true;
         }
-        var dto = {
-            accountRegistration: $scope.accountParam.dto,
-            customerInterests: $scope.customerInterestParam.result,
-            facebookAuthentication: facebookAuthentication
-        };
-        if ($scope.addressFormParam.isValid) {
-            dto.address = $scope.addressFormParam.dto;
-        }
+        else {
 
-        $scope.loading = true;
-        accountService.registration(dto, function () {
-                $scope.loading = false;
-                $flash.success(translationService.get("--.login.flash.success"));
-                if (fctToExecute != null) {
-                    fctToExecute(fctToExecuteParams);
-                }
-                $scope.close();
-            },
-            function () {
-                $scope.loading = false;
-            });
+            var dto = {
+                accountRegistration: $scope.accountParam.dto,
+                facebookAuthentication: facebookAuthentication
+            };
+
+            $scope.loading = true;
+            accountService.registration(dto, function () {
+                    $scope.loading = false;
+                    $flash.success(translationService.get("--.login.flash.success"));
+                    if (fctToExecute != null) {
+                        fctToExecute(fctToExecuteParams);
+                    }
+                    $scope.close();
+                },
+                function () {
+                    $scope.loading = false;
+                });
+        }
     }
 
 });

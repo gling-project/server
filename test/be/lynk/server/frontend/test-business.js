@@ -99,7 +99,7 @@ describe('Business test', function () {
 
     it('Business test web', function () {
 
-        browser.get(target);
+        browser.get(target+'home');
 
         //control page name
         expect(browser.getTitle()).toEqual('Gling');

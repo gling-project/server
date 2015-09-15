@@ -8,6 +8,16 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
             return {
                 post: function (scope) {
 
+                    scope.currentLang = languageService.currentLang;
+
+                    scope.sharePosition = geolocationService.sharePosition;
+
+                    $rootScope.$watch(function(){
+                        return geolocationService.sharePosition;
+                    },function(n,o){
+                        scope.sharePosition=n;
+                    });
+
                     //use the model
                     scope.myself = accountService.getMyself();
                     scope.accountService = accountService;
@@ -44,7 +54,7 @@ myApp.directive("headerBarCtrl", function (accountService, $rootScope, languageS
                         if (facebookService.isConnected()) {
                             facebookService.logout();
                         }
-                        scope.$broadcast('LOGOUT');
+                        $rootScope.$broadcast('LOGOUT');
                         accountService.logout(function () {
                             $location.path('/');
                         });

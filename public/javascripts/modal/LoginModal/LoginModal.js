@@ -1,6 +1,7 @@
 myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
 
     $scope.loading = false;
+    $scope.fctToExecute=fctToExecute;
 
     $scope.loginFormParam = {
         facebookSuccess: function (data) {

@@ -452,3 +452,14 @@ day_abrv_sunday=Di
 
 --.gallery.title=Galerie
 --.publication.description=Description (optionnelle)
+
+--.loginModal.fctToExecute.help=Vous devez vous enregistrez pour continuer
+--.home.interest-switch.help=Triez selon votre position ou vos commerces favoris
+--.home.interest.help=Triez les publications selon vos envies
+--.home.localisation.help=Triez selon votre position
+--.home.followning.help=Triez selon vos commerces favoris
+--.home.emptyResult.help=Vous ne suivez actuellement aucun commerce! Voici une sélection des commerces de votre quartier
+--.home.emptyResultWithInterest.help=Aucun des commerces que vous suivez ne correspond à l'intérêt sélectionné. Voici une liste des commerces de votre quartier correspondant à votre intérêt
+
+
+--.legal.title=Je suis les mentions légales

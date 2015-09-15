@@ -1,5 +1,6 @@
 package be.lynk.server.service.impl;
 
+import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.service.CrudService;
 import play.db.jpa.JPA;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudService<T> {
 
+
+    private static final Double  EARTH_RADIUS = 6371.0;
 
     protected Class<T> entityClass;
 
@@ -102,5 +105,25 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
         s = s.replaceAll("[^\\p{ASCII}]", "");
         s = s.replaceAll("\\p{M}", "");
         return s;
+    }
+
+
+
+    protected double[] computeMaxCoordinate(Position position, double maxDistance){
+        double r = maxDistance / EARTH_RADIUS;
+
+        double lat = Math.toRadians(position.getX());
+        double lon = Math.toRadians(position.getY());
+        double latMinR = lat - r;
+        double latMaxR = lat + r;
+        double latMin = Math.toDegrees(latMinR);
+        double latMax = Math.toDegrees(latMaxR);
+        double lonDelta = Math.asin(Math.sin(r) / Math.cos(lat));
+        double lonMinR = lon - lonDelta;
+        double lonMaxR = lon + lonDelta;
+        double lonMin = Math.toDegrees(lonMinR);
+        double lonMax = Math.toDegrees(lonMaxR);
+
+        return new double[]{latMin,latMax,lonMin,lonMax};
     }
 }

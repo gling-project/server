@@ -221,6 +221,7 @@ app.config(['$locationProvider', function ($locationProvider) {
 myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
 
     $scope.loading = false;
+    $scope.fctToExecute=fctToExecute;
 
     $scope.loginFormParam = {
         facebookSuccess: function (data) {
@@ -595,17 +596,9 @@ myApp.controller('AccountFusionFacebookModalCtrl', ['$scope', '$flash', '$modalI
 
 
 }]);
-myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', 'addressService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, addressService, fctToExecute, fctToExecuteParams) {
+myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, fctToExecute, fctToExecuteParams) {
 
     var facebookAuthentication = null;
-
-    $scope.badgeSelected = 1;
-
-    $scope.addressFormParam = {
-        addName: true
-    };
-
-    $scope.customerInterestParam = {};
 
     $scope.accountParam = {};
 
@@ -613,75 +606,9 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
         $modalInstance.close();
     };
 
-    $scope.toBusinessRegistration = function () {
+    $scope.toCustomerRegistration = function () {
         $scope.close();
-        modalService.openBusinessRegistrationModal();
-    };
-
-    $scope.skip = function () {
-        if ($scope.badgeSelected == 3) {
-            $scope.save(true);
-        }
-        else {
-            $scope.badgeSelected++;
-        }
-
-    };
-
-    $scope.next = function () {
-        var notValid = false;
-        if ($scope.badgeSelected == 1) {
-            if (!$scope.accountParam.isValid && facebookAuthentication == null) {
-                $scope.accountParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValid"));
-            }
-            else if (facebookAuthentication != null) {
-                $scope.badgeSelected++;
-            } else {
-                $scope.accountParam.disabled = true;
-                $scope.loading = true;
-                accountService.testEmail($scope.accountParam.dto.email, function (value) {
-                    $scope.accountParam.disabled = false;
-                    $scope.loading = false;
-                    if (value) {
-                        $flash.error(translationService.get("--.error.email_already_used"));
-                    }
-                    else {
-                        $scope.badgeSelected++;
-                    }
-                });
-            }
-            //control email
-            notValid = true;
-        }
-        else if ($scope.badgeSelected == 2) {
-            if (!$scope.customerInterestParam.isValid) {
-                $scope.customerInterestParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
-                notValid = true;
-            }
-        }
-        else {
-            if (!$scope.addressFormParam.isValid) {
-                $scope.addressFormParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
-                notValid = true;
-            }
-            else {
-                $scope.loading = true;
-                addressService.testAddress($scope.addressFormParam.dto,
-                    function () {
-                        $scope.loading = false;
-                        $scope.badgeSelected++;
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
-            }
-        }
-        if (!notValid) {
-            $scope.badgeSelected++;
-        }
+        modalService.openCustomerRegistrationModal();
     };
 
     //
@@ -729,7 +656,7 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
                         }
                         else {
                             facebookAuthentication = dto;
-                            $scope.skip();
+                            $scope.save();
                         }
                     }
                 });
@@ -746,40 +673,31 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
         modalService.openFacebookFusionModal(accountFusion);
     };
 
-    $scope.previous = function () {
-        $scope.badgeSelected--;
-    };
+    $scope.save = function () {
 
-    $scope.save = function (skipStep3) {
-
-        if (!skipStep3) {
-            if (!$scope.addressFormParam.isValid) {
-                $scope.addressFormParam.displayErrorMessage = true;
-                $flash.error(translationService.get("--.generic.stepNotValidOrSkip"));
-                return;
-            }
+        if (!$scope.accountParam.isValid && facebookAuthentication == null) {
+            $scope.accountParam.displayErrorMessage = true;
         }
-        var dto = {
-            accountRegistration: $scope.accountParam.dto,
-            customerInterests: $scope.customerInterestParam.result,
-            facebookAuthentication: facebookAuthentication
-        };
-        if ($scope.addressFormParam.isValid) {
-            dto.address = $scope.addressFormParam.dto;
-        }
+        else {
 
-        $scope.loading = true;
-        accountService.registration(dto, function () {
-                $scope.loading = false;
-                $flash.success(translationService.get("--.login.flash.success"));
-                if (fctToExecute != null) {
-                    fctToExecute(fctToExecuteParams);
-                }
-                $scope.close();
-            },
-            function () {
-                $scope.loading = false;
-            });
+            var dto = {
+                accountRegistration: $scope.accountParam.dto,
+                facebookAuthentication: facebookAuthentication
+            };
+
+            $scope.loading = true;
+            accountService.registration(dto, function () {
+                    $scope.loading = false;
+                    $flash.success(translationService.get("--.login.flash.success"));
+                    if (fctToExecute != null) {
+                        fctToExecute(fctToExecuteParams);
+                    }
+                    $scope.close();
+                },
+                function () {
+                    $scope.loading = false;
+                });
+        }
     }
 
 }]);
@@ -1351,6 +1269,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     //variable
     $scope.followedMode = false;
     $scope.businessInfoParam = {};
+    $scope.businessListParam={data:[]};
     $scope.accountService = accountService.model;
     $scope.interestDisplayed = [];
     $scope.interestDisplayFirst = 0;
@@ -1364,6 +1283,8 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.currentPage = 0;
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
+    $scope.displayEmptyHelpMessage=false;
+    $scope.displayEmptyHelpMessageWithInterest=false;
 
 
     //selection mode
@@ -1378,6 +1299,28 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         if ($scope.interestDisplayFirst < $scope.customerInterests.length - $scope.interestDisplayMax) {
             $scope.interestDisplayFirst++;
             $scope.computeList();
+        }
+    };
+
+    $scope.setFollowedMode = function (n) {
+        if (n == null) {
+            n = !$scope.followedMode;
+        }
+        if (accountService.getMyself() == null) {
+            modalService.openLoginModal($scope.switchFollowedMode,n);
+        }
+        else {
+            $scope.switchFollowedMode(n);
+        }
+    };
+
+    $scope.switchFollowedMode = function (n) {
+
+        if (n != null) {
+            $scope.followedMode = n;
+        }
+        else {
+            $scope.followedMode = !$scope.followedMode;
         }
     };
 
@@ -1426,6 +1369,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     });
 
     $scope.$on('LOGOUT', function () {
+        console.log('logout');
         if ($scope.followedMode) {
             $scope.followedMode = false;
         }
@@ -1445,7 +1389,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     });
 
 
-    var success = function (data) {
+    var success = function (data,callbackEmptyResultFunction) {
         if ($scope.currentPage == 0) {
             $scope.publicationListCtrl.data = [];
         }
@@ -1453,12 +1397,23 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         $scope.publicationListCtrl.loading = false;
         if (data == null || data.length == 0) {
             $scope.allLoaded = true;
+
+            //if there is no result and this is the first page and there is a callbackFunction,
+            //try something else
+            if($scope.currentPage==0 && callbackEmptyResultFunction!=null){
+                callbackEmptyResultFunction();
+            }
         }
         else {
             for (var key in data) {
                 $scope.publicationListCtrl.data.push(data[key])
             }
         }
+    };
+
+    var successBusiness = function(data){
+        $scope.businessListParam.data=data;
+        $scope.businessListParam.loading=false;
     };
 
 
@@ -1477,19 +1432,36 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             //if this is the first page that asked, remove other publication
             if ($scope.currentPage == 0) {
                 $scope.publicationListCtrl.loading = true;
+                $scope.displayEmptyHelpMessage=false;
+                $scope.displayEmptyHelpMessageWithInterest=false;
                 $scope.publicationListCtrl.data = [];
+                $scope.businessListParam.data=[];
             }
 
             if ($scope.followedMode) {
                 if (interestSelected != null) {
                     searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
-                        success(data);
+                        success(data,
+                        function(){
+                            $scope.displayEmptyHelpMessageWithInterest=true;
+                            $scope.businessListParam.loading=true;
+                            searchService.nearBusinessByInterest(interestSelected.id,function(data){
+                               successBusiness(data);
+                            });
+                        });
                     });
 
                 }
                 else {
                     searchService.byFollowed($scope.currentPage, function (data) {
-                        success(data);
+                        success(data,
+                            function(){
+                                $scope.displayEmptyHelpMessage=true;
+                                $scope.businessListParam.loading=true;
+                                searchService.nearBusiness(function(data){
+                                    successBusiness(data);
+                                });
+                            });
                     });
                 }
             }
@@ -1834,6 +1806,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                         validationMessage: '--.error.validation.image',
                         field: business,
                         multiple: true,
+                        target:'galley_picture',
                         fieldName: 'galleryPictures'
                     },
                     function (close, setLoading) {
@@ -2342,7 +2315,7 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                                     close();
                                 });
                             });
-                    }
+                    };
 
                     scope.getInterestClass = function (publication) {
                         if (publication.interest != null) {
@@ -2431,6 +2404,16 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
             return {
                 post: function (scope) {
 
+                    scope.currentLang = languageService.currentLang;
+
+                    scope.sharePosition = geolocationService.sharePosition;
+
+                    $rootScope.$watch(function(){
+                        return geolocationService.sharePosition;
+                    },function(n,o){
+                        scope.sharePosition=n;
+                    });
+
                     //use the model
                     scope.myself = accountService.getMyself();
                     scope.accountService = accountService;
@@ -2467,7 +2450,7 @@ myApp.directive("headerBarCtrl", ['accountService', '$rootScope', 'languageServi
                         if (facebookService.isConnected()) {
                             facebookService.logout();
                         }
-                        scope.$broadcast('LOGOUT');
+                        $rootScope.$broadcast('LOGOUT');
                         accountService.logout(function () {
                             $location.path('/');
                         });

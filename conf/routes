@@ -90,13 +90,16 @@ POST          /rest/search/publication/followed/$page<[0-9]+>                   
 POST          /rest/search/publication/followed/interest/$id<[0-9]+>/$page<[0-9]+>                @be.lynk.server.controller.rest.SearchRestController.getByInterestAndFollowed(page:Integer,id:Long)
 POST          /rest/search/text/little                                                            @be.lynk.server.controller.rest.SearchRestController.getByStringLittle()
 POST          /rest/search/text                                                                   @be.lynk.server.controller.rest.SearchRestController.getByString()
+POST          /rest/search/business/near                                                          @be.lynk.server.controller.rest.SearchRestController.getNearBusiness()
+POST          /rest/search/business/near/interest/$interestId<[0-9]+>                             @be.lynk.server.controller.rest.SearchRestController.getNearBusinessByInterest(interestId:Long)
 
 #file
 POST          /rest/file                                                                          @be.lynk.server.controller.rest.FilesController.upload()
 POST          /rest/file/:sizex/:sizey                                                            @be.lynk.server.controller.rest.FilesController.uploadWithSize(sizex:Integer,sizey:Integer)
 POST          /rest/file/business_illustration                                                    @be.lynk.server.controller.rest.FilesController.uploadForBusinessIllustration()
 POST          /rest/file/business_landscape                                                       @be.lynk.server.controller.rest.FilesController.uploadForBusinessLandscape()
-POST          /rest/file/publication_picture                                                       @be.lynk.server.controller.rest.FilesController.uploadForPublicationPicture()
+POST          /rest/file/publication_picture                                                      @be.lynk.server.controller.rest.FilesController.uploadForPublicationPicture()
+POST          /rest/file/galley_picture                                                           @be.lynk.server.controller.rest.FilesController.uploadForGalleryPicture()
 GET           /rest/file/:storedFileId                                                            @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 
 
@@ -123,5 +126,6 @@ GET           /town/                                                            
 GET           /welcome/                                                                           @be.lynk.server.controller.MainController.toWelcomePage()
 GET           /admin/                                                                             @be.lynk.server.controller.MainController.admin()
 GET           /mobile/                                                                            @be.lynk.server.controller.MainController.mobile()
+GET           /legal/*url                                                                         @be.lynk.server.controller.MainController.legal(url)
 GET           /                                                                                   @be.lynk.server.controller.MainController.mainPage2()
 GET           /*url                                                                               @be.lynk.server.controller.MainController.mainPage(url)

@@ -26,6 +26,13 @@ public class FilesController extends AbstractRestController {
     @Autowired
     private StoredFileService storedFileService;
 
+
+    @Transactional(readOnly = false)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result uploadForGalleryPicture() {
+        return uploadWithSize(Constant.PUBLICATION_PICTURE_WIDTH,Constant.PUBLICATION_PICTURE_HEIGHT);
+    }
+
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result uploadForBusinessIllustration() {

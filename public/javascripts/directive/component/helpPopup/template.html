@@ -1,0 +1,5 @@
+<div class="help-popup" ng-show="open !== true">
+    <button class="help-popup-close glyphicon glyphicon-remove"
+            ng-click="open=true"></button>
+    {{getInfo().text | translateText}}
+</div>

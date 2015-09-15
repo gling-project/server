@@ -94,6 +94,16 @@
         </div>
         <div class="publication-footer">
 
+            <!-- remove publication -->
+            <button
+                    ng-show="getInfo().displayRemoveIcon"
+                    type="button"
+                    style="margin-left: 25px"
+                    class="btn btn-primary"
+                    ng-click="removePublication(publication)">
+                {{'--.generic.remove' | translateText}}
+            </button>
+
 
             <div class="publication-footer-date publication-bordered-bottom">
                 {{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy hh:mm'}}

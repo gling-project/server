@@ -2,29 +2,44 @@
 
     <to-top-ctrl></to-top-ctrl>
 
-    <div class="home-interest-switch home-interest-box" ng-show="accountService.myself != null">
+
+    <div class="home-interest-switch home-interest-box">
 
         <!-- switch -->
-        <div>
-            <label class="gling-button gling-icon-location home-interest"></label>
-        </div>
-        <div>
-            <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-                       checked ng-model="followedMode"/>
-                <label class="onoffswitch-label" for="myonoffswitch">
-                    <span class="onoffswitch-inner"></span>
-                    <span class="onoffswitch-switch"></span>
-                </label>
+        <div>{{'--.home.interest-switch.help' | translateText}}</div>
+        <br/>
+
+        <div class="home-interest-switch home-interest-box-background">
+            <div>
+                <button class="gling-button gling-icon-location button-with-label home-interest"
+                        ng-click="setFollowedMode(false)">
+                    <p>{{'--.home.localisation.help' | translateText}}</p>
+                </button>
             </div>
-        </div>
-        <div>
-            <label class="gling-button gling-icon-bell home-interest"></label>
+            <div>
+                <div class="onoffswitch" ng-click="setFollowedMode()">
+                    <label class="onoffswitch-label"
+                            ng-class="{'followedMode':followedMode}">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <button class="gling-button gling-icon-bell button-with-label home-interest"
+                        ng-click="setFollowedMode(true)">
+                    <p>{{'--.home.followning.help' | translateText}}</p>
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- interest -->
     <div class="home-interest-box">
+
+
+        {{'--.home.interest.help' | translateText}}
+
 
         <div class="home-interest-box-background">
 
@@ -49,7 +64,21 @@
 
 
     </div>
+
     <!-- publication list -->
-    <publication-list-ctrl ng-info="publicationListCtrl"></publication-list-ctrl>
+    <publication-list-ctrl ng-info="publicationListCtrl"
+                           ng-hide="displayEmptyHelpMessage===true || displayEmptyHelpMessageWithInterest===true"></publication-list-ctrl>
+
+    <!-- empty result help -->
+    <div class="help-big" ng-show="displayEmptyHelpMessage===true">{{'--.home.emptyResult.help' | translateText}}</div>
+    <div class="help-big" ng-show="displayEmptyHelpMessageWithInterest===true">{{'--.home.emptyResultWithInterest.help' | translateText}}</div>
+
+
+    <!-- business list (in case of empty result -->
+    <business-list-ctrl
+            ng-info="businessListParam"
+            ng-show="displayEmptyHelpMessage===true || displayEmptyHelpMessageWithInterest===true">
+    </business-list-ctrl>
+
 
 </div>

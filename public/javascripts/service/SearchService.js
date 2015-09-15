@@ -270,4 +270,65 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
 
     };
+
+    this.nearBusiness = function (callbackSuccess, callbackError) {
+
+        if (canceler != null) {
+            canceler.resolve();
+        }
+
+        canceler = $q.defer();
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/business/near",
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': geolocationService.position,
+            'config': {
+                timeout: canceler.promise
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
+
+    this.nearBusinessByInterest = function (interestId,callbackSuccess, callbackError) {
+
+        if (canceler != null) {
+            canceler.resolve();
+        }
+
+        canceler = $q.defer();
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/business/near/interest/"+interestId,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': geolocationService.position,
+            'config': {
+                timeout: canceler.promise
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
 });

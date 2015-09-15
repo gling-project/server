@@ -163,7 +163,7 @@
 
             <!-- gallery -->
             <div class="panel panel-default"
-                 ng-show="business.galleryPictures !=null && business.galleryPictures.length > 0">
+                 ng-show="edit === true || (business.galleryPictures !=null && business.galleryPictures.length > 0)">
                 <div class="panel-heading">{{'--.business.gallery' | translateText}}</div>
                 <div class="panel-body">
 

@@ -128,7 +128,6 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
     private String importCategory(Sheet sheet, boolean addTranslation) {
 
-        int column = FIRST_COLUMN_INTEREST;
         Map<Integer, CustomerInterest> interestMap = new HashMap<>();
 
         int order = 0;
@@ -142,7 +141,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
             if (customerInterest == null) {
                 throw new RuntimeException("cannot found interest " + interestSNormalized);
             }
-            interestMap.put(column, customerInterest);
+            interestMap.put(i, customerInterest);
 
 
         }

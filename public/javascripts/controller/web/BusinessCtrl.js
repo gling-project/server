@@ -252,6 +252,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                         validationMessage: '--.error.validation.image',
                         field: business,
                         multiple: true,
+                        target:'galley_picture',
                         fieldName: 'galleryPictures'
                     },
                     function (close, setLoading) {

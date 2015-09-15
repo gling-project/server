@@ -12,6 +12,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     //variable
     $scope.followedMode = false;
     $scope.businessInfoParam = {};
+    $scope.businessListParam={data:[]};
     $scope.accountService = accountService.model;
     $scope.interestDisplayed = [];
     $scope.interestDisplayFirst = 0;
@@ -25,6 +26,8 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.currentPage = 0;
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
+    $scope.displayEmptyHelpMessage=false;
+    $scope.displayEmptyHelpMessageWithInterest=false;
 
 
     //selection mode
@@ -39,6 +42,28 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         if ($scope.interestDisplayFirst < $scope.customerInterests.length - $scope.interestDisplayMax) {
             $scope.interestDisplayFirst++;
             $scope.computeList();
+        }
+    };
+
+    $scope.setFollowedMode = function (n) {
+        if (n == null) {
+            n = !$scope.followedMode;
+        }
+        if (accountService.getMyself() == null) {
+            modalService.openLoginModal($scope.switchFollowedMode,n);
+        }
+        else {
+            $scope.switchFollowedMode(n);
+        }
+    };
+
+    $scope.switchFollowedMode = function (n) {
+
+        if (n != null) {
+            $scope.followedMode = n;
+        }
+        else {
+            $scope.followedMode = !$scope.followedMode;
         }
     };
 
@@ -87,6 +112,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     });
 
     $scope.$on('LOGOUT', function () {
+        console.log('logout');
         if ($scope.followedMode) {
             $scope.followedMode = false;
         }
@@ -106,7 +132,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     });
 
 
-    var success = function (data) {
+    var success = function (data,callbackEmptyResultFunction) {
         if ($scope.currentPage == 0) {
             $scope.publicationListCtrl.data = [];
         }
@@ -114,12 +140,23 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         $scope.publicationListCtrl.loading = false;
         if (data == null || data.length == 0) {
             $scope.allLoaded = true;
+
+            //if there is no result and this is the first page and there is a callbackFunction,
+            //try something else
+            if($scope.currentPage==0 && callbackEmptyResultFunction!=null){
+                callbackEmptyResultFunction();
+            }
         }
         else {
             for (var key in data) {
                 $scope.publicationListCtrl.data.push(data[key])
             }
         }
+    };
+
+    var successBusiness = function(data){
+        $scope.businessListParam.data=data;
+        $scope.businessListParam.loading=false;
     };
 
 
@@ -138,19 +175,36 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             //if this is the first page that asked, remove other publication
             if ($scope.currentPage == 0) {
                 $scope.publicationListCtrl.loading = true;
+                $scope.displayEmptyHelpMessage=false;
+                $scope.displayEmptyHelpMessageWithInterest=false;
                 $scope.publicationListCtrl.data = [];
+                $scope.businessListParam.data=[];
             }
 
             if ($scope.followedMode) {
                 if (interestSelected != null) {
                     searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
-                        success(data);
+                        success(data,
+                        function(){
+                            $scope.displayEmptyHelpMessageWithInterest=true;
+                            $scope.businessListParam.loading=true;
+                            searchService.nearBusinessByInterest(interestSelected.id,function(data){
+                               successBusiness(data);
+                            });
+                        });
                     });
 
                 }
                 else {
                     searchService.byFollowed($scope.currentPage, function (data) {
-                        success(data);
+                        success(data,
+                            function(){
+                                $scope.displayEmptyHelpMessage=true;
+                                $scope.businessListParam.loading=true;
+                                searchService.nearBusiness(function(data){
+                                    successBusiness(data);
+                                });
+                            });
                     });
                 }
             }

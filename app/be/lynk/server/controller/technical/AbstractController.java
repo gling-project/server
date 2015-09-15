@@ -1,9 +1,13 @@
 package be.lynk.server.controller.technical;
 
 import be.lynk.server.controller.technical.security.CommonSecurityController;
+import be.lynk.server.dto.BusinessToDisplayDTO;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.FollowLink;
 import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.DozerService;
+import be.lynk.server.service.FollowLinkService;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
@@ -16,10 +20,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -32,27 +33,36 @@ public abstract class AbstractController extends Controller {
     protected CommonSecurityController securityController;
     //service
     @Autowired
-    protected TranslationService translationService;
+    protected TranslationService       translationService;
     @Autowired
-    protected DozerService dozerService;
+    protected DozerService             dozerService;
     @Autowired
-    private MongoDBOperator mongoDBOperator;
+    private   MongoDBOperator          mongoDBOperator;
+    @Autowired
+    protected FollowLinkService        followLinkService;
 
     /**
      * this function control the dto (via play.validation annotation) and return it if it's valid, or throw a runtimeException with an error message if not.
      */
     protected <T extends DTO> T extractDTOFromRequest(Class<T> DTOclass) {
+        return extractDTOFromRequest(DTOclass,false);
+    }
+
+    protected <T extends DTO> T extractDTOFromRequest(Class<T> DTOclass,boolean nullable) {
 
         //extract the json node
         JsonNode node = request().body().asJson();
         //extract dto
         T dto = DTO.getDTO(node, DTOclass);
         if (dto == null) {
+            if(nullable){
+                return null;
+            }
             throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR, DTOclass.getName());
         }
 
         validation(dto);
-        if(securityController.isAuthenticated(ctx())) {
+        if (securityController.isAuthenticated(ctx())) {
             dto.setCurrentAccountId(securityController.getCurrentUser().getId());
         }
         mongoDBOperator.write(dto, DTOclass);
@@ -109,6 +119,29 @@ public abstract class AbstractController extends Controller {
             mobile = true;
         }
         return mobile;
+    }
+
+
+    protected BusinessToDisplayDTO convertBusiness(Business business) {
+
+        BusinessToDisplayDTO businessToDisplayDTO = dozerService.map(business, BusinessToDisplayDTO.class);
+
+        //additional data
+        if (securityController.isAuthenticated(ctx())) {
+            FollowLink followLink = followLinkService.findByAccountAndBusiness(securityController.getCurrentUser(), business);
+            if (followLink != null) {
+                businessToDisplayDTO.setFollowing(true);
+                businessToDisplayDTO.setFollowingFrom(dozerService.map(followLink.getFollowedFrom(), Date.class));
+                businessToDisplayDTO.setFollowingNotification(followLink.getFollowingNotification());
+            }
+
+        }
+        businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+
+        //order gallery
+        Collections.sort(businessToDisplayDTO.getGalleryPictures());
+
+        return businessToDisplayDTO;
     }
 
 

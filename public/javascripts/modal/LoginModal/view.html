@@ -4,16 +4,20 @@
 </div>
 <div class="modal-body modal-login" dir-enter="save()">
 
+
+    <div class="modal-login-help" ng-show="fctToExecute!=null">{{'--.loginModal.fctToExecute.help' | translateText}}</div>
+
+
+    <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>
+
+    <div class="link" ng-click="toForgotPassword()">{{'--.login.form.button.forgotPassword' | translateText}}</div>
+
     <div class="modal-login-link-box modal-description">
         <div>{{'--.loginModal.notRegisterYet' | translateText}}</div>
         <span class="modal-login-link link" ng-click="toCustomerRegistration()">{{'--.loginModal.toCustomerRegistration' | translateText}}</span>
         <span class="modal-login-link link" ng-click="toBusinessRegistration()">{{'--.loginModal.toBusinessRegistration' | translateText}}</span>
     </div>
 
-
-    <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>
-
-    <div class="link" ng-click="toForgotPassword()">{{'--.login.form.button.forgotPassword' | translateText}}</div>
 
 </div>
 <div class="modal-footer">

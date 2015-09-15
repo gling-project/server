@@ -45,6 +45,43 @@ public class SearchRestController extends AbstractRestController {
     private BusinessCategoryService businessCategoryService;
 
     @Transactional
+    public Result getNearBusinessByInterest(Long interestID) {
+
+        //create category list
+        CustomerInterest interest = customerInterestService.findById(interestID);
+        List<BusinessCategory> categories = new ArrayList<>();
+        for (CategoryInterestLink categoryInterestLink : interest.getLinks()) {
+            categories.add(categoryInterestLink.getBusinessCategory());
+        }
+
+        //position ?
+        PositionDTO positionDTO = extractDTOFromRequest(PositionDTO.class, true);
+        Position position = dozerService.map(positionDTO, Position.class);
+
+        List<Business> businesses = businessService.findByDistanceAndCategories(position, categories, 20);
+
+        List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, businesses, OrderType.DISTANCE);
+
+
+        return ok(new ListDTO<>(businessToDisplayDTOs));
+    }
+
+    @Transactional
+    public Result getNearBusiness() {
+
+        PositionDTO positionDTO = extractDTOFromRequest(PositionDTO.class);
+
+        Position position = dozerService.map(positionDTO, Position.class);
+
+        List<Business> businesses = businessService.findByDistance(position, 20);
+
+        List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, businesses, OrderType.DISTANCE);
+
+        return ok(new ListDTO<>(businessToDisplayDTOs));
+
+    }
+
+    @Transactional
     public Result getBusinessArchive(Integer page, long id) {
 
         Business byId = businessService.findById(id);
@@ -170,7 +207,7 @@ public class SearchRestController extends AbstractRestController {
             return ok(new ListDTO<>());
         }
         if (searchResults.size() < max) {
-            max = searchResults.size() ;
+            max = searchResults.size();
         }
         List<SearchResult> finalResult = searchResults.subList(min, max);
 
@@ -258,14 +295,14 @@ public class SearchRestController extends AbstractRestController {
                 switch (searchCriteriaEnum) {
                     case CATEGORY:
                         //1 recover cat
-                        List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(),null);
+                        List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(), null);
 
                         if (categories.size() > 0) {
                             createCategorySearchResult(categories, searchDTO, searchResultDTO, searchDTO.getPage(), (categories.size() == 1 && categories.get(0).getChildren().size() == 0), true);
                         }
                         break;
                     case BUSINESS:
-                        searchResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME));
+                        searchResultDTO.setBusinesses(finalizeBusiness(position, businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME));
                         break;
                     case PUBLICATION:
                         searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max)));
@@ -274,11 +311,11 @@ public class SearchRestController extends AbstractRestController {
             }
         } else {
             //1 recover cat
-            List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(),null);
+            List<BusinessCategory> categories = businessCategoryService.search(searchElement.getText(), lang(), null);
             if (categories.size() > 0) {
                 createCategorySearchResult(categories, searchDTO, searchResultDTO, searchDTO.getPage(), (categories.size() == 1 && categories.get(0).getChildren().size() == 0), true);
             }
-            List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME);
+            List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME);
             searchResultDTO.setBusinesses(businessToDisplayDTOs);
             searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max)));
         }
@@ -310,10 +347,10 @@ public class SearchRestController extends AbstractRestController {
 
                 switch (searchCriteriaEnum) {
                     case CATEGORY:
-                        searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(),  max), BusinessCategoryFlatDTO.class));
+                        searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
                         break;
                     case BUSINESS:
-                        searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
+                        searchLittleResultDTO.setBusinesses(finalizeBusiness(position, businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
                         break;
                     case PUBLICATION:
                         searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max)));
@@ -322,14 +359,14 @@ public class SearchRestController extends AbstractRestController {
             }
         } else {
             searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
-            searchLittleResultDTO.setBusinesses(finalizeBusiness(searchDTO.getPosition(), businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
+            searchLittleResultDTO.setBusinesses(finalizeBusiness(position, businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
             searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max)));
         }
 
         return ok(searchLittleResultDTO);
     }
 
-    private List<BusinessToDisplayDTO> finalizeBusiness(PositionDTO dto, List<Business> businesses, OrderType orderType) {
+    private List<BusinessToDisplayDTO> finalizeBusiness(Position position, List<Business> businesses, OrderType orderType) {
         //compute distance
         List<BusinessToDisplayDTO> finalResult = new ArrayList<>();
 
@@ -340,7 +377,7 @@ public class SearchRestController extends AbstractRestController {
                 businesses = businesses.subList(0, 20);
             }
 
-            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(dto, Position.class), businesses);
+            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(position, businesses);
 
             for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
                 for (Business business : businesses) {
@@ -380,7 +417,9 @@ public class SearchRestController extends AbstractRestController {
                 });
                 break;
             case DISTANCE:
-                finalResult.stream().sorted(new Comparator<BusinessToDisplayDTO>() {
+
+
+                Collections.sort(finalResult, new Comparator<BusinessToDisplayDTO>() {
                     @Override
                     public int compare(BusinessToDisplayDTO o1, BusinessToDisplayDTO o2) {
                         return o1.getDistance().compareTo(o2.getDistance());
@@ -507,20 +546,23 @@ public class SearchRestController extends AbstractRestController {
     }
 
     private void createCategorySearchResult(List<BusinessCategory> categories, SearchDTO searchDTO, SearchResultDTO searchResultDTO, int page, boolean onlyOneResult, boolean targetedCategory) {
+
+        Position position = dozerService.map(searchDTO.getPosition(), Position.class);
+
         for (BusinessCategory category : categories) {
 
             boolean lastLevelCategory = category.getChildren().size() == 0;
             if (lastLevelCategory && onlyOneResult) {
                 //TODO load 20 + by scrolling
                 List<Business> businesses = businessService.findByCategory(category, page, 20);
-                List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(searchDTO.getPosition(), businesses, OrderType.NAME);
+                List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, businesses, OrderType.NAME);
 
                 completeCategoryMap(true, searchResultDTO, category, businessToDisplayDTOs);
 
             } else if (lastLevelCategory) {
 
                 List<Business> businesses = businessService.findByCategory(category, 0, 4);
-                List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(searchDTO.getPosition(), businesses, OrderType.NAME);
+                List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, businesses, OrderType.NAME);
 
                 completeCategoryMap(targetedCategory, searchResultDTO, category, businessToDisplayDTOs);
             } else {

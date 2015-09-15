@@ -35,8 +35,6 @@ public class BusinessRestController extends AbstractController {
     @Autowired
     private StoredFileService storedFileService;
     @Autowired
-    private FollowLinkService followLinkService;
-    @Autowired
     private AddressService addressService;
     @Autowired
     private LocalizationService localizationService;
@@ -350,28 +348,6 @@ public class BusinessRestController extends AbstractController {
         return new ListDTO<>(businesses.stream()
                 .map(b -> convertBusiness(b))
                 .collect(Collectors.toList()));
-    }
-
-    private BusinessToDisplayDTO convertBusiness(Business business) {
-
-        BusinessToDisplayDTO businessToDisplayDTO = dozerService.map(business, BusinessToDisplayDTO.class);
-
-        //additional data
-        if (securityController.isAuthenticated(ctx())) {
-            FollowLink followLink = followLinkService.findByAccountAndBusiness(securityController.getCurrentUser(), business);
-            if(followLink!=null){
-                businessToDisplayDTO.setFollowing(true);
-                businessToDisplayDTO.setFollowingFrom(dozerService.map(followLink.getFollowedFrom(), Date.class));
-                businessToDisplayDTO.setFollowingNotification(followLink.getFollowingNotification());
-            }
-
-        }
-        businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
-
-        //order gallery
-        Collections.sort(businessToDisplayDTO.getGalleryPictures());
-
-        return businessToDisplayDTO;
     }
 
 }

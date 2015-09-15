@@ -82,7 +82,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                                     close();
                                 });
                             });
-                    }
+                    };
 
                     scope.getInterestClass = function (publication) {
                         if (publication.interest != null) {
