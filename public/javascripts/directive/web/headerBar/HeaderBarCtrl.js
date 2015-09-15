@@ -84,16 +84,12 @@ myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageS
                         });
                     };
 
-                    $rootScope.$watch(function () {
-                        return accountService.getMyself().selectedAddress;
-                    }, function (n,o) {
-                        if(n!=o) {
-                            if(accountService.getMyself().selectedAddress==null){
-                                scope.currentPosition = 'currentPosition';
-                                return;
-                            }
-                            scope.currentPosition = accountService.getMyself().selectedAddress.name;
+                    $rootScope.$on("CHANGE_ADDRESS_SELECTED", function () {
+                        if (accountService.getMyself().selectedAddress == null) {
+                            scope.currentPosition = 'currentPosition';
+                            return;
                         }
+                        scope.currentPosition = accountService.getMyself().selectedAddress.name;
                     });
 
                     $timeout(function () {

@@ -11,7 +11,6 @@
 
         <div class="business-management-progress-bar">
             <div ng-style="{'width':(300 * (computeProgression()/5))+'px'}">
-
             </div>
             <span>{{computeProgression()}} / 5</span>
         </div>
@@ -105,7 +104,7 @@
 
     <!-- Status -->
     <h4>
-        <i ng-class="'business-status-'+business.businessStatus"/>
+        <span ng-class="'business-status-'+business.businessStatus"></span>
         Status de votre page : {{'--.business.status.'+business.businessStatus | translateText}}
     </h4>
 
@@ -144,7 +143,7 @@
 
 
 <!-- show edit buttons or not -->
-<div class="onoffswitch-container" ng-show="myBusiness === true">
+<div class="onoffswitch-container">
     <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
     <div class="onoffswitch">
         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchFromBusiness"
