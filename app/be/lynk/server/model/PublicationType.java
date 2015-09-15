@@ -6,5 +6,5 @@ package be.lynk.server.model;
 public enum PublicationType {
 
     PROMOTION,
-    type, NOTIFICATION
+     NOTIFICATION
 }

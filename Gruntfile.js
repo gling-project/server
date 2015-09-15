@@ -288,6 +288,7 @@ module.exports = function (grunt) {
             town: {
                 src: ['public/javascripts/directive/town/publicationListForTown/template.html',
                     'public/javascripts/directive/town/townBusiness/template.html',
+                    'public/javascripts/directive/town/newsFeedForTown/template.html',
                     'public/javascripts/modal/GalleryModal/view.html'
                 ],
                 dest: 'public/javascripts/dist/templateCacheWeb-town.js'
