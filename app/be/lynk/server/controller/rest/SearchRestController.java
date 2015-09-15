@@ -436,54 +436,7 @@ public class SearchRestController extends AbstractRestController {
         return finalize(position, publications, new Date().getTime());
     }
 
-    private List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications, long t) {
 
-        //compute distance
-        List<Business> addresses = new ArrayList<>();
-        List<AbstractPublicationDTO> l = new ArrayList<>();
-
-        if (publications.size() > 0) {
-
-            //limit to 20 !
-            if (publications.size() > 20) {
-                publications = publications.subList(0, 20);
-            }
-
-
-            for (AbstractPublication publication : publications) {
-                if (!addresses.contains(publication.getBusiness())) {
-                    addresses.add(publication.getBusiness());
-                }
-            }
-            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(position, Position.class), addresses);
-
-            for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
-                for (AbstractPublication publication : publications) {
-                    if (addressLongEntry.getKey().equals(publication.getBusiness())) {
-
-                        AbstractPublicationDTO publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
-                        publicationDTO.setDistance(addressLongEntry.getValue());
-                        l.add(publicationDTO);
-                        //add business name
-                        publicationDTO.setBusinessName(publication.getBusiness().getName());
-                        publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
-                        publicationDTO.setBusinessId(publication.getBusiness().getId());
-                        //follow ?
-                        if (securityController.isAuthenticated(ctx())) {
-                            Account account = securityController.getCurrentUser();
-                            publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness(account, publication.getBusiness()));
-
-                        }
-                        publicationDTO.setTotalFollowers(followLinkService.countByBusiness(publication.getBusiness()));
-                    }
-                }
-            }
-        }
-
-        Collections.sort(l);
-
-        return l;//
-    }
 
 
     private static class SearchElement {

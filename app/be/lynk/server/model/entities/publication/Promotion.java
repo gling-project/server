@@ -1,5 +1,7 @@
 package be.lynk.server.model.entities.publication;
 
+import be.lynk.server.model.PublicationType;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 
@@ -24,7 +26,10 @@ public class Promotion extends AbstractPublication{
     @Basic
     private Double offPercent;
 
+
+
     public Promotion() {
+        type = PublicationType.PROMOTION;
     }
 
     public Double getQuantity() {

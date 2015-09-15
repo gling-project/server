@@ -67,6 +67,7 @@
             <script src="@routes.Assets.at("javascripts/TownMainCtrl.js")" type="text/javascript"></script>
 
                 <!-- component -->
+            <script src="@routes.Assets.at("javascripts/directive/town/newsFeedForTown/NewsFeedForTownCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/directive/town/townBusiness/TownBusinessCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/directive/town/publicationListForTown/PublicationListForTownCtrl.js")" type="text/javascript"></script>
 
@@ -86,6 +87,8 @@
 
     </head>
     <body ng-app="app" ng-controller="TownMainCtrl" style="width : 734px ; margin : auto">
+
+        <news-feed-for-town-ctrl></news-feed-for-town-ctrl>
 
         <town-business-ctrl></town-business-ctrl>
 

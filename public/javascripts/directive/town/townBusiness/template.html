@@ -8,8 +8,10 @@
 
             <img ng-src="{{business.illustration | image}}"/>
 
-            <div>{{business.name}}</div>
-            <div>{{business.address.street}}</div>
+            <div class="town-business-list-element-data">
+                <div class="business-name">{{business.name}}</div>
+                <div class="address">{{business.address.street}}</div>
+            </div>
         </div>
 
 

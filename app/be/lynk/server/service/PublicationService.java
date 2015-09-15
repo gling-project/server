@@ -5,6 +5,8 @@ import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.model.entities.publication.BusinessNotification;
+import be.lynk.server.model.entities.publication.Promotion;
 
 import java.util.List;
 
@@ -34,4 +36,8 @@ public interface PublicationService extends CrudService<AbstractPublication> {
     List<AbstractPublication> findBySearchResults(List<SearchResult> searchResults);
 
     List<AbstractPublication> findByBusinessForTown(Business business, Integer page,Integer maxResult);
+
+    List<AbstractPublication> findActivePublicationByTypeAndZip(Integer zip, Integer page, Integer maxResult);
+
+    List<AbstractPublication> findActivePromotionByTypeAndZip(Integer zip, Integer page, Integer maxResult);
 }

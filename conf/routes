@@ -110,7 +110,8 @@ GET           /rest/business/confirmPublication/$id<[0-9]+>                     
 GET           /rest/town/business/zip/$zip<[0-9]+>                                                @be.lynk.server.controller.rest.TownRestController.getBusinessesByZip(zip:Integer)
 GET           /rest/town/publication/business/$id<[0-9]+>/$page<[0-9]+>                           @be.lynk.server.controller.rest.TownRestController.getPublicationByBusiness(id:Long,page:Integer)
 GET           /rest/town/translations                                                             @be.lynk.server.controller.rest.TownRestController.getTranslations()
-
+GET           /rest/town/publications/$zip<[0-9]+>/$page<[0-9]+>                                  @be.lynk.server.controller.rest.TownRestController.getPublication(zip:Integer,page:Integer)
+GET           /rest/town/promotions/$zip<[0-9]+>/$page<[0-9]+>                                    @be.lynk.server.controller.rest.TownRestController.getPromotion(zip:Integer,page:Integer)
 
 
 #############

@@ -1,5 +1,7 @@
 package be.lynk.server.model.entities.publication;
 
+import be.lynk.server.model.PublicationType;
+
 import javax.persistence.Entity;
 
 /**
@@ -8,4 +10,7 @@ import javax.persistence.Entity;
 @Entity
 public class BusinessNotification extends AbstractPublication{
 
+    public BusinessNotification() {
+        type = PublicationType.NOTIFICATION;
+    }
 }

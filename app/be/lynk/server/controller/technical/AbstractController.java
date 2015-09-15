@@ -1,13 +1,19 @@
 package be.lynk.server.controller.technical;
 
 import be.lynk.server.controller.technical.security.CommonSecurityController;
+import be.lynk.server.dto.AbstractPublicationDTO;
 import be.lynk.server.dto.BusinessToDisplayDTO;
+import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.model.Position;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.FollowLink;
+import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.DozerService;
 import be.lynk.server.service.FollowLinkService;
+import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
@@ -40,22 +46,24 @@ public abstract class AbstractController extends Controller {
     private   MongoDBOperator          mongoDBOperator;
     @Autowired
     protected FollowLinkService        followLinkService;
+    @Autowired
+    private   LocalizationService      localizationService;
 
     /**
      * this function control the dto (via play.validation annotation) and return it if it's valid, or throw a runtimeException with an error message if not.
      */
     protected <T extends DTO> T extractDTOFromRequest(Class<T> DTOclass) {
-        return extractDTOFromRequest(DTOclass,false);
+        return extractDTOFromRequest(DTOclass, false);
     }
 
-    protected <T extends DTO> T extractDTOFromRequest(Class<T> DTOclass,boolean nullable) {
+    protected <T extends DTO> T extractDTOFromRequest(Class<T> DTOclass, boolean nullable) {
 
         //extract the json node
         JsonNode node = request().body().asJson();
         //extract dto
         T dto = DTO.getDTO(node, DTOclass);
         if (dto == null) {
-            if(nullable){
+            if (nullable) {
                 return null;
             }
             throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR, DTOclass.getName());
@@ -144,5 +152,53 @@ public abstract class AbstractController extends Controller {
         return businessToDisplayDTO;
     }
 
+    protected List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications, long t) {
+
+        //compute distance
+        List<Business> addresses = new ArrayList<>();
+        List<AbstractPublicationDTO> l = new ArrayList<>();
+
+        if (publications.size() > 0) {
+
+            //limit to 20 !
+            if (publications.size() > 20) {
+                publications = publications.subList(0, 20);
+            }
+
+
+            for (AbstractPublication publication : publications) {
+                if (!addresses.contains(publication.getBusiness())) {
+                    addresses.add(publication.getBusiness());
+                }
+            }
+            Map<Business, Long> addressLongMap = localizationService.distanceBetweenAddresses(dozerService.map(position, Position.class), addresses);
+
+            for (Map.Entry<Business, Long> addressLongEntry : addressLongMap.entrySet()) {
+                for (AbstractPublication publication : publications) {
+                    if (addressLongEntry.getKey().equals(publication.getBusiness())) {
+
+                        AbstractPublicationDTO publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
+                        publicationDTO.setDistance(addressLongEntry.getValue());
+                        l.add(publicationDTO);
+                        //add business name
+                        publicationDTO.setBusinessName(publication.getBusiness().getName());
+                        publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+                        publicationDTO.setBusinessId(publication.getBusiness().getId());
+                        //follow ?
+                        if (securityController.isAuthenticated(ctx())) {
+                            Account account = securityController.getCurrentUser();
+                            publicationDTO.setFollowing(followLinkService.testByAccountAndBusiness(account, publication.getBusiness()));
+
+                        }
+                        publicationDTO.setTotalFollowers(followLinkService.countByBusiness(publication.getBusiness()));
+                    }
+                }
+            }
+        }
+
+        Collections.sort(l);
+
+        return l;//
+    }
 
 }

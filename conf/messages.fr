@@ -483,3 +483,9 @@ day_abrv_sunday=Di
 --.business.status.NOT_PUBLISHED=Non publique
 --.business.status.PUBLISHED=Publique
 --.business.status.WAITING_CONFIRMATION=En attente de confirmation
+
+
+--.town.newsfeed.news=Nouveauté
+--.town.newsfeed.promotion=Promotions
+
+

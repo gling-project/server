@@ -2,10 +2,13 @@ package be.lynk.server.service.impl;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.model.Position;
+import be.lynk.server.model.PublicationType;
 import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.model.entities.publication.BusinessNotification;
+import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.PublicationService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
@@ -28,7 +31,7 @@ import java.util.stream.Collectors;
 public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication> implements PublicationService {
 
 
-    private static final Boolean OPT1         = false;
+    private static final Boolean OPT1 = false;
 
     private static enum PublicationTiming {FUTURE, PASSED, NOW}
 
@@ -196,7 +199,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
      * @return
      */
     @Override
-    public List<AbstractPublication> findByBusinessForTown(Business business, Integer page,Integer maxResult) {
+    public List<AbstractPublication> findByBusinessForTown(Business business, Integer page, Integer maxResult) {
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
@@ -205,6 +208,48 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(from.get("business"), business));
+        cq.orderBy(cb.desc(from.get("startDate")));
+
+        return JPA.em().createQuery(cq)
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
+                  .getResultList();
+    }
+
+    @Override
+    public List<AbstractPublication> findActivePublicationByTypeAndZip(Integer zip, Integer page, Integer maxResult) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        Path<Business> business = from.get("business");
+        Path<Object> address = business.get("address");
+        cq.select(from);
+        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(address.get("zip"), zip.toString())
+                , cb.equal(from.get("type"), PublicationType.NOTIFICATION));
+        cq.orderBy(cb.desc(from.get("startDate")));
+
+        return JPA.em().createQuery(cq)
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
+                  .getResultList();
+    }
+
+    @Override
+    public List<AbstractPublication> findActivePromotionByTypeAndZip(Integer zip, Integer page, Integer maxResult) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        Path<Business> business = from.get("business");
+        Path<Object> address = business.get("address");
+        cq.select(from);
+        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(address.get("zip"), zip.toString())
+                , cb.equal(from.get("type"), PublicationType.PROMOTION));
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)

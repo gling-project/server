@@ -252,6 +252,7 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/GalleryModal/GalleryModal.js',
                         'public/javascripts/TownMainCtrl.js',
                         'public/javascripts/directive/town/townBusiness/TownBusinessCtrl.js',
+                        'public/javascripts/directive/town/newsFeedForTown/NewsFeedForTownCtrl.js',
                         'public/javascripts/directive/town/publicationListForTown/PublicationListForTownCtrl.js',
                         'public/javascripts/dist/templateCacheWeb-town.js'
                     ]
