@@ -1,0 +1,42 @@
+@color-green-light: #1AD2AA;
+@color-blue-dark: #292763;
+
+body {
+    width: 1000px;
+    margin: auto;
+    font-family: "myFont";
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: myFont;
+    src: url('/assets/fonts/Brandon_bld.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: myFont;
+    src: url('/assets/fonts/brandon_re.ttf');
+}
+
+.header {
+    height: 380px;
+    background-image: url('/assets/images/welcome_page/bg.jpg');
+    background-repeat: no-repeat;
+    text-align: center;
+    & > *:first-child{
+        margin-top: 40px;
+    }
+    .logo{
+        font-size: 60px;
+    }
+    p{
+        font-size: 40px;
+        color: white;
+    }
+}
+
+.header-bottom {
+    height: 100px;
+    background-color: @color-blue-dark;
+}
