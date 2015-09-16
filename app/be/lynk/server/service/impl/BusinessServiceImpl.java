@@ -77,7 +77,33 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
     }
 
     @Override
-    public List<Business> findByZip(String zip) {
+    public List<Business> findByZipAndDeepSearch(String zip, String criteria, int page, int maxResult) {
+
+//TODO add seach by address and category
+
+        criteria = normalizeForSearch(criteria);
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Business> cq = cb.createQuery(Business.class);
+        Root<Business> from = cq.from(Business.class);
+        Path<Address> addressRel = from.get("address");
+
+        cq.select(from);
+
+        cq.where(cb.equal(addressRel.get("zip"), zip),
+                 cb.like(from.get("searchableName"), criteria),
+                 cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+
+        cq.orderBy(cb.asc(from.get("searchableName")));
+
+        return JPA.em().createQuery(cq)
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
+                  .getResultList();
+    }
+
+    @Override
+    public List<Business> findByZip(String zip, int page,int maxResult){
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Business> cq = cb.createQuery(Business.class);
@@ -92,8 +118,9 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         cq.orderBy(cb.asc(from.get("searchableName")));
 
         return JPA.em().createQuery(cq)
+                  .setFirstResult(page * maxResult)
+                  .setMaxResults(maxResult)
                   .getResultList();
-
     }
 
     @Override

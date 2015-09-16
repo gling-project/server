@@ -2,18 +2,33 @@
     <div class="town-business-list"
          ng-show="elementToDisplay === 'list'">
 
-        <div class="town-business-list-element"
-             ng-repeat="business in businesses"
-             ng-click="selectBusiness(business)">
+        <h3>Les commerces de votre commune.</h3>
 
-            <img ng-src="{{business.illustration | image}}"/>
-
-            <div class="town-business-list-element-data">
-                <div class="business-name">{{business.name}}</div>
-                <div class="address">{{business.address.street}}</div>
+        <div class="search-box">
+            <div class="input-group">
+                <span class="input-group-addon glyphicon glyphicon-search" id="basic-addon1"></span>
+                <input type="text" class="form-control" placeholder="Par nom, adresse, type,..." aria-describedby="basic-addon1">
             </div>
+            <button class="btn btn-primary">Ok</button>
         </div>
 
+        Cliquer sur les images pour obtenir plus d'information
+        <br/>
+
+        <div>
+
+            <div class="town-business-list-element"
+                 ng-repeat="business in businesses"
+                 ng-click="selectBusiness(business)">
+
+                <img ng-src="{{business.illustration | image}}"/>
+
+                <div class="town-business-list-element-data">
+                    <div class="business-name">{{business.name}}</div>
+                    <div class="address">{{business.address.street}}</div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <div ng-show="elementToDisplay === 'businessDetails'">

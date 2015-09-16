@@ -97,7 +97,7 @@ public class TownRestController extends AbstractRestController {
     }
 
     @Transactional
-    public Result getBusinessesByZip(Integer zip) {
+    public Result getBusinessesByZip(Integer zip,Integer page) {
 
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
@@ -105,7 +105,21 @@ public class TownRestController extends AbstractRestController {
         response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
         response().setHeader("Access-Control-Allow-Credentials", "true");
 
-        List<Business> businessList = businessService.findByZip(zip.toString());
+        List<Business> businessList = businessService.findByZip(zip.toString(),page,20);
+
+        return ok(new ListDTO<>(dozerService.map(businessList, BusinessDTO.class)));
+    }
+
+    @Transactional
+    public Result getBusinessesByZipAndSearch(Integer zip,String search,Integer page) {
+
+        response().setHeader("Access-Control-Allow-Origin", "*");
+        response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+        response().setHeader("Access-Control-Max-Age", "3600");
+        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
+        response().setHeader("Access-Control-Allow-Credentials", "true");
+
+        List<Business> businessList = businessService.findByZipAndDeepSearch(zip.toString(),search,page,20);
 
         return ok(new ListDTO<>(dozerService.map(businessList, BusinessDTO.class)));
     }
