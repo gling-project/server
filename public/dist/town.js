@@ -874,7 +874,7 @@ myApp.directive("townBusinessCtrl", ['townService', function (townService) {
             return {
                 post: function (scope) {
 
-                    townService.getBusinessByZip(1160, function (data) {
+                    townService.getBusinessByZip(1160, 0,function (data) {
                         scope.businesses = data;
                     });
 
