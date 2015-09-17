@@ -19,9 +19,10 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                     scope.update = scope.getInfo().dto != null;
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
-                            startDate: new Date()
+                            startDate: new Date(),
+                            endDate:new Date().setMonth(new Date().getMonth() + 1)
                         };
-                    }
+                    };
 
                     //load interests
                     businessService.getInterests(function (data) {
@@ -56,7 +57,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         },
                         description: {
                             fieldTitle: "--.publication.description",
-                            validationRegex: "^($|.{0,1000}$)",
+                            validationRegex: /^[\s\S]{2,1000}$/gi,
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -85,8 +86,9 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             },
                             field: scope.getInfo().dto,
                             active: function () {
-                                return false;
+                                return true;
                             },
+                            option:true,
                             fieldName: 'endDate'
                         },
                         illustration: {

@@ -2,10 +2,10 @@
     <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
     <h4 class="modal-title">{{'--.loginModal.title' | translateText}}</h4>
 </div>
-<div class="modal-body modal-login" dir-enter="save()">
+<div class="modal-body modal-login" >
 
 
-    <div class="modal-login-help" ng-show="fctToExecute!=null">{{'--.loginModal.fctToExecute.help' | translateText}}</div>
+    <div class="help-div" ng-show="helpMessage!=null">{{helpMessage | translateText}}</div>
 
 
     <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>

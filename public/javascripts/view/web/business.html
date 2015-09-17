@@ -3,79 +3,22 @@
 <!-- management part -->
 <div ng-show="myBusiness === true" class="panel panel-gling business-management">
 
-    <h3>{{'--.business.page.management.title' | translateText}}</h3>
+    <div class="management-block">
+        <h4>{{'--.business.page.management.title' | translateText}}
 
-    <!-- progress -->
-    <div class="business-management-progress">
-        <h4>{{'--.business.management.progression' | translateText}}</h4>
+        <span style="float: right">
+            {{'--.business.page.management.status' | translateText}}
+            <span ng-class="'business-status-'+business.businessStatus"></span>
+            {{'--.business.status.'+business.businessStatus | translateText}}
+        </span>
+        </h4>
 
-        <div class="business-management-progress-bar">
-            <div ng-style="{'width':(300 * (computeProgression()/5))+'px'}">
-            </div>
-            <span>{{computeProgression()}} / 5</span>
-        </div>
+        <div>{{'--.business.page.edit.description' | translateText}}</div>
+    </div>
 
-        <span>{{'--.business.management.progression.desc' | translateText}}</span><br/><br/>
+    <div class="management-block">
 
-        <!-- description -->
-        <div class="business-management-progress-el">
-            <input type="checkbox"
-                   ng-checked="business.description!=null"/>
-            <span ng-class="{'completed':business.description!=null}"
-                  ng-click="editbusiness()"
-                  class="link">
-                Ajouter une description
-            </span>
-        </div>
-
-        <!-- landscape -->
-        <div class="business-management-progress-el">
-            <input type="checkbox" ng-checked="business.landscape!=null"/>
-            <span ng-class="{'completed':business.landscape!=null}"
-                  ng-click="editLandscape()"
-                  class="link">
-                Ajouter une image de fond
-            </span>
-        </div>
-
-        <!-- gallery -->
-        <div class="business-management-progress-el">
-            <input type="checkbox" ng-checked="business.galleryPictures.length>0"/>
-            <span ng-class="{'completed':business.galleryPictures.length>0}"
-                  ng-click="editGallery()"
-                  class="link">
-                Ajouter une galerie de photos représentative de votre commerce, vos produits phares
-            </span>
-        </div>
-
-        <!-- social -->
-        <div class="business-management-progress-el">
-            <input type="checkbox"
-                   ng-checked="displaySocialNetwork()"/>
-            <span ng-class="{'completed':displaySocialNetwork()}"
-                  ng-click="editSocialNetwork()"
-                  class="link">
-                Ajouter des liens vers les réseaux sociaux sur lesquels votre commerce est présent
-            </span>
-        </div>
-
-
-        <!-- schedule -->
-        <div class="business-management-progress-el">
-            <input type="checkbox"
-                   ng-checked="displaySchedule()"/>
-            <span ng-class="{'completed':displaySchedule()}"
-                  ng-click="editSchedule()"
-                  class="link">
-                Ajouter vos heures d'ouverture et d'affluence
-            </span>
-        </div>
-
-        <br/>
-
-        <a href="/help/business/data" target="_blank">Besoin d'aide? Suivez notre guide conseil pour obtenir un maximum de Gling !</a>
-
-        <h4>Créer une publication</h4>
+        <h4>{{'--.business.manager.progress.createPublicationTitle' | translateText}}</h4>
 
         <button id="business-btn-promotion-add"
                 class="btn btn-primary"
@@ -88,58 +31,137 @@
                 ng-disabled="business.businessStatus !== 'PUBLISHED'">
             {{'--.business.publication.btn.notification' | translateText}}
         </button>
-
-
-        <div ng-hide="business.businessStatus==='PUBLISHED'">
-            Vous ne pouvez pas encore créer de publication pour l'instant car votre page n'est pas encore publique.
-            Pour rendre votre page publique, cliquez sur le bouton 'Publier ma page!' et attendez qu'un membre de notre
-            équipe valide votre demande.
-        </div>
-
-
     </div>
 
-    <div>{{'--.business.page.edit.description' | translateText}}</div>
+    <div ng-hide="business.businessStatus==='PUBLISHED'">
+        {{'--.business.manager.createPublication.disabled.desc' | translateText}}
+    </div>
 
 
-    <!-- Status -->
-    <h4>
-        <span ng-class="'business-status-'+business.businessStatus"></span>
-        Status de votre page : {{'--.business.status.'+business.businessStatus | translateText}}
-    </h4>
+    <div>
+        <div style="width: 49%;display: inline-block;vertical-align: top" class="business-management-progress">
 
-    <p>
-        <span ng-show="business.businessStatus === 'NOT_PUBLISHED'">
-            {{'--.business.page.edit.description.notPublished' |translateText}}
-        </span>
-        <span ng-show="business.businessStatus === 'WAITING_CONFIRMATION'">
-            {{'--.business.page.edit.description.waitConfirmation' | translateText}}
-        </span>
-        <span ng-show="business.businessStatus === 'PUBLISHED'">
-            {{'--.business.page.edit.descriptionPublished' |translateText}}
-        </span>
-    </p>
+            <h4>{{'--.business.management.progression' | translateText}}</h4>
 
-    <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
-            ng-click="publish()"
-            id="business-btn-publish"
-            class="btn btn-primary">
-        {{'--.business.page.publication' | translateText}}
-    </button>
+            <div class="business-management-progress-bar">
+                <div ng-style="{'width':(300 * (computeProgression()/6))+'px'}">
+                </div>
+                <span>{{computeProgression()}} / 6</span>
+            </div>
 
-    <button ng-show="business.businessStatus === 'WAITING_CONFIRMATION'"
-            ng-click="cancelPublishRequest()"
-            class="btn btn-primary">
-        {{'--.business.page.cancelPublishRequest' | translateText}}
-    </button>
+            <span>{{'--.business.management.progression.desc' | translateText}}</span><br/><br/>
 
-    <button ng-show="business.businessStatus === 'PUBLISHED'"
-            ng-click="stopPublish()"
-            class="btn btn-primary">
-        {{'--.business.page.stopPublication' | translateText}}
-    </button>
+            <!-- description -->
+            <div class="business-management-progress-el">
+                <input type="checkbox"
+                       ng-checked="business.description!=null"/>
+            <span ng-class="{'completed':business.description!=null}"
+                  ng-click="editbusiness()"
+                  class="link">
+                {{'--.business.manager.progress.add.description' | translateText}}
+            </span>
+            </div>
+
+            <!-- illustration -->
+            <div class="business-management-progress-el">
+                <input type="checkbox" ng-checked="business.illustration!=null"/>
+            <span ng-class="{'completed':business.illustration!=null}"
+                  ng-click="editIllustration()"
+                  class="link">
+                {{'--.business.manager.progress.add.illustration' | translateText}}
+            </span>
+            </div>
+
+            <!-- landscape -->
+            <div class="business-management-progress-el">
+                <input type="checkbox" ng-checked="business.landscape!=null"/>
+            <span ng-class="{'completed':business.landscape!=null}"
+                  ng-click="editLandscape()"
+                  class="link">
+                {{'--.business.manager.progress.add.landscape' | translateText}}
+            </span>
+            </div>
+
+            <!-- gallery -->
+            <div class="business-management-progress-el">
+                <input type="checkbox" ng-checked="business.galleryPictures.length>0"/>
+            <span ng-class="{'completed':business.galleryPictures.length>0}"
+                  ng-click="editGallery()"
+                  class="link">
+                {{'--.business.manager.progress.add.gallery' | translateText}}
+            </span>
+            </div>
+
+            <!-- social -->
+            <div class="business-management-progress-el">
+                <input type="checkbox"
+                       ng-checked="displaySocialNetwork()"/>
+            <span ng-class="{'completed':displaySocialNetwork()}"
+                  ng-click="editSocialNetwork()"
+                  class="link">
+                {{'--.business.manager.progress.add.socialNetwork' | translateText}}
+
+            </span>
+            </div>
+
+
+            <!-- schedule -->
+            <div class="business-management-progress-el">
+                <input type="checkbox"
+                       ng-checked="displaySchedule()"/>
+            <span ng-class="{'completed':displaySchedule()}"
+                  ng-click="editSchedule()"
+                  class="link">
+                {{'--.business.manager.progress.add.schedule' | translateText}}
+            </span>
+            </div>
+
+        </div>
+        <div style="width: 49%;display: inline-block;vertical-align: top">
+
+            <h4>Changer de status</h4>
+
+            <div class="management-block">
+                <p>
+                <span ng-show="business.businessStatus === 'NOT_PUBLISHED'">
+                    {{'--.business.page.edit.description.notPublished' |translateText}}
+                </span>
+                <span ng-show="business.businessStatus === 'WAITING_CONFIRMATION'">
+                    {{'--.business.page.edit.description.waitConfirmation' | translateText}}
+                </span>
+                <span ng-show="business.businessStatus === 'PUBLISHED'">
+                    {{'--.business.page.edit.descriptionPublished' |translateText}}
+                </span>
+                    <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
+                            ng-click="publish()"
+                            id="business-btn-publish"
+                            class="btn btn-primary">
+                        {{'--.business.page.publication' | translateText}}
+                    </button>
+
+                    <button ng-show="business.businessStatus === 'WAITING_CONFIRMATION'"
+                            ng-click="cancelPublishRequest()"
+                            class="btn btn-primary">
+                        {{'--.business.page.cancelPublishRequest' | translateText}}
+                    </button>
+
+                    <button ng-show="business.businessStatus === 'PUBLISHED'"
+                            ng-click="stopPublish()"
+                            class="btn btn-primary">
+                        {{'--.business.page.stopPublication' | translateText}}
+                    </button>
+                </p>
+            </div>
+            <h4>Un petit coup de pouce ?</h4>
+            <a  class="btn btn-primary" class="btn btn-primary" href="/help/business/data" target="_blank">
+                {{'--.business.manager.progress.help' | translateText}}
+            </a>
+            <button class="btn btn-primary" ng-click="openContact()">
+                Contactez-nous
+            </button>
+        </div>
+    </div>
 </div>
-
 
 
 <!-- show edit buttons or not -->

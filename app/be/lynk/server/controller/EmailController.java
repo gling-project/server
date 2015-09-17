@@ -5,9 +5,11 @@ import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.EmailService;
 import be.lynk.server.service.TranslationService;
+import be.lynk.server.util.ContactTargetEnum;
 import be.lynk.server.util.message.EmailMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
+import play.i18n.Lang;
 
 /**
  * Created by florian on 6/12/14.
@@ -17,7 +19,7 @@ public class EmailController extends AbstractController {
 
     //service
     @Autowired
-    private EmailService emailService;
+    private EmailService       emailService;
     @Autowired
     private TranslationService translationService;
 
@@ -74,5 +76,21 @@ public class EmailController extends AbstractController {
         EmailMessage emailMessage = new EmailMessage(recipient, title, body);
 
         emailService.sendEmail(emailMessage, account.getLang());
+    }
+
+    @Transactional
+    public void sendContactEmail(ContactTargetEnum target, String email, String subject, String message) {
+
+        String title = "Gling : message de " + target.getType();
+
+        String body =
+                "De : " + email + "<br/><br/>" +
+                        "Suject : " + subject + "<br/><br/>" +
+                        "Message : " + message + "<br/><br/>";
+
+        EmailMessage.Recipient recipient = new EmailMessage.Recipient(target.getEmail());
+        EmailMessage emailMessage = new EmailMessage(recipient, title, body);
+
+        emailService.sendEmail(emailMessage, Lang.forCode("fr"));
     }
 }

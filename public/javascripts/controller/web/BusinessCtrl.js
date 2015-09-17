@@ -1,4 +1,4 @@
-myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, constantService) {
+myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,contactService,$filter) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -113,7 +113,8 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
             $scope.editbusiness = function () {
                 var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
-                    {dto: business},
+                    {dto: business,
+                        status:business.businessStatus},
                     function (close, setLoading) {
                         businessService.edit(business, function (data) {
                             $scope.business.name = data.name;
@@ -348,6 +349,9 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                 if ($scope.business.description != null) {
                     total++;
                 }
+                if ($scope.business.illustration != null) {
+                    total++;
+                }
                 if ($scope.business.landscape != null) {
                     total++;
                 }
@@ -367,6 +371,21 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                 var s = 'width:' + (300 * ($scope.computeProgression() / 5)) + 'px';
                 console.log(s);
                 return s;
+            };
+
+            $scope.openContact = function () {
+
+                var dto = {target:'HELP'};
+
+                modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl',
+                    {dto: dto},
+                    function (close) {
+                        contactService.contact(dto, function () {
+                            $flash.success($filter('translateText')('--.contactForm.send.success'));
+                            close();
+                        });
+                    }
+                );
             };
 
 

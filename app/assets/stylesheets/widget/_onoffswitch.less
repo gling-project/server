@@ -79,10 +79,12 @@
     transition: all 0.3s ease-in 0s;;
 }
 
-.followedMode .onoffswitch-inner {
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner,
+.followedMode .onoffswitch-inner{
     margin-left: 0px;
 }
 
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch ,
 .followedMode .onoffswitch-switch {
     right: 0px;
 }

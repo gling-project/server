@@ -209,8 +209,8 @@
 	
 	
 ##  modal/LoginModal/view.html	
---.loginModal.toBusinessRegistration=S'enregistrer en tant de commerçant.
---.loginModal.toCustomerRegistration=S'enregistrer en tant que consommateur.
+--.loginModal.toBusinessRegistration=Je suis un commerçant.
+--.loginModal.toCustomerRegistration=S'enregistrer!
 --.loginModal.notRegisterYet=Pas encore enregistré(e)?
 ######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
 ######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
@@ -457,11 +457,12 @@ day_abrv_sunday=Di
 
 --.loginModal.fctToExecute.help=Vous devez vous enregistrez pour continuer
 --.home.interest-switch.help=Triez selon votre position ou vos commerces favoris
---.home.interest.help=Triez les publications selon vos envies
---.home.localisation.help=Triez selon votre position
+--.home.interest.help=Triez selon vos envies.
+--.home.localisation.help=Triez selon votre position.
 --.home.followning.help=Triez selon vos commerces favoris
---.home.emptyResult.help=Vous ne suivez actuellement aucun commerce! Voici une sélection des commerces de votre quartier
---.home.emptyResultWithInterest.help=Aucun des commerces que vous suivez ne correspond à l'intérêt sélectionné. Voici une liste des commerces de votre quartier correspondant à votre intérêt
+--.home.emptyResult.help=Aucune publication provenant de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.emptyResultWithInterest.help=Aucune publication de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
+
 
 
 --.legal.title=Je suis les mentions légales
@@ -469,7 +470,7 @@ day_abrv_sunday=Di
 --.business.registrationModal.personal.desc=Indiquez ici vos informations personnelles
 
 --.headerBar.logo.label=Home
---.home.interest.arrow.label=Découvrir d'autres centres d'intérêts.
+--.home.interest.arrow.label=D'autres envies?
 --.business.schedule.edit.modal.description=Indiquez ici vos heures d'ouvertures et d'affluence le cas échéant.
 --.business.logo.edit.modal.description=Insérez votre logo en choisissant de préférence une version de forme carrée afin de correspondre au mieux au design de la page. La photo doit faire au minimum 200 pixels par 200 pixels
 --.business.landscape.edit.modal.description=Insérez votre photo de fond. La photo doit faire au minimum 1000 pixels de large et 300 pixels de haut
@@ -487,8 +488,32 @@ day_abrv_sunday=Di
 
 --.town.newsfeed.news=Nouveauté
 --.town.newsfeed.promotion=Promotions
---.home.geolocation.notAccepted=<i class="glyphicon glyphicon-exclamation-sign"></i>Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>Si vous ne voulez pas partager votre position, vous pouvez aussi <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
+--.home.geolocation.notAccepted=Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>Si vous ne voulez pas partager votre position, vous pouvez aussi <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
 
 --.footer.legal=Mentions légales
 --.footer.contact=Contact
 --.footer.help=Signaler un problème
+
+--.business.manager.progress.add.description=Ajouter une description
+--.business.manager.progress.add.illustration=Ajouter un logo
+--.business.manager.progress.add.landscape=Ajouter une image de fond
+--.business.manager.progress.add.gallery=Ajouter une galerie de photos représentative de votre commerce, vos produits phares
+--.business.manager.progress.add.schedule=Ajouter vos heures d'ouverture et d'affluence
+--.business.manager.progress.add.socialNetwork=Ajouter des liens vers les réseaux sociaux sur lesquels votre commerce est présent\
+--.business.manager.progress.help=Besoin d'aide? Suivez notre guide conseil pour obtenir un maximum de Gling !
+--.business.manager.progress.createPublicationTitle=Créer une publication
+--.business.manager.createPublication.disabled.desc=Vous ne pouvez pas encore créer de publication pour l'instant car votre page n'est pas encore publique. Pour rendre votre page publique, cliquez sur le bouton 'Publier ma page!' et attendez qu'un membre de notre équipe valide votre demande.
+--.followWidget.message.remove=Ce commerce a bien été supprimer de vos favoris.
+--.followWidget.message.add=Ce commerce a bien été ajouté à vos favoris!
+--.followWidget.stopFollow=Ne plus suivre ce commerce
+--.followWidget.follow=Suivre ce commerce
+--.business.page.management.status=Status de votre page :
+
+--.schedule.closed=Fermé
+--.schedule.light=Ouvert (Affluence faible)
+--.schedule.moderate=Ouvert (Affluence moyenne)
+--.schedule.heavy=Ouvert (Affluence forte)
+
+--.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous enregister.
+--.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
+--.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.

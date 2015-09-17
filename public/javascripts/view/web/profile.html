@@ -96,6 +96,7 @@
             <div>
                 <div ng-repeat="interest in model.myself.customerInterests"
                      class="category-box">
+                    <span class="{{'gling-icon-' + interest.name}}"></span>
                     {{interest.translationName |translateText}}
                 </div>
 

@@ -11,7 +11,7 @@
     </div>
 
 
-    <div class="home-interest-switch home-interest-box">
+    <div class="home-interest-box">
 
         <!-- switch -->
         <div>{{'--.home.interest-switch.help' | translateText}}</div>
@@ -80,9 +80,12 @@
                            ng-hide="displayEmptyHelpMessage===true || displayEmptyHelpMessageWithInterest===true"></publication-list-ctrl>
 
     <!-- empty result help -->
-    <div class="help-big" ng-show="displayEmptyHelpMessage===true">{{'--.home.emptyResult.help' | translateText}}</div>
-    <div class="help-big" ng-show="displayEmptyHelpMessageWithInterest===true">{{'--.home.emptyResultWithInterest.help'
-        | translateText}}
+    <div class="help-big" ng-show="displayEmptyHelpMessage===true">
+        {{'--.home.emptyResult.help' | translateText}}
+    </div>
+
+    <div class="help-big" ng-show="displayEmptyHelpMessageWithInterest===true">
+        {{'--.home.emptyResultWithInterest.help' | translateText}}
     </div>
 
 

@@ -19,9 +19,12 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                         scope.getInfo().dto = {};
                     }
 
+                    console.log('scope.getInfo().status : ' + scope.getInfo().status);
+
+
                     scope.fields = {
                         name: {
-                            name:'name',
+                            name: 'name',
                             fieldTitle: "--.generic.name",
                             validationRegex: "^.{2,50}$",
                             validationMessage: ['--.generic.validation.size', '2', '250'],
@@ -31,55 +34,53 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                             focus: function () {
                                 return true;
                             },
-                            //isActive: !scope.getInfo().updateMode,
+                            disabled: function () {
+                                return scope.getInfo().status !=undefined && scope.getInfo().status !== 'NOT_PUBLISHED';
+                            },
                             field: scope.getInfo().dto,
                             fieldName: 'name'
                         },
                         description: {
-                            name:'description',
+                            name: 'description',
                             fieldTitle: "--.generic.desc",
-                            validationRegex: "^.{0,1500}$",
+                            validationRegex: /^[\s\S]{2,1500}$/gi,
                             validationMessage: ['--.generic.validation.size', '0', '1500'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: !scope.getInfo().updateMode,
                             field: scope.getInfo().dto,
                             fieldName: 'description'
                         },
                         phone: {
-                            name:'phone',
+                            name: 'phone',
                             fieldTitle: "--.generic.phone",
                             validationRegex: "^[0-9. *-+]{6,16}$",
                             validationMessage: '--.validation.dto.phone',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: !scope.getInfo().updateMode,
                             field: scope.getInfo().dto,
                             fieldName: 'phone'
                         },
                         email: {
-                            name:'business-email',
+                            name: 'business-email',
                             fieldTitle: "--.business.contactEmail",
                             validationRegex: /^($|(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)/,
                             validationMessage: '--.validation.dto.notNull',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: !scope.getInfo().updateMode,
                             field: scope.getInfo().dto,
                             fieldName: 'email'
                         },
                         website: {
-                            name:'website',
+                            name: 'website',
                             fieldTitle: "--.business.website",
                             validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
                             validationMessage: '--.validation.dto.url',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            isActive: !scope.getInfo().updateMode,
                             field: scope.getInfo().dto,
                             fieldName: 'website'
                         }

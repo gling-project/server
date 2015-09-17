@@ -22,7 +22,6 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
     private String name;
 
     @NotNull(message = "--.validation.dto.notNull")
-    @Size(min = 2, max = 1500, message = "--.validation.dto.size")
     private String description;
 
     @NotNull(message = "--.validation.dto.notNull")

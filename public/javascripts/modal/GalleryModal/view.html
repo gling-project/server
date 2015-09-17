@@ -1,11 +1,6 @@
-<div class="modal-header">
-    <button name="modal-btn-close"
-            class="btn glyphicon glyphicon-remove"
-            style="float:right"
-            ng-click="close()">
-    </button>
-    <h4 class="modal-title">{{'--.gallery.title' | translateText}}</h4>
-</div><div class="modal-body gallery-modal">
+<div class="modal-body gallery-modal">
+
+
 
     <div>
         <img class="gallery-picture"
@@ -13,6 +8,8 @@
     </div>
 
     <div class="comment-container">
+
+        <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
         {{image.comment}}
     </div>
 

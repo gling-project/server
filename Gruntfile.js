@@ -105,6 +105,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/field/dirFieldTextArea/directive.js',
                         'public/javascripts/directive/technical/dirFocusMe/directive.js',
                         'public/javascripts/directive/technical/dirInputNumber/directive.js',
+                        'public/javascripts/directive/technical/compile.js',
                         'public/javascripts/directive/field/dirFieldCheck/directive.js',
                         'public/javascripts/directive/field/dirFieldDocument/directive.js',
                         'public/javascripts/directive/field/dirFieldImageMutiple/directive.js',
@@ -121,6 +122,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/form/schedule/ScheduleFormCtrl.js',
                         'public/javascripts/directive/form/image/ImageFormCtrl.js',
                         'public/javascripts/directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js',
+                        'public/javascripts/directive/form/contact/ContactFormCtrl.js',
                         <!-- component -->
                         'public/javascripts/directive/component/publicationList/PublicationListCtrl.js',
                         'public/javascripts/directive/component/schedule/ScheduleCtrl.js',
@@ -163,6 +165,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/SearchBarService.js',
                         'public/javascripts/service/PublicationService.js',
                         'public/javascripts/service/ConstantService.js',
+                        'public/javascripts/service/ContactService.js',
                         //TODO ??
                         'public/javascripts/dist/templateCacheWeb.js'
                     ]

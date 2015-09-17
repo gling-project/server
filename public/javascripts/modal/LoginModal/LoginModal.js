@@ -1,7 +1,8 @@
-myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
+myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams,helpMessage) {
 
     $scope.loading = false;
     $scope.fctToExecute=fctToExecute;
+    $scope.helpMessage=helpMessage;
 
     $scope.loginFormParam = {
         facebookSuccess: function (data) {
@@ -31,7 +32,7 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
                     //logout facebook in case
                     facebookService.logout();
                     if (accountService.getMyself().type == 'BUSINESS') {
-                        $location.path('/business');
+                        $location.path('/business/'+accountService.getMyself().businessId);
                     }
                     if (fctToExecute != null) {
                         fctToExecute(fctToExecuteParams);

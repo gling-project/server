@@ -218,10 +218,11 @@ app.config(['$locationProvider', function ($locationProvider) {
         requireBase: false
     });
 }]);
-myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams) {
+myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams,helpMessage) {
 
     $scope.loading = false;
     $scope.fctToExecute=fctToExecute;
+    $scope.helpMessage=helpMessage;
 
     $scope.loginFormParam = {
         facebookSuccess: function (data) {
@@ -251,7 +252,7 @@ myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'tran
                     //logout facebook in case
                     facebookService.logout();
                     if (accountService.getMyself().type == 'BUSINESS') {
-                        $location.path('/business');
+                        $location.path('/business/'+accountService.getMyself().businessId);
                     }
                     if (fctToExecute != null) {
                         fctToExecute(fctToExecuteParams);
@@ -1317,7 +1318,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             n = !$scope.followedMode;
         }
         if (accountService.getMyself() == null) {
-            modalService.openLoginModal($scope.switchFollowedMode, n);
+            modalService.openLoginModal($scope.switchFollowedMode, n,'--.loginModal.help.followMode');
         }
         else {
             $scope.switchFollowedMode(n);
@@ -1492,11 +1493,12 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     };
 
     $scope.createNewAddress = function () {
+        console.log('CREATE NEW ADDRESS');
         if (accountService.getMyself() != null) {
             $scope.createNewAddressLaunch();
         }
         else {
-            modalService.openLoginModal($scope.createNewAddressLaunch);
+            modalService.openLoginModal($scope.createNewAddressLaunch,null,'--.loginModal.help.address');
         }
     };
 
@@ -1586,7 +1588,7 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'constantService', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, constantService) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,contactService,$filter) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -1701,7 +1703,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
             $scope.editbusiness = function () {
                 var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
-                    {dto: business},
+                    {dto: business,
+                        status:business.businessStatus},
                     function (close, setLoading) {
                         businessService.edit(business, function (data) {
                             $scope.business.name = data.name;
@@ -1936,6 +1939,9 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                 if ($scope.business.description != null) {
                     total++;
                 }
+                if ($scope.business.illustration != null) {
+                    total++;
+                }
                 if ($scope.business.landscape != null) {
                     total++;
                 }
@@ -1955,6 +1961,21 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                 var s = 'width:' + (300 * ($scope.computeProgression() / 5)) + 'px';
                 console.log(s);
                 return s;
+            };
+
+            $scope.openContact = function () {
+
+                var dto = {target:'HELP'};
+
+                modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl',
+                    {dto: dto},
+                    function (close) {
+                        contactService.contact(dto, function () {
+                            $flash.success($filter('translateText')('--.contactForm.send.success'));
+                            close();
+                        });
+                    }
+                );
             };
 
 
@@ -2573,7 +2594,7 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                                         scope.createNewAddress();
                                     }
                                     else {
-                                        modalService.openLoginModal(scope.createNewAddress, o);
+                                        modalService.openLoginModal(scope.createNewAddress, o,'--.loginModal.help.address');
                                     }
                                 }
                                 else if (scope.currentPosition != scope.positionCurrenltyComputed) {

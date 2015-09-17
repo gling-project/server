@@ -30,7 +30,8 @@ public enum ErrorMessageEnum {
     WRONG_ADDRESS_NAME("--.error.address.nameNotExists"),
     WRONG_OLD_PASSWORD("--.error.address.wrongOldPassword"),
     ADDRESS_WRONG_NAME_TECHNICAL_NAME("--.error.address.TechnicalName"),
-    ERROR_PICTURE_WRONG_SIZE("--.error.picture.wrongSize");
+    ERROR_PICTURE_WRONG_SIZE("--.error.picture.wrongSize"),
+    ERROR_CONTACT_NO_EMAIL("--.error.contact.no.email");
 
     private final String key;
 

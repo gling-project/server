@@ -102,7 +102,7 @@ myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageS
                                         scope.createNewAddress();
                                     }
                                     else {
-                                        modalService.openLoginModal(scope.createNewAddress, o);
+                                        modalService.openLoginModal(scope.createNewAddress, o,'--.loginModal.help.address');
                                     }
                                 }
                                 else if (scope.currentPosition != scope.positionCurrenltyComputed) {

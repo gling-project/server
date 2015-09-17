@@ -265,7 +265,6 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatus.NOT_PUBLISHED})
     public Result update() {
         BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
 
@@ -274,7 +273,9 @@ public class BusinessRestController extends AbstractController {
 
         Business business = currentUser.getBusiness();
 
-        business.setName(dto.getName());
+        if(business.getBusinessStatus().equals(BusinessStatus.NOT_PUBLISHED)){
+            business.setName(dto.getName());
+        }
         business.setDescription(dto.getDescription());
         business.setPhone(dto.getPhone());
         business.setEmail(dto.getEmail());

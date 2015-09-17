@@ -76,13 +76,16 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openLoginModal = function (fctToExecute,fctToExecuteParams) {
+    this.openLoginModal = function (fctToExecute,fctToExecuteParams,helpMessage) {
         var resolve = {
             fctToExecute: function () {
                 return fctToExecute;
             },
             fctToExecuteParams:function(){
                 return fctToExecuteParams;
+            },
+            helpMessage:function(){
+                return helpMessage;
             }
         };
         $modal.open({

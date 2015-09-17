@@ -1,8 +1,8 @@
 .follow-widget {
     text-align: center;
-    & > div {
+    & > div:first-child {
         text-align: center;
-        margin: 10px;
+        margin: 10px 10px 0px 10px;
         border: 2px solid  @color-blue-dark;
         color: white;
         border-radius: 50px;
@@ -11,10 +11,10 @@
         vertical-align: top;
         background-color: white;
 
-        button{
+        button {
             font-size: 48px;
             color: @color-blue-dark;
-            .selected{
+            .selected {
                 color: @color-green-light !important;
             }
         }
@@ -23,6 +23,21 @@
             background: none;
             border: none;
             outline: none;
+        }
+    }
+}
+
+.follow-text {
+    & > * {
+        display: inline-block;;
+        margin-left: 5px;
+        margin-bottom: 3px;
+
+    }
+    span {
+        color: @color-blue-dark;
+        &.selected {
+            color: @color-green-light !important;
         }
     }
 }

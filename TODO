@@ -36,18 +36,18 @@ ok- une seule étape d'enregistrement
 - 'promo jusqu'au' => expire dans X jours / X heure /X minutes + virer le picto => expire dans en bleu, x jour en vert
 - ajouter des popup avec les heures sur les horaires quand on survole
 - mettre un hover sur following (dans commerce par exemple)
-- ajouter un bouton follow-me dans 'publications' commerces
-- dans la progression du commerce, ajouter logo
-- welcompage => activer les registration window à partir des buttons
+ok- ajouter un bouton follow-me dans 'publications' commerces
+ok- dans la progression du commerce, ajouter logo
+ok- welcompage => activer les registration window à partir des buttons
 - changer la couleur du texte info-bulle sur le logoo
-- ajouter un bouton 'recherche' près de la barre de recherche pour 'activer la recherche'
+ok - ajouter un bouton 'recherche' près de la barre de recherche pour 'activer la recherche'
 - proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
-- ajouter une bouton 'follow-me' sur les 'publications' commerce
+ok- ajouter une bouton 'follow-me' sur les 'publications' commerce
 -mettre un lien pour retourner sur la page 'welcome'
 - mettre un dégradé sur le fond des boutons
 - publication : les titre trop long descendent à cause de l'icone d'intérêt
-- ajouter une ligne en bas pour réseaux sociaux, condition générale, mention légal, contact, etc...
-- Ajouter un footer avec Mentions légales, Copyright, Facebook, Signaler un problème.
+ok- ajouter une ligne en bas pour réseaux sociaux, condition générale, mention légal, contact, etc...
+ok- Ajouter un footer avec Mentions légales, Copyright, Facebook, Signaler un problème.
 - Quid d'une limite de publications? Deux par jour? OK? (exemple pour un resto : son plat du jour + la possibilité de publier autre chose)
-- Possible que les commerces aient un hyperlien reconnaissable? www.gling.be.be/lasoeurdupatron ? (avec modification manuelle si adresse est déjà prise)
+Plus tard- Possible que les commerces aient un hyperlien reconnaissable? www.gling.be.be/lasoeurdupatron ? (avec modification manuelle si adresse est déjà prise)
 - Ajouter les icônes des intérêts sur "Mes intérêts"

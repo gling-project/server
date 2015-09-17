@@ -1,4 +1,4 @@
-myApp.directive('followWidgetCtrl', function (accountService,modalService,followService,directiveService) {
+myApp.directive('followWidgetCtrl', function (accountService,modalService,followService,directiveService,$filter,$flash) {
 
     return {
         restrict: "E",
@@ -19,7 +19,7 @@ myApp.directive('followWidgetCtrl', function (accountService,modalService,follow
                             scope.followed();
                         }
                         else {
-                            modalService.openLoginModal(scope.followed);
+                            modalService.openLoginModal(scope.followed,null,'--.loginModal.help.follow');
                         }
                     };
 
@@ -32,8 +32,10 @@ myApp.directive('followWidgetCtrl', function (accountService,modalService,follow
                             scope.getInfo().business.following = !followed;
                             if (scope.getInfo().business.following) {
                                 scope.getInfo().business.totalFollowers++;
+                                $flash.success($filter('translateText')('--.followWidget.message.add'));
                             }
                             else {
+                                $flash.success($filter('translateText')('--.followWidget.message.remove'));
                                 scope.getInfo().business.totalFollowers--;
                             }
                         });

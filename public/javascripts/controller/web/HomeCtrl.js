@@ -60,7 +60,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             n = !$scope.followedMode;
         }
         if (accountService.getMyself() == null) {
-            modalService.openLoginModal($scope.switchFollowedMode, n);
+            modalService.openLoginModal($scope.switchFollowedMode, n,'--.loginModal.help.followMode');
         }
         else {
             $scope.switchFollowedMode(n);
@@ -240,7 +240,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             $scope.createNewAddressLaunch();
         }
         else {
-            modalService.openLoginModal($scope.createNewAddressLaunch);
+            modalService.openLoginModal($scope.createNewAddressLaunch,null,'--.loginModal.help.address');
         }
     };
 
