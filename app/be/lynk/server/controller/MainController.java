@@ -97,7 +97,7 @@ public class MainController extends AbstractController {
 
     public Result generateDefaultPage(String url, boolean forceMobile) {
 
-        if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
+        if (!isMobileDevice() && !forceMobile && ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
             addAlreadyVisitedCookie();
             return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage()));
         } else {
