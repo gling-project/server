@@ -2490,6 +2490,33 @@ myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocati
         }
     }
 }]);
+myApp.directive('toTopCtrl', ['$window', function ($window) {
+
+    return {
+        restrict: "E",
+        scope: {},
+        templateUrl: "/assets/javascripts/directive/component/toTop/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    //to top
+                    scope.toTop = function () {
+                        $(window).scrollTop(0);
+                    };
+
+                    scope.displayToTopButton = $(window).scrollTop() > 100;
+                    angular.element($window).bind("scroll", function () {
+                        scope.displayToTopButton = $(window).scrollTop() > 100;
+                        scope.$apply();
+                    });
+                }
+            }
+        }
+    }
+}]);
 myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', function (addressService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
     return {
         restrict: "E",

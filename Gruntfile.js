@@ -209,6 +209,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
                         'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
                         'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
+                        'public/javascripts/directive/component/toTop/ToTopCtrl.js',
                         'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js'],
                     'public/dist/mobile.js': [
                         'public/components/lodash/lodash.min.js',
