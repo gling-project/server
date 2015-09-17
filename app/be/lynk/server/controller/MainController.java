@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 public class MainController extends AbstractController {
 
     String accessKey  = Configuration.root().getString("app.status");
-    String AWSBuckect = Configuration.root().getString("AWSBuckect");
+    String AWSBuckect = Configuration.root().getString("aws.s3.bucket");
 
 
     @Autowired
@@ -60,7 +60,7 @@ public class MainController extends AbstractController {
         //try with param
         InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
         interfaceDataDTO.setLangId(lang().code());
-        interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + Configuration.root().getString("AWSBuckect") + "/");
+        interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + AWSBuckect + "/");
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());
@@ -121,7 +121,7 @@ public class MainController extends AbstractController {
             //try with param
             InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
             interfaceDataDTO.setLangId(lang().code());
-            interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + Configuration.root().getString("AWSBuckect") + "/");
+            interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + AWSBuckect + "/");
             interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
             interfaceDataDTO.setAppId(facebookAppId);
             interfaceDataDTO.setSearchCriterias(getSearchCriteria());
