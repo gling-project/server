@@ -8,6 +8,7 @@
     <head>
         <title>@Messages("--.site.name")</title>
         <meta charset="utf-8"/>
+        <link rel="shortcut icon" href="/assets/images/icon.ico">
 
 
             <!-- facebook meta -->
@@ -81,6 +82,7 @@
             <script src="@routes.Assets.at("javascripts/directive/component/businessList/BusinessListCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/directive/component/categoryLine/CategoryLineCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/directive/web/headerBar/HeaderBarCtrl.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.at("javascripts/directive/web/footerBar/FooterBarCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/directive/component/toTop/ToTopCtrl.js")" type="text/javascript"></script>
 
                 <!-- common angularsj elements -->
@@ -132,6 +134,9 @@
         <div class="container-content">
             <div ng-view></div>
         </div>
+
+            <!-- footer bar -->
+        <footer-bar-ctrl></footer-bar-ctrl>
 
     </body>
 </html>

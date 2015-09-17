@@ -487,5 +487,8 @@ day_abrv_sunday=Di
 
 --.town.newsfeed.news=Nouveauté
 --.town.newsfeed.promotion=Promotions
+--.home.geolocation.notAccepted=<i class="glyphicon glyphicon-exclamation-sign"></i>Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>Si vous ne voulez pas partager votre position, vous pouvez aussi <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
 
-
+--.footer.legal=Mentions légales
+--.footer.contact=Contact
+--.footer.help=Signaler un problème

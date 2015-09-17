@@ -235,6 +235,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     };
 
     $scope.createNewAddress = function () {
+        console.log('CREATE NEW ADDRESS');
         if (accountService.getMyself() != null) {
             $scope.createNewAddressLaunch();
         }

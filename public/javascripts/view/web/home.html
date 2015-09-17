@@ -5,11 +5,9 @@
     <div class="help-div" ng-show="displaySharePositionAdvertissement() && openGeolocationPopup !== true">
         <button class="help-popup-close glyphicon glyphicon-remove"
                 ng-click="openGeolocationPopup=true"></button>
-        <i class="glyphicon glyphicon-exclamation-sign"></i>
-        Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/>
-        <a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>
-        Si vous ne voulez pas partager votre position, vous pouvez aussi
-        <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
+        <p compile="'--.home.geolocation.notAccepted'">
+        </p>
+
     </div>
 
 
@@ -29,7 +27,7 @@
             <div>
                 <div class="onoffswitch" ng-click="setFollowedMode()">
                     <label class="onoffswitch-label"
-                            ng-class="{'followedMode':followedMode}">
+                           ng-class="{'followedMode':followedMode}">
                         <span class="onoffswitch-inner"></span>
                         <span class="onoffswitch-switch"></span>
                     </label>
@@ -48,7 +46,7 @@
     <div class="home-interest-box">
 
 
-        {{'--.home.interest.help' | translateText}}
+        <div>{{'--.home.interest.help' | translateText}}</div>
 
 
         <div class="home-interest-box-background">
@@ -83,7 +81,9 @@
 
     <!-- empty result help -->
     <div class="help-big" ng-show="displayEmptyHelpMessage===true">{{'--.home.emptyResult.help' | translateText}}</div>
-    <div class="help-big" ng-show="displayEmptyHelpMessageWithInterest===true">{{'--.home.emptyResultWithInterest.help' | translateText}}</div>
+    <div class="help-big" ng-show="displayEmptyHelpMessageWithInterest===true">{{'--.home.emptyResultWithInterest.help'
+        | translateText}}
+    </div>
 
 
     <!-- business list (in case of empty result -->

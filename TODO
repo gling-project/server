@@ -39,3 +39,15 @@ ok- une seule étape d'enregistrement
 - ajouter un bouton follow-me dans 'publications' commerces
 - dans la progression du commerce, ajouter logo
 - welcompage => activer les registration window à partir des buttons
+- changer la couleur du texte info-bulle sur le logoo
+- ajouter un bouton 'recherche' près de la barre de recherche pour 'activer la recherche'
+- proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
+- ajouter une bouton 'follow-me' sur les 'publications' commerce
+-mettre un lien pour retourner sur la page 'welcome'
+- mettre un dégradé sur le fond des boutons
+- publication : les titre trop long descendent à cause de l'icone d'intérêt
+- ajouter une ligne en bas pour réseaux sociaux, condition générale, mention légal, contact, etc...
+- Ajouter un footer avec Mentions légales, Copyright, Facebook, Signaler un problème.
+- Quid d'une limite de publications? Deux par jour? OK? (exemple pour un resto : son plat du jour + la possibilité de publier autre chose)
+- Possible que les commerces aient un hyperlien reconnaissable? www.gling.be.be/lasoeurdupatron ? (avec modification manuelle si adresse est déjà prise)
+- Ajouter les icônes des intérêts sur "Mes intérêts"

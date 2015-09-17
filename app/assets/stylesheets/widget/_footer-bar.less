@@ -1,0 +1,35 @@
+.footer-bar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 30px;
+    line-height: 30px;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 100;
+
+    & > * {
+
+        font-size: 14px;
+        color: #aaaaaa;
+        margin-right: 20px;
+        height: 100%;
+        vertical-align: top;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    a {
+        &:hover {
+            background-color: #aaaaaa;
+            color: white;
+        }
+    }
+    img {
+        margin-bottom: 2px;
+        height: 24px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+}

@@ -23,7 +23,6 @@ myApp.filter("translateText", function ($sce, translationService) {
                     text = text.replace('{0}', params);
                 }
             }
-
             return text;
         }
         return input;

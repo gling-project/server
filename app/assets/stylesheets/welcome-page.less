@@ -7,7 +7,7 @@ body {
     margin: auto;
     font-family: "myFont";
     font-size: 20px;
-    padding-bottom: 100px;
+    padding-bottom: 70px;
 }
 
 
@@ -23,44 +23,58 @@ body {
 }
 
 .header {
-    height: 380px;
+    border: 1px solid #ccc;
+    height: 440px;
     background-image: url('/assets/images/welcome_page/bg.jpg');
     background-repeat: no-repeat;
     text-align: center;
     .logo {
-        padding-top: 40px;
-        font-size: 180px;
+        padding-top: 20px;
+        font-size: 200px;
         color: @color-green-light;
     }
     p {
         font-size: 60px;
         font-weight: bold;
-        margin-top: 50px;
+        margin-top: 30px;
         text-shadow: 2px 2px black;
         color: white;
+    }
+    .gling-button{
+        margin-top: 40px;
     }
 }
 
 .header-bottom {
-    height: 100px;
+    height: 70px;
     vertical-align: middle;
     text-align: center;
-    background-color: @color-blue-dark;
+//    background-color: @color-blue-dark;
     & > * {
-        margin-top: 30px !important;
+        display: inline-block;
+        margin-top: 15px !important;
     }
+}
+
+.text-block-customer{
+    border-bottom: 3px solid @color-blue-dark;
 }
 
 .text-block{
     margin: 0 50px;
     padding: 50px 0;
-    border-bottom: 3px solid @color-blue-dark;
+
+
+
+    .text-block-title{
+        font-size: 22px;
+    }
 
     .icon{
-        background-color: @color-green-light;
-        padding: 10px;
-        font-size: 36px;
-        border-radius: 40px;
+        background-color: @color-blue-dark;
+        padding: 15px;
+        font-size: 40px;
+        border-radius: 50px;
         display: inline-block;
         color: white;
     }
