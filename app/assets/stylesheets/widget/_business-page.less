@@ -8,6 +8,18 @@
     }
 
     .business-page-header {
+
+        .editable-element {
+            position: relative;
+            & > button {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                top: inherit;
+                margin: 0;
+            }
+        }
+
         .business-page-header-landscape {
             background-color: rgb(166, 161, 161);
             border: 1px solid grey;
@@ -25,7 +37,7 @@
             .business-page-illustration-container {
                 margin-top: 140px;
                 vertical-align: top;
-                width: 140px;
+                margin-right: 20px;
                 display: inline-block;
                 margin-left: 50px;
                 & > img {
@@ -34,6 +46,7 @@
                     border: 2px solid @color-blue-dark;
                     border-radius: 20px;
                 }
+
             }
             .business-page-name {
                 margin-top: 180px;
@@ -124,12 +137,11 @@
     margin-bottom: 10px;
     padding: 10px;
 
-    .management-block{
+    .management-block {
         border-bottom: 1px solid #cccccc;
         margin-bottom: 10px;
         margin-top: 10px;
     }
-
 
     .business-status-NOT_PUBLISHED,
     .business-status-PUBLISHED,
@@ -151,7 +163,7 @@
     }
 
     .business-management-progress {
-//        float: right;
+        //        float: right;
         width: 400px;
         padding-right: 10px;
         margin-right: 10px;
@@ -177,7 +189,6 @@
                 right: 0;
             }
         }
-
 
         .business-management-progress-el {
             span {

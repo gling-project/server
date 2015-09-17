@@ -1,53 +1,56 @@
+- recharger les publications après connection
+- plus de scroll quand je recheche une publication
+- bug DL illustration dans mon commerce
+- truc facebook ne permet pas de publier en tant que page
+-  généraliser les boutons
+- 'promo jusqu'au' => expire dans X jours / X heure /X minutes + virer le picto => expire dans en bleu, x jour en vert
+- ajouter des popup avec les heures sur les horaires quand on survole
+- Ajouter les icônes des intérêts sur "Mes intérêts"
+- Quid d'une limite de publications? Deux par jour? OK? (exemple pour un resto : son plat du jour + la possibilité de publier autre chose)
+-mettre un lien pour retourner sur la page 'welcome'
+- proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
+- changer la couleur du texte info-bulle sur le logoo
 - ajouter des fléches sur les select du haut sur FF
+- désectionner les intérêts lorsqu'on clique sur gling
+- email bienvenue
+-nb max / durée max / photo max
+- ajouter acceptation SLA lors de l'enregistrement
+- mes commerces : checher / unchecher ts les commerces d'un coup
+- prévisualisation des publications
 ok- enlever (temporairement) les langues
 ok- 'ou' entre connection et enregistration pas centré.
 ok- date avec mois en lettre mais sans seconde.
 ok- activer 'accepter de partager la position' depuis le site: tant qu'elle n'est pas activé, faire une recherche par le temps
 ok- scroll lors du passage d'une page à l'autre
 ok- pas de border sur le nom du commrce sous FF
-- publicaiont : pas
 ok - arrière fond commerce en gris
 ok - bug fenetre enregistrement
-- désectionner les intérêts lorsqu'on clique sur gling
-TODO- '+3' sur les photos : fond en gris
+ok- '+3' sur les photos : fond en gris
 ok- changer la maison par une icone position
 ok- recherche (mini) : commerce false
-- ajouter les icones d'intérêt dans le form de sélection + profile
+ok- ajouter les icones d'intérêt dans le form de sélection + profile
 ok- home : 'position' et 'follow' doivent devenir des boutons
 ok - (localisation/following) dispo même pas connecté + phrase au-dessus de (localisation/following) et intérêt + phrase explicative qd fenetre conneciton s'ouvre depuis une action
 ok - changer la couleur des deux lignes + badges
 ok - changer les coulerus de la cloche (bleu : inactif, vers:actif) + ajouter un texte
-- recharger les publications après connection
 ok - changer la couleur de la cloche sur les publications
 ok - photo non réduite !!
-- plus de scroll quand je recheche une publication
-- dans mon profile, quand j'édite mes infos, bouton 'éditer' de mes intérêts disparait
-- problème position des boutons sur mon commerce : les mettres en bas à droite dans les images + virer les textes.
-- bug DL illustration dans mon commerce
-TODO- le commerçant peut éditer ces informations de contact + description. (seul le nom et l'adresse ne peuveut être changée)
-- truc facebook ne permet pas de publier en tant que page
+ok- dans mon profile, quand j'édite mes infos, bouton 'éditer' de mes intérêts disparait
+ok- problème position des boutons sur mon commerce : les mettres en bas à droite dans les images + virer les textes.
+ok- le commerçant peut éditer ces informations de contact + description. (seul le nom et l'adresse ne peuveut être changée)
 ok- remettre buton supprimer la publication
 ok- galleri photo pour commerce disparu
 ok- changer la couleur de hover des boutons
--  généraliser les boutons
 ok- trier les intérêts en fonction des choix de l'utilisateur
 ok- une seule étape d'enregistrement
-- rien de nouveau au niveau de la séleciton de ces intérêts pour le moment
-- 'promo jusqu'au' => expire dans X jours / X heure /X minutes + virer le picto => expire dans en bleu, x jour en vert
-- ajouter des popup avec les heures sur les horaires quand on survole
-- mettre un hover sur following (dans commerce par exemple)
+ok- rien de nouveau au niveau de la séleciton de ces intérêts pour le moment
+ok- mettre un hover sur following (dans commerce par exemple)
 ok- ajouter un bouton follow-me dans 'publications' commerces
 ok- dans la progression du commerce, ajouter logo
 ok- welcompage => activer les registration window à partir des buttons
-- changer la couleur du texte info-bulle sur le logoo
 ok - ajouter un bouton 'recherche' près de la barre de recherche pour 'activer la recherche'
-- proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
 ok- ajouter une bouton 'follow-me' sur les 'publications' commerce
--mettre un lien pour retourner sur la page 'welcome'
-- mettre un dégradé sur le fond des boutons
-- publication : les titre trop long descendent à cause de l'icone d'intérêt
+ok- publication : les titre trop long descendent à cause de l'icone d'intérêt
 ok- ajouter une ligne en bas pour réseaux sociaux, condition générale, mention légal, contact, etc...
 ok- Ajouter un footer avec Mentions légales, Copyright, Facebook, Signaler un problème.
-- Quid d'une limite de publications? Deux par jour? OK? (exemple pour un resto : son plat du jour + la possibilité de publier autre chose)
 Plus tard- Possible que les commerces aient un hyperlien reconnaissable? www.gling.be.be/lasoeurdupatron ? (avec modification manuelle si adresse est déjà prise)
-- Ajouter les icônes des intérêts sur "Mes intérêts"

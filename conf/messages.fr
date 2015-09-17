@@ -517,3 +517,5 @@ day_abrv_sunday=Di
 --.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous enregister.
 --.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
 --.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
+--.business.page.management.help.title=Un petit coup de pouce ?
+--.business.page.management.contact.btn=Contactez-nous!

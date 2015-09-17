@@ -152,12 +152,12 @@
                     </button>
                 </p>
             </div>
-            <h4>Un petit coup de pouce ?</h4>
-            <a  class="btn btn-primary" class="btn btn-primary" href="/help/business/data" target="_blank">
+            <h4>{{'--.business.page.management.help.title' | translateText}}</h4>
+            <a class="btn btn-primary" class="btn btn-primary" href="/help/business/data" target="_blank">
                 {{'--.business.manager.progress.help' | translateText}}
             </a>
             <button class="btn btn-primary" ng-click="openContact()">
-                Contactez-nous
+                {{'--.business.page.management.contact.btn' | translateText}}
             </button>
         </div>
     </div>
@@ -181,47 +181,37 @@
 
 <div class="business-page">
     <div class="business-page-header">
-        <div class="business-page-header-landscape"
+        <div class="business-page-header-landscape editable-element"
              ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
 
             <!-- landscape -->
-            <div class="edit-button-container landscape-edit">
-                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                        id="business-btn-landscape-edit"
+            <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    id="business-btn-landscape-edit"
+                    ng-show="edit"
+                    ng-click="editLandscape()">
+            </button>
+
+            <!-- illustration -->
+            <div class="business-page-illustration-container editable-element">
+                <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
+                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
+                        id="business-btn-illustration-edit"
                         ng-show="edit"
-                        ng-click="editLandscape()">
-                    {{'--.business.page.edit.landscape' | translateText}}
+                        ng-click="editIllustration()">
                 </button>
             </div>
 
-            <!-- illustration -->
-            <div class="business-page-illustration-container">
-                <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
-
-                <div class="edit-button-container">
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
-                            id="business-btn-illustration-edit"
-                            ng-show="edit"
-                            ng-click="editIllustration()">
-                        {{'--.business.page.edit.illustration' | translateText}}
-                    </button>
-                </div>
-            </div>
-
             <!-- name -->
-            <div class="business-page-name">
-            <span>
-                {{business.name}}
-            </span>
+            <div class="business-page-name editable-element">
+                <span>
+                    {{business.name}}
+                </span>
 
-                <div class="edit-button-container">
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            id="business-btn-name-edit"
-                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                            ng-click="editbusiness()">
-                        {{'--.business.page.edit.business' | translateText}}
-                    </button>
-                </div>
+                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                        id="business-btn-name-edit"
+                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                        ng-click="editbusiness()">
+                </button>
             </div>
         </div>
 
@@ -245,7 +235,7 @@
                     {{business.description}}
                 </span>
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                            ng-show="edit"
                             ng-click="editbusiness()">
                         {{'--.business.page.edit.business' | translateText}}
                     </button>
@@ -295,7 +285,6 @@
                             id="welcome-btn-gallery-edit"
                             ng-show="edit"
                             ng-click="editGallery()">
-                        {{'--.business.page.edit.gallery' | translateText}}
                     </button>
                 </div>
             </div>
@@ -315,7 +304,7 @@
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             id="business-btn-address-edit"
                             ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                            ng-click="editAddress()">{{'--.generic.edit' | translateText}}
+                            ng-click="editAddress()">
                     </button>
                 </div>
             </div>
@@ -343,9 +332,8 @@
 
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             id="business-btn-contact-edit"
-                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                            ng-show="edit"
                             ng-click="editbusiness()">
-                        {{'--.business.page.edit.business' | translateText}}
                     </button>
 
                 </div>
@@ -424,7 +412,6 @@
                             ng-show="edit"
                             id="business-btn-social-network-edit"
                             ng-click="editSocialNetwork()">
-                        {{'--.business.page.edit.business' | translateText}}
                     </button>
 
                 </div>
@@ -440,7 +427,7 @@
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             id="business-btn-schedule-edit"
                             ng-show="edit"
-                            ng-click="editSchedule()">{{'--.generic.edit' | translateText}}
+                            ng-click="editSchedule()">
                     </button>
                 </div>
             </div>
