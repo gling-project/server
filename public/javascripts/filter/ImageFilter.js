@@ -1,11 +1,11 @@
-myApp.filter("image", function () {
+myApp.filter("image", function (constantService) {
     return function (input,orginal) {
         if(input!=null && input!=undefined) {
             if(orginal!=undefined && orginal == true){
-                return "https://s3.amazonaws.com/lynk-test/" + input.storedNameOriginalSize;
+                return constantService.fileBucketUrl + input.storedNameOriginalSize;
             }
             else {
-                return "https://s3.amazonaws.com/lynk-test/" + input.storedName;
+                return constantService.fileBucketUrl + input.storedName;
             }
         }
         return null;

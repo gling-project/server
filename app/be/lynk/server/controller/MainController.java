@@ -10,10 +10,10 @@ import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Application;
 import play.Configuration;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
-import play.mvc.Http;
 import play.mvc.Result;
 
 import java.util.ArrayList;
@@ -27,7 +27,9 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-    String accessKey = Configuration.root().getString("app.status");
+    String accessKey  = Configuration.root().getString("app.status");
+    String AWSBuckect = Configuration.root().getString("AWSBuckect");
+
 
     @Autowired
     private PublicationService  publicationService;
@@ -58,6 +60,7 @@ public class MainController extends AbstractController {
         //try with param
         InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
         interfaceDataDTO.setLangId(lang().code());
+        interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + AWSBuckect + "/");
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());
@@ -118,6 +121,7 @@ public class MainController extends AbstractController {
             //try with param
             InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
             interfaceDataDTO.setLangId(lang().code());
+            interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + AWSBuckect + "/");
             interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
             interfaceDataDTO.setAppId(facebookAppId);
             interfaceDataDTO.setSearchCriterias(getSearchCriteria());
@@ -135,8 +139,6 @@ public class MainController extends AbstractController {
                 interfaceDataDTO.setMySelf(accountDTO);
 
             }
-
-
 
 
             if (isMobileDevice() || forceMobile) {

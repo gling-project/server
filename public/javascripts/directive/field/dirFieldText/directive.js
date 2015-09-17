@@ -62,6 +62,8 @@ myApp.directive("dirFieldText", function (directiveService, $timeout, modalServi
                             scope.getInfo().field[scope.getInfo().fieldName] += "";
                         }
                         if (scope.getInfo().validationRegex != null) {
+                            console.log('---------------');
+                            console.log(scope.getInfo().field[scope.getInfo().fieldName]);
                             isValid = scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
                         }
                         if (scope.getInfo().validationFct != null) {

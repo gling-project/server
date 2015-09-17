@@ -235,6 +235,8 @@ myApp.directive("dirFieldText", ['directiveService', '$timeout', 'modalService',
                             scope.getInfo().field[scope.getInfo().fieldName] += "";
                         }
                         if (scope.getInfo().validationRegex != null) {
+                            console.log('---------------');
+                            console.log(scope.getInfo().field[scope.getInfo().fieldName]);
                             isValid = scope.getInfo().field[scope.getInfo().fieldName].match(scope.getInfo().validationRegex) != null;
                         }
                         if (scope.getInfo().validationFct != null) {
@@ -1708,7 +1710,7 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                         description: {
                             name:'description',
                             fieldTitle: "--.publication.description",
-                            validationRegex: /^[\s\S]{2,1000}$/gi,
+                            validationRegex: /^[\s\S]{0,1000}$/gi,
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -2006,7 +2008,7 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                         },
                         description: {
                             fieldTitle: "--.publication.description",
-                            validationRegex: /^[\s\S]{2,1000}$/gi,
+                            validationRegex: /^[\s\S]{0,1000}$/gi,
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -3337,19 +3339,19 @@ myApp.filter("zeropad", ['$sce', 'translationService', function ($sce, translati
     };
 }]);
 
-myApp.filter("image", function () {
+myApp.filter("image", ['constantService', function (constantService) {
     return function (input,orginal) {
         if(input!=null && input!=undefined) {
             if(orginal!=undefined && orginal == true){
-                return "https://s3.amazonaws.com/lynk-test/" + input.storedNameOriginalSize;
+                return constantService.fileBucketUrl + input.storedNameOriginalSize;
             }
             else {
-                return "https://s3.amazonaws.com/lynk-test/" + input.storedName;
+                return constantService.fileBucketUrl + input.storedName;
             }
         }
         return null;
     };
-});
+}]);
 
 //
 // initialization external modules
@@ -3364,7 +3366,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout) {
+myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', 'constantService', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout,constantService) {
 
 
     //catch url
@@ -3386,6 +3388,7 @@ myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationSer
     //
     if ("data" in window && data != undefined && data != null) {
         translationService.set(data.translations);
+        constantService.fileBucketUrl=data.fileBucketUrl;
     }
 
     //import data

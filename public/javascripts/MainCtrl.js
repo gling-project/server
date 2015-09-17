@@ -11,7 +11,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout) {
+myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout,constantService) {
 
 
     //catch url
@@ -33,6 +33,7 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     //
     if ("data" in window && data != undefined && data != null) {
         translationService.set(data.translations);
+        constantService.fileBucketUrl=data.fileBucketUrl;
     }
 
     //import data

@@ -24,6 +24,19 @@ public class InterfaceDataDTO extends DTO implements KeyTyped<Date> {
 
     private String appId;
 
+    private String fileBucketUrl;
+
+    public InterfaceDataDTO() {
+    }
+
+    public String getFileBucketUrl() {
+        return fileBucketUrl;
+    }
+
+    public void setFileBucketUrl(String fileBucketUrl) {
+        this.fileBucketUrl = fileBucketUrl;
+    }
+
     public List<SearchCriteriaDTO> getSearchCriterias() {
         return searchCriterias;
     }
