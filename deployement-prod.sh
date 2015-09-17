@@ -19,7 +19,7 @@ echo "Deploy"
 ./deploy-prod.sh
 
 echo "open in navigator"
-xdg-open http://lynk-test.herokuapp.com/
+xdg-open http://gling-prod.herokuapp.com/
 
 echo "wait 1 minute to be sure the database is created"
 sleep 60
