@@ -1,4 +1,4 @@
-myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB) {
+myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB,constantService) {
 
 
     this.facebookAppId;
@@ -130,15 +130,10 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
         //
     };
 
-    this.share = function(url){
-        url = url.replace('#','%23');
-        FB.ui({
-            method: 'share_open_graph',
-            action_type: 'og.likes',
-            action_properties: JSON.stringify({
-                object:url
-            })
-        }, function(response){});
+    this.sharePublication = function(publication){
+        var obj = {method: 'share',href: constantService.urlBase+'/business/'+publication.businessId+'/publication/'+publication.id};
+        function callback(response) {}
+        FB.ui(obj, callback);
     };
 
     loginToServer = function (authResponse, callbackSuccess, callbackError) {

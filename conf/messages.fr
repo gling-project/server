@@ -410,7 +410,7 @@ day_abrv_sunday=Di
 	
 	
 	
-##  dist/templateCacheWeb.js (//lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class
+##  dist/templateCacheWeb.js
 --.business.socialNetwork.other=Autre
 --.gallery.modal.next=Suivant
 --.gallery.modal.previous=Précédent

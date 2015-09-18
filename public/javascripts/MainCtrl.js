@@ -11,14 +11,14 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout,constantService) {
+myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout, constantService) {
 
 
     //catch url
-    if($location.url().indexOf("customerRegistration")!=-1){
+    if ($location.url().indexOf("customerRegistration") != -1) {
         modalService.openCustomerRegistrationModal();
     }
-    else if($location.url().indexOf("businessRegistration")!=-1){
+    else if ($location.url().indexOf("businessRegistration") != -1) {
         modalService.openBusinessRegistrationModal();
     }
 
@@ -33,7 +33,8 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     //
     if ("data" in window && data != undefined && data != null) {
         translationService.set(data.translations);
-        constantService.fileBucketUrl=data.fileBucketUrl;
+        constantService.fileBucketUrl = data.fileBucketUrl;
+        constantService.urlBase = data.urlBase;
     }
 
     //import data
@@ -111,7 +112,7 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
         }, 500);
     });
 
-    $scope.$watch('progressBarWidth',function(){
+    $scope.$watch('progressBarWidth', function () {
         $scope.progressBarCss.width = ($scope.progressBarWidth / progressBarMultiplicator) + '%';
     });
 });

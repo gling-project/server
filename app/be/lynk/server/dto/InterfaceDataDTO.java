@@ -25,6 +25,7 @@ public class InterfaceDataDTO extends DTO implements KeyTyped<Date> {
     private String appId;
 
     private String fileBucketUrl;
+    private String urlBase;
 
     public InterfaceDataDTO() {
     }
@@ -91,5 +92,13 @@ public class InterfaceDataDTO extends DTO implements KeyTyped<Date> {
 
     public String getAppId() {
         return appId;
+    }
+
+    public void setUrlBase(String urlBase) {
+        this.urlBase = urlBase;
+    }
+
+    public String getUrlBase() {
+        return urlBase;
     }
 }

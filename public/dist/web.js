@@ -963,7 +963,7 @@ myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal',
     }
 
 }]);
-myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', '$filter', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,$filter) {
+myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', 'facebookService', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService) {
 
     $scope.loading = false;
 
@@ -991,14 +991,7 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
         $scope.loading = false;
 
         if (share) {
-            FB.ui({
-                method: 'feed',
-                link: 'http://lynk-test.herokuapp.com/business/'+data.businessId+"/publication/"+data.id,
-                picture:  $filter('image')($scope.getIllustration(data)),
-                name: data.title,
-                caption: "www.gling.be",
-                description: data.description
-            });
+            facebookService.sharePublication(data);
         }
 
         $scope.close();
@@ -1040,7 +1033,7 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
 
 
 }]);
-myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', '$filter', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,$filter) {
+myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', 'facebookService', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,facebookService) {
 
     $scope.loading = false;
 
@@ -1070,14 +1063,7 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
 
         if (share) {
 
-            FB.ui({
-                method: 'feed',
-                link: 'http://lynk-test.herokuapp.com/business/'+data.businessId+"/publication/"+data.id,
-                picture:  $filter('image')($scope.getIllustration(data)),
-                name: data.title,
-                caption: "www.gling.be",
-                description: data.description
-            });
+            facebookService.sharePublication(data);
         }
 
         $scope.close();
@@ -2490,33 +2476,6 @@ myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocati
         }
     }
 }]);
-myApp.directive('toTopCtrl', ['$window', function ($window) {
-
-    return {
-        restrict: "E",
-        scope: {},
-        templateUrl: "/assets/javascripts/directive/component/toTop/template.html",
-        replace: true,
-        transclude: true,
-        compile: function () {
-            return {
-                post: function (scope) {
-
-                    //to top
-                    scope.toTop = function () {
-                        $(window).scrollTop(0);
-                    };
-
-                    scope.displayToTopButton = $(window).scrollTop() > 100;
-                    angular.element($window).bind("scroll", function () {
-                        scope.displayToTopButton = $(window).scrollTop() > 100;
-                        scope.$apply();
-                    });
-                }
-            }
-        }
-    }
-}]);
 myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', function (addressService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
     return {
         restrict: "E",
@@ -2671,6 +2630,66 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                     }, function watchCallback(n, o) {
                         completePositions();
                     }, true);
+                }
+            }
+        }
+    }
+}]);
+
+myApp.directive("footerBarCtrl", ['modalService', 'contactService', '$flash', '$filter', function (modalService,contactService,$flash,$filter) {
+    return {
+        restrict: "E",
+        scope: {},
+        templateUrl: "/assets/javascripts/directive/web/footerBar/template.html",
+        replace: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    scope.openContactForm = function (target) {
+
+                        var dto = {
+                            target: target
+                        };
+
+                        modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl',
+                            {dto: dto},
+                            function (close) {
+                                contactService.contact(dto, function () {
+                                    $flash.success($filter('translateText')('--.contactForm.send.success'));
+                                    close();
+                                });
+                            }
+                        );
+                    };
+                }
+            }
+        }
+    }
+}]);
+
+myApp.directive('toTopCtrl', ['$window', function ($window) {
+
+    return {
+        restrict: "E",
+        scope: {},
+        templateUrl: "/assets/javascripts/directive/component/toTop/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    //to top
+                    scope.toTop = function () {
+                        $(window).scrollTop(0);
+                    };
+
+                    scope.displayToTopButton = $(window).scrollTop() > 100;
+                    angular.element($window).bind("scroll", function () {
+                        scope.displayToTopButton = $(window).scrollTop() > 100;
+                        scope.$apply();
+                    });
                 }
             }
         }

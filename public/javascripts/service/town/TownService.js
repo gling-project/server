@@ -1,6 +1,7 @@
 myApp.service("townService", function ($flash, $http) {
 
-    this.ROOT_URL = "https://lynk-test.herokuapp.com";
+    //???
+    this.ROOT_URL = "https://gling-prod.herokuapp.com";
     //this.ROOT_URL = "";
 
     this.getBusinessByZip = function (zip, page,callbackSuccess, callbackError) {

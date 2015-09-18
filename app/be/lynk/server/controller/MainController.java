@@ -29,6 +29,8 @@ public class MainController extends AbstractController {
 
     String accessKey  = Configuration.root().getString("app.status");
     String AWSBuckect = Configuration.root().getString("aws.s3.bucket");
+    String fileBucketUrl = "https://s3.amazonaws.com/"+AWSBuckect;
+    String urlBase = Configuration.root().getString("site.url.base");
 
 
     @Autowired
@@ -49,7 +51,7 @@ public class MainController extends AbstractController {
     }
 
     public Result toTown() {
-        return ok(be.lynk.server.views.html.town.render(translationService.getTranslations(lang())));
+        return ok(be.lynk.server.views.html.town.render());
     }
 
     @Transactional
@@ -60,9 +62,10 @@ public class MainController extends AbstractController {
         //try with param
         InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
         interfaceDataDTO.setLangId(lang().code());
-        interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + AWSBuckect + "/");
+        interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
+        interfaceDataDTO.setUrlBase(urlBase);
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();
@@ -121,9 +124,10 @@ public class MainController extends AbstractController {
             //try with param
             InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
             interfaceDataDTO.setLangId(lang().code());
-            interfaceDataDTO.setFileBucketUrl("https://s3.amazonaws.com/" + AWSBuckect + "/");
+            interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
             interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
             interfaceDataDTO.setAppId(facebookAppId);
+            interfaceDataDTO.setUrlBase(urlBase);
             interfaceDataDTO.setSearchCriterias(getSearchCriteria());
             if (securityController.isAuthenticated(ctx())) {
                 Account currentUser = securityController.getCurrentUser();

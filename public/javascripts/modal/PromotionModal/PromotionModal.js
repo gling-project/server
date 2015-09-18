@@ -1,4 +1,4 @@
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,$filter) {
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService) {
 
     $scope.loading = false;
 
@@ -26,14 +26,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
         $scope.loading = false;
 
         if (share) {
-            FB.ui({
-                method: 'feed',
-                link: 'http://lynk-test.herokuapp.com/business/'+data.businessId+"/publication/"+data.id,
-                picture:  $filter('image')($scope.getIllustration(data)),
-                name: data.title,
-                caption: "www.gling.be",
-                description: data.description
-            });
+            facebookService.sharePublication(data);
         }
 
         $scope.close();

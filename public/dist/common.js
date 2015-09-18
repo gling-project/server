@@ -532,24 +532,6 @@ myApp.directive("numbersOnly", ['$filter', 'translationService', '$locale', func
     };
 }]);
 
-myApp.directive("compile", ['$compile', '$filter', function ($compile, $filter) {
-    return function (scope, element, attrs) {
-        console.log('------------');
-        console.log(scope);
-        console.log(element);
-        console.log(attrs);
-        scope.$watch(
-            function (scope) {
-                return scope.$eval(attrs.compile);
-            },
-            function (value, o) {
-                value = $filter('translateText')(value);
-                element.html(value);
-                $compile(element.contents())(scope);
-            }
-        )
-    };
-}]);
 myApp.directive("dirFieldCheck", ['directiveService', '$timeout', function (directiveService, $timeout) {
     return {
         restrict: "E",
@@ -820,6 +802,24 @@ myApp.directive("dirFieldImageMutiple", ['directiveService', '$upload', '$flash'
                 }
             };
         }
+    };
+}]);
+myApp.directive("compile", ['$compile', '$filter', function ($compile, $filter) {
+    return function (scope, element, attrs) {
+        console.log('------------');
+        console.log(scope);
+        console.log(element);
+        console.log(attrs);
+        scope.$watch(
+            function (scope) {
+                return scope.$eval(attrs.compile);
+            },
+            function (value, o) {
+                value = $filter('translateText')(value);
+                element.html(value);
+                $compile(element.contents())(scope);
+            }
+        )
     };
 }]);
 myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationService', 'directiveService', '$timeout', 'accountService', function ($flash, facebookService, translationService, directiveService, $timeout, accountService) {
@@ -3235,7 +3235,7 @@ myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followSe
         }
     }
 }]);
-myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'facebookService', function ($rootScope, businessService, geolocationService, directiveService, facebookService) {
 
     return {
         restrict: "E",
@@ -3250,22 +3250,14 @@ myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService'
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    var url = 'https://lynk-test.herokuapp.com/business/'+scope.getInfo().publication.businessId+'/publication/'+scope.getInfo().publication.id;
 
-                    scope.openPopup = function(){
-                        window.open('https://www.facebook.com/sharer/sharer.php?u='+url, "Share on Facebook", "width=500,height=500");
+
+
+                    scope.share = function(){
+
+                        facebookService.sharePublication(scope.getInfo().publication);
+
                     };
-
-                    scope.getDescription = function(){
-                        return scope.getInfo().publication.description;
-                    };
-
-                    scope.getIllustration = function(){
-                        if(scope.getInfo().publication.pictures.length>0){
-                            return scope.getInfo().publication.pictures[0];
-                        }
-                        return scope.getInfo().publication.businessIllustration;
-                    }
 
                 }
             }
@@ -3343,10 +3335,10 @@ myApp.filter("image", ['constantService', function (constantService) {
     return function (input,orginal) {
         if(input!=null && input!=undefined) {
             if(orginal!=undefined && orginal == true){
-                return constantService.fileBucketUrl + input.storedNameOriginalSize;
+                return constantService.fileBucketUrl +'/'+ input.storedNameOriginalSize;
             }
             else {
-                return constantService.fileBucketUrl + input.storedName;
+                return constantService.fileBucketUrl +'/'+ input.storedName;
             }
         }
         return null;
@@ -3366,14 +3358,14 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', 'constantService', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout,constantService) {
+myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', 'constantService', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout, constantService) {
 
 
     //catch url
-    if($location.url().indexOf("customerRegistration")!=-1){
+    if ($location.url().indexOf("customerRegistration") != -1) {
         modalService.openCustomerRegistrationModal();
     }
-    else if($location.url().indexOf("businessRegistration")!=-1){
+    else if ($location.url().indexOf("businessRegistration") != -1) {
         modalService.openBusinessRegistrationModal();
     }
 
@@ -3388,7 +3380,8 @@ myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationSer
     //
     if ("data" in window && data != undefined && data != null) {
         translationService.set(data.translations);
-        constantService.fileBucketUrl=data.fileBucketUrl;
+        constantService.fileBucketUrl = data.fileBucketUrl;
+        constantService.urlBase = data.urlBase;
     }
 
     //import data
@@ -3466,7 +3459,7 @@ myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationSer
         }, 500);
     });
 
-    $scope.$watch('progressBarWidth',function(){
+    $scope.$watch('progressBarWidth', function () {
         $scope.progressBarCss.width = ($scope.progressBarWidth / progressBarMultiplicator) + '%';
     });
 }]);
@@ -3626,7 +3619,7 @@ myApp.service("modelService", ['$rootScope', function($rootScope) {
         delete this.model[key];
     };
 }]);
-myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languageService', '$FB', function ($http, accountService, $locale, languageService,$FB) {
+myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languageService', '$FB', 'constantService', function ($http, accountService, $locale, languageService,$FB,constantService) {
 
 
     this.facebookAppId;
@@ -3758,15 +3751,10 @@ myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languag
         //
     };
 
-    this.share = function(url){
-        url = url.replace('#','%23');
-        FB.ui({
-            method: 'share_open_graph',
-            action_type: 'og.likes',
-            action_properties: JSON.stringify({
-                object:url
-            })
-        }, function(response){});
+    this.sharePublication = function(publication){
+        var obj = {method: 'share',href: constantService.urlBase+'/business/'+publication.businessId+'/publication/'+publication.id};
+        function callback(response) {}
+        FB.ui(obj, callback);
     };
 
     loginToServer = function (authResponse, callbackSuccess, callbackError) {
@@ -5606,7 +5594,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/categoryLine/template.html",
     "<div><table class=category-line-tree><tr ng-repeat=\"(catLev1Key,lev2) in getInfo().categories\"><td><a ng-click=searchCat(catLev1Key)>{{catLev1Key | translateText}}</a> <span class=transition>>></span></td><td><table><tr ng-repeat=\"(catLev2Key, lev3) in lev2\"><td><a ng-click=searchCat(catLev2Key)>{{catLev2Key | translateText}}</a> <span class=transition>>></span></td><td><span ng-repeat=\"catLev3 in lev3\"><span class=transition ng-show=\"$index>0\">/</span> <a ng-click=searchCat(catLev3.translationName)>{{catLev3.translationName | translateText}}</a></span></td></tr></table></td></tr></table></div>");
   $templateCache.put("/assets/javascripts/directive/component/facebookSharePublication/template.html",
-    "<div><a facebook-feed-share class=facebookShare data-url=http://lynk-test.herokuapp.com/business/{{getInfo().publication.businessId}}/publication/{{getInfo().publication.id}} data-caption=www.gling.be data-picture=\"{{getIllustration() | image}}\" data-name={{getInfo().publication.title}} data-description={{getInfo().publication.description}}></a></div>");
+    "<div><a class=\"facebookShare ng-isolate-scope\" ng-click=share()><div class=facebookButton><div class=pluginButton><div class=pluginButtonContainer><div class=pluginButtonImage><button type=button><i class=\"pluginButtonIcon img sp_plugin-button-2x sx_plugin-button-2x_favblue\"></i></button></div><span class=pluginButtonLabel>Share</span></div></div></div></a></div>");
   $templateCache.put("/assets/javascripts/directive/component/followWidget/template.html",
     "<div class=follow-widget><div ng-hide=\"getInfo().displayText===true\"><button ng-click=follow()><span class=\"gling-icon-bell selected\" ng-show=getInfo().business.following></span> <span class=gling-icon-bell2 ng-hide=getInfo().business.following></span></button></div><div class=follow-text><div class=link ng-hide=getInfo().business.following ng-click=follow()>{{'--.followWidget.stopFollow' | translateText}}</div><div class=link ng-show=getInfo().business.following ng-click=follow()>{{'--.followWidget.follow' | translateText}}</div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/gallery/template.html",

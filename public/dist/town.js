@@ -504,7 +504,8 @@ var myApp = angular.module('app', [
 );
 myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
 
-    this.ROOT_URL = "https://lynk-test.herokuapp.com";
+    //???
+    this.ROOT_URL = "https://gling-prod.herokuapp.com";
     //this.ROOT_URL = "";
 
     this.getBusinessByZip = function (zip, page,callbackSuccess, callbackError) {
@@ -746,10 +747,10 @@ myApp.filter("image", ['constantService', function (constantService) {
     return function (input,orginal) {
         if(input!=null && input!=undefined) {
             if(orginal!=undefined && orginal == true){
-                return constantService.fileBucketUrl + input.storedNameOriginalSize;
+                return constantService.fileBucketUrl +'/'+ input.storedNameOriginalSize;
             }
             else {
-                return constantService.fileBucketUrl + input.storedName;
+                return constantService.fileBucketUrl +'/'+ input.storedName;
             }
         }
         return null;

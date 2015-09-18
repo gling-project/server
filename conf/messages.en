@@ -383,7 +383,7 @@
 ##  view/web/search_page.html (business )
 --.list.nothing=list.nothing
 
-##  dist/templateCacheWeb.js (//lynk-test.herokuapp.com/business/{{publication.businessId}}/publication/{{publication.id}} data-shares=shares>{{ shares }}</a><div class=date><i class=\"fa fa-calendar\"></i> {{publication.startDate | date:medium}}</div><div class=publication-box-name>{{publication.title}}</div><div class=publication-box-description>{{publication.description}}</div><div ng-show=\"publication.type == 'PROMOTION'\" class=publication-box-promotion-data>{{'--.publication.promotionData' | translateText}}<table><tr ng-show=\"publication.quantity!=null\"><td>{{'--.promotion.quantity' | translateText}}</td><td>{{publication.quantity}} {{publication.unit}}</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.originalUnitPrice' | translateText}}</td><td>{{publication.originalPrice | number:2}} €</td></tr><tr ng-show=\"publication.originalPrice!=null\"><td>{{'--.promotion.offPrice' | translateText}}</td><td>{{(publication.originalPrice * (1 - publication.offPercent)) | number:2 }} €</td></tr><tr><td>{{'--.promotion.offPercent' | translateText}}</td><td>- {{(publication.offPercent * 100) | number:2 }} %</td></tr></table></div><div class=publication-box-picture-container><gallery-ctrl ng-info={images:publication.pictures}></gallery-ctrl></div></div></div></div>");)
+##  dist/templateCacheWeb.js
 --.business.socialNetwork.other=business.socialNetwork.other
 --.search.category.seeMore=search.category.seeMore
 --.publication.promotionData=publication.promotionData
