@@ -105,10 +105,10 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/field/dirFieldTextArea/directive.js',
                         'public/javascripts/directive/technical/dirFocusMe/directive.js',
                         'public/javascripts/directive/technical/dirInputNumber/directive.js',
-                        'public/javascripts/directive/technical/compile.js',
                         'public/javascripts/directive/field/dirFieldCheck/directive.js',
                         'public/javascripts/directive/field/dirFieldDocument/directive.js',
                         'public/javascripts/directive/field/dirFieldImageMutiple/directive.js',
+                        'public/javascripts/directive/technical/compile.js',
                         <!-- form -->
                         'public/javascripts/directive/form/login/LoginFormCtrl.js',
                         'public/javascripts/directive/form/address/AddressFormCtrl.js',
@@ -209,8 +209,9 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
                         'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
                         'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
-                        'public/javascripts/directive/component/toTop/ToTopCtrl.js',
-                        'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js'],
+                        'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js',
+                        'public/javascripts/directive/web/footerBar/FooterBarCtrl.js',
+                        'public/javascripts/directive/component/toTop/ToTopCtrl.js'],
                     'public/dist/mobile.js': [
                         'public/components/lodash/lodash.min.js',
                         'public/components/angular-google-maps/dist/angular-google-maps.min.js',
