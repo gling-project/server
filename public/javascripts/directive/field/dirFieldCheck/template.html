@@ -6,6 +6,7 @@
                 <button class="calculator btn btn-sm btn-default fa fa-calculator" ng-click="openCalculator()"></button>
 
                 <input type="checkbox"
+                       name="{{getInfo().name}}"
                        ng-disabled="getInfo().disabled()"
                        ng-model="getInfo().field[getInfo().fieldName]"
                        ng-class="{input_number: getInfo().numbersOnly === 'integer' || getInfo().numbersOnly === 'double',

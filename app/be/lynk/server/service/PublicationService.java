@@ -8,6 +8,7 @@ import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.model.entities.publication.Promotion;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -40,4 +41,7 @@ public interface PublicationService extends CrudService<AbstractPublication> {
     List<AbstractPublication> findActivePublicationByTypeAndZip(Integer zip, Integer page, Integer maxResult);
 
     List<AbstractPublication> findActivePromotionByTypeAndZip(Integer zip, Integer page, Integer maxResult);
+
+    int countPublicationForToday(LocalDateTime day,Business business);
+
 }

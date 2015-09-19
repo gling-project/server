@@ -13,12 +13,16 @@ import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 /**
  * Created by florian on 23/05/15.
@@ -44,7 +48,22 @@ public class PromotionRestController extends AbstractRestController {
         BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        //TODO control file
+        //control start date
+        if(promotion.getStartDate().compareTo(LocalDateTime.now().minusHours(1))==-1){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_STARTDATE_BEFORE_NOW);
+        }
+
+        //control date
+        Duration duration= Duration.between(promotion.getEndDate(), promotion.getStartDate());
+        if(duration.getSeconds() < Constant.PROMOTION_PERIOD_MAX_DAY*24*60*60){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PROMOTION_DURATION_TOO_LONG,Constant.PROMOTION_PERIOD_MAX_DAY);
+        }
+
+        //control number by day
+        if(publicationService.countPublicationForToday(promotion.getStartDate(),securityController.getBusiness())>Constant.PUBLICATION_MAX_BY_DAY){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_DAY);
+        }
+
 
         promotion.setBusiness(business);
 

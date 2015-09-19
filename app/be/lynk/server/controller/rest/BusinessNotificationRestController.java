@@ -13,12 +13,16 @@ import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 /**
  * Created by florian on 1/06/15.
@@ -46,6 +50,23 @@ public class BusinessNotificationRestController extends AbstractRestController {
         businessNotification.setBusiness(((BusinessAccount) securityController.getCurrentUser()).getBusiness());
         if (businessNotification.getInterest() != null) {
             businessNotification.setInterest(customerInterestService.findById(businessNotification.getInterest().getId()));
+        }
+
+        //control start date
+        if(businessNotification.getStartDate().compareTo(LocalDateTime.now().minusHours(1))==-1){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_STARTDATE_BEFORE_NOW);
+        }
+
+        //control date
+        Duration duration= Duration.between(businessNotification.getStartDate(),businessNotification.getEndDate());
+        long seconds = duration.getSeconds();
+        if(duration.getSeconds() < Constant.NOTIFICATION_PERIOD_MAX_DAY*24*60*60){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOTIFICATION_DURATION_TOO_LONG,Constant.NOTIFICATION_PERIOD_MAX_DAY);
+        }
+
+        //control number by day
+        if(publicationService.countPublicationForToday(businessNotification.getStartDate(),securityController.getBusiness())>=Constant.PUBLICATION_MAX_BY_DAY){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_DAY);
         }
 
         //TODO control file

@@ -76,18 +76,18 @@
 
     <!-- publication list -->
     <publication-list-ctrl ng-info="publicationListCtrl"
-                           ng-hide="displayEmptyHelpMessage===true || displayEmptyHelpMessageWithInterest===true"></publication-list-ctrl>
+                           ng-hide="displayEmptyHelpMessage===true || displayEmptyHelpMessageWithInterest===true">
+    </publication-list-ctrl>
 
     <!-- empty result help -->
-    <div class="help-big" ng-show="emptyMessage!==null">
+    <div class="help-div" ng-show="emptyMessage!==null">
         {{'--.home.emptyResult.'+emptyMessage | translateText}}
     </div>
-
 
     <!-- business list (in case of empty result -->
     <business-list-ctrl
             ng-info="businessListParam"
-            ng-show="displayEmptyHelpMessage===true || displayEmptyHelpMessageWithInterest===true">
+            ng-show="emptyMessage!==null">
     </business-list-ctrl>
 
 

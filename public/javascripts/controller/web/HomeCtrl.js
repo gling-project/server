@@ -143,12 +143,15 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
+        console.log('je uis le success ')
         if (data == null || data.length == 0) {
+            console.log('je uis le success PAS BIEN')
             $scope.allLoaded = true;
 
             //if there is no result and this is the first page and there is a callbackFunction,
             //try something else
             if ($scope.currentPage == 0 && callbackEmptyResultFunction != null) {
+                console.log('je uis le success START CALLBACK')
                 callbackEmptyResultFunction();
             }
         }

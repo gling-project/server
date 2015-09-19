@@ -1,16 +1,28 @@
 <div class="follow-widget">
-    <div ng-hide="getInfo().displayText===true">
+
+
+    <div class="follow-text" ng-hide="getInfo().displayText===true">
+        <div ng-hide="getInfo().business.following">
+            {{'--.followWidget.follow' | translateText:null:true}}
+        </div>
+        <div ng-show="getInfo().business.following">
+            {{'--.followWidget.stopFollow' | translateText:null:true}}
+        </div>
+    </div>
+
+    <div ng-hide="getInfo().displayText===true" class="follow-widget-icon">
+
         <button ng-click="follow()">
             <span class="gling-icon-bell selected" ng-show="getInfo().business.following"></span>
             <span class="gling-icon-bell2" ng-hide="getInfo().business.following"></span>
         </button>
     </div>
-    <div class="follow-text">
-        <div class="link" ng-hide="getInfo().business.following" ng-click="follow()">{{'--.followWidget.stopFollow' |
-            translateText}}
+    <div class="follow-text" ng-show="getInfo().displayText===true">
+        <div class="link" ng-hide="getInfo().business.following" ng-click="follow()">
+            {{'--.followWidget.follow' | translateText}}
         </div>
-        <div class="link" ng-show="getInfo().business.following" ng-click="follow()">{{'--.followWidget.follow' |
-            translateText}}
+        <div class="link" ng-show="getInfo().business.following" ng-click="follow()">
+            {{'--.followWidget.stopFollow' | translateText}}
         </div>
     </div>
 </div>

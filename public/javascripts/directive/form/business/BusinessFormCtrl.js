@@ -44,7 +44,7 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                             name: 'description',
                             fieldTitle: "--.generic.desc",
                             validationRegex: /^[\s\S]{2,1500}$/gi,
-                            validationMessage: ['--.generic.validation.size', '0', '1500'],
+                            validationMessage: ['--.generic.validation.size', '2', '1500'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

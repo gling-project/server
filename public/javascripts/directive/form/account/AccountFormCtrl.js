@@ -138,6 +138,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                             fieldName: 'keepSessionOpen'
                         },
                         sla: {
+                            name: 'sla',
                             fieldTitle: "--.registration.form.acceptSla",
                             validationMessage: "--.registration.form.acceptSla.error",
                             valid: function () {

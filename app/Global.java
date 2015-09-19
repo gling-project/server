@@ -152,9 +152,6 @@ public class Global extends GlobalSettings {
             action = new Action() {
                 @Override
                 public Promise<SimpleResult> call(Http.Context ctx) throws Throwable {
-                    Logger.info("host:" + ctx.request().host());
-                    Logger.info("host:" + ctx.request().toString());
-                    Logger.info("host:" + ctx.request().uri());
                     return Promise.<SimpleResult>pure(Results.ok(be.lynk.server.views.html.comingSoon.render()));
                 }
             };

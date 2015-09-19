@@ -1413,12 +1413,15 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
+        console.log('je uis le success ')
         if (data == null || data.length == 0) {
+            console.log('je uis le success PAS BIEN')
             $scope.allLoaded = true;
 
             //if there is no result and this is the first page and there is a callbackFunction,
             //try something else
             if ($scope.currentPage == 0 && callbackEmptyResultFunction != null) {
+                console.log('je uis le success START CALLBACK')
                 callbackEmptyResultFunction();
             }
         }
@@ -1863,7 +1866,9 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     {
                         fieldTitle: "--.business.modal.gallery.title",
                         validationMessage: '--.error.validation.image',
+                        details:'--gallery.maximumImage',
                         field: business,
+                        maxImage:10,
                         multiple: true,
                         target: 'galley_picture',
                         fieldName: 'galleryPictures'

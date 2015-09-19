@@ -1,5 +1,5 @@
 myApp.filter("translateText", function ($sce, translationService) {
-    return function (input, params) {
+    return function (input, params,toUpperCase) {
         var text;
 
         if (typeof input === 'object') {
@@ -8,6 +8,9 @@ myApp.filter("translateText", function ($sce, translationService) {
                 if (key != 0) {
                     text = text.replace('{' + (parseFloat(key) -1) + '}', input[key]);
                 }
+            }
+            if(toUpperCase===true){
+                return text.toUpperCase();
             }
             return text;
         }
@@ -22,6 +25,9 @@ myApp.filter("translateText", function ($sce, translationService) {
                 } else {
                     text = text.replace('{0}', params);
                 }
+            }
+            if(toUpperCase===true){
+                return text.toUpperCase();
             }
             return text;
         }

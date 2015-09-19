@@ -110,6 +110,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                         illustration: {
                             name: 'illustration',
                             fieldTitle: "--.promotion.illustration",
+                            details:'--promotion.illustration.maximumImage',
                             validationMessage: '--.error.validation.image',
                             target: 'publication_picture',
                             //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
@@ -117,6 +118,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
+                            maxImage:4,
                             optional: function () {
                                 return true;
                             },

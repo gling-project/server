@@ -119,6 +119,7 @@ body {
 }
 
 .container-content {
+//    background-image: url('/assets/images/home-bg.png');
     width: 1000px;
     margin: auto;
     top: 64px;
@@ -368,11 +369,12 @@ a {
     }
     p {
         position: absolute;
-        background-color: #2c265c;
+        background-color: #999;
+        font-family: "myFont";
         color: #f4f4f4;
         display: none;
         padding: 4px 6px;
-        font-size: 12px;
+        font-size: 14px;
         bottom: -34px;
         left: -50%;
         opacity: 100;
@@ -406,7 +408,7 @@ a {
     background-color: @color-green-light;
     color: white;
     margin: 0 5px;
-    border: 1px solid white;
+    border: 0;//1px solid white;
     border-radius: 20px;
     padding: 5px 10px;
     font-size: 16px;
@@ -415,6 +417,8 @@ a {
     outline: none;
     &:hover:enabled {
         background-color: @color-green-dark;
+        color: white;
+        text-decoration: none;
     }
     &:disabled {
         color: rgba(255, 255, 255, 0.65);

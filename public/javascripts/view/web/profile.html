@@ -7,7 +7,7 @@
 
             <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
-            <button class="btn btn-gling glyphicon glyphicon-edit"
+            <button class="btn btn-gling "
                     id="profile-personal-btn-edit"
                     ng-show="accountParam.disabled"
                     ng-click="personalEdit()">{{'--.generic.edit' |translateText}}
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         <button
-                                class="btn btn-gling glyphicon glyphicon-edit"
+                                class="btn btn-gling "
                                 ng-click="editAddress(address)">
                             {{'--.generic.edit' | translateText}}
                         </button>
@@ -100,7 +100,7 @@
                     {{interest.translationName |translateText}}
                 </div>
 
-                <button class="btn btn-gling glyphicon glyphicon-edit"
+                <button class="btn btn-gling "
                         id="profile-interest-btn-edit"
                         ng-click="interestEdit()">
                     {{'--.generic.edit' | translateText}}

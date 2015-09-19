@@ -328,7 +328,7 @@ day_abrv_sunday=Di
 --.business.page.edit.editSwitchEdit=Vison édition
 --.business.page.edit.editSwitchDisplay=Vision client
 --.business.page.publication=Publier ma page!
---.business.page.edit.description=Bienvenue sur votre page de commerce! C'est ici que vous pourrez changer les informations concernant votre commerce, publier de nouvelles promotions, actualités, etc.
+--.business.page.edit.description=Bienvenue sur votre page de commerce\! C'est ici que vous pourrez changer les informations concernant votre commerce, publier de nouvelles promotions, actualités, etc.
 --.business.page.edit.descriptionPublished= Votre page est actuellement publique. Vous pouvez la rendre privée, si vous désirez changer des informations crutiales telles que l'adresse où le nom.
 --.business.page.edit.description.waitConfirmation=Votre page est en attente de confirmation. Un membre de notre équipe prendra contact avec vous dans les prochains jours pour valider votre identité.
 --.business.page.edit.description.notPublished=Votre page n'est actuellement pas publique, cela veut dire que personne ne peut consulter votre page ou vos publications. Avant de publier votre page, pensez à regarder si vous avez mis un maximum d'informations sur votre commerce (voir 'Ma progression' à droite). Si vous êtes près à rendre votre page publique, cliquez simplement sur 'Rendre ma page publique' ci-dessous. Un membre de notre équipe prendra contact avec vous dans les prochains jours pour valider votre identité.
@@ -341,7 +341,7 @@ day_abrv_sunday=Di
 --.business.publication.btn.promotion=Publier une promotion
 --.business.gallery=Galerie
 --.business.page.cancelPublishRequest=Annuler la demande de publication
---.business.page.edit.gallery=Editer la galerie
+#--.business.page.edit.gallery=Editer la galerie
 	
 	
 	
@@ -404,7 +404,7 @@ day_abrv_sunday=Di
 	
 ##  directive/component/publicationListForBusiness/template.html (start date )	
 --.publication.promotionData=Détails de la promotion
---.publication.promotionTo=Promotion jusqu'au
+--.publication.promotionTo=Promo
 --.publication.publishTo=Publié le
 	
 	
@@ -451,11 +451,13 @@ day_abrv_sunday=Di
 --.followedBusiness.table.notification=Recevoir les notifications
 --.followedBusiness.table.categories=Catégories
 	
---.gallery.title=Galerie
+#--.gallery.title=Galerie
 --.publication.description=Description (optionnelle)
+#--.followed-business.checkAll=followed-business.checkAll
+#--.followed-business.uncheckAll=followed-business.uncheckAll
 
 
---.loginModal.fctToExecute.help=Vous devez vous enregistrez pour continuer
+#--.loginModal.fctToExecute.help=Vous devez vous enregistrez pour continuer
 --.home.interest-switch.help=Triez selon votre position ou vos commerces favoris
 --.home.interest.help=Triez selon vos envies.
 --.home.localisation.help=Triez selon votre position.
@@ -504,12 +506,12 @@ day_abrv_sunday=Di
 --.business.manager.progress.add.socialNetwork=Ajouter des liens vers les réseaux sociaux sur lesquels votre commerce est présent
 --.business.manager.progress.help=Suiver le guide
 --.business.manager.progress.createPublicationTitle=Créer une publication
---.business.manager.createPublication.disabled.desc=Vous ne pouvez pas encore créer de publication pour l'instant car votre page n'est pas encore publique. Pour rendre votre page publique, cliquez sur le bouton 'Publier ma page!' et attendez qu'un membre de notre équipe valide votre demande.
+--.business.manager.createPublication.disabled.desc=Vous ne pouvez pas encore créer de publication pour l'instant car votre page n'est pas encore publique. Pour rendre votre page publique, cliquez sur le bouton 'Publier ma page\!' et attendez qu'un membre de notre équipe valide votre demande.
 --.followWidget.message.remove=Ce commerce a bien été supprimer de vos favoris.
---.followWidget.message.add=Ce commerce a bien été ajouté à vos favoris!
+--.followWidget.message.add=Ce commerce a bien été ajouté à vos favoris\!
 --.followWidget.stopFollow=Ne plus suivre ce commerce
 --.followWidget.follow=Suivre ce commerce
---.business.page.management.status=Status de votre page :
+--.business.page.management.status=Status de votre page \:
 
 --.schedule.closed=Fermé
 --.schedule.light=Ouvert (Affluence faible)
@@ -520,6 +522,29 @@ day_abrv_sunday=Di
 --.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
 --.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
 --.business.page.management.help.title=Un petit coup de pouce ?
---.business.page.management.contact.btn=Contactez-nous!
---.followed-business.checkAll=Sélectionner tout
---.followed-business.uncheckAll=Déselectionner tout
+--.business.page.management.contact.btn=Contactez-nous\!
+#--.followed-business.checkAll=Sélectionner tout
+#--.followed-business.uncheckAll=Déselectionner tout
+--.error.promotion.duration.tooLong=La durée maximum d'une promotion est de {0} jours
+--.error.notification.duration.tooLong=La durée maximum d'une actualité est de {0} jours
+--.error.promotion.TooMuchToday=Vous avez déjà publié {0} publications aujourd'hui. Attendez demain pour publier à nouveau
+--.error.publication.startDateBeforeNow=La publication doit commencer au plus tard maintenant
+
+##  directive/form/account/AccountFormCtrl.js (//)
+--.registration.form.acceptSla=J'accepte les termes et conditions
+--.sla.modal.title=Termes et conditions
+--.registration.form.acceptSla.error=Vous devez accepter les termes et conditions pour vous inscrire
+
+##  directive/form/contact/ContactFormCtrl.js (//)
+--.contactForm.message=Message
+--.contactForm.subject=Suject
+
+##  be/lynk/server/controller/technical/businessStatus/BusinessStatus.java
+--.business.status.published=Publique
+--.business.status.not_public=Non publique
+--.business.status.waiting_confirmation=En attente de validation
+--.generic.description=Description
+--.mobile.welcome.registration.desc=
+--.mobile.welcome.login.desc=
+--.business.page.edit.gallery=
+--.footer.aboutGling=A propos de Gling

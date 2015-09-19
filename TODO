@@ -12,8 +12,8 @@ ok- proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
 - ajouter des fléches sur les select du haut sur FF
 - désectionner les intérêts lorsqu'on clique sur gling
 ??- email bienvenue
-- nb max / durée max / photo max
-- ajouter acceptation SLA lors de l'enregistrement
+ok- nb max / durée max / photo max
+ok- ajouter acceptation SLA lors de l'enregistrement
 ok- mes commerces : checher / unchecher ts les commerces d'un coup
 ok- prévisualisation des publications
 ok- enlever (temporairement) les langues
@@ -57,3 +57,5 @@ Plus tard- Possible que les commerces aient un hyperlien reconnaissable? www.gli
 
 DEPLOYEMENT !!!
 - facebook dev : change l'url de gling-prod.herokuapp.com à gling.be
+- ajouter le SLA et documents légaux
+-ajouter guide help

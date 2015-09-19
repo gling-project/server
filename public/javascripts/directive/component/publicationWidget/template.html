@@ -1,5 +1,5 @@
 
-<div class="publication-box publication-bordered"
+<div class="publication-box"
      ng-class="{'publication-followed':getInfo().publication.following === true}"
      ng-click="click()">
 
@@ -18,7 +18,7 @@
             <td rowspan="2">
 
                 <!-- illustration -->
-                <div class="publication-business-illustration publication-bordered publication-bordered-hover">
+                <div class="publication-business-illustration">
                     <img ng-click="navigateTo('/business/'+getInfo().publication.businessId)"
                          ng-src="{{getInfo().publication.businessIllustration | image}}"/>
                 </div>
@@ -68,7 +68,7 @@
     </table>
 
     <div class="publication-body">
-        <div class="publication-data publication-bordered"
+        <div class="publication-data"
              ng-class="{'publication-body-two':getInfo().publication.pictures.length>0}"
              ng-hide="descriptionIsEmpty(getInfo().publication) === true">
 
@@ -80,7 +80,7 @@
                 <span>
                     <div>{{'--.publication.promotionTo' | translateText}}</div>
                     <div>
-                        {{getInfo().publication.endDate | date:'dd MMM yyyy hh:mm'}}
+                        > {{getInfo().publication.endDate | date:'dd MMM hh:mm'}}
                     </div>
                 </span>
             </div>
@@ -93,7 +93,7 @@
 
         <!-- gallery -->
         <!-- picture 1 -->
-        <div class="publication-gallery publication-bordered  publication-bordered-hover"
+        <div class="publication-gallery"
              ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}"
              ng-show="getInfo().publication.pictures.length > 0 "
              ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)">
@@ -108,7 +108,7 @@
         </div>
 
         <!-- picture 2 -->
-        <div class="publication-gallery publication-bordered  publication-bordered-hover publication-body-two publication-body-two-right"
+        <div class="publication-gallery publication-body-two publication-body-two-right"
              ng-show="getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) === true"
              ng-click="openGallery(getInfo().publication.pictures[1],getInfo().publication)">
 

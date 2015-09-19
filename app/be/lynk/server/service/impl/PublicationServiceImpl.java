@@ -9,6 +9,7 @@ import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.PublicationService;
 import org.springframework.stereotype.Service;
+import play.Logger;
 import play.db.jpa.JPA;
 
 import javax.persistence.TypedQuery;
@@ -254,5 +255,21 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                   .setFirstResult(page * maxResult)
                   .setMaxResults(maxResult)
                   .getResultList();
+    }
+
+    @Override
+    public int countPublicationForToday(LocalDateTime day,Business business){
+
+        String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business";
+
+        Long c = JPA.em().createQuery(r, Long.class)
+                    .setParameter("start", day.withHour(0).withMinute(0).withSecond(0))
+                    .setParameter("end", day.withHour(23).withMinute(59).withSecond(59))
+                    .setParameter("business", business)
+                    .getSingleResult();
+
+        return c.intValue();
+
+
     }
 }

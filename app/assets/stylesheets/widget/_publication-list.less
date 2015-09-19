@@ -72,9 +72,13 @@
 
     width: 600px;
     position: relative;
-    border-radius: 10px;
+//    border-radius: 10px;
     background-color: white;
     margin: 15px auto;
+    -webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.4);
+    -moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.4);
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+    padding-bottom: 20px;
 
     //withoutbusiness verion
     .publication-header-without-business-version {
@@ -138,11 +142,15 @@
         }
 
         .publication-business-illustration {
+            border: 1px solid #ccc;
             border-radius: 10px;
             width: 140px;
             height: 140px;
             overflow: hidden;
             margin: 25px 20px 20px 25px;
+            &:hover{
+                border: 1px solid #888;
+            }
 
             img {
                 cursor: pointer;
@@ -181,9 +189,19 @@
         margin-left: 25px;
         margin-right: 25px;
         margin-bottom: 20px;
+
+        .publication-gallery{
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            &:hover{
+                border: 1px solid #888;
+            }
+        }
+
         & > * {
             vertical-align: top;
-            border-radius: 10px;
+            border-bottom: @border-size solid @publication-border-color;
+            border-top: @border-size solid @publication-border-color;
             min-width: 265px;
         }
 
@@ -203,7 +221,7 @@
                 padding: 3px 10px;
                 color: @publication-text-color;
                 & > span {
-                    margin-left: 25px;
+                    margin-left: 10px;
                     & > div {
                         &:first-child {
                             margin-right: 2px;

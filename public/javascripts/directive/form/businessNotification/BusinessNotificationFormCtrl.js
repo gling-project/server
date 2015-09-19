@@ -100,12 +100,14 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
+                            details:'--promotion.illustration.maximumImage',
                             target:'publication_picture',
                             //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
                             //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
                             optional: function () {
                                 return true;
                             },
+                            maxImage:4,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

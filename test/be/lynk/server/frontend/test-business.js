@@ -99,6 +99,9 @@ describe('Business test', function () {
 
     it('Business test web', function () {
 
+        var width = 1200;
+        var height = 1400;
+        browser.driver.manage().window().setSize(width, height);
         browser.get(target+'home');
 
         //control page name
@@ -119,6 +122,7 @@ describe('Business test', function () {
         writeField('email', businessAccountEmail);
         writeField('password', businessAccountPassword);
         writeField('repeatPassword', businessAccountPassword);
+        element(by.name('sla')).click();
         element(by.id('business-registration-btn-next')).click();
 
         //add busines data
@@ -198,6 +202,7 @@ describe('Business test', function () {
         //TODO control ?
 
         //edit business
+        browser.executeScript('window.scrollTo(1000,0);');
         element(by.id("business-btn-contact-edit")).click();
         writeField('name', businessName2);
         writeField('description', businessDescription2);
