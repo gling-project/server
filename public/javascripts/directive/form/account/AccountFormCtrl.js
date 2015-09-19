@@ -1,4 +1,4 @@
-myApp.directive('accountFormCtrl', function ($flash, directiveService, languageService) {
+myApp.directive('accountFormCtrl', function ($flash, directiveService, languageService,modalService) {
 
     return {
         restrict: "E",
@@ -29,7 +29,6 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                     scope.passwordActive = true;
 
                     var langOptions = [];
-
 
 
                     scope.fields = {
@@ -78,7 +77,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'lang',
-                            active:function(){
+                            active: function () {
                                 return false;
                             }
                         },
@@ -137,6 +136,23 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'keepSessionOpen'
+                        },
+                        sla: {
+                            fieldTitle: "--.registration.form.acceptSla",
+                            validationMessage: "--.registration.form.acceptSla.error",
+                            valid: function () {
+                                var v = scope.fields.sla.field[scope.fields.sla.fieldName];
+                                console.log('---->>'+v);
+                                return v === true;
+                            },
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            active: function () {
+                                return !scope.getInfo().updateMode
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'sla'
                         }
                     };
 
@@ -156,10 +172,15 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                         scope.passwordActive = false;
                     };
 
+                    scope.openSla = function(){
+                      modalService.openSla('--.sla.modal.title','/legal/sla/');
+                    };
+
                     //
                     // validation : watching on field
                     //
                     scope.$watch('fields', function () {
+
                         var validation = true;
 
                         for (var key in scope.fields) {

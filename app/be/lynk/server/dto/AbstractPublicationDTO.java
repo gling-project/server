@@ -1,7 +1,7 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.PublicationType;
+import be.lynk.server.model.PublicationTypeEnum;
 import play.modules.mongodb.jackson.KeyTyped;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     private Integer totalFollowers;
 
-    protected PublicationType type;
+    protected PublicationTypeEnum type;
 
     private List<StoredFileDTO> pictures = new ArrayList<>();
 
@@ -68,11 +68,11 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
         this.businessIllustration = businessIllustration;
     }
 
-    public PublicationType getType() {
+    public PublicationTypeEnum getType() {
         return type;
     }
 
-    public void setType(PublicationType type) {
+    public void setType(PublicationTypeEnum type) {
         this.type = type;
     }
 

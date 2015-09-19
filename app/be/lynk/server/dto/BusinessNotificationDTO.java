@@ -1,6 +1,6 @@
 package be.lynk.server.dto;
 
-import be.lynk.server.model.PublicationType;
+import be.lynk.server.model.PublicationTypeEnum;
 import play.modules.mongodb.jackson.KeyTyped;
 
 import java.util.Date;
@@ -10,6 +10,6 @@ import java.util.Date;
  */
 public class BusinessNotificationDTO extends AbstractPublicationDTO implements KeyTyped<Date> {
     public BusinessNotificationDTO() {
-        type = PublicationType.NOTIFICATION;
+        type = PublicationTypeEnum.NOTIFICATION;
     }
 }

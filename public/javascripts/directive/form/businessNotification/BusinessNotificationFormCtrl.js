@@ -19,10 +19,16 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                     scope.update = scope.getInfo().dto != null;
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
+                            type: 'NOTIFICATION',
                             startDate: new Date(),
                             endDate:new Date().setMonth(new Date().getMonth() + 1)
                         };
                     };
+
+                    //complete for previsualization
+                    scope.getInfo().dto.businessName = scope.getInfo().business.name;
+                    scope.getInfo().dto.businessIllustration = scope.getInfo().business.illustration;
+                    scope.getInfo().dto.distance = scope.getInfo().business.distance;
 
                     //load interests
                     businessService.getInterests(function (data) {

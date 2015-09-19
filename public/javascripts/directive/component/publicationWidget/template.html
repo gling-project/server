@@ -3,6 +3,9 @@
      ng-class="{'publication-followed':getInfo().publication.following === true}"
      ng-click="click()">
 
+    <div ng-show="getInfo().previsualization === true" class="publication-box-previsualization">
+    </div>
+
     <!-- badge -->
     <div class="publication-badge"
          ng-show="getInfo().publication.type === 'PROMOTION'">

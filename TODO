@@ -15,7 +15,7 @@ ok- proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
 - nb max / durée max / photo max
 - ajouter acceptation SLA lors de l'enregistrement
 ok- mes commerces : checher / unchecher ts les commerces d'un coup
-- prévisualisation des publications
+ok- prévisualisation des publications
 ok- enlever (temporairement) les langues
 ok- 'ou' entre connection et enregistration pas centré.
 ok- date avec mois en lettre mais sans seconde.

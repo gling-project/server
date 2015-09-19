@@ -27,10 +27,21 @@ myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
                     };
 
                     scope.isValid = function () {
-                        scope.getInfo().isValid = true;
+                        if(scope.getInfo().valid != undefined){
+                            scope.getInfo().isValid =scope.getInfo().valid();
+                        }
+                        else {
+                            scope.getInfo().isValid = true;
+                        }
                     };
 
                     scope.isValid();
+
+                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                        return scope.isValid();
+                    });
+
+
                     scope.logField = function () {
                         return console.log(scope.getInfo());
                     };

@@ -2,13 +2,11 @@ package be.lynk.server.service.impl;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
 import be.lynk.server.model.Position;
-import be.lynk.server.model.PublicationType;
+import be.lynk.server.model.PublicationTypeEnum;
 import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
-import be.lynk.server.model.entities.publication.BusinessNotification;
-import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.PublicationService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
@@ -228,7 +226,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(address.get("zip"), zip.toString())
-                , cb.equal(from.get("type"), PublicationType.NOTIFICATION));
+                , cb.equal(from.get("type"), PublicationTypeEnum.NOTIFICATION));
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)
@@ -249,7 +247,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(address.get("zip"), zip.toString())
-                , cb.equal(from.get("type"), PublicationType.PROMOTION));
+                , cb.equal(from.get("type"), PublicationTypeEnum.PROMOTION));
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)

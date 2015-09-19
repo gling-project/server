@@ -1,13 +1,21 @@
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService) {
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business) {
 
     $scope.loading = false;
+
+
 
     $scope.update = (dto != null);
 
     $scope.promotionParam = {
-        dto: angular.copy(dto)
+        dto: angular.copy(dto),
+        business:business
     };
 
+
+    $scope.getHeight = function(){
+        var h = {height:($(window).height() - 190)+'px'};
+        return h;
+    };
 
     $scope.close = function () {
         $modalInstance.close();

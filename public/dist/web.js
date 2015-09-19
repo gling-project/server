@@ -963,16 +963,24 @@ myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal',
     }
 
 }]);
-myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', 'facebookService', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService) {
+myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', 'facebookService', 'business', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business) {
 
     $scope.loading = false;
+
+
 
     $scope.update = (dto != null);
 
     $scope.promotionParam = {
-        dto: angular.copy(dto)
+        dto: angular.copy(dto),
+        business:business
     };
 
+
+    $scope.getHeight = function(){
+        var h = {height:($(window).height() - 190)+'px'};
+        return h;
+    };
 
     $scope.close = function () {
         $modalInstance.close();
@@ -1033,14 +1041,21 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
 
 
 }]);
-myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', 'facebookService', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,facebookService) {
+myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', 'facebookService', 'business', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,facebookService,business) {
 
     $scope.loading = false;
 
     $scope.update = (dto != null);
 
     $scope.businessNotificationParam = {
-        dto: angular.copy(dto)
+        dto: angular.copy(dto),
+        business:business
+    };
+
+
+    $scope.getHeight = function(){
+        var h = {height:($(window).height() - 190)+'px'};
+        return h;
     };
 
 
@@ -1239,6 +1254,17 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'imag
                 break;
             }
         }
+    };
+
+}]);
+myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'title', 'url', function ($scope, $flash, $modalInstance,title,url) {
+
+
+    $scope.title=title;
+    $scope.url=url;
+
+    $scope.close = function () {
+        $modalInstance.close();
     };
 
 }]);
@@ -1877,13 +1903,13 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
 
             //create publication
             $scope.createPromotion = function () {
-                modalService.openPromotionModal(null, function () {
+                modalService.openPromotionModal(null, $scope.business,function () {
                     $scope.$broadcast('RELOAD_PUBLICATION');
                 });
 
             };
             $scope.createNotification = function () {
-                modalService.openBusinessNotificationModal(null, function () {
+                modalService.openBusinessNotificationModal(null, $scope.business,function () {
                     $scope.$broadcast('RELOAD_PUBLICATION');
                 });
             };

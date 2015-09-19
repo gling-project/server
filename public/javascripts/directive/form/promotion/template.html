@@ -29,20 +29,20 @@
                     </label>
                 </div>
             </div>
-            <label class="control-label col-xs-5">{{'--.promotion.completePromotion' | translateText}}</label>
+            <label style="text-align: left" class="control-label col-xs-5">{{'--.promotion.completePromotion' |
+                translateText}}</label>
         </div>
     </div>
-
-    <!--<dir-field-text ng-info="fields.quantity"></dir-field-text>-->
-
-    <!--<dir-field-text ng-info="fields.minimalQuantity"></dir-field-text>-->
-
-    <!--<dir-field-text ng-info="fields.unit"></dir-field-text>-->
 
     <dir-field-text ng-info="fields.originalPrice"></dir-field-text>
 
     <dir-field-text ng-info="fields.offPercent"></dir-field-text>
 
     <dir-field-text ng-info="fields.offPrice"></dir-field-text>
+
+    <h3>{{'--.publication.previsualization' | translateText}}</h3>
+
+    <publication-widget-ctrl ng-info="{publication:getInfo().dto,previsualization:true}"></publication-widget-ctrl>
+
 
 </div>

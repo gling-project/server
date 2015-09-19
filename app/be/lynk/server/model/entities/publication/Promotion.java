@@ -1,6 +1,6 @@
 package be.lynk.server.model.entities.publication;
 
-import be.lynk.server.model.PublicationType;
+import be.lynk.server.model.PublicationTypeEnum;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class Promotion extends AbstractPublication{
 
 
     public Promotion() {
-        type = PublicationType.PROMOTION;
+        type = PublicationTypeEnum.PROMOTION;
     }
 
     public Double getQuantity() {

@@ -31,10 +31,10 @@
                 ng-disabled="business.businessStatus !== 'PUBLISHED'">
             {{'--.business.publication.btn.notification' | translateText}}
         </button>
-    </div>
 
-    <div ng-hide="business.businessStatus==='PUBLISHED'">
-        {{'--.business.manager.createPublication.disabled.desc' | translateText}}
+        <div ng-hide="business.businessStatus==='PUBLISHED'">
+            {{'--.business.manager.createPublication.disabled.desc' | translateText}}
+        </div>
     </div>
 
 

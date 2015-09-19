@@ -295,13 +295,13 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
 
             //create publication
             $scope.createPromotion = function () {
-                modalService.openPromotionModal(null, function () {
+                modalService.openPromotionModal(null, $scope.business,function () {
                     $scope.$broadcast('RELOAD_PUBLICATION');
                 });
 
             };
             $scope.createNotification = function () {
-                modalService.openBusinessNotificationModal(null, function () {
+                modalService.openBusinessNotificationModal(null, $scope.business,function () {
                     $scope.$broadcast('RELOAD_PUBLICATION');
                 });
             };

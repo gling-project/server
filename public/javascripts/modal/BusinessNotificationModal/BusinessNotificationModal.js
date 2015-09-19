@@ -1,11 +1,18 @@
-myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,facebookService) {
+myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,facebookService,business) {
 
     $scope.loading = false;
 
     $scope.update = (dto != null);
 
     $scope.businessNotificationParam = {
-        dto: angular.copy(dto)
+        dto: angular.copy(dto),
+        business:business
+    };
+
+
+    $scope.getHeight = function(){
+        var h = {height:($(window).height() - 190)+'px'};
+        return h;
     };
 
 

@@ -196,6 +196,7 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/BasicModal/BasicModal.js',
                         'public/javascripts/modal/MessageModal/MessageModal.js',
                         'public/javascripts/modal/GalleryModal/GalleryModal.js',
+                        'public/javascripts/modal/IframeModal/IframeModal.js',
 
                         <!-- controllers -->
                         'public/javascripts/controller/web/HomeCtrl.js',

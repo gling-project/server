@@ -1,7 +1,7 @@
 
 package be.lynk.server.model.entities.publication;
 
-import be.lynk.server.model.PublicationType;
+import be.lynk.server.model.PublicationTypeEnum;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.StoredFile;
@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 public abstract class AbstractPublication extends AbstractEntity implements Comparable<AbstractPublication> {
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false, fetch = FetchType.LAZY)
     private Business business;
 
     @Basic(optional = false)
@@ -42,7 +42,7 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
     @Basic(optional = false)
     protected LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "publication", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "publication", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
     protected List<StoredFile> pictures = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,16 +50,16 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
 
     @Basic(optional = false)
     @Enumerated(value = EnumType.STRING)
-    protected PublicationType type;
+    protected PublicationTypeEnum type;
 
     public AbstractPublication() {
     }
 
-    public PublicationType getType() {
+    public PublicationTypeEnum getType() {
         return type;
     }
 
-    public void setType(PublicationType type) {
+    public void setType(PublicationTypeEnum type) {
         this.type = type;
     }
 

@@ -1,6 +1,6 @@
 package be.lynk.server.dto;
 
-import be.lynk.server.model.PublicationType;
+import be.lynk.server.model.PublicationTypeEnum;
 import play.modules.mongodb.jackson.KeyTyped;
 
 import java.util.Date;
@@ -21,7 +21,7 @@ public class PromotionDTO extends AbstractPublicationDTO implements KeyTyped<Dat
     private Double offPercent;
 
     public PromotionDTO() {
-        type= PublicationType.PROMOTION;
+        type= PublicationTypeEnum.PROMOTION;
     }
 
     public Double getQuantity() {

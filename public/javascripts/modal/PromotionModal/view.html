@@ -3,7 +3,7 @@
     <h4 ng-show="update" class="modal-title">{{'--.promotion.modal.title.update' | translateText}}</h4>
     <h4 ng-hide="update" class="modal-title">{{'--.promotion.modal.title.create' | translateText}}</h4>
 </div>
-<div class="modal-body" >
+<div class="modal-body" ng-style="getHeight()">
     <promotion-form-ctrl ng-info="promotionParam"></promotion-form-ctrl>
 </div>
 <div class="modal-footer">

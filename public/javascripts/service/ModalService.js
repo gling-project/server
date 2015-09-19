@@ -196,10 +196,13 @@ myApp.service("modalService", function ($modal) {
     };
 
 
-    this.openPromotionModal = function (promotion,callback) {
+    this.openPromotionModal = function (promotion,business,callback) {
         var resolve = {
             dto: function () {
                 return promotion;
+            },
+            business:function(){
+                return business;
             },
             callback:function(){
                 return callback;
@@ -208,16 +211,19 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/PromotionModal/view.html",
             controller: "PromotionModalCtrl",
-            size: "l",
+            size: "lg",
             resolve: resolve
         });
     };
 
 
-    this.openBusinessNotificationModal = function (businessNotification,callback) {
+    this.openBusinessNotificationModal = function (businessNotification,business,callback) {
         var resolve = {
             dto: function () {
                 return businessNotification;
+            },
+            business:function(){
+                return business;
             },
             callback:function(){
                 return callback;
@@ -226,7 +232,7 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/BusinessNotificationModal/view.html",
             controller: "BusinessNotificationModalCtrl",
-            size: "l",
+            size: "lg",
             resolve: resolve
         });
     };
@@ -266,5 +272,22 @@ myApp.service("modalService", function ($modal) {
             resolve: resolve
         });
     };
+
+    this.openSla = function(title,url){
+        var resolve = {
+            title: function () {
+                return title;
+            },
+            url: function () {
+                return url;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/IframeModal/view.html",
+            controller: "iframeModalCtrl",
+            size: "lg",
+            resolve: resolve
+        });
+    }
 
 });

@@ -1,4 +1,4 @@
-myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout,businessService,constantService) {
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout, businessService, constantService) {
 
     return {
         restrict: "E",
@@ -24,6 +24,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     //
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
+                            type: 'PROMOTION',
                             startDate: new Date()
                             //minimalQuantity: 1
                         };
@@ -31,6 +32,11 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     else {
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
+
+                    //complete for previsualization
+                    scope.getInfo().dto.businessName = scope.getInfo().business.name;
+                    scope.getInfo().dto.businessIllustration = scope.getInfo().business.illustration;
+                    scope.getInfo().dto.distance = scope.getInfo().business.distance;
 
 
                     //load interests
@@ -48,7 +54,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 });
                             }
                         }
-                        else if(scope.interests.length == 1){
+                        else if (scope.interests.length == 1) {
                             scope.getInfo().dto.interest = scope.interests[0];
                         }
                     });
@@ -56,7 +62,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     //build field + dto binding
                     scope.fields = {
                         title: {
-                            name:'title',
+                            name: 'title',
                             fieldTitle: "--.generic.title",
                             validationRegex: "^.{2,100}$",
                             validationMessage: ['--.generic.validation.size', '2', '100'],
@@ -67,7 +73,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'title'
                         },
                         description: {
-                            name:'description',
+                            name: 'description',
                             fieldTitle: "--.publication.description",
                             validationRegex: /^[\s\S]{0,1000}$/gi,
                             validationMessage: ['--.generic.validation.size', '0', '1000'],
@@ -78,7 +84,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'description'
                         },
                         startDate: {
-                            name:'startDate',
+                            name: 'startDate',
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
@@ -88,7 +94,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'startDate'
                         },
                         endDate: {
-                            name:'endDate',
+                            name: 'endDate',
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
@@ -102,10 +108,10 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'endDate'
                         },
                         illustration: {
-                            name:'illustration',
+                            name: 'illustration',
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            target:'publication_picture',
+                            target: 'publication_picture',
                             //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
                             //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
                             disabled: function () {
@@ -115,7 +121,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 return true;
                             },
                             field: scope.getInfo().dto,
-                            multiple:true,
+                            multiple: true,
                             fieldName: 'pictures'
                         },
                         //quantity: {
@@ -164,7 +170,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                         //    fieldName: 'unit'
                         //},
                         originalPrice: {
-                            name:'originalPrice',
+                            name: 'originalPrice',
                             fieldTitle: "--.promotion.originalUnitPrice",
                             numbersOnly: 'double',
                             validationMessage: '--.generic.validation.numberExpected',
@@ -182,7 +188,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'originalPrice'
                         },
                         offPercent: {
-                            name:'offPercent',
+                            name: 'offPercent',
                             fieldTitle: "--.promotion.offPercent",
                             numbersOnly: 'percent',
                             validationFct: function () {
@@ -197,7 +203,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'offPercent'
                         },
                         offPrice: {
-                            name:'offPrice',
+                            name: 'offPrice',
                             fieldTitle: "--.promotion.offPrice",
                             numbersOnly: 'double',
                             validationMessage: '--.promotion.validation.offPrice',
@@ -215,7 +221,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'offPrice'
                         },
                         interests: {
-                            name:'interests',
+                            name: 'interests',
                             fieldTitle: "--.promotion.interest",
                             details: '--.promotion.interest.help',
                             validationMessage: '--.error.validation.not_null',
@@ -259,7 +265,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     scope.$watch('getInfo().dto.offPrice', function (o, n) {
                         if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPrice && suspendWatch == false) {
                             suspendWatch = true;
-                            scope.getInfo().dto.offPercent = 1 -  (parseFloat(scope.getInfo().dto.offPrice) / parseFloat(scope.getInfo().dto.originalPrice));
+                            scope.getInfo().dto.offPercent = 1 - (parseFloat(scope.getInfo().dto.offPrice) / parseFloat(scope.getInfo().dto.originalPrice));
                             $timeout(function () {
                                 suspendWatch = false;
                             }, 1);
