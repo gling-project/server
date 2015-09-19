@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import play.Application;
-import play.GlobalSettings;
-import play.Logger;
-import play.Play;
+import play.*;
 import play.api.mvc.EssentialFilter;
 import play.i18n.Lang;
 import play.libs.F.Promise;
@@ -42,6 +39,8 @@ public class Global extends GlobalSettings {
 
     //services
     private TranslationService translationService = new TranslationServiceImpl();
+
+
 
     private static final String SSL_HEADER = "x-forwarded-proto";
 
@@ -142,22 +141,39 @@ public class Global extends GlobalSettings {
 
     @Override
     public Action onRequest(Http.Request request, Method actionMethod) {
-        // Analytics analytics = AnalyticsUtil.start(request);
-        Action action;
 
-        // ENFORCE HTTPS on production
-        if (Play.isProd() && !isHttpsRequest(request)) {
+        Configuration root = Configuration.root();
+
+        String appStatus = root.getString("app.status");
+
+        // Analytics analytics = AnalyticsUtil.start(request);
+        Action action = null;
+        if (appStatus!=null && appStatus.equals("COMING_SOON")) {
             action = new Action() {
                 @Override
                 public Promise<SimpleResult> call(Http.Context ctx) throws Throwable {
-                    return Promise.<SimpleResult>pure(Results.redirect("https://" + ctx.request().host() + ctx.request().uri()));
+                    Logger.info("host:" + ctx.request().host());
+                    Logger.info("host:" + ctx.request().toString());
+                    Logger.info("host:" + ctx.request().uri());
+                    return Promise.<SimpleResult>pure(Results.ok(be.lynk.server.views.html.comingSoon.render()));
                 }
             };
         } else {
-            action = super.onRequest(request, actionMethod);
+            // ENFORCE HTTPS on production
+            if (Play.isProd() && !isHttpsRequest(request)) {
+                action = new Action() {
+                    @Override
+                    public Promise<SimpleResult> call(Http.Context ctx) throws Throwable {
+                        return Promise.<SimpleResult>pure(Results.redirect("https://" + ctx.request().host() + ctx.request().uri()));
+                    }
+                };
+            }
         }
 
         //AnalyticsUtil.end(analytics);
+        if (action == null) {
+            return super.onRequest(request, actionMethod);
+        }
         return action;
     }
 

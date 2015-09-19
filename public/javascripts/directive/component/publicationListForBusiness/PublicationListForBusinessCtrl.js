@@ -20,8 +20,12 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
 
                     scope.success = function (data) {
 
-                        if(scope.currentPage==0){
+                        if (scope.currentPage == 0) {
                             scope.publications = [];
+                        }
+
+                        if(data.length == 0){
+                            scope.allLoaded=true;
                         }
 
                         scope.loadSemaphore = false;
@@ -32,12 +36,18 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                             scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
                         }
 
-                        $timeout(function () {
-                            if (scope.getInfo().scrollTo != null) {
-                                $('.main-body').scrollTop($("#publication" + scope.getInfo().scrollTo).offset().top);
+                        if (scope.getInfo().scrollTo != null) {
+
+                            //if the user looking for a publication, scroll to it
+                            $timeout(function () {
+                                var target = "#publication" + scope.getInfo().scrollTo;
+                                $(window).scrollTop($(target).offset().top - 70);
+
+                                //scrollTo null to scroll only one time
+                                scope.getInfo().scrollTo = null;
                                 scope.$apply();
-                            }
-                        }, 1);
+                            }, 1);
+                        }
                     };
 
 
@@ -62,6 +72,9 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                     };
 
                     scope.search = function () {
+                        if(scope.allLoaded == true){
+                            return;
+                        }
                         if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
                             searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
                         }

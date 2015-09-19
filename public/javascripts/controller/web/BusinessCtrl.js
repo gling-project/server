@@ -1,6 +1,7 @@
-myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,contactService,$filter) {
+myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,contactService,$filter,$location) {
 
     //back to the top of the page
+    //console.log($location.url());
     $(window).scrollTop(0);
 
 
@@ -131,16 +132,17 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
 
             //edit illustration
             $scope.editIllustration = function () {
+                var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
                     {
-                        dto: $scope.business,
+                        dto: business,
                         target: 'business_illustration',
                         fieldName: 'illustration',
                         details: '--.business.logo.edit.modal.description'
                     },
                     function (close, setLoading) {
-                        businessService.editIllustration($scope.business.illustration, function () {
-                            $scope.business.illustration.link = '/rest/file/' + $scope.business.illustration.id;
+                        businessService.editIllustration(business.illustration, function () {
+                            $scope.business.illustration = business.illustration;
                             close();
                         }, function () {
                             setLoading(false);
@@ -150,17 +152,17 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
 
             //edit landscape
             $scope.editLandscape = function () {
-                //$scope.business.landscape={}
+                var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
                     {
-                        dto: $scope.business,
+                        dto: business,
                         target: 'business_landscape',
                         fieldName: 'landscape',
                         details: '--.business.landscape.edit.modal.description'
                     },
                     function (close, setLoading) {
-                        businessService.editLandscape($scope.business.landscape, function () {
-                            $scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
+                        businessService.editLandscape(business.landscape, function () {
+                            $scope.business.landscape =business.landscape;
                             close();
                         }, function () {
                             setLoading(false);

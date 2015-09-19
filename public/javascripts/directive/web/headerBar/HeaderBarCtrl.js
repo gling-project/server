@@ -102,22 +102,23 @@ myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageS
                                         scope.createNewAddress();
                                     }
                                     else {
-                                        modalService.openLoginModal(scope.createNewAddress, o,'--.loginModal.help.address');
+                                        modalService.openLoginModal(scope.createNewAddress, o, '--.loginModal.help.address');
                                     }
                                 }
-                                else if (scope.currentPosition != scope.positionCurrenltyComputed) {
+                                if (scope.currentPosition != scope.positionCurrenltyComputed) {
                                     scope.positionCurrenltyComputed = scope.currentPosition;
                                     addressService.changeAddress(scope.currentPosition, function (result) {
 
-                                        if (result.__type.indexOf('AddressDTO') == -1) {
-                                            accountService.getMyself().selectedAddress = null;
-                                        }
-                                        else {
-                                            accountService.getMyself().selectedAddress = result;
+                                        if (accountService.getMyself() != null) {
+                                            if (result.__type.indexOf('AddressDTO') == -1) {
+                                                accountService.getMyself().selectedAddress = null;
+                                            }
+                                            else {
+                                                accountService.getMyself().selectedAddress = result;
+                                            }
                                         }
                                         $timeout(function () {
                                             $rootScope.$broadcast('POSITION_CHANGED');
-                                            console.log("POSITION_CHANGED");
                                         }, 1);
                                     });
                                 }
@@ -144,7 +145,7 @@ myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageS
                             }
                         }
                         scope.currentPosition = geolocationService.getLocationText();
-                        scope.positionCurrenltyComputed = scope.currentPosition;
+                        //scope.positionCurrenltyComputed = scope.currentPosition;
                     };
 
                     $rootScope.$watch(function () {

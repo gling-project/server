@@ -11,6 +11,7 @@
 
     <!-- publication -->
     <div ng-repeat="publication in publications"
+         id="publication{{publication.id}}"
          class="publication-box publication-bordered"
          ng-class="{'publication-followed':publication.following === true}"
          ng-click="click()">

@@ -1,4 +1,4 @@
-myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, businessService,ngTableParams,$filter,followService) {
+myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -15,8 +15,8 @@ myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, busin
 
             $scope.businesses = data;
 
-            $scope.$watch("filter.$", function (o,n) {
-                if(n!=o) {
+            $scope.$watch("filter.$", function (o, n) {
+                if (n != o) {
                     $scope.tableParams.reload();
                 }
             });
@@ -43,17 +43,26 @@ myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, busin
                 }
             });
 
-            $scope.setNotification = function(business){
-                followService.setNotification(business.id,business.followingNotification);
+            $scope.checkAll = function (check) {
+                for (var key  in $scope.businesses) {
+                    if ($scope.businesses[key].followingNotification != check) {
+                        $scope.businesses[key].followingNotification = check;
+                        $scope.setNotification($scope.businesses[key]);
+                    }
+                }
             };
 
-            $scope.stopFollow = function(business){
-                followService.addFollow(false,business.id,function(){
-                   for(var key  in $scope.businesses){
-                       if($scope.businesses[key] == business){
-                           $scope.businesses.splice(key,1);
-                       }
-                   }
+            $scope.setNotification = function (business) {
+                followService.setNotification(business.id, business.followingNotification);
+            };
+
+            $scope.stopFollow = function (business) {
+                followService.addFollow(false, business.id, function () {
+                    for (var key  in $scope.businesses) {
+                        if ($scope.businesses[key] == business) {
+                            $scope.businesses.splice(key, 1);
+                        }
+                    }
                     $scope.tableParams.reload();
                 });
             };

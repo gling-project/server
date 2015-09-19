@@ -1280,8 +1280,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.currentPage = 0;
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
-    $scope.displayEmptyHelpMessage = false;
-    $scope.displayEmptyHelpMessageWithInterest = false;
+    $scope.emptyMessage = null;
 
 
     //selection mode
@@ -1342,7 +1341,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         }
         $scope.currentPage = 0;
         $scope.allLoaded = false;
-        console.log('---- search after searchByInterest');
         $scope.search();
     };
 
@@ -1350,7 +1348,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.$on('POSITION_CHANGED', function () {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
-        console.log('---- search after POSITION_CHANGED');
         $scope.search();
     });
 
@@ -1360,13 +1357,11 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         if (o != n) {
             $scope.currentPage = 0;
             $scope.allLoaded = false;
-            console.log('---- search after followedMode');
             $scope.search();
         }
     });
 
     $scope.$on('LOGOUT', function () {
-        console.log('logout');
         if ($scope.followedMode) {
             $scope.followedMode = false;
         }
@@ -1429,8 +1424,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             //if this is the first page that asked, remove other publication
             if ($scope.currentPage == 0) {
                 $scope.publicationListCtrl.loading = true;
-                $scope.displayEmptyHelpMessage = false;
-                $scope.displayEmptyHelpMessageWithInterest = false;
+                $scope.emptyMessage = null;
                 $scope.publicationListCtrl.data = [];
                 $scope.businessListParam.data = [];
             }
@@ -1440,7 +1434,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
                     searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
                         success(data,
                             function () {
-                                $scope.displayEmptyHelpMessageWithInterest = true;
+                                $scope.emptyMessage = 'followedWithInterest';
                                 $scope.businessListParam.loading = true;
                                 searchService.nearBusinessByInterest(interestSelected.id, function (data) {
                                     successBusiness(data);
@@ -1453,7 +1447,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
                     searchService.byFollowed($scope.currentPage, function (data) {
                         success(data,
                             function () {
-                                $scope.displayEmptyHelpMessage = true;
+                                $scope.emptyMessage = 'followed';
                                 $scope.businessListParam.loading = true;
                                 searchService.nearBusiness(function (data) {
                                     successBusiness(data);
@@ -1465,13 +1459,27 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             else {
                 if (interestSelected != null) {
                     searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
-                        success(data);
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeedWithInterest';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
 
                 }
                 else {
                     searchService.default($scope.currentPage, function (data) {
-                        success(data);
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeed';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusiness(function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
                 }
             }
@@ -1479,7 +1487,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     };
 
     $scope.createNewAddress = function () {
-        console.log('CREATE NEW ADDRESS');
         if (accountService.getMyself() != null) {
             $scope.createNewAddressLaunch();
         }
@@ -1507,7 +1514,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     if (geolocationService.position != null) {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
-        console.log('---- search after INITIALIZE');
         $scope.search();
     }
 
@@ -1574,9 +1580,10 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,contactService,$filter) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', '$location', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,contactService,$filter,$location) {
 
     //back to the top of the page
+    //console.log($location.url());
     $(window).scrollTop(0);
 
 
@@ -1707,16 +1714,17 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
 
             //edit illustration
             $scope.editIllustration = function () {
+                var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
                     {
-                        dto: $scope.business,
+                        dto: business,
                         target: 'business_illustration',
                         fieldName: 'illustration',
                         details: '--.business.logo.edit.modal.description'
                     },
                     function (close, setLoading) {
-                        businessService.editIllustration($scope.business.illustration, function () {
-                            $scope.business.illustration.link = '/rest/file/' + $scope.business.illustration.id;
+                        businessService.editIllustration(business.illustration, function () {
+                            $scope.business.illustration = business.illustration;
                             close();
                         }, function () {
                             setLoading(false);
@@ -1726,17 +1734,17 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
 
             //edit landscape
             $scope.editLandscape = function () {
-                //$scope.business.landscape={}
+                var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
                     {
-                        dto: $scope.business,
+                        dto: business,
                         target: 'business_landscape',
                         fieldName: 'landscape',
                         details: '--.business.landscape.edit.modal.description'
                     },
                     function (close, setLoading) {
-                        businessService.editLandscape($scope.business.landscape, function () {
-                            $scope.business.landscape.link = "url('/file/" + $scope.business.landscape.id + "')";
+                        businessService.editLandscape(business.landscape, function () {
+                            $scope.business.landscape =business.landscape;
                             close();
                         }, function () {
                             setLoading(false);
@@ -2244,7 +2252,7 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
         $scope.search();
     });
 }]);
-myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', 'ngTableParams', '$filter', 'followService', function ($rootScope, $scope, businessService,ngTableParams,$filter,followService) {
+myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', 'ngTableParams', '$filter', 'followService', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -2261,8 +2269,8 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
             $scope.businesses = data;
 
-            $scope.$watch("filter.$", function (o,n) {
-                if(n!=o) {
+            $scope.$watch("filter.$", function (o, n) {
+                if (n != o) {
                     $scope.tableParams.reload();
                 }
             });
@@ -2289,17 +2297,26 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
                 }
             });
 
-            $scope.setNotification = function(business){
-                followService.setNotification(business.id,business.followingNotification);
+            $scope.checkAll = function (check) {
+                for (var key  in $scope.businesses) {
+                    if ($scope.businesses[key].followingNotification != check) {
+                        $scope.businesses[key].followingNotification = check;
+                        $scope.setNotification($scope.businesses[key]);
+                    }
+                }
             };
 
-            $scope.stopFollow = function(business){
-                followService.addFollow(false,business.id,function(){
-                   for(var key  in $scope.businesses){
-                       if($scope.businesses[key] == business){
-                           $scope.businesses.splice(key,1);
-                       }
-                   }
+            $scope.setNotification = function (business) {
+                followService.setNotification(business.id, business.followingNotification);
+            };
+
+            $scope.stopFollow = function (business) {
+                followService.addFollow(false, business.id, function () {
+                    for (var key  in $scope.businesses) {
+                        if ($scope.businesses[key] == business) {
+                            $scope.businesses.splice(key, 1);
+                        }
+                    }
                     $scope.tableParams.reload();
                 });
             };
@@ -2313,6 +2330,107 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
+myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
+
+    return {
+        restrict: "E",
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
+        templateUrl: "/assets/javascripts/directive/component/publicationList/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+                    directiveService.autoScopeImpl(scope);
+
+                    scope.click = function () {
+                        console.log(scope.publication);
+                    };
+
+                    scope.getInfo().loading = true;
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                    };
+
+                    scope.$watch("getInfo().data", function () {
+                        scope.publications = scope.getInfo().data;
+                        for (var i in scope.publications) {
+                            scope.publications[i].interval = (scope.publications[i].endDate - new Date());
+                        }
+                    });
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
+
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
+
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
+                }
+            }
+        }
+    }
+}]);
+myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
+
+    return {
+        restrict: "E",
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
+        templateUrl: "/assets/javascripts/directive/component/publicationWidget/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+                    directiveService.autoScopeImpl(scope);
+
+                    scope.click = function () {
+                        console.log(scope.publication);
+                    };
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                    };
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
+
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
+
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
+                }
+            }
+        }
+    }
+}]);
 myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService, modalService) {
 
     return {
@@ -2335,8 +2453,12 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
 
                     scope.success = function (data) {
 
-                        if(scope.currentPage==0){
+                        if (scope.currentPage == 0) {
                             scope.publications = [];
+                        }
+
+                        if(data.length == 0){
+                            scope.allLoaded=true;
                         }
 
                         scope.loadSemaphore = false;
@@ -2347,12 +2469,18 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                             scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
                         }
 
-                        $timeout(function () {
-                            if (scope.getInfo().scrollTo != null) {
-                                $('.main-body').scrollTop($("#publication" + scope.getInfo().scrollTo).offset().top);
+                        if (scope.getInfo().scrollTo != null) {
+
+                            //if the user looking for a publication, scroll to it
+                            $timeout(function () {
+                                var target = "#publication" + scope.getInfo().scrollTo;
+                                $(window).scrollTop($(target).offset().top - 70);
+
+                                //scrollTo null to scroll only one time
+                                scope.getInfo().scrollTo = null;
                                 scope.$apply();
-                            }
-                        }, 1);
+                            }, 1);
+                        }
                     };
 
 
@@ -2377,6 +2505,9 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                     };
 
                     scope.search = function () {
+                        if(scope.allLoaded == true){
+                            return;
+                        }
                         if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
                             searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
                         }
@@ -2580,22 +2711,23 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                                         scope.createNewAddress();
                                     }
                                     else {
-                                        modalService.openLoginModal(scope.createNewAddress, o,'--.loginModal.help.address');
+                                        modalService.openLoginModal(scope.createNewAddress, o, '--.loginModal.help.address');
                                     }
                                 }
-                                else if (scope.currentPosition != scope.positionCurrenltyComputed) {
+                                if (scope.currentPosition != scope.positionCurrenltyComputed) {
                                     scope.positionCurrenltyComputed = scope.currentPosition;
                                     addressService.changeAddress(scope.currentPosition, function (result) {
 
-                                        if (result.__type.indexOf('AddressDTO') == -1) {
-                                            accountService.getMyself().selectedAddress = null;
-                                        }
-                                        else {
-                                            accountService.getMyself().selectedAddress = result;
+                                        if (accountService.getMyself() != null) {
+                                            if (result.__type.indexOf('AddressDTO') == -1) {
+                                                accountService.getMyself().selectedAddress = null;
+                                            }
+                                            else {
+                                                accountService.getMyself().selectedAddress = result;
+                                            }
                                         }
                                         $timeout(function () {
                                             $rootScope.$broadcast('POSITION_CHANGED');
-                                            console.log("POSITION_CHANGED");
                                         }, 1);
                                     });
                                 }
@@ -2622,7 +2754,7 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                             }
                         }
                         scope.currentPosition = geolocationService.getLocationText();
-                        scope.positionCurrenltyComputed = scope.currentPosition;
+                        //scope.positionCurrenltyComputed = scope.currentPosition;
                     };
 
                     $rootScope.$watch(function () {

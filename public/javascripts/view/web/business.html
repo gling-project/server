@@ -222,22 +222,25 @@
                 <div class="business-page-description">
 
                     <!-- categoru -->
-                    <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
-
-                    <button ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                            id="business-btn-category-edit"
-                            class="btn btn-primary btn-xs glyphicon glyphicon-edit"
-                            ng-click="editCategory()">{{'--.generic.edit' | translateText}}
-                    </button>
+                    <div>
+                        <div style="display: inline-block">
+                            <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
+                        </div>
+                        <button ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                                id="business-btn-category-edit"
+                                class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                ng-click="editCategory()">
+                        </button>
+                    </div>
 
                     <!-- description -->
-                <span>
-                    {{business.description}}
-                </span>
+                    <span>
+                        {{business.description}}
+                    </span>
+                    <br/>
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="edit"
                             ng-click="editbusiness()">
-                        {{'--.business.page.edit.business' | translateText}}
                     </button>
                 </div>
             </div>

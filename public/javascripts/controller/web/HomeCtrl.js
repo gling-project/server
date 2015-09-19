@@ -36,8 +36,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.currentPage = 0;
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
-    $scope.displayEmptyHelpMessage = false;
-    $scope.displayEmptyHelpMessageWithInterest = false;
+    $scope.emptyMessage = null;
 
 
     //selection mode
@@ -98,7 +97,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         }
         $scope.currentPage = 0;
         $scope.allLoaded = false;
-        console.log('---- search after searchByInterest');
         $scope.search();
     };
 
@@ -106,7 +104,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.$on('POSITION_CHANGED', function () {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
-        console.log('---- search after POSITION_CHANGED');
         $scope.search();
     });
 
@@ -116,13 +113,11 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         if (o != n) {
             $scope.currentPage = 0;
             $scope.allLoaded = false;
-            console.log('---- search after followedMode');
             $scope.search();
         }
     });
 
     $scope.$on('LOGOUT', function () {
-        console.log('logout');
         if ($scope.followedMode) {
             $scope.followedMode = false;
         }
@@ -185,8 +180,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             //if this is the first page that asked, remove other publication
             if ($scope.currentPage == 0) {
                 $scope.publicationListCtrl.loading = true;
-                $scope.displayEmptyHelpMessage = false;
-                $scope.displayEmptyHelpMessageWithInterest = false;
+                $scope.emptyMessage = null;
                 $scope.publicationListCtrl.data = [];
                 $scope.businessListParam.data = [];
             }
@@ -196,7 +190,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
                     searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
                         success(data,
                             function () {
-                                $scope.displayEmptyHelpMessageWithInterest = true;
+                                $scope.emptyMessage = 'followedWithInterest';
                                 $scope.businessListParam.loading = true;
                                 searchService.nearBusinessByInterest(interestSelected.id, function (data) {
                                     successBusiness(data);
@@ -209,7 +203,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
                     searchService.byFollowed($scope.currentPage, function (data) {
                         success(data,
                             function () {
-                                $scope.displayEmptyHelpMessage = true;
+                                $scope.emptyMessage = 'followed';
                                 $scope.businessListParam.loading = true;
                                 searchService.nearBusiness(function (data) {
                                     successBusiness(data);
@@ -221,13 +215,27 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             else {
                 if (interestSelected != null) {
                     searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
-                        success(data);
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeedWithInterest';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
 
                 }
                 else {
                     searchService.default($scope.currentPage, function (data) {
-                        success(data);
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeed';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusiness(function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
                 }
             }
@@ -235,7 +243,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     };
 
     $scope.createNewAddress = function () {
-        console.log('CREATE NEW ADDRESS');
         if (accountService.getMyself() != null) {
             $scope.createNewAddressLaunch();
         }
@@ -263,7 +270,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     if (geolocationService.position != null) {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
-        console.log('---- search after INITIALIZE');
         $scope.search();
     }
 

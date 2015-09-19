@@ -124,7 +124,6 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js',
                         'public/javascripts/directive/form/contact/ContactFormCtrl.js',
                         <!-- component -->
-                        'public/javascripts/directive/component/publicationList/PublicationListCtrl.js',
                         'public/javascripts/directive/component/schedule/ScheduleCtrl.js',
                         'public/javascripts/directive/component/gallery/GalleryCtrl.js',
                         'public/javascripts/directive/component/googleMapWidget/GoogleMapWidgetCtrl.js',
@@ -206,6 +205,8 @@ module.exports = function (grunt) {
                         'public/javascripts/controller/web/FollowedBusinessPageCtrl.js',
 
                         <!-- component -->
+                        'public/javascripts/directive/component/publicationList/PublicationListCtrl.js',
+                        'public/javascripts/directive/component/publicationWidget/PublicationWidgetCtrl.js',
                         'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
                         'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
                         'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',

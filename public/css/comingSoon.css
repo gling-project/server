@@ -1,6 +1,6 @@
 @font-face {
     font-family: brandon;
-    src: url(Brandon_bld.ttf);
+    src: url('/assets/fonts/Brandon_bld.ttf');
     font-weight: bold;
 }
 
@@ -12,7 +12,7 @@ body {
 }
 
 .content {
-    background-image: url('img/coming_soon_back.png');
+    background-image: url('/assets/images/comingSoon/coming_soon_back.png');
     width: 1200px;
     height: 1000px;
     margin: auto;

@@ -460,8 +460,10 @@ day_abrv_sunday=Di
 --.home.interest.help=Triez selon vos envies.
 --.home.localisation.help=Triez selon votre position.
 --.home.followning.help=Triez selon vos commerces favoris
---.home.emptyResult.help=Aucune publication provenant de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
---.home.emptyResultWithInterest.help=Aucune publication de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.emptyResult.followed=Aucun de vos commerces favoris ne semblent avoir de publication. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.emptyResult.followedWithInterest=Aucune publication de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.emptyResult.newsFeed=Aucun commerce ne semble avoir de publication. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.emptyResult.newsFeedWithInterest=Aucune publication ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
 
 
 
@@ -519,3 +521,5 @@ day_abrv_sunday=Di
 --.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
 --.business.page.management.help.title=Un petit coup de pouce ?
 --.business.page.management.contact.btn=Contactez-nous!
+--.followed-business.checkAll=Sélectionner tout
+--.followed-business.uncheckAll=Déselectionner tout

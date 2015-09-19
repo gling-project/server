@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-    String accessKey  = Configuration.root().getString("app.status");
     String AWSBuckect = Configuration.root().getString("aws.s3.bucket");
     String fileBucketUrl = "https://s3.amazonaws.com/"+AWSBuckect;
     String urlBase = Configuration.root().getString("site.url.base");
@@ -37,6 +36,10 @@ public class MainController extends AbstractController {
     private PublicationService  publicationService;
     @Autowired
     private LocalizationService localizationService;
+
+    public Result comingSoon() {
+        return ok(be.lynk.server.views.html.comingSoon.render());
+    }
 
     public Result help(String url) {
         return ok(be.lynk.server.views.html.help.render());

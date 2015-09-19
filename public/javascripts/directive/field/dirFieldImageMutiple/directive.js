@@ -75,7 +75,9 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
 
                             var url = "/rest/file/"+scope.getInfo().target;
 
-                            scope.images.push(imgContainer);
+                            if(scope.unique!==true) {
+                                scope.images.push(imgContainer);
+                            }
                             scope.upload = $upload.upload({
                                 url: url,
                                 data: {

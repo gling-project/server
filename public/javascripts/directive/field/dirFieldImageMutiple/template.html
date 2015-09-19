@@ -32,7 +32,8 @@
                     <textarea ng-model="imageContainer.image.comment"></textarea>
 
                 </div>
-                <div class="add-image-button image-block">
+                <div class="add-image-button image-block"
+                        ng-hide="unique===true && images.length>0">
                     <input name="{{ id }}"
                            type="file"
                            ng-file-select="onFileSelect($files)"

@@ -79,12 +79,8 @@
                            ng-hide="displayEmptyHelpMessage===true || displayEmptyHelpMessageWithInterest===true"></publication-list-ctrl>
 
     <!-- empty result help -->
-    <div class="help-big" ng-show="displayEmptyHelpMessage===true">
-        {{'--.home.emptyResult.help' | translateText}}
-    </div>
-
-    <div class="help-big" ng-show="displayEmptyHelpMessageWithInterest===true">
-        {{'--.home.emptyResultWithInterest.help' | translateText}}
+    <div class="help-big" ng-show="emptyMessage!==null">
+        {{'--.home.emptyResult.'+emptyMessage | translateText}}
     </div>
 
 

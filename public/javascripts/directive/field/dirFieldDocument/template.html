@@ -9,18 +9,20 @@
         </label>
 
         <div ng-class="getInfo().fullSize==true?'col-md-12':'col-md-6'">
-            <div ng-class="{'input-group':!!getInfo().money}" style="text-align: center">
-                <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="document-question-progress-bar">
-                    <div ng-style="style">
-                        <spa></spa>
+            <div style="text-align: center">
+
+                <div>
+                    <div ng-show="inDownload=== true &amp;&amp; percent != 100" class="document-question-progress-bar">
+                        <div ng-style="style">
+                            <spa></spa>
+                        </div>
                     </div>
-                </div>
-                <div ng-show="inDownload=== true && percent != 100" class="document-question-progress-percentage">
-                    {{percent}} %
-                </div>
-                <div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |
-                    translateText}}
-                </div>
+                    <div ng-show="inDownload=== true && percent != 100" class="document-question-progress-percentage">
+                        {{percent}} %
+                    </div>
+                    <div ng-show="inDownload=== true && percent == 100">{{'--.field.document.inTreatment' |
+                        translateText}}
+                    </div>
                 <span class="btn btn-default btn-file field-document-btn"
                       ng-hide="inDownload === true || getInfo().disabled()">
                     {{((getInfo().field[getInfo().fieldName]!=null)?'--.download.button.update':'--.download.button.new') | translateText}}
@@ -30,22 +32,11 @@
                             />
                 </span>
 
-                <div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}
+                    <div ng-show="success && getInfo().disabled()!=true">{{'--.field.document.success' | translateText}}
+                    </div>
                 </div>
-                <button
-                        type="button"
-                        ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage!=true"
-                        class="button">
-                    {{'--.field.document.download' | translateText}} {{getInfo().field[getInfo().fieldName].name}}
-                </button>
 
-                <!--<img ng-show="getInfo().field[getInfo().fieldName]!=null && getInfo().field[getInfo().fieldName].isImage==true"-->
-                <!--style="border:1px solid #999999"-->
-                <!--ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>-->
-
-                <img ng-show="getInfo().field[getInfo().fieldName]!=null &&
-                getInfo().field[getInfo().fieldName].isImage==true &&
-                getInfo().field[getInfo().fieldName].storedName!=null"
+                <img ng-show="  getInfo().field[getInfo().fieldName]!=null"
                      ng-style="{width:getInfo().posx,height:getInfo().posy}"
                      style="border:1px solid #999999;max-width: 850px;"
                      ng-src="{{getInfo().field[getInfo().fieldName] | image}}"/>

@@ -1,21 +1,20 @@
-- recharger les publications après connection
-- plus de scroll quand je recheche une publication
-- bug DL illustration dans mon commerce
-- truc facebook ne permet pas de publier en tant que page
--  généraliser les boutons
-- 'promo jusqu'au' => expire dans X jours / X heure /X minutes + virer le picto => expire dans en bleu, x jour en vert
-- ajouter des popup avec les heures sur les horaires quand on survole
-- Ajouter les icônes des intérêts sur "Mes intérêts"
-- Quid d'une limite de publications? Deux par jour? OK? (exemple pour un resto : son plat du jour + la possibilité de publier autre chose)
--mettre un lien pour retourner sur la page 'welcome'
-- proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
+ok- recharger les publications après connection
+ok- plus de scroll quand je recheche une publication
+ok- bug DL illustration dans mon commerce
+ok- truc facebook ne permet pas de publier en tant que page
+- généraliser les boutons
+??- 'promo jusqu'au' => expire dans X jours / X heure /X minutes + virer le picto => expire dans en bleu, x jour en vert
+??- ajouter des popup avec les heures sur les horaires quand on survole
+ok- Ajouter les icônes des intérêts sur "Mes intérêts"
+- mettre un lien pour retourner sur la page 'welcome'
+ok- proposer des commerces lorsqu'il n'y a pas de résultat coté localisation
 - changer la couleur du texte info-bulle sur le logoo
 - ajouter des fléches sur les select du haut sur FF
 - désectionner les intérêts lorsqu'on clique sur gling
-- email bienvenue
--nb max / durée max / photo max
+??- email bienvenue
+- nb max / durée max / photo max
 - ajouter acceptation SLA lors de l'enregistrement
-- mes commerces : checher / unchecher ts les commerces d'un coup
+ok- mes commerces : checher / unchecher ts les commerces d'un coup
 - prévisualisation des publications
 ok- enlever (temporairement) les langues
 ok- 'ou' entre connection et enregistration pas centré.
@@ -54,3 +53,7 @@ ok- publication : les titre trop long descendent à cause de l'icone d'intérêt
 ok- ajouter une ligne en bas pour réseaux sociaux, condition générale, mention légal, contact, etc...
 ok- Ajouter un footer avec Mentions légales, Copyright, Facebook, Signaler un problème.
 Plus tard- Possible que les commerces aient un hyperlien reconnaissable? www.gling.be.be/lasoeurdupatron ? (avec modification manuelle si adresse est déjà prise)
+
+
+DEPLOYEMENT !!!
+- facebook dev : change l'url de gling-prod.herokuapp.com à gling.be

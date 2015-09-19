@@ -1,0 +1,134 @@
+
+<div class="publication-box publication-bordered"
+     ng-class="{'publication-followed':getInfo().publication.following === true}"
+     ng-click="click()">
+
+    <!-- badge -->
+    <div class="publication-badge"
+         ng-show="getInfo().publication.type === 'PROMOTION'">
+        - {{getInfo().publication.offPercent * 100 | number:0}}%
+    </div>
+
+    <!-- header -->
+    <table class="publication-header">
+        <tr>
+            <td rowspan="2">
+
+                <!-- illustration -->
+                <div class="publication-business-illustration publication-bordered publication-bordered-hover">
+                    <img ng-click="navigateTo('/business/'+getInfo().publication.businessId)"
+                         ng-src="{{getInfo().publication.businessIllustration | image}}"/>
+                </div>
+            </td>
+            <td class="publication-header-business">
+
+                <!-- business name -->
+                <div ng-click="navigateTo('/business/'+getInfo().publication.businessId)"
+                     class="publication-bordered-bottom-hover publication-bordered-bottom">
+                    <span class="publication-main-title">
+                        <i ng-show="getInfo().publication.following === true"
+                           class="gling-icon-bell">
+                        </i>
+                        {{getInfo().publication.businessName}}
+                    </span>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="publication-header-title">
+
+                <!-- publication title -->
+                <div class="publication-header-title-top">
+
+                    <!-- interest -->
+                    <i ng-show="getInterestClass(getInfo().publication)!=null"
+                       class="publication-interest {{getInterestClass(getInfo().publication)}} publication-color-background">
+                    </i>
+
+                    {{getInfo().publication.title}}
+                </div>
+
+                <!-- distance -->
+                <div class="publication-bubble publication-bordered">
+                    <i class="glyphicon gling-icon-earth"></i> {{getInfo().publication.distance / 1000 | number:2}} km
+                </div>
+
+                <!-- price -->
+                <div class="publication-bubble publication-box-price  publication-bordered"
+                     ng-show="getInfo().publication.type=='PROMOTION' && getInfo().publication.originalPrice!=null">
+                    <span>{{(getInfo().publication.originalPrice * (1.0 - getInfo().publication.offPercent)) | number:2}} €</span>
+                    <span>{{getInfo().publication.originalPrice | number:2}} €</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="publication-body">
+        <div class="publication-data publication-bordered"
+             ng-class="{'publication-body-two':getInfo().publication.pictures.length>0}"
+             ng-hide="descriptionIsEmpty(getInfo().publication) === true">
+
+            <div ng-show="getInfo().publication.type === 'PROMOTION'"
+                 ng-class="{'publication-bordered-bottom' : getInfo().publication.description !=null && getInfo().publication.description.length > 0}"
+                 class="publication-data-header">
+                <div class="glyphicon gling-icon-calendar"></div>
+
+                <span>
+                    <div>{{'--.publication.promotionTo' | translateText}}</div>
+                    <div>
+                        {{getInfo().publication.endDate | date:'dd MMM yyyy hh:mm'}}
+                    </div>
+                </span>
+            </div>
+            <div class="publication-data-body"
+                 ng-show="getInfo().publication.description !=null && getInfo().publication.description.length > 0">
+                {{getInfo().publication.description}}
+            </div>
+
+        </div>
+
+        <!-- gallery -->
+        <!-- picture 1 -->
+        <div class="publication-gallery publication-bordered  publication-bordered-hover"
+             ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}"
+             ng-show="getInfo().publication.pictures.length > 0 "
+             ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)">
+
+            <img ng-src="{{getInfo().publication.pictures[0] | image}}"
+                 class="publication-illustration">
+
+            <div ng-show="getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) !== true"
+                 class="publication-illustration-plus-icon">
+                <span>+{{getInfo().publication.pictures.length - 1}}</span>
+            </div>
+        </div>
+
+        <!-- picture 2 -->
+        <div class="publication-gallery publication-bordered  publication-bordered-hover publication-body-two publication-body-two-right"
+             ng-show="getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) === true"
+             ng-click="openGallery(getInfo().publication.pictures[1],getInfo().publication)">
+
+            <img ng-src="{{getInfo().publication.pictures[1] | image}}"
+                 class="publication-illustration">
+
+            <div
+                    class="publication-illustration-plus-icon">
+                <span>+{{getInfo().publication.pictures.length - 2}}</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="publication-footer">
+
+
+        <div class="publication-footer-date publication-bordered-bottom">
+            {{'--.publication.publishTo' | translateText}} {{getInfo().publication.startDate | date:'dd MMM yyyy hh:mm'}}
+        </div>
+
+        <div class="publication-footer-facebook">
+            <facebook-share-publication-ctrl ng-info="{publication:getInfo().publication}"></facebook-share-publication-ctrl>
+        </div>
+
+    </div>
+</div>

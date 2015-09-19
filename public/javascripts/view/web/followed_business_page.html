@@ -7,6 +7,10 @@
         <input class="form-control" type="text" ng-model="filter.$"/>
     </div>
 
+    <div style="float: right">
+        <a href="#" ng-click="checkAll(true)">{{'--.followed-business.checkAll' | translateText}}</a> / <a href="#" ng-click="checkAll(false)">{{'--.followed-business.uncheckAll' | translateText}}</a>
+    </div>
+
     <table ng-table="tableParams" class="table">
         <tr ng-repeat="business in $data">
             <td data-title="'--.followedBusiness.table.business' | translateText" sortable="'name'">
