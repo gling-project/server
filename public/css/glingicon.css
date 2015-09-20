@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'glingicon';
-	src:url('fonts/glingicon.eot?-2hz9ma');
-	src:url('fonts/glingicon.eot?#iefix-2hz9ma') format('embedded-opentype'),
-		url('fonts/glingicon.ttf?-2hz9ma') format('truetype'),
-		url('fonts/glingicon.woff?-2hz9ma') format('woff'),
-		url('fonts/glingicon.svg?-2hz9ma#glingicon') format('svg');
+	src:url('fonts/glingicon.eot?hefktk');
+	src:url('fonts/glingicon.eot?#iefixhefktk') format('embedded-opentype'),
+		url('fonts/glingicon.ttf?hefktk') format('truetype'),
+		url('fonts/glingicon.woff?hefktk') format('woff'),
+		url('fonts/glingicon.svg?hefktk#glingicon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,6 +23,36 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.gling-icon-fidelisation:before {
+	content: "\e62a";
+}
+.gling-icon-geolocalisation:before {
+	content: "\e62b";
+}
+.gling-icon-nouveau-client .path1:before {
+	content: "\e62c";
+	color: rgb(0, 0, 0);
+}
+.gling-icon-nouveau-client .path2:before {
+	content: "\e62d";
+	margin-left: -1em;
+	color: rgb(0, 0, 0);
+}
+.gling-icon-nouveau-client .path3:before {
+	content: "\e62e";
+	margin-left: -1em;
+	color: rgb(0, 0, 0);
+}
+.gling-icon-nouveau-client .path4:before {
+	content: "\e62f";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+.gling-icon-nouveau-client .path5:before {
+	content: "\e630";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
 .gling-icon-home:before {
 	content: "\e627";
 }
