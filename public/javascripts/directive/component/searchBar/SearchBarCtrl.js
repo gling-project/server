@@ -1,4 +1,4 @@
-myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, searchService,searchBarService,$timeout,$location) {
+myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocationService, directiveService,  searchService,searchBarService,$timeout,$location) {
 
     return {
         restrict: "E",
@@ -34,12 +34,19 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
 
                         if (searchBarService.displaySearchResult && o != n && searchBarService.currentSearch != "" && searchBarService.currentSearch.length >= 2) {
                             var searchS = angular.copy(searchBarService.currentSearch);
+
+                            scope.searchResultParam.waitingBeforeStartSearch=true;
+
                             $timeout(function () {
-                                if (searchS == searchBarService.currentSearch) {
+                                if (scope.searchResultParam.waitingBeforeStartSearch && searchS == searchBarService.currentSearch) {
+
+
 
                                     if ((searchBarService.currentSearch.indexOf(":") != -1 && searchBarService.currentSearch.split(":")[1].length > 0) ||
                                         (searchBarService.currentSearch.indexOf(":") == -1 && searchBarService.currentSearch.length > 0)) {
-                                        searchService.searchByStringLittle(searchBarService.currentSearch, function (result) {
+
+
+                                        scope.searchResultParam.promise = searchService.searchByStringLittle(searchBarService.currentSearch, function (result) {
                                             scope.searchResultParam.result = result;
                                             scope.searchResultParam.display = true;
                                         });
@@ -51,6 +58,7 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
 
 
                     scope.search = function () {
+                        scope.searchResultParam.waitingBeforeStartSearch = false;
                         scope.navigateTo('search/' + searchBarService.currentSearch);
                     };
 

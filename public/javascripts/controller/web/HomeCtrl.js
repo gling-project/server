@@ -1,5 +1,7 @@
 myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
 
+
+
     //back to the top of the page
     $(window).scrollTop(0);
 

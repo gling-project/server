@@ -10,7 +10,6 @@ body {
     padding-bottom: 70px;
 }
 
-
 @font-face {
     font-family: myFont;
     src: url('/assets/fonts/Brandon_bld.ttf');
@@ -40,7 +39,7 @@ body {
         text-shadow: 2px 2px black;
         color: white;
     }
-    .gling-button{
+    .gling-button {
         display: inline-block;
         margin-top: 20px;
         font-size: 24px;
@@ -51,28 +50,26 @@ body {
     height: 70px;
     vertical-align: middle;
     text-align: center;
-//    background-color: @color-blue-dark;
+    //    background-color: @color-blue-dark;
     & > * {
         display: inline-block;
         margin-top: 15px !important;
     }
 }
 
-.text-block-customer{
+.text-block-customer {
     border-bottom: 3px solid @color-blue-dark;
 }
 
-.text-block{
+.text-block {
     margin: 0 50px;
     padding: 50px 0;
 
-
-
-    .text-block-title{
+    .text-block-title {
         font-size: 22px;
     }
 
-    .icon{
+    .icon {
         background-color: @color-blue-dark;
         padding: 15px;
         font-size: 40px;
@@ -81,16 +78,15 @@ body {
         color: white;
     }
 
-    .center{
+    .center {
         text-align: center;
     }
 
-    .action{
+    .action {
         text-align: center;
         margin-top: 50px;
     }
 }
-
 
 .gling-button {
     background-color: @color-green-light;
@@ -114,6 +110,28 @@ body {
         background-color: @color-blue-dark;
         &:hover:enabled {
             background-color: @color-blue-dark;
+        }
+    }
+}
+
+h3{
+    text-transform: uppercase;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.presentation-block {
+    text-align: center;
+    & > div {
+        display: inline-block;
+        width: 33%;
+        padding: 10px;
+        vertical-align: top;
+        & > h4{
+            text-transform: uppercase;
+        }
+        & > span{
+            font-size: 60px;
         }
     }
 }

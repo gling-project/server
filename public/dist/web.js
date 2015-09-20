@@ -133,12 +133,12 @@ var test = function (accountService) {
 
 var initializeCommonRoutes = function () {
     myApp
-        .config(['$routeProvider', '$locationProvider', function ($routeProvider,$locationProvider) {
+        .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
             $routeProvider.when('/', {
                 templateUrl: '/assets/javascripts/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
-                    a: ['accountService', '$rootScope', function (accountService,$rootScope) {
+                    a: ['accountService', '$rootScope', function (accountService, $rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         var status = test(accountService);
                     }]
@@ -147,14 +147,14 @@ var initializeCommonRoutes = function () {
                 templateUrl: '/assets/javascripts/view/web/profile.html',
                 controller: 'ProfileCtrl',
                 resolve: {
-                    a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                    a: ['accountService', '$location', '$rootScope', function (accountService, $location, $rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         if (test(accountService) == 'NOT_CONNECTED') {
                             $location.path('/');
                         }
                     }]
                 }
-            }).when('/search/:param', {
+            }).when('/search/:param?', {
                 templateUrl: '/assets/javascripts/view/web/search_page.html',
                 controller: 'SearchPageCtrl',
                 resolve: {
@@ -184,6 +184,24 @@ var initializeCommonRoutes = function () {
                 resolve: {
                     a: ['$rootScope', function ($rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
+            }).when('/welcome/', {
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        window.location.replace('/welcome/');
+                    }]
+                }
+            }).when('/legal/', {
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        window.location.replace('/legal/');
+                    }]
+                }
+            }).when('/help/', {
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        window.location.replace('/help/');
                     }]
                 }
             }).otherwise({
@@ -1269,6 +1287,8 @@ myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'titl
 
 }]);
 myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
+
+
 
     //back to the top of the page
     $(window).scrollTop(0);

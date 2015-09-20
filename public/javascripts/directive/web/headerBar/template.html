@@ -85,18 +85,7 @@
                                     {{'--.welcome.myProfile' | translateText}}
                                 </a>
                             </li>
-                            <li role="presentation" id="welcome-btn-my-businesses">
-                                <a role="menuitem" tabindex="-1" href="" ng-click="navigateTo('/my-businesses')">
-                                    {{'--.welcome.myBusinesses' | translateText}}
-                                </a>
-                            </li>
-                            <li ng-show="accountService.getMyself().type == 'BUSINESS'" role="presentation"
-                                id="welcome-btn-business">
-                                <a role="menuitem" tabindex="-1" href=""
-                                   ng-click="navigateTo('/business/'+accountService.getMyself().businessId)">
-                                    {{'--.welcome.myBusiness' | translateText}}
-                                </a>
-                            </li>
+
                             <li role="presentation">
                                 <a role="menuitem" tabindex="-1" href="" ng-click="logout()" id="welcome-btn-logout">
                                     {{'--.generic.logout' | translateText}}
@@ -110,6 +99,21 @@
                 </div>
             </div>
 
+        </div>
+        <!-- navigation bar -->
+        <div class="navigation-bar-menu">
+
+            <a href="/">Accueil</a>
+
+            <a ng-show="accountService.getMyself()!=null"
+               href="/my-businesses">
+                {{'--.welcome.myBusinesses' | translateText}}
+            </a>
+            <a ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'"
+               href="/business/{{accountService.getMyself().businessId}}">
+                {{'--.welcome.myBusiness' | translateText}}
+            </a>
+            <a style="float: right" href="/welcome/">A propos de Gling</a>
         </div>
     </div>
 </div>

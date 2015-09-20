@@ -174,7 +174,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                     };
 
                     scope.openSla = function(){
-                      modalService.openSla('--.sla.modal.title','/legal/sla/');
+                      modalService.openSla('--.sla.modal.title','/legal/');
                     };
 
                     //

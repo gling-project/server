@@ -65,7 +65,9 @@
 --.generic.gallery=Galerie
 --.generic.instagram=Instagram
 --.generic.top=Haut
-	
+--.generic.search=Recherche
+
+
 ##  modal/RegistrationModal/RegistrationModal.js	
 --.registration.form.keepSessionOpen=Garder ma session ouverte.
 --.registration.form.repeatPassword=Répétez le mot de passe.
@@ -232,7 +234,7 @@
 	
 ##  modal/EditCustomerInterestModal/view.html	
 --.customer.editInterestModal.title=Modifier mes intérêts
-######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
+--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
 	
 	
 ##  directive/form/login/template.html	
@@ -453,8 +455,8 @@ day_abrv_sunday=Di
 	
 #--.gallery.title=Galerie
 --.publication.description=Description (optionnelle)
-#--.followed-business.checkAll=followed-business.checkAll
-#--.followed-business.uncheckAll=followed-business.uncheckAll
+--.followed-business.checkAll=Tout sélectionner
+--.followed-business.uncheckAll=Déselectionner
 
 
 #--.loginModal.fctToExecute.help=Vous devez vous enregistrez pour continuer
@@ -534,6 +536,7 @@ day_abrv_sunday=Di
 --.registration.form.acceptSla=J'accepte les termes et conditions
 --.sla.modal.title=Termes et conditions
 --.registration.form.acceptSla.error=Vous devez accepter les termes et conditions pour vous inscrire
+--.accountForm.seeSLA=Voir les Termes et Conditions
 
 ##  directive/form/contact/ContactFormCtrl.js (//)
 --.contactForm.message=Message

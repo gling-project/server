@@ -41,10 +41,6 @@ public class MainController extends AbstractController {
         return ok(be.lynk.server.views.html.comingSoon.render());
     }
 
-    public Result help(String url) {
-        return ok(be.lynk.server.views.html.help.render());
-    }
-
     public Result legal2() {
         return legal(null);
     }

@@ -186,7 +186,9 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByBusinessesAndInterest(position, MAX_DISTANCE, businesses, interest);
 
-        return selectByPageAndAlgorithme(t, page, publications, position);
+        Result result = selectByPageAndAlgorithme(t, page, publications, position);
+
+        return result;
     }
 
     private Result selectByPageAndStartDate(Integer page, List<SearchResult> searchResults) {
@@ -250,7 +252,7 @@ public class SearchRestController extends AbstractRestController {
             return ok(new ListDTO<>());
         }
         if (searchResults.size() < max) {
-            max = searchResults.size() - 1;
+            max = searchResults.size();
         }
         List<SearchResult> finalResult = searchResults.subList(min, max);
 

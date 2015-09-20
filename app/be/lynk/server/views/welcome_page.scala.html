@@ -10,7 +10,6 @@
         <meta charset="utf-8"/>
         <base href="/">
             <!-- main -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/bootstrap/dist/css/bootstrap.min.css")">
             <!-- 19 ko -->
@@ -41,12 +40,27 @@
 
             <div class="text-block text-block-customer">
                 <div class="center">
-                    <div class="gling-icon-people icon"></div>
+                    @*<div class="gling-icon-people icon"></div>*@
+                    <h3 class="text-block-title">Vous aimez vos commerces ?</h3>
                 </div>
-                <span class="text-block-title">Vous aimez vos commerces ?</span><br/> <br/>
-                Bienvenue dans votre nouveau réseau exclusivement consacré à vos commerces de proximité favoris !<br/>
-                Restaurants, boutiques de vêtements, théâtres, magasins de décoration,… Gling rassemble tous les types d’établissements et vous permet d’avoir instantanément accès à leurs nouveautés, promotions, événements et autres actualités pertinentes les concernant.<br/>
-                Centrez vos recherches selon vos envies du moment, localisez-vous à la maison ou au travail et découvrez en quelques clics des informations exclusives !
+
+                <div class="presentation-block">
+                    <div>
+                        <span class="gling-icon-shop"></span>
+                        <h4>VOTRE RESEAU</h4>
+                        <p>Restaurants, boutiques de vêtements, théâtres, magasins de décoration,… Gling rassemble tous les types d’établissements.</p>
+                    </div>
+                    <div>
+                        <span class="gling-icon-location"></span>
+                        <h4>PRES DE CHEZ VOUS</h4>
+                        <p>Localisez-vous à la maison, au travail  ou ailleurs et découvrez ce qu’il se passent dans vos commerces de proximité.</p>
+                    </div>
+                    <div>
+                        <span class="gling-icon-heart"></span>
+                        <h4>VOS ENVIES</h4>
+                        <p>Vous avez envie de manger, voyager, décorer, prendre soin de vous? <br/>Triez les publications selon vos envies.</p>
+                    </div>
+                </div>
                 <div class="action">
                     <a class="gling-button" href="/customerRegistration">
                         Enregistrez-vous
@@ -54,21 +68,35 @@
                 </div>
             </div>
 
-            <div class="text-block">
+            <div class="text-block text-block-customer">
                 <div class="center">
-                    <div class="gling-icon-shop icon"></div>
+                    @*<div class="gling-icon-shop icon"></div>*@
+                    <h3 class="text-block-title">Vous êtes un commerce ?</h3>
                 </div>
-                <span class="text-block-title">Vous êtes un commerce ?</span><br/> <br/>
-                Bienvenue dans votre nouveau réseau exclusivement consacré à la communication vers vos clients !<br/>
-                Créez en quelques clics votre profil de commerce et sélectionnez les types d’informations que vous souhaitez publier. Gardez un contact immédiat et instantané en permettant à vos clients de vous suivre au quotidien où qu’ils soient. Renforcez le lien de fidélité avec vos clients existants et faites découvrir votre commerce à leurs amis !<br/>
-                <div class="action">
 
+                <div class="presentation-block">
+                    <div>
+                        <span class="gling-icon-shopping"></span>
+                        <h4>FIDELISATION</h4>
+                        <p>Renforcez le lien de fidélité avec vos clients en gardant un contact  régulier.</p>
+                    </div>
+                    <div>
+                        <span class="gling-icon-people"></span>
+                        <h4>NOUVEAUX CLIENTS</h4>
+                        <p>Faites découvrir votre commerce grâce à la géolocalisation ou au réseau de vos clients.</p>
+                    </div>
+                    <div>
+                        <span class="gling-icon-calendar"></span>
+                        <h4>OUTIL QUOTIDIEN</h4>
+                        <p>Organisez et communiquez plus facilement vos actions spéciales.</p>
+                    </div>
+                </div>
+                <div class="action">
                     <a class="gling-button" href="/businessRegistration">
-                        Enregistrez votre commerce
+                        Enregistrez-vous
                     </a>
                 </div>
             </div>
-
         </div>
     </body>
 </html>

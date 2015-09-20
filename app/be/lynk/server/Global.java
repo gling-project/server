@@ -1,13 +1,16 @@
+package be.lynk.server;
+
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.dto.technical.ExceptionDTO;
+import be.lynk.server.model.entities.Account;
+import be.lynk.server.module.mongo.MongoDBOperator;
+import be.lynk.server.service.TranslationService;
 import be.lynk.server.service.impl.TranslationServiceImpl;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -15,31 +18,27 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import play.*;
 import play.api.mvc.EssentialFilter;
+import play.filters.gzip.GzipFilter;
 import play.i18n.Lang;
-import play.libs.F.Promise;
-import play.libs.Akka;
 import play.libs.F;
+import play.libs.F.Promise;
+import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Results;
 import play.mvc.SimpleResult;
-import scala.concurrent.duration.Duration;
-import be.lynk.server.service.TranslationService;
-import be.lynk.server.util.exception.MyRuntimeException;
-import play.filters.gzip.GzipFilter;
-import play.mvc.Action;
 
 import java.lang.reflect.Method;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by florian on 10/11/14.
  */
+@Component
 public class Global extends GlobalSettings {
+
 
     //services
     private TranslationService translationService = new TranslationServiceImpl();
-
 
 
     private static final String SSL_HEADER = "x-forwarded-proto";
@@ -139,16 +138,20 @@ public class Global extends GlobalSettings {
     }
 
 
+
+
     @Override
     public Action onRequest(Http.Request request, Method actionMethod) {
 
+
         Configuration root = Configuration.root();
+
 
         String appStatus = root.getString("app.status");
 
         // Analytics analytics = AnalyticsUtil.start(request);
         Action action = null;
-        if (appStatus!=null && appStatus.equals("COMING_SOON")) {
+        if (appStatus != null && appStatus.equals("COMING_SOON")) {
             action = new Action() {
                 @Override
                 public Promise<SimpleResult> call(Http.Context ctx) throws Throwable {
@@ -169,8 +172,17 @@ public class Global extends GlobalSettings {
 
         //AnalyticsUtil.end(analytics);
         if (action == null) {
-            return super.onRequest(request, actionMethod);
+            action= super.onRequest(request, actionMethod);
         }
+//
+//        String uri = request.uri();
+//
+//        CommonSecurityController autowire = (CommonSecurityController) ctx.getAutowireCapableBeanFactory().autowire(
+//                CommonSecurityController.class,
+//                AutowireCapableBeanFactory.AUTOWIRE_AUTODETECT, true);
+//
+//        Account currentUser = autowire.getCurrentUser();
+
         return action;
     }
 

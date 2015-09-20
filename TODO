@@ -54,6 +54,16 @@ ok- ajouter une ligne en bas pour réseaux sociaux, condition générale, mentio
 ok- Ajouter un footer avec Mentions légales, Copyright, Facebook, Signaler un problème.
 Plus tard- Possible que les commerces aient un hyperlien reconnaissable? www.gling.be.be/lasoeurdupatron ? (avec modification manuelle si adresse est déjà prise)
 
+BUG
+ok - ajouter une bar de navigation
+ok- recherche : la recherche rapide s'affiche après la recherche si on va trop vite
+ok- 'follow' => phrase trop grande qd commerce suivit
+- encoder dans mongo requete par requete
+ok- finir la bar de navigation
+ok- finir la page d'accueil
+ok- 'about gling' => mauvaise redirection
+ok- problème reherche 'j'ai faim...'
+
 
 DEPLOYEMENT !!!
 - facebook dev : change l'url de gling-prod.herokuapp.com à gling.be

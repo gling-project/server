@@ -19,6 +19,7 @@
         <div class="home-interest-switch home-interest-box-background">
             <div>
                 <button class="gling-button gling-icon-location button-with-label home-interest"
+                        ng-class="{'selected':followedMode !== true}"
                         ng-click="setFollowedMode(false)">
                     <p>{{'--.home.localisation.help' | translateText}}</p>
                 </button>
@@ -34,6 +35,7 @@
             </div>
             <div>
                 <button class="gling-button gling-icon-bell button-with-label home-interest"
+                        ng-class="{'selected':followedMode === true}"
                         ng-click="setFollowedMode(true)">
                     <p>{{'--.home.followning.help' | translateText}}</p>
                 </button>

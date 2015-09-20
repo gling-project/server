@@ -12,5 +12,7 @@
     <context:component-scan
             base-package="be.lynk.server"/>
 
+    <bean id="global" class="be.lynk.server.Global"></bean>
+
 
 </beans>
