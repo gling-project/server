@@ -1420,7 +1420,7 @@ myApp.directive('businessFormCtrl', ['$flash', 'directiveService', function ($fl
                         phone: {
                             name: 'phone',
                             fieldTitle: "--.generic.phone",
-                            validationRegex: "^[0-9. *-+]{6,16}$",
+                            validationRegex: /^[0-9. *-+/]{6,16}$/,
                             validationMessage: '--.validation.dto.phone',
                             disabled: function () {
                                 return scope.getInfo().disabled;

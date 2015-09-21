@@ -30,9 +30,9 @@ import java.util.Map;
 @Component
 public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
-    private static final String  ACCOUNTS_WORKBOOK_PATH       = "file/demo_data.xls";
-    private static final String  BUSINESS_SHEET               = "Commerces";
-    private static final String  PUBLICATION_SHEET            = "Publications";
+    private static final String ACCOUNTS_WORKBOOK_PATH = "file/demo_data.xls";
+    private static final String BUSINESS_SHEET         = "Commerces";
+    private static final String PUBLICATION_SHEET      = "Publications";
 
     /**
      * BUSINESS COLUMNS *
@@ -285,24 +285,24 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
 
                     //illustration
-                    try {
-                        String illustrationPath = getString(sheet, COL_PUBLICATION_PICTURES, rowCounter);
-                        if (illustrationPath != null && illustrationPath.length() > 0) {
-                            for (String s : illustrationPath.split(";")) {
-                                String path = "file/images/publications/" + s;
-                                File file = copyFileUsingFileStreams(new File(path));
-                                if (file != null) {
-                                    StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), Constant.PUBLICATION_PICTURE_WIDTH, Constant.PUBLICATION_PICTURE_HEIGHT, business.getAccount());
-                                    storedFile.setPublication(publication);
-                                    publication.getPictures().add(storedFile);
-                                    storedFileService.saveOrUpdate(storedFile);
+                    if (WITH_PICTURE) {
+                        try {
+                            String illustrationPath = getString(sheet, COL_PUBLICATION_PICTURES, rowCounter);
+                            if (illustrationPath != null && illustrationPath.length() > 0) {
+                                for (String s : illustrationPath.split(";")) {
+                                    String path = "file/images/publications/" + s;
+                                    File file = copyFileUsingFileStreams(new File(path));
+                                    if (file != null) {
+                                        StoredFile storedFile = fileService.uploadWithSize(file, file.getName(), Constant.PUBLICATION_PICTURE_WIDTH, Constant.PUBLICATION_PICTURE_HEIGHT, business.getAccount());
+                                        storedFile.setPublication(publication);
+                                        publication.getPictures().add(storedFile);
+                                        storedFileService.saveOrUpdate(storedFile);
+                                    }
                                 }
                             }
+                        } catch (Throwable e) {
                         }
-                    } catch (Throwable e) {
-
                     }
-
 
                 }
             }
