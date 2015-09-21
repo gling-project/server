@@ -673,10 +673,12 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
                             $scope.accountParam.disabled = false;
                             $flash.info('--.registration.facebook.someDataEmpty');
                         }
-                        else {
-                            facebookAuthentication = dto;
-                            $scope.save();
-                        }
+                        facebookAuthentication = dto;
+
+                        //else {
+                        //
+                        //    $scope.save();
+                        //}
                     }
                 });
             },
@@ -835,10 +837,11 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
                             $scope.accountParam.disabled = false;
                             $flash.info('--.registration.facebook.someDataEmpty');
                         }
-                        else {
-                            facebookAuthentication = dto;
-                            $scope.next();
-                        }
+                        facebookAuthentication = dto;
+                        //else {
+                        //
+                        //    $scope.next();
+                        //}
                     }
                 });
             },
@@ -1886,6 +1889,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     {
                         fieldTitle: "--.business.modal.gallery.title",
                         validationMessage: '--.error.validation.image',
+                        help:'--.business.gallery.download.help',
                         details:'--gallery.maximumImage',
                         field: business,
                         maxImage:10,
@@ -2569,6 +2573,13 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                             searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
                         }
                     };
+
+                    scope.$watch('type',function(n,o){
+                        if(n!=o){
+                         scope.allLoaded=false;
+                            scope.search();
+                        }
+                    });
 
                     scope.removePublication = function (publication) {
                         modalService.messageModal('--.business.publication.remove.confirmationModal.title',
