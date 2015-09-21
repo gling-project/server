@@ -30,6 +30,7 @@ public class MainController extends AbstractController {
     String AWSBuckect = Configuration.root().getString("aws.s3.bucket");
     String fileBucketUrl = "https://s3.amazonaws.com/"+AWSBuckect;
     String urlBase = Configuration.root().getString("site.url.base");
+    String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
 
 
     @Autowired
@@ -144,7 +145,7 @@ public class MainController extends AbstractController {
             }
 
 
-            if (isMobileDevice() || forceMobile) {
+            if ((isMobileDevice() || forceMobile) && mobileDisabled==null) {
                 return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
             } else {
                 return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, publicationDTO));
