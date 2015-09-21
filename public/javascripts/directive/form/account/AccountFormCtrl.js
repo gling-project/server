@@ -143,11 +143,10 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                             validationMessage: "--.registration.form.acceptSla.error",
                             valid: function () {
                                 var v = scope.fields.sla.field[scope.fields.sla.fieldName];
-                                console.log('---->>'+v);
                                 return v === true;
                             },
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return false;//scope.getInfo().disabled;
                             },
                             active: function () {
                                 return !scope.getInfo().updateMode

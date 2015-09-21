@@ -34,6 +34,9 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
     @Pattern(regexp = ValidationRegex.URL_OR_NULL, message = "--.validation.dto.url")
     private String website;
 
+    @Pattern(regexp = ValidationRegex.VTA, message = "--.validation.dto.vta")
+    private String vta;
+
     private AddressDTO address;
 
     private StoredFileDTO illustration;
@@ -61,6 +64,14 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
     }
 
     public BusinessDTO() {
+    }
+
+    public String getVta() {
+        return vta;
+    }
+
+    public void setVta(String vta) {
+        this.vta = vta;
     }
 
     public Long getId() {

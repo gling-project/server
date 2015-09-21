@@ -18,34 +18,45 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                     directiveService.autoScopeImpl(scope);
                     scope.result = null;
 
-                    scope.$watch('result', function () {
-                        if(scope.getInfo().minimalDelay=='day') {
-                            return scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd');
+                    if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+                        scope.result = new Date(Number(scope.getInfo().field[scope.getInfo().fieldName]));
+                        if (scope.getInfo().minimalDelay == 'day') {
+                            scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd');
                         }
-                        else{
-                            return scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd HH:mm');
+                        else {
+                            scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd HH:mm');
+                        }
+                    }
+
+                    scope.$watch('result', function (n, o) {
+                        if (n != o) {
+                            if (scope.result != null) {
+                                scope.getInfo().field[scope.getInfo().fieldName] = scope.result.getTime();
+                            } else {
+                                scope.getInfo().field[scope.getInfo().fieldName] = null;
+                            }
+                            scope.isValid();
+                            if (scope.getInfo().minimalDelay == 'day') {
+                                scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd');
+                            }
+                            else {
+                                scope.resultFormated = $filter('date')(scope.result, 'yyyy-MM-dd HH:mm');
+                            }
                         }
                     });
 
-                    scope.isActive = function(){
+                    scope.isActive = function () {
 
-                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
                     };
 
-                    scope.$watch('getInfo().field[getInfo().fieldName]', function () {
-                        if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
-                            return scope.result = new Date(Number(scope.getInfo().field[scope.getInfo().fieldName]));
+                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                        if (n != o) {
+                            if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+                                return scope.result = new Date(Number(scope.getInfo().field[scope.getInfo().fieldName]));
+                            }
+                            scope.isValid();
                         }
-                        scope.isValid();
-                    });
-
-                    scope.$watch('result', function () {
-                        if (scope.result != null) {
-                            scope.getInfo().field[scope.getInfo().fieldName] = scope.result.getTime();
-                        } else {
-                            scope.getInfo().field[scope.getInfo().fieldName] = null;
-                        }
-                        return scope.isValid();
                     });
 
                     scope.isValid = function () {
@@ -64,6 +75,8 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                         }
                         scope.getInfo().isValid = isValid;
                     };
+
+
                     scope.isValid();
 
                     scope.logField = function () {

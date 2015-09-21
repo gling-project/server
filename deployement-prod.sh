@@ -30,6 +30,5 @@ eval $DB_CONNECTION < script/basic_data.sql
 
 #import
 curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' https://gling-prod.herokuapp.com/rest/import_category
-curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' https://gling-prod.herokuapp.com/rest/import_demo
 
 echo "Done !"

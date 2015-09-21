@@ -255,6 +255,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     {
                         fieldTitle: "--.business.modal.gallery.title",
                         validationMessage: '--.error.validation.image',
+                        help:'--.business.gallery.download.help',
                         details:'--gallery.maximumImage',
                         field: business,
                         maxImage:10,

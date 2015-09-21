@@ -2,6 +2,8 @@
      ng-class="{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}"
      ng-hide="isActive() === false">
 
+    <div class="modal-description"  ng-show="getInfo().help!=null">{{getInfo().help | translateText}}</div>
+
 
 
     <div class="form-group row">

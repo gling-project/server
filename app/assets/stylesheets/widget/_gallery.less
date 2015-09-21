@@ -1,8 +1,24 @@
 .gallery-component {
 
+    & > div{
+        width: 45%;
+        display: inline-block;
+        overflow: hidden;
+        text-align: center;
+        &:nth-child(2n){
+
+            float: right;
+        }
+    }
+
     .gallery-picture {
+        border: 1px solid #ccc;
+        margin: 0 -50%;
         height: 80px;
         cursor: pointer;
+        &:hover{
+            border: 1px solid #888;
+        }
     }
 }
 

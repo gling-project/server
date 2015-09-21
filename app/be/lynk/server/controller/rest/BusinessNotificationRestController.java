@@ -45,7 +45,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
 
         BusinessNotification businessNotification = dozerService.map(dto, BusinessNotification.class);
-        businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
+//        businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
 
         businessNotification.setBusiness(((BusinessAccount) securityController.getCurrentUser()).getBusiness());
         if (businessNotification.getInterest() != null) {
@@ -60,7 +60,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
         //control date
         Duration duration= Duration.between(businessNotification.getStartDate(),businessNotification.getEndDate());
         long seconds = duration.getSeconds();
-        if(duration.getSeconds() < Constant.NOTIFICATION_PERIOD_MAX_DAY*24*60*60){
+        long x= Constant.NOTIFICATION_PERIOD_MAX_DAY*24*60*60;
+        if(duration.getSeconds() > Constant.NOTIFICATION_PERIOD_MAX_DAY*24*60*60){
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOTIFICATION_DURATION_TOO_LONG,Constant.NOTIFICATION_PERIOD_MAX_DAY);
         }
 

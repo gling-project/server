@@ -28,17 +28,25 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                             fieldTitle: "--.generic.name",
                             validationRegex: "^.{2,50}$",
                             validationMessage: ['--.generic.validation.size', '2', '250'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
                             focus: function () {
                                 return true;
                             },
                             disabled: function () {
-                                return scope.getInfo().status !=undefined && scope.getInfo().status !== 'NOT_PUBLISHED';
+                                return scope.getInfo().disabled || (scope.getInfo().status !=undefined && scope.getInfo().status !== 'NOT_PUBLISHED');
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'name'
+                        },
+                        vta: {
+                            name: 'vta',
+                            fieldTitle: "--.business.vta",
+                            validationRegex: /^[a-zA-Z0-9\.\- ]{6,20}$/,
+                            validationMessage: '--.validation.dto.vta',
+                            disabled: function () {
+                                return scope.getInfo().disabled || (scope.getInfo().status !=undefined && scope.getInfo().status !== 'NOT_PUBLISHED');
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'vta'
                         },
                         description: {
                             name: 'description',
@@ -76,7 +84,7 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                         website: {
                             name: 'website',
                             fieldTitle: "--.business.website",
-                            validationRegex: "^($|^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?$)",
+                            validationRegex: /^($|^(http[s]?:\/\/(www\.)?)[0-9A-Za-z-\.@:%_\+~#=]+\.[a-zA-Z]{2,3}((\/|\?).*)?$)/,
                             validationMessage: '--.validation.dto.url',
                             disabled: function () {
                                 return scope.getInfo().disabled;

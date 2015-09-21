@@ -28,16 +28,16 @@ public class TranslationServiceImpl implements TranslationService {
 
         java.util.Map<String, String> m = new java.util.HashMap<>();
 
-        if(lang!=null) {
+        if (lang != null) {
             Option<Map<String, String>> mapExpected = Play.current().plugin(MessagesPlugin.class).get().api().messages().get(lang.code());
 
-            if(mapExpected.nonEmpty()) {
+            if (mapExpected.nonEmpty()) {
                 //convert
                 m.putAll(JavaConverters.mapAsJavaMapConverter(mapExpected.get()).asJava());
             }
         }
 
-        if(!lang.code().equals(LANG_BASE)) {
+        if (!lang.code().equals(LANG_BASE)) {
 
             Option<Map<String, String>> mapDefaultLanguage = Play.current().plugin(MessagesPlugin.class).get().api().messages().get(LANG_BASE);
 
@@ -56,7 +56,15 @@ public class TranslationServiceImpl implements TranslationService {
     @Override
     public String getTranslation(ErrorMessageEnum errorMessage, Lang language, Object... params) {
 
-        return Messages.get(language, errorMessage.getKey(), params);
+        String s = Messages.get(language, errorMessage.getKey(), params);
+
+        if (s != null && params.length > 0) {
+            for (int i = 0; i < params.length; i++) {
+                s=s.replace("{" + i + "}", params[i].toString());
+            }
+        }
+
+        return s;
     }
 
     @Override

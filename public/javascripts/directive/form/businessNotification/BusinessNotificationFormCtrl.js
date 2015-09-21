@@ -21,7 +21,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
                             startDate: new Date(),
-                            endDate:new Date().setMonth(new Date().getMonth() + 1)
+                            endDate:new Date().setMonth(new Date().getDay()+(4*7))
                         };
                     };
 

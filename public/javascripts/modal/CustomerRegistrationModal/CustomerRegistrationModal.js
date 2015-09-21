@@ -56,10 +56,12 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                             $scope.accountParam.disabled = false;
                             $flash.info('--.registration.facebook.someDataEmpty');
                         }
-                        else {
-                            facebookAuthentication = dto;
-                            $scope.save();
-                        }
+                        facebookAuthentication = dto;
+
+                        //else {
+                        //
+                        //    $scope.save();
+                        //}
                     }
                 });
             },

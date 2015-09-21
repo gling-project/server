@@ -113,10 +113,11 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                             $scope.accountParam.disabled = false;
                             $flash.info('--.registration.facebook.someDataEmpty');
                         }
-                        else {
-                            facebookAuthentication = dto;
-                            $scope.next();
-                        }
+                        facebookAuthentication = dto;
+                        //else {
+                        //
+                        //    $scope.next();
+                        //}
                     }
                 });
             },

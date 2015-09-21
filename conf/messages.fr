@@ -1,9 +1,9 @@
 --.account.fusion.description=Il y a déjà un compte associé à cette adresse email {0}. Si vous en êtes bien propriétaire, vous pouvez associer votre compte Facebook à votre compte Gling. Sinon, vous ne pouvez pas utiliser cette adresse email.
-	
-##  be/flo/project/dto/ChangePasswordDTO.java	
+
+##  be/flo/project/dto/ChangePasswordDTO.java
 --.validation.dto.password=Entre 6 et 18 lettre, chiffres ou _-%
-	
-##  generic	
+
+##  generic
 --.generic.firstname=Prénom
 --.generic.save=Sauver
 --.generic.submit=Soumettre
@@ -56,66 +56,66 @@
 --.generic.facebook=Facebook
 --.generic.category=Catégorie
 --.generic.twitter=Twitter
---.generic.validation.facebook=L'adresse indiquée n'est pas une adresse Facebook valide! (elle doit commencer par https\://facebook.com/)
---.generic.validation.twitter=L'adresse indiquée n'est pas une adresse Twitter valide! (elle doit commencer par https\://twitter.com/)
+--.generic.validation.facebook=L'adresse indiquée n'est pas une adresse Facebook valide! (elle doit commencer par https://facebook.com/)
+--.generic.validation.twitter=L'adresse indiquée n'est pas une adresse Twitter valide! (elle doit commencer par https://twitter.com/)
 --.generic.title=Titre
 --.generic.socialNetwork=Lien(s) utile(s)
 --.generic.comment=Commentaires
---.generic.validation.instagram=L'adresse reprise n'est pas une adresse Instagram valide! (elle doit commencer par https\://instagram.com/)
+--.generic.validation.instagram=L'adresse reprise n'est pas une adresse Instagram valide! (elle doit commencer par https://instagram.com/)
 --.generic.gallery=Galerie
 --.generic.instagram=Instagram
 --.generic.top=Haut
 --.generic.search=Recherche
 
 
-##  modal/RegistrationModal/RegistrationModal.js	
+##  modal/RegistrationModal/RegistrationModal.js
 --.registration.form.keepSessionOpen=Garder ma session ouverte.
 --.registration.form.repeatPassword=Répétez le mot de passe.
 --.registration.form.password=Choisissez un mot de passe.
 --.registration.form.password.help=Entre 6 et 18 lettres, chiffres ou -_%
-	
-##  modal/ForgotPassword/ForgotPasswordModal.js	
+
+##  modal/ForgotPassword/ForgotPasswordModal.js
 --.changeEmailModal.email=Entrez votre nouvelle adresse email.
 --.forgotPassword.success=Un email vous a été envoyé avec un nouveau mot de passe.
-	
-##  modal/LoginModal/LoginModal.js (//logout facebook in case)	
+
+##  modal/LoginModal/LoginModal.js (//logout facebook in case)
 --.login.flash.success=Vous êtes maintenant connecté(e)!
 --.registration.form.yourEmail=Votre adresse email
-	
-##  modal/RegistrationModal/view.html	
+
+##  modal/RegistrationModal/view.html
 --.loginModal.title=Connexion
-	
-##  modal/DownloadFieldModal/view.html	
+
+##  modal/DownloadFieldModal/view.html
 --.downloadModal.title=Téléchargez un fichier.
-	
-##  modal/HelpModal/view.html	
+
+##  modal/HelpModal/view.html
 --.helpModal.title=Aide
-	
-##  modal/ChangePassword/ChangePasswordModal.js	
+
+##  modal/ChangePassword/ChangePasswordModal.js
 --.changePasswordModal.newPassword=Nouveau mot de passe
-	
-##  be/flo/project/dto/AccountDTO.java	
+
+##  be/flo/project/dto/AccountDTO.java
 --.validation.dto.size=Entre {0} et {1} caractères
-	
+
 --.validation.dto.email=Cette adresse email n'est pas valide.
-	
-##  modal/ForgotPassword/view.html	
+
+##  modal/ForgotPassword/view.html
 --.forgotPassword.title=Mot de passe perdu?
-	
-##  be/flo/project/views/template.scala.html (load data )	
+
+##  be/flo/project/views/template.scala.html (load data )
 --.welcome.myProfile=Mon profil
 --.welcome.signIn=Enregistrement
 --.welcome.login=Connexion
-	
-##  directive/dirFieldDocument/template.html	
+
+##  directive/dirFieldDocument/template.html
 --.field.document.download=Téléchargement
 --.field.document.success=Le fichier a été correctement téléchargé.
 --.field.document.inTreatment=En cours de traitement...
-	
-##  modal/ChangePassword/view.html	
+
+##  modal/ChangePassword/view.html
 --.changePasswordModal.title=Changez votre mot de passe.
-	
-##  be/flo/project/util/message/ErrorMessageEnum.java	
+
+##  be/flo/project/util/message/ErrorMessageEnum.java
 --.error.fatal_error=Une erreur fatale est survenue : {0}.
 --.error.validation.email=Adresse email valide
 --.error.validation.password=Entre 6 et 18 lettres, chiffres ou -_%
@@ -131,14 +131,14 @@
 --.error.wrong_password_or_login=Email ou mot de passe erroné.
 --.error.business.mustBePublished=Votre profil de commerce doit être validé avant de pouvoir diffuser de nouvelles publications
 --.error.picture.wrongSize=La taille de votre photo doit faire au minimum {0} pixels de large et {1} pixels de haut
-	
-	
-##  modal/AccountFusionFacebookModal/view.html	
+
+
+##  modal/AccountFusionFacebookModal/view.html
 --.account.fusion.modal.title=Fusion de compte
-	
-	
-	
-	
+
+
+
+
 ##  modal/CustomerRegistrationModal/view.html
 --.customer.registrationModal.interest.title=Intérêts
 --.customer.registrationModal.interest.desc=Sélectionnez vos centres d'intérêts. Ils nous permettront de mieux vous proposer des nouveautés et promotions qui vous correspondent! Vous pouvez également cliquer sur 'passer' et sélectionner vos intérêts plus tard.
@@ -150,20 +150,20 @@
 --.customer.registrationModal.personal.title=Personnelle
 --.registrationModal.facebook.btn=Enregistrez-vous avec Facebook.
 --.registrationModal.toBusinessRegistration=Vous êtes commerçant? Cliquez ici!
-	
-##  view/home.html	
-	
-##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)	
+
+##  view/home.html
+
+##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
 --.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté!
 --.registration.facebook.someDataEmpty=Certaines données sont manquantes. Merci de les compléter avant de passer à l'étape suivante.
-	
-##  modal/EditProfileModal/view.html (edit your personal information )	
-	
-##  be/lynk/server/dto/BusinessDTO.java	
+
+##  modal/EditProfileModal/view.html (edit your personal information )
+
+##  be/lynk/server/dto/BusinessDTO.java
 --.validation.dto.phone=Numéro de téléphone valide
---.validation.dto.url=Url valide (commencez avec htttp://)
-	
-##  be/lynk/server/util/message/ErrorMessageEnum.java	
+--.validation.dto.url=Url valide (commencez avec http://)
+
+##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=-
 --.error.facebook.notAccountFound=Ce compte Facebook n'est pas enregistré. Pour vous enregistrer, suivez un des deux liens ci-dessous.
 --.error.account.withoutLoginCredential=Ce compte utilise le système de connexion de Facebook et n'utilise aucun mot de passe.
@@ -175,26 +175,26 @@
 --.error.address.wrongOldPassword=L'ancien mot de passe ne correspond pas.
 --.error.address.nameAlreadyUsed=Ce nom a déjà été utilisé par un autre utilisateur. Merci d'en choisir un nouveau!
 --.error.address.TechnicalName=Ce nom de position n'est pas valide.
-	
-##  view/business_registration.html	
-	
-##  directive/form/business/BusinessFormCtrl.js	
+
+##  view/business_registration.html
+
+##  directive/form/business/BusinessFormCtrl.js
 --.business.website=Site web (en option)
 --.business.contactEmail=Email de contact (en option)
 --.validation.dto.notNull=Ce champs ne peut pas être laissé vide.
-	
-##  view/business_welcome.html	
+
+##  view/business_welcome.html
 ###--.business.profile.businessCategory=Type de commerce
-	
+
 ##  modal/BusinessRegistrationModal/view.html
 --.business.registrationModal.category.title=Catégorie de commerce
 --.business.registrationModal.business.desc=Indiquez ici les informations relatives à votre commerce
 --.business.registrationModal.title=Créez votre commerce.
 --.business.registrationModal.business.title=Information du commerce.
---.business.registrationModal.category.desc=Indiquer ici la catégorie relevante pour votre commerce. Vous pouvez choisir plusieurs catégories en sein d'un même groupe.
+--.business.registrationModal.category.desc=Indiquez ici la catégorie qui correspond le mieux à votre commerce. Si vous ne retrouvez aucune catégorie correspondant à votre commerce, signalez le nous via l'adresse hello@gling.be.
 --.business.registrationModal.address.subtitle=Encodez l'adresse de votre commerce.
-	
-##  directive/form/address/AddressFormCtrl.js	
+
+##  directive/form/address/AddressFormCtrl.js
 --.form.address.field.name=Type
 --.form.address.field.street=Rue / Numéro
 --.form.address.field.zip=Code postal
@@ -203,49 +203,49 @@
 --.address.type.other=Autre...
 --.address.type.work=Mon bureau
 --.address.customName.fieldTitle=Nom
-	
-##  directive/form/businessCategory/template.html	
+
+##  directive/form/businessCategory/template.html
 --.businessCategory.column.subcategory=Groupe
 --.businessCategory.column.category=Section
 --.businessCategory.column.subsubcategory=Catégorie
-	
-	
-##  modal/LoginModal/view.html	
+
+
+##  modal/LoginModal/view.html
 --.loginModal.toBusinessRegistration=Je suis un commerçant.
 --.loginModal.toCustomerRegistration=S'enregistrer!
 --.loginModal.notRegisterYet=Pas encore enregistré(e)?
 ######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
 ######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
-	
-	
-	
-##  be/lynk/server/views/template.scala.html (javascript library )	
+
+
+
+##  be/lynk/server/views/template.scala.html (javascript library )
 --.welcome.myBusiness=Mon commerce
 --.welcome.search=Que cherchez-vous?
 --.site.name=Gling
 #--.welcome.search.advanced.link=Recherche avancée
 --.welcome.serach.advanced.criteria=Critères
-	
-##  view/profile.html	
+
+##  view/profile.html
 --.customer.profile.myAddresses=Mon adresse
 --.customer.profile.personalInformation=Informations personnelles
 --.customer.profile.interest=Intérêts
 --.customer.profile.create=Créer
-	
-##  modal/EditCustomerInterestModal/view.html	
+
+##  modal/EditCustomerInterestModal/view.html
 --.customer.editInterestModal.title=Modifier mes intérêts
 --.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
-	
-	
-##  directive/form/login/template.html	
+
+
+##  directive/form/login/template.html
 --.login.form.button.forgotPassword=Mot de passe oublié?
-	
-	
+
+
 --.email.forgotPassword.subject=Votre nouveau mot de passe
---.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe \: {1}
-	
-	
-##  directive/form/promotion/PromotionFormCtrl.js	
+--.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe : {1}
+
+
+##  directive/form/promotion/PromotionFormCtrl.js
 --.promotion.minimalQuantity=Quantité minimum
 --.promotion.endDate=Date de fin
 --.promotion.quantity=Quantité
@@ -260,58 +260,58 @@
 --.promotion.validation.offPercent=La réduction doit être comprise entre 1 et 99%.
 --.promotion.completePromotion=Créer une promotion en affichant un prix.
 --.promotion.simplePromotion=Créer une promotion sans afficher de prix.
-	
-##  view/web/home.html	
-	
-##  view/mobile/login.html	
-	
-##  view/mobile/business_registration.html	
+
+##  view/web/home.html
+
+##  view/mobile/login.html
+
+##  view/mobile/business_registration.html
 --.page.business_registration.title=Inscription
-	
-##  view/web/business_welcome.html	
-	
-##  modal/PromotionModal/view.html	
+
+##  view/web/business_welcome.html
+
+##  modal/PromotionModal/view.html
 --.promotion.modal.title.create=Créer une nouvelle promotion
 --.promotion.modal.title.update=Editer une promotion
-	
-##  view/mobile/customer_registration.html	
+
+##  view/mobile/customer_registration.html
 --.page.customer_registration.title=Inscription
-	
-##  be/lynk/server/util/message/EmailMessageEnum.java	
+
+##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
 --.email.registration.business.body=Bienvenue sur Gling {0}!<br/><br/>...
 --.email.registration.business.subject=Bienvenu sur Gling !
 --.email.registration.customer.body=Bienvenue {0}<br/><br/>...
 --.email.registration.customer.subject=Bienvenue sur Gling !<br/><br/>...
-	
-##  view/mobile/welcome.html	
+
+##  view/mobile/welcome.html
 --.mobile.welcome.toCustomerRegistration.btn=Inscrivez-vous maintenant!
 --.page.welcome.title=Bienvenue!
 --.mobile.welcome.login.btn=Connexion
-	
-	
-##  directive/field/dirFieldDocument/template.html	
+
+
+##  directive/field/dirFieldDocument/template.html
 --.download.button.new=Télécharger un fichier
 --.download.button.update=Modifier le fichier
-	
-##  modal/AddressModal/view.html	
+
+##  modal/AddressModal/view.html
 --.account.address.modal.title.create=Créer une nouvelle adresse
 --.account.address.modal.title.update=Editer une adresse
-	
-##  controller/web/BusinessWelcomeCtrl.js (//)	
+
+##  controller/web/BusinessWelcomeCtrl.js (//)
 --.error.validation.image=Sélectionner une image
-	
-##  modal/BusinessNotificationModal/view.html	
+
+##  modal/BusinessNotificationModal/view.html
 --.businessNotification.modal.title.update=Editer une anonnce
 --.businessNotification.modal.title.create=Créer une annonce
-	
-##  directive/form/businessNotification/BusinessNotificationFormCtrl.js	
+
+##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
 --.promotion.validation.endDateBeforeStartDate=La date de fin doit être postérieure la date de début.
 ###--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
 --.promotion.interest=Intérêt
---.promotion.interest.help=Sélectionnez l'intérêt auquel répond votre publication (en option).
-	
-## day	
+--.promotion.interest.help=Si votre publication correspond à un intérêt de vos clients, sélectionnez le ci-dessus. (en option).
+
+## day
 day_abrv_monday=Lu
 day_abrv_tuesday=Ma
 day_abrv_wednesday=Me
@@ -319,10 +319,10 @@ day_abrv_thusday=Je
 day_abrv_friday=Ve
 day_abrv_saturday=Sa
 day_abrv_sunday=Di
-	
-	
-	
-##  view/web/business.html (landscape )	
+
+
+
+##  view/web/business.html (landscape )
 --.business.page.edit.illustration=Editer le logo
 --.business.page.edit.business=Editer les informations
 --.business.page.edit.landscape=Editer la photo de couverture
@@ -330,36 +330,36 @@ day_abrv_sunday=Di
 --.business.page.edit.editSwitchEdit=Vison édition
 --.business.page.edit.editSwitchDisplay=Vision client
 --.business.page.publication=Publier ma page!
---.business.page.edit.description=Bienvenue sur votre page de commerce\! C'est ici que vous pourrez changer les informations concernant votre commerce, publier de nouvelles promotions, actualités, etc.
---.business.page.edit.descriptionPublished= Votre page est actuellement publique. Vous pouvez la rendre privée, si vous désirez changer des informations crutiales telles que l'adresse où le nom.
---.business.page.edit.description.waitConfirmation=Votre page est en attente de confirmation. Un membre de notre équipe prendra contact avec vous dans les prochains jours pour valider votre identité.
---.business.page.edit.description.notPublished=Votre page n'est actuellement pas publique, cela veut dire que personne ne peut consulter votre page ou vos publications. Avant de publier votre page, pensez à regarder si vous avez mis un maximum d'informations sur votre commerce (voir 'Ma progression' à droite). Si vous êtes près à rendre votre page publique, cliquez simplement sur 'Rendre ma page publique' ci-dessous. Un membre de notre équipe prendra contact avec vous dans les prochains jours pour valider votre identité.
+--.business.page.edit.description=Bienvenue sur votre page de commerce ! Changez ici les informations concernant votre commerce, publiez de nouvelles promotions, actualités, etc.
+--.business.page.edit.descriptionPublished=Votre page est actuellement publique. Vous pouvez la rendre privée si vous désirez changer des informations déterminantes telles que l'adresse ou le nom.
+--.business.page.edit.description.waitConfirmation=Votre page est en attente de confirmation par notre équipe.
+--.business.page.edit.description.notPublished=Votre page est actuellement inaccessible au public et personne ne peut consulter votre page ou vos publications. Avant de publier votre page, assurez-vous d'avoir complété votre page de commerce (voir l'état de 'Progression de ma page' à gauche). Si vous êtes prêts à rendre votre page publique, cliquez simplement sur le bouton 'Rendre ma page publique' ci-dessous. Votre page sera en attente de confirmation par notre équipe.
 --.business.page.stopPublication.window.flash=Votre commerce est maintenant en mode édition. N'oubliez pas de le publier à nouveau à l'aide du bouton 'publier' une fois vos modifications finalisées.
 --.business.page.stopPublication.window.message=En passant en mode édition, votre commerce et ses annonces ne seront plus visible tant que vous n'aurez pas validé vos modifications. Êtes-vous certain(e) de vouloir continuer ?
 --.business.page.askPublication.window.flash=Votre commerce est maintenant en attente de validation par notre équipe.
---.business.page.askPublication.window.message=Une fois votre demande de publication envoyée, vous ne pourrez plus modifier que les horaires et les images de votre commerce. Votre commerce sera visible dès qu'il sera validé par notre équipe. Il vous sera alors possible de publier des actualités et des promotions. Êtes-vous certain(e) de vouloir continuer ?
+--.business.page.askPublication.window.message=Une fois votre demande de publication envoyée, vous ne pourrez plus modifier le nom, l'adresse et le numéro de TVAla . Votre commerce sera visible dès qu'il sera validé par notre équipe. Il vous sera alors possible de publier des actualités et des promotions. Êtes-vous certain(e) de vouloir continuer ?
 --.business.page.stopPublication=Republier mon commerce
 --.business.publication.btn.notification=Publier une actualité
 --.business.publication.btn.promotion=Publier une promotion
 --.business.gallery=Galerie
 --.business.page.cancelPublishRequest=Annuler la demande de publication
 #--.business.page.edit.gallery=Editer la galerie
-	
-	
-	
-	
-##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)	
+
+
+
+
+##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)
 --.registration.business.flash.success=Votre commerce est maintenant enregistré! Vous pouvez complèter votre page commerce avant de la rendre publique et visible auprès des utilisateurs de Gling !
-	
-##  controller/admin/AdminBusinessCtrl.js (// show first page)	
+
+##  controller/admin/AdminBusinessCtrl.js (// show first page)
 --.admin.business.confirmPublication.modal.message=Confirmer la publication de ce commerce?
 --.admin.business.confirmPublication.modal.title=Confirmation
-	
-##  view/admin/adminBusiness.html	
+
+##  view/admin/adminBusiness.html
 --.admin.business.confirmPublication=Confirmer la publication
 --.admin.business.toBusiness=Voir la page
-	
-##  controller/web/BusinessCtrl.js (//loading)	
+
+##  controller/web/BusinessCtrl.js (//loading)
 --.business.edit.category.modal.title=Modifier la catégorie
 --.business.edit.schedule.modal.title=Modifier l'horaire
 --.business.edit.landscape.modal.title=Modifier la photo d'arrière-plan
@@ -373,14 +373,14 @@ day_abrv_sunday=Di
 --.business.modal.gallery.title=Galerie
 --.business.page.cancelPublishRequest.window.title=Annuler la requête de publication
 --.business.publication.archive=Publications archivées
---.business.publication.previsualization=Publications en attente 
+--.business.publication.previsualization=Publications en attente
 --.business.publication.basic=Publications actives
-	
-	
-	
-	
-	
-##  directive/component/searchResult/template.html	
+
+
+
+
+
+##  directive/component/searchResult/template.html
 --.search.category=Catégories
 --.search.publication=Publications
 --.search.business.seeMore=Voir plus de commerces...
@@ -389,84 +389,85 @@ day_abrv_sunday=Di
 --.search.nothing=Aucun résultat
 --.search.publication.seeMore=Voir plus de publications...
 --.search.category.seeMore=Voir plus de catégories…
-	
-##  be/lynk/server/model/SearchCriteriaEnum.java	
+
+##  be/lynk/server/model/SearchCriteriaEnum.java
 --.search.criteria.business=Commerces
 --.search.criteria.publication=Publications
 --.search.criteria.category=Catégories
-	
-	
-##  directive/form/businessSocialNetwork/template.html	
+
+
+##  directive/form/businessSocialNetwork/template.html
 --.business.socialNetwork.form.description=Ajoutez ici les liens vers les autres plateformes sur lesquelles votre établissement est également présent.
-	
-##  view/web/search_page.html (business )	
+
+##  view/web/search_page.html (business )
 --.list.nothing=Aucun résultat trouvé.
-	
-##  directive/field/dirFieldImageMutiple/template.html	
-	
-##  directive/component/publicationListForBusiness/template.html (start date )	
+
+##  directive/field/dirFieldImageMutiple/template.html
+
+##  directive/component/publicationListForBusiness/template.html (start date )
 --.publication.promotionData=Détails de la promotion
 --.publication.promotionTo=Promo
 --.publication.publishTo=Publié le
-	
-	
-	
-	
+--.publication.previsualization=Aperçu
+
+
+
+
 ##  dist/templateCacheWeb.js
 --.business.socialNetwork.other=Autre
 --.gallery.modal.next=Suivant
 --.gallery.modal.previous=Précédent
 --.welcome.myBusinesses=Mes commerces favoris
-	
-##  controller/web/WelcomeCtrl.js (//use the model)	
+
+##  controller/web/WelcomeCtrl.js (//use the model)
 --.position.current=Ma position
-	
-##  directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js (//www.facebook\.com/.*$)",)	
+
+##  directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js (//www.facebook.com/.*$)",)
 --.business.socialNetwork.opinion=Commentaires & Avis
 --.business.socialNetwork.delivery=Livraison
 --.business.socialNetwork.ecommerce=Vente en ligne
 --.business.socialNetwork.reservation=Réservation
-	
-##  view/mobile/forgotPassword.html	
+
+##  view/mobile/forgotPassword.html
 --.mobile.forgotPassword.btn=Mot de passe oublié?
 --.forgotPassword.desc=Indiquez votre adresse email et un email vous sera envoyé avec un nouveau mot de passe.
 --.page.forgot_password.title=Mot de passe oublié?
-	
-##  view/mobile/profile.html (body )	
+
+##  view/mobile/profile.html (body )
 --.page.profile.title=Mon profil
 --.customer.profile.address.create=Créer une nouvelle adresse.
-	
-	
-	
-##  controller/mobile/HomeCtrl.js (//search function)	
+
+
+
+##  controller/mobile/HomeCtrl.js (//search function)
 --.position.newAddress=Créer une nouvelle adresse…
-	
-	
-	
-##  directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js (//scrolling)	
+
+
+
+##  directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js (//scrolling)
 --.business.publication.remove.confirmationModal.title=Supprimer un publication
 --.business.publication.remove.confirmationModal.body=Êtes-vous sûr de vouloir supprimer cette publication?
-	
-##  view/web/followed_business_page.html	
+
+##  view/web/followed_business_page.html
 --.followedBusiness.table.business=Commerce
 --.followedBusiness.table.followingFrom=Suivi depuis
 --.followedBusiness.table.notification=Recevoir les notifications
 --.followedBusiness.table.categories=Catégories
-	
+
 #--.gallery.title=Galerie
---.publication.description=Description (optionnelle)
+--.publication.description=Description (en option)
 --.followed-business.checkAll=Tout sélectionner
 --.followed-business.uncheckAll=Déselectionner
 
 
-#--.loginModal.fctToExecute.help=Vous devez vous enregistrez pour continuer
---.home.interest-switch.help=Triez selon votre position ou vos commerces favoris
+#--.loginModal.fctToExecute.help=Vous devez vous enregistrer pour continuer
+--.home.interest-switch.help=Triez selon votre position ou vos commerces favoris.
 --.home.interest.help=Triez selon vos envies.
 --.home.localisation.help=Triez selon votre position.
---.home.followning.help=Triez selon vos commerces favoris
---.home.emptyResult.followed=Aucun de vos commerces favoris ne semblent avoir de publication. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.followning.help=Triez selon vos commerces favoris.
+--.home.emptyResult.followed=Aucun de vos commerces favoris ne semble avoir publié de nouveautés ou de promotions. Les commerces ci-dessous pourront peut-être vous satisfaire!
 --.home.emptyResult.followedWithInterest=Aucune publication de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
---.home.emptyResult.newsFeed=Aucun commerce ne semble avoir de publication. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.emptyResult.newsFeed=Aucun commerce ne semble avoir publié de nouveautés ou de promotions.. Les commerces ci-dessous pourront peut-être vous satisfaire!
 --.home.emptyResult.newsFeedWithInterest=Aucune publication ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
 
 
@@ -477,7 +478,7 @@ day_abrv_sunday=Di
 
 --.headerBar.logo.label=Home
 --.home.interest.arrow.label=D'autres envies?
---.business.schedule.edit.modal.description=Indiquez ici vos heures d'ouvertures et d'affluence le cas échéant.
+--.business.schedule.edit.modal.description=Indiquez ici vos heures d'ouvertures et d'affluence connues.
 --.business.logo.edit.modal.description=Insérez votre logo en choisissant de préférence une version de forme carrée afin de correspondre au mieux au design de la page. La photo doit faire au minimum 200 pixels par 200 pixels
 --.business.landscape.edit.modal.description=Insérez votre photo de fond. La photo doit faire au minimum 1000 pixels de large et 300 pixels de haut
 --.business.social.edit.modal.delivery.desc=Ex. Take Eat Easy, Pizza.be,…
@@ -485,15 +486,15 @@ day_abrv_sunday=Di
 --.business.edit.socialNetwork.modal.title=Lien(s) utile(s)
 
 --.business.page.management.title=Mon commerce
---.business.management.progression=Ma progression
+--.business.management.progression=Progression de ma page
 --.business.management.progression.desc=Comment puis-je améliorer ma page de commerce ?
---.business.status.NOT_PUBLISHED=Non publique
---.business.status.PUBLISHED=Publique
+--.business.status.NOT_PUBLISHED=Non public
+--.business.status.PUBLISHED=Public
 --.business.status.WAITING_CONFIRMATION=En attente de confirmation
 
 
 --.town.newsfeed.news=Nouveauté
---.town.newsfeed.promotion=Promotions
+--.town.newsfeed.promotion=Promotion
 --.home.geolocation.notAccepted=Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>Si vous ne voulez pas partager votre position, vous pouvez aussi <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
 
 --.footer.legal=Mentions légales
@@ -508,12 +509,12 @@ day_abrv_sunday=Di
 --.business.manager.progress.add.socialNetwork=Ajouter des liens vers les réseaux sociaux sur lesquels votre commerce est présent
 --.business.manager.progress.help=Suiver le guide
 --.business.manager.progress.createPublicationTitle=Créer une publication
---.business.manager.createPublication.disabled.desc=Vous ne pouvez pas encore créer de publication pour l'instant car votre page n'est pas encore publique. Pour rendre votre page publique, cliquez sur le bouton 'Publier ma page\!' et attendez qu'un membre de notre équipe valide votre demande.
+--.business.manager.createPublication.disabled.desc=Vous ne pouvez pas encore créer de publication pour l'instant car votre page n'est pas encore publique. Pour rendre votre page publique, cliquez sur le bouton 'Publier ma page!' et attendez qu'un membre de notre équipe valide votre demande.
 --.followWidget.message.remove=Ce commerce a bien été supprimer de vos favoris.
---.followWidget.message.add=Ce commerce a bien été ajouté à vos favoris\!
---.followWidget.stopFollow=Ne plus suivre ce commerce
---.followWidget.follow=Suivre ce commerce
---.business.page.management.status=Status de votre page \:
+--.followWidget.message.add=Ce commerce a bien été ajouté à vos favoris!
+--.followWidget.stopFollow=Retirer de mes favoris
+--.followWidget.follow=Ajouter à mes favoris
+--.business.page.management.status=Statut de votre page :
 
 --.schedule.closed=Fermé
 --.schedule.light=Ouvert (Affluence faible)
@@ -524,7 +525,7 @@ day_abrv_sunday=Di
 --.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
 --.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
 --.business.page.management.help.title=Un petit coup de pouce ?
---.business.page.management.contact.btn=Contactez-nous\!
+--.business.page.management.contact.btn=Contactez-nous!
 #--.followed-business.checkAll=Sélectionner tout
 #--.followed-business.uncheckAll=Déselectionner tout
 --.error.promotion.duration.tooLong=La durée maximum d'une promotion est de {0} jours
@@ -551,3 +552,10 @@ day_abrv_sunday=Di
 --.mobile.welcome.login.desc=
 --.business.page.edit.gallery=
 --.footer.aboutGling=A propos de Gling
+--.business.page.management.changeStatus=Changer de statut
+--.publication.modal.publicAndShare=Sauver et partager sur Facebook
+
+--.business.gallery.download.help=Insérez vos photos pour créer une galerie représentative de votre établissement. La taille de vos photos doit faire 600 pixels de large minimum.
+--.business.manager.createPublication.enabled.desc=Attention, votre compte vous permet d'actuellement publier un maximum de 2 messages par jour (promotion ou actualité). Notez également qu'il n'est pas possible de modifier une publication lorsque vous l'avez validée.
+--.business.vta=Numéro de TVA
+--.validation.dto.vta=Numéro de TVA invalide

@@ -86,6 +86,13 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                         }
                     };
 
+                    scope.$watch('type',function(n,o){
+                        if(n!=o){
+                         scope.allLoaded=false;
+                            scope.search();
+                        }
+                    });
+
                     scope.removePublication = function (publication) {
                         modalService.messageModal('--.business.publication.remove.confirmationModal.title',
                             '--.business.publication.remove.confirmationModal.body',

@@ -54,14 +54,14 @@ public class PromotionRestController extends AbstractRestController {
         }
 
         //control date
-        Duration duration= Duration.between(promotion.getEndDate(), promotion.getStartDate());
-        if(duration.getSeconds() < Constant.PROMOTION_PERIOD_MAX_DAY*24*60*60){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PROMOTION_DURATION_TOO_LONG,Constant.PROMOTION_PERIOD_MAX_DAY);
+        Duration duration= Duration.between(promotion.getStartDate(), promotion.getEndDate());
+        if(duration.getSeconds() > Constant.PROMOTION_PERIOD_MAX_DAY*24*60*60){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PROMOTION_DURATION_TOO_LONG,Constant.PROMOTION_PERIOD_MAX_DAY+"");
         }
 
         //control number by day
         if(publicationService.countPublicationForToday(promotion.getStartDate(),securityController.getBusiness())>Constant.PUBLICATION_MAX_BY_DAY){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_DAY);
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_DAY+"");
         }
 
 

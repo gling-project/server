@@ -63,9 +63,13 @@ ok- finir la bar de navigation
 ok- finir la page d'accueil
 ok- 'about gling' => mauvaise redirection
 ok- problème reherche 'j'ai faim...'
+ok- bug binding sur les dates
+ok- publication 4 semaines et pas un mois coté JS
+- bouger les / des traductions
 
 
 DEPLOYEMENT !!!
 - facebook dev : change l'url de gling-prod.herokuapp.com à gling.be
-- ajouter le SLA et documents légaux
--ajouter guide help
+- mettre la verion mobile off line
+ok- ajouter le SLA et documents légaux
+ok- ajouter guide help

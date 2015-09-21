@@ -275,6 +275,7 @@ public class BusinessRestController extends AbstractController {
 
         if(business.getBusinessStatus().equals(BusinessStatus.NOT_PUBLISHED)){
             business.setName(dto.getName());
+            business.setVta(dto.getVta());
         }
         business.setDescription(dto.getDescription());
         business.setPhone(dto.getPhone());

@@ -41,6 +41,9 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     @Basic
     private String email;
 
+    @Basic
+    private String vta;
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Address address;
 
@@ -77,6 +80,17 @@ public class Business extends AbstractEntity implements Comparable<Business> {
 
     @OneToMany(mappedBy = "businessGalleryPicture", cascade = CascadeType.ALL)
     private Set<StoredFile> galleryPictures = new HashSet<>();
+
+    public Business() {
+    }
+
+    public String getVta() {
+        return vta;
+    }
+
+    public void setVta(String vta) {
+        this.vta = vta;
+    }
 
     public Set<StoredFile> getGalleryPictures() {
         return galleryPictures;
