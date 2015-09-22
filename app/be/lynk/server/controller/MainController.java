@@ -58,6 +58,11 @@ public class MainController extends AbstractController {
     }
 
     @Transactional
+    public Result admin2(String url) {
+        return admin();
+    }
+
+    @Transactional
     public Result admin() {
 
         String facebookAppId = AppUtil.getFacebookAppId();

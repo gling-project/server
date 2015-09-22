@@ -13,6 +13,10 @@ module.exports = function (grunt) {
                     {
                         dest: 'public/dist/styleTown.min.css',
                         src: ['public/dist/styleTown.css']
+                    },
+                    {
+                        dest: 'public/dist/styleMobile.min.css',
+                        src: ['public/dist/styleMobile.css']
                     }
                 ]
             }
@@ -321,34 +325,40 @@ module.exports = function (grunt) {
                     'public/javascripts/tests/**/*.js'
                 ]
             }
-        },timestamp: {
-            default: {
-                files: [{
-                    // Use dynamic extend name
-                    expand: true,
-                    // Open source dir
-                    cwd: 'public/dist/',
-                    // Match files
-                    src: ['*.min.css', '*.min.js'],
-                    // Output files
-                    dest: 'public/dist/',
-                    // Set extend middle name
-                    ext: '.final'
-                }],
-                options: {
-                    // Timestamp display text
-                    'timestampName': 'Timetamp',
-                    // Date format
-                    'timestampFormat': 'yyyy/mm/dd HH:MM:ss',
-                    // Add timestamp at the end of the files' content(.css/.js).
-                    'timestampType': 'md5',
-                    // Timestamp type like time(2014/04/02 22:17:07) | md5/sha1/ha256/sha512).
-                    'fileEndStamp': true,
-                    // Add timestamp at images of CSS style.
-                    'cssImgStamp': true,
-                    // Rename file name with timestamp inside.
-                    'fileNameStamp': false
-                }
+        },
+        rename: {
+            styleDependencies: {
+                src: 'public/dist/styleDependencies.min.css',
+                dest: 'public/dist/styleDependencies.final.css?' + grunt.template.today("yyyymmddHHMM")
+            },
+            styleTown: {
+                src: 'public/dist/styleTown.min.css',
+                dest: 'public/dist/styleTown.final.css?' + grunt.template.today("yyyymmddHHMM")
+            },
+            //styleMobile: {
+            //    src: 'public/dist/styleMobile.css',
+            //    dest: 'public/dist/styleMobile.final.css?' + grunt.template.today("yyyymmddHHMM"),
+            //    ignore:true
+            //},
+            common: {
+                src: 'public/dist/common.js',
+                dest: 'public/dist/common.final.js?' + grunt.template.today("yyyymmddHHMM")
+            },
+            web: {
+                src: 'public/dist/web.js',
+                dest: 'public/dist/web.final.js?' + grunt.template.today("yyyymmddHHMM")
+            },
+            dependencies: {
+                src: 'public/dist/dependencies.js',
+                dest: 'public/dist/dependencies.final.js?' + grunt.template.today("yyyymmddHHMM")
+            },
+            mobile: {
+                src: 'public/dist/mobile.js',
+                dest: 'public/dist/mobile.final.js?' + grunt.template.today("yyyymmddHHMM")
+            },
+            town: {
+                src: 'public/dist/town.js',
+                dest: 'public/dist/town.final.js?' + grunt.template.today("yyyymmddHHMM")
             }
         }
     });
@@ -362,7 +372,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-timestamp');
+    grunt.loadNpmTasks('grunt-rename');
 
 
 // Default task(s).
@@ -372,7 +382,7 @@ module.exports = function (grunt) {
         'ngAnnotate',
         'uglify',
         'cssmin',
-        'timestamp'
+        'rename'
     ]);
 
 // cache task(s).
@@ -387,5 +397,10 @@ module.exports = function (grunt) {
     grunt.registerTask('time', [
         'timestamp'
     ]);
+
+    grunt.registerTask('test', [
+        'rename'
+    ]);
+
 }
 ;

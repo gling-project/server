@@ -127,9 +127,10 @@ POST          /rest/import_category                                             
 
 ##welcome
 GET           /town/                                                                              @be.lynk.server.controller.MainController.toTown()
-GET           /coming_soon/                                                                        @be.lynk.server.controller.MainController.comingSoon()
+GET           /coming_soon/                                                                       @be.lynk.server.controller.MainController.comingSoon()
 GET           /welcome/                                                                           @be.lynk.server.controller.MainController.toWelcomePage()
 GET           /admin/                                                                             @be.lynk.server.controller.MainController.admin()
+GET           /admin/*url                                                                         @be.lynk.server.controller.MainController.admin2(url)
 GET           /mobile/                                                                            @be.lynk.server.controller.MainController.mobile()
 GET           /legal/                                                                             @be.lynk.server.controller.MainController.legal2()
 GET           /legal/*url                                                                         @be.lynk.server.controller.MainController.legal(url)

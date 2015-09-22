@@ -11,3 +11,5 @@ git push heroku master
 
 mv ./-package.json ./package.json
 
+rm -r public/dist/*
+

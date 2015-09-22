@@ -13,7 +13,7 @@ var initializeCommonRoutes = function () {
     myApp
         .config(function ($routeProvider) {
             $routeProvider
-                .when('/business', {
+                .when('/admin/business', {
                     templateUrl: '/assets/javascripts/view/admin/adminBusiness.html',
                     controller: 'AdminBusinessCtrl',
                     resolve: {
@@ -24,12 +24,12 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 })
-                .when('/', {
+                .when('/admin/', {
                     templateUrl: '/assets/javascripts/view/admin/welcome.html',
                     controller: 'WelcomeCtrl'
                 })
                 .otherwise({
-                    redirectTo: '/'
+                    redirectTo: '/admin/'
                 });
         });
 };
