@@ -168,11 +168,12 @@ public class MainController extends AbstractController {
         String facebookAppId = AppUtil.getFacebookAppId();
         InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
         interfaceDataDTO.setLangId(lang().code());
-        interfaceDataDTO.setCustomerInterests(dozerService.map(customerInterestService.findAll(),CustomerInterestDTO.class));
+        interfaceDataDTO.setCustomerInterests(dozerService.map(customerInterestService.findAll(), CustomerInterestDTO.class));
         interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
         interfaceDataDTO.setUrlBase(urlBase);
+        interfaceDataDTO.setProjectLastVersion(Configuration.root().getString("project.lastVersion"));
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();

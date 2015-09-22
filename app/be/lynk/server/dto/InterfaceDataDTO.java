@@ -29,7 +29,17 @@ public class InterfaceDataDTO extends DTO implements KeyTyped<Date> {
     private String fileBucketUrl;
     private String urlBase;
 
+    private String projectLastVersion;
+
     public InterfaceDataDTO() {
+    }
+
+    public String getProjectLastVersion(){
+        return this.projectLastVersion;
+    }
+
+    public void  setProjectLastVersion(String projectLastVersion){
+        this.projectLastVersion = projectLastVersion;
     }
 
     public List<CustomerInterestDTO> getCustomerInterests() {

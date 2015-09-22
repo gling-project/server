@@ -329,11 +329,11 @@ module.exports = function (grunt) {
         rename: {
             styleDependencies: {
                 src: 'public/dist/styleDependencies.min.css',
-                dest: 'public/dist/styleDependencies.final.css?' + grunt.template.today("yyyymmddHHMM")
+                dest: 'public/dist/styleDependencies.final.css'
             },
             styleTown: {
                 src: 'public/dist/styleTown.min.css',
-                dest: 'public/dist/styleTown.final.css?' + grunt.template.today("yyyymmddHHMM")
+                dest: 'public/dist/styleTown.final.css'
             },
             //styleMobile: {
             //    src: 'public/dist/styleMobile.css',
@@ -342,23 +342,23 @@ module.exports = function (grunt) {
             //},
             common: {
                 src: 'public/dist/common.js',
-                dest: 'public/dist/common.final.js?' + grunt.template.today("yyyymmddHHMM")
+                dest: 'public/dist/common.final.js'
             },
             web: {
                 src: 'public/dist/web.js',
-                dest: 'public/dist/web.final.js?' + grunt.template.today("yyyymmddHHMM")
+                dest: 'public/dist/web.final.js'
             },
             dependencies: {
                 src: 'public/dist/dependencies.js',
-                dest: 'public/dist/dependencies.final.js?' + grunt.template.today("yyyymmddHHMM")
+                dest: 'public/dist/dependencies.final.js'
             },
             mobile: {
                 src: 'public/dist/mobile.js',
-                dest: 'public/dist/mobile.final.js?' + grunt.template.today("yyyymmddHHMM")
+                dest: 'public/dist/mobile.final.js'
             },
             town: {
                 src: 'public/dist/town.js',
-                dest: 'public/dist/town.final.js?' + grunt.template.today("yyyymmddHHMM")
+                dest: 'public/dist/town.final.js'
             }
         }
     });

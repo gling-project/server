@@ -33,78 +33,15 @@
             }
         }
 
-
-
-        @* @if(true){ *@
-        @if(Play.application().isProd() == false) {
-
-             @header.dependencies_header()
-
-                <!-- map -->
-            <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-            <script src="@routes.Assets.at("components/lodash/lodash.min.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("components/angular-google-maps/dist/angular-google-maps.min.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("components/angular-google-maps/dist/angular-google-maps_dev_mapped.min.js")" type="text/javascript"></script>
-
-                <!-- routes -->
-            <script src="@routes.Assets.at("javascripts/routes/web-routes.js")" type="text/javascript"></script>
-
-                <!-- init -->
-            <script src="@routes.Assets.at("javascripts/Init.js")" type="text/javascript"></script>
-
-                <!-- modals -->
-            <script src="@routes.Assets.at("javascripts/modal/LoginModal/LoginModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/ChangePassword/ChangePasswordModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/ForgotPasswordModal/ForgotPasswordModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/HelpModal/HelpModalCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/DownloadFieldModal/DownloadFieldModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/AccountFusionFacebookModal/AccountFusionFacebookModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/CustomerRegistrationModal/CustomerRegistrationModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/BusinessRegistrationModal/BusinessRegistrationModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/AddressModal/AddressModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/EditCustomerInterestModal/EditCustomerInterestModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/PromotionModal/PromotionModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/BusinessNotificationModal/BusinessNotificationModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/OneFieldModal/OneFieldModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/BasicModal/BasicModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/MessageModal/MessageModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/GalleryModal/GalleryModal.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/modal/IframeModal/IframeModal.js")" type="text/javascript"></script>
-
-                <!-- controllers -->
-            <script src="@routes.Assets.at("javascripts/controller/web/HomeCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/controller/web/ProfileCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/controller/web/BusinessCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/controller/web/SearchPageCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/controller/web/FollowedBusinessPageCtrl.js")" type="text/javascript"></script>
-
-                <!-- component -->
-            <script src="@routes.Assets.at("javascripts/directive/component/publicationList/PublicationListCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/directive/component/publicationWidget/PublicationWidgetCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/directive/component/businessList/BusinessListCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/directive/component/categoryLine/CategoryLineCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/directive/web/headerBar/HeaderBarCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/directive/web/footerBar/FooterBarCtrl.js")" type="text/javascript"></script>
-            <script src="@routes.Assets.at("javascripts/directive/component/toTop/ToTopCtrl.js")" type="text/javascript"></script>
-
-                <!-- common angularsj elements -->
-            @header.header()
-        }
-
-         @* @if(false){*@
-         @if(Play.application().isProd()){
-
-            <script src="@routes.Assets.at("dist/dependencies.final.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.at("dist/dependencies."+data.getProjectLastVersion+".final.js")" type="text/javascript"></script>
 
             <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
-            <script src="@routes.Assets.at("dist/web.final.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.at("dist/web."+data.getProjectLastVersion+".final.js")" type="text/javascript"></script>
 
-            <script src="@routes.Assets.at("dist/common.final.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.at("dist/common."+data.getProjectLastVersion+".final.js")" type="text/javascript"></script>
 
-            <link rel="stylesheet" media="screen" href="@routes.Assets.at("dist/styleDependencies.final.css")">
-        }
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("dist/styleDependencies."+data.getProjectLastVersion+".final.css")">
 
 
 
