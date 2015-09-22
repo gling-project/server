@@ -69,11 +69,13 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     public Result getPublicData(long id) {
 
+        Business myBusiness = securityController.getBusiness();
+
         Business business = businessService.findById(id);
 
         if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED) &&
                 (securityController.isAuthenticated(ctx()) == false ||
-                        (!business.getAccount().equals(securityController.getCurrentUser()) &&
+                        (!business.equals(myBusiness) &&
                                 !securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)))) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_HIDDEN_AND_NOT_MINE);
         }
@@ -86,7 +88,6 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED, BusinessStatusEnum.PUBLISHED})
     public Result editGallery() {
         List<StoredFileDTO> galleryPictures = extractList(StoredFileDTO.class);
 
@@ -226,7 +227,6 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED, BusinessStatusEnum.PUBLISHED})
     public Result editIllustration() {
         StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
 
@@ -246,7 +246,6 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED, BusinessStatusEnum.PUBLISHED})
     public Result editLandscape() {
         StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
 

@@ -1019,10 +1019,6 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
 
         $scope.loading = false;
 
-        if (share) {
-            facebookService.sharePublication(data);
-        }
-
         $scope.close();
         callback();
     };
@@ -1050,6 +1046,7 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
                 }
                 else {
                     promotionService.add($scope.promotionParam.dto, function (data) {
+                            facebookService.sharePublication(data);
                             $scope.success(data, share);
                         },
                         function () {
@@ -1096,10 +1093,6 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
         console.log(data);
 
         $scope.loading = false;
-
-        if (share) {
-            //facebookService.sharePublication(data);
-        }
 
         $scope.close();
         callback();

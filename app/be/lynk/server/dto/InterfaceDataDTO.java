@@ -22,12 +22,22 @@ public class InterfaceDataDTO extends DTO implements KeyTyped<Date> {
 
     private List<SearchCriteriaDTO> searchCriterias;
 
+    private List<CustomerInterestDTO> customerInterests;
+
     private String appId;
 
     private String fileBucketUrl;
     private String urlBase;
 
     public InterfaceDataDTO() {
+    }
+
+    public List<CustomerInterestDTO> getCustomerInterests() {
+        return customerInterests;
+    }
+
+    public void setCustomerInterests(List<CustomerInterestDTO> customerInterests) {
+        this.customerInterests = customerInterests;
     }
 
     public String getFileBucketUrl() {

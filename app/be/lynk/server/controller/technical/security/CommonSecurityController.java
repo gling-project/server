@@ -208,6 +208,7 @@ public class CommonSecurityController extends Security.Authenticator {
     }
 
     public Business getBusiness() {
-        return ((BusinessAccount) getCurrentUser()).getBusiness();
+        Account currentUser = getCurrentUser();
+        return ((BusinessAccount) currentUser).getBusiness();
     }
 }

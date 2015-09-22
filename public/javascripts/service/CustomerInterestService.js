@@ -23,6 +23,10 @@ myApp.service("customerInterestService", function ($sce, $http, $flash) {
             });
     };
 
+    this.setAll = function(interests){
+        customerInterests = interests;
+    };
+
     this.getAll = function (callback) {
         if (customerInterests == null) {
             loadAll(callback);

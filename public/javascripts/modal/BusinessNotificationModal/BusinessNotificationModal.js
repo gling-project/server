@@ -33,10 +33,6 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
 
         $scope.loading = false;
 
-        if (share) {
-            //facebookService.sharePublication(data);
-        }
-
         $scope.close();
         callback();
     };

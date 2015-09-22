@@ -6,6 +6,7 @@ import be.lynk.server.dto.*;
 import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
@@ -37,6 +38,8 @@ public class MainController extends AbstractController {
     private PublicationService  publicationService;
     @Autowired
     private LocalizationService localizationService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
     public Result comingSoon() {
         return ok(be.lynk.server.views.html.comingSoon.render());
@@ -60,20 +63,7 @@ public class MainController extends AbstractController {
         String facebookAppId = AppUtil.getFacebookAppId();
 
         //try with param
-        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
-        interfaceDataDTO.setLangId(lang().code());
-        interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
-        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
-        interfaceDataDTO.setAppId(facebookAppId);
-        interfaceDataDTO.setUrlBase(urlBase);
-        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
-        if (securityController.isAuthenticated(ctx())) {
-            Account currentUser = securityController.getCurrentUser();
-            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
-            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
-            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
-            interfaceDataDTO.setMySelf(accountDTO);
-        }
+        InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO();
 
 
         return ok(be.lynk.server.views.html.template_admin.render(getAvaiableLanguage(), interfaceDataDTO));
@@ -105,7 +95,9 @@ public class MainController extends AbstractController {
             return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage()));
         } else {
 
-            String facebookAppId = AppUtil.getFacebookAppId();
+
+            InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO();
+
 
             AbstractPublicationDTO publicationDTO = null;
             if (url != null && url.contains("publication/")) {
@@ -122,27 +114,7 @@ public class MainController extends AbstractController {
             }
 
             //try with param
-            InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
-            interfaceDataDTO.setLangId(lang().code());
-            interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
-            interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
-            interfaceDataDTO.setAppId(facebookAppId);
-            interfaceDataDTO.setUrlBase(urlBase);
-            interfaceDataDTO.setSearchCriterias(getSearchCriteria());
-            if (securityController.isAuthenticated(ctx())) {
-                Account currentUser = securityController.getCurrentUser();
 
-                if (!currentUser.getLang().code().equals(interfaceDataDTO.getLangId())) {
-                    changeLang(currentUser.getLang().code());
-                    interfaceDataDTO.setLangId(currentUser.getLang().code());
-                }
-
-                MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
-                accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
-                accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
-                interfaceDataDTO.setMySelf(accountDTO);
-
-            }
 
 
             if ((isMobileDevice() || forceMobile) && mobileDisabled==null) {
@@ -183,6 +155,35 @@ public class MainController extends AbstractController {
 
     private void addAlreadyVisitedCookie() {
         ctx().response().setCookie(CommonSecurityController.COOKIE_ALREADY_VISITED, "true", 2592000);
+    }
+
+    private InterfaceDataDTO generateInterfaceDTO(){
+
+
+        String facebookAppId = AppUtil.getFacebookAppId();
+        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
+        interfaceDataDTO.setLangId(lang().code());
+        interfaceDataDTO.setCustomerInterests(dozerService.map(customerInterestService.findAll(),CustomerInterestDTO.class));
+        interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
+        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
+        interfaceDataDTO.setAppId(facebookAppId);
+        interfaceDataDTO.setUrlBase(urlBase);
+        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+        if (securityController.isAuthenticated(ctx())) {
+            Account currentUser = securityController.getCurrentUser();
+
+            if (!currentUser.getLang().code().equals(interfaceDataDTO.getLangId())) {
+                changeLang(currentUser.getLang().code());
+                interfaceDataDTO.setLangId(currentUser.getLang().code());
+            }
+
+            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
+            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
+            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
+            interfaceDataDTO.setMySelf(accountDTO);
+
+        }
+        return interfaceDataDTO;
     }
 
 }

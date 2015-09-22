@@ -3387,7 +3387,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', 'constantService', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout, constantService) {
+myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', 'constantService', 'customerInterestService', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout, constantService,customerInterestService) {
 
 
     //catch url
@@ -3411,6 +3411,7 @@ myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationSer
         translationService.set(data.translations);
         constantService.fileBucketUrl = data.fileBucketUrl;
         constantService.urlBase = data.urlBase;
+        customerInterestService.setAll(data.customerInterests);
     }
 
     //import data
@@ -3889,6 +3890,10 @@ myApp.service("customerInterestService", ['$sce', '$http', '$flash', function ($
                 }
                 $flash.error(data);
             });
+    };
+
+    this.setAll = function(interests){
+        customerInterests = interests;
     };
 
     this.getAll = function (callback) {

@@ -33,10 +33,6 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
 
         $scope.loading = false;
 
-        if (share) {
-            facebookService.sharePublication(data);
-        }
-
         $scope.close();
         callback();
     };
@@ -64,6 +60,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                 }
                 else {
                     promotionService.add($scope.promotionParam.dto, function (data) {
+                            facebookService.sharePublication(data);
                             $scope.success(data, share);
                         },
                         function () {
