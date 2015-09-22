@@ -28,16 +28,17 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-    String AWSBuckect = Configuration.root().getString("aws.s3.bucket");
-    String fileBucketUrl = "https://s3.amazonaws.com/"+AWSBuckect;
-    String urlBase = Configuration.root().getString("site.url.base");
-    String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
+    private String AWSBuckect     = Configuration.root().getString("aws.s3.bucket");
+    private String fileBucketUrl  = "https://s3.amazonaws.com/" + AWSBuckect;
+    private String urlBase        = Configuration.root().getString("site.url.base");
+    private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
+    private String lastVersion    = Configuration.root().getString("project.lastVersion");
 
 
     @Autowired
-    private PublicationService  publicationService;
+    private PublicationService      publicationService;
     @Autowired
-    private LocalizationService localizationService;
+    private LocalizationService     localizationService;
     @Autowired
     private CustomerInterestService customerInterestService;
 
@@ -54,7 +55,7 @@ public class MainController extends AbstractController {
     }
 
     public Result toTown() {
-        return ok(be.lynk.server.views.html.town.render());
+        return ok(be.lynk.server.views.html.town.render(lastVersion));
     }
 
     @Transactional
@@ -121,8 +122,7 @@ public class MainController extends AbstractController {
             //try with param
 
 
-
-            if ((isMobileDevice() || forceMobile) && mobileDisabled==null) {
+            if ((isMobileDevice() || forceMobile) && mobileDisabled == null) {
                 return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
             } else {
                 return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, publicationDTO));
@@ -162,7 +162,7 @@ public class MainController extends AbstractController {
         ctx().response().setCookie(CommonSecurityController.COOKIE_ALREADY_VISITED, "true", 2592000);
     }
 
-    private InterfaceDataDTO generateInterfaceDTO(){
+    private InterfaceDataDTO generateInterfaceDTO() {
 
 
         String facebookAppId = AppUtil.getFacebookAppId();
@@ -173,7 +173,7 @@ public class MainController extends AbstractController {
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
         interfaceDataDTO.setUrlBase(urlBase);
-        interfaceDataDTO.setProjectLastVersion(Configuration.root().getString("project.lastVersion"));
+        interfaceDataDTO.setProjectLastVersion(lastVersion);
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();
