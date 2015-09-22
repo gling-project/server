@@ -1,11 +1,11 @@
 package be.lynk.server.service.impl;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.model.Position;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Address;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
-import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.service.BusinessService;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
@@ -27,7 +27,8 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         CriteriaQuery<Business> cq = cb.createQuery(Business.class);
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
-        cq.where(cb.equal(from.get("name"), businessName));
+        cq.where(cb.equal(from.get("name"), businessName),
+                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
         return JPA.em().createQuery(cq).getResultList();
 
     }
@@ -42,7 +43,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
         cq.where(cb.like(from.get("searchableName"), criteria),
-                 cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
@@ -66,7 +67,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         Join<Business, BusinessCategory> businessCategories = from.join("businessCategories");
         cq.select(from);
         cq.where(cb.equal(businessCategories, businessCategory),
-                 cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
@@ -92,7 +93,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
 
         cq.where(cb.equal(addressRel.get("zip"), zip),
                  cb.like(from.get("searchableName"), criteria),
-                 cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
@@ -103,7 +104,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
     }
 
     @Override
-    public List<Business> findByZip(String zip, int page,int maxResult){
+    public List<Business> findByZip(String zip, int page, int maxResult) {
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Business> cq = cb.createQuery(Business.class);
@@ -113,7 +114,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         cq.select(from);
 
         cq.where(cb.equal(addressRel.get("zip"), zip),
-                 cb.equal(from.get("businessStatus"), BusinessStatus.PUBLISHED));
+                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
@@ -139,7 +140,8 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         cq.where(cb.greaterThan(addressRel.get("posx"), maxCoordinate[0]),
                  cb.lessThan(addressRel.get("posx"), maxCoordinate[1]),
                  cb.greaterThan(addressRel.get("posy"), maxCoordinate[2]),
-                 cb.lessThan(addressRel.get("posy"), maxCoordinate[3]));
+                 cb.lessThan(addressRel.get("posy"), maxCoordinate[3]),
+                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
@@ -159,14 +161,25 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
 
         //Select distinct d from Distributor d join d.towns t join t.district t where t.name = :name
 
-        String request = "select b from Business b join b.businessCategories c where c in :categories and b.address.posx > :coord1 and b.address.posx < :coord2 and b.address.posy > :coord3 and b.address.posy < :coord4 order by searchableName";
+        String request = "select b from Business b join b.businessCategories c where c in :categories and b.address.posx > :coord1 and b.address.posx < :coord2 and b.address.posy > :coord3 and b.address.posy < :coord4 and b.businessStatus = :status order by searchableName";
 
         return JPA.em().createQuery(request, Business.class)
-           .setParameter("categories", categories)
-           .setParameter("coord1", doubles[0])
-           .setParameter("coord2", doubles[1])
-           .setParameter("coord3", doubles[2])
-           .setParameter("coord4", doubles[3])
-           .getResultList();
+                  .setParameter("categories", categories)
+                  .setParameter("coord1", doubles[0])
+                  .setParameter("coord2", doubles[1])
+                  .setParameter("coord3", doubles[2])
+                  .setParameter("coord4", doubles[3])
+                  .setParameter("status", BusinessStatusEnum.PUBLISHED)
+                  .getResultList();
+    }
+
+    @Override
+    public List<Business> findByFollowed(Account currentUser) {
+
+        String request = "Select b from Business b, FollowLink f where b.businessStatus = :status and f.business=b and f.account=:account";
+
+        return JPA.em().createQuery(request, Business.class)
+                  .setParameter("account", currentUser)
+                  .getResultList();
     }
 }

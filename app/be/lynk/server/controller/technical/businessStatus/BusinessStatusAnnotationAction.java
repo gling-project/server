@@ -27,7 +27,7 @@ public class BusinessStatusAnnotationAction extends Action<BusinessStatusAnnotat
             if (role.equals(RoleEnum.BUSINESS) ||
                     role.getChildren().contains(RoleEnum.BUSINESS)) {
                 Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
-                for (BusinessStatus businessStatus : configuration.status()) {
+                for (BusinessStatusEnum businessStatus : configuration.status()) {
                     if (business.getBusinessStatus().equals(businessStatus)) {
                         return delegate.call(context);
                     }

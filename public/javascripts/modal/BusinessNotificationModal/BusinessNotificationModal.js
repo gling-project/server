@@ -1,4 +1,4 @@
-myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback,facebookService,business) {
+myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business) {
 
     $scope.loading = false;
 
@@ -6,12 +6,12 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
 
     $scope.businessNotificationParam = {
         dto: angular.copy(dto),
-        business:business
+        business: business
     };
 
 
-    $scope.getHeight = function(){
-        var h = {height:($(window).height() - 190)+'px'};
+    $scope.getHeight = function () {
+        var h = {height: ($(window).height() - 190) + 'px'};
         return h;
     };
 
@@ -21,8 +21,8 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
     };
 
 
-    $scope.getIllustration = function(publication){
-        if(publication.pictures.length>0){
+    $scope.getIllustration = function (publication) {
+        if (publication.pictures.length > 0) {
             return publication.pictures[O];
         }
         return publication.businessIllustration;
@@ -34,8 +34,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
         $scope.loading = false;
 
         if (share) {
-
-            facebookService.sharePublication(data);
+            //facebookService.sharePublication(data);
         }
 
         $scope.close();
@@ -48,6 +47,8 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
             $scope.businessNotificationParam.displayErrorMessage = true;
         }
         else {
+
+
             $scope.loading = true;
             if ($scope.update) {
                 businessNotificationService.edit($scope.businessNotificationParam.dto, function (data) {
@@ -59,6 +60,9 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
             }
             else {
                 businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
+                        if (share) {
+                            facebookService.sharePublication(data);
+                        }
                         $scope.success(data, share);
                     },
                     function () {

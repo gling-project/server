@@ -1,12 +1,11 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessNotificationDTO;
 import be.lynk.server.dto.StoredFileDTO;
-import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.BusinessNotification;
@@ -39,7 +38,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatus.PUBLISHED})
+    @BusinessStatusAnnotation(status = {BusinessStatusEnum.PUBLISHED})
     public Result create() {
         BusinessNotificationDTO dto = extractDTOFromRequest(BusinessNotificationDTO.class);
 
@@ -101,7 +100,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatus.PUBLISHED})
+    @BusinessStatusAnnotation(status = {BusinessStatusEnum.PUBLISHED})
     public Result update(Long id) {
         BusinessNotificationDTO dto = extractDTOFromRequest(BusinessNotificationDTO.class);
 

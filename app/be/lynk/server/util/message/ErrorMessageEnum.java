@@ -35,7 +35,8 @@ public enum ErrorMessageEnum {
     ERROR_PROMOTION_DURATION_TOO_LONG("--.error.promotion.duration.tooLong"),
     ERROR_NOTIFICATION_DURATION_TOO_LONG("--.error.notification.duration.tooLong"),
     ERROR_PUBLICATION_TOO_MUCH_TODAY("--.error.promotion.TooMuchToday"),
-    ERROR_PUBLICATION_STARTDATE_BEFORE_NOW("--.error.publication.startDateBeforeNow");
+    ERROR_PUBLICATION_STARTDATE_BEFORE_NOW("--.error.publication.startDateBeforeNow"),
+    ERROR_BUSINESS_HIDDEN_AND_NOT_MINE("--.error.business.hiddenAndNotMine");
 
     private final String key;
 

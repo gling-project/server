@@ -18,6 +18,7 @@
     <button ng-disabled="loading"
             id="promotion-modal-btn-save-and-share"
             type="button"
+            ng-hide="update===true"
             class="btn btn-primary"
             ng-click="save(true)">
         {{'--.publication.modal.publicAndShare' | translateText}}

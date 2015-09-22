@@ -559,3 +559,4 @@ day_abrv_sunday=Di
 --.business.manager.createPublication.enabled.desc=Attention, votre compte vous permet d'actuellement publier un maximum de 2 messages par jour (promotion ou actualité). Notez également qu'il n'est pas possible de modifier une publication lorsque vous l'avez validée.
 --.business.vta=Numéro de TVA
 --.validation.dto.vta=Numéro de TVA invalide
+--.error.business.hiddenAndNotMine=Ce commerce n'est actuellement pas visible. Si ce commerce est le vôtre, veuillez vous connecter pour poursuivre votre navigation

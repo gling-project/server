@@ -124,11 +124,12 @@
     </div>
     <div class="publication-footer">
 
-
+        <!-- publication date -->
         <div class="publication-footer-date publication-bordered-bottom">
             {{'--.publication.publishTo' | translateText}} {{getInfo().publication.startDate | date:'dd MMM yyyy hh:mm'}}
         </div>
 
+        <!-- facebook -->
         <div class="publication-footer-facebook">
             <facebook-share-publication-ctrl ng-info="{publication:getInfo().publication}"></facebook-share-publication-ctrl>
         </div>

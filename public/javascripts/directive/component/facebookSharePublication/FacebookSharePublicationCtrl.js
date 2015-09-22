@@ -13,13 +13,8 @@ myApp.directive('facebookSharePublicationCtrl', function ($rootScope, businessSe
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-
-
-
                     scope.share = function(){
-
                         facebookService.sharePublication(scope.getInfo().publication);
-
                     };
 
                 }

@@ -3,7 +3,7 @@ package be.lynk.server.controller.technical.businessStatus;
 /**
  * Created by florian on 5/07/15.
  */
-public enum  BusinessStatus {
+public enum BusinessStatusEnum {
 
     NOT_PUBLISHED("--.business.status.not_public"),
     WAITING_CONFIRMATION("--.business.status.waiting_confirmation"),
@@ -11,7 +11,7 @@ public enum  BusinessStatus {
 
     private final String translationName;
 
-    BusinessStatus(String translationName) {
+    BusinessStatusEnum(String translationName) {
         this.translationName = translationName;
     }
 

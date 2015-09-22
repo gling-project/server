@@ -1,6 +1,6 @@
 package be.lynk.server.importer.impl;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.importer.DemoImporter;
 import be.lynk.server.model.GenderEnum;
@@ -19,7 +19,6 @@ import play.Logger;
 import play.i18n.Lang;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +114,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 business.setName(bName);
                 business.setDescription(getString(sheet, COL_BUSINESS_DESC, rowCounter));
                 business.setPhone(getString(sheet, COL_BUSINESS_PHONE, rowCounter));
-                business.setBusinessStatus(BusinessStatus.PUBLISHED);
+                business.setBusinessStatus(BusinessStatusEnum.PUBLISHED);
                 business.setAddress(new Address(
                         getString(sheet, COL_BUSINESS_STREET, rowCounter),
                         getString(sheet, COL_BUSINESS_ZIP, rowCounter),
@@ -320,7 +319,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
             ;
             business.setDescription("business " + i + " - escription");
             business.setPhone("00000000");
-            business.setBusinessStatus(BusinessStatus.PUBLISHED);
+            business.setBusinessStatus(BusinessStatusEnum.PUBLISHED);
             business.setAddress(new Address("4 Place des Bienfaiteurs", "1030", "BXL", "BELGIUM"));
             business.getAddress().setPosx(50.8357006);
             business.getAddress().setPosy(4.4397416);

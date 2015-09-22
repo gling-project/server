@@ -16,12 +16,21 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+
+                    //add day function
+                    var addDays = function(date, days) {
+                        var result = new Date(date);
+                        result.setDate(result.getDate() + days);
+                        return result;
+                    };
+
+
                     scope.update = scope.getInfo().dto != null;
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
                             startDate: new Date(),
-                            endDate:new Date().setMonth(new Date().getDay()+(4*7))
+                            endDate:addDays(new Date(),28)//.setMonth(new Date().getDay()+28)
                         };
                     };
 

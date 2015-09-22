@@ -15,5 +15,5 @@ import java.lang.annotation.*;
 @Inherited
 @Documented
 public @interface BusinessStatusAnnotation {
-	BusinessStatus[] status();
+	BusinessStatusEnum[] status();
 }

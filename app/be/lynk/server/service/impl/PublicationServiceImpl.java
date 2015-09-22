@@ -1,6 +1,6 @@
 package be.lynk.server.service.impl;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.PublicationTypeEnum;
 import be.lynk.server.model.SearchResult;
@@ -9,7 +9,6 @@ import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.PublicationService;
 import org.springframework.stereotype.Service;
-import play.Logger;
 import play.db.jpa.JPA;
 
 import javax.persistence.TypedQuery;
@@ -126,7 +125,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         request += " ORDER BY p.startDate DESC ";
 
         TypedQuery<SearchResult> query = JPA.em().createQuery(request, SearchResult.class)
-                                            .setParameter("businessStatus", BusinessStatus.PUBLISHED);
+                                            .setParameter("businessStatus", BusinessStatusEnum.PUBLISHED);
 
         if (position != null && maxDistance != null) {
 
@@ -164,7 +163,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.like(from.get("searchableTitle"), criteria)
                 , cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
-                , cb.equal(business.get("businessStatus"), BusinessStatus.PUBLISHED)
+                , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
                 );
         cq.orderBy(cb.desc(from.get("startDate")));
 

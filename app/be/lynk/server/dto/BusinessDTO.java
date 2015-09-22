@@ -1,6 +1,6 @@
 package be.lynk.server.dto;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.util.constants.ValidationRegex;
 import play.modules.mongodb.jackson.KeyTyped;
@@ -49,7 +49,7 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
 
     private List<BusinessCategoryDTO> businessCategories = new ArrayList<>();
 
-    private BusinessStatus businessStatus;
+    private BusinessStatusEnum businessStatus;
 
     protected Date askPublicationDate;
 
@@ -82,11 +82,11 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
         this.id = id;
     }
 
-    public BusinessStatus getBusinessStatus() {
+    public BusinessStatusEnum getBusinessStatus() {
         return businessStatus;
     }
 
-    public void setBusinessStatus(BusinessStatus businessStatus) {
+    public void setBusinessStatus(BusinessStatusEnum businessStatus) {
         this.businessStatus = businessStatus;
     }
 

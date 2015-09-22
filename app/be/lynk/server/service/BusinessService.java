@@ -1,6 +1,7 @@
 package be.lynk.server.service;
 
 import be.lynk.server.model.Position;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
 import be.lynk.server.model.entities.CustomerInterest;
@@ -27,4 +28,5 @@ public interface BusinessService extends CrudService<Business>{
 
     List<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance);
 
+    List<Business> findByFollowed(Account currentUser);
 }

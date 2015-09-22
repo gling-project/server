@@ -1,6 +1,6 @@
 package be.lynk.server.model.entities;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatus;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.model.entities.technical.AbstractEntity;
@@ -68,7 +68,7 @@ public class Business extends AbstractEntity implements Comparable<Business> {
 
     @Basic(optional = false)
     @Enumerated(value = EnumType.STRING)
-    private BusinessStatus businessStatus;
+    private BusinessStatusEnum businessStatus;
 
     @Column(columnDefinition = "timestamp")
     @Convert(converter = LocalDateTimePersistenceConverter.class)
@@ -100,7 +100,7 @@ public class Business extends AbstractEntity implements Comparable<Business> {
         this.galleryPictures = galleryPictures;
     }
 
-    public BusinessStatus getBusinessStatus() {
+    public BusinessStatusEnum getBusinessStatus() {
         return businessStatus;
     }
 
@@ -121,7 +121,7 @@ public class Business extends AbstractEntity implements Comparable<Business> {
         this.askPublicationDate = askPublicationDate;
     }
 
-    public void setBusinessStatus(BusinessStatus businessStatus) {
+    public void setBusinessStatus(BusinessStatusEnum businessStatus) {
         this.businessStatus = businessStatus;
     }
 
