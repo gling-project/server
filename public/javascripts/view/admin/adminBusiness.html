@@ -1,4 +1,4 @@
-<div>Business</div>
+<div>Business (Total : {{businesses.length}})</div>
 
 
 <table ng-table="tableParams" class="table">
@@ -8,6 +8,12 @@
         </td>
         <td data-title="'--.generic.status' | translateText" sortable="'businessStatus'">
             {{business.businessStatus}}
+        </td>
+        <td data-title="'Création'"  sortable="'creationDate'">
+            {{business.creationDate | date}}
+        </td>
+        <td data-title="'Followers'" sortable="'totalFollowers'">
+            {{business.totalFollowers}}
         </td>
         <td data-title="'--.generic.action' | translateText">
             <button

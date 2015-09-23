@@ -54,7 +54,16 @@ public class BusinessRestController extends AbstractController {
     public Result getAll() {
         List<Business> all = businessService.findAll();
 
-        List<BusinessDTO> map = dozerService.map(all, BusinessDTO.class);
+        List<BusinessDTO> map = new ArrayList<>();
+
+        for (Business business : all) {
+
+            BusinessDTO businessDTO = dozerService.map(business, BusinessDTO.class);
+            map.add(businessDTO);
+
+            businessDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+        }
+
 
         return ok(new ListDTO<>(map));
     }
