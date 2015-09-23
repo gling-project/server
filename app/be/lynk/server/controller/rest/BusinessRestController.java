@@ -69,14 +69,14 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     public Result getPublicData(long id) {
 
-        Business myBusiness = securityController.getBusiness();
+        //Business myBusiness = ;
 
         Business business = businessService.findById(id);
 
         if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED) &&
                 (securityController.isAuthenticated(ctx()) == false ||
-                        (!business.equals(myBusiness) &&
-                                !securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)))) {
+                        (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                                (!securityController.getCurrentUser().getRole().equals(RoleEnum.BUSINESS) || !business.equals(securityController.getBusiness()))))) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_HIDDEN_AND_NOT_MINE);
         }
 
