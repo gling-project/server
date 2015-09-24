@@ -52,7 +52,7 @@ myApp.service("modalService", function ($modal) {
     };
 
 
-    this.loadingModal = function () {
+    this.openLoadingModal = function () {
         this.loadingModal = $modal.open({
             templateUrl: "/assets/javascripts/modal/mobile/LoadingModal/view.html",
             controller: "LoadingModalCtrl",

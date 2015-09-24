@@ -39,6 +39,8 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
                         $scope.fusion(data2.accountFusion);
                     }
                     else if (data2.status == 'OK') {
+                        console.log('data2');
+                        console.log(data2);
                         $scope.accountParam.dto.firstname = data2.firstname;
                         $scope.accountParam.dto.lastname = data2.lastname;
                         $scope.accountParam.dto.email = data2.email;
@@ -59,7 +61,7 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
 
     $scope.loading = function(b){
         if(b === true) {
-            modalService.loadingModal();
+            modalService.openLoadingModal();
         }
         else{
             modalService.closeLoadingModal();
