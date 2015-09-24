@@ -58,7 +58,7 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
     };
 
     $scope.loading = function(b){
-        if(b) {
+        if(b === true) {
             modalService.loadingModal();
         }
         else{
@@ -83,7 +83,7 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
                 facebookAuthentication: facebookAuthentication
             };
 
-            $scope.loading = true;
+            $scope.loading(true);
             accountService.registration(dto, function () {
                     $scope.loading(false);
                     $flash.success(translationService.get("--.login.flash.success"));

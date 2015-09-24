@@ -145,112 +145,112 @@ var initializeCommonRoutes = function () {
     //    };
     //});
     myApp
-        .config(function ($routeProvider) {
+        .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/', {
                     templateUrl: '/assets/javascripts/view/mobile/welcome.html',
                     controller: 'WelcomeCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/home');
                             }
-                        }
+                        }]
                     }
                 })
                 .when('/home', {
                     templateUrl: '/assets/javascripts/view/mobile/home.html',
                     controller: 'HomeCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
-                        }
+                        }]
                     }
                 })
                 .when('/customer_registration', {
                     templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
                     controller: 'CustomerRegistrationCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
-                        }
+                        }]
                     }
                 })
                 .when('/profile', {
                     templateUrl: '/assets/javascripts/view/mobile/profile.html',
                     controller: 'ProfileCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
-                        }
+                        }]
                     }
                 }).when('/business/:businessId', {
                     templateUrl: '/assets/javascripts/view/mobile/business.html',
                     controller: 'BusinessCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
-                        }
+                        }]
                     }
                 }).when('/business/:businessId/publication/:publicationId', {
                     templateUrl: '/assets/javascripts/view/mobile/business.html',
                     controller: 'BusinessCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
-                        }
+                        }]
                     }
                 }).when('/search/:param', {
                     templateUrl: '/assets/javascripts/view/mobile/search_page.html',
                     controller: 'SearchPageCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) == 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
-                        }
+                        }]
                     }
                 }).when('/forgot_password', {
                     templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
                     controller: 'ForgotPasswordCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope) {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
                             $rootScope.$broadcast('PROGRESS_BAR_START');
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
-                        }
+                        }]
                     }
                 }).when('/legal/', {
                     templateUrl: '/assets/javascripts/view/mobile/legal.html',
                     controller: 'LegalCtrl'
                 }).when('/help/', {
                     resolve: {
-                        a: function ($rootScope) {
+                        a: ['$rootScope', function ($rootScope) {
                             window.location.replace('/help/');
-                        }
+                        }]
                     }
                 }).otherwise({
                     redirectTo: '/'
                 });
-        });
+        }]);
 };
 var myApp = angular.module('app', [
         'ngAnimate',
@@ -274,7 +274,7 @@ app.config(['$locationProvider', function ($locationProvider) {
         requireBase: false
     });
 }]);
-myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
+myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountService', '$timeout', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
     $scope.loading=false;
 
@@ -378,8 +378,8 @@ myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalIns
         }
     };
 
-});
-myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness,callback) {
+}]);
+myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', 'callback', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness,callback) {
 
     $scope.loading = false;
 
@@ -441,8 +441,8 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,bu
     }
 
 
-});
-myApp.controller('OneFieldModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
+}]);
+myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'field', 'callback', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
 
     var value = {
         data: null
@@ -473,9 +473,9 @@ myApp.controller('OneFieldModalCtrl', function ($scope, $flash, facebookService,
         }
     };
 
-})
+}])
 ;
-myApp.controller('AlertMessageCtrl', function ($scope, $flash, $modalInstance,  $compile, message) {
+myApp.controller('AlertMessageCtrl', ['$scope', '$flash', '$modalInstance', '$compile', 'message', function ($scope, $flash, $modalInstance,  $compile, message) {
 
     $scope.message = message;
 
@@ -484,16 +484,16 @@ myApp.controller('AlertMessageCtrl', function ($scope, $flash, $modalInstance,  
     };
 
 
-});
-myApp.controller('LoadingModalCtrl', function ($scope, $flash, $modalInstance,  $compile) {
+}]);
+myApp.controller('LoadingModalCtrl', ['$scope', '$flash', '$modalInstance', '$compile', function ($scope, $flash, $modalInstance,  $compile) {
 
     $scope.close = function () {
         $modalInstance.close();
     };
 
 
-});
-myApp.controller('WelcomeCtrl', function ($rootScope,$scope,$location,accountService,$flash,translationService) {
+}]);
+myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountService', '$flash', 'translationService', function ($rootScope,$scope,$location,accountService,$flash,translationService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -531,8 +531,8 @@ myApp.controller('WelcomeCtrl', function ($rootScope,$scope,$location,accountSer
     };
 
 
-});
-myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService,modalService) {
+}]);
+myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', 'modalService', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService,modalService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -785,8 +785,8 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     }
 
 
-});
-myApp.controller('ForgotPasswordCtrl', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash) {
+}]);
+myApp.controller('ForgotPasswordCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$filter', '$flash', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -861,8 +861,8 @@ myApp.controller('ForgotPasswordCtrl', function ($rootScope,$scope,facebookServi
 
 
 
-});
-myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flash, accountService, facebookService, translationService, modalService, $location, addressService) {
+}]);
+myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', 'addressService', function ($rootScope, $scope, $flash, accountService, facebookService, translationService, modalService, $location, addressService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -922,7 +922,7 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
     };
 
     $scope.loading = function(b){
-        if(b) {
+        if(b === true) {
             modalService.loadingModal();
         }
         else{
@@ -947,7 +947,7 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
                 facebookAuthentication: facebookAuthentication
             };
 
-            $scope.loading = true;
+            $scope.loading(true);
             accountService.registration(dto, function () {
                     $scope.loading(false);
                     $flash.success(translationService.get("--.login.flash.success"));
@@ -960,8 +960,8 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
     }
 
 
-});
-myApp.controller('MenuCtrl', function ($rootScope,$scope,facebookService,accountService,$location) {
+}]);
+myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', function ($rootScope,$scope,facebookService,accountService,$location) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -976,8 +976,8 @@ myApp.controller('MenuCtrl', function ($rootScope,$scope,facebookService,account
     };
 
 
-});
-myApp.controller('ProfileCtrl', function ($rootScope,$scope, modalService, accountService) {
+}]);
+myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accountService', function ($rootScope,$scope, modalService, accountService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1053,8 +1053,8 @@ myApp.controller('ProfileCtrl', function ($rootScope,$scope, modalService, accou
             });
     };
 
-});
-myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+}]);
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1143,8 +1143,8 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
         //displayRemoveIcon: $scope.edit
     };
 
-});
-myApp.controller('SearchPageCtrl', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService) {
+}]);
+myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -1241,8 +1241,8 @@ myApp.controller('SearchPageCtrl', function ($rootScope,$scope, searchService, $
     $scope.$on('POSITION_CHANGED', function () {
         $scope.search();
     });
-});
-myApp.directive('businessListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+}]);
+myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -1272,8 +1272,8 @@ myApp.directive('businessListMobileCtrl', function ($rootScope, businessService,
             }
         }
     }
-});
-myApp.directive('publicationListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+}]);
+myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
         restrict: "E",
@@ -1306,8 +1306,8 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
             }
         }
     }
-});
-myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService) {
+}]);
+myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService) {
 
     return {
         restrict: "E",
@@ -1372,7 +1372,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
             }
         }
     }
-})
+}])
 ;
 myApp.directive("headerSearchCtrl", function () {
     return {
@@ -1424,7 +1424,7 @@ myApp.directive("mobileTitleCtrl", function () {
     }
 });
 
-myApp.service("$flash", function($filter,modalService) {
+myApp.service("$flash", ['$filter', 'modalService', function($filter,modalService) {
 
     Messenger.options = {
         extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right cr-messenger',
@@ -1466,4 +1466,4 @@ myApp.service("$flash", function($filter,modalService) {
         };
         return;
     }
-});
+}]);

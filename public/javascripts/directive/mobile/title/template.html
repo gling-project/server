@@ -1,19 +1,21 @@
 <div class="navbar navbar-app navbar-absolute-top">
 
 
-
     <div class="navbar-brand navbar-brand-center">
         {{title | translateText}}
     </div>
 
-    <div class="btn-group pull-left" >
-        <div class="btn btn-navbar">
-            <div class="nav-button"  ng-click="back()" ng-show="displayBack()" ng-hide="displayMenu">
+    <div class="btn-group pull-left">
+        <div class="btn btn-navbar" ng-click="back()" ng-hide="displayMenu">
+            <div class="nav-button" ng-show="displayBack()">
                 <i class="glyphicon glyphicon-chevron-left"></i>
             </div>
-            <div ui-toggle="uiSidebarLeft" class="nav-button" ng-show="displayMenu">
+        </div>
+        <div class="btn btn-navbar" ui-toggle="uiSidebarLeft"  ng-show="displayMenu" >
+            <div class="nav-button">
                 <i class="fa fa-bars"></i>
             </div>
         </div>
+
     </div>
 </div>
