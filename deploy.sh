@@ -20,11 +20,13 @@ mv ./package.json ./-package.json
 git add -A
 git commit -m "pre-deploy"
 
+mv ./-package.json ./package.json
+
+rm -r public/dist/*
+
+
 echo ""
 echo "Deploy"
 git push heroku master
 
-mv ./-package.json ./package.json
-
-rm -r public/dist/*
 
