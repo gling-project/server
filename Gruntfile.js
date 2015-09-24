@@ -148,7 +148,6 @@ module.exports = function (grunt) {
 
                         <!-- services -->
                         'public/javascripts/service/DirectiveService.js',
-                        'public/javascripts/service/FlashService.js',
                         'public/javascripts/service/GenerateIdService.js',
                         'public/javascripts/service/TranslationService.js',
                         'public/javascripts/service/ModelService.js',
@@ -217,7 +216,10 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
                         'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js',
                         'public/javascripts/directive/web/footerBar/FooterBarCtrl.js',
-                        'public/javascripts/directive/component/toTop/ToTopCtrl.js'],
+                        'public/javascripts/directive/component/toTop/ToTopCtrl.js',
+
+                        <!-- service -->
+                        'public/javascripts/service/FlashService.js'],
                     'public/dist/mobile.js': [
                         'public/components/lodash/lodash.min.js',
                         'public/components/angular-google-maps/dist/angular-google-maps.min.js',
@@ -227,14 +229,18 @@ module.exports = function (grunt) {
                         'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.components.min.js',
                         'public/javascripts/routes/mobile-routes.js',
                         'public/javascripts/InitMobile.js',
+
+                        <!-- modal -->
                         'public/javascripts/modal/ChangePassword/ChangePasswordModal.js',
                         'public/javascripts/modal/AddressModal/AddressModal.js',
                         'public/javascripts/modal/OneFieldModal/OneFieldModal.js',
+                        'public/javascripts/modal/mobile/AlertModal/AlertMessage.js',
+                        'public/javascripts/modal/mobile/LoadingModal/LoadingModal.js',
+
                         'public/javascripts/controller/mobile/WelcomeCtrl.js',
                         'public/javascripts/controller/mobile/HomeCtrl.js',
                         'public/javascripts/controller/mobile/ForgotPasswordCtrl.js',
                         'public/javascripts/controller/mobile/CustomerRegistrationCtrl.js',
-                        'public/javascripts/controller/mobile/BusinessRegistrationCtrl.js',
                         'public/javascripts/controller/mobile/MenuCtrl.js',
                         'public/javascripts/controller/mobile/ProfileCtrl.js',
                         'public/javascripts/controller/mobile/BusinessCtrl.js',
@@ -243,7 +249,11 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/publicationListMobile/PublicationListMobileCtrl.js',
                         'public/javascripts/directive/component/publicationListMobileForBusiness/PublicationListMobileForBusinessCtrl.js',
                         'public/javascripts/directive/mobile/headerSearch/HeaderSearchCtrl.js',
-                        'public/javascripts/directive/mobile/title/MobileTitleCtrl.js'
+                        'public/javascripts/directive/mobile/title/MobileTitleCtrl.js',
+
+                        <!-- service -->
+                        'public/javascripts/service/mobile/FlashService.js',
+
                     ],
                     'public/dist/town.js': [
                         'public/components/jquery/dist/jquery.min.js',

@@ -23,6 +23,50 @@ myApp.service("modalService", function ($modal) {
             resolve: resolve
         });
     };
+
+    this.alertModal = function (type, message) {
+        var resolve = {
+            message: function () {
+                return message;
+            }
+        };
+        var classes = "modal-alert-content";
+        if (type == 'info') {
+            classes += " modal-alert-content-info";
+        }
+        else if (type == 'success') {
+            classes += " modal-alert-content-success";
+        }
+        else {
+            classes += " modal-alert-content-error";
+        }
+
+
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/mobile/AlertModal/view.html",
+            controller: "AlertMessageCtrl",
+            size: "l",
+            windowClass: classes,
+            resolve: resolve
+        });
+    };
+
+
+    this.loadingModal = function () {
+        this.loadingModal = $modal.open({
+            templateUrl: "/assets/javascripts/modal/mobile/LoadingModal/view.html",
+            controller: "LoadingModalCtrl",
+            size: "l",
+            windowClass: 'loading-modal',
+            backdrop:'static'
+        });
+    };
+    this.closeLoadingModal = function () {
+        if (this.loadingModal  != undefined && this.loadingModal  != null) {
+            this.loadingModal .close();
+        }
+    };
+
     this.messageModal = function (title, message, save) {
         var resolve = {
             message: function () {
@@ -43,12 +87,12 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openCustomerRegistrationModal = function (fctToExecute,fctToExecuteParams) {
+    this.openCustomerRegistrationModal = function (fctToExecute, fctToExecuteParams) {
         var resolve = {
             fctToExecute: function () {
                 return fctToExecute;
             },
-            fctToExecuteParams:function(){
+            fctToExecuteParams: function () {
                 return fctToExecuteParams;
             }
         };
@@ -76,15 +120,15 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openLoginModal = function (fctToExecute,fctToExecuteParams,helpMessage) {
+    this.openLoginModal = function (fctToExecute, fctToExecuteParams, helpMessage) {
         var resolve = {
             fctToExecute: function () {
                 return fctToExecute;
             },
-            fctToExecuteParams:function(){
+            fctToExecuteParams: function () {
                 return fctToExecuteParams;
             },
-            helpMessage:function(){
+            helpMessage: function () {
                 return helpMessage;
             }
         };
@@ -158,7 +202,7 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.addressModal = function (addName, address, isBusiness,callback) {
+    this.addressModal = function (addName, address, isBusiness, callback) {
         var resolve = {
             dto: function () {
                 return address;
@@ -169,7 +213,7 @@ myApp.service("modalService", function ($modal) {
             isBusiness: function () {
                 return isBusiness;
             },
-            callback:function(){
+            callback: function () {
                 return callback;
             }
         };
@@ -196,15 +240,15 @@ myApp.service("modalService", function ($modal) {
     };
 
 
-    this.openPromotionModal = function (promotion,business,callback) {
+    this.openPromotionModal = function (promotion, business, callback) {
         var resolve = {
             dto: function () {
                 return promotion;
             },
-            business:function(){
+            business: function () {
                 return business;
             },
-            callback:function(){
+            callback: function () {
                 return callback;
             }
         };
@@ -217,15 +261,15 @@ myApp.service("modalService", function ($modal) {
     };
 
 
-    this.openBusinessNotificationModal = function (businessNotification,business,callback) {
+    this.openBusinessNotificationModal = function (businessNotification, business, callback) {
         var resolve = {
             dto: function () {
                 return businessNotification;
             },
-            business:function(){
+            business: function () {
                 return business;
             },
-            callback:function(){
+            callback: function () {
                 return callback;
             }
         };
@@ -267,13 +311,13 @@ myApp.service("modalService", function ($modal) {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/GalleryModal/view.html",
             controller: "GalleryModalCtrl",
-            windowClass:'modal-gallery-content',
+            windowClass: 'modal-gallery-content',
             size: "lg",
             resolve: resolve
         });
     };
 
-    this.openSla = function(title,url){
+    this.openSla = function (title, url) {
         var resolve = {
             title: function () {
                 return title;

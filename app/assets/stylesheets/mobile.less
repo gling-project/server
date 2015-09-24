@@ -14,3 +14,33 @@ button {
         }
     }
 }
+
+.modal-alert-content {
+    .modal-dialog{
+        margin-top: 200px;
+    }
+    &.modal-alert-content-error .modal-content {
+        background-color: red;
+        color: #ffffff;
+    }
+    &.modal-alert-content-success .modal-content {
+        background-color: green;
+        color: #ffffff;
+    }
+    &.modal-alert-content-info .modal-content {
+        background-color: #0000ff;
+        color: #ffffff;
+    }
+}
+
+.loading-modal{
+
+    .modal-dialog{
+        width: 200px;
+        margin: 100px auto;
+    }
+    .modal-body{
+        text-align: center;
+    }
+
+}

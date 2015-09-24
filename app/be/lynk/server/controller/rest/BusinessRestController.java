@@ -78,14 +78,14 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     public Result getPublicData(long id) {
 
-        //Business myBusiness = ;
+        Account currentUser = securityController.getCurrentUser();
 
         Business business = businessService.findById(id);
 
         if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED) &&
                 (securityController.isAuthenticated(ctx()) == false ||
-                        (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                                (!securityController.getCurrentUser().getRole().equals(RoleEnum.BUSINESS) || !business.equals(securityController.getBusiness()))))) {
+                        (!currentUser.getRole().equals(RoleEnum.SUPERADMIN) &&
+                                (!currentUser.getRole().equals(RoleEnum.BUSINESS) || !business.equals(securityController.getBusiness()))))) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_HIDDEN_AND_NOT_MINE);
         }
 
@@ -241,8 +241,7 @@ public class BusinessRestController extends AbstractController {
 
         StoredFile storedFile = storedFileService.findById(dto.getId());
 
-        if ((storedFile.getIsImage() != null && !storedFile.getIsImage()) ||
-                !storedFile.getAccount().equals(securityController.getCurrentUser())) {
+        if (!storedFile.getAccount().equals(securityController.getCurrentUser())) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
