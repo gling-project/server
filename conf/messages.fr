@@ -563,3 +563,5 @@ day_abrv_sunday=Di
 --.customer.registrationModal.help.business=Vous êtes commerçant? utilisez notre site web www.gling.be pour enregistrer votre commerce (indisponible sur smartphone ou tablette)
 --.registration.facebook.validSLAMessage=Veuillez accepter les termes et conditions pour terminer votre inscription
 --.generic.loading=Veuillez patienter
+--.generic.registration=S'enregistrer
+--.page.legal.title=Mensions légales

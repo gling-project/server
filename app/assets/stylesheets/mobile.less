@@ -42,6 +42,10 @@ body {
     font-size: 16px;
 }
 
+.app{
+    background-color: @color-body-bg;
+}
+
 button {
     & > span {
         &.fa {
@@ -85,7 +89,7 @@ button {
 }
 
 .navbar-absolute-top ,
-.navbar-absolute-top .navbar-app .btn{
+.navbar-absolute-top.navbar-app .btn{
     background-color: @color-blue-dark;
     color: #ffffff !important;
 }
@@ -96,20 +100,24 @@ button {
     background-size: 200% auto;
     background-position-x: 50%;
     background-position-y: 50%;
+    margin: -15px -15px 0px -15px;
+    text-align: center;
     height: 200px;
-    width: 100%;
+    width: ~'calc(100% + 30px)';
     color: @color-green-light;
 
-    .navbar-brand-center {
+    & > div{
+
         .logo {
-            padding-top: 20px;
+            display: inline-block;
+            padding-top: 10px;
             font-size: 100px;
             color: @color-green-light;
         }
         p {
             font-size: 30px;
             font-weight: bold;
-            margin-top: 40px;
+            margin-top: 30px;
             text-shadow: 2px 2px black;
             color: white;
         }

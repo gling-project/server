@@ -12,12 +12,10 @@ myApp.directive("mobileTitleCtrl", function () {
                 post: function (scope) {
 
                     scope.displayBack = function(){
-                        console.log('window.history.length:'+window.history.length);
                         return window.history.length>0;
                     };
 
                     scope.back = function () {
-                        console.log('BACK4 !! ');
                         window.history.back();
                     };
 

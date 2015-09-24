@@ -238,6 +238,15 @@ var initializeCommonRoutes = function () {
                             }
                         }]
                     }
+                }).when('/legal/', {
+                    templateUrl: '/assets/javascripts/view/mobile/legal.html',
+                    controller: 'LegalCtrl'
+                }).when('/help/', {
+                    resolve: {
+                        a: ['$rootScope', function ($rootScope) {
+                            window.location.replace('/help/');
+                        }]
+                    }
                 }).otherwise({
                     redirectTo: '/'
                 });
@@ -1402,12 +1411,10 @@ myApp.directive("mobileTitleCtrl", function () {
                 post: function (scope) {
 
                     scope.displayBack = function(){
-                        console.log('window.history.length:'+window.history.length);
                         return window.history.length>0;
                     };
 
                     scope.back = function () {
-                        console.log('BACK4 !! ');
                         window.history.back();
                     };
 

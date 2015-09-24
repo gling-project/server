@@ -112,6 +112,15 @@ var initializeCommonRoutes = function () {
                             }
                         }
                     }
+                }).when('/legal/', {
+                    templateUrl: '/assets/javascripts/view/mobile/legal.html',
+                    controller: 'LegalCtrl'
+                }).when('/help/', {
+                    resolve: {
+                        a: function ($rootScope) {
+                            window.location.replace('/help/');
+                        }
+                    }
                 }).otherwise({
                     redirectTo: '/'
                 });

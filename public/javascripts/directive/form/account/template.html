@@ -18,6 +18,13 @@
 
     <dir-field-check ng-info="fields.sla"></dir-field-check>
 
-    <a ng-show="getInfo().updateMode !== true" href="#" ng-click="openSla()">{{'--.accountForm.seeSLA' | translateText}}</a>
+    <a ng-hide="getInfo().mobileVersion === true" ng-show="getInfo().updateMode !== true" href="#" ng-click="openSla()">
+        {{'--.accountForm.seeSLA' | translateText}}
+    </a>
+    <a ng-show="getInfo().mobileVersion === true && getInfo().updateMode !== true" href="/legal/">
+        {{'--.accountForm.seeSLA' | translateText}}
+    </a>
+
+
 
 </div>

@@ -144,6 +144,7 @@ module.exports = function (grunt) {
 
                         <!-- controllers -->
                         'public/javascripts/MainCtrl.js',
+                        'public/javascripts/controller/legal.js',
 
 
                         <!-- services -->

@@ -29,26 +29,13 @@
                 </table>
 
                 <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="navbar navbar-app navbar-absolute-bottom">
 
-    <div class="btn-group navbar-brand-center">
-        <div style="text-align: center;width: 100%;">
-            <div
-                    class="btn btn-navbar glyphicon glyphicon-home"
-                    ng-click="navigateTo('/')">
+                <div class="generic-center">
+                    <button class="btn btn-primary" ng-click="save()">
+                        {{'--.generic.registration' | translateText}}
+                    </button>
+                </div>
             </div>
-
-        </div>
-    </div>
-    <div class="btn-group pull-right">
-        <div class="btn btn-navbar"
-             type="button"
-             ng-click="save()">
-            {{'--.generic.save' |translateText}}
         </div>
     </div>
 </div>

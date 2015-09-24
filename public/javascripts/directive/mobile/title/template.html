@@ -1,5 +1,11 @@
 <div class="navbar navbar-app navbar-absolute-top">
 
+
+
+    <div class="navbar-brand navbar-brand-center">
+        {{title | translateText}}
+    </div>
+
     <div class="btn-group pull-left" >
         <div class="btn btn-navbar">
             <div ui-toggle="uiSidebarLeft" class="nav-button"  ng-click="back()" ng-show="displayBack()" ng-hide="displayMenu">
@@ -10,10 +16,4 @@
             </div>
         </div>
     </div>
-
-
-    <div class="navbar-brand navbar-brand-center">
-        {{title | translateText}}
-    </div>
-
 </div>
