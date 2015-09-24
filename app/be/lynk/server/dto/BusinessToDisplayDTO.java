@@ -26,6 +26,8 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
 
     private String email;
 
+    private String vta;
+
     private AddressDTO address;
 
     private StoredFileDTO illustration;
@@ -57,6 +59,14 @@ public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Compara
     private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
 
     public BusinessToDisplayDTO() {
+    }
+
+    public String getVta() {
+        return vta;
+    }
+
+    public void setVta(String vta) {
+        this.vta = vta;
     }
 
     public Boolean getFollowingNotification() {

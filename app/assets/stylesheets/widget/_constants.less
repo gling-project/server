@@ -1,0 +1,294 @@
+
+//33CC99
+//28FDA7
+
+//gling official color
+@color-green-dark: #00B49B;
+//@color-green-light: #00f9b7;
+//@color-green-light: #4dfbcd;
+//@color-green-light: #33CC99;
+//@color-green-light: #19d2aa;
+//power point
+@color-green-light: #1AD2AA;
+//gling.be
+//@color-green-light: #28fca7;
+//@color-blue-dark: #2c265c;
+//@color-blue-dark: #3e4192;
+@color-blue-dark: #292763;
+@color-blue-light: #9ECAEE;
+@color-help: #F5F5A6;
+
+// main
+@color-body-bg: #eee;
+@color-body-text: #555555;
+@color-body-content-bg: #ffffff;
+
+@font-face {
+    font-family: myFont;
+    src: url('/assets/fonts/Brandon_bld.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: myFont;
+    src: url('/assets/fonts/brandon_re.ttf');
+}
+
+
+
+.generic-center {
+    text-align: center;
+}
+
+.generic-bold{
+    font-weight: bold;
+}
+
+.generic-inline-block {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.generic-pointer {
+    cursor: pointer;
+}
+
+.generic-block {
+    display: block !important;
+}
+
+.button-with-label {
+    position: relative;
+    &:enabled:hover {
+        p {
+            display: block;
+        }
+    }
+    p {
+        position: absolute;
+        background-color: #999;
+        font-family: "myFont";
+        color: #f4f4f4;
+        display: none;
+        padding: 4px 6px;
+        font-size: 16px;
+        bottom: -34px;
+        left: -50%;
+        opacity: 100;
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        z-index: 10;
+        border-radius: 6px;
+    }
+}
+
+.illustration {
+    vertical-align: top;
+    width: 60px;
+    height: 60px;
+    float: left;
+    border: 1px solid darkgray;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+}
+
+.facebookCount {
+    display: none !important;
+}
+
+.gling-button {
+    background-color: @color-green-light;
+    color: white;
+    margin: 0 5px;
+    border: 0;//1px solid white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    min-height: 40px;
+    outline: none;
+    &:hover:enabled {
+        background-color: @color-green-dark;
+        color: white;
+        text-decoration: none;
+    }
+    &:disabled {
+        color: rgba(255, 255, 255, 0.65);
+    }
+
+    &.selected {
+        background-color: @color-blue-dark;
+        &:hover:enabled {
+            background-color: @color-blue-dark;
+        }
+    }
+}
+
+.btn,
+.dropdown-menu,
+.form-control {
+    font-size: 16px;
+}
+
+.btn-gling{
+    background-image: -webkit-linear-gradient(top,@color-blue-light 0,@color-blue-dark 20%,@color-blue-dark 80%,@color-blue-light 100%);
+    background-image: -o-linear-gradient(top,@color-blue-light 0,@color-blue-dark 20%,@color-blue-dark 80%,@color-blue-light 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(@color-blue-light),to(@color-blue-dark));
+    background-image: linear-gradient(to bottom,@color-blue-light 0,@color-blue-dark 20%,@color-blue-dark 80%,@color-blue-light 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    color: #ffffff;
+    border-color: #9ecaee;
+}
+
+.gling-button-light {
+    background-color: white;
+    color: @color-blue-dark;
+    margin-right: 10px;
+    border: 2px solid @color-green-light;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 16px;
+    -moz-appearance: none;
+    outline: none;
+    cursor: pointer;
+    min-height: 40px;
+    //    &:hover:enabled{
+    //        background-color: @color-green-light;
+    //        color: white;
+    //    }
+    //    &:disabled{
+    //        color: rgba(255, 255, 255, 0.65);
+    //    }
+    //
+    //    &.selected {
+    //        background-color: @color-blue-dark;
+    //        &:hover:enabled{
+    //            background-color: @color-blue-dark;
+    //        }
+    //    }
+}
+
+.btn,
+.dropdown-menu,
+.form-control {
+    font-size: 16px;
+}
+
+.panel-gling {
+    border-radius: 20px;
+    border: 1px solid @color-blue-dark;
+    overflow: hidden;
+    .panel-heading {
+        background: @color-blue-dark none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+.help-big {
+    font-weight: bold;
+    text-align: center;
+    margin: 8px;
+    font-size: 18px;
+}
+
+.help-popup {
+    position: absolute;
+    width: 300px;
+    background-color: @color-help;
+    z-index: 1;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #000000;
+    margin: 5px;
+    .help-popup-close{
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 12px;
+        border-radius: 20px;
+        width: 22px;
+        height: 22px;
+        float: right;
+        &:hover,
+        &:focus{
+            background-color: #000000;
+            color: @color-help;
+        }
+    }
+}
+.help-div{
+    background-color: @color-help;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #000000;
+    margin: 5px;
+
+    .help-popup-close{
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 12px;
+        border-radius: 20px;
+        width: 22px;
+        height: 22px;
+        float: right;
+        &:hover,
+        &:focus{
+            background-color: #000000;
+            color: @color-help;
+        }
+    }
+}
+
+
+.horizontal-split {
+
+    width: 100%;
+    table-layout: fixed;
+
+    tr {
+
+        td:first-child,
+        td:last-child {
+            width: 2em;
+        }
+        td:nth-child(2) {
+            width: 1em;
+            text-align: center;
+        }
+
+        div {
+            width: 100%; //~'calc(50% - 30px)';
+            height: 1px;
+            background: #bbbbbb;
+            vertical-align: middle;
+        }
+    }
+}
+
+.modal-description {
+    background-color: #efefef;
+    margin: 5px;
+    padding: 3px 25px;
+    width: 90%;
+}
+
+
+
+.link {
+    text-decoration: underline;
+    color: rgba(45, 77, 238, 0.57);
+    cursor: pointer;
+}
+
+.link:hover {
+    color: #0000ff;
+}

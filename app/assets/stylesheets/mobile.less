@@ -1,7 +1,46 @@
+@import 'widget/_form';
+@import 'widget/_cr-messenger';
+@import 'widget/_field_date';
+@import 'widget/_field_text';
+@import 'widget/_input-text';
+@import 'widget/_modal-login';
+@import 'widget/_customer_interest_form';
+@import 'widget/_wizard';
+@import 'widget/_business-category';
+@import 'widget/_customer_profile';
+@import 'widget/_customer-registration';
+@import 'widget/_business-registration';
+@import 'widget/_publication-list';
+@import 'widget/_business-list';
+@import 'widget/_field_image_multiple';
+@import 'widget/_onoffswitch';
+@import 'widget/_schedule';
+@import 'widget/_business-page';
+@import 'widget/_home-interest';
+@import 'widget/_follow';
+@import 'widget/_category-line';
+@import 'widget/_gallery';
+@import 'widget/_facebook-login';
+@import 'widget/_profile-page';
+@import 'widget/_business-mobile-page';
+@import 'widget/_messenger';
+@import 'widget/_progress_bar';
+@import 'widget/_followed-business';
+@import 'widget/_toTop';
+@import 'widget/_search-page';
+@import 'widget/_footer-bar';
 @import 'widget/_wizard-little';
 @import 'widget/_mobile';
 @import 'widget/_publication-list-mobile';
 @import 'widget/_search-mobile';
+@import 'widget/_constants';
+
+body {
+    color: @color-body-text;
+    background-color: @color-body-bg;
+    font-family: "myFont";
+    font-size: 16px;
+}
 
 button {
     & > span {
@@ -16,7 +55,7 @@ button {
 }
 
 .modal-alert-content {
-    .modal-dialog{
+    .modal-dialog {
         margin-top: 200px;
     }
     &.modal-alert-content-error .modal-content {
@@ -33,14 +72,46 @@ button {
     }
 }
 
-.loading-modal{
+.loading-modal {
 
-    .modal-dialog{
+    .modal-dialog {
         width: 200px;
         margin: 100px auto;
     }
-    .modal-body{
+    .modal-body {
         text-align: center;
     }
 
+}
+
+.navbar-absolute-top ,
+.navbar-absolute-top .navbar-app .btn{
+    background-color: @color-blue-dark;
+    color: #ffffff !important;
+}
+
+.welcome-header {
+    background-image: url('/assets/images/welcome_page/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: 200% auto;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    height: 200px;
+    width: 100%;
+    color: @color-green-light;
+
+    .navbar-brand-center {
+        .logo {
+            padding-top: 20px;
+            font-size: 100px;
+            color: @color-green-light;
+        }
+        p {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 40px;
+            text-shadow: 2px 2px black;
+            color: white;
+        }
+    }
 }
