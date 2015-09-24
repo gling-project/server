@@ -49,13 +49,15 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                         $scope.accountParam.dto.email = data2.email;
                         $scope.accountParam.dto.gender = data2.gender;
                         $scope.accountParam.maskPassword();
-                        $flash.info('--.registration.facebook.validSLAMessage');
                         if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
                             ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
                             ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
                             ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
                             $scope.accountParam.disabled = false;
                             $flash.info('--.registration.facebook.someDataEmpty');
+                        }
+                        else {
+                            $flash.info('--.registration.facebook.validSLAMessage');
                         }
                         facebookAuthentication = dto;
 
