@@ -59,6 +59,14 @@ module.exports = function (grunt) {
                             'public/javascripts/externalDependence/facebook_sdk.js']
                     },
                     {
+                        dest: 'public/dist/styleMobile.css',
+
+                        src: ['public/components/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css',
+                            'public/css/glingicon.css',
+                            'public/stylesheets/mobile.css'
+                        ]
+                    },
+                    {
                         dest: 'public/dist/styleDependencies.css',
 
                         src: ['public/components/angucomplete/angucomplete.css',
@@ -346,11 +354,10 @@ module.exports = function (grunt) {
                 src: 'public/dist/styleTown.min.css',
                 dest: 'public/dist/styleTown.final.css'
             },
-            //styleMobile: {
-            //    src: 'public/dist/styleMobile.css',
-            //    dest: 'public/dist/styleMobile.final.css?' + grunt.template.today("yyyymmddHHMM"),
-            //    ignore:true
-            //},
+            styleMobile: {
+                src: 'public/dist/styleMobile.css',
+                dest: 'public/dist/styleMobile.final.css'
+            },
             common: {
                 src: 'public/dist/common.js',
                 dest: 'public/dist/common.final.js'
