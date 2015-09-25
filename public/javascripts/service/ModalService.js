@@ -58,12 +58,12 @@ myApp.service("modalService", function ($modal) {
             controller: "LoadingModalCtrl",
             size: "l",
             windowClass: 'loading-modal',
-            backdrop:'static'
+            backdrop: 'static'
         });
     };
     this.closeLoadingModal = function () {
-        if (this.loadingModal  != undefined && this.loadingModal  != null) {
-            this.loadingModal .close();
+        if (this.loadingModal != undefined && this.loadingModal != null) {
+            this.loadingModal.close();
         }
     };
 
@@ -171,10 +171,13 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openFacebookFusionModal = function (accountFusion) {
+    this.openFacebookFusionModal = function (accountFusion, closeRegistrationModal) {
         var resolve = {
             accountFusion: function () {
                 return accountFusion;
+            },
+            closeRegistrationModal: function () {
+                return closeRegistrationModal;
             }
         };
 

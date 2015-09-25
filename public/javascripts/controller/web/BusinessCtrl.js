@@ -1,4 +1,4 @@
-myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout,contactService,$filter,$location) {
+myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, $location) {
 
     //back to the top of the page
     //console.log($location.url());
@@ -36,6 +36,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     });
     //address
     $scope.googleMapParams = {};
+
+    $scope.displayEditMode = function () {
+        return $scope.myBusiness === true || accountService.getMyself().role === 'SUPERADMIN';
+    };
 
 
     //loading
@@ -114,8 +118,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
             $scope.editbusiness = function () {
                 var business = angular.copy($scope.business);
                 modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
-                    {dto: business,
-                        status:business.businessStatus},
+                    {
+                        dto: business,
+                        status: business.businessStatus
+                    },
                     function (close, setLoading) {
                         businessService.edit(business, function (data) {
                             $scope.business.name = data.name;
@@ -141,7 +147,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                         details: '--.business.logo.edit.modal.description'
                     },
                     function (close, setLoading) {
-                        businessService.editIllustration(business.illustration, function () {
+                        businessService.editIllustration(business.id, business.illustration, function () {
                             $scope.business.illustration = business.illustration;
                             close();
                         }, function () {
@@ -161,8 +167,8 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                         details: '--.business.landscape.edit.modal.description'
                     },
                     function (close, setLoading) {
-                        businessService.editLandscape(business.landscape, function () {
-                            $scope.business.landscape =business.landscape;
+                        businessService.editLandscape(business.id, business.landscape, function () {
+                            $scope.business.landscape = business.landscape;
                             close();
                         }, function () {
                             setLoading(false);
@@ -186,7 +192,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     },
                     function (close, setLoading) {
                         //scope.business
-                        businessService.editAddress(address, function (data) {
+                        businessService.editAddress($scope.business.id, address, function (data) {
                             $scope.business.address = data;
                             $scope.googleMapParams.setAddress(data);
                             close();
@@ -219,7 +225,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     },
                     function (close, setLoading) {
                         //scope.business
-                        businessService.editBusinessCategory(catList, function (data) {
+                        businessService.editBusinessCategory($scope.business.id, catList, function (data) {
                             $scope.business.categories = data.categories;
                             $scope.categoryLineParams.categories = $scope.business.categories;
                             close();
@@ -239,7 +245,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                         disabled: false
                     },
                     function (close, setLoading) {
-                        businessService.createSchedule({schedules: schedules}, function (data) {
+                        businessService.createSchedule($scope.business.id, {schedules: schedules}, function (data) {
                             $scope.business.schedules = schedules;
                             close();
                         }, function () {
@@ -255,17 +261,17 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     {
                         fieldTitle: "--.business.modal.gallery.title",
                         validationMessage: '--.error.validation.image',
-                        help:'--.business.gallery.download.help',
-                        details:'--gallery.maximumImage',
+                        help: '--.business.gallery.download.help',
+                        details: '--gallery.maximumImage',
                         field: business,
-                        maxImage:10,
+                        maxImage: 10,
                         multiple: true,
                         target: 'galley_picture',
                         fieldName: 'galleryPictures'
                     },
                     function (close, setLoading) {
                         //scope.business
-                        businessService.editGallery({list: business.galleryPictures}, function (data) {
+                        businessService.editGallery($scope.business.id, {list: business.galleryPictures}, function (data) {
                             $scope.business.galleryPictures = data;
                             close();
                         }, function () {
@@ -287,7 +293,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     },
                     function (close, setLoading) {
                         //scope.business
-                        businessService.editSocialNetwork(socialNetwork, function (data) {
+                        businessService.editSocialNetwork($scope.business.id, socialNetwork, function (data) {
                             $scope.business.socialNetwork = socialNetwork;
                             close();
                         }, function () {
@@ -298,13 +304,13 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
 
             //create publication
             $scope.createPromotion = function () {
-                modalService.openPromotionModal(null, $scope.business,function () {
+                modalService.openPromotionModal(null, $scope.business, function () {
                     $scope.$broadcast('RELOAD_PUBLICATION');
                 });
 
             };
             $scope.createNotification = function () {
-                modalService.openBusinessNotificationModal(null, $scope.business,function () {
+                modalService.openBusinessNotificationModal(null, $scope.business, function () {
                     $scope.$broadcast('RELOAD_PUBLICATION');
                 });
             };
@@ -380,7 +386,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
 
             $scope.openContact = function () {
 
-                var dto = {target:'HELP'};
+                var dto = {target: 'HELP'};
 
                 modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl',
                     {dto: dto},

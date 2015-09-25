@@ -1,12 +1,14 @@
-myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $flash, $modalInstance,accountFusion,accountService) {
+myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $flash, $modalInstance, accountFusion, accountService,closeRegistrationModal) {
 
-    $scope.loading=false;
+    $scope.loading = false;
 
     $scope.email = accountFusion.email;
 
+    var isValid=false;
+
     $scope.fields = {
         password: {
-            name:'password',
+            name: 'password',
             fieldTitle: "--.generic.password",
             validationRegex: "^[a-zA-Z0-9-_%]{6,18}$",
             validationMessage: "--.generic.validation.password",
@@ -14,9 +16,11 @@ myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $flash, $mo
             focus: function () {
                 return true;
             },
-            disabled:function(){
+            disabled: function () {
                 return $scope.loading;
-            }
+            },
+            field: accountFusion,
+            fieldName: 'password'
         }
     };
 
@@ -25,35 +29,41 @@ myApp.controller('AccountFusionFacebookModalCtrl', function ($scope, $flash, $mo
         $modalInstance.close();
     };
 
-    $scope.allFieldValid = function () {
+    //
+    // validation : watching on field
+    //
+    $scope.$watch('fields', function () {
 
         var validation = true;
 
         for (var key in $scope.fields) {
             var obj = $scope.fields[key];
             if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                obj.firstAttempt = false;
-                validation= false;
+                obj.firstAttempt = accountFusion.displayErrorMessage;
+                validation = false;
             }
         }
-        return validation;
-    };
+        isValid = validation;
+    }, true);
 
     $scope.save = function () {
 
-        if ($scope.allFieldValid()) {
+        if (!isValid) {
+            accountFusion.displayErrorMessage = true;
+        }
+        else {
+            $scope.loading = true;
 
-            accountFusion.password = $scope.fields.password.field;
+            console.log(accountFusion);
 
-            $scope.loading=true;
-
-            accountService.accountFusion(accountFusion,function(){
-                $scope.loading=false;
-                $scope.close();
-            },
-            function(){
-                $scope.loading=false;
-            });
+            accountService.accountFusion(accountFusion, function () {
+                    $scope.loading = false;
+                    $scope.close();
+                    closeRegistrationModal();
+                },
+                function () {
+                    $scope.loading = false;
+                });
         }
     }
 

@@ -19,8 +19,6 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
 
-
-
     //scrolling
     $('.scrollable-content-body').on('scroll', function () {
         var scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();

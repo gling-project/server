@@ -1,4 +1,4 @@
-myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,businessService, accountService, translationService, addName, dto,isBusiness,callback) {
+myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, addName, dto, isBusiness, callback) {
 
     $scope.loading = false;
 
@@ -14,11 +14,11 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,bu
         $modalInstance.close();
     };
 
-    $scope.success = function(data){
+    $scope.success = function (data) {
         $scope.loading = false;
         $scope.close();
 
-        if(callback!=null && callback != undefined){
+        if (callback != null && callback != undefined) {
             callback(data);
         }
     };
@@ -31,22 +31,12 @@ myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance,bu
         else {
             $scope.loading = true;
             if ($scope.update) {
-                if(isBusiness){
-                    businessService.editAddress($scope.addressParam.dto, function (data) {
-                            $scope.success(data);
-                        },
-                        function () {
-                            $scope.loading = false;
-                        });
-                }
-                else {
-                    accountService.editAddress($scope.addressParam.dto, function (data) {
-                            $scope.success(data);
-                        },
-                        function () {
-                            $scope.loading = false;
-                        });
-                }
+                accountService.editAddress($scope.addressParam.dto, function (data) {
+                        $scope.success(data);
+                    },
+                    function () {
+                        $scope.loading = false;
+                    });
             }
             else {
                 accountService.addAddress($scope.addressParam.dto, function (data) {

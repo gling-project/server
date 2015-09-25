@@ -1,0 +1,60 @@
+
+.home-interest-switch {
+    text-align: center;
+    button{
+        font-size: 36px;
+    }
+    & > * {
+        display: inline-block;
+        vertical-align: middle;
+        &:first-child {
+            margin-right: 30px;
+        }
+        &:last-child {
+            margin-left: 30px;
+        }
+    }
+
+}
+
+
+.home-interest-box {
+    margin-top: 10px;
+    padding: 10px;
+    text-align: center;
+
+    .home-interest-box-background {
+        display: inline-block;
+        background: url("/assets/images/home_interest_bg.png") repeat-x 0 50%;
+    }
+
+    .home-interest {
+        display: inline-block;
+        font-size: 30px;
+        padding: 10px 10px;
+        margin-bottom: 2px;
+        border-radius: 40px;
+        font-weight: normal;
+        margin-right: 10px;
+        vertical-align: middle;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.home-interest-arrow {
+            font-size: 20px;
+        }
+
+        img {
+            vertical-align: middle;
+            text-align: center;
+            width: 50px;
+        }
+
+    }
+}

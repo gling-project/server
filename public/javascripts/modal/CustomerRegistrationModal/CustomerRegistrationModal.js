@@ -77,7 +77,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
 
     $scope.fusion = function (accountFusion) {
 
-        modalService.openFacebookFusionModal(accountFusion);
+        modalService.openFacebookFusionModal(accountFusion,$scope.close);
     };
 
     $scope.save = function () {

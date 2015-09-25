@@ -46,20 +46,20 @@ GET           /rest/business/$id<[0-9]+>                                        
 GET           /rest/business/all                                                                  @be.lynk.server.controller.rest.BusinessRestController.getAll()
 GET           /rest/business/interests                                                            @be.lynk.server.controller.rest.BusinessRestController.getInterests()
 GET           /rest/business/followed                                                             @be.lynk.server.controller.rest.BusinessRestController.getFollowed()
-PUT           /rest/business                                                                      @be.lynk.server.controller.rest.BusinessRestController.update()
-PUT           /rest/business/social_network                                                       @be.lynk.server.controller.rest.BusinessRestController.updateSocialNetwork()
-PUT           /rest/business/address                                                              @be.lynk.server.controller.rest.BusinessRestController.editAddress()
-PUT           /rest/business/category                                                             @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory()
-PUT           /rest/business/illustration                                                         @be.lynk.server.controller.rest.BusinessRestController.editIllustration()
-PUT           /rest/business/landscape                                                            @be.lynk.server.controller.rest.BusinessRestController.editLandscape()
+PUT           /rest/business/$id<[0-9]+>                                                          @be.lynk.server.controller.rest.BusinessRestController.update(id:Long)
+PUT           /rest/business/$id<[0-9]+>/social_network                                           @be.lynk.server.controller.rest.BusinessRestController.updateSocialNetwork(id:Long)
+PUT           /rest/business/$id<[0-9]+>/address                                                  @be.lynk.server.controller.rest.BusinessRestController.editAddress(id:Long)
+PUT           /rest/business/$id<[0-9]+>/category                                                 @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory(id:Long)
+PUT           /rest/business/$id<[0-9]+>/illustration                                             @be.lynk.server.controller.rest.BusinessRestController.editIllustration(id:Long)
+PUT           /rest/business/$id<[0-9]+>/landscape                                                @be.lynk.server.controller.rest.BusinessRestController.editLandscape(id:Long)
+POST          /rest/business/$id<[0-9]+>/edit/gallery                                             @be.lynk.server.controller.rest.BusinessRestController.editGallery(id:Long)
 POST          /rest/business/ask_publication                                                      @be.lynk.server.controller.rest.BusinessRestController.askPublication()
 POST          /rest/business/stop_publish                                                         @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
 POST          /rest/business/cancel_publication_request                                           @be.lynk.server.controller.rest.BusinessRestController.cancelPublicationRequest()
-POST          /rest/business/edit/gallery                                                         @be.lynk.server.controller.rest.BusinessRestController.editGallery()
 
 
 ## business schedule
-POST          /rest/business/schedule                                                             @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule()
+POST          /rest/business/$id<[0-9]+>/schedule                                                 @be.lynk.server.controller.rest.BusinessScheduleRestController.createSchedule(id:Long)
 
 ## promotion
 POST          /rest/promotion                                                                     @be.lynk.server.controller.rest.PromotionRestController.create()

@@ -17,6 +17,9 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         $scope.sharePosition = n;
     });
 
+    $scope.interestDisplayFirst = 0;
+    $scope.interestDisplayMax = 12;
+    $scope.interestDisplayed = [];
     $scope.computeList = function () {
         $scope.interestDisplayed = $scope.customerInterests.slice($scope.interestDisplayFirst, $scope.interestDisplayMax + $scope.interestDisplayFirst);
     };
@@ -26,9 +29,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.businessInfoParam = {};
     $scope.businessListParam = {data: []};
     $scope.accountService = accountService.model;
-    $scope.interestDisplayed = [];
-    $scope.interestDisplayFirst = 0;
-    $scope.interestDisplayMax = 12;
     customerInterestService.getAll(function (value) {
         $scope.customerInterests = value;
 

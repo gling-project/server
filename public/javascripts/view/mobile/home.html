@@ -15,15 +15,15 @@
                     <!-- interest -->
                     <div style="overflow: auto">
                         <div class="home-interest-box"
-                             style="width:700px"
-                             ng-style="{width:(customerInterests.length * 34 + 20) + 'px'}">
-                            <button class="home-interest" ng-repeat="interest in customerInterests"
+                             ng-style="{width:(customerInterests.length * 49 + 20) + 'px'}">
+
+                            <button class="gling-button home-interest {{'gling-icon-' + interest.name}}"
+                                    ng-repeat="interest in customerInterests"
                                     ng-show="interest.iconName!=null"
                                     ng-click="searchByInterest(interest)"
                                     ng-class="{'selected':interest.selected === true}">
-
-                                <img ng-src="/assets/images/interest/{{interest.iconName}}" style="width:50px"/>
                             </button>
+
                         </div>
                     </div>
 

@@ -10,6 +10,8 @@ import be.lynk.server.model.entities.BusinessSchedule;
 import be.lynk.server.model.entities.BusinessSchedulePart;
 import be.lynk.server.service.BusinessScheduleService;
 import be.lynk.server.service.BusinessService;
+import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import play.db.jpa.Transactional;
@@ -32,11 +34,18 @@ public class BusinessScheduleRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    public Result createSchedule() {
+    public Result createSchedule(long businessId) {
+
+        //control business
+        Business business = businessService.findById(businessId);
+
+        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+        }
 
         BusinessScheduleContainerDTO dto = extractDTOFromRequest(BusinessScheduleContainerDTO.class);
 
-        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
         business.getSchedules().clear();
 
 

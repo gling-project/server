@@ -60,7 +60,7 @@ myApp.service("businessService", function ($flash, $http, accountService) {
     this.edit = function (dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/rest/business",
+            'url': "/rest/business/"+dto.id,
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
@@ -77,10 +77,10 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             });
     };
 
-    this.editSocialNetwork = function (dto, callbackSuccess, callbackError) {
+    this.editSocialNetwork = function (businessId,dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/rest/business/social_network",
+            'url': "/rest/business/"+businessId+"/social_network",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
@@ -96,11 +96,11 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             });
     };
 
-    this.editBusinessCategory = function (dto, callbackSuccess, callbackError) {
+    this.editBusinessCategory = function (businessId,dto, callbackSuccess, callbackError) {
 
         $http({
             'method': "PUT",
-            'url': "/rest/business/category",
+            'url': "/rest/business/"+businessId+"/category",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': {list: dto}
         }).success(function (data, status) {
@@ -181,11 +181,11 @@ myApp.service("businessService", function ($flash, $http, accountService) {
     };
 
 
-    this.editIllustration = function (dto, callbackSuccess, callbackError) {
+    this.editIllustration = function (businessId,dto, callbackSuccess, callbackError) {
 
         $http({
             'method': "PUT",
-            'url': "/rest/business/illustration",
+            'url': "/rest/business/"+businessId+"/illustration",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
@@ -203,11 +203,11 @@ myApp.service("businessService", function ($flash, $http, accountService) {
 
     };
 
-    this.editLandscape = function (dto, callbackSuccess, callbackError) {
+    this.editLandscape = function (businessId,dto, callbackSuccess, callbackError) {
 
         $http({
             'method': "PUT",
-            'url': "/rest/business/landscape",
+            'url': "/rest/business/"+businessId+"/landscape",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
@@ -225,10 +225,10 @@ myApp.service("businessService", function ($flash, $http, accountService) {
 
     };
 
-    this.editAddress = function (dto, callbackSuccess, callbackError) {
+    this.editAddress = function (businessId,dto, callbackSuccess, callbackError) {
         $http({
             'method': "PUT",
-            'url': "/rest/business/address",
+            'url': "/rest/business/"+businessId+"/address",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
@@ -245,11 +245,11 @@ myApp.service("businessService", function ($flash, $http, accountService) {
     };
 
 
-    this.createSchedule = function (dto, callbackSuccess, callbackError) {
+    this.createSchedule = function (businessId,dto, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/business/schedule",
+            'url': "/rest/business/"+businessId+"/schedule",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
@@ -265,11 +265,11 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             });
     };
 
-    this.editGallery = function (dto, callbackSuccess, callbackError) {
+    this.editGallery = function (businessId,dto, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/business/edit/gallery",
+            'url': "/rest/business/"+businessId+"/edit/gallery",
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {

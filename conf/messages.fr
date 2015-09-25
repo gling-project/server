@@ -565,3 +565,4 @@ day_abrv_sunday=Di
 --.generic.loading=Veuillez patienter
 --.generic.registration=S'enregistrer
 --.page.legal.title=Mensions légales
+--.error.business.notYours=Vous n'avez pas les droits pour éditer ce commerce

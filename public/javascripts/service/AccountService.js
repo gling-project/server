@@ -1,4 +1,4 @@
-myApp.service("accountService", function ($flash, $http) {
+myApp.service("accountService", function ($flash, $http,translationService) {
 
     var self = this;
 
