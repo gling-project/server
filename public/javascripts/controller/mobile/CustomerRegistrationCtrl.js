@@ -95,6 +95,8 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
             };
 
             $scope.loading(true);
+            console.log("dto = ");
+            console.log(dto);
             accountService.registration(dto, function () {
                     $scope.loading(false);
                     $flash.success(translationService.get("--.login.flash.success"));

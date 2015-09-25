@@ -27,6 +27,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.*;
+import java.util.logging.Logger;
 
 
 /**
@@ -74,6 +75,8 @@ public abstract class AbstractController extends Controller {
             dto.setCurrentAccountId(securityController.getCurrentUser().getId());
         }
         mongoDBOperator.write(dto, DTOclass);
+
+        play.Logger.info(request().uri()+",dto:"+dto);
 
         return dto;
     }

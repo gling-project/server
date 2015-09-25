@@ -180,6 +180,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
 
         return JPA.em().createQuery(request, Business.class)
                   .setParameter("account", currentUser)
+                  .setParameter("status", BusinessStatusEnum.PUBLISHED)
                   .getResultList();
     }
 }
