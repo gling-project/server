@@ -948,7 +948,7 @@ myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 
 
     $scope.save = function () {
 
-        if (!$scope.accountParam.isValid && facebookAuthentication == null) {
+        if (!$scope.accountParam.isValid) {
             $scope.accountParam.displayErrorMessage = true;
         }
         else {

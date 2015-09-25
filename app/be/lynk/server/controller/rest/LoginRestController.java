@@ -31,23 +31,23 @@ import java.util.ArrayList;
 public class LoginRestController extends AbstractRestController {
 
     @Autowired
-    private AccountService accountService;
+    private AccountService            accountService;
     @Autowired
-    private SessionService sessionService;
+    private SessionService            sessionService;
     @Autowired
-    private EmailController emailController;
+    private EmailController           emailController;
     @Autowired
     private FacebookCredentialService facebookCredentialService;
     @Autowired
-    private LoginCredentialService loginCredentialService;
+    private LoginCredentialService    loginCredentialService;
     @Autowired
-    private CustomerInterestService customerInterestService;
+    private CustomerInterestService   customerInterestService;
     @Autowired
-    private BusinessCategoryService businessCategoryService;
+    private BusinessCategoryService   businessCategoryService;
     @Autowired
-    private StoredFileService storedFileService;
+    private StoredFileService         storedFileService;
     @Autowired
-    private LocalizationService localizationService;
+    private LocalizationService       localizationService;
 
     @Transactional
     public Result forgotPassword() {
@@ -416,11 +416,15 @@ public class LoginRestController extends AbstractRestController {
 
                 //lang
                 //priority to the facebook language
-                for (Lang lang : Lang.availables()) {
-                    if (result.getFacebookTokenAccessControl().getLocale().equals(lang.code())) {
-                        account.setLang(lang);
-                        break;
+                if (result.getFacebookTokenAccessControl().getLocale() != null) {
+                    for (Lang lang : Lang.availables()) {
+                        if (result.getFacebookTokenAccessControl().getLocale().equals(lang.code())) {
+                            account.setLang(lang);
+                            break;
+                        }
                     }
+                } else {
+                    account.setLang(Lang.forCode("fr"));
                 }
                 //choose the current interface lang
                 if (account.getLang() != null) {

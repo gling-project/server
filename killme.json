@@ -1,1 +1,17 @@
-http://E1ROFAGMUR1BWN.cloudfront.net/0gz96hZZMOeqSJygftSZO6BTM6uZLaZ3lOGw1pYECCjuS4QkAdaIX7kygeMwNb4dvPhadlBO9zGMaUkD8dQLXIXdwqS7PIQnWStn
+CustomerRegistrationDTO{
+facebookAuthentication=
+FacebookAuthenticationDTO{
+  userId=10207002454475958,
+token='CAACSQ2juiPQBAGUpcWduuM8ePhlcbnehhkklzsAM94wh4x8TrOE6TvhAZBphI9Q3pw5PVr6GCmqbOdvsAmslqdp8yGt21Rdru2JmBre15CgN9ORriC7ZC8SztZAxMI4dJFx7RGu0QwCVLpj4lEahzGqNLN2iDZBQxVl70DsaZAk5ma0ceBTkc7gerapvw7ZAf0CzP2DrLnQ4CBBRimy2wO'
+},
+accountRegistration=
+  AccountRegistrationDTO{
+    gender=null,
+    firstname='',
+    lastname='',
+    email='',
+    password='*********',
+    lang=LangDTO{language='fr', code='fr'},
+    keepSessionOpen=null
+  },
+address=null}
