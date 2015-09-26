@@ -109,9 +109,9 @@
 
             <!-- load data -->
         <script>
-        var data = @Html(new ObjectMapper().writeValueAsString(data)) ;
-        var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;
-        var lang = " @ctx().lang().code ";
+        var data =@Html(new ObjectMapper().writeValueAsString(data));
+        var languages =@Html(new ObjectMapper().writeValueAsString(languages.getList));
+        var lang = "@ctx().lang().code";
         </script>
 
             <!-- Sidebars -->
@@ -143,7 +143,7 @@
         <div class="app">
 
                 <!-- App body -->
-            <div ng-view style="height : 100 %"></div>
+            <div ng-view style="height : 100%"></div>
 
 
         </div>

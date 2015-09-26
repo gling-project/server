@@ -56,8 +56,8 @@
                     </span>
                 </div>
                 <div class="publication-data-body"
-                     ng-show="publication.description !=null && publication.description.length > 0">
-                    {{publication.description}}
+                     ng-show="publication.description !=null && publication.description.length > 0"
+                     ng-bind-html="publication.description | text">
                 </div>
 
             </div>

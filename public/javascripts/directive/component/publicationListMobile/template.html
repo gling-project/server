@@ -64,7 +64,8 @@
             </div>
 
             <div class="publication-box-name">{{publication.title}}</div>
-            <div class="publication-box-name">{{publication.description}}</div>
+            <div class="publication-box-name"
+                 ng-bind-html="publication.description | text"></div>
 
             <!-- promotion data -->
             <div ng-show="publication.type == 'PROMOTION'"

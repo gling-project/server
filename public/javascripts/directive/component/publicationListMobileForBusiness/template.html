@@ -29,7 +29,9 @@
             <!-- name -->
             <div class="publication-box-name">{{publication.title}}</div>
             <!-- description -->
-            <div class="publication-box-description">{{publication.description}}</div>
+            <div class="publication-box-description"
+                 ng-bind-html="publication.description | text">
+            </div>
 
             <!-- promotion data -->
             <div ng-show="publication.type == 'PROMOTION'"

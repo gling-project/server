@@ -1,4 +1,3 @@
-
 <div class="publication-box"
      ng-class="{'publication-followed':getInfo().publication.following === true}"
      ng-click="click()">
@@ -85,8 +84,8 @@
                 </span>
             </div>
             <div class="publication-data-body"
-                 ng-show="getInfo().publication.description !=null && getInfo().publication.description.length > 0">
-                {{getInfo().publication.description}}
+                 ng-show="getInfo().publication.description !=null && getInfo().publication.description.length > 0"
+                 ng-bind-html="getInfo().publication.description | text">
             </div>
 
         </div>
@@ -126,12 +125,14 @@
 
         <!-- publication date -->
         <div class="publication-footer-date publication-bordered-bottom">
-            {{'--.publication.publishTo' | translateText}} {{getInfo().publication.startDate | date:'dd MMM yyyy hh:mm'}}
+            {{'--.publication.publishTo' | translateText}} {{getInfo().publication.startDate | date:'dd MMM yyyy
+            hh:mm'}}
         </div>
 
         <!-- facebook -->
         <div class="publication-footer-facebook">
-            <facebook-share-publication-ctrl ng-info="{publication:getInfo().publication}"></facebook-share-publication-ctrl>
+            <facebook-share-publication-ctrl
+                    ng-info="{publication:getInfo().publication}"></facebook-share-publication-ctrl>
         </div>
 
     </div>

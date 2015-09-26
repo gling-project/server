@@ -48,6 +48,8 @@ public class LoginRestController extends AbstractRestController {
     private StoredFileService         storedFileService;
     @Autowired
     private LocalizationService       localizationService;
+    @Autowired
+    private BusinessService           businessService;
 
     @Transactional
     public Result forgotPassword() {

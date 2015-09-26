@@ -237,9 +237,9 @@
                     </div>
 
                     <!-- description -->
-                    <span>
-                        {{business.description}}
+                    <span ng-bind-html="business.description | text">
                     </span>
+
                     <br/>
                     <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
                             ng-show="edit"
