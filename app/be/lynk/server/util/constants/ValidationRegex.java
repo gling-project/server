@@ -13,4 +13,5 @@ public class ValidationRegex {
     public static final String URL         = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$";
     public static final String URL_OR_NULL = "^($|(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$)";
     public static final String VTA         = "^[a-zA-Z0-9\\.\\- ]{6,20}$";
+    public static final String VAT         = "^[a-zA-Z0-9\\.\\- ]{6,20}$";
 }

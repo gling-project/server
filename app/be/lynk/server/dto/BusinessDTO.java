@@ -35,7 +35,7 @@ public class BusinessDTO extends DTO implements KeyTyped<Date> {
     @Pattern(regexp = ValidationRegex.URL_OR_NULL, message = "--.validation.dto.url")
     private String website;
 
-    @Pattern(regexp = ValidationRegex.VTA, message = "--.validation.dto.vta")
+    @Pattern(regexp = ValidationRegex.VAT, message = "--.validation.dto.vta")
     private String vta;
 
     private AddressDTO address;
