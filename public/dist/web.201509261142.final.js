@@ -1308,11 +1308,12 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         $scope.sharePosition = n;
     });
 
-    $scope.interestDisplayFirst = 0;
     $scope.interestDisplayMax = 12;
     $scope.interestDisplayed = [];
+    $scope.interestDisplayed2 = [];
     $scope.computeList = function () {
-        $scope.interestDisplayed = $scope.customerInterests.slice($scope.interestDisplayFirst, $scope.interestDisplayMax + $scope.interestDisplayFirst);
+        $scope.interestDisplayed = $scope.customerInterests.slice(0, $scope.interestDisplayMax);
+        $scope.interestDisplayed2 = $scope.customerInterests.slice($scope.interestDisplayMax,$scope.customerInterests.length);
     };
 
     //variable
@@ -1333,19 +1334,19 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
 
     //selection mode
-    $scope.left = function () {
-        if ($scope.interestDisplayFirst > 0) {
-            $scope.interestDisplayFirst--;
-            $scope.computeList();
-        }
-    };
-
-    $scope.right = function () {
-        if ($scope.interestDisplayFirst < $scope.customerInterests.length - $scope.interestDisplayMax) {
-            $scope.interestDisplayFirst++;
-            $scope.computeList();
-        }
-    };
+    //$scope.left = function () {
+    //    if ($scope.interestDisplayFirst > 0) {
+    //        $scope.interestDisplayFirst--;
+    //        $scope.computeList();
+    //    }
+    //};
+    //
+    //$scope.right = function () {
+    //    if ($scope.interestDisplayFirst < $scope.customerInterests.length - $scope.interestDisplayMax) {
+    //        $scope.interestDisplayFirst++;
+    //        $scope.computeList();
+    //    }
+    //};
 
     $scope.setFollowedMode = function (n) {
         if (n == null) {
