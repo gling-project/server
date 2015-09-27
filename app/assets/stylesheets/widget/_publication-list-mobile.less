@@ -1,10 +1,89 @@
 .publication-list-mobile {
+
+    .illustration {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 40px;
+        height: 40px;
+    }
+
     .publication-publication {
-        background-color: #ddd;
+        background-color: #ffffff;
         padding: 4px;
-        margin-bottom: 5px;
+        margin: 5px;
+        -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+        box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+
+        .publication-interest {
+            background-color: @color-blue-dark;
+            font-size: 16px;
+            float: right;
+            padding: 5px;
+            border-radius: 30px;
+            color: white;
+            position: relative;
+        }
+
+        .publication-header {
+            padding-bottom: 5px;
+
+            .title {
+                font-size: 18px;
+                color: @color-blue-dark;
+                font-weight: bold;
+            }
+
+            & > * {
+                display: inline-block;
+                vertical-align: top;
+            }
+            & > *:last-child {
+                float: right;
+                border: 1px solid @color-blue-dark;
+                padding: 2px 5px;
+                font-size: 14px;
+                color: @color-blue-dark;
+                border-radius: 10px;
+            }
+        }
+
+        .publication-data {
+            .publication-data-header {
+                background-color: @color-blue-dark;
+                padding: 5px;
+                border-radius: 10px;
+                margin: 5px;
+                color: #ffffff;
+                font-size: 14px;
+                display: inline-block;
+                & > div {
+                    display: inline-block;
+                    &:first-child {
+                        margin-right: 2px;
+                    }
+                }
+            }
+        }
+
         .publication-list-business-data {
             display: inline-block;
         }
+    }
+
+    .publication-footer {
+        height: 20px;
+        font-size: 14px;
+        margin-top: 5px;
+        .publication-footer-facebook {
+            float: right;
+            margin-right: 10px;
+        }
+        .publication-footer-date {
+            float: right;
+            padding-right: 15px;
+        }
+
     }
 }

@@ -7,6 +7,7 @@ import be.lynk.server.model.entities.BusinessCategory;
 import be.lynk.server.model.entities.CustomerInterest;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by florian on 18/05/15.
@@ -24,9 +25,9 @@ public interface BusinessService extends CrudService<Business>{
 
     List<Business> findByZip(String zip, int page,int maxResult);
 
-    public List<Business> findByDistance(Position position,int maxDistance);
+    List<Business> findByDistance(Position position,int maxDistance);
 
-    List<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance);
+    Set<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance);
 
     List<Business> findByFollowed(Account currentUser);
 }

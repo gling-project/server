@@ -58,9 +58,9 @@ public class SearchRestController extends AbstractRestController {
         PositionDTO positionDTO = extractDTOFromRequest(PositionDTO.class, true);
         Position position = dozerService.map(positionDTO, Position.class);
 
-        List<Business> businesses = businessService.findByDistanceAndCategories(position, categories, 20);
+        Set<Business> businesses = businessService.findByDistanceAndCategories(position, categories, 20);
 
-        List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, businesses, OrderType.DISTANCE);
+        List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, new ArrayList<>(businesses), OrderType.DISTANCE);
 
 
         return ok(new ListDTO<>(businessToDisplayDTOs));

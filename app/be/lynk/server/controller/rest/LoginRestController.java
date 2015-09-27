@@ -204,6 +204,7 @@ public class LoginRestController extends AbstractRestController {
         return ok(new ResultDTO());
     }
 
+
     @Transactional
     public Result businessRegistration() {
         BusinessRegistrationDTO dto = extractDTOFromRequest(BusinessRegistrationDTO.class);

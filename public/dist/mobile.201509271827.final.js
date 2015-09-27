@@ -1291,6 +1291,12 @@ myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', '
 
                     scope.getInfo().loading = true;
 
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
 
                     scope.navigateTo = function (target) {
                         $location.path(target);
@@ -1335,6 +1341,13 @@ myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'business
                             }
                         }
                     });
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
 
 
                     scope.getInfo().refresh = function (type) {

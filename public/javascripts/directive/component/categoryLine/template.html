@@ -1,16 +1,16 @@
 <div>
     <table class="category-line-tree">
         <tr ng-repeat="(catLev1Key,lev2) in getInfo().categories">
-            <td>
-                <a ng-click="searchCat(catLev1Key)"> {{catLev1Key | translateText}} </a> <span
-                    class="transition">>></span>
+            <td style="white-space: nowrap;">
+                <a ng-click="searchCat(catLev1Key)"> {{catLev1Key | translateText}} </a>
+                <span class="transition">>></span>
             </td>
             <td>
                 <table>
                     <tr ng-repeat="(catLev2Key, lev3) in lev2">
-                        <td>
-                            <a ng-click="searchCat(catLev2Key)"> {{catLev2Key | translateText}}</a> <span
-                                class="transition">>></span>
+                        <td  style="white-space: nowrap;">
+                            <a ng-click="searchCat(catLev2Key)"> {{catLev2Key | translateText}}</a>
+                            <span class="transition">>></span>
                         </td>
                         <td>
                         <span ng-repeat="catLev3 in lev3">

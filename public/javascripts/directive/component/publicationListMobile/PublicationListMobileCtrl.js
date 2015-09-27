@@ -15,6 +15,12 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
 
                     scope.getInfo().loading = true;
 
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
 
                     scope.navigateTo = function (target) {
                         $location.path(target);

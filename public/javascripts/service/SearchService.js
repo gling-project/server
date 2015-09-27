@@ -7,6 +7,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.default = function (page,callbackSuccess, callbackError) {
 
+        console.log("search default : "+page);
+
         if (this.canceler != null) {$
             this.canceler.resolve();
         }
@@ -35,6 +37,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
     };
 
     this.searchByStringLittle = function (searchText, callbackSuccess, callbackError) {
+
+        console.log("search by string little : "+searchText);
 
         if (this.canceler != null) {
             this.canceler.resolve();
@@ -101,6 +105,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.byFollowed = function (page,callbackSuccess, callbackError) {
 
+        console.log("search by follow : "+page);
+
         if (this.canceler != null) {
             this.canceler.resolve();
         }
@@ -128,6 +134,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
     };
 
     this.byFollowedAndInterest = function (page,interestId,callbackSuccess, callbackError) {
+
+        console.log("search by follow and interest : "+page+"/"+interestId);
 
         if (this.canceler != null) {
             this.canceler.resolve();
@@ -158,6 +166,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.byBusiness = function (page,businessId, callbackSuccess, callbackError) {
 
+        console.log("search by business : "+page+"/"+businessId);
+
         if (this.canceler != null) {
             this.canceler.resolve();
         }
@@ -185,6 +195,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
 
     this.byBusinessArchived = function (page,businessId, callbackSuccess, callbackError) {
+
+        console.log("search by business archived : "+page+"/"+businessId);
 
         if (this.canceler != null) {
             this.canceler.resolve();
@@ -214,6 +226,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.byBusinessPrevisualization = function (page,businessId, callbackSuccess, callbackError) {
 
+        console.log("search by business previsualization : "+page+"/"+businessId);
+
         if (this.canceler != null) {
             this.canceler.resolve();
         }
@@ -240,6 +254,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
     };
 
     this.byInterest = function (page,interestId, callbackSuccess, callbackError) {
+
+        console.log("search by interst : "+page+"/"+interestId);
 
         if (this.canceler != null) {
             this.canceler.resolve();
@@ -271,6 +287,8 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.nearBusiness = function (callbackSuccess, callbackError) {
 
+        console.log("search near business");
+
         if (this.canceler != null) {
             this.canceler.resolve();
         }
@@ -301,6 +319,9 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
 
     this.nearBusinessByInterest = function (interestId,callbackSuccess, callbackError) {
+
+        console.log("search near business by interest");
+
 
         if (this.canceler != null) {
             this.canceler.resolve();

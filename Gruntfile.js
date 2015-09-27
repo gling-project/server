@@ -147,6 +147,7 @@ module.exports = function (grunt) {
 
                         <!-- filters -->
                         'public/javascripts/filter/TranslateTextFilter.js',
+                        'public/javascripts/filter/TextFilter.js',
                         'public/javascripts/filter/ZeropadFilter.js',
                         'public/javascripts/filter/ImageFilter.js',
 

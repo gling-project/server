@@ -12,7 +12,9 @@ import play.db.jpa.JPA;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by florian on 18/05/15.
@@ -151,26 +153,28 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
     }
 
     @Override
-    public List<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance) {
+    public Set<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance) {
 
         if (categories.size() == 0) {
-            return new ArrayList<>();
+            return new HashSet<>();
         }
         double[] doubles = computeMaxCoordinate(position, maxDistance);
 
 
         //Select distinct d from Distributor d join d.towns t join t.district t where t.name = :name
 
-        String request = "select b from Business b join b.businessCategories c where c in :categories and b.address.posx > :coord1 and b.address.posx < :coord2 and b.address.posy > :coord3 and b.address.posy < :coord4 and b.businessStatus = :status order by searchableName";
+        String request = "select b from Business b inner join b.businessCategories c where c in :categories and b.address.posx > :coord1 and b.address.posx < :coord2 and b.address.posy > :coord3 and b.address.posy < :coord4 and b.businessStatus = :status order by searchableName";
 
-        return JPA.em().createQuery(request, Business.class)
-                  .setParameter("categories", categories)
-                  .setParameter("coord1", doubles[0])
-                  .setParameter("coord2", doubles[1])
-                  .setParameter("coord3", doubles[2])
-                  .setParameter("coord4", doubles[3])
-                  .setParameter("status", BusinessStatusEnum.PUBLISHED)
-                  .getResultList();
+        List<Business> resultList = JPA.em().createQuery(request, Business.class)
+                                       .setParameter("categories", categories)
+                                       .setParameter("coord1", doubles[0])
+                                       .setParameter("coord2", doubles[1])
+                                       .setParameter("coord3", doubles[2])
+                                       .setParameter("coord4", doubles[3])
+                                       .setParameter("status", BusinessStatusEnum.PUBLISHED)
+                                       .getResultList();
+        HashSet<Business> businesses = new HashSet<>(resultList);
+        return businesses;
     }
 
     @Override
