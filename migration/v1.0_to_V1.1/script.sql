@@ -8,3 +8,7 @@ insert into customerinterest (iconname,name,orderindex,translationname_id) value
 insert into categoryinterestlink (businesscategory_id,customerinterest_id,priority) values
 ((select id from businesscategory where name = 'servicesprox_findroit_assurances'),(select id from customerinterest where name = 'money'),1),
 ((select id from businesscategory where name = 'servicesprox_findroit_comptable'),(select id from customerinterest where name = 'money'),1);
+
+
+
+select *
