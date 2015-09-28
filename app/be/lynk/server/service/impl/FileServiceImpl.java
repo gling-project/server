@@ -89,7 +89,16 @@ public class FileServiceImpl implements FileService {
 
                 //1) sizeX and sizeY are the minimal size :
                 if ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey)) {
-                    throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
+                    if(sizey==null){
+                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
+                    }
+                    else if(sizex==null){
+                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
+
+                    }
+                    else{
+                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
+                    }
                 }
 
                 if (sizex != null && sizey != null) {

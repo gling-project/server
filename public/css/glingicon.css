@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'glingicon';
-	src:url('fonts/glingicon.eot?sddbhg');
-	src:url('fonts/glingicon.eot?#iefixsddbhg') format('embedded-opentype'),
-		url('fonts/glingicon.ttf?sddbhg') format('truetype'),
-		url('fonts/glingicon.woff?sddbhg') format('woff'),
-		url('fonts/glingicon.svg?sddbhg#glingicon') format('svg');
+	src:url('fonts/glingicon.eot?w3mdqi');
+	src:url('fonts/glingicon.eot?#iefixw3mdqi') format('embedded-opentype'),
+		url('fonts/glingicon.ttf?w3mdqi') format('truetype'),
+		url('fonts/glingicon.woff?w3mdqi') format('woff'),
+		url('fonts/glingicon.svg?w3mdqi#glingicon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -170,7 +170,7 @@
 .gling-icon-culture:before {
 	content: "\e623";
 }
-.gling-icon-going_out:before {
+.gling-icon-going-out:before {
 	content: "\e624";
 }
 .gling-icon-drink:before {
@@ -179,9 +179,15 @@
 .gling-icon-eat:before {
 	content: "\e626";
 }
+.gling-icon-images:before {
+	content: "\e90e";
+}
 .gling-icon-money:before {
 	content: "\e93c";
 }
 .gling-icon-location:before {
 	content: "\e947";
+}
+.gling-icon-info:before {
+	content: "\ea0c";
 }

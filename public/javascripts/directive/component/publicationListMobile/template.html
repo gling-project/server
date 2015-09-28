@@ -77,25 +77,25 @@
                 <img ng-src="{{publication.pictures[0] | image}}"
                      class="publication-illustration">
 
-                <div ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true"
+                <div ng-show="publication.pictures.length > 1"
                      class="publication-illustration-plus-icon">
                     <span>+{{publication.pictures.length - 1}}</span>
                 </div>
             </div>
 
-            <!-- picture 2 -->
-            <div class="publication-gallery publication-body-two publication-body-two-right"
-                 ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true"
-                 ng-click="openGallery(publication.pictures[1],publication)">
+            <!--&lt;!&ndash; picture 2 &ndash;&gt;-->
+            <!--<div class="publication-gallery publication-body-two publication-body-two-right"-->
+                 <!--ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true"-->
+                 <!--ng-click="openGallery(publication.pictures[1],publication)">-->
 
-                <img ng-src="{{publication.pictures[1] | image}}"
-                     class="publication-illustration">
+                <!--<img ng-src="{{publication.pictures[1] | image}}"-->
+                     <!--class="publication-illustration">-->
 
-                <div
-                        class="publication-illustration-plus-icon">
-                    <span>+{{publication.pictures.length - 2}}</span>
-                </div>
-            </div>
+                <!--<div-->
+                        <!--class="publication-illustration-plus-icon">-->
+                    <!--<span>+{{publication.pictures.length - 2}}</span>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
         <div class="publication-footer">
 

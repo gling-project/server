@@ -1084,7 +1084,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
             });
 
             $scope.actions = [{
-                icon: '/assets/images/action/home.png',
+                name:'home',
+                icon: 'gling-icon-home',
                 action: function () {
                     $scope.interfaceToDisplay = 'home'
                 },
@@ -1092,7 +1093,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
                     return true;
                 }
             }, {
-                icon: '/assets/images/action/info.png',
+                name:'info',
+                icon: 'gling-icon-info',
                 action: function () {
                     $scope.interfaceToDisplay = 'info'
                 },
@@ -1100,7 +1102,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
                     return true;
                 }
             }, {
-                icon: '/assets/images/action/gallery.png',
+                name:'gallery',
+                icon: 'gling-icon-images',
                 action: function () {
                     $scope.interfaceToDisplay = 'gallery'
                 },
@@ -1438,6 +1441,29 @@ myApp.directive("mobileTitleCtrl", function () {
     }
 });
 
+myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function ($rootScope, businessService, geolocationService, directiveService, $location) {
+
+    return {
+        restrict: "E",
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
+        templateUrl: "/assets/javascripts/directive/component/categoryLine/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+                    directiveService.autoScopeImpl(scope);
+
+                    scope.searchCat = function(categoryName){
+                        $location.path('/search/category:'+categoryName);
+                    }
+                }
+            }
+        }
+    }
+}]);
 myApp.service("$flash", ['$filter', 'modalService', function($filter,modalService) {
 
     Messenger.options = {

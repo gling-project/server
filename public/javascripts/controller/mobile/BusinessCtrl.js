@@ -27,7 +27,8 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
             });
 
             $scope.actions = [{
-                icon: '/assets/images/action/home.png',
+                name:'home',
+                icon: 'gling-icon-home',
                 action: function () {
                     $scope.interfaceToDisplay = 'home'
                 },
@@ -35,7 +36,8 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
                     return true;
                 }
             }, {
-                icon: '/assets/images/action/info.png',
+                name:'info',
+                icon: 'gling-icon-info',
                 action: function () {
                     $scope.interfaceToDisplay = 'info'
                 },
@@ -43,7 +45,8 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
                     return true;
                 }
             }, {
-                icon: '/assets/images/action/gallery.png',
+                name:'gallery',
+                icon: 'gling-icon-images',
                 action: function () {
                     $scope.interfaceToDisplay = 'gallery'
                 },

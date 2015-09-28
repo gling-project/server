@@ -1,0 +1,56 @@
+.business-list-mobile {
+
+    .illustration {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 40px;
+        height: 40px;
+    }
+
+    .business-ticket {
+        background-color: #ffffff;
+        padding: 4px;
+        margin: 5px;
+        -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+        box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+
+        .publication-bubble{
+            border: 1px solid @color-blue-dark;
+            padding: 2px 5px;
+            font-size: 14px;
+            color: @color-blue-dark;
+            border-radius: 10px;
+        }
+
+
+        .business-header {
+            padding-bottom: 5px;
+
+            .title {
+                font-size: 18px;
+                color: @color-blue-dark;
+                font-weight: bold;
+            }
+
+            & > * {
+                display: inline-block;
+                vertical-align: top;
+            }
+            & > *:nth-child(3) {
+                float: right;
+            }
+        }
+
+        .business-list-business-data {
+
+                vertical-align: top;
+                border-bottom: 1px solid @color-blue-dark;
+                border-top: 1px solid @color-blue-dark;
+
+
+        }
+    }
+
+}

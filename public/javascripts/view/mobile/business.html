@@ -55,13 +55,11 @@
                     <div style="overflow: auto">
                         <div class="business-page-menu"
                              ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">
-                            <button class="home-interest"
+                            <button class="gling-button {{action.icon}}"
+                                    ng-class="{'selected':interfaceToDisplay === action.name}"
                                     ng-repeat="action in actions"
                                     ng-show="action.display()"
                                     ng-click="action.action()">
-
-                                <img ng-src="{{action.icon}}"
-                                     style="width:50px"/>
                             </button>
                         </div>
                     </div>

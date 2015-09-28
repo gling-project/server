@@ -30,14 +30,16 @@ public enum ErrorMessageEnum {
     WRONG_ADDRESS_NAME("--.error.address.nameNotExists"),
     WRONG_OLD_PASSWORD("--.error.address.wrongOldPassword"),
     ADDRESS_WRONG_NAME_TECHNICAL_NAME("--.error.address.TechnicalName"),
-    ERROR_PICTURE_WRONG_SIZE("--.error.picture.wrongSize"),
     ERROR_CONTACT_NO_EMAIL("--.error.contact.no.email"),
     ERROR_PROMOTION_DURATION_TOO_LONG("--.error.promotion.duration.tooLong"),
     ERROR_NOTIFICATION_DURATION_TOO_LONG("--.error.notification.duration.tooLong"),
     ERROR_PUBLICATION_TOO_MUCH_TODAY("--.error.promotion.TooMuchToday"),
     ERROR_PUBLICATION_STARTDATE_BEFORE_NOW("--.error.publication.startDateBeforeNow"),
     ERROR_BUSINESS_HIDDEN_AND_NOT_MINE("--.error.business.hiddenAndNotMine"),
-    ERROR_NOT_YOUR_BUSINESS("--.error.business.notYours");
+    ERROR_NOT_YOUR_BUSINESS("--.error.business.notYours"),
+    ERROR_PICTURE_WRONG_SIZE("--.error.picture.wrongSize"),
+    ERROR_PICTURE_WRONG_SIZE_Y("--.error.picture.wrongSizeY"),
+    ERROR_PICTURE_WRONG_SIZE_X("--.error.picture.wrongSizeX");
 
     private final String key;
 

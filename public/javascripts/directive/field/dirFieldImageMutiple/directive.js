@@ -93,6 +93,14 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
                                 scope.inDownload = false;
                             })
                                 .error(function (data, status) {
+                                    console.log('je suis un échec !! : '+data.message);
+                                    console.log(data);
+                                    for(var key in scope.images){
+                                        if(scope.images[key] == imgContainer){
+                                            scope.images.splice(key,1);
+                                        }
+                                    }
+
                                     imgContainer.percent = 0;
                                     scope.inDownload = false;
                                     $flash.error(data.message);

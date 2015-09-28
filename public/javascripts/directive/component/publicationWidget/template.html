@@ -91,20 +91,6 @@
         </div>
 
         <!-- gallery -->
-        <!-- picture 1 -->
-        <div class="publication-gallery"
-             ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}"
-             ng-show="getInfo().publication.pictures.length > 0 "
-             ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)">
-
-            <img ng-src="{{getInfo().publication.pictures[0] | image}}"
-                 class="publication-illustration">
-
-            <div ng-show="getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) !== true"
-                 class="publication-illustration-plus-icon">
-                <span>+{{getInfo().publication.pictures.length - 1}}</span>
-            </div>
-        </div>
 
         <!-- picture 2 -->
         <div class="publication-gallery publication-body-two publication-body-two-right"
@@ -117,6 +103,21 @@
             <div
                     class="publication-illustration-plus-icon">
                 <span>+{{getInfo().publication.pictures.length - 2}}</span>
+            </div>
+        </div>
+
+        <!-- picture 1 -->
+        <div class="publication-gallery"
+             ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}"
+             ng-show="getInfo().publication.pictures.length > 0 "
+             ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)">
+
+            <img ng-src="{{getInfo().publication.pictures[0] | image}}"
+                 class="publication-illustration">
+
+            <div ng-show="getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) !== true"
+                 class="publication-illustration-plus-icon">
+                <span>+{{getInfo().publication.pictures.length - 1}}</span>
             </div>
         </div>
 

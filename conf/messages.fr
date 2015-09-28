@@ -131,6 +131,8 @@
 --.error.wrong_password_or_login=Email ou mot de passe erroné.
 --.error.business.mustBePublished=Votre profil de commerce doit être validé avant de pouvoir diffuser de nouvelles publications
 --.error.picture.wrongSize=La taille de votre photo doit faire au minimum {0} pixels de large et {1} pixels de haut
+--.error.picture.wrongSizeX=La taille de votre photo doit faire au minimum {0} pixels de large
+--.error.picture.wrongSizeY=La taille de votre photo doit faire au minimum {0} pixels de haut
 
 
 ##  modal/AccountFusionFacebookModal/view.html
