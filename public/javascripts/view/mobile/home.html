@@ -56,19 +56,23 @@
                 </div>
 
                 <button ng-click="openPositionDetails()"
-                        class="glyphicon glyphicon-home">
+                        class="glyphicon glyphicon-home gling-button">
                 </button>
             </div>
-            <div>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-                           checked ng-model="followedMode">
-                    <label class="onoffswitch-label" for="myonoffswitch">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </div>
+
+            <div class="onoffswitch">
+                <input type="checkbox"
+                       name="onoffswitch"
+                       class="onoffswitch-checkbox"
+                       id="switchHome"
+                       checked
+                       ng-model="followedMode">
+                <label class="onoffswitch-label" for="switchHome">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
             </div>
+
             <div>
                 <div class="home-footer-position-details"
                      ng-class="{'generic-block':displayFavoriteBusiness  === true}">
@@ -82,9 +86,10 @@
                 </div>
 
                 <button ng-click="openFavoriteBusiness()"
-                        class="glyphicon glyphicon-heart-empty">
+                        class="glyphicon glyphicon-heart-empty gling-button">
                 </button>
             </div>
+
 
         </div>
     </div>

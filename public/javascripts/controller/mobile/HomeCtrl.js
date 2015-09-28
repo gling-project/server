@@ -77,6 +77,7 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
 
     //watch in follow mode
     $scope.$watch('followedMode', function (o,n) {
+        console.log("xatch followedMode")
         if(o!=n) {
             $scope.currentPage = 0;
             $scope.allLoaded = false;
