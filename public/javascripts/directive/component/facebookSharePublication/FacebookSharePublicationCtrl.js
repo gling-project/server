@@ -14,7 +14,7 @@ myApp.directive('facebookSharePublicationCtrl', function ($rootScope, businessSe
                     directiveService.autoScopeImpl(scope);
 
                     scope.share = function(){
-                        facebookService.sharePublication(scope.getInfo().publication);
+                        facebookService.sharePublication(scope.getInfo().businessId,scope.getInfo().publicationId);
                     };
 
                 }

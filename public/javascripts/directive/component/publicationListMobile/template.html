@@ -56,7 +56,7 @@
                     </div>
                     <div>{{'--.publication.promotionTo' | translateText}}</div>
                     <div>
-                        &lt; {{publication.endDate | date:'dd MMM hh:mm'}}
+                        &lt; {{publication.endDate | date:'dd MMM HH:mm'}}
                     </div>
 
                 </div>
@@ -105,14 +105,14 @@
 
             <!-- publication date -->
             <div class="publication-footer-date publication-bordered-bottom">
-                {{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy
-                hh:mm'}}
+                {{'--.publication.publishTo' | translateText}}
+                {{publication.startDate | date:'dd MMM yyyy'}}
             </div>
 
             <!-- facebook -->
             <div class="publication-footer-facebook">
                 <facebook-share-publication-ctrl
-                        ng-info="{publication:publication}"></facebook-share-publication-ctrl>
+                        ng-info="{businessId:publication.businessId,publicationId:publication.id}"></facebook-share-publication-ctrl>
             </div>
 
         </div>

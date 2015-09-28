@@ -41,7 +41,7 @@ body {
     font-size: 16px;
 }
 
-.app{
+.app {
     background-color: @color-body-bg;
 }
 
@@ -87,10 +87,19 @@ button {
 
 }
 
-.navbar-absolute-top ,
-.navbar-absolute-top.navbar-app .btn{
+
+.navbar{
+    .nav-menu {
+        margin-left: -10px;
+    }
+}
+
+.navbar-absolute-top,
+.navbar-absolute-top.navbar-app .btn {
     background-color: @color-blue-dark;
     color: #ffffff !important;
+
+
 }
 
 .welcome-header {
@@ -105,7 +114,7 @@ button {
     width: ~'calc(100% + 30px)';
     color: @color-green-light;
 
-    & > div{
+    & > div {
 
         .logo {
             display: inline-block;
@@ -123,6 +132,6 @@ button {
     }
 }
 
-.sidebar-left{
+.sidebar-left {
     background-color: @color-green-light;
 }

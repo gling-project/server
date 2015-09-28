@@ -7,11 +7,18 @@
 
     </div>
 
-    <div class="btn-group pull-left header-option-container">
-        <div ui-toggle="uiSidebarLeft" class="btn btn-navbar">
+
+    <div class="btn-group pull-left">
+        <div class="btn btn-navbar" ng-click="back()" ng-hide="displayMenu !== false">
+            <div class="nav-button" ng-show="displayBack()">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </div>
+        </div>
+        <div class="btn btn-navbar nav-menu" ui-toggle="uiSidebarLeft"  ng-show="displayMenu !== false" >
             <div class="nav-button">
                 <i class="fa fa-bars"></i>
             </div>
         </div>
     </div>
+
 </div>

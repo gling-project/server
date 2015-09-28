@@ -106,28 +106,50 @@
 
             <!-- load data -->
         <script>
-        var data =@Html(new ObjectMapper().writeValueAsString(data));
-        var languages =@Html(new ObjectMapper().writeValueAsString(languages.getList));
+        var data = @Html(new ObjectMapper().writeValueAsString(data));
+        var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList));
         var lang = "@ctx().lang().code";
         </script>
 
             <!-- Sidebars -->
-        <div class="sidebar sidebar-left" ui-turn-off='uiSidebarLeft' ng-controller="MenuCtrl">
+        <!-- ui-turn-off='uiSidebarLeft'  -->
+        <div class="sidebar sidebar-left"   ng-controller="MenuCtrl">
             <div class="scrollable">
                 <h1 class="scrollable-header app-name">{{'--.site.name' | translateText}}</h1>
                 <div class="scrollable-content">
-                    <div class="list-group" ui-turn-off='uiSidebarLeft'>
+                    <div class="list-group">
+
+                        <div class="list-group-item generic-pointer">
+                            <select
+                                ng-model="currentPosition"
+                                ng-options="position.key as position.translation | translateText for position in positions">
+                            </select>
+                            <span class="gling-icon-location"></span>
+                        </div>
 
                         <div class="list-group-item generic-pointer"
-                            ng-click="navigateTo('/home')">
-                            <span class="glyphicon glyphicon-home"></span>
+                        ui-turn-off='uiSidebarLeft'
+                        ng-click="navigateTo('/home')">
+                            <span class="gling-icon-home"></span>
                             {{'--.generic.home' | translateText}}
                         </div>
-                        <div class="list-group-item generic-pointer" ng-click="navigateTo('/profile')">
-                            <span class="glyphicon glyphicon-user"></span>
+
+                        <div class="list-group-item generic-pointer"
+                        ui-turn-off='uiSidebarLeft'
+                        ng-click="navigateTo('/profile')">
+                            <span class="gling-icon-profil"></span>
                             {{'--.welcome.myProfile' | translateText}}
                         </div>
-                        <div class="list-group-item generic-pointer" ng-click="logout()">
+
+                        <div class="list-group-item generic-pointer"
+                        ui-turn-off='uiSidebarLeft'
+                        ng-click="navigateTo('/my-businesses')">
+                            <span class="gling-icon-shop"></span>
+                            {{'--.welcome.myBusinesses' | translateText}}
+                        </div>
+
+                        <div class="list-group-item generic-pointer"
+                        ng-click="logout()">
                             <span class="glyphicon glyphicon-off" ></span>
                             {{'--.generic.logout' | translateText}}
                         </div>

@@ -1784,11 +1784,24 @@ body,
   padding-top: 4px;
   padding-bottom: 5px;
 }
-.list-group-item {
+.list-group .list-group-item {
   color: #666;
 }
-.list-group-item:hover {
+.list-group .list-group-item:hover {
   background-color: #ddd;
+}
+.list-group select {
+  position: absolute;
+  height: 100%;
+  width: calc(100% - 42px);
+  height: 40px;
+  margin-top: -9px;
+  margin-bottom: -10px;
+  background-color: white;
+  margin-right: -8px;
+  margin-left: 25px;
+  vertical-align: top;
+  display: inline-block;
 }
 .body-mask {
   background-color: #000000;
@@ -2348,6 +2361,9 @@ button > span.fa {
 }
 .loading-modal .modal-body {
   text-align: center;
+}
+.navbar .nav-menu {
+  margin-left: -10px;
 }
 .navbar-absolute-top,
 .navbar-absolute-top.navbar-app .btn {

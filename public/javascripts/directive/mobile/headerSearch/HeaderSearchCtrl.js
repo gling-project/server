@@ -11,6 +11,13 @@ myApp.directive("headerSearchCtrl", function () {
             return {
                 post: function (scope) {
 
+                    scope.displayBack = function(){
+                        return window.history.length>0;
+                    };
+
+                    scope.back = function () {
+                        window.history.back();
+                    };
 
 
 
