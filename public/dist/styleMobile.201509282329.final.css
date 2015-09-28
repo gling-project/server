@@ -402,11 +402,11 @@ function randomString(len, an) {
 
 @font-face {
 	font-family: 'glingicon';
-	src:url('fonts/glingicon.eot?w3mdqi');
-	src:url('fonts/glingicon.eot?#iefixw3mdqi') format('embedded-opentype'),
-		url('fonts/glingicon.ttf?w3mdqi') format('truetype'),
-		url('fonts/glingicon.woff?w3mdqi') format('woff'),
-		url('fonts/glingicon.svg?w3mdqi#glingicon') format('svg');
+	src:url('/assets/fonts/glingicon.eot?w3mdqi');
+	src:url('/assets/fonts/glingicon.eot?#iefixw3mdqi') format('embedded-opentype'),
+		url('/assets/fonts/glingicon.ttf?w3mdqi') format('truetype'),
+		url('/assets/fonts/glingicon.woff?w3mdqi') format('woff'),
+		url('/assets/fonts/glingicon.svg?w3mdqi#glingicon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
