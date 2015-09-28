@@ -1,17 +1,9 @@
-CustomerRegistrationDTO{
-facebookAuthentication=
-FacebookAuthenticationDTO{
-  userId=10207002454475958,
-token='CAACSQ2juiPQBAGUpcWduuM8ePhlcbnehhkklzsAM94wh4x8TrOE6TvhAZBphI9Q3pw5PVr6GCmqbOdvsAmslqdp8yGt21Rdru2JmBre15CgN9ORriC7ZC8SztZAxMI4dJFx7RGu0QwCVLpj4lEahzGqNLN2iDZBQxVl70DsaZAk5ma0ceBTkc7gerapvw7ZAf0CzP2DrLnQ4CBBRimy2wO'
-},
-accountRegistration=
-  AccountRegistrationDTO{
-    gender=null,
-    firstname='',
-    lastname='',
-    email='',
-    password='*********',
-    lang=LangDTO{language='fr', code='fr'},
-    keepSessionOpen=null
-  },
-address=null}
+http://dcz35ar8sf5qb.cloudfront.net/00TwA4B9dOWFRKit8c2qMRLyAUJlhgMDaWaGHCcvM55WkJ8EjpFHHUOMW1idWcUcEXtRQSIa8p6sMzrfKGxcmJDJtj0m7FfoFPLQ
+
+
+http://dcz35ar8sf5qb.cloudfront.net/jJkBYRMJV8kTHbXzoDZSL9Me8se5IvAAVmPFR8aWMyeI7DdrnjiGsI2hhuSqIBY6Ng6eyHt8nYsWHvRhp23TPwf9YPafEXtKhka6
+http://dcz35ar8sf5qb.cloudfront.net/test/jJkBYRMJV8kTHbXzoDZSL9Me8se5IvAAVmPFR8aWMyeI7DdrnjiGsI2hhuSqIBY6Ng6eyHt8nYsWHvRhp23TPwf9YPafEXtKhka6
+
+https://s3.amazonaws.com/lynk-test/jJkBYRMJV8kTHbXzoDZSL9Me8se5IvAAVmPFR8aWMyeI7DdrnjiGsI2hhuSqIBY6Ng6eyHt8nYsWHvRhp23TPwf9YPafEXtKhka6
+
+dcz35ar8sf5qb.cloudfront.net/gling-prod/00TwA4B9dOWFRKit8c2qMRLyAUJlhgMDaWaGHCcvM55WkJ8EjpFHHUOMW1idWcUcEXtRQSIa8p6sMzrfKGxcmJDJtj0m7FfoFPLQ

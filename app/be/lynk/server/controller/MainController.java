@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class MainController extends AbstractController {
 
     private String AWSBuckect     = Configuration.root().getString("aws.s3.bucket");
-    private String fileBucketUrl  = "https://s3.amazonaws.com/" + AWSBuckect;
+    private String fileBucketUrl  = "http://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
     private String urlBase        = Configuration.root().getString("site.url.base");
     private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
     private String lastVersion    = Configuration.root().getString("project.lastVersion");
