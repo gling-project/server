@@ -11,4 +11,30 @@ insert into categoryinterestlink (businesscategory_id,customerinterest_id,priori
 
 
 
-select *
+update translationvalue set content = 'Expo ou théâtre?' where translation_id =(select translationname_id from customerinterest where name = 'culture') and lang = 'fr';
+update translationvalue set content = 'Exhibition or theatre?' where translation_id =(select translationname_id from customerinterest where name = 'culture') and lang = 'en';
+
+update translationvalue set content = 'Fleurs ou plantes?' where translation_id =(select translationname_id from customerinterest where name = 'garden') and lang = 'fr';
+update translationvalue set content = 'The green side of life!' where translation_id =(select translationname_id from customerinterest where name = 'garden') and lang = 'en';
+
+update translationvalue set content = 'Les bons comptes font…' where translation_id =(select translationname_id from customerinterest where name = 'money') and lang = 'fr';
+update translationvalue set content = 'Good accounts make…' where translation_id =(select translationname_id from customerinterest where name = 'money') and lang = 'en';
+
+insert into categoryinterestlink (businesscategory_id,customerinterest_id,priority) values
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'eat'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'drink'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'going_out'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'culture'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'clothe'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'decor'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'welness'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'sport'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'pets'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'travel'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'sleep'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'doityourself'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'garden'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'music'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'technology'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'play'),1),
+((select id from businesscategory where name = 'magasin_loisirs_livres'),(select id from customerinterest where name = 'money'),1);
