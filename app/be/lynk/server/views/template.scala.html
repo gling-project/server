@@ -116,6 +116,11 @@
 
                 <!-- common angularsj elements -->
             @header.header()
+
+                <!-- css -->
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/web.css")">
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/glingicon.css")">
         }
 
          @* @if(false){*@
@@ -131,15 +136,6 @@
 
              <link rel="stylesheet" media="screen" href="@routes.Assets.at("dist/styleDependencies."+data.getProjectLastVersion+".final.css")">
         }
-
-
-
-
-            <!-- css -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/glingicon.css")">
-            <!-- main -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/web.css")">
 
     </head>
     <body ng-app="app" ng-controller="MainCtrl">

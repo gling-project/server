@@ -8,16 +8,26 @@
         height: 40px;
     }
 
+    .publication-title{
+        font-weight: bold;
+        padding-bottom: 5px;
+    }
+
+    .publication-data-body{
+//        color: rgb(120, 120, 120);
+    }
+
     .publication-illustration-plus-icon {
-        position: relative;
-        bottom: 64px;
-        right: -4px;
+        position: absolute;
+        bottom: 4px;
+        text-align: center;
+        right: 4px;
         height: 60px;
         width: 60px;
         vertical-align: top;
-        background-color: rgba(230, 230, 230, 0.7);
+        background-color: rgba(0,0,0, 0.7);
         span {
-            color: @color-green-light;
+            color: #aaa;
             font-size: 45px;
             line-height: 60px;
             font-weight: bold;
@@ -28,8 +38,23 @@
     }
 
     .publication-publication {
-        img {
+
+        .publication-gallery{
+            text-align: center;
+
+        }
+
+        .publication-gallery-image-box{
+            position: relative;
             border: 1px solid #CCCCCC;
+            border-radius: 10px;
+            height: 200px;
+            display: inline-block;
+            overflow: hidden;
+
+            img {
+                max-height: 100%;
+            }
         }
         background-color: #ffffff;
         padding: 4px;

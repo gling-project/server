@@ -35,14 +35,14 @@
             </div>
         </div>
 
+        <div class="publication-title">
+            <!-- interest -->
+            <i ng-show="getInterestClass(publication)!=null"
+               class="publication-interest {{getInterestClass(publication)}} publication-color-background">
+            </i>
 
-        <!-- interest -->
-        <i ng-show="getInterestClass(publication)!=null"
-           class="publication-interest {{getInterestClass(publication)}} publication-color-background">
-        </i>
-
-        {{publication.title}}
-
+            {{publication.title}}
+        </div>
 
         <div class="publication-body">
             <div class="publication-data"
@@ -74,27 +74,31 @@
                  ng-show="publication.pictures.length > 0 "
                  ng-click="openGallery(publication.pictures[0],publication)">
 
-                <img ng-src="{{publication.pictures[0] | image}}"
-                     class="publication-illustration">
+                <div class="publication-gallery-image-box">
 
-                <div ng-show="publication.pictures.length > 1"
-                     class="publication-illustration-plus-icon">
-                    <span>+{{publication.pictures.length - 1}}</span>
+                    <img ng-src="{{publication.pictures[0] | image}}"
+                         class="publication-illustration">
+
+
+                    <div ng-show="publication.pictures.length > 1"
+                         class="publication-illustration-plus-icon">
+                        <span>+{{publication.pictures.length - 1}}</span>
+                    </div>
                 </div>
             </div>
 
             <!--&lt;!&ndash; picture 2 &ndash;&gt;-->
             <!--<div class="publication-gallery publication-body-two publication-body-two-right"-->
-                 <!--ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true"-->
-                 <!--ng-click="openGallery(publication.pictures[1],publication)">-->
+            <!--ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true"-->
+            <!--ng-click="openGallery(publication.pictures[1],publication)">-->
 
-                <!--<img ng-src="{{publication.pictures[1] | image}}"-->
-                     <!--class="publication-illustration">-->
+            <!--<img ng-src="{{publication.pictures[1] | image}}"-->
+            <!--class="publication-illustration">-->
 
-                <!--<div-->
-                        <!--class="publication-illustration-plus-icon">-->
-                    <!--<span>+{{publication.pictures.length - 2}}</span>-->
-                <!--</div>-->
+            <!--<div-->
+            <!--class="publication-illustration-plus-icon">-->
+            <!--<span>+{{publication.pictures.length - 2}}</span>-->
+            <!--</div>-->
             <!--</div>-->
         </div>
         <div class="publication-footer">

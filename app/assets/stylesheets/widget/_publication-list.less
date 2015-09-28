@@ -191,6 +191,7 @@
         margin-bottom: 20px;
 
         .publication-gallery{
+            position: relative;
             border-radius: 10px;
             border: 1px solid #ccc;
             &:hover{
@@ -261,15 +262,16 @@
             }
 
             .publication-illustration-plus-icon {
-                position: relative;
-                bottom: 64px;
-                right: -196px;
+                position: absolute;
+                bottom: 4px;
+                text-align: center;
+                right: 4px;
                 height: 60px;
                 width: 60px;
                 vertical-align: top;
-                background-color: rgba(230, 230, 230, 0.7);
+                background-color: rgba(0,0,0, 0.7);
                 span {
-                    color: @color-green-light;
+                    color: #aaa;
                     font-size: 45px;
                     line-height: 60px;
                     font-weight: bold;
