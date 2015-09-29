@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-    private String AWSBuckect     = Configuration.root().getString("aws.s3.bucket");
-    private String fileBucketUrl  = "https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
+//    private String AWSBuckect     =
+    private String fileBucketUrl  = Configuration.root().getString("aws.accesFile.url");//"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
     private String urlBase        = Configuration.root().getString("site.url.base");
     private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
     private String lastVersion    = Configuration.root().getString("project.lastVersion");
