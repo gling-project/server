@@ -1,13 +1,16 @@
 <div class="gallery-modal-mobile" ng-show="display">
-    <div>
+    <div ng-click="close()">
         <div class="previous"
              ng-click="previous()"
-                ng-show="images.length>0">
+                ng-show="images.length>1">
             <div>
                 <span class=" gling-icon-arrow_left"></span>
             </div>
         </div>
-        <button ng-click="close()" class="glyphicon glyphicon-remove"></button>
+
+        <button ng-click="close()" class="glyphicon glyphicon-remove">
+        </button>
+
         <img
                 class="gallery-picture"
                 ng-src="{{image | image}}"/>
@@ -17,7 +20,7 @@
         </div>
         <div class="next"
              ng-click="next()"
-             ng-show="images.length>0">
+             ng-show="images.length>1">
             <div>
                 <span class=" gling-icon-arrow_right"></span>
             </div>
