@@ -1511,40 +1511,6 @@ function randomString(len, an) {
   margin-left: 10px;
   margin-right: 10px;
 }
-.gallery-component > div {
-  width: 45%;
-  display: inline-block;
-  overflow: hidden;
-  text-align: center;
-}
-.gallery-component > div:nth-child(2n) {
-  float: right;
-}
-.gallery-component .gallery-picture {
-  border: 1px solid #ccc;
-  margin: 0 -50%;
-  height: 80px;
-  cursor: pointer;
-}
-.gallery-component .gallery-picture:hover {
-  border: 1px solid #888;
-}
-.gallery-modal > div {
-  display: inline-block;
-  vertical-align: top;
-}
-.gallery-modal > div:nth-child(1) {
-  width: calc(100% - 160px);
-  text-align: center;
-}
-.gallery-modal > div:nth-child(2) {
-  width: 150px;
-}
-.gallery-modal img {
-  width: auto;
-  max-height: 500px;
-  max-width: 100%;
-}
 .facebook-login-btn-container {
   width: 100%;
   text-align: center;
@@ -1577,6 +1543,11 @@ function randomString(len, an) {
 }
 .profile-page .category-box {
   margin: 5px;
+}
+.business-page-follow {
+  background: none;
+  border: none;
+  outline: none;
 }
 .business-mobile-page .business-page-menu {
   padding: 5px;
@@ -1923,6 +1894,7 @@ body,
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
 }
 .publication-list-mobile .publication-publication .publication-gallery {
+  position: relative;
   text-align: center;
 }
 .publication-list-mobile .publication-publication .publication-gallery-image-box {
@@ -2038,6 +2010,16 @@ body,
   border-bottom: 1px solid #292763;
   border-top: 1px solid #292763;
 }
+.followed-business .followed-business-line {
+  padding: 5px 0px;
+  border-bottom: 1px solid #292763;
+}
+.followed-business .followed-business-line img {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 .search-advanced-block {
   height: 100px;
   color: #d1d1d1;
@@ -2118,6 +2100,96 @@ body,
   font-weight: bold;
   margin-left: 10px;
   margin-right: 10px;
+}
+.gallery-modal-mobile {
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.gallery-modal-mobile > div {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+.gallery-modal-mobile > div > button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 24px;
+  outline: none;
+  position: absolute;
+  right: 10px;
+  top: 4px;
+  z-index: 2;
+}
+.gallery-modal-mobile > div > button:hover {
+  color: red;
+  background-color: #ffffff;
+}
+.gallery-modal-mobile > div img {
+  max-height: 100%;
+  vertical-align: middle;
+  margin: 0 -50%;
+  text-align: center;
+}
+.gallery-modal-mobile > div .previous {
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 40px;
+  font-size: 24px;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  vertical-align: middle;
+  color: #ffffff;
+}
+.gallery-modal-mobile > div .previous > div {
+  height: 100%;
+  position: relative;
+}
+.gallery-modal-mobile > div .previous > div > span {
+  top: 50%;
+  position: absolute;
+  right: 0;
+}
+.gallery-modal-mobile > div .next {
+  color: #ffffff;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 40px;
+  font-size: 24px;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  vertical-align: middle;
+}
+.gallery-modal-mobile > div .next > div {
+  height: 100%;
+  position: relative;
+}
+.gallery-modal-mobile > div .next > div > span {
+  top: 50%;
+  position: absolute;
+  left: 0;
+}
+.gallery-modal-mobile > div .description {
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  color: white;
+  padding: 5px;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 @font-face {
   font-family: myFont;
@@ -2397,4 +2469,35 @@ button > span.fa {
 }
 .sidebar-left {
   background-color: #1ad2aa;
+}
+.menuleft {
+  left: -50%;
+  position: fixed;
+  top: 0;
+  width: 70%;
+  height: 100%;
+  z-index: 1000;
+  border-right: 1px solid #000;
+  background-color: #e9e9e9;
+  display: block;
+}
+.menuleft h1 {
+  color: #e9e9e9;
+  padding: 15px;
+  font-style: 28px;
+}
+.menuleft h1 span {
+  color: #1ad2aa;
+}
+.menuleft.slide {
+  left: 0;
+}
+.overlay {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 30%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
 }

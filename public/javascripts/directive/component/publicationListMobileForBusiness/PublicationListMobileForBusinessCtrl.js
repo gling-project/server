@@ -26,6 +26,10 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                         }
                     });
 
+                    scope.openGallery = function (image, publication) {
+                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
+                    };
+
                     scope.getInterestClass = function (publication) {
                         if (publication.interest != null) {
                             return 'gling-icon-' + publication.interest.name;

@@ -1,0 +1,40 @@
+<header-search-ctrl></header-search-ctrl>
+<div class='app-body'>
+    <div class='app-content modal-login'>
+
+        <div class="scrollable">
+            <div class="section customer-registration scrollable-content followed-business">
+
+
+                {{'--.followed-business.page.title' | translateText}}
+
+                <div ng-repeat="business in businesses" class="followed-business-line">
+                    <div>
+                        <img class="illustration"
+                             ng-click="navigateTo('/business/'+business.id)"
+                             ng-src="{{business.illustration | image}}"/>
+                        {{business.name}}
+                        {{business.followingFrom | date}}
+                    </div>
+                    <div>
+
+                        <!-- stop follow -->
+                        <button class="btn btn-xs btn-primary"
+                                ng-click="stopFollow(business)">
+                            {{'--.business.follow.stopFollowing' | translateText}}
+                        </button>
+
+                        <!-- notification -->
+                        <button class="btn btn-xs btn-primary"
+                                ng-click="setNotification(business)">
+
+                            <input type="checkbox"
+                                   ng-model="business.followingNotification">
+                            Notifications
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

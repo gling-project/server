@@ -132,7 +132,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         if ($('.container-content').height() - scrollBottom < 200) {
 
             if ($scope.loadSemaphore == false) {
-                $scope.loadSemaphore = true;
                 $scope.currentPage = $scope.currentPage + 1;
                 $scope.search();
             }
@@ -182,6 +181,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
                 }
             }
 
+            $scope.loadSemaphore = true;
 
             //if this is the first page that asked, remove other publication
             if ($scope.currentPage == 0) {

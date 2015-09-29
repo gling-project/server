@@ -5,13 +5,19 @@
         {{title | translateText}}
     </div>
 
+
     <div class="btn-group pull-left">
-        <div class="btn btn-navbar" ng-click="back()" ng-hide="displayMenu">
-            <div class="nav-button" ng-show="displayBack()">
+        <div class="btn btn-navbar"
+             ng-click="back()"
+             ng-hide="displayMenu !== false">
+            <div class="nav-button"
+                 ng-show="displayBack()">
                 <i class="glyphicon glyphicon-chevron-left"></i>
             </div>
         </div>
-        <div class="btn btn-navbar" ui-toggle="uiSidebarLeft"  ng-show="displayMenu" >
+        <div class="btn btn-navbar nav-menu"
+             ng-click="showMenu()"
+             ng-show="displayMenu !== false" >
             <div class="nav-button">
                 <i class="fa fa-bars"></i>
             </div>

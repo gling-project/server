@@ -227,6 +227,17 @@ var initializeCommonRoutes = function () {
                             }
                         }]
                     }
+                }).when('/my-businesses', {
+                    templateUrl: '/assets/javascripts/view/mobile/followed_business_page.html',
+                    controller: 'FollowedBusinessPageCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', '$rootScope', function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
                 }).when('/forgot_password', {
                     templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
                     controller: 'ForgotPasswordCtrl',
@@ -483,7 +494,75 @@ myApp.controller('LoadingModalCtrl', ['$scope', '$flash', '$modalInstance', '$co
 
 
 }]);
-myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountService', '$flash', 'translationService', function ($rootScope,$scope,$location,accountService,$flash,translationService) {
+myApp.directive('galleryMobileCtrl', ['$rootScope', function ($rootScope) {
+
+    return {
+        restrict: "E",
+        scope: {},
+        templateUrl: "/assets/javascripts/directive/mobile/galleryMobile/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    scope.display = false;
+                    scope.image=null;
+
+
+                    $rootScope.$on('DISPLAY_PICTURE_IN_GALLERY',function(event,params){
+                        scope.display = true;
+                        scope.image=params.first;
+                        scope.images=params.list;
+                    });
+
+                    scope.close = function(){
+                        scope.display=false;
+                    };
+
+                    scope.openGallery = function (image) {
+                        modalService.galleryModal(image, scope.getInfo().images);
+                    };
+
+                    scope.previous = function () {
+                        for (var key in scope.images) {
+                            if (scope.images[key].storedName == scope.image.storedName) {
+                                if (scope.images[key - 1] == undefined) {
+                                    scope.image = scope.images[scope.images.length - 1];
+                                    scope.imageNb = scope.images.length;
+                                }
+                                else {
+                                    scope.image = scope.images[key - 1];
+                                    scope.imageNb = key - 1 - -1;
+                                }
+                                break;
+                            }
+                        }
+                    };
+
+                    scope.next = function () {
+                        for (var key in scope.images) {
+                            if (scope.images[key].storedName == scope.image.storedName) {
+                                var newKey = key - -1;
+                                if (scope.images[newKey] == undefined) {
+                                    scope.image = scope.images[0];
+                                    scope.imageNb = 1;
+                                }
+                                else {
+                                    scope.image = scope.images[newKey];
+                                    scope.imageNb = key - -1 - -1;
+                                }
+                                break;
+                            }
+                        }
+                    };
+                }
+            }
+        }
+    }
+}]);
+myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountService', '$flash', 'translationService', function ($rootScope, $scope, $location, accountService, $flash, translationService) {
+
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -511,15 +590,14 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountSe
                     $scope.loading = false;
                 });
         }
-        else{
+        else {
             $scope.loginFormParam.displayErrorMessage = true;
         }
     };
 
-    $scope.toForgotPassword = function(){
+    $scope.toForgotPassword = function () {
 
     };
-
 
 }]);
 myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', 'modalService', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService,modalService) {
@@ -963,9 +1041,25 @@ myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 
 
 
 }]);
-myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$timeout', 'geolocationService', 'modalService', 'addressService', function ($rootScope,$scope,facebookService,accountService,$location,$timeout,geolocationService,modalService,addressService) {
+myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$timeout', 'geolocationService', 'modalService', 'addressService', function ($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService) {
 
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+
+    //mobile menu
+    //default the menu to not show
+    $scope.showmenu = false;
+
+    //this is the toggle function
+    $scope.$on('toggleMenu', function () {
+        console.log('je suis toggleMenu')
+        $scope.showmenu = ($scope.showmenu) ? false : true;
+    });
+
+    $scope.navigateTo = function (target) {
+        $scope.showmenu=false;
+        $location.path(target);
+    };
+
 
     $scope.logout = function () {
         if (facebookService.isConnected()) {
@@ -977,11 +1071,6 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
         });
     };
 
-    $rootScope.$on('mobile-angular-ui.toggle.toggled', function(e, id, active){
-        window.console.log(id);
-        window.console.log(active);
-    });
-    
     $scope.currentPosition = null;
     $scope.positionBasicData = [
         {key: 'currentPosition', translation: '--.position.current'},
@@ -1068,7 +1157,7 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
             }
         }
         $scope.currentPosition = geolocationService.getLocationText();
-        //$scope.positionCurrenltyComputed = $scope.currentPosition;
+        $scope.showmenu=false;
     };
 
     $rootScope.$watch(function () {
@@ -1156,14 +1245,41 @@ myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accoun
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', '$flash', 'followService', '$filter', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter) {
+
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.loading = true;
 
+    $scope.displayBack = function(){
+        return window.history.length>0;
+    };
+
+    $scope.back = function () {
+        window.history.back();
+    };
+
     //address
-    $scope.googleMapParams = {}
+    $scope.googleMapParams = {};
+
+
+    $scope.followed = function () {
+        var followed = $scope.business.following;
+        followService.addFollow(!followed, $scope.business.id, function () {
+            $scope.business.following = !followed;
+            if ($scope.business.following) {
+                $flash.success($filter('translateText')('--.followWidget.message.add'));
+            }
+            else {
+                $flash.success($filter('translateText')('--.followWidget.message.remove'));
+            }
+        });
+    };
+
+    $scope.openGallery = function (image) {
+        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:$scope.business.galleryPictures,first:image});
+    };
 
     businessService.getBusiness($routeParams.businessId,
         function (data) {
@@ -1347,6 +1463,85 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
         $scope.search();
     });
 }]);
+myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', 'ngTableParams', '$filter', 'followService', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
+
+    //back to the top of the page
+    $(window).scrollTop(0);
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    $scope.businessListParams = {
+        loading: true
+    };
+
+    //loading
+    businessService.getFollowedBusinesses(
+        function (data) {
+
+            $scope.businesses = data;
+
+            //$scope.$watch("filter.$", function (o, n) {
+            //    if (n != o) {
+            //        $scope.tableParams.reload();
+            //    }
+            //});
+            //
+            //$scope.tableParams = new ngTableParams({
+            //    page: 1,            // show first page
+            //    count: 10,          // count per page
+            //    sorting: {
+            //        name: 'asc'     // initial sorting
+            //    }
+            //}, {
+            //    counts: [], // hides page sizes
+            //    total: $scope.businesses.length, // length of data
+            //    getData: function ($defer, params) {
+            //
+            //        var filteredData = $filter('filter')($scope.businesses, $scope.filter);
+            //        var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+            //
+            //        //var filteredData = $filter('filter')(data, $scope.filter);
+            //        //// use build-in angular filter
+            //        //var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
+            //
+            //        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            //    }
+            //});
+            //
+            //$scope.checkAll = function (check) {
+            //    for (var key  in $scope.businesses) {
+            //        if ($scope.businesses[key].followingNotification != check) {
+            //            $scope.businesses[key].followingNotification = check;
+            //            $scope.setNotification($scope.businesses[key]);
+            //        }
+            //    }
+            //};
+            //
+            $scope.setNotification = function (business) {
+                business.followingNotification=!business.followingNotification;
+                followService.setNotification(business.id, business.followingNotification);
+            };
+
+            $scope.stopFollow = function (business) {
+                followService.addFollow(false, business.id, function () {
+                    for (var key  in $scope.businesses) {
+                        if ($scope.businesses[key] == business) {
+                            $scope.businesses.splice(key, 1);
+                        }
+                    }
+                    //$scope.tableParams.reload();
+                });
+            };
+
+
+        }, function () {
+            $scope.loading = false;
+            $scope.displayError = true;
+
+        });
+
+}])
+;
 myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {
@@ -1406,6 +1601,10 @@ myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', '
                         $location.path(target);
                     };
 
+                    scope.openGallery = function (image, publication) {
+                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
+                    };
+
                     scope.$watch("getInfo().data", function () {
                         scope.publications = scope.getInfo().data;
                         for (var i in scope.publications) {
@@ -1445,6 +1644,10 @@ myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'business
                             }
                         }
                     });
+
+                    scope.openGallery = function (image, publication) {
+                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
+                    };
 
                     scope.getInterestClass = function (publication) {
                         if (publication.interest != null) {
@@ -1492,7 +1695,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'business
     }
 }])
 ;
-myApp.directive("headerSearchCtrl", function () {
+myApp.directive("headerSearchCtrl", ['$rootScope', function ($rootScope) {
     return {
         restrict: "E",
         scope: {
@@ -1505,6 +1708,10 @@ myApp.directive("headerSearchCtrl", function () {
             return {
                 post: function (scope) {
 
+                    scope.showMenu = function(){
+                        $rootScope.$broadcast('toggleMenu');
+                    };
+
                     scope.displayBack = function(){
                         return window.history.length>0;
                     };
@@ -1520,9 +1727,9 @@ myApp.directive("headerSearchCtrl", function () {
             }
         }
     }
-});
+}]);
 
-myApp.directive("mobileTitleCtrl", function () {
+myApp.directive("mobileTitleCtrl", ['$rootScope', function ($rootScope) {
     return {
         restrict: "E",
         scope: {
@@ -1535,6 +1742,11 @@ myApp.directive("mobileTitleCtrl", function () {
             return {
                 post: function (scope) {
 
+                    scope.showMenu = function(){
+                        console.log('showMenu');
+                        $rootScope.$broadcast('toggleMenu');
+                    };
+
                     scope.displayBack = function(){
                         return window.history.length>0;
                     };
@@ -1543,11 +1755,14 @@ myApp.directive("mobileTitleCtrl", function () {
                         window.history.back();
                     };
 
+
+
+
                 }
             }
         }
     }
-});
+}]);
 
 myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function ($rootScope, businessService, geolocationService, directiveService, $location) {
 

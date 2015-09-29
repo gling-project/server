@@ -50,33 +50,24 @@
 
             <!-- gallery -->
             <!-- picture 1 -->
+            <!-- picture 1 -->
             <div class="publication-gallery"
                  ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}"
                  ng-show="publication.pictures.length > 0 "
                  ng-click="openGallery(publication.pictures[0],publication)">
 
-                <img ng-src="{{publication.pictures[0] | image}}"
-                     class="publication-illustration">
+                <div class="publication-gallery-image-box">
 
-                <div ng-show="publication.pictures.length > 1"
-                     class="publication-illustration-plus-icon">
-                    <span>+{{publication.pictures.length - 1}}</span>
+                    <img ng-src="{{publication.pictures[0] | image}}"
+                         class="publication-illustration">
+
+
+                    <div ng-show="publication.pictures.length > 1"
+                         class="publication-illustration-plus-icon">
+                        <span>+{{publication.pictures.length - 1}}</span>
+                    </div>
                 </div>
             </div>
-
-            <!-- picture 2 -->
-            <!--<div class="publication-gallery publication-body-two publication-body-two-right"-->
-                 <!--ng-show="publication.pictures.length > 1 && descriptionIsEmpty(publication) === true"-->
-                 <!--ng-click="openGallery(publication.pictures[1],publication)">-->
-
-                <!--<img ng-src="{{publication.pictures[1] | image}}"-->
-                     <!--class="publication-illustration">-->
-
-                <!--<div-->
-                        <!--class="publication-illustration-plus-icon">-->
-                    <!--<span>+{{publication.pictures.length - 2}}</span>-->
-                <!--</div>-->
-            <!--</div>-->
         </div>
         <div class="publication-footer">
 

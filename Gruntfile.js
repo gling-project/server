@@ -251,6 +251,7 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/OneFieldModal/OneFieldModal.js',
                         'public/javascripts/modal/mobile/AlertModal/AlertMessage.js',
                         'public/javascripts/modal/mobile/LoadingModal/LoadingModal.js',
+                        'public/javascripts/directive/mobile/galleryMobile/GalleryMobileCtrl.js',
 
                         'public/javascripts/controller/mobile/WelcomeCtrl.js',
                         'public/javascripts/controller/mobile/HomeCtrl.js',
@@ -260,6 +261,7 @@ module.exports = function (grunt) {
                         'public/javascripts/controller/mobile/ProfileCtrl.js',
                         'public/javascripts/controller/mobile/BusinessCtrl.js',
                         'public/javascripts/controller/mobile/SearchPageCtrl.js',
+                        'public/javascripts/controller/mobile/FollowedBusinessPageCtrl.js',
 
                         <!-- component -->
                         'public/javascripts/directive/component/businessListMobile/BusinessListMobileCtrl.js',

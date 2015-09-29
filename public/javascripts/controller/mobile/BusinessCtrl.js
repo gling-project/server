@@ -1,11 +1,38 @@
-myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout) {
+myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter) {
+
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
     $scope.loading = true;
 
+    $scope.displayBack = function(){
+        return window.history.length>0;
+    };
+
+    $scope.back = function () {
+        window.history.back();
+    };
+
     //address
-    $scope.googleMapParams = {}
+    $scope.googleMapParams = {};
+
+
+    $scope.followed = function () {
+        var followed = $scope.business.following;
+        followService.addFollow(!followed, $scope.business.id, function () {
+            $scope.business.following = !followed;
+            if ($scope.business.following) {
+                $flash.success($filter('translateText')('--.followWidget.message.add'));
+            }
+            else {
+                $flash.success($filter('translateText')('--.followWidget.message.remove'));
+            }
+        });
+    };
+
+    $scope.openGallery = function (image) {
+        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:$scope.business.galleryPictures,first:image});
+    };
 
     businessService.getBusiness($routeParams.businessId,
         function (data) {

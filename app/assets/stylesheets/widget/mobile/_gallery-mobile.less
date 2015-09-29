@@ -1,0 +1,102 @@
+.gallery-modal-mobile{
+
+    position: fixed;
+    z-index: 10000;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+
+    & > div{
+
+
+        & > button{
+            background: none;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 24px;
+            outline: none;
+            position: absolute;
+            right: 10px;
+            top: 4px;
+            z-index: 2;
+            &:hover{
+                color: red;
+                background-color: #ffffff;
+            }
+        }
+
+
+        height: 100%;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        img{
+            max-height: 100%;
+            vertical-align: middle;
+            margin: 0 -50%;
+            text-align: center;
+        }
+
+        .previous{
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+            top:0;
+            width: 40px;
+            font-size: 24px;
+            left: 0;
+            background-color: rgba(0,0,0,0.5);
+            vertical-align: middle;
+            color: #ffffff;
+            & > div{
+                height: 100%;
+                position: relative;
+                & > span {
+                    top: 50%;
+                    position: absolute;
+                    right: 0;
+                }
+            }
+        }
+
+        .next{
+            color: #ffffff;
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+            top:0;
+            width: 40px;
+            font-size: 24px;
+            right: 0;
+            background-color: rgba(0,0,0,0.5);
+            vertical-align: middle;
+            & > div{
+                height: 100%;
+                position: relative;
+                & > span {
+                    top: 50%;
+                    position: absolute;
+                    left: 0;
+                }
+            }
+        }
+
+
+        .description{
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+            color: white;
+            padding: 5px;
+            right: 0;
+            left: 0;
+            background-color: rgba(0,0,0,0.5);
+        }
+    }
+
+}

@@ -1423,7 +1423,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         if ($('.container-content').height() - scrollBottom < 200) {
 
             if ($scope.loadSemaphore == false) {
-                $scope.loadSemaphore = true;
                 $scope.currentPage = $scope.currentPage + 1;
                 $scope.search();
             }
@@ -1473,6 +1472,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
                 }
             }
 
+            $scope.loadSemaphore = true;
 
             //if this is the first page that asked, remove other publication
             if ($scope.currentPage == 0) {
@@ -1673,7 +1673,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
     $scope.googleMapParams = {};
 
     $scope.displayEditMode = function () {
-        return $scope.myBusiness === true || accountService.getMyself().role === 'SUPERADMIN';
+        return $scope.myBusiness === true || (accountService.getMyself()!=null && accountService.getMyself().role === 'SUPERADMIN');
     };
 
 

@@ -229,8 +229,8 @@
 --.welcome.serach.advanced.criteria=Critères
 
 ##  view/profile.html
---.customer.profile.myAddresses=Mon adresse
---.customer.profile.personalInformation=Informations personnelles
+--.customer.profile.myAddresses=Adresses
+--.customer.profile.personalInformation=Moi
 --.customer.profile.interest=Intérêts
 --.customer.profile.create=Créer
 
@@ -568,3 +568,6 @@ day_abrv_sunday=Di
 --.generic.registration=S'enregistrer
 --.page.legal.title=Mensions légales
 --.error.business.notYours=Vous n'avez pas les droits pour éditer ce commerce
+
+--.business.follow.stopFollowing=Arrêter de suivre
+--.followed-business.page.title=Mes commerces suivis

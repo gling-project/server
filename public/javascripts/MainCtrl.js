@@ -116,4 +116,6 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     $scope.$watch('progressBarWidth', function () {
         $scope.progressBarCss.width = ($scope.progressBarWidth / progressBarMultiplicator) + '%';
     });
+
+
 });

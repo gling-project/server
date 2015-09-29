@@ -1,0 +1,26 @@
+<div class="gallery-modal-mobile" ng-show="display">
+    <div>
+        <div class="previous"
+             ng-click="previous()"
+                ng-show="images.length>0">
+            <div>
+                <span class=" gling-icon-arrow_left"></span>
+            </div>
+        </div>
+        <button ng-click="close()" class="glyphicon glyphicon-remove"></button>
+        <img
+                class="gallery-picture"
+                ng-src="{{image | image}}"/>
+
+        <div class="description" ng-show="image.comment!=null">
+            {{image.comment}}
+        </div>
+        <div class="next"
+             ng-click="next()"
+             ng-show="images.length>0">
+            <div>
+                <span class=" gling-icon-arrow_right"></span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -101,6 +101,17 @@ var initializeCommonRoutes = function () {
                             }
                         }
                     }
+                }).when('/my-businesses', {
+                    templateUrl: '/assets/javascripts/view/mobile/followed_business_page.html',
+                    controller: 'FollowedBusinessPageCtrl',
+                    resolve: {
+                        a: function (accountService, $location,$rootScope) {
+                            $rootScope.$broadcast('PROGRESS_BAR_START');
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
                 }).when('/forgot_password', {
                     templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
                     controller: 'ForgotPasswordCtrl',

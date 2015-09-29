@@ -38,7 +38,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     $scope.googleMapParams = {};
 
     $scope.displayEditMode = function () {
-        return $scope.myBusiness === true || accountService.getMyself().role === 'SUPERADMIN';
+        return $scope.myBusiness === true || (accountService.getMyself()!=null && accountService.getMyself().role === 'SUPERADMIN');
     };
 
 

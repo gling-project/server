@@ -17,7 +17,6 @@
 @import 'widget/mobile/_home-interest';
 @import 'widget/_follow';
 @import 'widget/_category-line';
-@import 'widget/_gallery';
 @import 'widget/_facebook-login';
 @import 'widget/_profile-page';
 @import 'widget/mobile/_business-mobile-page';
@@ -31,7 +30,9 @@
 @import 'widget/mobile/_mobile';
 @import 'widget/mobile/_publication-list-mobile';
 @import 'widget/mobile/_business-list-mobile';
-@import 'widget/_search-mobile';
+@import 'widget/mobile/_followed-business-mobile';
+@import 'widget/mobile/_search-mobile';
+@import 'widget/mobile/_gallery-mobile';
 @import 'widget/_constants';
 
 body {
@@ -87,8 +88,7 @@ button {
 
 }
 
-
-.navbar{
+.navbar {
     .nav-menu {
         margin-left: -10px;
     }
@@ -98,7 +98,6 @@ button {
 .navbar-absolute-top.navbar-app .btn {
     background-color: @color-blue-dark;
     color: #ffffff !important;
-
 
 }
 
@@ -134,4 +133,45 @@ button {
 
 .sidebar-left {
     background-color: @color-green-light;
+}
+
+.menuleft {
+
+    h1 {
+        color: #e9e9e9;
+        padding: 15px;
+        font-style: 28px;
+        span {
+            color: @color-green-light;
+        }
+
+    }
+
+    left: -50%;
+    position: fixed;
+    top: 0;
+    width: 70%;
+    height: 100%;
+    z-index: 1000;
+    border-right: 1px solid #000;
+    background-color: #e9e9e9;
+    display: block;
+    &.slide {
+        left: 0;
+    }
+}
+
+.slide, .hide {
+    //    -webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+    //    transition: width 2s, height 2s, background-color 2s, transform 2s;
+}
+
+.overlay {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 30%;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
 }

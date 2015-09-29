@@ -26,6 +26,10 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
                         $location.path(target);
                     };
 
+                    scope.openGallery = function (image, publication) {
+                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
+                    };
+
                     scope.$watch("getInfo().data", function () {
                         scope.publications = scope.getInfo().data;
                         for (var i in scope.publications) {

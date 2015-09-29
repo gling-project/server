@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
  * Created by florian on 9/06/15.
  */
 @Entity
+@Table(uniqueConstraints=
+@UniqueConstraint(columnNames = {"business_id", "account_id"}))
 public class FollowLink extends AbstractEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

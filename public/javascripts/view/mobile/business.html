@@ -1,5 +1,25 @@
-<!-- header -->
-<header-search-ctrl display-menu="false"></header-search-ctrl>
+<div class="navbar navbar-app navbar-absolute-top"
+     ng-class="{'header-with-advanced-search':advancedSearch}">
+
+
+    <div class="btn-group pull-left">
+        <div class="btn btn-navbar" ng-click="back()">
+            <div class="nav-button">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group pull-right">
+        <div class="btn btn-navbar" ng-click="followed()">
+            <div class="nav-button">
+                <span class="gling-icon-bell selected" ng-show="business.following"></span>
+                <span class="gling-icon-bell2" ng-hide="business.following"></span>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <!-- body -->
 <div class='app-body'>

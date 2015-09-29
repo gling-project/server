@@ -51,7 +51,9 @@ public class SearchRestController extends AbstractRestController {
         CustomerInterest interest = customerInterestService.findById(interestID);
         List<BusinessCategory> categories = new ArrayList<>();
         for (CategoryInterestLink categoryInterestLink : interest.getLinks()) {
-            categories.add(categoryInterestLink.getBusinessCategory());
+            if (categoryInterestLink.getPriority().equals(1)) {
+                categories.add(categoryInterestLink.getBusinessCategory());
+            }
         }
 
         //position ?
@@ -437,8 +439,6 @@ public class SearchRestController extends AbstractRestController {
     private List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications) {
         return finalize(position, publications, new Date().getTime());
     }
-
-
 
 
     private static class SearchElement {

@@ -1,4 +1,4 @@
-myApp.directive("headerSearchCtrl", function () {
+myApp.directive("headerSearchCtrl", function ($rootScope) {
     return {
         restrict: "E",
         scope: {
@@ -10,6 +10,10 @@ myApp.directive("headerSearchCtrl", function () {
         compile: function () {
             return {
                 post: function (scope) {
+
+                    scope.showMenu = function(){
+                        $rootScope.$broadcast('toggleMenu');
+                    };
 
                     scope.displayBack = function(){
                         return window.history.length>0;

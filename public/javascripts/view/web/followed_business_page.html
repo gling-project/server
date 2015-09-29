@@ -20,7 +20,7 @@
                 <span class="link" ng-click="navigateTo('/business/'+business.id)">{{business.name}}</span>
                 <br/>
                 <button class="btn btn-xs btn-primary"
-                        ng-click="stopFollow(business)">Arrêter de suivre
+                        ng-click="stopFollow(business)">{{'--.business.follow.stopFollowing' | translateText}}
                 </button>
             </td>
             <td data-title="'--.followedBusiness.table.categories' | translateText">
@@ -41,7 +41,8 @@
             </td>
             <td data-title="'--.followedBusiness.table.notification' | translateText" sortable="'followingNotification'"
                 style="text-align: center">
-                <div><input ng-click="setNotification(business)"
+                <div>
+                    <input ng-click="setNotification(business)"
                             type="checkbox"
                             ng-model="business.followingNotification">
                 </div>

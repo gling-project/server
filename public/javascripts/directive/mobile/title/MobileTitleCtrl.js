@@ -1,4 +1,4 @@
-myApp.directive("mobileTitleCtrl", function () {
+myApp.directive("mobileTitleCtrl", function ($rootScope) {
     return {
         restrict: "E",
         scope: {
@@ -11,6 +11,11 @@ myApp.directive("mobileTitleCtrl", function () {
             return {
                 post: function (scope) {
 
+                    scope.showMenu = function(){
+                        console.log('showMenu');
+                        $rootScope.$broadcast('toggleMenu');
+                    };
+
                     scope.displayBack = function(){
                         return window.history.length>0;
                     };
@@ -18,6 +23,9 @@ myApp.directive("mobileTitleCtrl", function () {
                     scope.back = function () {
                         window.history.back();
                     };
+
+
+
 
                 }
             }

@@ -1,6 +1,22 @@
-myApp.controller('MenuCtrl', function ($rootScope,$scope,facebookService,accountService,$location,$timeout,geolocationService,modalService,addressService) {
+myApp.controller('MenuCtrl', function ($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService) {
 
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+
+    //mobile menu
+    //default the menu to not show
+    $scope.showmenu = false;
+
+    //this is the toggle function
+    $scope.$on('toggleMenu', function () {
+        console.log('je suis toggleMenu')
+        $scope.showmenu = ($scope.showmenu) ? false : true;
+    });
+
+    $scope.navigateTo = function (target) {
+        $scope.showmenu=false;
+        $location.path(target);
+    };
+
 
     $scope.logout = function () {
         if (facebookService.isConnected()) {
@@ -12,11 +28,6 @@ myApp.controller('MenuCtrl', function ($rootScope,$scope,facebookService,account
         });
     };
 
-    $rootScope.$on('mobile-angular-ui.toggle.toggled', function(e, id, active){
-        window.console.log(id);
-        window.console.log(active);
-    });
-    
     $scope.currentPosition = null;
     $scope.positionBasicData = [
         {key: 'currentPosition', translation: '--.position.current'},
@@ -103,7 +114,7 @@ myApp.controller('MenuCtrl', function ($rootScope,$scope,facebookService,account
             }
         }
         $scope.currentPosition = geolocationService.getLocationText();
-        //$scope.positionCurrenltyComputed = $scope.currentPosition;
+        $scope.showmenu=false;
     };
 
     $rootScope.$watch(function () {
