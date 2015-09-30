@@ -62,7 +62,7 @@ module.exports = function (grunt) {
                         dest: 'public/dist/styleMobile.css',
 
                         src: ['public/components/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css',
-                            'public/components/angular-socialshare/angular-socialshare.js',
+                            'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
                             'target/scala-2.10/resource_managed/main/public/stylesheets/mobile.css'
                         ]

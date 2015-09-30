@@ -1,23 +1,29 @@
 <div class="gallery-modal-mobile" ng-show="display">
-    <div ng-click="close()">
+    <div>
+
+        <!-- previous -->
         <div class="previous"
              ng-click="previous()"
-                ng-show="images.length>1">
+             ng-show="images.length>1">
             <div>
                 <span class=" gling-icon-arrow_left"></span>
             </div>
         </div>
 
-        <button ng-click="close()" class="glyphicon glyphicon-remove">
-        </button>
+        <div class="close-area"  ng-click="close()">
+            <button ng-click="close()" class="btn-close glyphicon glyphicon-remove">
+            </button>
+            <span class="helper"></span>
+            <img
+                    class="gallery-picture"
+                    ng-src="{{image | image}}"/>
 
-        <img
-                class="gallery-picture"
-                ng-src="{{image | image}}"/>
-
-        <div class="description" ng-show="image.comment!=null">
-            {{image.comment}}
+            <div class="description" ng-show="image.comment!=null">
+                {{image.comment}}
+            </div>
         </div>
+
+        <!-- next -->
         <div class="next"
              ng-click="next()"
              ng-show="images.length>1">

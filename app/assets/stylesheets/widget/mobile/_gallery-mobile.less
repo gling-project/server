@@ -1,17 +1,30 @@
-.gallery-modal-mobile{
+.gallery-modal-mobile {
 
     position: fixed;
     z-index: 10000;
-    top:0;
+    top: 0;
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.8);
 
-    & > div{
+    & > div {
 
+        .close-area{
+            right: 50px;
+            left: 50px;
+            top:0;
+            bottom: 0;
+            position: absolute;
+        }
 
-        & > button{
+        .helper {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .btn-close {
             background: none;
             border: none;
             outline: none;
@@ -24,36 +37,35 @@
             right: 10px;
             top: 4px;
             z-index: 2;
-            &:hover{
+            &:hover {
                 color: red;
                 background-color: #ffffff;
             }
         }
 
-
         height: 100%;
         width: 100%;
         position: relative;
         text-align: center;
-        img{
+        img {
             max-height: 100%;
             vertical-align: middle;
             margin: 0 -50%;
             text-align: center;
         }
 
-        .previous{
+        .previous {
             z-index: 1;
             position: absolute;
-            bottom: 0;
-            top:0;
-            width: 40px;
+            bottom: 20%;
+            top: 20%;
+            width: 50px;
             font-size: 24px;
             left: 0;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             vertical-align: middle;
             color: #ffffff;
-            & > div{
+            & > div {
                 height: 100%;
                 position: relative;
                 & > span {
@@ -64,18 +76,18 @@
             }
         }
 
-        .next{
+        .next {
             color: #ffffff;
             z-index: 1;
             position: absolute;
-            bottom: 0;
-            top:0;
-            width: 40px;
+            bottom: 20%;
+            top: 20%;
+            width: 50px;
             font-size: 24px;
             right: 0;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             vertical-align: middle;
-            & > div{
+            & > div {
                 height: 100%;
                 position: relative;
                 & > span {
@@ -86,16 +98,15 @@
             }
         }
 
-
-        .description{
+        .description {
             z-index: 1;
             position: absolute;
             bottom: 0;
             color: white;
             padding: 5px;
-            right: 0;
-            left: 0;
-            background-color: rgba(0,0,0,0.5);
+            right: 10%;
+            left: 10%;
+            background-color: rgba(0, 0, 0, 0.5);
         }
     }
 
