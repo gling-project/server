@@ -2951,17 +2951,23 @@ myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geoloc
                                         protocol = 'http://';
 
                                     }
-                                    window.location = protocol + scope.complete('maps.apple.com/maps');
+                                    //http://maps.apple.com/?address=
+                                    window.location = protocol + scope.complete('maps.apple.com/?address=');
                                 }
                                 else {
-                                    window.open(scope.complete('http://maps.google.com'));
+
+                                    //https://www.google.be/maps/place/
+                                    window.open(scope.complete('https://www.google.be/maps/place/'));
                                 }
                             };
 
                             scope.complete = function(url){
-                                var address = scope.getInfo().address;
-                                url += '?q='+address.posx + ",+" + address.posy;
-                                return url;
+                                //var address = scope.getInfo().address;
+                                //url += '?q='+address.posx + ",+" + address.posy;
+                                //return url;
+
+                                var add = scope.getInfo().address.street+","+scope.getInfo().address.zip+","+scope.getInfo().address.city+","+scope.getInfo().address.country;
+                                return url+=add.replace(/ /g,'+');
                             };
                         }
                     });

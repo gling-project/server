@@ -62,6 +62,7 @@ module.exports = function (grunt) {
                         dest: 'public/dist/styleMobile.css',
 
                         src: ['public/components/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css',
+                            'public/components/font-awesome/css/font-awesome.min.css',
                             'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
                             'target/scala-2.10/resource_managed/main/public/stylesheets/mobile.css'
@@ -90,7 +91,6 @@ module.exports = function (grunt) {
                             'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
                             'public/components/messenger/build/css/messenger.css',
                             'public/components/font-awesome/css/font-awesome.min.css',
-                            'public/css/components/font-awesome/css/font-awesome.min.css',
                             'target/scala-2.10/resource_managed/main/public/stylesheets/town.css']
                     }
                 ]
