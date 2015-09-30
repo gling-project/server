@@ -1,12 +1,29 @@
-.followed-business{
+.followed-business {
 
-    .followed-business-container{
+    table {
+        background-color: white;
+
+
+        img {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    }
+
+    .first-cell{
+        & > div{
+            display: inline-block;
+            vertical-align: top;
+        }
+    }
+
+    .followed-business-container {
         padding: 10px;
         margin: 10px;
-        background-color: white;
         border: 1px solid #999;
         box-shadow: #555;
     }
-
 
 }

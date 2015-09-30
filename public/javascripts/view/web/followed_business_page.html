@@ -13,22 +13,24 @@
 
     <table ng-table="tableParams" class="table">
         <tr ng-repeat="business in $data">
-            <td data-title="'--.followedBusiness.table.business' | translateText" sortable="'name'">
+            <td data-title="'--.followedBusiness.table.business' | translateText" sortable="'name'" class="first-cell">
                 <img class="illustration"
                      ng-click="navigateTo('/business/'+business.id)"
                      ng-src="{{business.illustration | image}}"/>
-                <span class="link" ng-click="navigateTo('/business/'+business.id)">{{business.name}}</span>
-                <br/>
-                <button class="btn btn-xs btn-primary"
-                        ng-click="stopFollow(business)">{{'--.business.follow.stopFollowing' | translateText}}
-                </button>
+                <div>
+                    <span class="link" ng-click="navigateTo('/business/'+business.id)">{{business.name}}</span>
+                    <br/>
+                    <button class="btn btn-xs btn-primary"
+                            ng-click="stopFollow(business)">{{'--.business.follow.stopFollowing' | translateText}}
+                    </button>
+                </div>
             </td>
             <td data-title="'--.followedBusiness.table.categories' | translateText">
 
                 <span ng-repeat="(catLev1Key,lev2) in business.categories">
                     <span ng-repeat="(catLev2Key, lev3) in lev2">
                         <span ng-repeat="catLev3 in lev3">
-                            {{catLev3.translationName |translateText}}
+                            {{catLev3.translationName |translateText}} /
                         </span>
                     </span>
                 </span>

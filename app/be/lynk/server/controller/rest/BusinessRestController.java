@@ -38,6 +38,8 @@ public class BusinessRestController extends AbstractController {
     private AddressService          addressService;
     @Autowired
     private LocalizationService     localizationService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
@@ -133,17 +135,20 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result getInterests() {
 
-        List<CustomerInterest> result = new ArrayList<>();
+        //TODO test return all
+        return ok(new ListDTO<>(dozerService.map(customerInterestService.findAll(), CustomerInterestDTO.class)));
 
-        Business business = securityController.getBusiness();
-
-        for (BusinessCategory businessCategory : business.getBusinessCategories()) {
-            for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
-                result.add(categoryInterestLink.getCustomerInterest());
-            }
-        }
-
-        return ok(new ListDTO<>(dozerService.map(result, CustomerInterestDTO.class)));
+//        List<CustomerInterest> result = new ArrayList<>();
+//
+//        Business business = securityController.getBusiness();
+//
+//        for (BusinessCategory businessCategory : business.getBusinessCategories()) {
+//            for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
+//                result.add(categoryInterestLink.getCustomerInterest());
+//            }
+//        }
+//
+//        return ok(new ListDTO<>(dozerService.map(result, CustomerInterestDTO.class)));
     }
 
     /* ////////////////////////////////////////////////////

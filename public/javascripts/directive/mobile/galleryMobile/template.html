@@ -10,17 +10,20 @@
             </div>
         </div>
 
-        <div class="close-area"  ng-click="close()">
-            <button ng-click="close()" class="btn-close glyphicon glyphicon-remove">
-            </button>
-            <span class="helper"></span>
-            <img
-                    class="gallery-picture"
-                    ng-src="{{image | image}}"/>
+        <button ng-click="close()" class="btn-close glyphicon glyphicon-remove">
+        </button>
+        <span class="helper"></span>
+        <img
+                class="gallery-picture"
+                ng-src="{{image | image}}"/>
 
-            <div class="description" ng-show="image.comment!=null">
-                {{image.comment}}
-            </div>
+        <div class="description" ng-show="image.comment!=null">
+            {{image.comment}}
+        </div>
+
+
+        <div class="close-area" ng-click="close()">
+
         </div>
 
         <!-- next -->

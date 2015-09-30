@@ -1810,7 +1810,7 @@ ul.messenger .messenger-spinner {
   position: absolute;
   bottom: 4px;
   text-align: center;
-  right: -4px;
+  right: 4px;
   height: 60px;
   width: 60px;
   vertical-align: top;
@@ -2255,7 +2255,7 @@ ul.messenger .messenger-spinner {
   background-color: #ff0000 !important;
 }
 .business-page .business-right-column {
-  width: 700px;
+  width: 680px;
 }
 .business-page .business-page-header .editable-element {
   position: relative;
@@ -2329,13 +2329,14 @@ ul.messenger .messenger-spinner {
   padding: 10px;
   display: inline-block;
   vertical-align: top;
-  width: 700px;
+  width: 680px;
+  padding-left: 70px;
 }
 .business-page .business-page-body .business-page-body-right {
-  padding: 10px;
+  padding-right: 10px;
   display: inline-block;
   vertical-align: top;
-  width: 290px;
+  width: 320px;
 }
 .business-page .panel {
   width: 100%;
@@ -2585,10 +2586,22 @@ ul.messenger .messenger-spinner {
   background-color: #ff0000;
   box-shadow: #000000;
 }
+.followed-business table {
+  background-color: white;
+}
+.followed-business table img {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.followed-business .first-cell > div {
+  display: inline-block;
+  vertical-align: top;
+}
 .followed-business .followed-business-container {
   padding: 10px;
   margin: 10px;
-  background-color: white;
   border: 1px solid #999;
   box-shadow: #555;
 }
