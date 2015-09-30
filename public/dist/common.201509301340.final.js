@@ -1413,29 +1413,29 @@ myApp.directive('businessFormCtrl', ['$flash', 'directiveService', function ($fl
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'vta'
+                        },
+                        description: {
+                            name: 'description',
+                            fieldTitle: "--.generic.desc",
+                            validationRegex: /^[\s\S]{2,1500}$/gi,
+                            validationMessage: ['--.generic.validation.size', '2', '1500'],
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'description'
+                        },
+                        phone: {
+                            name: 'phone',
+                            fieldTitle: "--.generic.phone",
+                            validationRegex: /^[0-9. *-+/]{6,16}$/,
+                            validationMessage: '--.validation.dto.phone',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'phone'
                         }
-                        //description: {
-                        //    name: 'description',
-                        //    fieldTitle: "--.generic.desc",
-                        //    validationRegex: /^[\s\S]{2,1500}$/gi,
-                        //    validationMessage: ['--.generic.validation.size', '2', '1500'],
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'description'
-                        //},
-                        //phone: {
-                        //    name: 'phone',
-                        //    fieldTitle: "--.generic.phone",
-                        //    validationRegex: /^[0-9. *-+/]{6,16}$/,
-                        //    validationMessage: '--.validation.dto.phone',
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'phone'
-                        //},
                         //email: {
                         //    name: 'business-email',
                         //    fieldTitle: "--.business.contactEmail",
