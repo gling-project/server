@@ -508,7 +508,6 @@ day_abrv_sunday=Di
 --.schedule.light=Ouvert (Affluence faible)
 --.schedule.moderate=Ouvert (Affluence moyenne)
 --.schedule.heavy=Ouvert (Affluence forte)
-http://192.168.1.3:9000/
 --.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous enregister.
 --.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
 --.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
