@@ -30,7 +30,6 @@
 --.generic.name=Nom
 --.generic.stepNotValid=Merci de complèter cette étape avant de passer à l'étape suivante.
 --.generic.home=Accueil
---.generic.skip=Passer
 --.generic.numberOnly=Uniquement un chiffre
 --.generic.stepNotValidOrSkip=Merci de complèter cette étape avant de passer à la suivante.
 --.generic.validation.wrongRepeatPassword=Le mot de passe répété ne correspond pas à celui repris ci-dessus.
@@ -43,10 +42,8 @@
 --.generic.edit=Editer
 --.generic.cancel=Annuler
 --.generic.remove=Supprimer
-#--.generic.description=Description
 --.generic.login.btn=Connexion
 --.generic.validation.max=Maximum {0} caractères
-###--.generic.image=Image
 --.generic.validation.numberExpected=Uniquement un nombre
 --.generic.contact=Contact
 --.generic.valid=Valider
@@ -216,16 +213,12 @@
 --.loginModal.toBusinessRegistration=Je suis un commerçant.
 --.loginModal.toCustomerRegistration=S'enregistrer!
 --.loginModal.notRegisterYet=Pas encore enregistré(e)?
-######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
-######--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
-
 
 
 ##  be/lynk/server/views/template.scala.html (javascript library )
 --.welcome.myBusiness=Mon commerce
 --.welcome.search=Que cherchez-vous?
 --.site.name=Gling
-#--.welcome.search.advanced.link=Recherche avancée
 --.welcome.serach.advanced.criteria=Critères
 
 ##  view/profile.html
@@ -236,7 +229,6 @@
 
 ##  modal/EditCustomerInterestModal/view.html
 --.customer.editInterestModal.title=Modifier mes intérêts
---.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
 
 
 ##  directive/form/login/template.html
@@ -263,9 +255,6 @@
 --.promotion.completePromotion=Créer une promotion en affichant un prix.
 --.promotion.simplePromotion=Créer une promotion sans afficher de prix.
 
-##  view/web/home.html
-
-##  view/mobile/login.html
 
 ##  view/mobile/business_registration.html
 --.page.business_registration.title=Inscription
@@ -309,7 +298,6 @@
 
 ##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
 --.promotion.validation.endDateBeforeStartDate=La date de fin doit être postérieure la date de début.
-###--.validation.dto.notNull=Ce champ ne peut pas être laissé vide.
 --.promotion.interest=Intérêt
 --.promotion.interest.help=Si votre publication correspond à un intérêt de vos clients, sélectionnez le ci-dessus. (en option).
 
@@ -345,7 +333,6 @@ day_abrv_sunday=Di
 --.business.publication.btn.promotion=Publier une promotion
 --.business.gallery=Galerie
 --.business.page.cancelPublishRequest=Annuler la demande de publication
-#--.business.page.edit.gallery=Editer la galerie
 
 
 
@@ -462,7 +449,6 @@ day_abrv_sunday=Di
 --.followed-business.uncheckAll=Déselectionner
 
 
-#--.loginModal.fctToExecute.help=Vous devez vous enregistrer pour continuer
 --.home.interest-switch.help=Triez selon votre position ou vos commerces favoris.
 --.home.interest.help=Triez selon vos envies.
 --.home.localisation.help=Triez selon votre position.
@@ -522,14 +508,12 @@ day_abrv_sunday=Di
 --.schedule.light=Ouvert (Affluence faible)
 --.schedule.moderate=Ouvert (Affluence moyenne)
 --.schedule.heavy=Ouvert (Affluence forte)
-
+http://192.168.1.3:9000/
 --.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous enregister.
 --.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
 --.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
 --.business.page.management.help.title=Un petit coup de pouce ?
 --.business.page.management.contact.btn=Contactez-nous!
-#--.followed-business.checkAll=Sélectionner tout
-#--.followed-business.uncheckAll=Déselectionner tout
 --.error.promotion.duration.tooLong=La durée maximum d'une promotion est de {0} jours
 --.error.notification.duration.tooLong=La durée maximum d'une actualité est de {0} jours
 --.error.promotion.TooMuchToday=Vous avez déjà publié {0} publications aujourd'hui. Attendez demain pour publier à nouveau
