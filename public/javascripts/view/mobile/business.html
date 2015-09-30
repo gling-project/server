@@ -12,9 +12,9 @@
 
     <div class="btn-group pull-right">
         <div class="btn btn-navbar" ng-click="followed()">
-            <div class="nav-button">
-                <span class="gling-icon-bell selected" ng-show="business.following"></span>
-                <span class="gling-icon-bell2" ng-hide="business.following"></span>
+            <div class="nav-button business-page-follow">
+                <span class="selected" ng-show="business.following">{{'--.followWidget.stopFollow' | translateText}}<i class="gling-icon-bell"></i></span>
+                <span ng-hide="business.following">{{'--.followWidget.follow' | translateText}}<i class="gling-icon-bell2"></i></span>
             </div>
         </div>
     </div>

@@ -58,8 +58,6 @@
 
 
         @* @if(true){ *@
-        @if(Play.application().isProd() == false) {
-
              @header.dependencies_header()
 
                 <!-- map -->
@@ -121,19 +119,6 @@
             <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
             <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/web.css")">
             <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/glingicon.css")">
-        }
-
-         @* @if(false){*@
-         @if(Play.application().isProd()){
-
-             <script src="@routes.Assets.at("dist/dependencies."+data.getProjectLastVersion+".final.js")" type="text/javascript"></script>
-
-             <script src="@routes.Assets.at("dist/web."+data.getProjectLastVersion+".final.js")" type="text/javascript"></script>
-
-             <script src="@routes.Assets.at("dist/common."+data.getProjectLastVersion+".final.js")" type="text/javascript"></script>
-
-             <link rel="stylesheet" media="screen" href="@routes.Assets.at("dist/styleDependencies."+data.getProjectLastVersion+".final.css")">
-        }
 
     </head>
     <body ng-app="app" ng-controller="MainCtrl">

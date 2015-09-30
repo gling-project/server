@@ -2033,10 +2033,12 @@ ul.messenger .messenger-spinner {
 .profile-page .category-box {
   margin: 5px;
 }
-.business-page-follow {
-  background: none;
-  border: none;
-  outline: none;
+.business-page-follow span {
+  font-size: 14px;
+}
+.business-page-follow span i {
+  margin-left: 10px;
+  font-size: 16px;
 }
 .business-mobile-page .business-page-menu {
   padding: 5px;
