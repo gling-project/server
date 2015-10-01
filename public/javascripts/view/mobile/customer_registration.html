@@ -10,10 +10,14 @@
                 </div>
 
                 <div class="facebook-login-btn-container">
-                    <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+
+                    <!-- mobile version (open connection page into the same page) -->
+                    <a href="https://www.facebook.com/dialog/oauth/?client_id={{facebookAppId}}&redirect_uri={{basic_url}}/customer_registration&state=BELGIUM&scope={{facebookAuthorization}}&response_type=token"
+                       class="facebook-login-btn btn btn-primary">
                         <img src="/assets/images/facebook/login_icon.png"/>
-                        <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
-                    </button>
+                        <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
+                    </a>
+
                 </div>
 
                 <table class="horizontal-split">

@@ -12,6 +12,10 @@ myApp.controller('MenuCtrl', function ($rootScope, $scope, facebookService, acco
         $scope.showmenu = ($scope.showmenu) ? false : true;
     });
 
+    $scope.closeMenu = function(){
+        $scope.showmenu=false;
+    };
+
     $scope.navigateTo = function (target) {
         $scope.showmenu=false;
         $location.path(target);

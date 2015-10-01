@@ -1,4 +1,4 @@
-myApp.directive("mobileTitleCtrl", function ($rootScope) {
+myApp.directive("mobileTitleCtrl", function ($rootScope,$location) {
     return {
         restrict: "E",
         scope: {
@@ -21,7 +21,7 @@ myApp.directive("mobileTitleCtrl", function ($rootScope) {
                     };
 
                     scope.back = function () {
-                        window.history.back();
+                        $location.path('/');//window.history.back();
                     };
 
 

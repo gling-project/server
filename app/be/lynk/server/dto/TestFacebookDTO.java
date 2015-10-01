@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class TestFacebookDTO extends DTO implements KeyTyped<Date> {
 
+    private String userId;
+
     private String firstname;
 
     private String lastname;
@@ -26,6 +28,17 @@ public class TestFacebookDTO extends DTO implements KeyTyped<Date> {
 
     private AccountFusionDTO accountFusion;
     private FacebookTokenAccessControlDTO facebookTokenAccessControl;
+
+    public TestFacebookDTO() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getFirstname() {
         return firstname;

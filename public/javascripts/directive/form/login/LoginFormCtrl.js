@@ -15,6 +15,13 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.facebookAppId = facebookService.facebookAppId;
+                    scope.facebookAuthorization = facebookService.facebookAuthorization;
+                    scope.basic_url = location.host;
+                    if (scope.basic_url.indexOf('http') == -1) {
+                        scope.basic_url = 'http://' + scope.basic_url;
+                    }
+
                     if (scope.getInfo().dto == null) {
                         scope.getInfo().dto = {};
                     }
@@ -50,8 +57,8 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            active : function(){
-                              return !scope.getInfo().mobileVersion
+                            active: function () {
+                                return !scope.getInfo().mobileVersion
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'keepSessionOpen'
@@ -75,7 +82,6 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                     }, true);
 
 
-
                     //
                     // display error watching
                     //
@@ -87,19 +93,48 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                     });
 
                     //
+                    //facebook success
+                    //
+                    scope.facebookSuccess = function (data) {
+                        accountService.setMyself(data);
+                        $flash.success(translationService.get("--.login.flash.success"));
+                        scope.getInfo().facebookSuccess(data);
+                    };
+
+
+                    //
                     // facebook connection
+                    //not mobile version
                     //
                     scope.fb_login = function () {
                         facebookService.login(function (data) {
-                                accountService.setMyself(data);
-                                $flash.success(translationService.get("--.login.flash.success"));
-                                scope.getInfo().facebookSuccess(data);
-
-                            },
-                            function (data, status) {
-                                $flash.error(data.message);
-                            });
+                            scope.facebookSuccess(data);
+                        });
                     };
+
+                    scope.getUrlParam = function (name, url) {
+                        if (!url) url = location.href
+                        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                        var regexS = "[\\?&]" + name + "=([^&#]*)";
+                        var regex = new RegExp(regexS);
+                        var results = regex.exec(url);
+                        return results == null ? null : results[1];
+                    };
+
+                    //try to catch facebook connection
+                    //mobile version
+                    if (location.href.indexOf('access_token') != -1) {
+                        var access_token = scope.getUrlParam('access_token', location.href)
+
+                        if (access_token != null) {
+                            facebookService.loginToServerSimple(access_token, function (data) {
+                                    scope.facebookSuccess(data);
+                                },
+                                function (data, status) {
+                                    $flash.error(data.message);
+                                });
+                        }
+                    }
                 }
             }
         }

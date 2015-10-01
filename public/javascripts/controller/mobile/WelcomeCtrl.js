@@ -1,5 +1,4 @@
-myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, accountService, $flash, translationService) {
-
+myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, accountService, $flash, translationService, facebookService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
@@ -7,7 +6,7 @@ myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, account
         dto: {},
         mobileVersion: true,
         facebookSuccess: function (data) {
-            $location.path('/home');
+            $location.url('/home');
         }
     };
 

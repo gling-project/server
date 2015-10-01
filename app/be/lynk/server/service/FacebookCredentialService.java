@@ -9,5 +9,7 @@ import be.lynk.server.model.entities.FacebookCredential;
 public interface FacebookCredentialService extends CrudService<FacebookCredential> {
     FacebookCredential findByUserId(String userId);
 
+    FacebookTokenAccessControlDTO controlFacebookAccess(String accessToken);
+
     FacebookTokenAccessControlDTO controlFacebookAccess(String accessToken, String expectedId);
 }

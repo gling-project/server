@@ -2,6 +2,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
 
     this.facebookAppId;
+    this.facebookAuthorization = 'public_profile,email,publish_actions';
 
     //
     // initialization
@@ -34,8 +35,12 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
     //
     this.registration = function (successCallback, failCallback) {
 
+        console.log("je suis registration");
+
         // From now on you can use the  service just as Facebook api says
         FB.login(function (response) {
+
+            console.log("FB.login : "+response.status);
 
             if (response.status === 'connected') {
 
@@ -46,7 +51,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
                 failCallback();
             }
         }, {
-            scope: 'public_profile, email,publish_actions'
+            scope: self.facebookAuthorization
         });
     };
 
@@ -59,6 +64,9 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
             if (response.status === 'connected') {
 
+                console.log("response.authResponse");
+                console.log(response.authResponse);
+
                 loginToServer(response.authResponse, successCallback, failCallback);
                 isConnected = true;
             }
@@ -66,7 +74,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
                 failCallback();
             }
         }, {
-            scope: 'public_profile, email,publish_actions'
+            scope: self.facebookAuthorization
         });
     };
 
@@ -83,7 +91,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
     me = function (successCallback, failCallback) {
         // From now on you can use the  service just as Facebook api says
         FB.api('/me', {
-            fields: 'first_name,last_name,email,gender,locale'
+            fields: self.facebookAuthorization
         }, function (response) {
             if (!response || response.error) {
                 failCallback(response.status, response.error);
@@ -157,6 +165,24 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
                 callbackSuccess(data);
             }
             ;
+        })
+            .error(function (data, status) {
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.loginToServerSimple = function (accessToken, callbackSuccess, callbackError) {
+
+        $http({
+            'method': "GET",
+            'url': "/rest/login/facebook/"+accessToken,
+            'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
         })
             .error(function (data, status) {
                 if (callbackError != null) {

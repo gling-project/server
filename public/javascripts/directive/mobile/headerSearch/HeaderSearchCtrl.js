@@ -1,4 +1,4 @@
-myApp.directive("headerSearchCtrl", function ($rootScope) {
+myApp.directive("headerSearchCtrl", function ($rootScope,$location) {
     return {
         restrict: "E",
         scope: {
@@ -12,6 +12,7 @@ myApp.directive("headerSearchCtrl", function ($rootScope) {
                 post: function (scope) {
 
                     scope.showMenu = function(){
+                        console.log('shox manue !! ');
                         $rootScope.$broadcast('toggleMenu');
                     };
 
@@ -20,7 +21,7 @@ myApp.directive("headerSearchCtrl", function ($rootScope) {
                     };
 
                     scope.back = function () {
-                        window.history.back();
+                        $location.path('/');//window.history.back();
                     };
 
 

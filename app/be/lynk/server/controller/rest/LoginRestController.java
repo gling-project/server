@@ -97,12 +97,27 @@ public class LoginRestController extends AbstractRestController {
 
         //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getToken(), dto.getUserId());
-        if (!facebookTokenAccessControlDTO.getId().equals(dto.getUserId())) {
-            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
-        }
 
         //control
-        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(dto.getUserId());
+        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
+        Account account;
+
+        if (facebookCredential == null) {
+            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NOT_ACCOUNT_FOUND);
+        }
+        account = facebookCredential.getAccount();
+
+        return ok(finalizeConnection(account));
+    }
+
+    @Transactional
+    public Result loginFacebookSimple(String facebookToken) {
+
+       //authentication
+        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookToken);
+
+        //control
+        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
         Account account;
 
         if (facebookCredential == null) {
@@ -341,7 +356,8 @@ public class LoginRestController extends AbstractRestController {
         TestFacebookDTO testFacebookDTO = new TestFacebookDTO();
 
         //1) load the data from facebook
-        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookAuthenticationDTO.getToken(), facebookAuthenticationDTO.getUserId());
+        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookAuthenticationDTO.getToken());
+        testFacebookDTO.setUserId(facebookTokenAccessControlDTO.getId());
         testFacebookDTO.setFacebookTokenAccessControl(facebookTokenAccessControlDTO);
         testFacebookDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
         testFacebookDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
@@ -349,7 +365,7 @@ public class LoginRestController extends AbstractRestController {
         testFacebookDTO.setGender(GenderEnum.getByText(facebookTokenAccessControlDTO.getGender()));
 
         //2) test if there is an account with this facebook credential
-        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookAuthenticationDTO.getUserId());
+        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
 
         if (facebookCredential != null) {
             //founded ! the user is already registered
@@ -368,7 +384,7 @@ public class LoginRestController extends AbstractRestController {
                 AccountFusionDTO accountFusion = new AccountFusionDTO();
                 accountFusion.setFacebookToken(facebookAuthenticationDTO.getToken());
                 accountFusion.setEmail(facebookTokenAccessControlDTO.getEmail());
-                accountFusion.setFacebookUserId(facebookAuthenticationDTO.getUserId());
+                accountFusion.setFacebookUserId(facebookTokenAccessControlDTO.getId());
                 testFacebookDTO.setAccountFusion(accountFusion);
                 testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ACCOUNT_WITH_SAME_EMAIL);
             } else {

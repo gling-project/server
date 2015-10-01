@@ -12,7 +12,6 @@ import java.util.Date;
  */
 public class FacebookAuthenticationDTO extends DTO implements KeyTyped<Date> {
 
-    @NotNull(message = "--.validation.dto.notNull")
     private String userId;
 
     @NotNull(message = "--.validation.dto.notNull")
