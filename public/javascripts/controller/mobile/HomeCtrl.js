@@ -251,4 +251,37 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     }
 
 
+
+    //TEMP !!!
+    $scope.actions = [{
+        name:'home',
+        icon: 'gling-icon-home',
+        action: function () {
+            $scope.interfaceToDisplay = 'home'
+        },
+        display: function () {
+            return true;
+        }
+    }, {
+        name:'info',
+        icon: 'gling-icon-info',
+        action: function () {
+            $scope.interfaceToDisplay = 'info'
+        },
+        display: function () {
+            return true;
+        }
+    }, {
+        name:'gallery',
+        icon: 'gling-icon-images',
+        action: function () {
+            $scope.interfaceToDisplay = 'gallery'
+        },
+        display: function () {
+            return $scope.business.galleryPictures != null && $scope.business.galleryPictures.length > 0
+        }
+    }
+    ];
+
+
 });

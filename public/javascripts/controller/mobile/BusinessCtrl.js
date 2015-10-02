@@ -1,4 +1,4 @@
-myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter,modalService) {
+myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter,modalService,customerInterestService) {
 
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
@@ -118,5 +118,13 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
         //scrollTo: $scope.publicationIdToGo,
         //displayRemoveIcon: $scope.edit
     };
+
+
+
+
+    //TEMP !!
+    customerInterestService.getAll(function (value) {
+        $scope.customerInterests = value;
+    });
 
 });

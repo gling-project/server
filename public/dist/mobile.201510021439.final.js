@@ -868,6 +868,39 @@ myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', '
     }
 
 
+
+    //TEMP !!!
+    $scope.actions = [{
+        name:'home',
+        icon: 'gling-icon-home',
+        action: function () {
+            $scope.interfaceToDisplay = 'home'
+        },
+        display: function () {
+            return true;
+        }
+    }, {
+        name:'info',
+        icon: 'gling-icon-info',
+        action: function () {
+            $scope.interfaceToDisplay = 'info'
+        },
+        display: function () {
+            return true;
+        }
+    }, {
+        name:'gallery',
+        icon: 'gling-icon-images',
+        action: function () {
+            $scope.interfaceToDisplay = 'gallery'
+        },
+        display: function () {
+            return $scope.business.galleryPictures != null && $scope.business.galleryPictures.length > 0
+        }
+    }
+    ];
+
+
 }]);
 myApp.controller('ForgotPasswordCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$filter', '$flash', 'modalService', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash,modalService) {
 
@@ -1289,7 +1322,7 @@ myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accoun
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', '$flash', 'followService', '$filter', 'modalService', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter,modalService) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', '$flash', 'followService', '$filter', 'modalService', 'customerInterestService', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter,modalService,customerInterestService) {
 
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
@@ -1409,6 +1442,14 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
         //scrollTo: $scope.publicationIdToGo,
         //displayRemoveIcon: $scope.edit
     };
+
+
+
+
+    //TEMP !!
+    customerInterestService.getAll(function (value) {
+        $scope.customerInterests = value;
+    });
 
 }]);
 myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', 'modalService', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService,modalService) {
