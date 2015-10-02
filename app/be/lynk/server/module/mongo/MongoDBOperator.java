@@ -1,10 +1,7 @@
 package be.lynk.server.module.mongo;
 
 import be.lynk.server.dto.technical.DTO;
-import net.vz.mongodb.jackson.JacksonDBCollection;
 import org.springframework.stereotype.Component;
-import play.libs.F;
-import play.modules.mongodb.jackson.MongoDB;
 
 import java.util.Date;
 
@@ -15,13 +12,13 @@ import java.util.Date;
 public class MongoDBOperator {
 
     public <V extends DTO> void write(V dto, Class<V> clazz) {
-        //asynchronious
-        F.Promise.promise(() -> {
-            JacksonDBCollection<V, Date> collection = MongoDB.collection(clazz.getName(), clazz, play.api.Play.current());
-
-            collection.insert(dto);
-            return null;
-        });
+//        //asynchronious
+//        F.Promise.promise(() -> {
+//            JacksonDBCollection<V, Date> collection = MongoDB.collection(clazz.getName(), clazz, play.api.Play.current());
+//
+//            collection.insert(dto);
+//            return null;
+//        });
     }
 
 }

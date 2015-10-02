@@ -3,7 +3,7 @@ package be.lynk.server.dto.post;
 import be.lynk.server.dto.BusinessDTO;
 import be.lynk.server.dto.FacebookAuthenticationDTO;
 import be.lynk.server.dto.technical.DTO;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created by florian on 11/11/14.
  */
-public class BusinessRegistrationDTO extends DTO implements KeyTyped<Date> {
+public class BusinessRegistrationDTO extends DTO  {
 
     private FacebookAuthenticationDTO facebookAuthentication;
 

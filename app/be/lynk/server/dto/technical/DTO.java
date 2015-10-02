@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import play.Logger;
-import play.modules.mongodb.jackson.KeyTyped;
+
 import play.mvc.Content;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.Date;
  * Created by florian on 10/11/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true,value = {"parsingDate"})
-public class DTO implements Content ,KeyTyped<Date> {
+public class DTO implements Content{
 
     @javax.persistence.Id
     @JsonIgnoreProperties

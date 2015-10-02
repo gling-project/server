@@ -2,7 +2,7 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.PublicationTypeEnum;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by florian on 5/06/15.
  */
-public abstract class AbstractPublicationDTO extends DTO implements Comparable<AbstractPublicationDTO>, KeyTyped<Date> {
+public abstract class AbstractPublicationDTO extends DTO implements Comparable<AbstractPublicationDTO> {
 
     protected Long id;
 

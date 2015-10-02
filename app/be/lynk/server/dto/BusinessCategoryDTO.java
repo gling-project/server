@@ -1,7 +1,7 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by florian on 18/05/15.
  */
-public class BusinessCategoryDTO extends DTO implements Comparable<BusinessCategoryDTO> ,KeyTyped<Date> {
+public class BusinessCategoryDTO extends DTO implements Comparable<BusinessCategoryDTO>{
 
     private String name;
 

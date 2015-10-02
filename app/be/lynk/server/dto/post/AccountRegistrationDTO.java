@@ -3,7 +3,7 @@ package be.lynk.server.dto.post;
 import be.lynk.server.dto.LangDTO;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.GenderEnum;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Created by florian on 11/11/14.
  */
-public class AccountRegistrationDTO extends DTO implements KeyTyped<Date> {
+public class AccountRegistrationDTO extends DTO  {
 
     @NotNull
     private GenderEnum gender;

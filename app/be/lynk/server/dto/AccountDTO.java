@@ -5,7 +5,7 @@ import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.GenderEnum;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.constants.ValidationRegex;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * Created by florian on 11/11/14.
  */
-public class AccountDTO extends DTO implements KeyTyped<Date> {
+public class AccountDTO extends DTO  {
 
     private Long id;
 

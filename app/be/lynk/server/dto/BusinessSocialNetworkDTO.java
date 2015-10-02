@@ -1,13 +1,13 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import java.util.Date;
 
 /**
  */
-public class BusinessSocialNetworkDTO extends DTO implements KeyTyped<Date> {
+public class BusinessSocialNetworkDTO extends DTO  {
 
 
     private String facebookLink;

@@ -2,7 +2,7 @@ package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.util.AccountTypeEnum;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by florian on 3/05/15.
  */
-public class FacebookAuthenticationDTO extends DTO implements KeyTyped<Date> {
+public class FacebookAuthenticationDTO extends DTO  {
 
     private String userId;
 

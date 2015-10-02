@@ -2,7 +2,7 @@ package be.lynk.server.dto;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.dto.technical.DTO;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import java.time.DayOfWeek;
 import java.util.*;
@@ -12,7 +12,7 @@ import java.util.*;
  * this DTO must  contain only business public datas
  * IMPORTANT !!!
  */
-public class BusinessToDisplayDTO extends DTO implements KeyTyped<Date>, Comparable<BusinessToDisplayDTO> {
+public class BusinessToDisplayDTO extends DTO implements Comparable<BusinessToDisplayDTO> {
 
     private Long id;
 

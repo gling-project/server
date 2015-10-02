@@ -46,7 +46,7 @@ object ApplicationBuild extends Build {
       ExclusionRule(organization = "com.sun.jdmk"),
       ExclusionRule(organization = "com.sun.jmx"),
       ExclusionRule(organization = "javax.jms")),
-    "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0",
+//    "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0",
 
     "net.coobird" % "thumbnailator" % "0.4.8",
     "net.imagej" % "ij" % "1.50a"

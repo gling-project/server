@@ -1,7 +1,7 @@
 package be.lynk.server.dto;
 
 import be.lynk.server.dto.technical.DTO;
-import play.modules.mongodb.jackson.KeyTyped;
+
 
 import java.util.Collection;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.HashSet;
 /**
  * Created by florian on 11/11/14.
  */
-public class ListDTO<T extends DTO> extends DTO implements KeyTyped<Date> {
+public class ListDTO<T extends DTO> extends DTO  {
 
     private Collection<T> list = new HashSet<>();
 
