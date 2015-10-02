@@ -37,7 +37,12 @@
 
         <div class="publication-title">
             <!-- interest -->
-            <i ng-show="getInterestClass(publication)!=null"
+            <i style="float: right; color: #ffffff;background-color: green;padding: 10px;border-radius: 20px"
+                    ng-show="getInterestClass(publication)!=null"
+                    class="gling-icon {{getInterestClass(publication)}}">
+                
+            </i>
+            <i
                class="publication-interest gling-icon {{getInterestClass(publication)}} publication-color-background">
             </i>
 
