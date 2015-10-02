@@ -31,7 +31,7 @@
 
             <!-- distance -->
             <div class="distance">
-                <i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km
+                <i class="gling-icon gling-icon-earth"></i> {{publication.distance / 1000 | number:2}} km
             </div>
         </div>
 
@@ -58,8 +58,8 @@
                 <div ng-show="publication.type === 'PROMOTION'"
                      ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"
                      class="publication-data-header">
-                    <div class="glyphicon gling-icon gling-icon gling-icon-calendar">
-                    </div>
+                    <i class="fa gling-icon-calendar">
+                    </i>
                     <div>{{'--.publication.promotionTo' | translateText}}</div>
                     <div>
                         &lt; {{publication.endDate | date:'dd MMM HH:mm'}}
