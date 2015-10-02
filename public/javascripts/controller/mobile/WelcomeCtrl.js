@@ -18,9 +18,11 @@ myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, account
 
             accountService.login($scope.loginFormParam.dto,
                 function () {
-                    $flash.success(translationService.get("--.login.flash.success"));
-                    $scope.loading = false;
-                    $location.path('/home');
+                    $timeout(function () {
+                        $flash.success(translationService.get("--.login.flash.success"));
+                        $location.url('/');
+                        $scope.loading = false;
+                    }, 1);
                 },
                 function () {
                     $scope.loading = false;

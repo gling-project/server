@@ -97,7 +97,6 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                     //
                     scope.facebookSuccess = function (data) {
                         accountService.setMyself(data);
-                        $flash.success(translationService.get("--.login.flash.success"));
                         scope.getInfo().facebookSuccess(data);
                     };
 

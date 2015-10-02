@@ -581,9 +581,11 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountSe
 
             accountService.login($scope.loginFormParam.dto,
                 function () {
-                    $flash.success(translationService.get("--.login.flash.success"));
-                    $scope.loading = false;
-                    $location.path('/home');
+                    $timeout(function () {
+                        $location.path('/');
+                        $flash.success(translationService.get("--.login.flash.success"));
+                        $scope.loading = false;
+                    }, 1);
                 },
                 function () {
                     $scope.loading = false;
