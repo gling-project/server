@@ -910,8 +910,8 @@ ul.messenger .messenger-spinner {
 	line-height: 1;
 
 	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	/*-webkit-font-smoothing: antialiased;*/
+	/*-moz-osx-font-smoothing: grayscale;*/
 }
 
 .gling-icon-fidelisation:before {
