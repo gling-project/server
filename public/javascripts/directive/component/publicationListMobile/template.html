@@ -38,12 +38,12 @@
         <div class="publication-title">
             <!-- interest -->
             <i style="float: right; color: #ffffff;background-color: green;padding: 10px;border-radius: 20px"
-                    ng-show="getInterestClass(publication)!=null"
-                    class="gling-icon {{getInterestClass(publication)}}">
-                
+               ng-show="getInterestClass(publication)!=null"
+               class="gling-icon {{getInterestClass(publication)}}">
             </i>
             <i
-               class="publication-interest gling-icon {{getInterestClass(publication)}} publication-color-background">
+                    ng-show="getInterestClass(publication)!=null"
+                    class="publication-interest gling-icon {{getInterestClass(publication)}}">
             </i>
 
             {{publication.title}}
@@ -64,6 +64,7 @@
                      ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"
                      class="publication-data-header">
                     <i class="gling-icon gling-icon-calendar"></i>
+
                     <div>{{'--.publication.promotionTo' | translateText}}</div>
                     <div>
                         &lt; {{publication.endDate | date:'dd MMM HH:mm'}}
