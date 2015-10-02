@@ -1,6 +1,5 @@
 myApp.service("modalService", function ($modal) {
 
-
     this.basicModal = function (title, directiveName, param, save) {
         var resolve = {
             directiveName: function () {
@@ -57,8 +56,7 @@ myApp.service("modalService", function ($modal) {
             templateUrl: "/assets/javascripts/modal/mobile/LoadingModal/view.html",
             controller: "LoadingModalCtrl",
             size: "l",
-            windowClass: 'loading-modal',
-            backdrop: 'static'
+            windowClass: 'loading-modal'
         });
     };
     this.closeLoadingModal = function () {

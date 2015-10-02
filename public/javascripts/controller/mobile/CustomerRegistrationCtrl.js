@@ -2,6 +2,8 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
+    modalService.closeLoadingModal();
+
 
     $scope.facebookAppId = facebookService.facebookAppId;
     $scope.facebookAuthorization = facebookService.facebookAuthorization;

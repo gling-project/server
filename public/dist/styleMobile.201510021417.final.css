@@ -1825,7 +1825,7 @@ ul.messenger .messenger-spinner {
   padding-right: 10px;
   display: inline-block;
   vertical-align: top;
-  width: 320px;
+  width: 310px;
 }
 .business-page .panel {
   width: 100%;
@@ -2294,7 +2294,7 @@ body,
   text-align: left !important;
 }
 .home-interest-box .home-interest {
-  padding: 2px 5px !important;
+  padding: 8px 8px !important;
   margin-right: 4px !important;
 }
 .home-interest-box .home-interest img {

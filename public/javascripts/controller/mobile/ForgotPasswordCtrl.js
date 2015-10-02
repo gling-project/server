@@ -1,6 +1,8 @@
-myApp.controller('ForgotPasswordCtrl', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash) {
+myApp.controller('ForgotPasswordCtrl', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash,modalService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    modalService.closeLoadingModal();
 
     $scope.loading = false;
 

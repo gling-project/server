@@ -17,13 +17,32 @@
          class="publication-box publication-publication"
          ng-click="click()">
 
-        <!-- interest -->
-        <i ng-show="getInterestClass(publication)!=null"
-           class="publication-interest {{getInterestClass(publication)}} publication-color-background">
-        </i>
+        <div class="publication-header"
+             ng-click="navigateTo('/business/'+publication.businessId)">
 
-        {{publication.title}}
+            <img class="illustration"
+                 ng-src="{{publication.businessIllustration | image}}"/>
 
+            <div class="title">
+                <span>
+                    {{publication.businessName}}
+                </span>
+            </div>
+
+            <!-- distance -->
+            <div class="distance">
+                <i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km
+            </div>
+        </div>
+
+        <div class="publication-title">
+            <!-- interest -->
+            <i ng-show="getInterestClass(publication)!=null"
+               class="publication-interest {{getInterestClass(publication)}} publication-color-background">
+            </i>
+
+            {{publication.title}}
+        </div>
 
         <div class="publication-body">
             <div class="publication-data"
@@ -50,7 +69,6 @@
 
             <!-- gallery -->
             <!-- picture 1 -->
-            <!-- picture 1 -->
             <div class="publication-gallery"
                  ng-class="{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}"
                  ng-show="publication.pictures.length > 0 "
@@ -68,6 +86,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="publication-footer">
 
@@ -80,8 +99,7 @@
             <!-- facebook -->
             <div class="publication-footer-facebook">
                 <facebook-share-publication-ctrl
-                        ng-info="{businessId:publication.businessId,publicationId:publication.id}">
-                </facebook-share-publication-ctrl>
+                        ng-info="{businessId:publication.businessId,publicationId:publication.id}"></facebook-share-publication-ctrl>
             </div>
 
         </div>

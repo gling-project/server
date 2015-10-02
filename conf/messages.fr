@@ -554,3 +554,4 @@ day_abrv_sunday=Di
 
 --.business.follow.stopFollowing=Arrêter de suivre
 --.followed-business.page.title=Mes commerces suivis
+--.generic.site=Site

@@ -1,4 +1,4 @@
-myApp.directive('loginFormCtrl', function ($flash, facebookService, translationService, directiveService, $timeout, accountService) {
+myApp.directive('loginFormCtrl', function ($flash, facebookService, translationService, directiveService, $timeout, accountService,$location,modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -14,6 +14,16 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                 },
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
+
+
+                    scope.setLoading = function (b) {
+                        if (b === true) {
+                            modalService.openLoadingModal();
+                        }
+                        else {
+                            modalService.closeLoadingModal();
+                        }
+                    };
 
                     scope.facebookAppId = facebookService.facebookAppId;
                     scope.facebookAuthorization = facebookService.facebookAuthorization;
@@ -103,6 +113,7 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                     scope.facebookSuccess = function (data) {
                         accountService.setMyself(data);
                         scope.getInfo().facebookSuccess(data);
+                        scope.setLoading(false);
                     };
 
 
@@ -127,22 +138,19 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
 
                     //try to catch facebook connection
                     //mobile version
-                    console.log('JE SUIS UNE MERDEEEE');
                     if (location.href.indexOf('access_token') != -1) {
-                        console.log('facebook con 1');
                         var access_token = scope.getUrlParam('access_token', location.href)
 
-                        console.log('facebook con 2');
-
                         if (access_token != null) {
-                            console.log('facebook con 3');
+                            scope.setLoading(true);
                             facebookService.loginToServerSimple(access_token, function (data) {
-                                    console.log('facebook con 4');
                                     scope.facebookSuccess(data);
                                 },
                                 function (data, status) {
-                                    console.log('facebook con ERROR');
-                                    $flash.error(data.message);
+                                    scope.setLoading(false);
+                                    $location.path('/customer_registration');
+                                    //console.log('facebook con ERROR');
+                                    //$flash.error(data.message);
                                 });
                         }
                     }

@@ -91,6 +91,7 @@
                                 ng-info="publicationListParam">
                         </publication-list-mobile-for-business-ctrl>
 
+
                     </div>
 
                     <!-- info-->
@@ -141,7 +142,7 @@
                         <table class="business-info-line" ng-show="business.website!=null">
                             <tr>
                                 <td>
-                                    {{business.website}}
+                                    {{'--.generic.site' | translateText}}
                                 </td>
                                 <td class="td-action">
                                     <a href="{{business.website}}" target="_blank">{{business.website}}</a>

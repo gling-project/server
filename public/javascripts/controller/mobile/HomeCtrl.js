@@ -1,6 +1,7 @@
 myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService,modalService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+    modalService.closeLoadingModal();
 
     $scope.displayMask = true;
 

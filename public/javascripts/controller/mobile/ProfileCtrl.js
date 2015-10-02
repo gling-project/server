@@ -1,6 +1,7 @@
 myApp.controller('ProfileCtrl', function ($rootScope,$scope, modalService, accountService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+    modalService.closeLoadingModal();
 
     $scope.model = accountService.model;
 

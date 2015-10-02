@@ -1,7 +1,9 @@
-myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter) {
+myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter,modalService) {
 
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    modalService.closeLoadingModal();
 
     $scope.loading = true;
 

@@ -1,9 +1,11 @@
-myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
+myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService,modalService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    modalService.closeLoadingModal();
 
     $scope.businessListParams = {
         loading: true

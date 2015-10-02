@@ -4,6 +4,7 @@
 
         <!-- mobile version (open connection page into the same page) -->
         <a href="https://www.facebook.com/dialog/oauth/?client_id={{facebookAppId}}&redirect_uri={{basic_url}}/&state=BELGIUM&scope={{facebookAuthorization}}&response_type=token"
+           ng-click="setLoading(true)"
            ng-show="getInfo().mobileVersion"
            class="facebook-login-btn btn btn-primary">
             <img src="/assets/images/facebook/login_icon.png"/>

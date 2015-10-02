@@ -1,6 +1,7 @@
-myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, accountService, $flash, translationService, facebookService) {
+myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, accountService, $flash, translationService, $timeout,modalService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+    modalService.closeLoadingModal();
 
     $scope.loginFormParam = {
         dto: {},
@@ -13,19 +14,18 @@ myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, account
     $scope.save = function () {
 
         if ($scope.loginFormParam.isValid) {
-
-            $scope.loading = true;
+            $scope.setLoading(true);
 
             accountService.login($scope.loginFormParam.dto,
                 function () {
                     $timeout(function () {
+                        $scope.setLoading(false);
                         $flash.success(translationService.get("--.login.flash.success"));
-                        $location.url('/');
-                        $scope.loading = false;
+                        $location.url('/home');
                     }, 1);
                 },
                 function () {
-                    $scope.loading = false;
+                    $scope.setLoading(false);
                 });
         }
         else {
@@ -33,8 +33,13 @@ myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, account
         }
     };
 
-    $scope.toForgotPassword = function () {
-
+    $scope.setLoading = function (b) {
+        if (b === true) {
+            modalService.openLoadingModal();
+        }
+        else {
+            modalService.closeLoadingModal();
+        }
     };
 
 });
