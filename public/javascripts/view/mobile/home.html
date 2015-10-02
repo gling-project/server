@@ -17,7 +17,7 @@
                         <div class="home-interest-box"
                              ng-style="{width:(customerInterests.length * 50 + 20) + 'px'}">
 
-                            <button class="gling-button home-interest {{'gling-icon gling-icon-' + interest.name}}"
+                            <button class="gling-icon {{'gling-icon-' + interest.name}}"
                                     ng-repeat="interest in customerInterests"
                                     ng-show="interest.iconName!=null"
                                     ng-click="searchByInterest(interest)"
