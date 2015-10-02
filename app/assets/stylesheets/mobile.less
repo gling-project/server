@@ -33,7 +33,9 @@
 @import 'widget/mobile/_followed-business-mobile';
 @import 'widget/mobile/_search-mobile';
 @import 'widget/mobile/_gallery-mobile';
+@import 'widget/mobile/_welcome-page';
 @import 'widget/_constants';
+
 
 body {
     color: @color-body-text;
@@ -104,36 +106,6 @@ button {
     background-color: @color-blue-dark;
     color: #ffffff !important;
 
-}
-
-.welcome-header {
-    background-image: url('/assets/images/welcome_page/bg.jpg');
-    background-repeat: no-repeat;
-    background-size: 200% auto;
-    background-position-x: 50%;
-    background-position-y: 50%;
-    margin: -15px -15px 0px -15px;
-    text-align: center;
-    height: 200px;
-    width: ~'calc(100% + 30px)';
-    color: @color-green-light;
-
-    & > div {
-
-        .logo {
-            display: inline-block;
-            padding-top: 10px;
-            font-size: 100px;
-            color: @color-green-light;
-        }
-        p {
-            font-size: 30px;
-            font-weight: bold;
-            margin-top: 30px;
-            text-shadow: 2px 2px black;
-            color: white;
-        }
-    }
 }
 
 .sidebar-left {

@@ -21,12 +21,12 @@
         <h4>{{'--.business.manager.progress.createPublicationTitle' | translateText}}</h4>
 
         <button id="business-btn-promotion-add"
-                class="btn btn-primary"
+                class="btn gling-button-dark"
                 ng-click="createPromotion()"
                 ng-disabled="business.businessStatus !== 'PUBLISHED'">
             {{'--.business.publication.btn.promotion' | translateText}}
         </button>
-        <button class="btn btn-primary"
+        <button class="btn gling-button-dark"
                 ng-click="createNotification()"
                 ng-disabled="business.businessStatus !== 'PUBLISHED'">
             {{'--.business.publication.btn.notification' | translateText}}
@@ -138,28 +138,28 @@
                     <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
                             ng-click="publish()"
                             id="business-btn-publish"
-                            class="btn btn-primary">
+                            class="btn gling-button-dark">
                         {{'--.business.page.publication' | translateText}}
                     </button>
 
                     <button ng-show="business.businessStatus === 'WAITING_CONFIRMATION'"
                             ng-click="cancelPublishRequest()"
-                            class="btn btn-primary">
+                            class="btn gling-button-dark">
                         {{'--.business.page.cancelPublishRequest' | translateText}}
                     </button>
 
                     <button ng-show="business.businessStatus === 'PUBLISHED'"
                             ng-click="stopPublish()"
-                            class="btn btn-primary">
+                            class="btn gling-button-dark">
                         {{'--.business.page.stopPublication' | translateText}}
                     </button>
                 </p>
             </div>
             <h4>{{'--.business.page.management.help.title' | translateText}}</h4>
-            <a class="btn btn-primary" class="btn btn-primary" href="/assets/document/business_help.pdf" target="_blank">
+            <a class="btn gling-button-dark" class="btn gling-button-dark" href="/assets/document/business_help.pdf" target="_blank">
                 {{'--.business.manager.progress.help' | translateText}}
             </a>
-            <button class="btn btn-primary" ng-click="openContact()">
+            <button class="btn gling-button-dark" ng-click="openContact()">
                 {{'--.business.page.management.contact.btn' | translateText}}
             </button>
         </div>
@@ -188,7 +188,7 @@
              ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
 
             <!-- landscape -->
-            <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+            <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                     id="business-btn-landscape-edit"
                     ng-show="edit"
                     ng-click="editLandscape()">
@@ -197,7 +197,7 @@
             <!-- illustration -->
             <div class="business-page-illustration-container editable-element">
                 <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
-                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit btn-sm"
+                <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm"
                         id="business-btn-illustration-edit"
                         ng-show="edit"
                         ng-click="editIllustration()">
@@ -210,7 +210,7 @@
                     {{business.name}}
                 </span>
 
-                <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                         id="business-btn-name-edit"
                         ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                         ng-click="editbusiness()">
@@ -231,7 +231,7 @@
                         </div>
                         <button ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                                 id="business-btn-category-edit"
-                                class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                                class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                                 ng-click="editCategory()">
                         </button>
                     </div>
@@ -241,7 +241,7 @@
                     </span>
 
                     <br/>
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                             ng-show="edit"
                             ng-click="editbusiness()">
                     </button>
@@ -288,7 +288,7 @@
 
                     <gallery-ctrl ng-info="{images:business.galleryPictures}"></gallery-ctrl>
 
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                             id="welcome-btn-gallery-edit"
                             ng-show="edit"
                             ng-click="editGallery()">
@@ -308,7 +308,7 @@
                         <div>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</div>
                         <div>{{business.distance / 1000 | number:2}} Km</div>
                     </div>
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                             id="business-btn-address-edit"
                             ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
                             ng-click="editAddress()">
@@ -337,7 +337,7 @@
                         {{business.email}}
                     </div>
 
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                             id="business-btn-contact-edit"
                             ng-show="edit"
                             ng-click="editbusiness()">
@@ -415,7 +415,7 @@
 
                     <br/>
 
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                             ng-show="edit"
                             id="business-btn-social-network-edit"
                             ng-click="editSocialNetwork()">
@@ -431,7 +431,7 @@
 
                     <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
 
-                    <button class="btn btn-primary btn-xs glyphicon glyphicon-edit"
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
                             id="business-btn-schedule-edit"
                             ng-show="edit"
                             ng-click="editSchedule()">

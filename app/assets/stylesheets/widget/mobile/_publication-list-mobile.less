@@ -8,17 +8,31 @@
         height: 40px;
     }
 
+    .publication-badge{
+        background-color: @color-red;
+        padding: 5px 10px;
+        border-radius: 10px;
+        display: inline-block;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
     .publication-title{
+        min-height: 40px;
         font-weight: bold;
         padding-bottom: 5px;
     }
 
     .publication-data-body{
+        border-bottom: 1px solid @color-blue-dark;
+        border-top: 1px solid @color-blue-dark;
+        padding: 3px 0px;
+        margin: 5px 0px;
 //        color: rgb(120, 120, 120);
     }
 
     .publication-illustration-plus-icon {
-        border-radius: 10px;
+        border-radius: 40px;
         position: absolute;
         bottom: 4px;
         text-align: center;
@@ -28,8 +42,8 @@
         vertical-align: top;
         background-color: rgba(0,0,0, 0.5);
         span {
-            color: #aaa;
-            font-size: 45px;
+            color: #d4d4d4;
+            font-size: 30px;
             line-height: 60px;
             font-weight: bold;
             margin: auto;
@@ -67,9 +81,9 @@
 
         .publication-interest {
             background-color: @color-blue-dark;
-            font-size: 16px;
+            font-size: 20px;
             float: right;
-            padding: 5px;
+            padding: 8px;
             border-radius: 30px;
             color: white;
             position: relative;
@@ -100,13 +114,21 @@
 
         .publication-data {
             .publication-data-header {
-                background-color: @color-blue-dark;
+                border-top: 1px solid @color-blue-dark;
+                border-bottom: 1px solid @color-blue-dark;
                 padding: 5px;
-                border-radius: 10px;
                 margin: 5px;
-                color: #ffffff;
                 font-size: 14px;
-                display: inline-block;
+                & > div:first-child {
+                    background-color: @color-green-light;
+                    color: #ffffff;
+                    border-radius: 5px;
+                }
+                & > div:nth-child(n+2) {
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: @color-blue-dark;
+                }
                 & > div {
                     display: inline-block;
                     &:first-child {

@@ -1,0 +1,49 @@
+
+.welcome-page {
+
+    h3{
+        font-size: 18px;
+        text-align: center;
+        color: @color-green-light;
+        padding-top: 20px;
+        font-weight: bold;
+        font-family: "myFont";
+
+    }
+
+    .separator{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 3px double #ccc;
+    }
+
+    .welcome-header {
+        background-image: url('/assets/images/welcome_page/bg.jpg');
+        background-repeat: no-repeat;
+        background-size: 200% auto;
+        background-position-x: 50%;
+        background-position-y: 50%;
+        margin: -15px -15px 0px -15px;
+        text-align: center;
+        height: 200px;
+        width: ~'calc(100% + 30px)';
+        color: @color-green-light;
+
+        & > div {
+
+            .logo {
+                display: inline-block;
+                padding-top: 10px;
+                font-size: 100px;
+                color: @color-green-light;
+            }
+            h2 {
+                font-size: 30px;
+                font-weight: bold;
+                margin-top: 30px;
+                text-shadow: 2px 2px black;
+                color: white;
+            }
+        }
+    }
+}

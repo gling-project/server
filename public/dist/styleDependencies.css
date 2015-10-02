@@ -1807,6 +1807,7 @@ ul.messenger .messenger-spinner {
   margin: 0 -50%;
 }
 .publication-box .publication-body .publication-gallery .publication-illustration-plus-icon {
+  border-radius: 10px;
   position: absolute;
   bottom: 4px;
   text-align: center;
@@ -1814,7 +1815,7 @@ ul.messenger .messenger-spinner {
   height: 60px;
   width: 60px;
   vertical-align: top;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .publication-box .publication-body .publication-gallery .publication-illustration-plus-icon span {
   color: #aaa;
@@ -2801,6 +2802,32 @@ ul.messenger .messenger-spinner {
   background-color: #292763;
 }
 .gling-button.selected:hover:enabled {
+  background-color: #292763;
+}
+.gling-button-dark {
+  border: 0;
+  outline: none;
+  background-color: #292763;
+  color: white;
+  margin: 0 5px;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  min-height: 40px;
+}
+.gling-button-dark:hover:enabled {
+  background-color: #00b49b;
+  color: white;
+  text-decoration: none;
+}
+.gling-button-dark:disabled {
+  color: rgba(255, 255, 255, 0.65);
+}
+.gling-button-dark.selected {
+  background-color: #292763;
+}
+.gling-button-dark.selected:hover:enabled {
   background-color: #292763;
 }
 .btn,

@@ -44,6 +44,12 @@
             {{publication.title}}
         </div>
 
+        <!-- badge -->
+        <div class="publication-badge"
+             ng-show="publication.type === 'PROMOTION'">
+            - {{publication.offPercent * 100 | number:0}}%
+        </div>
+
         <div class="publication-body">
             <div class="publication-data"
                  ng-class="{'publication-body-two':publication.pictures.length>0}"

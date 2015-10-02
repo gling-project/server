@@ -1,6 +1,6 @@
 <div class='app-body'>
 
-    <div class='app-content modal-login'>
+    <div class='app-content modal-login welcome-page'>
 
         <div class="scrollable">
             <div class="section customer-registration scrollable-content">
@@ -10,12 +10,24 @@
                     <div>
                         <span class="logo gling-icon-logoapp button-with-label"></span>
 
-                        <p>What's up in my shops</p>
+                        <h2>What's up in my shops</h2>
                     </div>
 
                 </div>
 
-                <div>{{'--.mobile.welcome.login.desc' | translateText}}</div>
+                <h3>
+                    {{'--.mobile.welcome.registration.desc' |translateText}}
+                </h3>
+
+                <div class="generic-center">
+                    <button class="gling-button-dark" ng-click="navigateTo('/customer_registration')">
+                        {{'--.mobile.welcome.toCustomerRegistration.btn' | translateText}}
+                    </button>
+                </div>
+
+                <div class="separator"></div>
+
+                <h3>{{'--.mobile.welcome.login.desc' | translateText}}</h3>
 
 
                 <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>
@@ -25,7 +37,7 @@
                             ng-click="save()"
                             ng-disabled="loading"
                             type="button"
-                            class="btn btn-primary">
+                            class="gling-button-dark">
                         {{'--.mobile.welcome.login.btn' | translateText}}
                     </button>
                 </div>
@@ -37,16 +49,7 @@
                 </div>
 
 
-                <div class="mobile_welcome_registration_title">
-                    {{'--.mobile.welcome.registration.desc' |
-                    translateText}}
-                </div>
 
-                <div class="generic-center">
-                    <button class="btn btn-primary" ng-click="navigateTo('/customer_registration')">
-                        {{'--.mobile.welcome.toCustomerRegistration.btn' | translateText}}
-                    </button>
-                </div>
             </div>
 
         </div>

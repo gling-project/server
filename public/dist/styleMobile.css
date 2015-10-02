@@ -2366,12 +2366,27 @@ body,
   width: 40px;
   height: 40px;
 }
+.publication-list-mobile .publication-badge {
+  background-color: #ff0000;
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  color: #ffffff;
+  font-weight: bold;
+}
 .publication-list-mobile .publication-title {
+  min-height: 40px;
   font-weight: bold;
   padding-bottom: 5px;
 }
+.publication-list-mobile .publication-data-body {
+  border-bottom: 1px solid #292763;
+  border-top: 1px solid #292763;
+  padding: 3px 0px;
+  margin: 5px 0px;
+}
 .publication-list-mobile .publication-illustration-plus-icon {
-  border-radius: 10px;
+  border-radius: 40px;
   position: absolute;
   bottom: 4px;
   text-align: center;
@@ -2382,8 +2397,8 @@ body,
   background-color: rgba(0, 0, 0, 0.5);
 }
 .publication-list-mobile .publication-illustration-plus-icon span {
-  color: #aaa;
-  font-size: 45px;
+  color: #d4d4d4;
+  font-size: 30px;
   line-height: 60px;
   font-weight: bold;
   margin: auto;
@@ -2415,9 +2430,9 @@ body,
 }
 .publication-list-mobile .publication-publication .publication-interest {
   background-color: #292763;
-  font-size: 16px;
+  font-size: 20px;
   float: right;
-  padding: 5px;
+  padding: 8px;
   border-radius: 30px;
   color: white;
   position: relative;
@@ -2443,13 +2458,21 @@ body,
   border-radius: 10px;
 }
 .publication-list-mobile .publication-publication .publication-data .publication-data-header {
-  background-color: #292763;
+  border-top: 1px solid #292763;
+  border-bottom: 1px solid #292763;
   padding: 5px;
-  border-radius: 10px;
   margin: 5px;
-  color: #ffffff;
   font-size: 14px;
-  display: inline-block;
+}
+.publication-list-mobile .publication-publication .publication-data .publication-data-header > div:first-child {
+  background-color: #1ad2aa;
+  color: #ffffff;
+  border-radius: 5px;
+}
+.publication-list-mobile .publication-publication .publication-data .publication-data-header > div:nth-child(n+2) {
+  font-size: 16px;
+  font-weight: bold;
+  color: #292763;
 }
 .publication-list-mobile .publication-publication .publication-data .publication-data-header > div {
   display: inline-block;
@@ -2708,6 +2731,44 @@ body,
   left: 10%;
   background-color: rgba(0, 0, 0, 0.5);
 }
+.welcome-page h3 {
+  font-size: 18px;
+  text-align: center;
+  color: #1ad2aa;
+  padding-top: 20px;
+  font-weight: bold;
+  font-family: "myFont";
+}
+.welcome-page .separator {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 3px double #ccc;
+}
+.welcome-page .welcome-header {
+  background-image: url('/assets/images/welcome_page/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: 200% auto;
+  background-position-x: 50%;
+  background-position-y: 50%;
+  margin: -15px -15px 0px -15px;
+  text-align: center;
+  height: 200px;
+  width: calc(100% + 30px);
+  color: #1ad2aa;
+}
+.welcome-page .welcome-header > div .logo {
+  display: inline-block;
+  padding-top: 10px;
+  font-size: 100px;
+  color: #1ad2aa;
+}
+.welcome-page .welcome-header > div h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 30px;
+  text-shadow: 2px 2px black;
+  color: white;
+}
 @font-face {
   font-family: myFont;
   src: url('/assets/fonts/Brandon_bld.ttf');
@@ -2783,6 +2844,32 @@ body,
   background-color: #292763;
 }
 .gling-button.selected:hover:enabled {
+  background-color: #292763;
+}
+.gling-button-dark {
+  border: 0;
+  outline: none;
+  background-color: #292763;
+  color: white;
+  margin: 0 5px;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  min-height: 40px;
+}
+.gling-button-dark:hover:enabled {
+  background-color: #00b49b;
+  color: white;
+  text-decoration: none;
+}
+.gling-button-dark:disabled {
+  color: rgba(255, 255, 255, 0.65);
+}
+.gling-button-dark.selected {
+  background-color: #292763;
+}
+.gling-button-dark.selected:hover:enabled {
   background-color: #292763;
 }
 .btn,
@@ -2962,31 +3049,6 @@ button > span.fa {
 .navbar-absolute-top.navbar-app .btn {
   background-color: #292763;
   color: #ffffff !important;
-}
-.welcome-header {
-  background-image: url('/assets/images/welcome_page/bg.jpg');
-  background-repeat: no-repeat;
-  background-size: 200% auto;
-  background-position-x: 50%;
-  background-position-y: 50%;
-  margin: -15px -15px 0px -15px;
-  text-align: center;
-  height: 200px;
-  width: calc(100% + 30px);
-  color: #1ad2aa;
-}
-.welcome-header > div .logo {
-  display: inline-block;
-  padding-top: 10px;
-  font-size: 100px;
-  color: #1ad2aa;
-}
-.welcome-header > div p {
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: 30px;
-  text-shadow: 2px 2px black;
-  color: white;
 }
 .sidebar-left {
   background-color: #1ad2aa;

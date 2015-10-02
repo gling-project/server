@@ -11,7 +11,7 @@
 
 
     <div class="facebook-login-btn-container">
-        <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+        <button ng-click="fb_login();" class="facebook-login-btn btn gling-button-dark">
             <img src="/assets/images/facebook/login_icon.png"/>
             <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
         </button>
@@ -37,7 +37,7 @@
 <div class="modal-footer">
     <button
             id="customer-registration-modal-btn-save"
-            ng-disabled="loading" type="button" class="btn btn-primary" ng-click="save()">
+            ng-disabled="loading" type="button" class="btn gling-button-dark" ng-click="save()">
         {{'--.generic.save' | translateText}}
     </button>
     <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
