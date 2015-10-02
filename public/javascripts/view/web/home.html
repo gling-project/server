@@ -63,7 +63,8 @@
                     ng-show="interest.iconName!=null"
                     ng-click="searchByInterest(interest)"
                     ng-class="{'selected':interest.selected === true}">
-                <p>{{interest.translationName}}</p>
+                <p>{{interest.translationName}}
+                    {{'gling-icon-' + interest.name}}</p>
             </button>
 
             <!--<button ng-click="right()"-->

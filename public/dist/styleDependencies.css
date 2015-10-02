@@ -893,11 +893,11 @@ ul.messenger .messenger-spinner {
 
 @font-face {
 	font-family: 'glingicon';
-	src:url('fonts/glingicon.eot?9l655s');
-	src:url('fonts/glingicon.eot?9l655s#iefix') format('embedded-opentype'),
-		url('fonts/glingicon.ttf?9l655s') format('truetype'),
-		url('fonts/glingicon.woff?9l655s') format('woff'),
-		url('fonts/glingicon.svg?9l655s#glingicon') format('svg');
+	src:url('/assets/fonts/glingicon.eot?9l655s');
+	src:url('/assets/fonts/glingicon.eot?9l655s#iefix') format('embedded-opentype'),
+		url('/assets/fonts/glingicon.ttf?9l655s') format('truetype'),
+		url('/assets/fonts/glingicon.woff?9l655s') format('woff'),
+		url('/assets/fonts/glingicon.svg?9l655s#glingicon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -1066,7 +1066,7 @@ ul.messenger .messenger-spinner {
 .gling-icon-culture:before {
 	content: "\e623";
 }
-.gling-icon-goingout:before {
+.gling-icon-going_out:before {
 	content: "\e624";
 }
 .gling-icon-drink:before {
