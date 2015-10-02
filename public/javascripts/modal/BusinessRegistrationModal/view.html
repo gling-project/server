@@ -26,7 +26,12 @@
         </div>
 
 
-        <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+        <div class="facebook-login-btn-container">
+            <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
+                <img src="/assets/images/facebook/login_icon.png"/>
+                <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
+            </button>
+        </div>
 
         <table class="horizontal-split">
             <tr>
@@ -40,12 +45,8 @@
             </tr>
         </table>
 
-        <div class="facebook-login-btn-container">
-            <button ng-click="fb_login();" class="facebook-login-btn btn btn-primary">
-                <img src="/assets/images/facebook/login_icon.png"/>
-                <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
-            </button>
-        </div>
+        <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+
 
     </div>
     <div ng-show="badgeSelected==2">

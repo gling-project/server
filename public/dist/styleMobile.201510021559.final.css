@@ -2371,6 +2371,7 @@ body,
   padding-bottom: 5px;
 }
 .publication-list-mobile .publication-illustration-plus-icon {
+  border-radius: 10px;
   position: absolute;
   bottom: 4px;
   text-align: center;
@@ -2378,7 +2379,7 @@ body,
   height: 60px;
   width: 60px;
   vertical-align: top;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .publication-list-mobile .publication-illustration-plus-icon span {
   color: #aaa;
@@ -2942,6 +2943,10 @@ button > span.fa {
 .modal-alert-content.modal-alert-content-info .modal-content {
   background-color: #0000ff;
   color: #ffffff;
+}
+.loading {
+  text-align: center;
+  padding-top: 50px;
 }
 .loading-modal .modal-dialog {
   width: 200px;

@@ -30,4 +30,6 @@ public interface BusinessService extends CrudService<Business>{
     Set<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance);
 
     List<Business> findByFollowed(Account currentUser);
+
+    Business findByAccount(Account account);
 }

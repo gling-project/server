@@ -112,6 +112,11 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                     //
                     scope.facebookSuccess = function (data) {
                         accountService.setMyself(data);
+
+                        if (data.type == 'BUSINESS') {
+                            $location.path('/business/'+accountService.getMyself().businessId);
+                        }
+
                         scope.getInfo().facebookSuccess(data);
                         scope.setLoading(false);
                     };

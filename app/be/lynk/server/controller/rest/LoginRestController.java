@@ -107,13 +107,15 @@ public class LoginRestController extends AbstractRestController {
         }
         account = facebookCredential.getAccount();
 
-        return ok(finalizeConnection(account));
+        MyselfDTO myselfDTO = finalizeConnection(account);
+
+        return ok(myselfDTO);
     }
 
     @Transactional
     public Result loginFacebookSimple(String facebookToken) {
 
-       //authentication
+        //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookToken);
 
         //control
@@ -199,7 +201,9 @@ public class LoginRestController extends AbstractRestController {
             accountService.saveOrUpdate(account);
         }
 
-        return ok(finalizeConnection(account));
+        MyselfDTO myselfDTO = finalizeConnection(account);
+
+        return ok(myselfDTO);
     }
 
     @Transactional
@@ -344,6 +348,10 @@ public class LoginRestController extends AbstractRestController {
         myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
         myselfDTO.setLoginAccount(account.getLoginCredential() != null);
         myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
+        if (account.getType().equals(AccountTypeEnum.BUSINESS)) {
+            myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
+        }
+
 
         //storage
         securityController.storeAccount(ctx(), account);

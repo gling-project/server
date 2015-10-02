@@ -13,6 +13,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+
                     //scrolling
                     $('.scrollable-content-body').on('scroll', function () {
                         var scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();

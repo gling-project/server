@@ -13,31 +13,31 @@
                 <div class="scrollable-content-inner">
 
                     <!-- interest -->
-                    <!--<div style="overflow: auto">-->
-                        <!--<div class="home-interest-box"-->
-                             <!--ng-style="{width:(customerInterests.length * 5 + 20) + 'px'}">-->
-
-                            <!--<button class="gling-button home-interest {{'gling-icon-' + interest.name}}"-->
-                                    <!--ng-repeat="interest in customerInterests"-->
-                                    <!--ng-show="interest.iconName!=null"-->
-                                    <!--ng-click="searchByInterest(interest)"-->
-                                    <!--ng-class="{'selected':interest.selected === true}">-->
-                            <!--</button>-->
-
-                        <!--</div>-->
-                    <!--</div>-->
-
                     <div style="overflow: auto">
-                        <div class="business-page-menu"
-                             ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">
-                            <button class="gling-button {{action.icon}}"
-                                    ng-class="{'selected':interfaceToDisplay === action.name}"
-                                    ng-repeat="action in actions"
-                                    ng-show="action.display()"
-                                    ng-click="action.action()">
+                        <div class="home-interest-box"
+                             ng-style="{width:(customerInterests.length * 55 + 20) + 'px'}">
+
+                            <button class="gling-button home-interest {{'gling-icon-' + interest.name}}"
+                                    ng-repeat="interest in customerInterests"
+                                    ng-show="interest.iconName!=null"
+                                    ng-click="searchByInterest(interest)"
+                                    ng-class="{'selected':interest.selected === true}">
                             </button>
+
                         </div>
                     </div>
+
+                    <!--<div style="overflow: auto">-->
+                        <!--<div class="business-page-menu"-->
+                             <!--ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">-->
+                            <!--<button class="gling-button {{action.icon}}"-->
+                                    <!--ng-class="{'selected':interfaceToDisplay === action.name}"-->
+                                    <!--ng-repeat="action in actions"-->
+                                    <!--ng-show="action.display()"-->
+                                    <!--ng-click="action.action()">-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
 
                     <publication-list-mobile-ctrl ng-info="publicationListCtrl"></publication-list-mobile-ctrl>

@@ -187,4 +187,15 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
                   .setParameter("status", BusinessStatusEnum.PUBLISHED)
                   .getResultList();
     }
+
+    @Override
+    public Business findByAccount(Account account) {
+
+        String request = "Select b from Business b where b.account= :account";
+
+        return JPA.em().createQuery(request, Business.class)
+                  .setParameter("account", account)
+                  .getSingleResult();
+
+    }
 }

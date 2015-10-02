@@ -1,4 +1,4 @@
-myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB,constantService) {
+myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB,constantService,$location) {
 
 
     this.facebookAppId;
@@ -113,6 +113,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
                 //the user is now connected by facebook
                 isConnected = true;
 
+
                 loginToServer(response.authResponse, function (data) {
                         //success
                         //store connected user
@@ -120,6 +121,12 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
                         //test lang
                         languageService.changeLanguage(data.lang.code);
+
+                        console.log('facebook conneciton');
+                        if (data.type == 'BUSINESS') {
+                            console.log('redireection !! ');
+                            $location.path('/business/'+accountService.getMyself().businessId);
+                        }
                     },
                     function () {
                         //connection failed
@@ -164,7 +171,6 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
             if (callbackSuccess != null) {
                 callbackSuccess(data);
             }
-            ;
         })
             .error(function (data, status) {
                 if (callbackError != null) {
