@@ -871,7 +871,12 @@ myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationServi
                     scope.facebookAuthorization = facebookService.facebookAuthorization;
                     scope.basic_url = location.host;
                     if (scope.basic_url.indexOf('http') == -1) {
-                        scope.basic_url = 'http://' + scope.basic_url;
+                        if(scope.basic_url.indexOf('localhost') != -1) {
+                            scope.basic_url = 'http://' + scope.basic_url;
+                        }
+                        else {
+                            scope.basic_url = 'https://' + scope.basic_url;
+                        }
                     }
 
                     if (scope.getInfo().dto == null) {
@@ -949,7 +954,7 @@ myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationServi
                     //
                     scope.facebookSuccess = function (data) {
                         accountService.setMyself(data);
-                        //scope.getInfo().facebookSuccess(data);
+                        scope.getInfo().facebookSuccess(data);
                     };
 
 
@@ -974,6 +979,7 @@ myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationServi
 
                     //try to catch facebook connection
                     //mobile version
+                    console.log('JE SUIS UNE MERDEEEE');
                     if (location.href.indexOf('access_token') != -1) {
                         console.log('facebook con 1');
                         var access_token = scope.getUrlParam('access_token', location.href)
