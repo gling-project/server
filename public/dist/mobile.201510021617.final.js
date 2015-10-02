@@ -867,38 +867,27 @@ myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', '
         $scope.search();
     }
 
+    $scope.setFollowedMode = function (n) {
+        if (n == null) {
+            n = !$scope.followedMode;
+        }
+        if (accountService.getMyself() == null) {
+            modalService.openLoginModal($scope.switchFollowedMode, n,'--.loginModal.help.followMode');
+        }
+        else {
+            $scope.switchFollowedMode(n);
+        }
+    };
 
+    $scope.switchFollowedMode = function (n) {
 
-    //TEMP !!!
-    $scope.actions = [{
-        name:'home',
-        icon: 'gling-icon-home',
-        action: function () {
-            $scope.interfaceToDisplay = 'home'
-        },
-        display: function () {
-            return true;
+        if (n != null) {
+            $scope.followedMode = n;
         }
-    }, {
-        name:'info',
-        icon: 'gling-icon-info',
-        action: function () {
-            $scope.interfaceToDisplay = 'info'
-        },
-        display: function () {
-            return true;
+        else {
+            $scope.followedMode = !$scope.followedMode;
         }
-    }, {
-        name:'gallery',
-        icon: 'gling-icon-images',
-        action: function () {
-            $scope.interfaceToDisplay = 'gallery'
-        },
-        display: function () {
-            return $scope.business.galleryPictures != null && $scope.business.galleryPictures.length > 0
-        }
-    }
-    ];
+    };
 
 
 }]);
