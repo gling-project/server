@@ -124,13 +124,19 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                     //try to catch facebook connection
                     //mobile version
                     if (location.href.indexOf('access_token') != -1) {
+                        console.log('facebook con 1');
                         var access_token = scope.getUrlParam('access_token', location.href)
 
+                        console.log('facebook con 2');
+
                         if (access_token != null) {
+                            console.log('facebook con 3');
                             facebookService.loginToServerSimple(access_token, function (data) {
+                                    console.log('facebook con 4');
                                     scope.facebookSuccess(data);
                                 },
                                 function (data, status) {
+                                    console.log('facebook con ERROR');
                                     $flash.error(data.message);
                                 });
                         }

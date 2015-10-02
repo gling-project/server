@@ -38,7 +38,7 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
             if (data2.status == 'ALREADY_REGISTRERED') {
                 $flash.success('--.customer.registrationModal.alredyRegistred.success');
                 accountService.setMyself(data2.myself);
-                $location.path('/');
+                $location.url('/');
             }
             else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
                 $scope.fusion(data2.accountFusion);
@@ -81,20 +81,11 @@ myApp.controller('CustomerRegistrationCtrl', function ($rootScope, $scope, $flas
     //try to catch facebook connection
     //mobile version
     if (location.href.indexOf('access_token') != -1) {
-        console.log('je suis une merde ');
         var access_token = $scope.getUrlParam('access_token', location.href);
         //window.location.hash = '#';
 
         if (access_token != null) {
-            //$location.url('/customer_registration');
-            //window.location.href.substr(0, window.location.href.indexOf('#'));
             $scope.facebookSuccess(access_token);
-            //history.pushState("", document.title, window.location.pathname+ window.location.search);
-
-            //document.getElementById("content").innerHTML = response.html;
-            //document.title = response.pageTitle;
-            //window.history.pushState({"html":response.html,"pageTitle":response.pageTitle},"", urlPath);
-
         }
     }
 
