@@ -31,14 +31,14 @@
 
             <!-- distance -->
             <div class="distance">
-                <i class="glyphicon gling-icon-calendar"></i> {{publication.distance / 1000 | number:2}} km
+                <i class="fa fa-globe"></i> {{publication.distance / 1000 | number:2}} km
             </div>
         </div>
 
         <div class="publication-title">
             <!-- interest -->
             <i ng-show="getInterestClass(publication)!=null"
-               class="publication-interest {{getInterestClass(publication)}} publication-color-background">
+               class="publication-interest gling-icon {{getInterestClass(publication)}} publication-color-background">
             </i>
 
             {{publication.title}}
@@ -58,7 +58,7 @@
                 <div ng-show="publication.type === 'PROMOTION'"
                      ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"
                      class="publication-data-header">
-                    <div class="glyphicon gling-icon-calendar">
+                    <div class="glyphicon gling-icon gling-icon gling-icon-calendar">
                     </div>
                     <div>{{'--.publication.promotionTo' | translateText}}</div>
                     <div>

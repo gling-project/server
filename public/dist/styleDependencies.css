@@ -902,14 +902,22 @@ ul.messenger .messenger-spinner {
 	font-style: normal;
 }
 
-[class^="gling-icon-"], [class*=" gling-icon-"] {
-	font-family: 'glingicon';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+.gling-icon{ /*[class^="gling-icon-"], [class*=" gling-icon-"] {*/
+	/*font-family: 'glingicon';*/
+	/*speak: none;*/
+	/*font-style: normal;*/
+	/*font-weight: normal;*/
+	/*font-variant: normal;*/
+	/*text-transform: none;*/
+	/*line-height: 1;*/
+
+    display: inline-block;
+    font: normal normal normal 14px/1 glingicon;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
 
 	/* Better Font Rendering =========== */
 	/*-webkit-font-smoothing: antialiased;*/

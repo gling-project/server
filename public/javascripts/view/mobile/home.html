@@ -17,7 +17,7 @@
                         <div class="home-interest-box"
                              ng-style="{width:(customerInterests.length * 55 + 20) + 'px'}">
 
-                            <button class="gling-button home-interest {{'gling-icon-' + interest.name}}"
+                            <button class="gling-button home-interest {{'gling-icon gling-icon-' + interest.name}}"
                                     ng-repeat="interest in customerInterests"
                                     ng-show="interest.iconName!=null"
                                     ng-click="searchByInterest(interest)"
@@ -57,7 +57,7 @@
             <!-- switch -->
             <div class="home-interest-switch home-interest-box-background">
                 <div>
-                    <button class="gling-button gling-icon-location button-with-label home-interest"
+                    <button class="gling-button gling-icon gling-icon-location button-with-label home-interest"
                             ng-class="{'selected':followedMode !== true}"
                             ng-click="setFollowedMode(false)">
                         <p>{{'--.home.localisation.help' | translateText}}</p>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div>
-                    <button class="gling-button gling-icon-bell button-with-label home-interest"
+                    <button class="gling-button gling-icon gling-icon-bell button-with-label home-interest"
                             ng-class="{'selected':followedMode === true}"
                             ng-click="setFollowedMode(true)">
                         <p>{{'--.home.followning.help' | translateText}}</p>

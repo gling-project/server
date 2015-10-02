@@ -29,7 +29,7 @@
                      class="publication-bordered-bottom-hover publication-bordered-bottom">
                     <span class="publication-main-title">
                         <i ng-show="getInfo().publication.following === true"
-                           class="gling-icon-bell">
+                           class="gling-icon gling-icon gling-icon-bell">
                         </i>
                         {{getInfo().publication.businessName}}
                     </span>
@@ -53,7 +53,7 @@
 
                 <!-- distance -->
                 <div class="publication-bubble publication-bordered">
-                    <i class="glyphicon gling-icon-earth"></i> {{getInfo().publication.distance / 1000 | number:2}} km
+                    <i class="glyphicon gling-icon gling-icon gling-icon-earth"></i> {{getInfo().publication.distance / 1000 | number:2}} km
                 </div>
 
                 <!-- price -->
@@ -74,7 +74,7 @@
             <div ng-show="getInfo().publication.type === 'PROMOTION'"
                  ng-class="{'publication-bordered-bottom' : getInfo().publication.description !=null && getInfo().publication.description.length > 0}"
                  class="publication-data-header">
-                <div class="glyphicon gling-icon-calendar"></div>
+                <div class="glyphicon gling-icon gling-icon gling-icon-calendar"></div>
 
                 <span>
                     <div>{{'--.publication.promotionTo' | translateText}}</div>
