@@ -893,11 +893,11 @@ ul.messenger .messenger-spinner {
 
 @font-face {
 	font-family: 'glingicon';
-	src:url('/assets/fonts/glingicon.eot?w3mdqi');
-	src:url('/assets/fonts/glingicon.eot?#iefixw3mdqi') format('embedded-opentype'),
-		url('/assets/fonts/glingicon.ttf?w3mdqi') format('truetype'),
-		url('/assets/fonts/glingicon.woff?w3mdqi') format('woff'),
-		url('/assets/fonts/glingicon.svg?w3mdqi#glingicon') format('svg');
+	src:url('fonts/glingicon.eot?9l655s');
+	src:url('fonts/glingicon.eot?9l655s#iefix') format('embedded-opentype'),
+		url('fonts/glingicon.ttf?9l655s') format('truetype'),
+		url('fonts/glingicon.woff?9l655s') format('woff'),
+		url('fonts/glingicon.svg?9l655s#glingicon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -954,6 +954,12 @@ ul.messenger .messenger-spinner {
 }
 .gling-icon-logoapp:before {
 	content: "\e629";
+}
+.gling-icon-money:before {
+	content: "\e631";
+}
+.gling-icon-sleep:before {
+	content: "\e632";
 }
 .gling-icon-arrow_right:before {
 	content: "\e600";
@@ -1033,9 +1039,6 @@ ul.messenger .messenger-spinner {
 .gling-icon-baby:before {
 	content: "\e619";
 }
-.gling-icon-sleep:before {
-	content: "\e61a";
-}
 .gling-icon-travel:before {
 	content: "\e61b";
 }
@@ -1063,7 +1066,7 @@ ul.messenger .messenger-spinner {
 .gling-icon-culture:before {
 	content: "\e623";
 }
-.gling-icon-going_out:before {
+.gling-icon-goingout:before {
 	content: "\e624";
 }
 .gling-icon-drink:before {
@@ -1075,15 +1078,13 @@ ul.messenger .messenger-spinner {
 .gling-icon-images:before {
 	content: "\e90e";
 }
-.gling-icon-money:before {
-	content: "\e93c";
-}
 .gling-icon-location:before {
 	content: "\e947";
 }
 .gling-icon-info:before {
 	content: "\ea0c";
 }
+
 
 .form .form_loading {
   height: 75px;
