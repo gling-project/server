@@ -1,4 +1,4 @@
-myApp.directive("mobileTitleCtrl", function ($rootScope,$location) {
+myApp.directive("mobileTitleCtrl", function ($rootScope,$location,$timeout,modalService) {
     return {
         restrict: "E",
         scope: {
@@ -21,7 +21,12 @@ myApp.directive("mobileTitleCtrl", function ($rootScope,$location) {
                     };
 
                     scope.back = function () {
-                        $location.path('/');//window.history.back();
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        modalService.openLoadingModal();
+                        $timeout(function(){
+                            $location.path('/');//window.history.back();
+                        },1);
+
                     };
 
 

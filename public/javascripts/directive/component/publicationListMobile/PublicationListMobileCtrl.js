@@ -25,9 +25,8 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
                     scope.navigateTo = function (target) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         modalService.openLoadingModal();
-                        console.log('je ouvert la geneter loadins');
                         $timeout(function(){
-                        $location.path(target);
+                            $location.path(target);
                         },1);
                     };
 

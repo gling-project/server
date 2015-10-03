@@ -50,6 +50,7 @@
             <script src="@routes.Assets.at("javascripts/modal/OneFieldModal/OneFieldModal.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/modal/mobile/AlertModal/AlertMessage.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/modal/mobile/LoadingModal/LoadingModal.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.at("javascripts/modal/mobile/InterestSelectionModal/InterestSelectionModal.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/modal/AccountFusionFacebookModal/AccountFusionFacebookModal.js")" type="text/javascript"></script>
 
 
@@ -124,7 +125,7 @@
 
                     <h1>
                         {{'--.site.name' | translateText}}
-                        <span class=" gling-icon-logogling"></span>
+                        <span class=" gling-icon gling-icon-logogling"></span>
                     </h1>
 
                     <div class="scrollable-content">
@@ -135,24 +136,24 @@
                                 ng-model="currentPosition"
                                 ng-options="position.key as position.translation | translateText for position in positions">
                                 </select>
-                                <span class="gling-icon-location"></span>
+                                <span class="gling-icon gling-icon-location"></span>
                             </div>
 
                             <div class="list-group-item generic-pointer"
                             ng-click="navigateTo('/home')">
-                                <span class="gling-icon-home"></span>
+                                <span class="gling-icon gling-icon-home"></span>
                                 {{'--.generic.home' | translateText}}
                             </div>
 
                             <div class="list-group-item generic-pointer"
                             ng-click="navigateTo('/profile')">
-                                <span class="gling-icon-profil"></span>
+                                <span class="gling-icon gling-icon-profil"></span>
                                 {{'--.welcome.myProfile' | translateText}}
                             </div>
 
                             <div class="list-group-item generic-pointer"
                             ng-click="navigateTo('/my-businesses')">
-                                <span class="gling-icon-shop"></span>
+                                <span class="gling-icon gling-icon-shop"></span>
                                 {{'--.welcome.myBusinesses' | translateText}}
                             </div>
 

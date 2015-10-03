@@ -318,6 +318,23 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
+    this.interestSelection = function (listInterest, callback) {
+        var resolve = {
+            listInterest:function(){
+              return listInterest;
+            },
+            callback: function () {
+                return callback;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/mobile/InterestSelectionModal/view.html",
+            controller: "InterestSelectionModalCtrl",
+            size: "l",
+            resolve: resolve
+        });
+    };
+
     this.openSla = function (title, url) {
         var resolve = {
             title: function () {

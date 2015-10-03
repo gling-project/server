@@ -8,7 +8,6 @@ myApp.controller('MenuCtrl', function ($rootScope, $scope, facebookService, acco
 
     //this is the toggle function
     $scope.$on('toggleMenu', function () {
-        console.log('je suis toggleMenu')
         $scope.showmenu = ($scope.showmenu) ? false : true;
     });
 
@@ -17,8 +16,17 @@ myApp.controller('MenuCtrl', function ($rootScope, $scope, facebookService, acco
     };
 
     $scope.navigateTo = function (target) {
+
         $scope.showmenu=false;
-        $location.path(target);
+
+        if($location.path().indexOf(target)==-1) {
+            $rootScope.$broadcast('PROGRESS_BAR_START');
+            modalService.openLoadingModal();
+            $rootScope.$broadcast('SEARCH_CLEAN');
+            $timeout(function () {
+                $location.path(target);
+            }, 1);
+        }
     };
 
 

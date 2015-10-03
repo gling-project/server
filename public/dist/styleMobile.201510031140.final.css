@@ -1944,6 +1944,12 @@ ul.messenger .messenger-spinner {
   color: white;
   margin: 0 5px;
 }
+.home-interest.selected {
+  background-color: #292763;
+}
+.home-interest.selected:hover:enabled {
+  background-color: #292763;
+}
 .follow-widget {
   text-align: center;
 }
@@ -2369,7 +2375,6 @@ body,
   padding-bottom: 5px;
 }
 .publication-list-mobile .publication-data-body {
-  border-bottom: 1px solid #292763;
   border-top: 1px solid #292763;
   padding: 3px 0px;
   margin: 5px 0px;
@@ -2447,7 +2452,6 @@ body,
 }
 .publication-list-mobile .publication-publication .publication-data .publication-data-header {
   border-top: 1px solid #292763;
-  border-bottom: 1px solid #292763;
   padding: 5px;
   margin: 5px;
   font-size: 14px;

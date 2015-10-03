@@ -4,6 +4,22 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     modalService.closeLoadingModal();
 
     $scope.displayMask = true;
+    $scope.getSelectedInterest = function(){
+
+        for (var i in $scope.customerInterests) {
+            if($scope.customerInterests[i].selected){
+                return $scope.customerInterests[i];
+            };
+        }
+    };
+
+    $scope.selectInterest = function(){
+      modalService.interestSelection($scope.customerInterests,function(target){
+          console.log('target');
+          console.log(target);
+          $scope.searchByInterest(target);
+      });
+    };
 
 
     customerInterestService.getAll(function (value) {

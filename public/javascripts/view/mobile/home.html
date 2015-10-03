@@ -19,14 +19,22 @@
                              style="margin: 10px 0;">
 
 
-
-                            <i class="home-interest gling-icon {{'gling-icon-' + interest.name}}"
-                                    ng-repeat="interest in customerInterests"
-                                    ng-click="searchByInterest(interest)"
-                                    ng-class="{'selected':interest.selected === true}">
+                            <button ng-click="selectInterest()">Sélectionner un intérêt</button>
+                            <i ng-show="getSelectedInterest()!=null"
+                                    class="home-interest gling-icon {{'gling-icon-' + getSelectedInterest().name}} selected">
 
                                 <!--<img ng-src="assets/images/icon/withe/{{interest.name}}.png"/>-->
                             </i>
+
+
+
+                            <!--<i class="home-interest gling-icon {{'gling-icon-' + interest.name}}"-->
+                                    <!--ng-repeat="interest in customerInterests"-->
+                                    <!--ng-click="searchByInterest(interest)"-->
+                                    <!--ng-class="{'selected':interest.selected === true}">-->
+
+                                <!--&lt;!&ndash;<img ng-src="assets/images/icon/withe/{{interest.name}}.png"/>&ndash;&gt;-->
+                            <!--</i>-->
                         </div>
                     </div>
 

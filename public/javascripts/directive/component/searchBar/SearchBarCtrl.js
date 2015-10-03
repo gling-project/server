@@ -1,4 +1,4 @@
-myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocationService, directiveService,  searchService,searchBarService,$timeout,$location) {
+myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocationService, directiveService,  searchService,searchBarService,$timeout,$location,modalService) {
 
     return {
         restrict: "E",
@@ -63,8 +63,12 @@ myApp.directive('searchBarCtrl', function ($rootScope, businessService, geolocat
                     };
 
                     scope.navigateTo = function (target) {
-                        $location.path(target);
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        modalService.openLoadingModal();
                         $rootScope.$broadcast('SEARCH_CLEAN');
+                        $timeout(function(){
+                            $location.path(target);
+                        },1);
                     };
                     
                 }

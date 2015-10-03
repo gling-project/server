@@ -1,4 +1,4 @@
-myApp.directive("headerSearchCtrl", function ($rootScope,$location) {
+myApp.directive("headerSearchCtrl", function ($rootScope,$location,$timeout,modalService) {
     return {
         restrict: "E",
         scope: {
@@ -12,7 +12,6 @@ myApp.directive("headerSearchCtrl", function ($rootScope,$location) {
                 post: function (scope) {
 
                     scope.showMenu = function(){
-                        console.log('shox manue !! ');
                         $rootScope.$broadcast('toggleMenu');
                     };
 
@@ -20,8 +19,13 @@ myApp.directive("headerSearchCtrl", function ($rootScope,$location) {
                         return window.history.length>0;
                     };
 
+
                     scope.back = function () {
-                        $location.path('/');//window.history.back();
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        modalService.openLoadingModal();
+                        $timeout(function(){
+                            $location.path('/');
+                        },1);
                     };
 
 

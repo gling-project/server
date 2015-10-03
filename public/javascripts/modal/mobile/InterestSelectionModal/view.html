@@ -1,0 +1,28 @@
+<div class="modal-body">
+
+    <div style="overflow: auto">
+        <div style="margin: 10px 0;">
+
+
+            <i class="home-interest gling-icon {{'gling-icon-' + interest.name}}"
+               ng-repeat="interest in customerInterests"
+               ng-click="selectInterest(interest)"
+               ng-class="{'selected':interest.selected === true}">
+            </i>
+            <br/>
+
+            <button
+                    type="button"
+                    class="btn btn-default"
+                    ng-click="selectInterest(null)">
+                {{'--.interest.selection.window.nothing' | translateText}}
+            </button>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' |
+        translateText}}
+    </button>
+</div>

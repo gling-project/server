@@ -503,6 +503,20 @@ myApp.controller('LoadingModalCtrl', ['$scope', '$flash', '$modalInstance', '$co
 
 
 }]);
+myApp.controller('InterestSelectionModalCtrl', ['$scope', '$flash', '$modalInstance', 'callback', 'customerInterestService', 'listInterest', function ($scope, $flash, $modalInstance, callback, customerInterestService, listInterest) {
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.customerInterests = listInterest;
+
+    $scope.selectInterest = function (target) {
+        callback(target);
+        $scope.close();
+    }
+
+}]);
 myApp.directive('galleryMobileCtrl', ['$rootScope', function ($rootScope) {
 
     return {
@@ -621,6 +635,22 @@ myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', '
     modalService.closeLoadingModal();
 
     $scope.displayMask = true;
+    $scope.getSelectedInterest = function(){
+
+        for (var i in $scope.customerInterests) {
+            if($scope.customerInterests[i].selected){
+                return $scope.customerInterests[i];
+            };
+        }
+    };
+
+    $scope.selectInterest = function(){
+      modalService.interestSelection($scope.customerInterests,function(target){
+          console.log('target');
+          console.log(target);
+          $scope.searchByInterest(target);
+      });
+    };
 
 
     customerInterestService.getAll(function (value) {
@@ -1112,7 +1142,6 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
 
     //this is the toggle function
     $scope.$on('toggleMenu', function () {
-        console.log('je suis toggleMenu')
         $scope.showmenu = ($scope.showmenu) ? false : true;
     });
 
@@ -1121,8 +1150,17 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
     };
 
     $scope.navigateTo = function (target) {
+
         $scope.showmenu=false;
-        $location.path(target);
+
+        if($location.path().indexOf(target)==-1) {
+            $rootScope.$broadcast('PROGRESS_BAR_START');
+            modalService.openLoadingModal();
+            $rootScope.$broadcast('SEARCH_CLEAN');
+            $timeout(function () {
+                $location.path(target);
+            }, 1);
+        }
     };
 
 
@@ -1680,9 +1718,8 @@ myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', '
                     scope.navigateTo = function (target) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         modalService.openLoadingModal();
-                        console.log('je ouvert la geneter loadins');
                         $timeout(function(){
-                        $location.path(target);
+                            $location.path(target);
                         },1);
                     };
 
@@ -1783,7 +1820,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'business
     }
 }])
 ;
-myApp.directive("headerSearchCtrl", ['$rootScope', '$location', function ($rootScope,$location) {
+myApp.directive("headerSearchCtrl", ['$rootScope', '$location', '$timeout', 'modalService', function ($rootScope,$location,$timeout,modalService) {
     return {
         restrict: "E",
         scope: {
@@ -1797,7 +1834,6 @@ myApp.directive("headerSearchCtrl", ['$rootScope', '$location', function ($rootS
                 post: function (scope) {
 
                     scope.showMenu = function(){
-                        console.log('shox manue !! ');
                         $rootScope.$broadcast('toggleMenu');
                     };
 
@@ -1805,8 +1841,13 @@ myApp.directive("headerSearchCtrl", ['$rootScope', '$location', function ($rootS
                         return window.history.length>0;
                     };
 
+
                     scope.back = function () {
-                        $location.path('/');//window.history.back();
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        modalService.openLoadingModal();
+                        $timeout(function(){
+                            $location.path('/');
+                        },1);
                     };
 
 
@@ -1818,7 +1859,7 @@ myApp.directive("headerSearchCtrl", ['$rootScope', '$location', function ($rootS
     }
 }]);
 
-myApp.directive("mobileTitleCtrl", ['$rootScope', '$location', function ($rootScope,$location) {
+myApp.directive("mobileTitleCtrl", ['$rootScope', '$location', '$timeout', 'modalService', function ($rootScope,$location,$timeout,modalService) {
     return {
         restrict: "E",
         scope: {
@@ -1841,7 +1882,12 @@ myApp.directive("mobileTitleCtrl", ['$rootScope', '$location', function ($rootSc
                     };
 
                     scope.back = function () {
-                        $location.path('/');//window.history.back();
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        modalService.openLoadingModal();
+                        $timeout(function(){
+                            $location.path('/');//window.history.back();
+                        },1);
+
                     };
 
 
