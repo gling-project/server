@@ -3,6 +3,7 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
+    console.log('je germe la geneter loadins');
     modalService.closeLoadingModal();
 
     $scope.loading = true;

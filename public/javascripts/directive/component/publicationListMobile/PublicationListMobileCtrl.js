@@ -1,4 +1,4 @@
-myApp.directive('publicationListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+myApp.directive('publicationListMobileCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location,modalService,$timeout) {
 
     return {
         restrict: "E",
@@ -23,7 +23,12 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
                     };
 
                     scope.navigateTo = function (target) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        modalService.openLoadingModal();
+                        console.log('je ouvert la geneter loadins');
+                        $timeout(function(){
                         $location.path(target);
+                        },1);
                     };
 
                     scope.openGallery = function (image, publication) {

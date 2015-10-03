@@ -14,22 +14,28 @@
 
                     <!-- interest -->
 
+                    <div style="overflow: auto">
+                        <div class="home-interest-box"
+                             ng-style="{width:(customerInterests.length * 46 + 4) + 'px'}">
+
                             <button class="gling-button home-interest gling-icon {{'gling-icon-' + interest.name}}"
                                     ng-repeat="interest in customerInterests"
                                     ng-click="searchByInterest(interest)"
                                     ng-class="{'selected':interest.selected === true}">
                             </button>
+                        </div>
+                    </div>
 
                     <!--<div style="overflow: auto">-->
-                        <!--<div class="business-page-menu"-->
-                             <!--ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">-->
-                            <!--<button class="gling-button {{action.icon}}"-->
-                                    <!--ng-class="{'selected':interfaceToDisplay === action.name}"-->
-                                    <!--ng-repeat="action in actions"-->
-                                    <!--ng-show="action.display()"-->
-                                    <!--ng-click="action.action()">-->
-                            <!--</button>-->
-                        <!--</div>-->
+                    <!--<div class="business-page-menu"-->
+                    <!--ng-style="{width:(customerInterests.length * 34 + 4) + 'px'}">-->
+                    <!--<button class="gling-button {{action.icon}}"-->
+                    <!--ng-class="{'selected':interfaceToDisplay === action.name}"-->
+                    <!--ng-repeat="action in actions"-->
+                    <!--ng-show="action.display()"-->
+                    <!--ng-click="action.action()">-->
+                    <!--</button>-->
+                    <!--</div>-->
                     <!--</div>-->
 
 

@@ -47,6 +47,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                     };
 
                     scope.search = function () {
+                        scope.loading=true;
                         searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
                     };
 
@@ -70,6 +71,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                                 scope.$apply();
                             }
                         }, 1);
+                        scope.loading=false;
                     };
                 }
             }
