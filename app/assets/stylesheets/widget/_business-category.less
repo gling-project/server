@@ -18,25 +18,25 @@
                 height: 40px;
                 display: inline-block;
                 margin: 3%;
-                background-color: #00b3ee;
+                background-color: #1a0def;
                 position: relative;
-                box-shadow: #999999;
-                color: #ffffff;
+                box-shadow: @color-grey-dark;
+                color: @color-white;
                 vertical-align: middle;
                 text-align: -webkit-center;
                 vertical-align: middle;
                 line-height: 40px;
                 &:hover:enabled{
-                    background-color: #00a1d8;
+                    background-color: #1a0def;
                 }
             }
 
             .category-selected,
             .subcategory-selected,
             .subsubcategory-selected,{
-                background-color: #1969ee;
+                background-color: @color-blue-dark;
                 &:hover:enabled{
-                    background-color: #1969ee !important;
+                    background-color: @color-blue-dark !important;
                 }
             }
             .category-selected:after,
@@ -45,7 +45,7 @@
                 height: 0px;
                 border-top: 20px inset transparent;
                 border-bottom: 20px inset transparent;
-                border-left: 20px solid #1969ee;
+                border-left: 20px solid @color-blue-dark;
                 position: absolute;
                 content: "";
                 top: 0;

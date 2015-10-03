@@ -1,36 +1,11 @@
-//.search-container {
-//    width: 100%;
-//    width: ~'calc(100% - 70px)';
-//    display: inline-block;
-//    .search-advanced {
-//        display: block;
-//        color: #d1d1d1;
-//        cursor: pointer;
-//        text-decoration: underline;
-//        background: none;
-//        border: none;
-//        &:hover {
-//            color: #ffffff;
-//        }
-//    }
-//    .search-button {
-//        line-height: 20px;
-//        color: white;
-//        background-color: #555;
-//        border: 1px solid #444;
-//        border-radius: 10px;
-//        padding: 5px;
-//    }
-//}
-
 .search-advanced-block {
     height: 100px;
-    color: #d1d1d1;
+    color: @color-grey;
     position: fixed;
     top: 0;
 
     .search-advanced-block-desc {
-        color: #999;
+        color: @color-grey-dark;
         text-align: left;
         font-size: 14px;
     }
@@ -44,14 +19,14 @@
 .search-result-box {
     display: block;
     position: fixed;
-    background-color: white;
-    border: 1px solid #999;
+    background-color: @color-white;
+    border: 1px solid @color-grey-dark;
     z-index: 10000;
     left: 0;
     right: 0;
     margin-top: 3px;
     font-size: 14px;
-    color: black;
+    color: @color-black;
     text-align: left;
 
     table {
@@ -62,22 +37,22 @@
     }
 
     .search-result-sub-title {
-        color: #999;
+        color: @color-grey-dark;
         padding-left: 20px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid @color-grey;
         margin-top: 15px;
         padding-bottom: 5px;
     }
 
     .search-result-nothing {
-        color: #999;
+        color: @color-grey-dark;
         padding-left: 4px;
         margin-top: 20px;
     }
 
     .search-result-content {
         line-height: 34px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid @color-grey;
         vertical-align: middle;
         padding-left: 4px;
         padding-right: 4px;
@@ -86,8 +61,8 @@
         }
 
         &.search-result-selected {
-            background-color: rgba(0, 63, 195, 0.57);
-            color: #ffffff;
+            background-color: @color-blue-light;
+            color: @color-white;
             cursor: pointer;
         }
     }

@@ -61,7 +61,7 @@
         background: url('/assets/images/publication_badge.png') no-repeat;
         top: 20px;
         left: -75px;
-        color: white;
+        color: @color-white;
         line-height: 53px;
         vertical-align: middle;
         font-size: 20px;
@@ -73,7 +73,7 @@
     width: 600px;
     position: relative;
 //    border-radius: 10px;
-    background-color: white;
+    background-color: @color-white;
     margin: 15px auto;
     -webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.4);
     -moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.4);
@@ -142,14 +142,14 @@
         }
 
         .publication-business-illustration {
-            border: 1px solid #ccc;
+            border: 1px solid @color-grey;
             border-radius: 10px;
             width: 140px;
             height: 140px;
             overflow: hidden;
             margin: 25px 20px 20px 25px;
             &:hover{
-                border: 1px solid #888;
+                border: 1px solid @color-grey-dark;
             }
 
             img {
@@ -193,9 +193,9 @@
         .publication-gallery{
             position: relative;
             border-radius: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid @color-grey;
             &:hover{
-                border: 1px solid #888;
+                border: 1px solid @color-grey-dark;
             }
         }
 
@@ -272,7 +272,7 @@
                 vertical-align: top;
                 background-color: rgba(0,0,0, 0.5);
                 span {
-                    color: #aaa;
+                    color: @color-grey-dark;
                     font-size: 30px;
                     line-height: 60px;
                     font-weight: bold;
@@ -303,7 +303,7 @@
 
         &.publication-box-price {
             background-color: @publication-text-color !important;
-            color: white !important;
+            color: @color-white !important;
             span:first-child {
                 font-size: 16px;
                 font-weight: bold;

@@ -14,13 +14,13 @@
 
     .field-image-multiple-progress-bar {
         text-align: center;
-        border: 1px solid #dbd9d2;
+        border: 1px solid @color-grey;
         width: ~'calc(100% - 70px)';
         height: 20px;
         display: inline-block;
         & > div {
             height: 18px;
-            background-color: #5cb85c;
+            background-color: @color-green-light;
         }
     }
 
@@ -33,14 +33,14 @@
         margin-top: 6px;
         width: 120px;
         height: 120px;
-        border: 1px solid #999999;
+        border: 1px solid @color-grey-dark;
         overflow: hidden;
         vertical-align: top;
         cursor: pointer;
         background-image: url('/assets/images/add.png');
         background-size: 120px 120px;
         &:hover {
-            background-color: #DDDDDD;
+            background-color: @color-grey;
         }
         input {
             height: 100%;
@@ -70,19 +70,19 @@
             position: relative;
             width: 100%;
             height: 120px;
-            border: 1px solid #999999;
+            border: 1px solid @color-grey-dark;
 
             .image-remove {
                 position: absolute;
-                background-color: red;
+                background-color: @color-red;
                 width: 20px;
                 height: 20px;
-                border: 1px solid #999;
+                border: 1px solid @color-grey-dark;
                 border-radius: 10px;
                 top: -8px;
                 right: -8px;
                 z-index: 100;
-                color: wheat;
+                color: @color-white;
                 font-size: 14px;
                 text-align: center;
                 line-height: 20px;
@@ -90,14 +90,10 @@
                 cursor: pointer;
                 &:hover {
                     background-color: #ffffff;
-                    color: red;
+                    color: @color-red;
                 }
             }
 
-            //        &:hover > div {
-            //            display: block;
-            //        }
-            //
             .image-container {
                 overflow: hidden;
                 max-width: 850px;
@@ -107,24 +103,6 @@
                     height: 100%;
                 }
             }
-            //
-            //        & > div {
-            //            display: none;
-            //            position: absolute;
-            //            top: 0px;
-            //            left: 40px;
-            //            background-color: #ffffff;
-            //            border: 1px solid #000000;
-            //            padding: 10px;
-            //            //            & > div:first-child{
-            //            //                background-image: url("assets/directive/field/image_multiple/arrow.png");
-            //            //            }
-            //            //            & > div:last-child{
-            //            //                background-color: #ffffff;
-            //            //                border: 1px solid #000000;
-            //            //                padding: 10px;
-            //            //            }
-            //        }
         }
     }
 

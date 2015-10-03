@@ -35,20 +35,20 @@
         }
 
         &.message-error {
-            color: #d22323;
-            background: lighten(#d22323, 50%);
+            color: @color-red;
+            background: lighten(@color-red, 50%);
 
             &:before {
-                background-color: #d22323;
+                background-color: @color-red;
             }
         }
 
         &.message-success {
-            color: #229913;
-            background: lighten(#229913, 50%);
+            color: @color-green-dark;
+            background: lighten(@color-green-dark, 50%);
 
             &:before {
-                background-color: #229913;
+                background-color: @color-green-dark;
             }
 
             .messenger-message-inner:before {
@@ -71,11 +71,11 @@
         }
 
         &.message-warning {
-            color: #ff7800;
-            background: lighten(#ff7800, 50%);
+            color: @color-yellow;
+            background: lighten(@color-yellow, 50%);
 
             &:before {
-                background-color: #ff7800;
+                background-color: @color-yellow;
             }
 
             .messenger-message-inner:before {

@@ -10,7 +10,7 @@
         top: 9px;
         font-size: 20px;
         cursor: pointer;
-        color: #000000;
+        color: @color-black;
     }
 
     .search-bar {
@@ -19,7 +19,7 @@
     }
     .search-advanced {
         display: block;
-        color: #d1d1d1;
+        color: @color-grey;
         cursor: pointer;
         text-decoration: underline;
         background: none;
@@ -30,9 +30,9 @@
     }
     .search-button {
         line-height: 20px;
-        color: white;
-        background-color: #555;
-        border: 1px solid #444;
+        color: @color-white;
+        background-color: @color-black;
+        border: 1px solid @color-black;
         border-radius: 10px;
         padding: 5px;
     }
@@ -40,7 +40,7 @@
 
 .search-advanced-block {
     height: 100px;
-    color: #d1d1d1;
+    color: @color-grey;
     position: fixed;
     top: 0;
 
@@ -58,10 +58,10 @@
 .search-result-box {
     display: block;
     position: absolute;
-    background-color: white;
+    background-color: @color-white;
     width: 750px;
     padding: 10px;
-    border: 1px solid #999;
+    border: 1px solid @color-grey-dark;
     z-index:10;
 
     table {
@@ -72,22 +72,22 @@
     }
 
     .search-result-sub-title{
-        color: #999;
+        color: @color-grey-dark;
         padding-left: 20px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid @color-grey;
         margin-top: 15px;
         padding-bottom: 5px;
     }
 
     .search-result-nothing{
-        color: #999;
+        color: @color-grey-dark;
         padding-left: 40px;
         margin-top: 20px;
     }
 
     .search-result-content{
         line-height: 34px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid @color-grey;
         vertical-align: middle;
         padding-left: 40px;
         & > *{
@@ -96,7 +96,7 @@
 
         &.search-result-selected{
             background-color: rgba(0, 63, 195, 0.57);
-            color: #ffffff;
+            color: @color-white;
             cursor: pointer;
         }
     }

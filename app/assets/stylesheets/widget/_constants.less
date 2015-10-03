@@ -4,25 +4,21 @@
 
 //gling official color
 @color-green-dark: #00B49B;
-//@color-green-light: #00f9b7;
-//@color-green-light: #4dfbcd;
-//@color-green-light: #33CC99;
-//@color-green-light: #19d2aa;
-//power point
 @color-green-light: #1AD2AA;
-//gling.be
-//@color-green-light: #28fca7;
-//@color-blue-dark: #2c265c;
-//@color-blue-dark: #3e4192;
-@color-blue-dark: #292763;
-@color-blue-light: #9ECAEE;
-@color-help: #F5F5A6;
-@color-red:red;
+@color-blue-dark: #2c265c;
+@color-blue-light: #aad4f2;
+@color-red:#cc0033;
+@color-yellow:#ff9900;
+@color-grey:#ccc;
+@color-grey-dark:#999;
+@color-white:#f4f4f4;
+@color-help: @color-yellow;
+@color-black:#555555;
 
 // main
 @color-body-bg: #eee;
-@color-body-text: #555555;
-@color-body-content-bg: #ffffff;
+@color-body-text: @color-black;
+@color-body-content-bg: @color-white;
 
 @font-face {
     font-family: myFont;
@@ -64,6 +60,7 @@
     display: block !important;
 }
 
+.button-with-label-top,
 .button-with-label {
     position: relative;
     &:enabled:hover {
@@ -73,9 +70,9 @@
     }
     p {
         position: absolute;
-        background-color: #999;
+        background-color: @color-grey-dark;
         font-family: "myFont";
-        color: #f4f4f4;
+        color: @color-white;
         display: none;
         padding: 4px 6px;
         font-size: 16px;
@@ -90,6 +87,13 @@
     }
 }
 
+.button-with-label-top{
+    p {
+        top: -34px;
+        bottom: inherit;
+    }
+}
+
 
 .facebookCount {
     display: none !important;
@@ -99,7 +103,7 @@
     border: 0;//1px solid white;
     outline: none;
     background-color: @color-green-light;
-    color: white;
+    color: @color-white;
     margin: 0 5px;
     border-radius: 20px;
     padding: 5px 10px;
@@ -108,7 +112,7 @@
     min-height: 40px;
     &:hover:enabled {
         background-color: @color-green-dark;
-        color: white;
+        color: @color-white;
         text-decoration: none;
     }
     &:disabled {
@@ -127,7 +131,7 @@
     border: 0;//1px solid white;
     outline: none;
     background-color: @color-blue-dark;
-    color: white;
+    color: @color-white;
     margin: 0 5px;
     border-radius: 20px;
     padding: 5px 15px;
@@ -136,7 +140,7 @@
     min-height: 40px;
     &:hover:enabled {
         background-color: @color-green-dark;
-        color: white;
+        color: @color-white;
         text-decoration: none;
     }
     &:disabled {
@@ -169,7 +173,7 @@
 }
 
 .gling-button-light {
-    background-color: white;
+    background-color: @color-white;
     color: @color-blue-dark;
     margin-right: 10px;
     border: 2px solid @color-green-light;
@@ -180,20 +184,6 @@
     outline: none;
     cursor: pointer;
     min-height: 40px;
-    //    &:hover:enabled{
-    //        background-color: @color-green-light;
-    //        color: white;
-    //    }
-    //    &:disabled{
-    //        color: rgba(255, 255, 255, 0.65);
-    //    }
-    //
-    //    &.selected {
-    //        background-color: @color-blue-dark;
-    //        &:hover:enabled{
-    //            background-color: @color-blue-dark;
-    //        }
-    //    }
 }
 
 .btn,
@@ -208,7 +198,7 @@
     overflow: hidden;
     .panel-heading {
         background: @color-blue-dark none;
-        color: white;
+        color: @color-white;
         font-size: 16px;
         font-weight: bold;
     }
@@ -228,7 +218,7 @@
     z-index: 1;
     font-size: 16px;
     padding: 10px;
-    border: 1px solid #000000;
+    border: 1px solid @color-black;
     margin: 5px;
     .help-popup-close{
         border: none;
@@ -241,7 +231,7 @@
         float: right;
         &:hover,
         &:focus{
-            background-color: #000000;
+            background-color: @color-black;
             color: @color-help;
         }
     }
@@ -250,7 +240,7 @@
     background-color: @color-help;
     font-size: 16px;
     padding: 10px;
-    border: 1px solid #000000;
+    border: 1px solid @color-black;
     margin: 5px;
 
     .help-popup-close{
@@ -264,7 +254,7 @@
         float: right;
         &:hover,
         &:focus{
-            background-color: #000000;
+            background-color: @color-black;
             color: @color-help;
         }
     }
@@ -290,7 +280,7 @@
         div {
             width: 100%; //~'calc(50% - 30px)';
             height: 1px;
-            background: #bbbbbb;
+            background: @color-grey-dark;
             vertical-align: middle;
         }
     }
@@ -307,10 +297,10 @@
 
 .link {
     text-decoration: underline;
-    color: rgba(45, 77, 238, 0.57);
+    color: #1b0ddd;
     cursor: pointer;
 }
 
 .link:hover {
-    color: #0000ff;
+    color: #1a0dab;
 }
