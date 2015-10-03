@@ -18,10 +18,14 @@
                         <div class="home-interest-box"
                              ng-style="{width:(customerInterests.length * 46 + 4) + 'px'}">
 
-                            <button class="gling-button home-interest gling-icon {{'gling-icon-' + interest.name}}"
+
+
+                            <button class="gling-button home-interest gling-icon"
                                     ng-repeat="interest in customerInterests"
                                     ng-click="searchByInterest(interest)"
                                     ng-class="{'selected':interest.selected === true}">
+
+                                <img ng-src="assets/images/icon/withe/{{interest.name}}.png"/>
                             </button>
                         </div>
                     </div>
