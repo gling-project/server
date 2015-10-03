@@ -73,8 +73,7 @@
 
                     <!-- option -->
                     <div style="overflow: auto">
-                        <div class="business-tab-set"
-                             ng-style="{width:(actions.length * 55 + 14) + 'px'}">
+                        <div class="business-tab-set">
                             <div class="business-tab"
                                     style="display:inline-block"
                                     ng-class="{'selected':interfaceToDisplay === action.name}"
@@ -82,7 +81,7 @@
                                     ng-show="action.display()"
                                     ng-click="action.action()">
                                 <i class="gling-icon {{action.icon}}"></i>
-                                {{action.name}}
+                                {{action.translatableName | translateText}}
                             </div>
                         </div>
                     </div>
@@ -165,6 +164,74 @@
                             </tr>
                         </table>
 
+                        <!-- social network-->
+                        <table class="business-info-line" ng-show="displaySocialNetwork() === true">
+                            <tr>
+                                <td>
+                                    <div ng-show="!!business.socialNetwork.facebookLink" class="business-social-network-box">
+                                        <a id="welcome-link-facebook"
+                                           href="{{business.socialNetwork.facebookLink}}"
+                                           title="Facebook"
+                                           target="_blank">
+                                            <img src="/assets/images/social_network/facebook.png">
+                                        </a>
+                                    </div>
+
+                                    <div ng-show="!!business.socialNetwork.twitterLink" class="business-social-network-box">
+                                        <a id="welcome-link-twitter"
+                                           href="{{business.socialNetwork.twitterLink}}"
+                                           title="Twitter"
+                                           target="_blank">
+                                            <img src="/assets/images/social_network/twitter.png">
+                                        </a>
+                                    </div>
+
+                                    <div ng-show="!!business.socialNetwork.instagramLink" class="business-social-network-box">
+                                        <a id="welcome-link-instagram"
+                                           href="{{business.socialNetwork.instagramLink}}"
+                                           title="Instagram"
+                                           target="_blank">
+                                            <img src="/assets/images/social_network/instagram.png">
+                                        </a>
+                                    </div>
+
+                                    <div ng-show="!!business.socialNetwork.deliveryLink" class="business-social-network-box">
+                                        <a id="welcome-link-delivery"
+                                           href="{{business.socialNetwork.deliveryLink}}"
+                                           title="{{'--.business.socialNetwork.delivery' | translateText}}"
+                                           target="_blank">
+                                            <img src="/assets/images/social_network/delivery.png">
+                                        </a>
+                                    </div>
+
+                                    <div ng-show="!!business.socialNetwork.reservationLink" class="business-social-network-box">
+                                        <a href="{{business.socialNetwork.reservationLink}}"
+                                           title="{{'--.business.socialNetwork.reservation' | translateText}}"
+                                           target="_blank">
+                                            <img src="/assets/images/social_network/reservation.png">
+                                        </a>
+                                    </div>
+
+                                    <div ng-show="!!business.socialNetwork.opinionLink" class="business-social-network-box">
+                                        <a href="{{business.socialNetwork.opinionLink}}"
+                                           title="{{'--.business.socialNetwork.opinion' | translateText}}"
+                                           target="_blank">
+                                            <img src="/assets/images/social_network/opinion.png">
+                                        </a>
+                                    </div>
+
+                                    <div ng-show="!!business.socialNetwork.ecommerceLink" class="business-social-network-box">
+                                        <a href="{{business.socialNetwork.ecommerceLink}}"
+                                           title="{{'--.business.socialNetwork.ecommerce' | translateText}}"
+                                           target="_blank">
+                                            <img src="/assets/images/social_network/e_commerce.png">
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+
                         <!-- schedule -->
                         <table class="business-info-line" ng-show="displaySchedule() === true">
                             <tr>
@@ -184,6 +251,8 @@
                              ng-click="openGallery(image)"
                              ng-src="{{image | image}}"/>
                     </div>
+
+
                 </div>
 
             </div>

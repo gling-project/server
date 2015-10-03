@@ -1424,8 +1424,22 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
                 }
             });
 
+            $scope.displaySocialNetwork = function () {
+                var s = $scope.business.socialNetwork;
+                if (s == null) {
+                    return false;
+                }
+                return s.facebookLink != null ||
+                    s.twitterLink != null ||
+                    s.instagramLink != null ||
+                    s.deliveryLink != null ||
+                    s.opinionLink != null ||
+                    s.reservationLink != null;
+            };
+
             $scope.actions = [{
                 name: 'home',
+                translatableName: '--.business.action.home',
                 icon: 'gling-icon-home',
                 action: function () {
                     $scope.interfaceToDisplay = 'home'
@@ -1435,6 +1449,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
                 }
             }, {
                 name: 'info',
+                translatableName: '--.business.action.info',
                 icon: 'gling-icon-info',
                 action: function () {
                     $scope.interfaceToDisplay = 'info'
@@ -1445,6 +1460,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
             }, {
                 name: 'gallery',
                 icon: 'gling-icon-images',
+                translatableName: '--.business.action.gallery',
                 action: function () {
                     $scope.interfaceToDisplay = 'gallery'
                 },

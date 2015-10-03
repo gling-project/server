@@ -558,3 +558,6 @@ day_abrv_sunday=Di
 --.interest.selection.window.nothing=Aucun
 --.profile.connectedByFacebook=Connecté via Facebook
 --.home.mobile.selectInterest=Une envie ?
+--.business.action.info=Info
+--.business.action.gallery=Galerie
+--.business.action.home=Accueil
