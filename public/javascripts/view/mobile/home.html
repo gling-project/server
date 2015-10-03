@@ -15,18 +15,18 @@
                     <!-- interest -->
 
                     <div style="overflow: auto">
-                        <div class="home-interest-box"
-                             ng-style="{width:(customerInterests.length * 46 + 4) + 'px'}">
+                        <div
+                             style="width: 970px;margin: 10px 0;">
 
 
 
-                            <button class="gling-button home-interest gling-icon"
+                            <i class="home-interest gling-icon {{'gling-icon-' + interest.name}}"
                                     ng-repeat="interest in customerInterests"
                                     ng-click="searchByInterest(interest)"
                                     ng-class="{'selected':interest.selected === true}">
 
-                                <img ng-src="assets/images/icon/withe/{{interest.name}}.png"/>
-                            </button>
+                                <!--<img ng-src="assets/images/icon/withe/{{interest.name}}.png"/>-->
+                            </i>
                         </div>
                     </div>
 

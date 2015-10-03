@@ -1936,27 +1936,13 @@ ul.messenger .messenger-spinner {
 .home-interest-switch > *:last-child {
   margin-left: 30px;
 }
-.home-interest-box {
-  margin-top: 10px;
-  padding: 10px;
-  text-align: center;
-}
-.home-interest-box .home-interest-box-background {
-  display: inline-block;
-  background: url("/assets/images/home_interest_bg.png") repeat-x 0 50%;
-}
-.home-interest-box .home-interest {
+.home-interest {
   display: inline-block;
   padding: 10px 10px;
   border-radius: 40px;
-  font-weight: normal;
-  min-height: 0;
-}
-.home-interest-box .home-interest:first-child {
-  margin-left: 0;
-}
-.home-interest-box .home-interest:last-child {
-  margin-right: 0;
+  background-color: #1ad2aa;
+  color: white;
+  margin: 0 5px;
 }
 .follow-widget {
   text-align: center;
