@@ -82,7 +82,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
 
     $scope.save = function () {
 
-        if (!$scope.accountParam.isValid && facebookAuthentication == null) {
+        if (!$scope.accountParam.isValid) {
             $scope.accountParam.displayErrorMessage = true;
         }
         else {

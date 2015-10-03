@@ -348,7 +348,7 @@ public class LoginRestController extends AbstractRestController {
         myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
         myselfDTO.setLoginAccount(account.getLoginCredential() != null);
         myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
-        if (account.getType().equals(AccountTypeEnum.BUSINESS)) {
+        if (account.getType()!=null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
             myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
         }
 

@@ -4,6 +4,11 @@ myApp.controller('InterestSelectionModalCtrl', function ($scope, $flash, $modalI
         $modalInstance.close();
     };
 
+    $scope.getHeight = function(){
+        var h = {height:($(window).height() - 190)+'px'};
+        return h;
+    };
+
     $scope.customerInterests = listInterest;
 
     $scope.selectInterest = function (target) {

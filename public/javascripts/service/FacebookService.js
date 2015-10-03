@@ -1,4 +1,4 @@
-myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB,constantService,$location) {
+myApp.service("facebookService", function ($http, accountService, $locale, languageService,$FB,constantService,$location,$flash) {
 
 
     this.facebookAppId;
@@ -58,20 +58,21 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
     //
     // login
     //
-    this.login = function (successCallback, failCallback) {
+    this.login = function (successCallback, callbackError ) {
         // From now on you can use the  service just as Facebook api says
         FB.login(function (response) {
 
             if (response.status === 'connected') {
 
-                console.log("response.authResponse");
-                console.log(response.authResponse);
-
-                loginToServer(response.authResponse, successCallback, failCallback);
+                loginToServer(response.authResponse, successCallback, callbackError );
                 isConnected = true;
             }
             else {
-                failCallback();
+
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+
             }
         }, {
             scope: self.facebookAuthorization
@@ -128,7 +129,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
                             $location.path('/business/'+accountService.getMyself().businessId);
                         }
                     },
-                    function () {
+                    function (data) {
                         //connection failed
                     });
             } else {

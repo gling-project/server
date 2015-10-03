@@ -73,14 +73,17 @@
 
                     <!-- option -->
                     <div style="overflow: auto">
-                        <div class="business-page-menu"
+                        <div class="business-tab-set"
                              ng-style="{width:(actions.length * 55 + 14) + 'px'}">
-                            <button class="gling-button gling-icon {{action.icon}}"
+                            <div class="business-tab"
+                                    style="display:inline-block"
                                     ng-class="{'selected':interfaceToDisplay === action.name}"
                                     ng-repeat="action in actions"
                                     ng-show="action.display()"
                                     ng-click="action.action()">
-                            </button>
+                                <i class="gling-icon {{action.icon}}"></i>
+                                {{action.name}}
+                            </div>
                         </div>
                     </div>
 
@@ -163,7 +166,7 @@
                         </table>
 
                         <!-- schedule -->
-                        <table class="business-info-line" ng-show="business.schedules!=null">
+                        <table class="business-info-line" ng-show="displaySchedule() === true">
                             <tr>
                                 <td>
                                     <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>

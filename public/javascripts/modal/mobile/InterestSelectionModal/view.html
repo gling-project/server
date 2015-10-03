@@ -1,27 +1,29 @@
-<div class="modal-body">
+<div class="modal-body" ng-style="getHeight()">
 
     <div style="overflow: auto">
         <div style="margin: 10px 0;">
 
 
-            <i class="home-interest gling-icon {{'gling-icon-' + interest.name}}"
-               ng-repeat="interest in customerInterests"
-               ng-click="selectInterest(interest)"
-               ng-class="{'selected':interest.selected === true}">
-            </i>
-            <br/>
+            <div ng-repeat="interest in customerInterests"
+                 ng-click="selectInterest(interest)">
+                <span class="home-interest gling-icon {{'gling-icon-' + interest.name}}"
 
-            <button
-                    type="button"
-                    class="btn btn-default"
-                    ng-click="selectInterest(null)">
-                {{'--.interest.selection.window.nothing' | translateText}}
-            </button>
+                      ng-class="{'selected':interest.selected === true}">
+                </span>
+                {{interest.translationName | translateText}}
+            </div>
+
 
         </div>
     </div>
 </div>
 <div class="modal-footer">
+    <button
+            type="button"
+            class="btn btn-default"
+            ng-click="selectInterest(null)">
+        {{'--.interest.selection.window.nothing' | translateText}}
+    </button>
     <button ng-disabled="loading" type="button" class="btn btn-default" ng-click="close()">{{'--.generic.close' |
         translateText}}
     </button>

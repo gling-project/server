@@ -1,15 +1,10 @@
-myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, businessService, geolocationService, addressService, $timeout,$flash,followService,$filter,modalService,customerInterestService) {
+myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, customerInterestService) {
 
-
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
-
-    console.log('je germe la geneter loadins');
-    modalService.closeLoadingModal();
 
     $scope.loading = true;
 
-    $scope.displayBack = function(){
-        return window.history.length>0;
+    $scope.displayBack = function () {
+        return window.history.length > 0;
     };
 
     $scope.back = function () {
@@ -34,11 +29,28 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
     };
 
     $scope.openGallery = function (image) {
-        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:$scope.business.galleryPictures,first:image});
+        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {list: $scope.business.galleryPictures, first: image});
+    };
+
+    $scope.displaySchedule = function () {
+        if ($scope.business != null && $scope.business.schedules != null) {
+            for (var i in $scope.business.schedules) {
+                if ($scope.business.schedules[i].length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     };
 
     businessService.getBusiness($routeParams.businessId,
         function (data) {
+
+            //stop loading icons
+            $rootScope.$broadcast('PROGRESS_BAR_STOP');
+            modalService.closeLoadingModal();
+
+
             $scope.loading = false;
             $scope.business = data;
 
@@ -46,7 +58,7 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
 
             //address
             $scope.googleMapParams.address = $scope.business.address;
-            $scope.googleMapParams.mobile=true;
+            $scope.googleMapParams.mobile = true;
 
             $scope.$watch('interfaceToDisplay', function () {
                 if ($scope.interfaceToDisplay == 'info') {
@@ -57,7 +69,7 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
             });
 
             $scope.actions = [{
-                name:'home',
+                name: 'home',
                 icon: 'gling-icon-home',
                 action: function () {
                     $scope.interfaceToDisplay = 'home'
@@ -66,7 +78,7 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
                     return true;
                 }
             }, {
-                name:'info',
+                name: 'info',
                 icon: 'gling-icon-info',
                 action: function () {
                     $scope.interfaceToDisplay = 'info'
@@ -75,7 +87,7 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
                     return true;
                 }
             }, {
-                name:'gallery',
+                name: 'gallery',
                 icon: 'gling-icon-images',
                 action: function () {
                     $scope.interfaceToDisplay = 'gallery'
@@ -119,8 +131,6 @@ myApp.controller('BusinessCtrl', function ($rootScope,$scope, $routeParams, busi
         //scrollTo: $scope.publicationIdToGo,
         //displayRemoveIcon: $scope.edit
     };
-
-
 
 
     //TEMP !!

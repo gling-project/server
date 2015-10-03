@@ -1818,7 +1818,7 @@ ul.messenger .messenger-spinner {
   margin: 0 -50%;
 }
 .publication-box .publication-body .publication-gallery .publication-illustration-plus-icon {
-  border-radius: 10px;
+  border-radius: 50px;
   position: absolute;
   bottom: 4px;
   text-align: center;
@@ -1830,7 +1830,7 @@ ul.messenger .messenger-spinner {
 }
 .publication-box .publication-body .publication-gallery .publication-illustration-plus-icon span {
   color: #aaa;
-  font-size: 45px;
+  font-size: 30px;
   line-height: 60px;
   font-weight: bold;
   margin: auto;
@@ -2742,6 +2742,10 @@ ul.messenger .messenger-spinner {
   font-family: myFont;
   src: url('/assets/fonts/Brandon_bld.ttf');
   font-weight: bold;
+}
+.modal-body {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 @font-face {
   font-family: myFont;

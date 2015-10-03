@@ -129,6 +129,10 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                     scope.fb_login = function () {
                         facebookService.login(function (data) {
                             scope.facebookSuccess(data);
+                        },
+                        function(data){
+                            console.log('je suis un merde !! ;');
+                            $flash.error(data.message);
                         });
                     };
 
@@ -148,14 +152,15 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
 
                         if (access_token != null) {
                             scope.setLoading(true);
-                            facebookService.loginToServerSimple(access_token, function (data) {
+                            facebookService.loginToServerSimple(access_token,
+                                function (data) {
                                     scope.facebookSuccess(data);
                                 },
                                 function (data, status) {
                                     scope.setLoading(false);
                                     $location.path('/customer_registration');
                                     //console.log('facebook con ERROR');
-                                    //$flash.error(data.message);
+                                   // $flash.error(data.message);
                                 });
                         }
                     }

@@ -24,9 +24,9 @@
                  ng-src="{{publication.businessIllustration | image}}"/>
 
             <div class="title">
-                <span>
-                    {{publication.businessName}}
-                </span>
+                    <span>
+                        {{publication.businessName}}
+                    </span>
             </div>
 
             <!-- distance -->
@@ -41,15 +41,15 @@
                     ng-show="getInterestClass(publication)!=null"
                     class="publication-interest gling-icon {{getInterestClass(publication)}}">
             </i>
+            <!-- badge -->
+            <div class="publication-badge"
+                 ng-show="publication.type === 'PROMOTION'">
+                - {{publication.offPercent * 100 | number:0}}%
+            </div>
 
             {{publication.title}}
         </div>
 
-        <!-- badge -->
-        <div class="publication-badge"
-             ng-show="publication.type === 'PROMOTION'">
-            - {{publication.offPercent * 100 | number:0}}%
-        </div>
 
         <div class="publication-body">
             <div class="publication-data"

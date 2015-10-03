@@ -4,17 +4,21 @@
         border: 1px solid #ccc;
         border-radius: 10px;
         overflow: hidden;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
     }
 
     .publication-badge{
-        background-color: @color-red;
-        padding: 5px 10px;
-        border-radius: 10px;
+        background: url('/assets/images/publication_badge.png') no-repeat;
+        padding: 10px 10px;
+        /* border-radius: 10px; */
         display: inline-block;
         color: #ffffff;
         font-weight: bold;
+        margin-right: 10px;
+        height: 55px;
+        width: 80px;
+        background-size: 80px 40px;
     }
 
     .publication-title{
@@ -91,9 +95,15 @@
             padding-bottom: 5px;
 
             .title {
+                margin-left: 10px;
                 font-size: 18px;
                 color: @color-blue-dark;
                 font-weight: bold;
+            }
+
+            & > *:nth-child(n+2) {
+                margin-top: 20px;
+
             }
 
             & > * {
@@ -105,6 +115,7 @@
                 border: 1px solid @color-blue-dark;
                 padding: 2px 5px;
                 font-size: 14px;
+                margin-right: 10px;
                 color: @color-blue-dark;
                 border-radius: 10px;
             }
@@ -116,18 +127,18 @@
                 padding: 5px;
                 margin: 5px;
                 font-size: 14px;
-                & > div:first-child {
-                    background-color: @color-green-light;
-                    color: #ffffff;
-                    border-radius: 5px;
+                & > *:first-child {
+//                    background-color: @color-green-light;
+//                    color: #ffffff;
+//                    border-radius: 5px;
                     padding: 5px;
                 }
-                & > div:nth-child(n+2) {
+                & > *:nth-child(n+2) {
                     font-size: 16px;
                     font-weight: bold;
                     color: @color-blue-dark;
                 }
-                & > div {
+                & > * {
                     display: inline-block;
                     &:first-child {
                         margin-right: 2px;
