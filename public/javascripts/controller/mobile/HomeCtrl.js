@@ -1,24 +1,25 @@
-myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope,followService,modalService) {
+myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope, followService, modalService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
     modalService.closeLoadingModal();
 
     $scope.displayMask = true;
-    $scope.getSelectedInterest = function(){
+    $scope.getSelectedInterest = function () {
 
         for (var i in $scope.customerInterests) {
-            if($scope.customerInterests[i].selected){
+            if ($scope.customerInterests[i].selected) {
                 return $scope.customerInterests[i];
-            };
+            }
+            ;
         }
     };
 
-    $scope.selectInterest = function(){
-      modalService.interestSelection($scope.customerInterests,function(target){
-          console.log('target');
-          console.log(target);
-          $scope.searchByInterest(target);
-      });
+    $scope.selectInterest = function () {
+        modalService.interestSelection($scope.customerInterests, function (target) {
+            console.log('target');
+            console.log(target);
+            $scope.searchByInterest(target);
+        });
     };
 
 
@@ -26,15 +27,18 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
         $scope.customerInterests = value;
     });
 
-    $scope.$on('DISPLAY_ADVANCED_SEARCH',function(event,params){
+    $scope.$on('DISPLAY_ADVANCED_SEARCH', function (event, params) {
         $scope.advancedSearch = params.display;
     });
 
     //search function
     $scope.publicationListCtrl = {};
+    $scope.businessInfoParam = {};
+    $scope.businessListParam = {data: []};
     $scope.currentPage = 0;
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
+    $scope.emptyMessage = null;
 
     //scrolling
     $('.scrollable-content-body').on('scroll', function () {
@@ -49,14 +53,23 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
         }
     });
 
-    var success = function (data) {
-        if($scope.currentPage==0){
-            $scope.publicationListCtrl.data=[];
+    var success = function (data, callbackEmptyResultFunction) {
+        if ($scope.currentPage == 0) {
+            $scope.publicationListCtrl.data = [];
         }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
+        console.log('je uis le success ')
         if (data == null || data.length == 0) {
+            console.log('je uis le success PAS BIEN')
             $scope.allLoaded = true;
+
+            //if there is no result and this is the first page and there is a callbackFunction,
+            //try something else
+            if ($scope.currentPage == 0 && callbackEmptyResultFunction != null) {
+                console.log('je uis le success START CALLBACK')
+                callbackEmptyResultFunction();
+            }
         }
         else {
             for (var key in data) {
@@ -65,18 +78,31 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
         }
     };
 
+    var successBusiness = function (data) {
+        $scope.businessListParam.data = data;
+        $scope.businessListParam.loading = false;
+    };
+
     //functions
     //search by interest
     $scope.searchByInterest = function (interest) {
 
-        if (interest.selected == true) {
-            interest.selected = false;
-        }
-        else {
+
+        if (interest == null) {
             for (var i in $scope.customerInterests) {
                 $scope.customerInterests[i].selected = false;
             }
-            interest.selected = true;
+        }
+        else {
+            if (interest.selected == true) {
+                interest.selected = false;
+            }
+            else {
+                for (var i in $scope.customerInterests) {
+                    $scope.customerInterests[i].selected = false;
+                }
+                interest.selected = true;
+            }
         }
         console.log('SERACH AFTER searchByInterest ');
         $scope.currentPage = 0;
@@ -93,9 +119,9 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     });
 
     //watch in follow mode
-    $scope.$watch('followedMode', function (o,n) {
+    $scope.$watch('followedMode', function (o, n) {
         console.log("xatch followedMode")
-        if(o!=n) {
+        if (o != n) {
             $scope.currentPage = 0;
             $scope.allLoaded = false;
             console.log('SERACH AFTER followedMode');
@@ -103,13 +129,13 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
         }
     });
 
-    $scope.positionBasicData =[
+    $scope.positionBasicData = [
         {key: 'currentPosition', translation: '--.position.current'},
         {key: 'createNewAddress', translation: '--.position.newAddress'}
     ];
 
     //position
-    $scope.positions =angular.copy($scope.positionBasicData);
+    $scope.positions = angular.copy($scope.positionBasicData);
 
     $scope.currentPositionText = 'currentPosition';
 
@@ -123,15 +149,15 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
 
         $scope.$watch('currentPosition', function (n, o) {
             if (n != null && o != n) {
-                if($scope.currentPosition == 'createNewAddress'){
-                    $scope.currentPosition=o;
-                    modalService.addressModal(true,null,false,function(data){
+                if ($scope.currentPosition == 'createNewAddress') {
+                    $scope.currentPosition = o;
+                    modalService.addressModal(true, null, false, function (data) {
                         $timeout(function () {
                             $scope.currentPosition = data.name;
-                        },1);
+                        }, 1);
                     });
                 }
-                else if($scope.currentPosition != $scope.positionCurrenltyComputed) {
+                else if ($scope.currentPosition != $scope.positionCurrenltyComputed) {
                     $scope.positionCurrenltyComputed = $scope.currentPosition;
                     addressService.changeAddress($scope.currentPosition, function (result) {
 
@@ -158,10 +184,10 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     }, 1);
 
     var completePositions = function () {
-        $scope.positions =angular.copy($scope.positionBasicData);
+        $scope.positions = angular.copy($scope.positionBasicData);
         if (accountService.getMyself() != null) {
             for (var key in accountService.getMyself().addresses) {
-                $scope.positions.splice($scope.positions.length - 1 ,0,
+                $scope.positions.splice($scope.positions.length - 1, 0,
                     {
                         key: accountService.getMyself().addresses[key].name,
                         translation: accountService.getMyself().addresses[key].name
@@ -169,7 +195,7 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
             }
         }
         $scope.currentPosition = geolocationService.getLocationText();
-        $scope.positionCurrenltyComputed=$scope.currentPosition;
+        $scope.positionCurrenltyComputed = $scope.currentPosition;
     };
     //initialisation
     completePositions();
@@ -186,7 +212,7 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
         $scope.displayFavoriteBusiness = !$scope.displayFavoriteBusiness;
     };
 
-    var refreshFollowList = function() {
+    var refreshFollowList = function () {
         followService.getFollows(function (list) {
             $scope.follows = list;
         });
@@ -197,20 +223,18 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     //mask
     $scope.$watch('displayPositionDetails', function () {
         $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
-        $scope.displayFavoriteBusiness=false;
+        $scope.displayFavoriteBusiness = false;
 
     });
     $scope.$watch('displayFavoriteBusiness', function () {
         $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
-        $scope.displayPositionDetails=false;
+        $scope.displayPositionDetails = false;
     });
-
-
 
 
     $scope.search = function () {
 
-        console.log('search : '+$scope.currentPage);
+        console.log('search : ' + $scope.currentPage);
 
         if (geolocationService.position != null) {
 
@@ -229,27 +253,55 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
 
             if ($scope.followedMode) {
                 if (interestSelected != null) {
-                    searchService.byFollowedAndInterest($scope.currentPage,interestSelected.id, function (data) {
-                        success(data);
+                    searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'followedWithInterest';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
 
                 }
                 else {
-                    searchService.byFollowed($scope.currentPage,function (data) {
-                        success(data);
+                    searchService.byFollowed($scope.currentPage, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'followed';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusiness(function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
                 }
             }
             else {
                 if (interestSelected != null) {
-                    searchService.byInterest($scope.currentPage,interestSelected.id, function (data) {
-                        success(data);
+                    searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeedWithInterest';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
 
                 }
                 else {
-                    searchService.default($scope.currentPage,function (data) {
-                        success(data);
+                    searchService.default($scope.currentPage, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeed';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusiness(function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
                 }
             }
@@ -257,9 +309,8 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
     };
 
 
-
     //initialize
-    if(geolocationService.position!=null){
+    if (geolocationService.position != null) {
         $scope.currentPage = 0;
         $scope.allLoaded = false;
         console.log('---- search after INITIALIZE');
@@ -271,7 +322,7 @@ myApp.controller('HomeCtrl', function ($scope, geolocationService, searchService
             n = !$scope.followedMode;
         }
         if (accountService.getMyself() == null) {
-            modalService.openLoginModal($scope.switchFollowedMode, n,'--.loginModal.help.followMode');
+            modalService.openLoginModal($scope.switchFollowedMode, n, '--.loginModal.help.followMode');
         }
         else {
             $scope.switchFollowedMode(n);
