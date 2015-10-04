@@ -554,3 +554,21 @@ day_abrv_sunday=Zon
 
 --.business.follow.stopFollowing=Niet meer volgend
 --.followed-business.page.title=Mijn gevolgde winkels
+
+--.welcome.start=Ga Binnen!
+--.welcome.customer.title=Houdt U van uw handelszaken?
+--.welcome.customer.subTitle1=UW NETWERK
+--.welcome.customer.content1=Restaurants, kledingszaken, theaters, decoratiewinkels,... Gling omvat alle types handelszaken.
+--.welcome.customer.subTitle2=DICHT BIJ U
+--.welcome.customer.content2=Lokaliseer U thuis, op het werk of elders en ontdek wat er leeft in uw buurtwinkels.
+--.welcome.customer.subTitle3=UW VERLANGENS
+--.welcome.customer.content3=Heef u zin om te eten, te reizen, te decoreren, uzelf te verwennen? Sorteer de publicaties volgens uw verlangens.
+--.welcome.business.subTitle1=GETROUWHEID
+--.welcome.business.content1=Versterk de getrouwheidsbanden met uw klanten door regelmatig contact te houden.
+--.welcome.business.subTitle2=NIEUWE KLANTEN
+--.welcome.business.content2=Laat uw winkel ontdekt worden dankzij de geolocalisatie of het netwerk van uw klanten.
+--.welcome.business.subTitle3=DAGELIJKSE TOOL
+--.welcome.business.content3=Organiseer en communiceer makkelijker over uw speciale acties.
+--.welcome.registration=Schrijf u in
+--.welcome.business.title=U bent een bedrijf ?
+
