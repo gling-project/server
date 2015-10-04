@@ -5,5 +5,7 @@ package be.lynk.server.importer;
  */
 public interface CategoryImporter {
 
+    String importTranslation();
+
     String importStart(boolean b);
 }

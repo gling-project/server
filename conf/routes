@@ -123,7 +123,8 @@ GET           /rest/town/promotions/$zip<[0-9]+>/$page<[0-9]+>                  
 ############
 POST          /rest/import_demo                                                                   @be.lynk.server.controller.rest.SuperAdminRestController.importDemoDate()
 POST          /rest/generate_publication                                                          @be.lynk.server.controller.rest.SuperAdminRestController.generateFakePublications()
-POST          /rest/import_category                                                               @be.lynk.server.controller.rest.SuperAdminRestController.importCategoryTranslation()
+POST          /rest/import_category                                                               @be.lynk.server.controller.rest.SuperAdminRestController.importCategory()
+POST          /rest/import_category_translation                                                   @be.lynk.server.controller.rest.SuperAdminRestController.importCategoryTranslation()
 
 
 ##welcome

@@ -68,7 +68,12 @@ public class AbstractImporter {
         W(22),
         X(23),
         Y(24),
-        Z(25);
+        Z(25),
+        AA(26),
+        AB(27),
+        AC(28),
+        AD(29),
+        AE(30);
 
         private final int value;
 

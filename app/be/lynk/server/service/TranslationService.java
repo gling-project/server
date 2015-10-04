@@ -2,6 +2,7 @@ package be.lynk.server.service;
 
 import be.lynk.server.dto.TranslationsDTO;
 import be.lynk.server.model.entities.Translation;
+import be.lynk.server.model.entities.TranslationValue;
 import be.lynk.server.util.message.EmailMessageEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import play.i18n.Lang;
@@ -20,4 +21,8 @@ public interface TranslationService {
     String getTranslation(EmailMessageEnum emailMessage, Lang language, Object... params);
 
     String getTranslation(Translation translation, Lang language, Object... params);
+
+    void removeTranslationValue(Translation translationName);
+
+    void removeTranslationValue(TranslationValue translation);
 }

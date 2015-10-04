@@ -9,9 +9,11 @@ import be.lynk.server.importer.CategoryImporter;
 import be.lynk.server.importer.DemoImporter;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
+import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.service.AccountService;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.LoginCredentialService;
+import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +27,17 @@ import play.mvc.Result;
 public class SuperAdminRestController extends AbstractRestController {
 
     @Autowired
-    private BusinessService businessService;
+    private BusinessService             businessService;
     @Autowired
-    private AccountService accountService;
+    private AccountService              accountService;
     @Autowired
-    private LoginCredentialService loginCredentialService;
+    private LoginCredentialService      loginCredentialService;
     @Autowired
-    private CategoryImporter categoryImporter;
+    private CategoryImporter            categoryImporter;
     @Autowired
-    private DemoImporter demoImporter;
+    private DemoImporter                demoImporter;
+    @Autowired
+    private CustomerInterestServiceImpl customerInterestService;
 
     @Transactional
     public Result generateFakePublications() {
@@ -48,11 +52,10 @@ public class SuperAdminRestController extends AbstractRestController {
                 //if there is no account for this email or the password doesn't the right, throw an exception
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
             }
+        } else {
+            account = securityController.getCurrentUser();
         }
-        else{
-            account=securityController.getCurrentUser();
-        }
-        if(!account.getRole().equals(RoleEnum.SUPERADMIN)){
+        if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
@@ -73,15 +76,38 @@ public class SuperAdminRestController extends AbstractRestController {
                 //if there is no account for this email or the password doesn't the right, throw an exception
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
             }
+        } else {
+            account = securityController.getCurrentUser();
         }
-        else{
-            account=securityController.getCurrentUser();
-        }
-        if(!account.getRole().equals(RoleEnum.SUPERADMIN)){
+        if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
         return ok(demoImporter.importStart(true));
+    }
+
+    @Transactional
+    public Result importCategory() {
+
+        Account account;
+        if (!securityController.isAuthenticated(ctx())) {
+            //extract DTO
+            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+
+            account = accountService.findByEmail(dto.getEmail());
+
+            if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
+                //if there is no account for this email or the password doesn't the right, throw an exception
+                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+            }
+        } else {
+            account = securityController.getCurrentUser();
+        }
+        if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
+            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        }
+
+        return ok(categoryImporter.importStart(true));
     }
 
     @Transactional
@@ -98,15 +124,15 @@ public class SuperAdminRestController extends AbstractRestController {
                 //if there is no account for this email or the password doesn't the right, throw an exception
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
             }
+        } else {
+            account = securityController.getCurrentUser();
         }
-        else{
-            account=securityController.getCurrentUser();
-        }
-        if(!account.getRole().equals(RoleEnum.SUPERADMIN)){
+        if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
-        return ok(categoryImporter.importStart(true));
+
+        return ok(categoryImporter.importTranslation());
     }
 
     @Transactional

@@ -9,6 +9,7 @@ import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.stereotype.Repository;
 import play.api.Play;
 import play.api.i18n.MessagesPlugin;
+import play.db.jpa.JPA;
 import play.i18n.Lang;
 import play.i18n.Messages;
 import scala.Option;
@@ -60,7 +61,7 @@ public class TranslationServiceImpl implements TranslationService {
 
         if (s != null && params.length > 0) {
             for (int i = 0; i < params.length; i++) {
-                s=s.replace("{" + i + "}", params[i].toString());
+                s = s.replace("{" + i + "}", params[i].toString());
             }
         }
 
@@ -100,5 +101,23 @@ public class TranslationServiceImpl implements TranslationService {
 
         }
         return message;
+    }
+
+    @Override
+    public void removeTranslationValue(Translation translation) {
+        if (translation != null) {
+            for (TranslationValue translationValue : translation.getTranslationValues()) {
+                JPA.em().remove(JPA.em().find(TranslationValue.class, translationValue.getId()));
+            }
+            translation.getTranslationValues().clear();
+        }
+    }
+
+    @Override
+    public void removeTranslationValue(TranslationValue translation) {
+        if (translation != null) {
+            JPA.em().remove(translation);//JPA.em().find(TranslationValue.class, translation.getId()));
+
+        }
     }
 }

@@ -223,7 +223,6 @@
 
 ##  be/lynk/server/views/template.scala.html (javascript library )
 --.welcome.myBusiness=My business
---.welcome.search.advanced.link=Advanced serach...
 --.welcome.serach.advanced.criteria=Criterias
 
 ##  view/profile.html

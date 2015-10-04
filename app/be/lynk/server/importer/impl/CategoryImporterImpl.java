@@ -5,11 +5,14 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.service.BusinessCategoryService;
 import be.lynk.server.service.CategoryInterestLinkService;
 import be.lynk.server.service.CustomerInterestService;
+import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.StringUtil;
+import be.lynk.server.util.exception.MyRuntimeException;
 import jxl.Cell;
 import jxl.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import play.Logger;
 import play.i18n.Lang;
 
 import java.io.*;
@@ -29,21 +32,23 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
     private static final Pattern PATTERN = Pattern.compile("messages\\.(.*)");
     private static final String  FILE    = "conf/";
 
-    protected static final Letter            COL_CATEGORY_CAT         = Letter.A;
-    protected static final Letter            COL_CATEGORY_SUB_CAT     = Letter.B;
-    protected static final Letter            COL_CATEGORY_SUB_SUB_CAT = Letter.C;
+    protected static final Letter            COL_CATEGORY_CAT            = Letter.A;
+    protected static final Letter            COL_CATEGORY_SUB_CAT        = Letter.B;
+    protected static final Letter            COL_CATEGORY_SUB_SUB_CAT    = Letter.C;
     protected static final Letter            COL_CATEGORY_INTEREST_START = Letter.D;
-    protected static final Letter            COL_CATEGORY_INTEREST_END = Letter.W;
-    protected static final Map<Lang, Letter> COL_CATEGORY_TRANSLATION = new HashMap<Lang, Letter>() {{
-        put(Lang.forCode("fr"), Letter.Y);
+    protected static final Letter            COL_CATEGORY_INTEREST_END   = Letter.W;
+    protected static final Map<Lang, Letter> COL_CATEGORY_TRANSLATION    = new HashMap<Lang, Letter>() {{
+        put(Lang.forCode("fr"), Letter.Z);
+        put(Lang.forCode("nl"), Letter.AB);
     }};
-    protected static final Map<Lang, Letter> COL_INTEREST_TRANSLATION = new HashMap<Lang, Letter>() {{
+    protected static final Map<Lang, Letter> COL_INTEREST_TRANSLATION    = new HashMap<Lang, Letter>() {{
         put(Lang.forCode("fr"), Letter.A);
-        put(Lang.forCode("en"), Letter.B);
+        put(Lang.forCode("nl"), Letter.B);
+        put(Lang.forCode("en"), Letter.C);
     }};
 
-    private static final Letter COL_INTEREST_NAME      = Letter.D;
-    private static final Letter COL_INTEREST_NAME_ICON = Letter.C;
+    private static final Letter COL_INTEREST_NAME      = Letter.E;
+    private static final Letter COL_INTEREST_NAME_ICON = Letter.D;
 
     private static final String  CATEGORY_STREET       = "Général - Catégories B.";
     private static final String  INTEREST_SHEET        = "Général - Besoins C.";
@@ -58,6 +63,88 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
     private BusinessCategoryService     businessCategoryService;
     @Autowired
     private CategoryInterestLinkService categoryInterestLinkService;
+    @Autowired
+    private TranslationService          translationService;
+
+    @Override
+    public String importTranslation() {
+
+
+//        CustomerInterest customerInterest = customerInterestService.findByName("drink");
+//        customerInterest.getTranslationName().getTranslationValues().clear();
+//        customerInterestService.saveOrUpdate(customerInterest);
+
+
+        //import category
+        Map<String, Sheet> workbookSheets = getWorkbookSheets(ACCOUNTS_WORKBOOK_PATH);
+        Sheet categorySheet = workbookSheets.get(CATEGORY_STREET);
+        Sheet interestSheet = workbookSheets.get(INTEREST_SHEET);
+
+        int rowCounter = CATEGORY_FIRST_ROW;
+
+        while (interestSheet.getRows() > rowCounter) {
+
+            String interestS = getString(interestSheet, COL_INTEREST_NAME, rowCounter);
+            if (interestS != null && interestS.length() > 0) {
+
+                //load interest
+                CustomerInterest customerInterest = customerInterestService.findByName(interestS);
+
+                customerInterest.getTranslationName().getTranslationValues().clear();
+                customerInterestService.saveOrUpdate(customerInterest);
+//
+                for (Map.Entry<Lang, Letter> langIntegerEntry : COL_INTEREST_TRANSLATION.entrySet()) {
+                    String s = getString(interestSheet, langIntegerEntry.getValue(), rowCounter);
+                    customerInterest.getTranslationName().addTranslationValue(new TranslationValue(customerInterest.getTranslationName(), langIntegerEntry.getKey(), s));
+                }
+
+                //save
+                customerInterestService.saveOrUpdate(customerInterest);
+            }
+            rowCounter++;
+
+        }
+
+        rowCounter = CATEGORY_FIRST_ROW;
+
+        while (categorySheet.getRows() > rowCounter) {
+
+            String name = null;
+
+            if (isNotEmpty(getCell(categorySheet, COL_CATEGORY_CAT, rowCounter))) {
+                name = getString(categorySheet, COL_CATEGORY_CAT, rowCounter);
+            } else if (isNotEmpty(getCell(categorySheet, COL_CATEGORY_SUB_CAT, rowCounter))) {
+                name = getString(categorySheet, COL_CATEGORY_SUB_CAT, rowCounter);
+            } else if (isNotEmpty(getCell(categorySheet, COL_CATEGORY_SUB_SUB_CAT, rowCounter))) {
+                name = getString(categorySheet, COL_CATEGORY_SUB_SUB_CAT, rowCounter);
+            }
+
+            if (name != null) {
+
+                BusinessCategory businessCategory = businessCategoryService.findByName(name);
+
+                if (businessCategory == null) {
+                    Logger.warn("cannot found category " + name);
+//                    throw new MyRuntimeException("cannot found category "+name);
+                } else {
+
+                    businessCategory.getTranslationName().getTranslationValues().clear();
+                    businessCategoryService.saveOrUpdate(businessCategory);
+
+
+                    for (Map.Entry<Lang, Letter> langIntegerEntry : COL_CATEGORY_TRANSLATION.entrySet()) {
+                        String s = getString(categorySheet, langIntegerEntry.getValue(), rowCounter);
+                        businessCategory.getTranslationName().addTranslationValue(new TranslationValue(businessCategory.getTranslationName(), langIntegerEntry.getKey(), s));
+                    }
+                }
+            }
+            rowCounter++;
+
+        }
+
+        return "translation imported";
+    }
+
 
     @Override
     public String importStart(boolean addTranslation) {
@@ -132,7 +219,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
         int order = 0;
 
-        for(int i=COL_CATEGORY_INTEREST_START.getValue();i<=COL_CATEGORY_INTEREST_END.getValue();i++){
+        for (int i = COL_CATEGORY_INTEREST_START.getValue(); i <= COL_CATEGORY_INTEREST_END.getValue(); i++) {
             String interestS = sheet.getCell(i, 0).getContents();
             String interestSNormalized = StringUtil.normalize(interestS);
 
