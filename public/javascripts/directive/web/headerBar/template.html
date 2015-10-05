@@ -36,8 +36,8 @@
             <div class="profile-buttons-container" ng-show="accountService.getMyself()==null">
                 <!-- lang -->
                 <select class="gling-button-light"
-                ng-model="languageService.currentLanguage"
-                ng-options="lang.code as lang.language for lang in languageService.languages">
+                    ng-model="languageService.currentLanguage"
+                    ng-options="lang.code as lang.language for lang in languageService.languages">
                 </select>
                 <button
                         type="button"

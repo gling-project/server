@@ -2441,6 +2441,7 @@ ul.messenger .messenger-spinner {
   position: relative;
   border: 1px solid #cccccc;
   border-radius: 10px;
+  max-height: 200px;
   display: inline-block;
   overflow: hidden;
 }
@@ -2771,6 +2772,11 @@ ul.messenger .messenger-spinner {
   width: calc(100% + 30px);
   color: #1ad2aa;
 }
+.welcome-page .welcome-header select {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
 .welcome-page .welcome-header > div .logo {
   display: inline-block;
   padding-top: 10px;
@@ -2974,7 +2980,8 @@ ul.messenger .messenger-spinner {
   color: #ff9900;
 }
 .help-div {
-  background-color: #ff9900;
+  background-color: #1ad2aa;
+  color: #2c265c;
   font-size: 16px;
   padding: 10px;
   border: 1px solid #555555;
@@ -2992,6 +2999,28 @@ ul.messenger .messenger-spinner {
 }
 .help-div .help-popup-close:hover,
 .help-div .help-popup-close:focus {
+  background-color: #555555;
+  color: #ff9900;
+}
+.help-div-geolocalisation {
+  background-color: #ff9900;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #555555;
+  margin: 5px;
+}
+.help-div-geolocalisation .help-popup-close {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 12px;
+  border-radius: 20px;
+  width: 22px;
+  height: 22px;
+  float: right;
+}
+.help-div-geolocalisation .help-popup-close:hover,
+.help-div-geolocalisation .help-popup-close:focus {
   background-color: #555555;
   color: #ff9900;
 }

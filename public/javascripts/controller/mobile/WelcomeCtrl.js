@@ -1,7 +1,18 @@
-myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, accountService, $flash, translationService, $timeout,modalService) {
+myApp.controller('WelcomeCtrl', function ($rootScope, $scope, $location, accountService, $flash, translationService, $timeout,modalService,languageService) {
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
     modalService.closeLoadingModal();
+
+    //
+    // change lang
+    //
+    $scope.$watch('lang', function () {
+        if (!angular.isUndefined($scope.lang)) {
+            languageService.changeLanguage($scope.lang);
+        }
+    });
+
+    $scope.languageService = languageService;
 
     $scope.loginFormParam = {
         dto: {},

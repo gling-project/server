@@ -90,7 +90,17 @@ public class MainController extends AbstractController {
         if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
             addAlreadyVisitedCookie();
         }
-        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage()));
+
+        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(),dozerService.map(lang(), LangDTO.class)));
+    }
+
+    @Transactional
+    public Result toWelcomePage2(String lang) {
+        changeLang(lang);
+        if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
+            addAlreadyVisitedCookie();
+        }
+        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(),dozerService.map(lang(), LangDTO.class)));
     }
 
 
@@ -98,7 +108,7 @@ public class MainController extends AbstractController {
 
         if (!isMobileDevice() && !forceMobile && ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
             addAlreadyVisitedCookie();
-            return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage()));
+            return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(),dozerService.map(lang(), LangDTO.class)));
         } else {
 
 

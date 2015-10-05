@@ -7,6 +7,13 @@
 
 
                 <div class="welcome-header">
+
+                    <!-- lang -->
+                    <select class="gling-button-light"
+                            ng-model="languageService.currentLanguage"
+                            ng-options="lang.code as lang.language for lang in languageService.languages">
+                    </select>
+
                     <div>
                         <span class="logo gling-icon gling-icon-logoapp button-with-label"></span>
 
