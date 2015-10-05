@@ -38,7 +38,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     $scope.googleMapParams = {};
 
     $scope.displayEditMode = function () {
-        return $scope.myBusiness === true || (accountService.getMyself()!=null && accountService.getMyself().role === 'SUPERADMIN');
+        return $scope.myBusiness === true || (accountService.getMyself() != null && accountService.getMyself().role === 'SUPERADMIN');
     };
 
 
@@ -73,9 +73,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                     $scope.business.distance = data.distance;
                 });
             };
-            if (geolocationService.position != null) {
-                $scope.computeDistance();
-            }
+
+            //initlaization
+            $scope.computeDistance();
+
             $scope.$on('POSITION_CHANGED', function () {
                 $scope.computeDistance();
             });

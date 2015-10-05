@@ -5029,31 +5029,37 @@ myApp.service("geolocationService", ['$rootScope', 'geolocation', '$http', 'acco
 
 
         this.position = null;
-        this.currentPosition = null;
+        this.currentPosition = {};
         this.geoPositionAlreadyComputed = false;
         var self = this;
         this.sharePosition = false;
 
 
-        $http({
-            'method': "GET",
-            'url': "https://freegeoip.net/json/",
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (self.currentPosition == null) {
-                var pos = [2];
-                pos[0] = data.latitude;
-                pos[1] = data.longitude;
-                self.currentPosition = {
-                    x: pos[0],
-                    y: pos[1]
-                };
-                computePosition();
-                $timeout(function () {
-                    $rootScope.$broadcast('POSITION_CHANGED');
-                }, 1);
-            }
-        });
+        //$http({
+        //    'method': "GET",
+        //    //'url': "https://freegeoip.net/json/",
+        //    'url': "https://www.telize.com/geoip",
+        //    'headers': "Content-Type:application/json;charset=utf-8"
+        //}).success(function (data, status) {
+        //    console.log("je suis position IP");
+        //    if (self.currentPosition == null) {
+        //        var pos = [2];
+        //        pos[0] = data.latitude;
+        //        pos[1] = data.longitude;
+        //        self.currentPosition = {
+        //            x: pos[0],
+        //            y: pos[1]
+        //        };
+        //        computePosition();
+        //        $timeout(function () {
+        //            console.log("je suis position IP POSITION_CHANGED");
+        //            $rootScope.$broadcast('POSITION_CHANGED');
+        //        }, 1);
+        //    }
+        //},function(data){
+        //    console.log("je suis position IP FAILEd");
+        //    console.log(data);
+        //});
 
 
         if ($window.navigator && $window.navigator.geolocation && this.geoPositionAlreadyComputed == false) {
@@ -5209,48 +5215,44 @@ myApp.service("addressService", ['$flash', '$http', 'geolocationService', functi
 
     this.distance = function (addressId, callbackSuccess, callbackError) {
 
-        if (geolocationService.position != null) {
-            $http({
-                'method': "POST",
-                'url': "/rest/address/distance/" + addressId,
-                'headers': "Content-Type:application/json;charset=utf-8",
-                data: geolocationService.position
-            }).success(function (data, status) {
-                if (callbackSuccess != null) {
-                    callbackSuccess(data);
+        $http({
+            'method': "POST",
+            'url': "/rest/address/distance/" + addressId,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data: geolocationService.position
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
                 }
-            })
-                .error(function (data, status) {
-                    $flash.error(data.message);
-                    if (callbackError != null) {
-                        callbackError(data, status);
-                    }
-                });
-        }
+            });
     };
 
     this.changeAddress = function (addressText, callbackSuccess, callbackError) {
 
-        if (geolocationService.position != null) {
-            $http({
-                'method': "PUT",
-                'url': "/rest/address/current",
-                'headers': "Content-Type:application/json;charset=utf-8",
-                data: {
-                    addressName:addressText
+        $http({
+            'method': "PUT",
+            'url': "/rest/address/current",
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data: {
+                addressName: addressText
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
                 }
-            }).success(function (data, status) {
-                if (callbackSuccess != null) {
-                    callbackSuccess(data);
-                }
-            })
-                .error(function (data, status) {
-                    $flash.error(data.message);
-                    if (callbackError != null) {
-                        callbackError(data, status);
-                    }
-                });
-        }
+            });
     };
 
 }]);
@@ -5833,7 +5835,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/publicationListForBusiness/template.html",
     "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" id=publication{{publication.id}} class=publication-box ng-class=\"{'publication-followed':publication.following === true}\" ng-click=click()><div class=publication-badge ng-show=\"publication.type === 'PROMOTION'\">- {{publication.offPercent * 100 | number:0}}%</div><div class=publication-header-without-business-version><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(publication)}} publication-color-background\"></i><div class=\"publication-bubble publication-box-price publication-bordered\" ng-show=\"publication.type=='PROMOTION' && publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></div><span style=\"margin-right: 80px\" class=publication-main-title>{{publication.title}}</span></div><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><div ng-show=\"publication.type === 'PROMOTION'\" ng-class=\"{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}\" class=publication-data-header><div class=\"glyphicon gling-icon gling-icon gling-icon-calendar\"></div><span><div>{{'--.publication.promotionTo' | translateText}}</div><div>&lt; {{publication.endDate | date:'dd MMM yyyy HH:mm'}}</div></span></div><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\" ng-bind-html=\"publication.description | text\"></div></div><div class=\"publication-gallery publication-body-two publication-body-two-right\" ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) === true\" ng-click=openGallery(publication.pictures[1],publication)><img ng-src=\"{{publication.pictures[1] | image}}\" class=publication-illustration><div class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 2}}</span></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1 && descriptionIsEmpty(publication) !== true\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div></div><div class=publication-footer><button ng-show=getInfo().displayRemoveIcon type=button style=\"margin-left: 25px\" class=\"btn gling-button-dark\" ng-click=removePublication(publication)>{{'--.generic.remove' | translateText}}</button><div class=\"publication-footer-date publication-bordered-bottom\">{{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy'}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:publication.businessId,publicationId:publication.id}></facebook-share-publication-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobile/template.html",
-    "<div class=publication-list-mobile><div ng-show=\"loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"loading===true\" ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(publication)}}\"></i><table class=publication-header ng-click=\"navigateTo('/business/'+publication.businessId)\"><tr><td><img class=illustration ng-src=\"{{publication.businessIllustration | image}}\"></td><td><div class=title-box><div class=title><i ng-show=\"publication.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{publication.businessName}}</div><div class=title-data>{{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy'}} - {{publication.distance / 1000 | number:2}} km</div></div></td></tr></table><div class=publication-title>{{publication.title}}</div><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><table ng-show=\"publication.type === 'PROMOTION'\" class=publication-data-promotion><tr><td>- {{publication.offPercent * 100 | number:0}}%</td><td class=publication-box-price ng-show=\"publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></td><td>&gt; {{publication.endDate | date:'dd MMM HH:mm'}}</td></tr></table><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\" ng-bind-html=\"publication.description | text\"></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><div class=publication-gallery-image-box><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div></div></div><div class=publication-footer><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:publication.businessId,publicationId:publication.id}></facebook-share-publication-ctrl></div></div></div></div>");
+    "<div class=publication-list-mobile><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"getInfo().loading===true\" ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(publication)}}\"></i><table class=publication-header ng-click=\"navigateTo('/business/'+publication.businessId)\"><tr><td><img class=illustration ng-src=\"{{publication.businessIllustration | image}}\"></td><td><div class=title-box><div class=title><i ng-show=\"publication.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{publication.businessName}}</div><div class=title-data>{{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy'}} - {{publication.distance / 1000 | number:2}} km</div></div></td></tr></table><div class=publication-title>{{publication.title}}</div><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><table ng-show=\"publication.type === 'PROMOTION'\" class=publication-data-promotion><tr><td>- {{publication.offPercent * 100 | number:0}}%</td><td class=publication-box-price ng-show=\"publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></td><td>&gt; {{publication.endDate | date:'dd MMM HH:mm'}}</td></tr></table><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\" ng-bind-html=\"publication.description | text\"></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><div class=publication-gallery-image-box><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div></div></div><div class=publication-footer><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:publication.businessId,publicationId:publication.id}></facebook-share-publication-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobileForBusiness/template.html",
     "<div class=publication-list-mobile><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"getInfo().loading===true\" ng-repeat=\"publication in publications\" class=\"publication-box publication-publication\" ng-click=click()><div class=publication-header><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(publication)}}\"></i><div class=title-box><div class=title-data>{{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy'}}</div></div></div><div class=publication-title>{{publication.title}}</div><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><table ng-show=\"publication.type === 'PROMOTION'\" class=publication-data-promotion><tr><td>- {{publication.offPercent * 100 | number:0}}%</td><td class=publication-box-price ng-show=\"publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></td><td>&gt; {{publication.endDate | date:'dd MMM HH:mm'}}</td></tr></table><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\" ng-bind-html=\"publication.description | text\"></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><div class=publication-gallery-image-box><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div></div></div><div class=publication-footer><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:publication.businessId,publicationId:publication.id}></facebook-share-publication-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationWidget/template.html",

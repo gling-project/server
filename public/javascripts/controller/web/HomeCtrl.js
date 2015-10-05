@@ -9,7 +9,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
 
 
     $scope.displaySharePositionAdvertissement = function () {
-        return geolocationService.sharePosition == false && (accountService.getMyself()==null || accountService.getMyself().selectedAddress == null);
+        return geolocationService.sharePosition == false && (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null);
     };
     $rootScope.$watch(function () {
         return geolocationService.sharePosition;
@@ -22,7 +22,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.interestDisplayed2 = [];
     $scope.computeList = function () {
         $scope.interestDisplayed = $scope.customerInterests.slice(0, $scope.interestDisplayMax);
-        $scope.interestDisplayed2 = $scope.customerInterests.slice($scope.interestDisplayMax,$scope.customerInterests.length);
+        $scope.interestDisplayed2 = $scope.customerInterests.slice($scope.interestDisplayMax, $scope.customerInterests.length);
     };
 
     //variable
@@ -62,7 +62,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             n = !$scope.followedMode;
         }
         if (accountService.getMyself() == null) {
-            modalService.openLoginModal($scope.switchFollowedMode, n,'--.loginModal.help.followMode');
+            modalService.openLoginModal($scope.switchFollowedMode, n, '--.loginModal.help.followMode');
         }
         else {
             $scope.switchFollowedMode(n);
@@ -172,7 +172,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
 
     //search function
     $scope.search = function () {
-        if (geolocationService.position != null && $scope.allLoaded == false) {
+        if ($scope.allLoaded == false) {
 
             var interestSelected = null;
             for (var i in $scope.customerInterests) {
@@ -253,12 +253,11 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
             $scope.createNewAddressLaunch();
         }
         else {
-            modalService.openLoginModal($scope.createNewAddressLaunch,null,'--.loginModal.help.address');
+            modalService.openLoginModal($scope.createNewAddressLaunch, null, '--.loginModal.help.address');
         }
     };
 
     $scope.createNewAddressLaunch = function () {
-
         modalService.addressModal(true, null, false, function (data) {
             $timeout(function () {
                 addressService.changeAddress(data.name, function (data) {
@@ -273,10 +272,8 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
 
 
     //initialize
-    if (geolocationService.position != null) {
-        $scope.currentPage = 0;
-        $scope.allLoaded = false;
-        $scope.search();
-    }
+    $scope.currentPage = 0;
+    $scope.allLoaded = false;
+    $scope.search();
 
 });

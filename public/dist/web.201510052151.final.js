@@ -1300,7 +1300,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
 
     $scope.displaySharePositionAdvertissement = function () {
-        return geolocationService.sharePosition == false && (accountService.getMyself()==null || accountService.getMyself().selectedAddress == null);
+        return geolocationService.sharePosition == false && (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null);
     };
     $rootScope.$watch(function () {
         return geolocationService.sharePosition;
@@ -1313,7 +1313,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.interestDisplayed2 = [];
     $scope.computeList = function () {
         $scope.interestDisplayed = $scope.customerInterests.slice(0, $scope.interestDisplayMax);
-        $scope.interestDisplayed2 = $scope.customerInterests.slice($scope.interestDisplayMax,$scope.customerInterests.length);
+        $scope.interestDisplayed2 = $scope.customerInterests.slice($scope.interestDisplayMax, $scope.customerInterests.length);
     };
 
     //variable
@@ -1353,7 +1353,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             n = !$scope.followedMode;
         }
         if (accountService.getMyself() == null) {
-            modalService.openLoginModal($scope.switchFollowedMode, n,'--.loginModal.help.followMode');
+            modalService.openLoginModal($scope.switchFollowedMode, n, '--.loginModal.help.followMode');
         }
         else {
             $scope.switchFollowedMode(n);
@@ -1463,7 +1463,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
     //search function
     $scope.search = function () {
-        if (geolocationService.position != null && $scope.allLoaded == false) {
+        if ($scope.allLoaded == false) {
 
             var interestSelected = null;
             for (var i in $scope.customerInterests) {
@@ -1544,12 +1544,11 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
             $scope.createNewAddressLaunch();
         }
         else {
-            modalService.openLoginModal($scope.createNewAddressLaunch,null,'--.loginModal.help.address');
+            modalService.openLoginModal($scope.createNewAddressLaunch, null, '--.loginModal.help.address');
         }
     };
 
     $scope.createNewAddressLaunch = function () {
-
         modalService.addressModal(true, null, false, function (data) {
             $timeout(function () {
                 addressService.changeAddress(data.name, function (data) {
@@ -1564,11 +1563,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
 
     //initialize
-    if (geolocationService.position != null) {
-        $scope.currentPage = 0;
-        $scope.allLoaded = false;
-        $scope.search();
-    }
+    $scope.currentPage = 0;
+    $scope.allLoaded = false;
+    $scope.search();
 
 }]);
 myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$rootScope', '$window', function ($scope, modalService, accountService, $rootScope,$window) {
@@ -1673,7 +1670,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
     $scope.googleMapParams = {};
 
     $scope.displayEditMode = function () {
-        return $scope.myBusiness === true || (accountService.getMyself()!=null && accountService.getMyself().role === 'SUPERADMIN');
+        return $scope.myBusiness === true || (accountService.getMyself() != null && accountService.getMyself().role === 'SUPERADMIN');
     };
 
 
@@ -1708,9 +1705,10 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
                     $scope.business.distance = data.distance;
                 });
             };
-            if (geolocationService.position != null) {
-                $scope.computeDistance();
-            }
+
+            //initlaization
+            $scope.computeDistance();
+
             $scope.$on('POSITION_CHANGED', function () {
                 $scope.computeDistance();
             });
@@ -2306,9 +2304,8 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
         return totalToAdd;
     };
 
-    if (geolocationService.position != null) {
+    //initialization
         $scope.search();
-    }
 
     $scope.$on('POSITION_CHANGED', function () {
         $scope.search();

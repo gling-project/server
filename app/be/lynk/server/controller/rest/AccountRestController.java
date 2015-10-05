@@ -12,6 +12,7 @@ import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.Session;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.LocalizationServiceImpl;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -270,10 +271,10 @@ public class
         //load address
         Address byId = addressService.findById(id);
 
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
+        Position position = extractPosition();
 
         //distance
-        Long distance = localizationService.distanceBetweenAddress(dozerService.map(dto, Position.class), byId);
+        Long distance = localizationService.distanceBetweenAddress(position, byId);
 
         return ok(new DistanceDTO(distance));
     }
@@ -310,5 +311,21 @@ public class
         return ok(addressDTO);
     }
 
+
+    private Position extractPosition(PositionDTO dto) {
+        Position position;
+
+        if (dto.getX() == null || dto.getY() == null) {
+            position = Constant.DEFAULT_POSITION;
+        } else {
+            position = dozerService.map(dto, Position.class);
+        }
+
+        return position;
+    }
+
+    private Position extractPosition() {
+        return extractPosition(extractDTOFromRequest(PositionDTO.class));
+    }
 
 }

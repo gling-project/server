@@ -2,31 +2,37 @@ myApp.service("geolocationService", function ($rootScope, geolocation, $http, ac
 
 
         this.position = null;
-        this.currentPosition = null;
+        this.currentPosition = {};
         this.geoPositionAlreadyComputed = false;
         var self = this;
         this.sharePosition = false;
 
 
-        $http({
-            'method': "GET",
-            'url': "https://freegeoip.net/json/",
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (self.currentPosition == null) {
-                var pos = [2];
-                pos[0] = data.latitude;
-                pos[1] = data.longitude;
-                self.currentPosition = {
-                    x: pos[0],
-                    y: pos[1]
-                };
-                computePosition();
-                $timeout(function () {
-                    $rootScope.$broadcast('POSITION_CHANGED');
-                }, 1);
-            }
-        });
+        //$http({
+        //    'method': "GET",
+        //    //'url': "https://freegeoip.net/json/",
+        //    'url': "https://www.telize.com/geoip",
+        //    'headers': "Content-Type:application/json;charset=utf-8"
+        //}).success(function (data, status) {
+        //    console.log("je suis position IP");
+        //    if (self.currentPosition == null) {
+        //        var pos = [2];
+        //        pos[0] = data.latitude;
+        //        pos[1] = data.longitude;
+        //        self.currentPosition = {
+        //            x: pos[0],
+        //            y: pos[1]
+        //        };
+        //        computePosition();
+        //        $timeout(function () {
+        //            console.log("je suis position IP POSITION_CHANGED");
+        //            $rootScope.$broadcast('POSITION_CHANGED');
+        //        }, 1);
+        //    }
+        //},function(data){
+        //    console.log("je suis position IP FAILEd");
+        //    console.log(data);
+        //});
 
 
         if ($window.navigator && $window.navigator.geolocation && this.geoPositionAlreadyComputed == false) {

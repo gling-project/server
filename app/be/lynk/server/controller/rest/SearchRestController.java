@@ -10,6 +10,7 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.*;
 import be.lynk.server.util.StringUtil;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,7 @@ public class SearchRestController extends AbstractRestController {
             }
         }
 
-        //position ?
-        PositionDTO positionDTO = extractDTOFromRequest(PositionDTO.class, true);
-        Position position = dozerService.map(positionDTO, Position.class);
+        Position position = extractPosition();
 
         Set<Business> businesses = businessService.findByDistanceAndCategories(position, categories, 20);
 
@@ -71,9 +70,7 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getNearBusiness() {
 
-        PositionDTO positionDTO = extractDTOFromRequest(PositionDTO.class);
-
-        Position position = dozerService.map(positionDTO, Position.class);
+        Position position = extractPosition();
 
         List<Business> businesses = businessService.findByDistance(position, 20);
 
@@ -125,9 +122,7 @@ public class SearchRestController extends AbstractRestController {
 
         long t = new Date().getTime();
 
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
-
-        Position position = dozerService.map(dto, Position.class);
+        Position position = extractPosition();
 
         List<SearchResult> searchResults = publicationService.findActivePublication(position, MAX_DISTANCE);
 
@@ -140,9 +135,7 @@ public class SearchRestController extends AbstractRestController {
 
         long t = new Date().getTime();
 
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
-
-        Position position = dozerService.map(dto, Position.class);
+        Position position = extractPosition();
 
         Account currentUser = securityController.getCurrentUser();
 
@@ -162,9 +155,7 @@ public class SearchRestController extends AbstractRestController {
         //load interest
         CustomerInterest interest = customerInterestService.findById(id);
 
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
-
-        Position position = dozerService.map(dto, Position.class);
+        Position position = extractPosition();
 
         List<SearchResult> publications = publicationService.findActivePublicationByInterest(position, MAX_DISTANCE, interest);
 
@@ -180,9 +171,7 @@ public class SearchRestController extends AbstractRestController {
         //load interest
         CustomerInterest interest = customerInterestService.findById(id);
 
-        PositionDTO dto = extractDTOFromRequest(PositionDTO.class);
-
-        Position position = dozerService.map(dto, Position.class);
+        Position position = extractPosition();
 
         List<Business> businesses = followLinkService.findBusinessByAccount(securityController.getCurrentUser());
 
@@ -284,7 +273,7 @@ public class SearchRestController extends AbstractRestController {
 
         SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
 
-        Position position = dozerService.map(searchDTO.getPosition(), Position.class);
+        Position position = extractPosition(searchDTO.getPosition());
 
         //parse criteria
         SearchElement searchElement = new SearchElement(searchDTO.getSearch());
@@ -337,7 +326,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<AbstractPublication> finalList = new ArrayList<>();
 
-        Position position = dozerService.map(searchDTO.getPosition(), Position.class);
+        Position position = extractPosition(searchDTO.getPosition());
 
         //parse criteria
         SearchElement searchElement = new SearchElement(searchDTO.getSearch());
@@ -502,7 +491,7 @@ public class SearchRestController extends AbstractRestController {
 
     private void createCategorySearchResult(List<BusinessCategory> categories, SearchDTO searchDTO, SearchResultDTO searchResultDTO, int page, boolean onlyOneResult, boolean targetedCategory) {
 
-        Position position = dozerService.map(searchDTO.getPosition(), Position.class);
+        Position position = extractPosition(searchDTO.getPosition());
 
         for (BusinessCategory category : categories) {
 
@@ -572,5 +561,21 @@ public class SearchRestController extends AbstractRestController {
         NAME, DISTANCE
     }
 
+
+    private Position extractPosition(PositionDTO dto) {
+        Position position;
+
+        if (dto.getX() == null || dto.getY() == null) {
+            position = Constant.DEFAULT_POSITION;
+        } else {
+            position = dozerService.map(dto, Position.class);
+        }
+
+        return position;
+    }
+
+    private Position extractPosition() {
+        return extractPosition(extractDTOFromRequest(PositionDTO.class));
+    }
 
 }

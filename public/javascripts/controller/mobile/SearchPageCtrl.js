@@ -1,4 +1,4 @@
-myApp.controller('SearchPageCtrl', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService,modalService) {
+myApp.controller('SearchPageCtrl', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService, modalService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -261,9 +261,8 @@ myApp.controller('SearchPageCtrl', function ($rootScope,$scope, searchService, $
         return totalToAdd;
     };
 
-    if (geolocationService.position != null) {
-        $scope.search();
-    }
+    //initilization
+    $scope.search();
 
     $scope.$on('POSITION_CHANGED', function () {
         $scope.search();

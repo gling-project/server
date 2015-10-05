@@ -881,88 +881,81 @@ myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', '
 
     $scope.search = function () {
 
-        console.log('search : ' + $scope.currentPage);
 
-        if (geolocationService.position != null) {
-
-            var interestSelected = null;
-            for (var i in $scope.customerInterests) {
-                if ($scope.customerInterests[i].selected) {
-                    interestSelected = $scope.customerInterests[i];
-                }
+        var interestSelected = null;
+        for (var i in $scope.customerInterests) {
+            if ($scope.customerInterests[i].selected) {
+                interestSelected = $scope.customerInterests[i];
             }
+        }
 
-            //if this is the first page that asked, remove other publication
-            if ($scope.currentPage == 0) {
-                $scope.publicationListCtrl.loading = true;
-                $scope.publicationListCtrl.data = [];
-            }
+        //if this is the first page that asked, remove other publication
+        if ($scope.currentPage == 0) {
+            $scope.publicationListCtrl.loading = true;
+            $scope.publicationListCtrl.data = [];
+        }
 
-            if ($scope.followedMode) {
-                if (interestSelected != null) {
-                    searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
-                        success(data,
-                            function () {
-                                $scope.emptyMessage = 'followedWithInterest';
-                                $scope.businessListParam.loading = true;
-                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
-                                    successBusiness(data);
-                                });
+        if ($scope.followedMode) {
+            if (interestSelected != null) {
+                searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
+                    success(data,
+                        function () {
+                            $scope.emptyMessage = 'followedWithInterest';
+                            $scope.businessListParam.loading = true;
+                            searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                successBusiness(data);
                             });
-                    });
+                        });
+                });
 
-                }
-                else {
-                    searchService.byFollowed($scope.currentPage, function (data) {
-                        success(data,
-                            function () {
-                                $scope.emptyMessage = 'followed';
-                                $scope.businessListParam.loading = true;
-                                searchService.nearBusiness(function (data) {
-                                    successBusiness(data);
-                                });
-                            });
-                    });
-                }
             }
             else {
-                if (interestSelected != null) {
-                    searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
-                        success(data,
-                            function () {
-                                $scope.emptyMessage = 'newsFeedWithInterest';
-                                $scope.businessListParam.loading = true;
-                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
-                                    successBusiness(data);
-                                });
+                searchService.byFollowed($scope.currentPage, function (data) {
+                    success(data,
+                        function () {
+                            $scope.emptyMessage = 'followed';
+                            $scope.businessListParam.loading = true;
+                            searchService.nearBusiness(function (data) {
+                                successBusiness(data);
                             });
-                    });
+                        });
+                });
+            }
+        }
+        else {
+            if (interestSelected != null) {
+                searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
+                    success(data,
+                        function () {
+                            $scope.emptyMessage = 'newsFeedWithInterest';
+                            $scope.businessListParam.loading = true;
+                            searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                successBusiness(data);
+                            });
+                        });
+                });
 
-                }
-                else {
-                    searchService.default($scope.currentPage, function (data) {
-                        success(data,
-                            function () {
-                                $scope.emptyMessage = 'newsFeed';
-                                $scope.businessListParam.loading = true;
-                                searchService.nearBusiness(function (data) {
-                                    successBusiness(data);
-                                });
+            }
+            else {
+                searchService.default($scope.currentPage, function (data) {
+                    success(data,
+                        function () {
+                            $scope.emptyMessage = 'newsFeed';
+                            $scope.businessListParam.loading = true;
+                            searchService.nearBusiness(function (data) {
+                                successBusiness(data);
                             });
-                    });
-                }
+                        });
+                });
             }
         }
     };
 
 
     //initialize
-    if (geolocationService.position != null) {
-        $scope.currentPage = 0;
-        $scope.allLoaded = false;
-        console.log('---- search after INITIALIZE');
-        $scope.search();
-    }
+    $scope.currentPage = 0;
+    $scope.allLoaded = false;
+    $scope.search();
 
     $scope.setFollowedMode = function (n) {
         if (n == null) {
@@ -1542,9 +1535,9 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
                     $scope.business.distance = data.distance;
                 });
             };
-            if (geolocationService.position != null) {
-                $scope.computeDistance();
-            }
+            //initialize
+            $scope.computeDistance();
+
             $scope.$on('POSITION_CHANGED', function () {
                 $scope.computeDistance();
             });
@@ -1577,7 +1570,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
     });
 
 }]);
-myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', 'modalService', function ($rootScope,$scope, searchService, $routeParams, searchBarService,geolocationService,modalService) {
+myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', 'modalService', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService, modalService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -1840,9 +1833,8 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
         return totalToAdd;
     };
 
-    if (geolocationService.position != null) {
-        $scope.search();
-    }
+    //initilization
+    $scope.search();
 
     $scope.$on('POSITION_CHANGED', function () {
         $scope.search();

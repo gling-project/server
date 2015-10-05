@@ -261,9 +261,8 @@ myApp.controller('SearchPageCtrl', function ($rootScope, $scope, searchService, 
         return totalToAdd;
     };
 
-    if (geolocationService.position != null) {
+    //initialization
         $scope.search();
-    }
 
     $scope.$on('POSITION_CHANGED', function () {
         $scope.search();

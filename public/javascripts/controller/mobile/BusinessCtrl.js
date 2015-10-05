@@ -124,9 +124,9 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
                     $scope.business.distance = data.distance;
                 });
             };
-            if (geolocationService.position != null) {
-                $scope.computeDistance();
-            }
+            //initialize
+            $scope.computeDistance();
+
             $scope.$on('POSITION_CHANGED', function () {
                 $scope.computeDistance();
             });

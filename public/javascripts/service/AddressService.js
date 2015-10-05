@@ -22,48 +22,44 @@ myApp.service("addressService", function ($flash, $http, geolocationService) {
 
     this.distance = function (addressId, callbackSuccess, callbackError) {
 
-        if (geolocationService.position != null) {
-            $http({
-                'method': "POST",
-                'url': "/rest/address/distance/" + addressId,
-                'headers': "Content-Type:application/json;charset=utf-8",
-                data: geolocationService.position
-            }).success(function (data, status) {
-                if (callbackSuccess != null) {
-                    callbackSuccess(data);
+        $http({
+            'method': "POST",
+            'url': "/rest/address/distance/" + addressId,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data: geolocationService.position
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
                 }
-            })
-                .error(function (data, status) {
-                    $flash.error(data.message);
-                    if (callbackError != null) {
-                        callbackError(data, status);
-                    }
-                });
-        }
+            });
     };
 
     this.changeAddress = function (addressText, callbackSuccess, callbackError) {
 
-        if (geolocationService.position != null) {
-            $http({
-                'method': "PUT",
-                'url': "/rest/address/current",
-                'headers': "Content-Type:application/json;charset=utf-8",
-                data: {
-                    addressName:addressText
+        $http({
+            'method': "PUT",
+            'url': "/rest/address/current",
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data: {
+                addressName: addressText
+            }
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
                 }
-            }).success(function (data, status) {
-                if (callbackSuccess != null) {
-                    callbackSuccess(data);
-                }
-            })
-                .error(function (data, status) {
-                    $flash.error(data.message);
-                    if (callbackError != null) {
-                        callbackError(data, status);
-                    }
-                });
-        }
+            });
     };
 
 });
