@@ -10,7 +10,7 @@ myApp.service("geolocationService", function ($rootScope, geolocation, $http, ac
 
         $http({
             'method': "GET",
-            'url': "https://www.telize.com/geoip",
+            'url': "https://freegeoip.net/json/",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (self.currentPosition == null) {
