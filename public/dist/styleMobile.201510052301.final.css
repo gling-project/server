@@ -2033,6 +2033,10 @@ ul.messenger .messenger-spinner {
   margin-left: 10px;
   font-size: 16px;
 }
+.business-mobile-page .business-social-network-box {
+  display: inline-block;
+  margin: 5px;
+}
 .business-mobile-page .business-tab-set {
   margin-left: 10px;
   margin-top: 5px;
@@ -2320,9 +2324,6 @@ ul.messenger .messenger-spinner {
 }
 .business-info-line > tbody > tr .td-action {
   text-align: right;
-}
-.business-info-line .glyphicon {
-  font-size: 30px;
 }
 .angular-google-map-container {
   height: 150px !important;
