@@ -5783,6 +5783,10 @@ myApp.service("publicationService", ['$http', '$flash', '$rootScope', function (
     };
 
 }]);
+myApp.service("constantService", function () {
+
+
+});
 myApp.service("contactService", ['$flash', '$http', function ($flash, $http) {
 
     this.contact= function (contactFrom, callbackSuccess, callbackError) {

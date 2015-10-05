@@ -1,0 +1,4 @@
+myApp.service("constantService", function () {
+
+
+});
