@@ -1,4 +1,3 @@
-
 //33CC99
 //28FDA7
 
@@ -7,13 +6,13 @@
 @color-green-light: #1AD2AA;
 @color-blue-dark: #2c265c;
 @color-blue-light: #aad4f2;
-@color-red:#cc0033;
-@color-yellow:#ff9900;
-@color-grey:#ccc;
-@color-grey-dark:#999;
-@color-white:#f4f4f4;
+@color-red: #cc0033;
+@color-yellow: #ff9900;
+@color-grey: #ccc;
+@color-grey-dark: #999;
+@color-white: #f4f4f4;
 @color-help: @color-yellow;
-@color-black:#555555;
+@color-black: #555555;
 
 // main
 @color-body-bg: #eee;
@@ -26,8 +25,7 @@
     font-weight: bold;
 }
 
-
-.modal-body{
+.modal-body {
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -37,13 +35,11 @@
     src: url('/assets/fonts/brandon_re.ttf');
 }
 
-
-
 .generic-center {
     text-align: center;
 }
 
-.generic-bold{
+.generic-bold {
     font-weight: bold;
 }
 
@@ -87,20 +83,19 @@
     }
 }
 
-.button-with-label-top{
+.button-with-label-top {
     p {
         top: -34px;
         bottom: inherit;
     }
 }
 
-
 .facebookCount {
     display: none !important;
 }
 
 .gling-button {
-    border: 0;//1px solid white;
+    border: 0; //1px solid white;
     outline: none;
     background-color: @color-green-light;
     color: @color-white;
@@ -128,20 +123,19 @@
 }
 
 .gling-button-dark {
-    border: 0;//1px solid white;
+    border: 0; //1px solid white;
     outline: none;
     background-color: @color-blue-dark;
     color: @color-white;
-    margin: 0 5px;
     border-radius: 20px;
-    padding: 5px 15px;
+    padding: 4px 10px;
+    margin: 2px;
     font-size: 16px;
-    font-weight: bold;
-    min-height: 40px;
     &:hover:enabled {
         background-color: @color-green-dark;
         color: @color-white;
         text-decoration: none;
+        outline: none;
     }
     &:disabled {
         color: rgba(255, 255, 255, 0.65);
@@ -149,6 +143,7 @@
 
     &.selected {
         background-color: @color-blue-dark;
+        outline: none;
         &:hover:enabled {
             background-color: @color-blue-dark;
         }
@@ -161,10 +156,10 @@
     font-size: 16px;
 }
 
-.btn-gling{
+.btn-gling {
     background-image: -webkit-linear-gradient(top,@color-blue-light 0,@color-blue-dark 20%,@color-blue-dark 80%,@color-blue-light 100%);
     background-image: -o-linear-gradient(top,@color-blue-light 0,@color-blue-dark 20%,@color-blue-dark 80%,@color-blue-light 100%);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(@color-blue-light),to(@color-blue-dark));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@color-blue-light), to(@color-blue-dark));
     background-image: linear-gradient(to bottom,@color-blue-light 0,@color-blue-dark 20%,@color-blue-dark 80%,@color-blue-light 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
@@ -220,7 +215,7 @@
     padding: 10px;
     border: 1px solid @color-black;
     margin: 5px;
-    .help-popup-close{
+    .help-popup-close {
         border: none;
         outline: none;
         background: none;
@@ -230,20 +225,46 @@
         height: 22px;
         float: right;
         &:hover,
-        &:focus{
+        &:focus {
             background-color: @color-black;
             color: @color-help;
         }
     }
 }
-.help-div{
+
+.help-div {
+    background-color: @color-green-light;
+    color: @color-blue-dark;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid @color-black;
+    margin: 5px;
+
+    .help-popup-close {
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 12px;
+        border-radius: 20px;
+        width: 22px;
+        height: 22px;
+        float: right;
+        &:hover,
+        &:focus {
+            background-color: @color-black;
+            color: @color-help;
+        }
+    }
+}
+
+.help-div-geolocalisation {
     background-color: @color-help;
     font-size: 16px;
     padding: 10px;
     border: 1px solid @color-black;
     margin: 5px;
 
-    .help-popup-close{
+    .help-popup-close {
         border: none;
         outline: none;
         background: none;
@@ -253,13 +274,12 @@
         height: 22px;
         float: right;
         &:hover,
-        &:focus{
+        &:focus {
             background-color: @color-black;
             color: @color-help;
         }
     }
 }
-
 
 .horizontal-split {
 
@@ -292,8 +312,6 @@
     padding: 3px 25px;
     width: 90%;
 }
-
-
 
 .link {
     text-decoration: underline;

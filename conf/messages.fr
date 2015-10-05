@@ -556,15 +556,6 @@ day_abrv_sunday=Di
 --.followed-business.page.title=Mes commerces suivis
 
 
-
---.generic.site=Site
---.interest.selection.window.nothing=Aucun
---.profile.connectedByFacebook=Connecté via Facebook
---.home.mobile.selectInterest=Une envie ?
---.business.action.info=Info
---.business.action.gallery=Galerie
---.business.action.home=Accueil
-
 --.welcome.start=Entrer!
 --.welcome.customer.title=Vous aimez vos commerces ?
 --.welcome.customer.subTitle1=VOTRE RESEAU
@@ -581,3 +572,14 @@ day_abrv_sunday=Di
 --.welcome.business.content3=Organisez et communiquez plus facilement vos actions spéciales.
 --.welcome.registration=Enregistrez-vous
 --.welcome.business.title=Vous êtes un commerce ?
+
+
+
+--.generic.site=Site
+--.interest.selection.window.nothing=Aucun
+--.profile.connectedByFacebook=Connecté via Facebook
+--.home.mobile.selectInterest=Une envie ?
+--.business.action.info=Info
+--.business.action.gallery=Galerie
+--.business.action.home=Accueil
+--.generic.notification=Notifications

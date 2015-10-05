@@ -23,19 +23,19 @@ myApp.directive('searchResultCtrl', function (directiveService, $location, searc
                             for (var i in scope.getInfo().result.businesses) {
                                 scope.getInfo().result.businesses[i].index = ++counter;
                             }
-                            if (scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile != true) {
+                            if (scope.getInfo().result.businesses!=null && scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile != true) {
                                 scope.seeMoreBusinessIndex = ++counter;
                             }
                             for (var i in scope.getInfo().result.publications) {
                                 scope.getInfo().result.publications[i].index = ++counter;
                             }
-                            if (scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile != true) {
+                            if (scope.getInfo().result.publications!=null && scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile != true) {
                                 scope.seeMorePublicationIndex = ++counter;
                             }
                             for (var i in scope.getInfo().result.categories) {
                                 scope.getInfo().result.categories[i].index = ++counter;
                             }
-                            if (scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile != true) {
+                            if (scope.getInfo().result.categories!=null && scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile != true) {
                                 scope.seeMoreCategoryIndex = ++counter;
                             }
                             scope.seeMoreIndex = ++counter;

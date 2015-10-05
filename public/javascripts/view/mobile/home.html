@@ -13,21 +13,14 @@
                 <div class="scrollable-content-inner">
 
                     <!-- interest -->
-
-                    <div style="overflow: auto">
-                        <div
-                                style="margin: 10px 0;">
-
-
-                            <div ng-click="selectInterest()">
+                    <div class="home-page-interest-box">
+                        <div ng-click="selectInterest()">
                             <span class="gling-button">
                                 {{'--.home.mobile.selectInterest' | translateText}}
                             </span>
-                                <i ng-show="getSelectedInterest()!=null"
-                                   class="home-interest gling-icon {{'gling-icon-' + getSelectedInterest().name}} selected">
-                                </i>
-                            </div>
-
+                            <i ng-show="getSelectedInterest()!=null"
+                               class="home-interest gling-icon {{'gling-icon-' + getSelectedInterest().name}} selected">
+                            </i>
                         </div>
                     </div>
 

@@ -24,7 +24,7 @@ myApp.directive("headerSearchCtrl", function ($rootScope,$location,$timeout,moda
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         modalService.openLoadingModal();
                         $timeout(function(){
-                            $location.path('/');
+                            $location.url('/');
                         },1);
                     };
 

@@ -16,39 +16,53 @@
          ng-repeat="publication in publications"
          class="publication-box publication-publication"
          ng-click="click()">
-        
-        <div class="publication-title">
+
+        <div class="publication-header">
+
             <!-- interest -->
             <i
                     ng-show="getInterestClass(publication)!=null"
                     class="publication-interest gling-icon {{getInterestClass(publication)}}">
             </i>
 
+            <div class="title-box">
+                <div class="title-data">
+                    {{'--.publication.publishTo' | translateText}}
+                    {{publication.startDate | date:'dd MMM yyyy'}}
+                </div>
+            </div>
+        </div>
+
+        <!-- publication title -->
+        <div class="publication-title">
             {{publication.title}}
         </div>
 
-        <!-- badge -->
-        <div class="publication-badge"
-             ng-show="publication.type === 'PROMOTION'">
-            - {{publication.offPercent * 100 | number:0}}%
-        </div>
 
         <div class="publication-body">
             <div class="publication-data"
                  ng-class="{'publication-body-two':publication.pictures.length>0}"
                  ng-hide="descriptionIsEmpty(publication) === true">
 
-                <div ng-show="publication.type === 'PROMOTION'"
-                     ng-class="{'publication-bordered-bottom' : publication.description !=null && publication.description.length > 0}"
-                     class="publication-data-header">
-                    <i class="gling-icon gling-icon-calendar"></i>
+                <!-- promotion data -->
+                <table ng-show="publication.type === 'PROMOTION'"
+                       class="publication-data-promotion">
+                    <tr>
+                        <td>
+                            - {{publication.offPercent * 100 | number:0}}%
+                        </td>
+                        <td class="publication-box-price"
+                            ng-show="publication.originalPrice!=null">
+                            <span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span>
+                            <span>{{publication.originalPrice | number:2}} €</span>
+                        </td>
+                        <td>
+                            &gt; {{publication.endDate | date:'dd MMM HH:mm'}}
+                        </td>
+                    </tr>
+                </table>
 
-                    <div>{{'--.publication.promotionTo' | translateText}}</div>
-                    <div>
-                        &lt; {{publication.endDate | date:'dd MMM HH:mm'}}
-                    </div>
-
-                </div>
+                <!-- description -->
                 <div class="publication-data-body"
                      ng-show="publication.description !=null && publication.description.length > 0"
                      ng-bind-html="publication.description | text">
@@ -80,10 +94,7 @@
         <div class="publication-footer">
 
             <!-- publication date -->
-            <div class="publication-footer-date publication-bordered-bottom">
-                {{'--.publication.publishTo' | translateText}}
-                {{publication.startDate | date:'dd MMM yyyy'}}
-            </div>
+
 
             <!-- facebook -->
             <div class="publication-footer-facebook">

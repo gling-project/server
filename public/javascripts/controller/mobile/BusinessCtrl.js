@@ -56,6 +56,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
 
             $scope.interfaceToDisplay = 'home';
 
+            $scope.categoryLineParams = {
+                categories: $scope.business.categories
+            };
+
             //address
             $scope.googleMapParams.address = $scope.business.address;
             $scope.googleMapParams.mobile = true;

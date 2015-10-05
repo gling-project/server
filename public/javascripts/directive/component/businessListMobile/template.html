@@ -1,4 +1,4 @@
-<div class="business-list-mobile">
+<div class="publication-list-mobile">
 
 
     <!-- loading -->
@@ -11,38 +11,63 @@
         {{'--.list.nothing' | translateText}}
     </div>
 
-    <!-- publication -->
+    <!-- content -->
     <div ng-hide="loading===true"
          ng-repeat="business in businesses"
-         class="business-ticket"
+         class="publication-publication"
          ng-click="click()">
 
-        <div class="business-header"
-             ng-click="navigateTo('/business/'+business.id)">
 
-            <img class="illustration"
-                 ng-src="{{business.illustration | image}}"/>
+        <table class="publication-header"
+               ng-click="navigateTo('/business/'+business.id)">
+            <tr>
+                <td>
+                    <img class="illustration"
+                         ng-src="{{business.illustration | image}}"/>
+
+                </td>
+                <td>
+                    <div class="title-box">
+
+                        <div class="title">
+                            <i ng-show="business.following === true"
+                               class="gling-icon gling-icon gling-icon-bell">
+                            </i>
+                            {{business.name}}
+                        </div>
+                        <div class="title-data">
+                            {{business.address.street}}, {{business.address.zip}}, {{business.address.city}} -
+                            {{business.distance / 1000 | number:2}} km
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
 
-            <!-- business name -->
-            <div class="title">
-                <span>
-                    <i ng-show="business.following === true"
-                       class="gling-icon gling-icon gling-icon-bell">
-                    </i>
-                    {{business.name}}
-                </span>
-            </div>
+        <!--<div class="business-header"-->
+             <!--ng-click="navigateTo('/business/'+business.id)">-->
 
-            <!-- distance -->
-            <div class="distance publication-bubble">
-                <i class="fa fa-globe"></i> {{business.distance / 1000 | number:2}} km
-            </div>
-            <!-- address -->
-            <div class="publication-bubble publication-bordered">
-                <span>{{business.address.street}}, {{business.address.zip}}, {{business.address.city}}</span>
-            </div>
-        </div>
+            <!--<img class="illustration"-->
+                 <!--ng-src="{{business.illustration | image}}"/>-->
+
+
+            <!--&lt;!&ndash; business name &ndash;&gt;-->
+            <!--<div class="title">-->
+                <!--<span>-->
+                    <!--{{business.name}}-->
+                <!--</span>-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash; distance &ndash;&gt;-->
+            <!--<div class="distance publication-bubble">-->
+                <!--<i class="fa fa-globe"></i> {{business.distance / 1000 | number:2}} km-->
+            <!--</div>-->
+            <!--&lt;!&ndash; address &ndash;&gt;-->
+            <!--<div class="publication-bubble publication-bordered">-->
+                <!--<span></span>-->
+            <!--</div>-->
+        <!--</div>-->
 
 
         <div class="business-list-business-data">

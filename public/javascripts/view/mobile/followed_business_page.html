@@ -1,4 +1,4 @@
-<header-search-ctrl></header-search-ctrl>
+<mobile-title-ctrl display-menu="false" title="'--.followed-business.page.title'"></mobile-title-ctrl>
 <div class='app-body'>
     <div class='app-content modal-login'>
 
@@ -6,12 +6,9 @@
             <div class="section customer-registration scrollable-content followed-business">
 
 
-                {{'--.followed-business.page.title' | translateText}}
-
                 <div ng-repeat="business in businesses" class="followed-business-line">
-                    <div>
+                    <div ng-click="navigateTo('/business/'+business.id)">
                         <img class="illustration"
-                             ng-click="navigateTo('/business/'+business.id)"
                              ng-src="{{business.illustration | image}}"/>
                         {{business.name}}
                         {{business.followingFrom | date}}
@@ -27,10 +24,9 @@
                         <!-- notification -->
                         <button class="btn btn-xs gling-button-dark"
                                 ng-click="setNotification(business)">
-
-                            <input type="checkbox"
-                                   ng-model="business.followingNotification">
-                            Notifications
+                            <i class="glyphicon glyphicon-ok" ng-show="business.followingNotification"></i>
+                            <i class="glyphicon glyphicon-remove" ng-hide="business.followingNotification"></i>
+                            {{'--.generic.notification' | translateText}}
                         </button>
                     </div>
                 </div>

@@ -60,14 +60,12 @@ myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, busin
             };
 
             $scope.stopFollow = function (business) {
-                followService.addFollow(false, business.id, function () {
-                    for (var key  in $scope.businesses) {
-                        if ($scope.businesses[key] == business) {
-                            $scope.businesses.splice(key, 1);
-                        }
+                for (var key  in $scope.businesses) {
+                    if ($scope.businesses[key] == business) {
+                        $scope.businesses.splice(key, 1);
                     }
-                    //$scope.tableParams.reload();
-                });
+                }
+                followService.addFollow(false, business.id);
             };
 
 

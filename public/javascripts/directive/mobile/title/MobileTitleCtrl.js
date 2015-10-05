@@ -24,7 +24,7 @@ myApp.directive("mobileTitleCtrl", function ($rootScope,$location,$timeout,modal
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         modalService.openLoadingModal();
                         $timeout(function(){
-                            $location.path('/');//window.history.back();
+                            $location.url('/');//window.history.back();
                         },1);
 
                     };
