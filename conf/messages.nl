@@ -572,3 +572,5 @@ day_abrv_sunday=Zon
 --.welcome.registration=Schrijf u in
 --.welcome.business.title=U bent een bedrijf ?
 
+
+--.home.moreBusiness=Découvrez également les commerces suivants.

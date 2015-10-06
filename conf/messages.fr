@@ -583,3 +583,10 @@ day_abrv_sunday=Di
 --.business.action.gallery=Galerie
 --.business.action.home=Accueil
 --.generic.notification=Notifications
+
+
+--.home.emptyResult.moreBusiness=Découvrez également les commerces suivants.
+--.position.brussel=Bruxelles
+--.message.modal.notLocalised.title=Impossible de vous localiser
+--.message.modal.notLocalised.content=Vous devez accepter de partager votre position avant de pouvoir être localisé.
+

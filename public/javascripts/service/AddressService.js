@@ -26,7 +26,7 @@ myApp.service("addressService", function ($flash, $http, geolocationService) {
             'method': "POST",
             'url': "/rest/address/distance/" + addressId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data: geolocationService.position
+            data: geolocationService.getPositionWithoutNull()
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);

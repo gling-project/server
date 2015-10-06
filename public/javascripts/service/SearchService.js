@@ -19,7 +19,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'url': "/rest/search/publication/default/"+page,
             'headers': "Content-Type:application/json; charset=utf-8",
             'dataType':"json",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -51,7 +51,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': {
                 search: searchText,
-                position: geolocationService.position
+                position: geolocationService.getPositionWithoutNull()
             },
             timeout: this.canceler.promise
         }).success(function (data, status) {
@@ -85,7 +85,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'data': {
                 page:page,
                 search: searchText,
-                position: geolocationService.position
+                position: geolocationService.getPositionWithoutNull()
             },
             timeout: this.canceler.promise
         }).success(function (data, status) {
@@ -116,7 +116,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'method': "POST",
             'url': "/rest/search/publication/followed/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -146,7 +146,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'method': "POST",
             'url': "/rest/search/publication/followed/interest/"+interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -267,7 +267,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'method': "POST",
             'url': "/rest/search/publication/interest/" + interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -299,7 +299,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'method': "POST",
             'url': "/rest/search/business/near",
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -333,7 +333,7 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'method': "POST",
             'url': "/rest/search/business/near/interest/"+interestId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {

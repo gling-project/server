@@ -5029,38 +5029,17 @@ myApp.service("geolocationService", ['$rootScope', 'geolocation', '$http', 'acco
 
 
         this.position = null;
-        this.currentPosition = {};
+        this.currentPosition = null;
         this.geoPositionAlreadyComputed = false;
         var self = this;
         this.sharePosition = false;
 
-
-        //$http({
-        //    'method': "GET",
-        //    //'url': "https://freegeoip.net/json/",
-        //    'url': "https://www.telize.com/geoip",
-        //    'headers': "Content-Type:application/json;charset=utf-8"
-        //}).success(function (data, status) {
-        //    console.log("je suis position IP");
-        //    if (self.currentPosition == null) {
-        //        var pos = [2];
-        //        pos[0] = data.latitude;
-        //        pos[1] = data.longitude;
-        //        self.currentPosition = {
-        //            x: pos[0],
-        //            y: pos[1]
-        //        };
-        //        computePosition();
-        //        $timeout(function () {
-        //            console.log("je suis position IP POSITION_CHANGED");
-        //            $rootScope.$broadcast('POSITION_CHANGED');
-        //        }, 1);
-        //    }
-        //},function(data){
-        //    console.log("je suis position IP FAILEd");
-        //    console.log(data);
-        //});
-
+        this.getPositionWithoutNull = function () {
+            if (this.position == null) {
+                return {};
+            }
+            return this.position;
+        };
 
         if ($window.navigator && $window.navigator.geolocation && this.geoPositionAlreadyComputed == false) {
 
@@ -5086,27 +5065,24 @@ myApp.service("geolocationService", ['$rootScope', 'geolocation', '$http', 'acco
         var computePosition = function () {
 
             if (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null) {
-                if (self.currentPosition == null) {
-
-                    $rootScope.$watch(function () {
-                        return self.currentPosition;
-                    }, function watchCallback(n, o) {
-                        if (n != null) {
-                            self.position = {
-                                x: self.currentPosition.x,
-                                y: self.currentPosition.y
-                            };
-
-                        }
-                    });
-
-                }
-                else {
-                    self.position = {
-                        x: self.currentPosition.x,
-                        y: self.currentPosition.y
-                    };
-                }
+                //if (self.currentPosition == null) {
+                //
+                //    $rootScope.$watch(function () {
+                //        return self.currentPosition;
+                //    }, function watchCallback(n, o) {
+                //        if (n != null) {
+                //            self.position = {
+                //                x: self.currentPosition.x,
+                //                y: self.currentPosition.y
+                //            };
+                //
+                //        }
+                //    });
+                //
+                //}
+                //else {
+                    self.position = angular.copy(self.currentPosition);
+                //}
             }
             else {
                 self.position = {
@@ -5131,7 +5107,12 @@ myApp.service("geolocationService", ['$rootScope', 'geolocation', '$http', 'acco
 
         this.getLocationText = function () {
             if (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null) {
-                return "currentPosition";
+                if (this.currentPosition != null) {
+                    return "currentPosition";
+                }
+                else {
+                    return "default";
+                }
             }
             else {
                 return accountService.getMyself().selectedAddress.name;
@@ -5219,7 +5200,7 @@ myApp.service("addressService", ['$flash', '$http', 'geolocationService', functi
             'method': "POST",
             'url': "/rest/address/distance/" + addressId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data: geolocationService.position
+            data: geolocationService.getPositionWithoutNull()
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
@@ -5353,7 +5334,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'url': "/rest/search/publication/default/"+page,
             'headers': "Content-Type:application/json; charset=utf-8",
             'dataType':"json",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -5385,7 +5366,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': {
                 search: searchText,
-                position: geolocationService.position
+                position: geolocationService.getPositionWithoutNull()
             },
             timeout: this.canceler.promise
         }).success(function (data, status) {
@@ -5419,7 +5400,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'data': {
                 page:page,
                 search: searchText,
-                position: geolocationService.position
+                position: geolocationService.getPositionWithoutNull()
             },
             timeout: this.canceler.promise
         }).success(function (data, status) {
@@ -5450,7 +5431,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'method': "POST",
             'url': "/rest/search/publication/followed/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -5480,7 +5461,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'method': "POST",
             'url': "/rest/search/publication/followed/interest/"+interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -5601,7 +5582,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'method': "POST",
             'url': "/rest/search/publication/interest/" + interestId+"/"+page,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -5633,7 +5614,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'method': "POST",
             'url': "/rest/search/business/near",
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -5667,7 +5648,7 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             'method': "POST",
             'url': "/rest/search/business/near/interest/"+interestId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.position,
+            'data': geolocationService.getPositionWithoutNull(),
             timeout: this.canceler.promise
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -5936,7 +5917,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/modal/LoginModal/view.html",
     "<div class=modal-header><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{'--.loginModal.title' | translateText}}</h4></div><div class=\"modal-body modal-login\"><div class=help-div ng-show=\"helpMessage!=null\">{{helpMessage | translateText}}</div><login-form-ctrl ng-info=loginFormParam></login-form-ctrl><div class=link ng-click=toForgotPassword()>{{'--.login.form.button.forgotPassword' | translateText}}</div><div class=\"modal-login-link-box modal-description\"><div>{{'--.loginModal.notRegisterYet' | translateText}}</div><span class=\"modal-login-link link\" ng-click=toCustomerRegistration()>{{'--.loginModal.toCustomerRegistration' | translateText}}</span> <span class=\"modal-login-link link\" ng-click=toBusinessRegistration()>{{'--.loginModal.toBusinessRegistration' | translateText}}</span></div></div><div class=modal-footer><button ng-disabled=loading type=button class=\"btn btn-default\" ng-click=close()>{{'--.generic.close' | translateText}}</button> <button ng-disabled=loading id=login-modal-btn-save type=button class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.login.btn' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
   $templateCache.put("/assets/javascripts/modal/MessageModal/view.html",
-    "<div class=modal-header><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{title | translateText}}</h4></div><div class=modal-body>{{message | translateText}}</div><div class=modal-footer><button ng-disabled=loading type=button class=\"btn btn-default\" ng-click=close()>{{'--.generic.cancel' | translateText}}</button> <button ng-disabled=loading id=modal-message-btn-valid type=button class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.valid' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
+    "<div class=modal-header><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{title | translateText}}</h4></div><div class=modal-body>{{message | translateText}}</div><div class=modal-footer ng-show=displaySaveButton()><button ng-disabled=loading type=button class=\"btn btn-default\" ng-click=close()>{{'--.generic.cancel' | translateText}}</button> <button ng-disabled=loading id=modal-message-btn-valid type=button class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.valid' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
   $templateCache.put("/assets/javascripts/modal/OneFieldModal/view.html",
     "<div class=modal-header><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{'--.loginModal.title' | translateText}}</h4></div><div class=\"modal-body modal-login\"><dir-field-text ng-info=text></dir-field-text></div><div class=modal-footer><button ng-disabled=loading type=button class=\"btn btn-default\" ng-click=close()>{{'--.generic.close' | translateText}}</button> <button ng-disabled=loading type=button class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.valid' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
   $templateCache.put("/assets/javascripts/modal/PromotionModal/view.html",

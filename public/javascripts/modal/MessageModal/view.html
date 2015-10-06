@@ -7,7 +7,8 @@
     {{message | translateText}}
 
 </div>
-<div class="modal-footer">
+<div class="modal-footer"
+     ng-show="displaySaveButton()">
     <button
             ng-disabled="loading"
             type="button"

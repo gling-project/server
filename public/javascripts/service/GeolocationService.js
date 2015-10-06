@@ -2,38 +2,17 @@ myApp.service("geolocationService", function ($rootScope, geolocation, $http, ac
 
 
         this.position = null;
-        this.currentPosition = {};
+        this.currentPosition = null;
         this.geoPositionAlreadyComputed = false;
         var self = this;
         this.sharePosition = false;
 
-
-        //$http({
-        //    'method': "GET",
-        //    //'url': "https://freegeoip.net/json/",
-        //    'url': "https://www.telize.com/geoip",
-        //    'headers': "Content-Type:application/json;charset=utf-8"
-        //}).success(function (data, status) {
-        //    console.log("je suis position IP");
-        //    if (self.currentPosition == null) {
-        //        var pos = [2];
-        //        pos[0] = data.latitude;
-        //        pos[1] = data.longitude;
-        //        self.currentPosition = {
-        //            x: pos[0],
-        //            y: pos[1]
-        //        };
-        //        computePosition();
-        //        $timeout(function () {
-        //            console.log("je suis position IP POSITION_CHANGED");
-        //            $rootScope.$broadcast('POSITION_CHANGED');
-        //        }, 1);
-        //    }
-        //},function(data){
-        //    console.log("je suis position IP FAILEd");
-        //    console.log(data);
-        //});
-
+        this.getPositionWithoutNull = function () {
+            if (this.position == null) {
+                return {};
+            }
+            return this.position;
+        };
 
         if ($window.navigator && $window.navigator.geolocation && this.geoPositionAlreadyComputed == false) {
 
@@ -59,27 +38,24 @@ myApp.service("geolocationService", function ($rootScope, geolocation, $http, ac
         var computePosition = function () {
 
             if (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null) {
-                if (self.currentPosition == null) {
-
-                    $rootScope.$watch(function () {
-                        return self.currentPosition;
-                    }, function watchCallback(n, o) {
-                        if (n != null) {
-                            self.position = {
-                                x: self.currentPosition.x,
-                                y: self.currentPosition.y
-                            };
-
-                        }
-                    });
-
-                }
-                else {
-                    self.position = {
-                        x: self.currentPosition.x,
-                        y: self.currentPosition.y
-                    };
-                }
+                //if (self.currentPosition == null) {
+                //
+                //    $rootScope.$watch(function () {
+                //        return self.currentPosition;
+                //    }, function watchCallback(n, o) {
+                //        if (n != null) {
+                //            self.position = {
+                //                x: self.currentPosition.x,
+                //                y: self.currentPosition.y
+                //            };
+                //
+                //        }
+                //    });
+                //
+                //}
+                //else {
+                    self.position = angular.copy(self.currentPosition);
+                //}
             }
             else {
                 self.position = {
@@ -104,7 +80,12 @@ myApp.service("geolocationService", function ($rootScope, geolocation, $http, ac
 
         this.getLocationText = function () {
             if (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null) {
-                return "currentPosition";
+                if (this.currentPosition != null) {
+                    return "currentPosition";
+                }
+                else {
+                    return "default";
+                }
             }
             else {
                 return accountService.getMyself().selectedAddress.name;

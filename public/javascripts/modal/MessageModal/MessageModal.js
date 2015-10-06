@@ -11,8 +11,11 @@ myApp.controller('MessageModalCtrl', function ($scope, $flash, $modalInstance,  
         $modalInstance.close();
     };
 
-    $scope.save = function () {
+    $scope.displaySaveButton = function(){
+        return save!=null && save != undefined;
+    };
 
+    $scope.save = function () {
         save($scope.close);
     }
 

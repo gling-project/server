@@ -145,22 +145,21 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
-        console.log('je uis le success ')
-        if (data == null || data.length == 0) {
-            console.log('je uis le success PAS BIEN')
+        if (data == null || data.length <= 5) {
             $scope.allLoaded = true;
+
 
             //if there is no result and this is the first page and there is a callbackFunction,
             //try something else
             if ($scope.currentPage == 0 && callbackEmptyResultFunction != null) {
-                console.log('je uis le success START CALLBACK')
                 callbackEmptyResultFunction();
+                if (data.length != 0) {
+                    $scope.emptyMessage = 'moreBusiness';
+                }
             }
         }
-        else {
-            for (var key in data) {
-                $scope.publicationListCtrl.data.push(data[key])
-            }
+        for (var key in data) {
+            $scope.publicationListCtrl.data.push(data[key]);
         }
     };
 

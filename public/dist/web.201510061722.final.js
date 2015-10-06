@@ -1220,8 +1220,11 @@ myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$co
         $modalInstance.close();
     };
 
-    $scope.save = function () {
+    $scope.displaySaveButton = function(){
+        return save!=null && save != undefined;
+    };
 
+    $scope.save = function () {
         save($scope.close);
     }
 
@@ -1436,22 +1439,21 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         }
         $scope.loadSemaphore = false;
         $scope.publicationListCtrl.loading = false;
-        console.log('je uis le success ')
-        if (data == null || data.length == 0) {
-            console.log('je uis le success PAS BIEN')
+        if (data == null || data.length <= 5) {
             $scope.allLoaded = true;
+
 
             //if there is no result and this is the first page and there is a callbackFunction,
             //try something else
             if ($scope.currentPage == 0 && callbackEmptyResultFunction != null) {
-                console.log('je uis le success START CALLBACK')
                 callbackEmptyResultFunction();
+                if (data.length != 0) {
+                    $scope.emptyMessage = 'moreBusiness';
+                }
             }
         }
-        else {
-            for (var key in data) {
-                $scope.publicationListCtrl.data.push(data[key])
-            }
+        for (var key in data) {
+            $scope.publicationListCtrl.data.push(data[key]);
         }
     };
 
@@ -2735,33 +2737,25 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                     scope.languageService = languageService;
 
 
+                    //
+                    // POSITION
+                    //
+                    scope.currentPosition = null;
+                    scope.suspendWatching=false;
                     scope.positionBasicData = [
                         {key: 'currentPosition', translation: '--.position.current'},
                         {key: 'createNewAddress', translation: '--.position.newAddress'}
                     ];
 
-                    scope.positions = angular.copy(scope.positionBasicData);
-
-                    scope.currentPositionText = 'currentPosition';
-
-                    //$scope.$broadcast('CHANGE_ADDRESS',{address:data});
-
-                    $rootScope.$on('CHANGE_ADDRESS', function (data) {
-                        scope.currentPosition = data.address.name;
-                    });
-
-                    scope.createNewAddress = function (o) {
-                        scope.currentPosition = o;
-                        modalService.addressModal(true, null, false, function (data) {
-                            $timeout(function () {
-                                scope.currentPosition = data.name;
-                            }, 1);
-                        });
-                    };
-
+                    //the user has selected a new address
                     $rootScope.$on("CHANGE_ADDRESS_SELECTED", function () {
                         if (accountService.getMyself().selectedAddress == null) {
-                            scope.currentPosition = 'currentPosition';
+                            if (geolocationService.position == null) {
+                                scope.currentPosition = 'default';
+                            }
+                            else {
+                                scope.currentPosition = 'currentPosition';
+                            }
                             return;
                         }
                         scope.currentPosition = accountService.getMyself().selectedAddress.name;
@@ -2771,16 +2765,30 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                         completePositions();
 
                         scope.$watch('currentPosition', function (n, o) {
-                            if (n != null && o != n) {
+                            console.log(n+'/'+o+"=>"+scope.suspendWatching);
+                            if (n != null && o != n && scope.suspendWatching!=true) {
+                                scope.suspendWatching=true;
                                 if (scope.currentPosition == 'createNewAddress') {
-                                    if (accountService.getMyself(o) != null) {
-                                        scope.createNewAddress();
+                                    scope.currentPosition = o;
+                                    if (accountService.getMyself() != null) {
+
+                                        //open modal to create new address
+                                        modalService.addressModal(true, null, false, function (data) {
+                                            $timeout(function () {
+                                                scope.currentPosition = data.name;
+                                            }, 1);
+                                        });
                                     }
                                     else {
-                                        modalService.openLoginModal(scope.createNewAddress, o, '--.loginModal.help.address');
+                                        modalService.openLoginModal(scope.createNewAddress, angular.copy(o), '--.loginModal.help.address');
                                     }
                                 }
-                                if (scope.currentPosition != scope.positionCurrenltyComputed) {
+                                else if (scope.currentPosition == 'currentPosition' && geolocationService.position == null) {
+                                    scope.currentPosition = o;
+                                    modalService.messageModal('--.message.modal.notLocalised.title', '--.message.modal.notLocalised.content');
+                                }
+                                else if (scope.currentPosition != scope.positionCurrenltyComputed) {
+
                                     scope.positionCurrenltyComputed = scope.currentPosition;
                                     addressService.changeAddress(scope.currentPosition, function (result) {
 
@@ -2797,6 +2805,9 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                                         }, 1);
                                     });
                                 }
+                                $timeout(function () {
+                                    scope.suspendWatching = false;
+                                }, 1);
                             }
                         });
 
@@ -2808,8 +2819,22 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
 
                     }, 1);
 
+                    $rootScope.$on('POSITION_CHANGED',function(){
+                        console.log('je suis POSITION_CHANGED : '+scope.suspendWatching);
+                        completePositions();
+                    });
+
                     var completePositions = function () {
+                        console.log("---- completePositions : "+geolocationService.position);
                         scope.positions = angular.copy(scope.positionBasicData);
+                        if(geolocationService.position == null){
+                            scope.positions.splice(0,0,{key: 'default', translation: '--.position.brussel'});
+                        }
+                        else{
+                            if(scope.currentPosition == 'default'){
+                                scope.currentPosition ='currentPosition';
+                            }
+                        }
                         if (accountService.getMyself() != null) {
                             for (var key in accountService.getMyself().addresses) {
                                 scope.positions.splice(scope.positions.length - 1, 0,
@@ -2820,7 +2845,6 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
                             }
                         }
                         scope.currentPosition = geolocationService.getLocationText();
-                        //scope.positionCurrenltyComputed = scope.currentPosition;
                     };
 
                     $rootScope.$watch(function () {
