@@ -573,4 +573,15 @@ day_abrv_sunday=Zon
 --.welcome.business.title=U bent een bedrijf ?
 
 
---.home.moreBusiness=Découvrez également les commerces suivants.
+--.generic.site=Website
+--.interest.selection.window.nothing=Niks
+--.profile.connectedByFacebook=Aangemeld met Facebook
+--.home.mobile.selectInterest=Een wens ?
+--.business.action.info=Info
+--.business.action.gallery=Galerij
+--.business.action.home=Startpagina
+--.generic.notification=Kennisgevingen
+--.home.emptyResult.moreBusiness=Ondekt ook de volgende winkels.
+--.position.brussel=Brussel
+--.message.modal.notLocalised.title=Onmogelijk  U te lokaliseren
+--.message.modal.notLocalised.content=U moet uw positie aan ons meedelen om te lokaliseren worden.
