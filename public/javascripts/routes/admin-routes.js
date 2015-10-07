@@ -24,6 +24,17 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 })
+                .when('/admin/categories_and_interests', {
+                    templateUrl: '/assets/javascripts/view/admin/CategoriesAndInterests.html',
+                    controller: 'CategoriesAndInterestsCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                })
                 .when('/admin/', {
                     templateUrl: '/assets/javascripts/view/admin/welcome.html',
                     controller: 'WelcomeCtrl'

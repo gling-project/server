@@ -3,22 +3,22 @@ package be.lynk.server.controller.rest;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
+import be.lynk.server.dto.*;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
 import be.lynk.server.importer.DemoImporter;
-import be.lynk.server.model.entities.Account;
-import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.CustomerInterest;
-import be.lynk.server.service.AccountService;
-import be.lynk.server.service.BusinessService;
-import be.lynk.server.service.LoginCredentialService;
+import be.lynk.server.model.entities.*;
+import be.lynk.server.service.*;
 import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by florian on 5/07/15.
@@ -38,6 +38,11 @@ public class SuperAdminRestController extends AbstractRestController {
     private DemoImporter                demoImporter;
     @Autowired
     private CustomerInterestServiceImpl customerInterestService;
+    @Autowired
+    private BusinessCategoryService     businessCategoryService;
+    @Autowired
+    private CategoryInterestLinkService categoryInterestLinkService;
+
 
     @Transactional
     public Result generateFakePublications() {
@@ -148,4 +153,59 @@ public class SuperAdminRestController extends AbstractRestController {
 
         return ok(new ResultDTO());
     }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result getCategoriesAndInterests() {
+
+        List<BusinessCategoryWithInterestDTO> result = new ArrayList<>();
+        List<BusinessCategory> all = businessCategoryService.findAll();
+
+        for (BusinessCategory businessCategory : all) {
+
+            BusinessCategoryWithInterestDTO dto = dozerService.map(businessCategory, BusinessCategoryWithInterestDTO.class);
+
+            for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
+                CustomerInterestDTO customerInterestDTO = dozerService.map(categoryInterestLink.getCustomerInterest(), CustomerInterestDTO.class);
+                dto.getInterests().add(new BusinessCategoryWithInterestDTO.InterestWithPriority(customerInterestDTO, categoryInterestLink.getPriority()));
+            }
+
+            result.add(dto);
+        }
+
+        CategoriesAndInterestsDTO categoriesAndInterestsDTO = new CategoriesAndInterestsDTO();
+        categoriesAndInterestsDTO.setCategories(result);
+        categoriesAndInterestsDTO.setInterests(dozerService.map(customerInterestService.findAll(), CustomerInterestDTO.class));
+
+        return ok(categoriesAndInterestsDTO);
+    }
+
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result setCategoryInterestLink(String categoryName, String interestName, Integer priority) {
+
+        BusinessCategory businessCategory = businessCategoryService.findByName(categoryName);
+
+        CustomerInterest customerInterest = customerInterestService.findByName(interestName);
+
+        if (businessCategory == null || customerInterest == null) {
+            throw new MyRuntimeException("interest or category not found : " + interestName + "/" + categoryName);
+        }
+
+        for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
+            if (categoryInterestLink.getCustomerInterest().equals(customerInterest)) {
+                categoryInterestLink.setPriority(priority);
+                categoryInterestLinkService.saveOrUpdate(categoryInterestLink);
+                return ok();
+            }
+        }
+
+        CategoryInterestLink categoryInterestLink = new CategoryInterestLink(businessCategory, customerInterest, priority);
+        categoryInterestLinkService.saveOrUpdate(categoryInterestLink);
+
+        return ok();
+    }
+
+
 }
