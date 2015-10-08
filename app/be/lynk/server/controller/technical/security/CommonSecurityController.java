@@ -78,17 +78,6 @@ public class CommonSecurityController extends Security.Authenticator {
         return SourceEnum.ANDROID;//SourceEnum.getByKey(ctx.request().getHeader(REQUEST_HEADER_SOURCE));
     }
 
-    @Override
-    public SimpleResult onUnauthorized(Http.Context ctx) {
-        if (getSource(ctx) == SourceEnum.WEBSITE) {
-            //TODO return ok(be.flo.project.views.html.home.render(getAvaiableLanguage(),interfaceDataDTO));
-        }
-        if (ctx.args.get(FAILED_AUTHENTICATION_CAUSE) == FAILED_AUTHENTICATION_CAUSE_WRONG_RIGHTS) {
-            return Results.unauthorized(new ExceptionDTO(Messages.get(Lang.defaultLang(), ErrorMessageEnum.WRONG_AUTHORIZATION.name())));
-        }
-        return unauthorized(new ExceptionDTO(Messages.get(Lang.defaultLang(), ErrorMessageEnum.NOT_CONNECTED.name())));
-    }
-
     /**
      * return the current user if the user is authenticated
      *
@@ -125,6 +114,17 @@ public class CommonSecurityController extends Security.Authenticator {
         }
 
         throw new MyRuntimeException(ErrorMessageEnum.NOT_CONNECTED);
+    }
+
+    @Override
+    public SimpleResult onUnauthorized(Http.Context ctx) {
+        if (getSource(ctx) == SourceEnum.WEBSITE) {
+            //TODO return ok(be.flo.project.views.html.home.render(getAvaiableLanguage(),interfaceDataDTO));
+        }
+        if (ctx.args.get(FAILED_AUTHENTICATION_CAUSE) == FAILED_AUTHENTICATION_CAUSE_WRONG_RIGHTS) {
+            return Results.unauthorized(new ExceptionDTO(Messages.get(Lang.defaultLang(), ErrorMessageEnum.WRONG_AUTHORIZATION.name())));
+        }
+        return unauthorized(new ExceptionDTO(Messages.get(Lang.defaultLang(), ErrorMessageEnum.NOT_CONNECTED.name())));
     }
 
     /**

@@ -2,6 +2,7 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.EmailController;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
+import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.businessApplication.LoginSuccessDTO;
@@ -53,6 +54,8 @@ public class LoginRestController extends AbstractRestController {
     private LocalizationService       localizationService;
     @Autowired
     private BusinessService           businessService;
+
+
 
     @Transactional
     public Result forgotPassword() {
@@ -341,6 +344,12 @@ public class LoginRestController extends AbstractRestController {
 
 
         return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    public Result getBusinessData() {
+        return ok(finalizeConnection(securityController.getCurrentUser(),true));
     }
 
     private DTO finalizeConnection(Account account, boolean forBusinessApplication) {
