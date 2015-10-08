@@ -11,8 +11,10 @@ GET           /assets/*file                                                     
 
 ## registration and login
 ## tested by LoginRestControllerTest
-POST          /rest/login                                                                                            @be.lynk.server.controller.rest.LoginRestController.login()
-POST          /rest/login/facebook                                                                                   @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
+POST          /rest/login                                                                                            @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication=false)
+POST          /rest/login/facebook                                                                                   @be.lynk.server.controller.rest.LoginRestController.loginFacebook(forBusinessApplicationn=false)
+POST          /rest/login_for_business                                                                               @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication=true)
+POST          /rest/login_for_business/facebook                                                                      @be.lynk.server.controller.rest.LoginRestController.loginFacebook(forBusinessApplication=true)
 GET           /rest/login/facebook/:access_token                                                                     @be.lynk.server.controller.rest.LoginRestController.loginFacebookSimple(access_token:String)
 POST          /rest/account/fusion                                                                                   @be.lynk.server.controller.rest.LoginRestController.fusion()
 POST          /rest/registration/customer                                                                            @be.lynk.server.controller.rest.LoginRestController.customerRegistration()

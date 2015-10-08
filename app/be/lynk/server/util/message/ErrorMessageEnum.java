@@ -39,7 +39,8 @@ public enum ErrorMessageEnum {
     ERROR_NOT_YOUR_BUSINESS("--.error.business.notYours"),
     ERROR_PICTURE_WRONG_SIZE("--.error.picture.wrongSize"),
     ERROR_PICTURE_WRONG_SIZE_Y("--.error.picture.wrongSizeY"),
-    ERROR_PICTURE_WRONG_SIZE_X("--.error.picture.wrongSizeX");
+    ERROR_PICTURE_WRONG_SIZE_X("--.error.picture.wrongSizeX"),
+    ERROR_NOT_BUSINESS_ACCOUNT("--.error.businessApplication.notBusinessAccount");
 
     private final String key;
 

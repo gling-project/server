@@ -572,9 +572,6 @@ day_abrv_sunday=Di
 --.welcome.business.content3=Organisez et communiquez plus facilement vos actions spéciales.
 --.welcome.registration=Enregistrez-vous
 --.welcome.business.title=Vous êtes un commerce ?
-
-
-
 --.generic.site=Site
 --.interest.selection.window.nothing=Aucun
 --.profile.connectedByFacebook=Connecté via Facebook
@@ -583,10 +580,12 @@ day_abrv_sunday=Di
 --.business.action.gallery=Galerie
 --.business.action.home=Accueil
 --.generic.notification=Notifications
-
-
 --.home.emptyResult.moreBusiness=Découvrez également les commerces suivants.
 --.position.brussel=Bruxelles
 --.message.modal.notLocalised.title=Impossible de vous localiser
 --.message.modal.notLocalised.content=Vous devez accepter de partager votre position avant de pouvoir être localisé.
+
+
+
+--.error.businessApplication.notBusinessAccount=Ce compte n'est pas un compte commerçant. Seuls les comptes commerçants peuvent se connecter via cette application.
 

@@ -4,8 +4,10 @@ import be.lynk.server.controller.EmailController;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
+import be.lynk.server.dto.businessApplication.LoginSuccessDTO;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.dto.post.*;
+import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.GenderEnum;
 import be.lynk.server.model.entities.*;
@@ -14,6 +16,7 @@ import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
@@ -90,7 +93,7 @@ public class LoginRestController extends AbstractRestController {
 
 
     @Transactional
-    public Result loginFacebook() {
+    public Result loginFacebook(boolean forBusinessApplication) {
 
         //extract DTO
         FacebookAuthenticationDTO dto = extractDTOFromRequest(FacebookAuthenticationDTO.class);
@@ -107,9 +110,9 @@ public class LoginRestController extends AbstractRestController {
         }
         account = facebookCredential.getAccount();
 
-        MyselfDTO myselfDTO = finalizeConnection(account);
+        DTO result = finalizeConnection(account, forBusinessApplication);
 
-        return ok(myselfDTO);
+        return ok(result);
     }
 
     @Transactional
@@ -127,7 +130,7 @@ public class LoginRestController extends AbstractRestController {
         }
         account = facebookCredential.getAccount();
 
-        return ok(finalizeConnection(account));
+        return ok(finalizeConnection(account, false));
     }
 
     @Transactional
@@ -167,7 +170,7 @@ public class LoginRestController extends AbstractRestController {
         }
 
         //connection
-        return ok(finalizeConnection(account));
+        return ok(finalizeConnection(account, false));
     }
 
     /**
@@ -179,7 +182,7 @@ public class LoginRestController extends AbstractRestController {
      * Create also a session
      */
     @Transactional
-    public Result login() {
+    public Result login(boolean forBusinessApplication) {
 
         //extract DTO
         LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
@@ -201,9 +204,10 @@ public class LoginRestController extends AbstractRestController {
             accountService.saveOrUpdate(account);
         }
 
-        MyselfDTO myselfDTO = finalizeConnection(account);
 
-        return ok(myselfDTO);
+        DTO result = finalizeConnection(account, forBusinessApplication);
+
+        return ok(result);
     }
 
     @Transactional
@@ -259,7 +263,7 @@ public class LoginRestController extends AbstractRestController {
         accountService.saveOrUpdate(account);
 
         //return
-        return ok(finalizeConnection(account));
+        return ok(finalizeConnection(account,false));
     }
 
     /**
@@ -304,7 +308,7 @@ public class LoginRestController extends AbstractRestController {
 
         accountService.saveOrUpdate(account);
 
-        return ok(finalizeConnection(account));
+        return ok(finalizeConnection(account,false));
 
     }
 
@@ -339,24 +343,45 @@ public class LoginRestController extends AbstractRestController {
         return ok(new ResultDTO());
     }
 
-    private MyselfDTO finalizeConnection(Account account) {
+    private DTO finalizeConnection(Account account, boolean forBusinessApplication) {
 
-        sessionService.saveOrUpdate(new Session(account, securityController.getSource(ctx())));
 
-        //build success dto
-        MyselfDTO myselfDTO = dozerService.map(account, MyselfDTO.class);
-        myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
-        myselfDTO.setLoginAccount(account.getLoginCredential() != null);
-        myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
-        if (account.getType()!=null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
-            myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
+        if (forBusinessApplication) {
+            if (!account.getType().equals(AccountTypeEnum.BUSINESS)) {
+                throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_BUSINESS_ACCOUNT);
+            }
+            LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
+            loginSuccessDTO.setAccount(dozerService.map(account, AccountDTO.class));
+            loginSuccessDTO.setBusiness(dozerService.map(((BusinessAccount) account).getBusiness(), BusinessDTO.class));
+
+            if (account.getAuthenticationKey() != null) {
+                generateEncryptingPassword(KeyGenerator.generateRandomKey(40));
+                accountService.saveOrUpdate(account);
+            }
+
+            loginSuccessDTO.setAuthenticationKey(account.getAuthenticationKey());
+
+            return loginSuccessDTO;
+
+        } else {
+            sessionService.saveOrUpdate(new Session(account, securityController.getSource(ctx())));
+
+            //build success dto
+            MyselfDTO myselfDTO = dozerService.map(account, MyselfDTO.class);
+            myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
+            myselfDTO.setLoginAccount(account.getLoginCredential() != null);
+            myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
+            if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
+                myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
+            }
+
+
+            //storage
+            securityController.storeAccount(ctx(), account);
+
+            return myselfDTO;
         }
 
-
-        //storage
-        securityController.storeAccount(ctx(), account);
-
-        return myselfDTO;
     }
 
     private TestFacebookDTO testFacebookAccount(FacebookAuthenticationDTO facebookAuthenticationDTO) {
@@ -379,7 +404,7 @@ public class LoginRestController extends AbstractRestController {
             //founded ! the user is already registered
             Account account = facebookCredential.getAccount();
             testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED);
-            testFacebookDTO.setMyself(finalizeConnection(account));
+            testFacebookDTO.setMyself((MyselfDTO) finalizeConnection(account,false));
         } else if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
 
             //test if there is an account with the same email address than the facebook account
@@ -469,6 +494,10 @@ public class LoginRestController extends AbstractRestController {
         }
 
         return account;
+    }
+
+    private String generateEncryptingPassword(final String password) {
+        return new StrongPasswordEncryptor().encryptPassword(password);
     }
 
 }
