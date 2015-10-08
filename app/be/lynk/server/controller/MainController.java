@@ -46,9 +46,6 @@ public class MainController extends AbstractController {
         return ok(be.lynk.server.views.html.comingSoon.render());
     }
 
-    public Result legal2() {
-        return legal(null);
-    }
 
     public Result legal(String url) {
         return ok(be.lynk.server.views.html.legal.render());
@@ -59,12 +56,7 @@ public class MainController extends AbstractController {
     }
 
     @Transactional
-    public Result admin2(String url) {
-        return admin();
-    }
-
-    @Transactional
-    public Result admin() {
+    public Result admin(String url) {
 
         String facebookAppId = AppUtil.getFacebookAppId();
 
@@ -76,26 +68,12 @@ public class MainController extends AbstractController {
     }
 
     @Transactional
-    public Result mainPage2() {
-        return mainPage(null);
-    }
-
-    @Transactional
     public Result mainPage(String url) {
         return generateDefaultPage(url, false);
     }
 
     @Transactional
-    public Result toWelcomePage() {
-        if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
-            addAlreadyVisitedCookie();
-        }
-
-        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(),dozerService.map(lang(), LangDTO.class)));
-    }
-
-    @Transactional
-    public Result toWelcomePage2(String lang) {
+    public Result toWelcomePage(String lang) {
         changeLang(lang);
         if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
             addAlreadyVisitedCookie();

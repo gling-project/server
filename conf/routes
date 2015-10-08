@@ -11,10 +11,10 @@ GET           /assets/*file                                                     
 
 ## registration and login
 ## tested by LoginRestControllerTest
-POST          /rest/login                                                                                            @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication=false)
-POST          /rest/login/facebook                                                                                   @be.lynk.server.controller.rest.LoginRestController.loginFacebook(forBusinessApplicationn=false)
-POST          /rest/login_for_business                                                                               @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication=true)
-POST          /rest/login_for_business/facebook                                                                      @be.lynk.server.controller.rest.LoginRestController.loginFacebook(forBusinessApplication=true)
+POST          /rest/login                                                                                            @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication:Boolean=false)
+POST          /rest/login/facebook                                                                                   @be.lynk.server.controller.rest.LoginRestController.loginFacebook(forBusinessApplication:Boolean=false)
+POST          /rest/login_for_business                                                                               @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication:Boolean=true)
+POST          /rest/login_for_business/facebook                                                                      @be.lynk.server.controller.rest.LoginRestController.loginFacebook(forBusinessApplication:Boolean=true)
 GET           /rest/login/facebook/:access_token                                                                     @be.lynk.server.controller.rest.LoginRestController.loginFacebookSimple(access_token:String)
 POST          /rest/account/fusion                                                                                   @be.lynk.server.controller.rest.LoginRestController.fusion()
 POST          /rest/registration/customer                                                                            @be.lynk.server.controller.rest.LoginRestController.customerRegistration()
@@ -135,12 +135,12 @@ POST          /rest/import_category_translation                                 
 ##welcome
 GET           /town/                                                                                                 @be.lynk.server.controller.MainController.toTown()
 GET           /coming_soon/                                                                                          @be.lynk.server.controller.MainController.comingSoon()
-GET           /welcome/                                                                                              @be.lynk.server.controller.MainController.toWelcomePage()
-GET           /welcome/*lang                                                                                         @be.lynk.server.controller.MainController.toWelcomePage2(lang:String)
-GET           /admin/                                                                                                @be.lynk.server.controller.MainController.admin()
-GET           /admin/*url                                                                                            @be.lynk.server.controller.MainController.admin2(url)
+GET           /welcome/                                                                                              @be.lynk.server.controller.MainController.toWelcomePage(lang=null)
+GET           /welcome/*lang                                                                                         @be.lynk.server.controller.MainController.toWelcomePage(lang:String)
+GET           /admin/                                                                                                @be.lynk.server.controller.MainController.admin(url=null)
+GET           /admin/*url                                                                                            @be.lynk.server.controller.MainController.admin(url)
 GET           /mobile/                                                                                               @be.lynk.server.controller.MainController.mobile()
-GET           /legal/                                                                                                @be.lynk.server.controller.MainController.legal2()
+GET           /legal/                                                                                                @be.lynk.server.controller.MainController.legal(url=null)
 GET           /legal/*url                                                                                            @be.lynk.server.controller.MainController.legal(url)
-GET           /                                                                                                      @be.lynk.server.controller.MainController.mainPage2()
+GET           /                                                                                                      @be.lynk.server.controller.MainController.mainPage(url=null)
 GET           /*url                                                                                                  @be.lynk.server.controller.MainController.mainPage(url)
