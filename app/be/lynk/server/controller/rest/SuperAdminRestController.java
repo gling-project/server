@@ -183,7 +183,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result setCategoryInterestLink(String categoryName, String interestName, Integer priority) {
+    public Result setCategoryInterestLink(String categoryName, String interestName, String priorityS) {
 
         BusinessCategory businessCategory = businessCategoryService.findByName(categoryName);
 
@@ -193,16 +193,30 @@ public class SuperAdminRestController extends AbstractRestController {
             throw new MyRuntimeException("interest or category not found : " + interestName + "/" + categoryName);
         }
 
+
         for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
             if (categoryInterestLink.getCustomerInterest().equals(customerInterest)) {
-                categoryInterestLink.setPriority(priority);
-                categoryInterestLinkService.saveOrUpdate(categoryInterestLink);
-                return ok();
+                if (priorityS == null) {
+                    businessCategory.getLinks().remove(categoryInterestLink);
+                    businessCategoryService.saveOrUpdate(businessCategory);
+                    customerInterest.getLinks().remove(categoryInterestLink);
+                    customerInterestService.saveOrUpdate(customerInterest);
+                    categoryInterestLinkService.remove(categoryInterestLink);
+                    return ok();
+                } else {
+                    Integer priority = Integer.parseInt(priorityS);
+                    categoryInterestLink.setPriority(priority);
+                    categoryInterestLinkService.saveOrUpdate(categoryInterestLink);
+                    return ok();
+                }
+
             }
         }
 
-        CategoryInterestLink categoryInterestLink = new CategoryInterestLink(businessCategory, customerInterest, priority);
-        categoryInterestLinkService.saveOrUpdate(categoryInterestLink);
+        if (priorityS != null) {
+            CategoryInterestLink categoryInterestLink = new CategoryInterestLink(businessCategory, customerInterest, Integer.parseInt(priorityS));
+            categoryInterestLinkService.saveOrUpdate(categoryInterestLink);
+        }
 
         return ok();
     }
