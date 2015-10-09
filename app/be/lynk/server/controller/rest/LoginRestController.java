@@ -359,12 +359,12 @@ public class LoginRestController extends AbstractRestController {
     }
 
     private DTO finalizeConnection(Account account, boolean forBusinessApplication) {
-        
+
         if (forBusinessApplication) {
 
             AccountDTO accountDTO = dozerService.map(account, AccountDTO.class);
 
-            if (!accountDTO.getRole().equals(AccountTypeEnum.BUSINESS)) {
+            if (accountDTO.getRole()==null || !accountDTO.getRole().equals(AccountTypeEnum.BUSINESS)) {
                 throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_BUSINESS_ACCOUNT);
             }
             LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
