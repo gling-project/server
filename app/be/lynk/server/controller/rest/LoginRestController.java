@@ -98,28 +98,34 @@ public class LoginRestController extends AbstractRestController {
     @Transactional
     public Result loginFacebook(boolean forBusinessApplication) {
 
+
+
         //extract DTO
         FacebookAuthenticationDTO dto = extractDTOFromRequest(FacebookAuthenticationDTO.class);
 
-        //authentication
-        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getToken(), dto.getUserId());
+        return loginFacebookSimple(dto.getToken(),forBusinessApplication);
 
-        //control
-        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
-        Account account;
-
-        if (facebookCredential == null) {
-            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NOT_ACCOUNT_FOUND);
-        }
-        account = facebookCredential.getAccount();
-
-        DTO result = finalizeConnection(account, forBusinessApplication);
-
-        return ok(result);
+//        //authentication
+//        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getToken(), dto.getUserId());
+//
+//
+//
+//        //control
+//        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
+//
+//        if (facebookCredential == null) {
+//            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NOT_ACCOUNT_FOUND);
+//        }
+//        Account account = facebookCredential.getAccount();
+//        AccountTypeEnum type = account.getType();
+//
+//        DTO result = finalizeConnection(account, true);
+//
+//        return ok(result);
     }
 
     @Transactional
-    public Result loginFacebookSimple(String facebookToken) {
+    public Result loginFacebookSimple(String facebookToken,boolean forBusinessApplication) {
 
         //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookToken);
@@ -133,7 +139,7 @@ public class LoginRestController extends AbstractRestController {
         }
         account = facebookCredential.getAccount();
 
-        return ok(finalizeConnection(account, false));
+        return ok(finalizeConnection(account, forBusinessApplication));
     }
 
     @Transactional
