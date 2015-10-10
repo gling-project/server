@@ -60,7 +60,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                 }
                 else {
                     promotionService.add($scope.promotionParam.dto, function (data) {
-                            facebookService.sharePublication(busines.id,data.id);
+                            facebookService.sharePublication($scope.promotionParam.business.id,data.id);
                             $scope.success(data, share);
                         },
                         function () {

@@ -60,7 +60,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
         Duration duration= Duration.between(businessNotification.getStartDate(),businessNotification.getEndDate());
         long seconds = duration.getSeconds();
         long x= Constant.NOTIFICATION_PERIOD_MAX_DAY*24*60*60;
-        if(duration.getSeconds() > Constant.NOTIFICATION_PERIOD_MAX_DAY*24*60*60){
+        //add 1 hour
+        x += 60*60;
+        if(duration.getSeconds() > x){
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOTIFICATION_DURATION_TOO_LONG,Constant.NOTIFICATION_PERIOD_MAX_DAY);
         }
 

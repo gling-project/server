@@ -3,8 +3,10 @@ package be.lynk.server.controller.rest;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.technical.ResultDTO;
+import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
@@ -23,14 +25,23 @@ public class PublicationRestController extends AbstractRestController {
 
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private BusinessService    businessService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result delete(Long id) {
-        //load
+
         AbstractPublication publication = publicationService.findById(id);
-        if (publication == null || !publication.getBusiness().equals(((BusinessAccount) securityController.getCurrentUser()).getBusiness())) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+
+
+
+        //control business
+        Business business = publication.getBusiness();
+
+        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         publication.setEndDate(LocalDateTime.now());
