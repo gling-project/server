@@ -28,8 +28,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
         return publication.businessIllustration;
     };
 
-    $scope.success = function (data, share) {
-        console.log(data);
+    $scope.success = function (data) {
 
         $scope.loading = false;
 
@@ -48,7 +47,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
             $scope.loading = true;
             if ($scope.update) {
                 businessNotificationService.edit($scope.businessNotificationParam.dto, function (data) {
-                        $scope.success(data, share);
+                        $scope.success(data);
                     },
                     function () {
                         $scope.loading = false;
@@ -59,7 +58,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
                         if (share) {
                             facebookService.sharePublication($scope.promotionParam.business.id,data.id);
                         }
-                        $scope.success(data, share);
+                        $scope.success(data);
                     },
                     function () {
                         $scope.loading = false;

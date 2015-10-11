@@ -29,7 +29,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
     };
 
 
-    $scope.success = function (data, share) {
+    $scope.success = function (data) {
 
         $scope.loading = false;
 
@@ -52,7 +52,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                 $scope.loading = true;
                 if ($scope.update) {
                     promotionService.edit($scope.promotionParam.dto, function (data) {
-                            $scope.success(data, share);
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;
@@ -60,8 +60,10 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                 }
                 else {
                     promotionService.add($scope.promotionParam.dto, function (data) {
-                            facebookService.sharePublication($scope.promotionParam.business.id,data.id);
-                            $scope.success(data, share);
+                            if(share) {
+                                facebookService.sharePublication($scope.promotionParam.business.id, data.id);
+                            }
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;

@@ -106,6 +106,16 @@
                 {{'--.generic.remove' | translateText}}
             </button>
 
+            <!-- edit publication -->
+            <button
+                    ng-show="getInfo().displayRemoveIcon"
+                    type="button"
+                    style="margin-left: 25px"
+                    class="btn gling-button-dark"
+                    ng-click="editPublication(publication)">
+                {{'--.generic.edit' | translateText}}
+            </button>
+
 
             <div class="publication-footer-date publication-bordered-bottom">
                 {{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy'}}

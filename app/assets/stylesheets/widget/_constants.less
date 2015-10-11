@@ -131,8 +131,16 @@
     padding: 4px 10px;
     margin: 2px;
     font-size: 16px;
-    &:hover:enabled {
+    &:hover:enabled,
+    &:active:enabled{
         background-color: @color-green-dark;
+        color: @color-white;
+        text-decoration: none;
+        outline: none;
+    }
+    &:focus:enabled,
+    &:visited:enabled{
+        background-color: @color-blue-dark;
         color: @color-white;
         text-decoration: none;
         outline: none;

@@ -1,4 +1,4 @@
-myApp.directive('publicationListForBusinessCtrl', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService, modalService) {
+myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiveService, searchService, $timeout, publicationService, modalService) {
 
     return {
         restrict: "E",
@@ -24,8 +24,8 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                             scope.publications = [];
                         }
 
-                        if(data.length == 0){
-                            scope.allLoaded=true;
+                        if (data.length == 0) {
+                            scope.allLoaded = true;
                         }
 
                         scope.loadSemaphore = false;
@@ -72,27 +72,28 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                     };
 
                     scope.search = function () {
-                        if(scope.allLoaded == true){
+                        if (scope.allLoaded == true) {
                             return;
                         }
                         if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
-                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().business.id, scope.success);
                         }
                         else if (scope.type != null && scope.type != undefined && scope.type == 'PREVISUALIZATION') {
-                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().business.id, scope.success);
                         }
                         else {
-                            searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            searchService.byBusiness(scope.currentPage, scope.getInfo().business.id, scope.success);
                         }
                     };
 
-                    scope.$watch('type',function(n,o){
-                        if(n!=o){
-                         scope.allLoaded=false;
+                    scope.$watch('type', function (n, o) {
+                        if (n != o) {
+                            scope.allLoaded = false;
                             scope.search();
                         }
                     });
 
+                    //remove
                     scope.removePublication = function (publication) {
                         modalService.messageModal('--.business.publication.remove.confirmationModal.title',
                             '--.business.publication.remove.confirmationModal.body',
@@ -102,6 +103,16 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, business
                                     close();
                                 });
                             });
+                    };
+
+                    //edit
+                    scope.editPublication = function (publication) {
+                        if (publication.type == 'PROMOTION') {
+                            modalService.openPromotionModal(publication, scope.getInfo().business);
+                        }
+                        else {
+                            modalService.openBusinessNotificationModal(publication, scope.getInfo().business);
+                        }
                     };
 
                     scope.getInterestClass = function (publication) {

@@ -1018,7 +1018,7 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
     };
 
 
-    $scope.success = function (data, share) {
+    $scope.success = function (data) {
 
         $scope.loading = false;
 
@@ -1041,7 +1041,7 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
                 $scope.loading = true;
                 if ($scope.update) {
                     promotionService.edit($scope.promotionParam.dto, function (data) {
-                            $scope.success(data, share);
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;
@@ -1049,8 +1049,10 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
                 }
                 else {
                     promotionService.add($scope.promotionParam.dto, function (data) {
-                            facebookService.sharePublication($scope.promotionParam.business.id,data.id);
-                            $scope.success(data, share);
+                            if(share) {
+                                facebookService.sharePublication($scope.promotionParam.business.id, data.id);
+                            }
+                            $scope.success(data);
                         },
                         function () {
                             $scope.loading = false;
@@ -1092,8 +1094,7 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
         return publication.businessIllustration;
     };
 
-    $scope.success = function (data, share) {
-        console.log(data);
+    $scope.success = function (data) {
 
         $scope.loading = false;
 
@@ -1112,7 +1113,7 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
             $scope.loading = true;
             if ($scope.update) {
                 businessNotificationService.edit($scope.businessNotificationParam.dto, function (data) {
-                        $scope.success(data, share);
+                        $scope.success(data);
                     },
                     function () {
                         $scope.loading = false;
@@ -1123,7 +1124,7 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
                         if (share) {
                             facebookService.sharePublication($scope.promotionParam.business.id,data.id);
                         }
-                        $scope.success(data, share);
+                        $scope.success(data);
                     },
                     function () {
                         $scope.loading = false;
@@ -1658,16 +1659,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
         {key: 'BASIC', value: '--.business.publication.basic'},
         {key: 'ARCHIVE', value: '--.business.publication.archive'}
     ];
-    //publication
-    $scope.publicationListParam = {
-        businessId: $scope.businessId,
-        scrollTo: $scope.publicationIdToGo,
-        displayRemoveIcon: $scope.edit,
-        type: 'BASIC'
-    };
-    $scope.$watch('edit', function () {
-        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
-    });
+
     //address
     $scope.googleMapParams = {};
 
@@ -1675,12 +1667,26 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
         return $scope.myBusiness === true || (accountService.getMyself() != null && accountService.getMyself().role === 'SUPERADMIN');
     };
 
+    //publication
+    $scope.publicationListParam = {
+        scrollTo: $scope.publicationIdToGo,
+        displayRemoveIcon: $scope.edit,
+        type: 'BASIC'
+    };
+    $scope.$watch('edit', function () {
+        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
+    });
 
     //loading
     businessService.getBusiness($routeParams.businessId,
         function (data) {
             $scope.loading = false;
             $scope.business = data;
+
+            //publication
+            $scope.publicationListParam.business= $scope.business;
+
+
             //edit mode ?
             $scope.$watch('business.businessStatus', function () {
 
@@ -2492,7 +2498,7 @@ myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geol
         }
     }
 }]);
-myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService, modalService) {
+myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'directiveService', 'searchService', '$timeout', 'publicationService', 'modalService', function ($rootScope, directiveService, searchService, $timeout, publicationService, modalService) {
 
     return {
         restrict: "E",
@@ -2518,8 +2524,8 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                             scope.publications = [];
                         }
 
-                        if(data.length == 0){
-                            scope.allLoaded=true;
+                        if (data.length == 0) {
+                            scope.allLoaded = true;
                         }
 
                         scope.loadSemaphore = false;
@@ -2566,27 +2572,28 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                     };
 
                     scope.search = function () {
-                        if(scope.allLoaded == true){
+                        if (scope.allLoaded == true) {
                             return;
                         }
                         if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
-                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().business.id, scope.success);
                         }
                         else if (scope.type != null && scope.type != undefined && scope.type == 'PREVISUALIZATION') {
-                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().business.id, scope.success);
                         }
                         else {
-                            searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
+                            searchService.byBusiness(scope.currentPage, scope.getInfo().business.id, scope.success);
                         }
                     };
 
-                    scope.$watch('type',function(n,o){
-                        if(n!=o){
-                         scope.allLoaded=false;
+                    scope.$watch('type', function (n, o) {
+                        if (n != o) {
+                            scope.allLoaded = false;
                             scope.search();
                         }
                     });
 
+                    //remove
                     scope.removePublication = function (publication) {
                         modalService.messageModal('--.business.publication.remove.confirmationModal.title',
                             '--.business.publication.remove.confirmationModal.body',
@@ -2596,6 +2603,16 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'businessServic
                                     close();
                                 });
                             });
+                    };
+
+                    //edit
+                    scope.editPublication = function (publication) {
+                        if (publication.type == 'PROMOTION') {
+                            modalService.openPromotionModal(publication, scope.getInfo().business);
+                        }
+                        else {
+                            modalService.openBusinessNotificationModal(publication, scope.getInfo().business);
+                        }
                     };
 
                     scope.getInterestClass = function (publication) {

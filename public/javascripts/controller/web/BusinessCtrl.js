@@ -24,16 +24,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
         {key: 'BASIC', value: '--.business.publication.basic'},
         {key: 'ARCHIVE', value: '--.business.publication.archive'}
     ];
-    //publication
-    $scope.publicationListParam = {
-        businessId: $scope.businessId,
-        scrollTo: $scope.publicationIdToGo,
-        displayRemoveIcon: $scope.edit,
-        type: 'BASIC'
-    };
-    $scope.$watch('edit', function () {
-        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
-    });
+
     //address
     $scope.googleMapParams = {};
 
@@ -41,12 +32,26 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
         return $scope.myBusiness === true || (accountService.getMyself() != null && accountService.getMyself().role === 'SUPERADMIN');
     };
 
+    //publication
+    $scope.publicationListParam = {
+        scrollTo: $scope.publicationIdToGo,
+        displayRemoveIcon: $scope.edit,
+        type: 'BASIC'
+    };
+    $scope.$watch('edit', function () {
+        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
+    });
 
     //loading
     businessService.getBusiness($routeParams.businessId,
         function (data) {
             $scope.loading = false;
             $scope.business = data;
+
+            //publication
+            $scope.publicationListParam.business= $scope.business;
+
+
             //edit mode ?
             $scope.$watch('business.businessStatus', function () {
 

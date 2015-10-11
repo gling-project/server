@@ -1,4 +1,4 @@
-myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout, businessService, constantService) {
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout, businessService, $filter) {
 
     return {
         restrict: "E",
@@ -91,7 +91,9 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 return scope.getInfo().disabled;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'startDate'
+                            fieldName: 'startDate',
+                            startDate:new Date().getTime(),
+                            maxDay:30
                         },
                         endDate: {
                             name: 'endDate',
@@ -105,7 +107,10 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'endDate'
+                            fieldName: 'endDate',
+                            startDate:new Date().getTime(),
+                            maxDay:14,
+                            defaultSelection:'lastDay'
                         },
                         illustration: {
                             name: 'illustration',
@@ -241,6 +246,11 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldName: 'interest'
                         }
                     };
+
+                    scope.$watch('fields.startDate.field',function(){
+                        console.log('je suis watching');
+                        scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
+                    },true);
 
                     //
                     // specific treatment

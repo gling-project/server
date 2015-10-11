@@ -128,6 +128,7 @@ module.exports = function (grunt) {
                         <!-- directives -->
                         'public/javascripts/directive/technical/dirEnter/directive.js',
                         'public/javascripts/directive/field/dirFieldDate/directive.js',
+                        'public/javascripts/directive/field/dirFieldDateSimple/directive.js',
                         'public/javascripts/directive/field/dirFieldSelect/directive.js',
                         'public/javascripts/directive/field/dirFieldText/directive.js',
                         'public/javascripts/directive/field/dirFieldTextArea/directive.js',

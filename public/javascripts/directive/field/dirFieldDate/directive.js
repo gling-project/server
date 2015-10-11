@@ -18,6 +18,7 @@ myApp.directive("dirFieldDate", function (directiveService, $filter, generateId)
                     directiveService.autoScopeImpl(scope);
                     scope.result = null;
 
+
                     if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
                         scope.result = new Date(Number(scope.getInfo().field[scope.getInfo().fieldName]));
                         if (scope.getInfo().minimalDelay == 'day') {
