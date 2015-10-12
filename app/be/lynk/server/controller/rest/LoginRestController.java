@@ -60,7 +60,7 @@ public class LoginRestController extends AbstractRestController {
     @Transactional
     public Result forgotPassword() {
 
-        ForgotPasswordDTO dto = extractDTOFromRequest(ForgotPasswordDTO.class);
+        ForgotPasswordDTO dto = initialization(ForgotPasswordDTO.class);
 
         Account byEmail = accountService.findByEmail(dto.getEmail());
 
@@ -89,7 +89,7 @@ public class LoginRestController extends AbstractRestController {
     @Transactional
     public Result testFacebookAccount() {
 
-        FacebookAuthenticationDTO dto = extractDTOFromRequest(FacebookAuthenticationDTO.class);
+        FacebookAuthenticationDTO dto = initialization(FacebookAuthenticationDTO.class);
 
         return ok(testFacebookAccount(dto));
     }
@@ -99,33 +99,17 @@ public class LoginRestController extends AbstractRestController {
     public Result loginFacebook(boolean forBusinessApplication) {
 
 
-
         //extract DTO
-        FacebookAuthenticationDTO dto = extractDTOFromRequest(FacebookAuthenticationDTO.class);
+        FacebookAuthenticationDTO dto = initialization(FacebookAuthenticationDTO.class,false,false);
 
         return loginFacebookSimple(dto.getToken(),forBusinessApplication);
 
-//        //authentication
-//        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(dto.getToken(), dto.getUserId());
-//
-//
-//
-//        //control
-//        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
-//
-//        if (facebookCredential == null) {
-//            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NOT_ACCOUNT_FOUND);
-//        }
-//        Account account = facebookCredential.getAccount();
-//        AccountTypeEnum type = account.getType();
-//
-//        DTO result = finalizeConnection(account, true);
-//
-//        return ok(result);
     }
 
     @Transactional
     public Result loginFacebookSimple(String facebookToken,boolean forBusinessApplication) {
+
+        initialization();
 
         //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookToken);
@@ -145,7 +129,7 @@ public class LoginRestController extends AbstractRestController {
     @Transactional
     public Result fusion() {
 
-        AccountFusionDTO dto = extractDTOFromRequest(AccountFusionDTO.class);
+        AccountFusionDTO dto = initialization(AccountFusionDTO.class);
 
         //load account
         Account account = accountService.findByEmail(dto.getEmail());
@@ -194,7 +178,7 @@ public class LoginRestController extends AbstractRestController {
     public Result login(boolean forBusinessApplication) {
 
         //extract DTO
-        LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+        LoginDTO dto = initialization(LoginDTO.class);
 
         //control account
         Account account = accountService.findByEmail(dto.getEmail());
@@ -221,7 +205,7 @@ public class LoginRestController extends AbstractRestController {
 
     @Transactional
     public Result testAddress() {
-        AddressDTO addressDTO = extractDTOFromRequest(AddressDTO.class);
+        AddressDTO addressDTO = initialization(AddressDTO.class);
         Address address = dozerService.map(addressDTO, Address.class);
         //TODO temp
         address.setCountry("BELGIUM");
@@ -239,7 +223,7 @@ public class LoginRestController extends AbstractRestController {
 
     @Transactional
     public Result businessRegistration() {
-        BusinessRegistrationDTO dto = extractDTOFromRequest(BusinessRegistrationDTO.class);
+        BusinessRegistrationDTO dto = initialization(BusinessRegistrationDTO.class);
 
         BusinessAccount account = (BusinessAccount) createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), false);
         account.setRole(RoleEnum.BUSINESS);
@@ -284,7 +268,7 @@ public class LoginRestController extends AbstractRestController {
     @Transactional
     public Result customerRegistration() {
 
-        CustomerRegistrationDTO dto = extractDTOFromRequest(CustomerRegistrationDTO.class);
+        CustomerRegistrationDTO dto = initialization(CustomerRegistrationDTO.class);
 
         Account account = createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), true);
         account.setRole(RoleEnum.CUSTOMER);
@@ -334,6 +318,8 @@ public class LoginRestController extends AbstractRestController {
 
     @Transactional
     public Result changeLanguage(String code) {
+
+        initialization();
 
 
         Lang lang = Lang.forCode(code);

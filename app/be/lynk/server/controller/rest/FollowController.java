@@ -35,7 +35,7 @@ public class FollowController extends AbstractRestController {
     public Result followNotification() {
 
 
-        FollowNotificationDTO dto = extractDTOFromRequest(FollowNotificationDTO.class);
+        FollowNotificationDTO dto = initialization(FollowNotificationDTO.class);
 
         Business business = businessService.findById(dto.getBusinessId());
 
@@ -50,7 +50,7 @@ public class FollowController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result followBusiness() {
-        FollowFormDTO dto = extractDTOFromRequest(FollowFormDTO.class);
+        FollowFormDTO dto = initialization(FollowFormDTO.class);
         Business byId = businessService.findById(dto.getBusinessId());
         Account customerAccount = securityController.getCurrentUser();
 

@@ -44,7 +44,7 @@ public class BusinessScheduleRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
-        BusinessScheduleContainerDTO dto = extractDTOFromRequest(BusinessScheduleContainerDTO.class);
+        BusinessScheduleContainerDTO dto = initialization(BusinessScheduleContainerDTO.class);
 
         business.getSchedules().clear();
 

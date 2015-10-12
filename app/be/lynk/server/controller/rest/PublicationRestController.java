@@ -32,9 +32,9 @@ public class PublicationRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result delete(Long id) {
 
+        initialization();
+
         AbstractPublication publication = publicationService.findById(id);
-
-
 
         //control business
         Business business = publication.getBusiness();

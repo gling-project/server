@@ -48,6 +48,8 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getNearBusinessByInterest(Long interestID) {
 
+        initialization();
+
         //create category list
         CustomerInterest interest = customerInterestService.findById(interestID);
         List<BusinessCategory> categories = new ArrayList<>();
@@ -70,6 +72,8 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getNearBusiness() {
 
+        initialization();
+
         Position position = extractPosition();
 
         List<Business> businesses = businessService.findByDistance(position, 20);
@@ -83,6 +87,8 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getBusinessArchive(Integer page, long id) {
 
+        initialization();
+
         Business byId = businessService.findById(id);
 
         //load
@@ -94,6 +100,8 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getBusinessPrevisualization(Integer page, long id) {
 
+        initialization();
+
         Business byId = businessService.findById(id);
 
         //load
@@ -104,6 +112,8 @@ public class SearchRestController extends AbstractRestController {
 
     @Transactional
     public Result getBusiness(Integer page, long id) {
+
+        initialization();
 
         Business byId = businessService.findById(id);
 
@@ -117,6 +127,8 @@ public class SearchRestController extends AbstractRestController {
 
     @Transactional
     public Result getByDefault(Integer page) {
+
+        initialization();
 
         Logger.info("Serach Default page " + page);
 
@@ -132,6 +144,8 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result getByFollowed(Integer page) {
+
+        initialization();
 
         long t = new Date().getTime();
 
@@ -150,6 +164,8 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getByInterest(Integer page, long id) {
 
+        initialization();
+
         long t = new Date().getTime();
 
         //load interest
@@ -165,6 +181,8 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result getByInterestAndFollowed(Integer page, long id) {
+
+        initialization();
 
         long t = new Date().getTime();
 
@@ -182,87 +200,6 @@ public class SearchRestController extends AbstractRestController {
         return result;
     }
 
-    private Result selectByPageAndStartDate(Integer page, List<SearchResult> searchResults) {
-
-        //sort
-        Collections.sort(searchResults, new Comparator<SearchResult>() {
-            @Override
-            public int compare(SearchResult o1, SearchResult o2) {
-                return o2.getStartDate().compareTo(
-                        o2.getStartDate());
-            }
-        });
-
-        //limit
-        int min = page * NUMBER_RESULT_BY_PAGE;
-        int max = (page + 1) * NUMBER_RESULT_BY_PAGE;
-        if (searchResults.size() <= min) {
-            return ok(new ListDTO<>());
-        }
-        if (searchResults.size() < max) {
-            max = searchResults.size();
-        }
-        List<SearchResult> finalResult = searchResults.subList(min, max);
-
-        //load publication
-        List<AbstractPublication> publications = publicationService.findBySearchResults(finalResult);
-
-        List<AbstractPublicationDTO> publication = dozerService.map(publications, AbstractPublicationDTO.class);
-
-        Collections.sort(publication);
-
-        return ok(new ListDTO<>(publication));
-    }
-
-    private Result selectByPageAndAlgorithme(long t, Integer page, List<SearchResult> searchResults, Position position) {
-
-
-        String s = "";
-
-        s += "====== Default selectByPageAndAlgorithme\n";
-
-
-        s += "====== Find : " + (new Date().getTime() - t) + "\n";
-
-        //compute distance
-        for (SearchResult publication : searchResults) {
-            publication.setDistance(localizationService.distance(position.getX(), position.getY(), publication.getPosx(), publication.getPosy(), null));
-        }
-
-        s += "====== DISTANCE : " + (new Date().getTime() - t) + "\n";
-
-        //sort
-        Collections.sort(searchResults);
-
-        s += "====== SORT : " + (new Date().getTime() - t) + "\n";
-
-        //select
-        int min = page * NUMBER_RESULT_BY_PAGE;
-        int max = (page + 1) * NUMBER_RESULT_BY_PAGE;
-        if (searchResults.size() <= min) {
-            return ok(new ListDTO<>());
-        }
-        if (searchResults.size() < max) {
-            max = searchResults.size();
-        }
-        List<SearchResult> finalResult = searchResults.subList(min, max);
-
-        s += "====== SELECT : " + (new Date().getTime() - t) + "\n";
-
-        //load publication
-        List<AbstractPublication> publications = publicationService.findBySearchResults(finalResult);
-
-        s += "====== LOAD : " + (new Date().getTime() - t) + "\n";
-
-
-        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(position, publications, t));
-
-        s += "====== Finalize : " + (new Date().getTime() - t) + "\n";
-
-        Logger.info(s);
-
-        return ok(abstractPublicationDTOListDTO);
-    }
 
     @Transactional
     public Result getByString() {
@@ -271,7 +208,7 @@ public class SearchRestController extends AbstractRestController {
 
         int max = 20;
 
-        SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
+        SearchDTO searchDTO = initialization(SearchDTO.class);
 
         Position position = extractPosition(searchDTO.getPosition());
 
@@ -322,7 +259,7 @@ public class SearchRestController extends AbstractRestController {
 
         int max = 4;
 
-        SearchDTO searchDTO = extractDTOFromRequest(SearchDTO.class);
+        SearchDTO searchDTO = initialization(SearchDTO.class);
 
         List<AbstractPublication> finalList = new ArrayList<>();
 
@@ -575,7 +512,89 @@ public class SearchRestController extends AbstractRestController {
     }
 
     private Position extractPosition() {
-        return extractPosition(extractDTOFromRequest(PositionDTO.class));
+        return extractPosition(initialization(PositionDTO.class));
     }
 
+
+    private Result selectByPageAndStartDate(Integer page, List<SearchResult> searchResults) {
+
+        //sort
+        Collections.sort(searchResults, new Comparator<SearchResult>() {
+            @Override
+            public int compare(SearchResult o1, SearchResult o2) {
+                return o2.getStartDate().compareTo(
+                        o2.getStartDate());
+            }
+        });
+
+        //limit
+        int min = page * NUMBER_RESULT_BY_PAGE;
+        int max = (page + 1) * NUMBER_RESULT_BY_PAGE;
+        if (searchResults.size() <= min) {
+            return ok(new ListDTO<>());
+        }
+        if (searchResults.size() < max) {
+            max = searchResults.size();
+        }
+        List<SearchResult> finalResult = searchResults.subList(min, max);
+
+        //load publication
+        List<AbstractPublication> publications = publicationService.findBySearchResults(finalResult);
+
+        List<AbstractPublicationDTO> publication = dozerService.map(publications, AbstractPublicationDTO.class);
+
+        Collections.sort(publication);
+
+        return ok(new ListDTO<>(publication));
+    }
+
+    private Result selectByPageAndAlgorithme(long t, Integer page, List<SearchResult> searchResults, Position position) {
+
+
+        String s = "";
+
+        s += "====== Default selectByPageAndAlgorithme\n";
+
+
+        s += "====== Find : " + (new Date().getTime() - t) + "\n";
+
+        //compute distance
+        for (SearchResult publication : searchResults) {
+            publication.setDistance(localizationService.distance(position.getX(), position.getY(), publication.getPosx(), publication.getPosy(), null));
+        }
+
+        s += "====== DISTANCE : " + (new Date().getTime() - t) + "\n";
+
+        //sort
+        Collections.sort(searchResults);
+
+        s += "====== SORT : " + (new Date().getTime() - t) + "\n";
+
+        //select
+        int min = page * NUMBER_RESULT_BY_PAGE;
+        int max = (page + 1) * NUMBER_RESULT_BY_PAGE;
+        if (searchResults.size() <= min) {
+            return ok(new ListDTO<>());
+        }
+        if (searchResults.size() < max) {
+            max = searchResults.size();
+        }
+        List<SearchResult> finalResult = searchResults.subList(min, max);
+
+        s += "====== SELECT : " + (new Date().getTime() - t) + "\n";
+
+        //load publication
+        List<AbstractPublication> publications = publicationService.findBySearchResults(finalResult);
+
+        s += "====== LOAD : " + (new Date().getTime() - t) + "\n";
+
+
+        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(position, publications, t));
+
+        s += "====== Finalize : " + (new Date().getTime() - t) + "\n";
+
+        Logger.info(s);
+
+        return ok(abstractPublicationDTOListDTO);
+    }
 }

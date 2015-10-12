@@ -41,7 +41,7 @@ public class PromotionRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.PUBLISHED})
     public Result create() {
-        PromotionDTO dto = extractDTOFromRequest(PromotionDTO.class);
+        PromotionDTO dto = initialization(PromotionDTO.class);
 
         Promotion promotion = dozerService.map(dto, Promotion.class);
 
@@ -101,20 +101,22 @@ public class PromotionRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.PUBLISHED})
     public Result update(Long id) {
-        PromotionDTO dto = extractDTOFromRequest(PromotionDTO.class);
+        PromotionDTO dto = initialization(PromotionDTO.class);
 
         Promotion promotion = dozerService.map(dto, Promotion.class);
 
         //load
         Promotion promotionToEdit = (Promotion) publicationService.findById(id);
 
-        BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
-        Business business = account.getBusiness();
+        //control business
+        Business business = promotionToEdit.getBusiness();
 
-        //control
-        if (!promotionToEdit.getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
+
+        BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
 
         promotionToEdit.setTitle(promotion.getTitle());
         promotionToEdit.setDescription(promotion.getDescription());

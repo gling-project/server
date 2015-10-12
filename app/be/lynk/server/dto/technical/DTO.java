@@ -13,6 +13,8 @@ import play.mvc.Content;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by florian on 10/11/14.
@@ -22,7 +24,10 @@ public class DTO implements Content{
 
     @javax.persistence.Id
     @JsonIgnoreProperties
-    protected Date parsingDate =new Date();
+    protected Date parsingDate = new Date();
+
+    @JsonIgnoreProperties
+    protected Map<String, String> requestParams = new HashMap<>();
 
     protected Long currentAccountId;
 
@@ -47,7 +52,7 @@ public class DTO implements Content{
                 return dto;
 
             } catch (IOException e) {
-                Logger.error("ERROR into DTO convertion : "+data.asText());
+                Logger.error("ERROR into DTO convertion : " + data.asText());
                 e.printStackTrace();
                 throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
             }
@@ -96,5 +101,13 @@ public class DTO implements Content{
 
     public void setCurrentAccountId(Long currentAccountId) {
         this.currentAccountId = currentAccountId;
+    }
+
+    public Map<String, String> getRequestParams() {
+        return requestParams;
+    }
+
+    public void setRequestParams(Map<String, String> requestParams) {
+        this.requestParams = requestParams;
     }
 }

@@ -32,6 +32,8 @@ public class TownRestController extends AbstractRestController {
     @Transactional
     public Result getPublication(Integer zip, Integer page) {
 
+        initialization();
+
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
         response().setHeader("Access-Control-Max-Age", "3600");
@@ -58,6 +60,8 @@ public class TownRestController extends AbstractRestController {
     @Transactional
     public Result getPromotion(Integer zip, Integer page) {
 
+        initialization();
+
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
         response().setHeader("Access-Control-Max-Age", "3600");
@@ -83,6 +87,8 @@ public class TownRestController extends AbstractRestController {
     @Transactional
     public Result getPublicationByBusiness(Long id, Integer page) {
 
+        initialization();
+
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
         response().setHeader("Access-Control-Max-Age", "3600");
@@ -99,6 +105,8 @@ public class TownRestController extends AbstractRestController {
     @Transactional
     public Result getBusinessesByZip(Integer zip,Integer page) {
 
+        initialization();
+
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
         response().setHeader("Access-Control-Max-Age", "3600");
@@ -113,6 +121,8 @@ public class TownRestController extends AbstractRestController {
     @Transactional
     public Result getBusinessesByZipAndSearch(Integer zip,String search,Integer page) {
 
+        initialization();
+
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
         response().setHeader("Access-Control-Max-Age", "3600");
@@ -126,6 +136,8 @@ public class TownRestController extends AbstractRestController {
 
     @Transactional
     public Result getTranslations() {
+
+        initialization();
 
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");

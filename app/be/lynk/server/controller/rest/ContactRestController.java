@@ -21,7 +21,7 @@ public class ContactRestController extends AbstractRestController {
     @Transactional
     public Result contact() {
 
-        ContactFormDTO contactFormDTO = extractDTOFromRequest(ContactFormDTO.class);
+        ContactFormDTO contactFormDTO = initialization(ContactFormDTO.class);
 
         String email;
         if (securityController.isAuthenticated(ctx())) {

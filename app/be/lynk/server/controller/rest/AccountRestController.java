@@ -69,7 +69,7 @@ public class
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result editAccount(long id) {
 
-        AccountDTO dto = extractDTOFromRequest(AccountDTO.class);
+        AccountDTO dto = initialization(AccountDTO.class);
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {
@@ -105,7 +105,7 @@ public class
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result editCustomerInterest(long id) {
 
-        CustomerRegistrationDTO dto = extractDTOFromRequest(CustomerRegistrationDTO.class);
+        CustomerRegistrationDTO dto = initialization(CustomerRegistrationDTO.class);
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {
@@ -136,7 +136,7 @@ public class
             throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
         }
 
-        ChangePasswordDTO changePasswordDTO = extractDTOFromRequest(ChangePasswordDTO.class);
+        ChangePasswordDTO changePasswordDTO = initialization(ChangePasswordDTO.class);
 
         Account account = securityController.getCurrentUser();
 
@@ -156,7 +156,7 @@ public class
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result addAddress() {
-        AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
+        AddressDTO dto = initialization(AddressDTO.class);
 
         Address address = dozerService.map(dto, Address.class);
 
@@ -213,7 +213,7 @@ public class
         }
 
 
-        AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
+        AddressDTO dto = initialization(AddressDTO.class);
 
         Address address = addressService.findById(id);
         address.setCity(dto.getCity());
@@ -239,6 +239,8 @@ public class
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result deleteAddress(long id) {
+
+        initialization();
 
         Account currentUser = securityController.getCurrentUser();
 
@@ -282,7 +284,7 @@ public class
     @Transactional
     public Result setCurrentAddress() {
 
-        NewAddressDTO newAddressDTO = extractDTOFromRequest(NewAddressDTO.class);
+        NewAddressDTO newAddressDTO = initialization(NewAddressDTO.class);
 
         if (!securityController.isAuthenticated(ctx())) {
             return ok(new ResultDTO());
@@ -325,7 +327,7 @@ public class
     }
 
     private Position extractPosition() {
-        return extractPosition(extractDTOFromRequest(PositionDTO.class));
+        return extractPosition(initialization(PositionDTO.class));
     }
 
 }

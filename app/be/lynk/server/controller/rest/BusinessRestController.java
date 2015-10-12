@@ -159,7 +159,7 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result editGallery(long businessId) {
-        List<StoredFileDTO> galleryPictures = extractList(StoredFileDTO.class);
+        List<StoredFileDTO> galleryPictures = initializationList(StoredFileDTO.class);
 
         //control business
         Business business = businessService.findById(businessId);
@@ -221,7 +221,7 @@ public class BusinessRestController extends AbstractController {
         //test id
         Account currentUser = securityController.getCurrentUser();
 
-        AddressDTO dto = extractDTOFromRequest(AddressDTO.class);
+        AddressDTO dto = initialization(AddressDTO.class);
 
         Address address = business.getAddress();
         address.setCity(dto.getCity());
@@ -259,7 +259,7 @@ public class BusinessRestController extends AbstractController {
         }
 
 
-        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
+        StoredFileDTO dto = initialization(StoredFileDTO.class);
 
         StoredFile storedFile = storedFileService.findById(dto.getId());
 
@@ -281,7 +281,7 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result editLandscape(long businessId) {
-        StoredFileDTO dto = extractDTOFromRequest(StoredFileDTO.class);
+        StoredFileDTO dto = initialization(StoredFileDTO.class);
 
         StoredFile storedFile = storedFileService.findById(dto.getId());
 
@@ -310,7 +310,7 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result update(long businessId) {
-        BusinessDTO dto = extractDTOFromRequest(BusinessDTO.class);
+        BusinessDTO dto = initialization(BusinessDTO.class);
 
         //control business
         Business business = businessService.findById(businessId);
@@ -338,7 +338,7 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result updateSocialNetwork(long businessId) {
 
-        BusinessSocialNetworkDTO dto = extractDTOFromRequest(BusinessSocialNetworkDTO.class);
+        BusinessSocialNetworkDTO dto = initialization(BusinessSocialNetworkDTO.class);
 
         //control business
         Business business = businessService.findById(businessId);
@@ -360,7 +360,7 @@ public class BusinessRestController extends AbstractController {
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED})
     public Result editBusinessCategory(long businessId) {
 
-        List<BusinessCategoryDTO> list = extractList(BusinessCategoryDTO.class);
+        List<BusinessCategoryDTO> list = initializationList(BusinessCategoryDTO.class);
 
         //control business
         Business business = businessService.findById(businessId);
@@ -392,6 +392,9 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED, BusinessStatusEnum.PUBLISHED})
     public Result askPublication() {
+
+        initialization();
+
         Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
 
         business.setBusinessStatus(BusinessStatusEnum.WAITING_CONFIRMATION);
@@ -406,6 +409,9 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.WAITING_CONFIRMATION})
     public Result cancelPublicationRequest() {
+
+        initialization();
+
         Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
 
         business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
@@ -420,6 +426,9 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.PUBLISHED})
     public Result stopPublication() {
+
+        initialization();
+
         Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
 
         business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);

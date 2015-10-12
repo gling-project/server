@@ -49,7 +49,7 @@ public class SuperAdminRestController extends AbstractRestController {
         Account account;
         if (!securityController.isAuthenticated(ctx())) {
             //extract DTO
-            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+            LoginDTO dto = initialization(LoginDTO.class);
 
             account = accountService.findByEmail(dto.getEmail());
 
@@ -73,7 +73,7 @@ public class SuperAdminRestController extends AbstractRestController {
         Account account;
         if (!securityController.isAuthenticated(ctx())) {
             //extract DTO
-            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+            LoginDTO dto = initialization(LoginDTO.class);
 
             account = accountService.findByEmail(dto.getEmail());
 
@@ -97,7 +97,7 @@ public class SuperAdminRestController extends AbstractRestController {
         Account account;
         if (!securityController.isAuthenticated(ctx())) {
             //extract DTO
-            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+            LoginDTO dto = initialization(LoginDTO.class);
 
             account = accountService.findByEmail(dto.getEmail());
 
@@ -121,7 +121,7 @@ public class SuperAdminRestController extends AbstractRestController {
         Account account;
         if (!securityController.isAuthenticated(ctx())) {
             //extract DTO
-            LoginDTO dto = extractDTOFromRequest(LoginDTO.class);
+            LoginDTO dto = initialization(LoginDTO.class);
 
             account = accountService.findByEmail(dto.getEmail());
 

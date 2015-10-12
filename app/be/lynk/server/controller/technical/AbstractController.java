@@ -3,8 +3,10 @@ package be.lynk.server.controller.technical;
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.dto.AbstractPublicationDTO;
 import be.lynk.server.dto.BusinessToDisplayDTO;
+import be.lynk.server.dto.ListDTO;
 import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
@@ -27,7 +29,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.*;
-import java.util.logging.Logger;
 
 
 /**
@@ -50,35 +51,104 @@ public abstract class AbstractController extends Controller {
     @Autowired
     private   LocalizationService      localizationService;
 
+    protected void initialization() {
+        initialization(ResultDTO.class, false);
+    }
+
     /**
      * this function control the dto (via play.validation annotation) and return it if it's valid, or throw a runtimeException with an error message if not.
      */
-    protected <T extends DTO> T extractDTOFromRequest(Class<T> DTOclass) {
-        return extractDTOFromRequest(DTOclass, false);
+    protected <T extends DTO> T initialization(Class<T> dtoClass) {
+        return initialization(dtoClass, false);
     }
 
-    protected <T extends DTO> T extractDTOFromRequest(Class<T> DTOclass, boolean nullable) {
 
-        //extract the json node
-        JsonNode node = request().body().asJson();
-        //extract dto
-        T dto = DTO.getDTO(node, DTOclass);
-        if (dto == null) {
-            if (nullable) {
-                return null;
-            }
-            throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR, DTOclass.getName());
+    protected <T extends DTO> List<T> initializationList(Class<T> classExpected) {
+        List<T> resultList = new ArrayList<>();
+        JsonNode parse = request().body().asJson();//Json.parse(new String(contentAsBytes(result)));
+        JsonNode list = parse.get("list");
+        Iterator<JsonNode> elements = list.elements();
+        while (elements.hasNext()) {
+            T item = Json.fromJson(elements.next(), classExpected);
+            validation(item);
+            resultList.add(item);
         }
 
-        validation(dto);
+        saveInMongo(new ListDTO<>(resultList),ListDTO.class);
+
+
+        return resultList;
+    }
+
+
+    protected <T extends DTO> T initialization(Class<T> dtoClass, boolean nullable){
+        return initialization(dtoClass,nullable,true);
+    }
+
+    protected <T extends DTO> T initialization(Class<T> dtoClass, boolean nullable,boolean saveIntoMongo) {
+
+        T dto;
+
+        if (dtoClass != ResultDTO.class) {
+
+            //extract the json node
+            JsonNode node = request().body().asJson();
+            //extract dto
+            dto = DTO.getDTO(node, dtoClass);
+            if (dto == null) {
+                if (nullable) {
+                    return null;
+                }
+                throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR, dtoClass.getName());
+            }
+
+            validation(dto);
+        } else {
+            //create DTO for mongo
+            dto = (T) new ResultDTO();
+        }
+
+        //add user id
         if (securityController.isAuthenticated(ctx())) {
             dto.setCurrentAccountId(securityController.getCurrentUser().getId());
         }
-        mongoDBOperator.write(dto, DTOclass);
+        //write
 
-        play.Logger.info(request().uri()+",dto:"+dto);
+        //build params list
+        if(saveIntoMongo) {
+            saveInMongo(dto, dtoClass);
+        }
+
 
         return dto;
+    }
+
+
+    private <T extends DTO> void saveInMongo(T dto,Class<T> dtoClass){
+
+
+        Map<String, Object> args = ctx().args;
+
+        String route = (String) ctx().args.get("ROUTE_CONTROLLER");
+        String action = (String) ctx().args.get("ROUTE_ACTION_METHOD");
+        String url = (String) ctx().args.get("ROUTE_PATTERN");
+        Map<String, String> params = new HashMap<>();
+        String[] urlEls = url.split("/");
+        String[] pathEls = ctx().request().path().split("/");
+        for (int i = 0; i < urlEls.length; i++) {
+            String s = urlEls[i];
+            if (s.contains("$") || s.contains(":")) {
+                //it's a param !!
+                params.put("param" + i, pathEls[i]);
+            }
+        }
+
+        dto.setRequestParams(params);
+
+        mongoDBOperator.write(route+"."+action, dto, dtoClass);
+
+
+        play.Logger.info(request().uri() + ",dto:" + dto);
     }
 
     private <T extends DTO> void validation(T dto) {
@@ -105,21 +175,6 @@ public abstract class AbstractController extends Controller {
 
             throw new MyRuntimeException(message);
         }
-    }
-
-    protected <T extends DTO> List<T> extractList(Class<T> classExpected) {
-        List<T> resultList = new ArrayList<>();
-        JsonNode parse = request().body().asJson();//Json.parse(new String(contentAsBytes(result)));
-        JsonNode list = parse.get("list");
-        Iterator<JsonNode> elements = list.elements();
-        while (elements.hasNext()) {
-            T item = Json.fromJson(elements.next(), classExpected);
-            validation(item);
-            resultList.add(item);
-        }
-
-
-        return resultList;
     }
 
     protected boolean isMobileDevice() {
