@@ -6,6 +6,7 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.PromotionDTO;
 import be.lynk.server.dto.StoredFileDTO;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
@@ -110,13 +111,12 @@ public class PromotionRestController extends AbstractRestController {
 
         //control business
         Business business = promotionToEdit.getBusiness();
+        Account account = securityController.getCurrentUser();
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if(!account.getRole().equals(RoleEnum.SUPERADMIN) &&
+                !((BusinessAccount)account).getBusiness().equals(business)){
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
-
-        BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
 
         promotionToEdit.setTitle(promotion.getTitle());
         promotionToEdit.setDescription(promotion.getDescription());

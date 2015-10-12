@@ -53,7 +53,7 @@ public class MongoDBOperator {
             db = mongoClient.getDB(DATABASE);
 
 
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

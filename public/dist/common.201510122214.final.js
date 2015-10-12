@@ -3499,18 +3499,20 @@ myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followSe
                     scope.getInfo().maskTotal = true;
 
                     scope.followed = function () {
+
+                        scope.getInfo().business.following = !followed;
+                        if (scope.getInfo().business.following) {
+                            scope.getInfo().business.totalFollowers++;
+                            $flash.success($filter('translateText')('--.followWidget.message.add'));
+                        }
+                        else {
+                            $flash.success($filter('translateText')('--.followWidget.message.remove'));
+                            scope.getInfo().business.totalFollowers--;
+                        }
+
                         var followed = scope.getInfo().business.following;
-                        followService.addFollow(!followed, scope.getInfo().business.id, function () {
-                            scope.getInfo().business.following = !followed;
-                            if (scope.getInfo().business.following) {
-                                scope.getInfo().business.totalFollowers++;
-                                $flash.success($filter('translateText')('--.followWidget.message.add'));
-                            }
-                            else {
-                                $flash.success($filter('translateText')('--.followWidget.message.remove'));
-                                scope.getInfo().business.totalFollowers--;
-                            }
-                        });
+                        followService.addFollow(scope.getInfo().business.following, scope.getInfo().business.id);
+
                     };
                 }
             }

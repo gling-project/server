@@ -1194,8 +1194,16 @@ ul.messenger .messenger-spinner {
   margin: 2px;
   font-size: 16px;
 }
-.gling-button-dark:hover:enabled {
+.gling-button-dark:hover:enabled,
+.gling-button-dark:active:enabled {
   background-color: #00b49b;
+  color: #f4f4f4;
+  text-decoration: none;
+  outline: none;
+}
+.gling-button-dark:focus:enabled,
+.gling-button-dark:visited:enabled {
+  background-color: #2c265c;
   color: #f4f4f4;
   text-decoration: none;
   outline: none;
@@ -2098,6 +2106,7 @@ ul.messenger .messenger-spinner {
   margin-left: 10px;
 }
 .field-image-multiple .field-image-multiple-progress-bar {
+  overflow: hidden;
   text-align: center;
   border: 1px solid #cccccc;
   width: calc(100% - 70px);
@@ -2544,6 +2553,7 @@ ul.messenger .messenger-spinner {
   border-right: 1px solid #cccccc;
 }
 .business-management .business-management-progress .business-management-progress-bar {
+  overflow: hidden;
   width: 300px;
   border: 1px solid #2c265c;
   height: 30px;
@@ -2887,6 +2897,7 @@ body {
   background-color: #eeeeee;
   font-family: "myFont";
   font-size: 16px;
+  margin-bottom: 20px;
 }
 .container-content {
   background-image: url('/assets/images/home-bg.png');

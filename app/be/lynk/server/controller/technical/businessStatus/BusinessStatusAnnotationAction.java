@@ -24,8 +24,13 @@ public class BusinessStatusAnnotationAction extends Action<BusinessStatusAnnotat
 
         if (securityController.isAuthenticated(context)) {
             RoleEnum role = securityController.getCurrentUser().getRole();
-            if (role.equals(RoleEnum.BUSINESS) ||
-                    role.getChildren().contains(RoleEnum.BUSINESS)) {
+
+            if (role.equals(RoleEnum.SUPERADMIN)) {
+                return delegate.call(context);
+            }
+
+            if (role.equals(RoleEnum.BUSINESS) || role.getChildren().contains(RoleEnum.BUSINESS)) {
+
                 Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
                 for (BusinessStatusEnum businessStatus : configuration.status()) {
                     if (business.getBusinessStatus().equals(businessStatus)) {

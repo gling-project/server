@@ -2608,10 +2608,14 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'directiveServi
                     //edit
                     scope.editPublication = function (publication) {
                         if (publication.type == 'PROMOTION') {
-                            modalService.openPromotionModal(publication, scope.getInfo().business);
+                            modalService.openPromotionModal(publication, scope.getInfo().business, function () {
+                                $rootScope.$broadcast('RELOAD_PUBLICATION');
+                            });
                         }
                         else {
-                            modalService.openBusinessNotificationModal(publication, scope.getInfo().business);
+                            modalService.openBusinessNotificationModal(publication, scope.getInfo().business, function () {
+                                $rootScope.$broadcast('RELOAD_PUBLICATION');
+                            });
                         }
                     };
 
