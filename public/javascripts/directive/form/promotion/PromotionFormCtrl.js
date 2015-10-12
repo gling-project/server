@@ -18,11 +18,13 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
 
                     scope.update = scope.getInfo().dto != null;
                     scope.completePromotion = true;
+                    scope.editMode=false;
 
                     //
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
+                        scope.editMode=true;
                         scope.getInfo().dto = {
                             type: 'PROMOTION',
                             startDate: new Date()
@@ -88,11 +90,11 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'startDate',
-                            startDate:new Date().getTime(),
+                            startDate:scope.getInfo().dto.startDate,
                             maxDay:30
                         },
                         endDate: {
@@ -100,15 +102,16 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
+                            details:'--.promotion.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             validationFct: function () {
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'endDate',
-                            startDate:new Date().getTime(),
+                            startDate:scope.getInfo().dto.startDate,
                             maxDay:14,
                             defaultSelection:'lastDay'
                         },

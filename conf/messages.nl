@@ -140,9 +140,9 @@
 
 ##  modal/CustomerRegistrationModal/view.html
 --.customer.registrationModal.interest.title=Interesses
---.customer.registrationModal.interest.desc=Selecteer uw interesses. Het zal ons helpen om u nieuwtjes en kortingen voor te stellen die beter bij je passen ! U kunt ook op ''later '' drukken en uw interesses later aanvullen.
+--.customer.registrationModal.interest.desc=Selecteer uw interesses. Het zal ons helpen om u nieuwtjes en kortingen voor te stellen die beter bij je passen ! U kunt ook op 'later ' drukken en uw interesses later aanvullen.
 --.loginModal.facebook.btn=Inloggen met Facebook
---.customer.registrationModal.address.desc=Vul een adres in (thuis, op het werk, sport ). U kunt dit gebruiken om winkels in de buurt te vinden. U kunt ook op ''later'' drukken en uw adres(sen) later bijvoegen.
+--.customer.registrationModal.address.desc=Vul een adres in (thuis, op het werk, sport ). U kunt dit gebruiken om winkels in de buurt te vinden. U kunt ook op 'later' drukken en uw adres(sen) later bijvoegen.
 --.customer.registrationModal.title=Nieuw gebruikers account aanmaken.
 --.customer.registrationModal.personal.desc=Maak een account
 --.customer.registrationModal.personal.address=Adres
@@ -249,7 +249,7 @@
 --.promotion.validation.offPrice=De gereduceerde prijs moet lager zijn dan de oorspronkelijke prijs.
 --.promotion.offPercent=Verlagingspercentage
 --.promotion.validation.minimalQuantityMustBeLowerThanQuantity=De minimum hoeveelheid moet lager zijn dan de totale voorgestelde hoeveelheid.
---.promotion.illustration=Foto''s (optioneel)
+--.promotion.illustration=Foto's (optioneel)
 --.promotion.originalUnitPrice=Startprijs
 --.promotion.validation.offPercent=De vermindering moet tussen 1 en 99 % zijn.
 --.promotion.completePromotion=Maak een korting door het weergeven van een prijs.
@@ -272,8 +272,8 @@
 --.email.default.footer=email.default.footer
 --.email.registration.business.body=Welkom op Gling {0}!<br/><br/>...
 --.email.registration.business.subject=Welkom op Gling !
---.email.registration.customer.body=Welkom {0}<br/><br/>...
---.email.registration.customer.subject=Welkom op Gling !<br/><br/>?
+--.email.registration.customer.body=Welkom!<br/><br/> We zijn verheugd u te mogen verwelkomen op Gling. U bent nu een uniek Glinger en heeft de mogelijkheid om uw favoriete winkels te kunnen volgen op basis van uw wensen en interessen ! <br/>Wij staan ??tot uw beschikking via ons adres hello@gling.be om uw eventuele vragen of opmerkingen over gling te kunnen antwoorden. <br/><br/>Wij hopen U op Gling te kunnen zien. <br/>Gling Team
+--.email.registration.customer.subject=Welkom op Gling !
 
 ##  view/mobile/welcome.html
 --.mobile.welcome.toCustomerRegistration.btn=Registreer U nu !
@@ -323,8 +323,8 @@ day_abrv_sunday=Zon
 --.business.page.edit.description=Welkom op uw winkel pagina! Wijzig hier de informatie over uw winkel, publiceer nieuwe kortingen, nieuws, enz.
 --.business.page.edit.descriptionPublished=Uw pagina is momenteel Openbaar. U kunt naar een niet openbare verwisselen om belangrijke informatie te wijzigen, zoals uw adres of uw naam.
 --.business.page.edit.description.waitConfirmation=Uw pagina is in afwachting voor een bevestiging door ons team.
---.business.page.edit.description.notPublished=Uw pagina is momenteel niet toegankelijk voor het publiek en niemand kan uw pagina of uw publicaties zien. Voordat u uw pagina publiceert, zorg ervoor dat u uw winkel pagina hebt voltooid (zie de status op links ''Voortgang van mijn pagina ''). Als u klaar bent om uw  pagina openbaar te maken, klik op de knop '' Maak mijn  pagina openbaar'' hieronder. Uw pagina zal worden bevestigd door ons team .
---.business.page.stopPublication.window.flash=Uw winkel is nu in de bewerkingsmodus. Vergeet niet om het opnieuw te publiceren met de knop ''publiceren'' eenmaal uw wijzigingen klaar zijn.
+--.business.page.edit.description.notPublished=Uw pagina is momenteel niet toegankelijk voor het publiek en niemand kan uw pagina of uw publicaties zien. Voordat u uw pagina publiceert, zorg ervoor dat u uw winkel pagina hebt voltooid (zie de status op links 'Voortgang van mijn pagina '). Als u klaar bent om uw  pagina openbaar te maken, klik op de knop ' Maak mijn  pagina openbaar' hieronder. Uw pagina zal worden bevestigd door ons team .
+--.business.page.stopPublication.window.flash=Uw winkel is nu in de bewerkingsmodus. Vergeet niet om het opnieuw te publiceren met de knop 'publiceren' eenmaal uw wijzigingen klaar zijn.
 --.business.page.stopPublication.window.message=Als U in bewerkingsmodus werkt, zal uw winkel en de advertenties niet meer zichtbaar zijn totdat u uw wijzigingen bevestigd hebt. Bent U zeker dat U verder wilt gaan ?
 --.business.page.askPublication.window.flash=Uw winkel is nu in afwachting voor de validatie door ons team .
 --.business.page.askPublication.window.message=Zodra u uw aanvraag voor publicatie heeft ingevoerd, kunt u de naam, het adres en het  BTW nummer van uw winkel niet meer wijzigen. Uw winkel zal zichtbaar zijn zodra het goedgekeurd werd door ons team. Het zal dan mogelijk zijn om nieuws en kortingen te publiceren. Weet je zeker dat U verder wilt gaan ?
@@ -497,7 +497,7 @@ day_abrv_sunday=Zon
 --.business.manager.progress.add.socialNetwork=Voeg hier de links naar andere platforms toe waarop uw winkel ook aanwezig is.
 --.business.manager.progress.help=Volg de gids
 --.business.manager.progress.createPublicationTitle=Maak een publicatie
---.business.manager.createPublication.disabled.desc=U kan momenteel nog geen publicatie maken omdat uw pagina nog niet toegankelijk is voor het publiek. Om uw pagina toegankelijk te maken voor het publiek druk op ''Mijn pagina publiceren'' en wacht op de bevestiging van ons team.
+--.business.manager.createPublication.disabled.desc=U kan momenteel nog geen publicatie maken omdat uw pagina nog niet toegankelijk is voor het publiek. Om uw pagina toegankelijk te maken voor het publiek druk op 'Mijn pagina publiceren' en wacht op de bevestiging van ons team.
 --.followWidget.message.remove=Deze winkel werd uit uw favoriete winkels geschrapt.
 --.followWidget.message.add=Deze winkel is bij uw favoriete winkels toegevoegd.
 --.followWidget.stopFollow=Uit mijn favorieten halen

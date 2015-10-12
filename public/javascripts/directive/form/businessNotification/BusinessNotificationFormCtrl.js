@@ -24,15 +24,31 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         return result;
                     };
 
+                    scope.editMode=false;
 
-                    scope.update = scope.getInfo().dto != null;
+                    //
+                    // initialize default data
+                    //
                     if (scope.getInfo().dto == null) {
+                        scope.startDate = new Date().getTime();
+                        scope.endDate = new Date();
+                        scope.endDate.setSeconds(0);
+                        scope.endDate.setMinutes(0);
+                        scope.endDate.setHours(0);
+                        scope.endDate.setMilliseconds(0);
+                        addDays(scope.endDate,28);
+
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
                             startDate: new Date(),
-                            endDate:addDays(new Date(),28)//.setMonth(new Date().getDay()+28)
+                            endDate:scope.endDate
                         };
-                    };
+                    }
+                    else {
+                        scope.startDate = scope.getInfo().dto.startDate;
+                        scope.editMode=true;
+                        scope.completePromotion = scope.getInfo().dto.originalPrice != null;
+                    }
 
                     //complete for previsualization
                     scope.getInfo().dto.businessName = scope.getInfo().business.name;
@@ -81,30 +97,34 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             fieldName: 'description'
                         },
                         startDate: {
+                            name: 'startDate',
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'startDate'
+                            fieldName: 'startDate',
+                            startDate:scope.startDate,
+                            maxDay:30
                         },
                         endDate: {
+                            name: 'endDate',
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
+                            details:'--.businessNotification.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             validationFct: function () {
-                                return scope.fields.endDate.field >= scope.fields.startDate.field;
+                                return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
-                            active: function () {
-                                return true;
-                            },
-                            option:true,
-                            fieldName: 'endDate'
+                            fieldName: 'endDate',
+                            startDate:scope.startDate,
+                            maxDay:28,
+                            defaultSelection:'lastDay'
                         },
                         illustration: {
                             fieldTitle: "--.promotion.illustration",

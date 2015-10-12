@@ -1919,11 +1919,13 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
 
                     scope.update = scope.getInfo().dto != null;
                     scope.completePromotion = true;
+                    scope.editMode=false;
 
                     //
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
+                        scope.editMode=true;
                         scope.getInfo().dto = {
                             type: 'PROMOTION',
                             startDate: new Date()
@@ -1989,11 +1991,11 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'startDate',
-                            startDate:new Date().getTime(),
+                            startDate:scope.getInfo().dto.startDate,
                             maxDay:30
                         },
                         endDate: {
@@ -2001,15 +2003,16 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
+                            details:'--.promotion.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             validationFct: function () {
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'endDate',
-                            startDate:new Date().getTime(),
+                            startDate:scope.getInfo().dto.startDate,
                             maxDay:14,
                             defaultSelection:'lastDay'
                         },
@@ -2253,15 +2256,31 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                         return result;
                     };
 
+                    scope.editMode=false;
 
-                    scope.update = scope.getInfo().dto != null;
+                    //
+                    // initialize default data
+                    //
                     if (scope.getInfo().dto == null) {
+                        scope.startDate = new Date().getTime();
+                        scope.endDate = new Date();
+                        scope.endDate.setSeconds(0);
+                        scope.endDate.setMinutes(0);
+                        scope.endDate.setHours(0);
+                        scope.endDate.setMilliseconds(0);
+                        addDays(scope.endDate,28);
+
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
                             startDate: new Date(),
-                            endDate:addDays(new Date(),28)//.setMonth(new Date().getDay()+28)
+                            endDate:scope.endDate
                         };
-                    };
+                    }
+                    else {
+                        scope.startDate = scope.getInfo().dto.startDate;
+                        scope.editMode=true;
+                        scope.completePromotion = scope.getInfo().dto.originalPrice != null;
+                    }
 
                     //complete for previsualization
                     scope.getInfo().dto.businessName = scope.getInfo().business.name;
@@ -2310,30 +2329,34 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                             fieldName: 'description'
                         },
                         startDate: {
+                            name: 'startDate',
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'startDate'
+                            fieldName: 'startDate',
+                            startDate:scope.startDate,
+                            maxDay:30
                         },
                         endDate: {
+                            name: 'endDate',
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
+                            details:'--.businessNotification.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode===true;
                             },
                             validationFct: function () {
-                                return scope.fields.endDate.field >= scope.fields.startDate.field;
+                                return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
-                            active: function () {
-                                return true;
-                            },
-                            option:true,
-                            fieldName: 'endDate'
+                            fieldName: 'endDate',
+                            startDate:scope.startDate,
+                            maxDay:28,
+                            defaultSelection:'lastDay'
                         },
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
@@ -5987,7 +6010,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/field/dirFieldDate/template.html",
     "<div class=\"row form-group has-feedback\" ng-class=\"{'error' : displayError()===true}\" ng-click=logField() ng-hide=\"isActive() === false\"><div><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div class=dropdown></div><a id={{id}} role=button data-toggle=dropdown data-target=# href=\"\" class=dropdown-toggle><div class=input-group><input ng-disabled=getInfo().disabled() name={{getInfo().name}} ng-model=resultFormated class=\"form-control\"> <span class=input-group-addon><i class=\"glyphicon glyphicon-calendar\"></i></span></div><ul role=menu aria-labelledby=dLabel class=\"dropdown-menu date_input\"><datetimepicker data-ng-model=result data-datetimepicker-config=\"{ dropdownSelector: '{{idHtag}}',minView:'{{getInfo().minimalDelay}}' }\"></datetimepicker></ul></a></div><div ng-transclude></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-xs\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldDateSimple/template.html",
-    "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div>Le<select ng-options=\"day.value as day.key for day in days\" ng-model=day></select>à<select ng-options=\"hour.value as hour.key for hour in hours\" ng-model=hour></select></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-md\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
+    "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div>{{'--.field.dateSimple.to' | translateText}}<select ng-options=\"day.value as day.key for day in days\" ng-model=day style=\"width: 100px;margin-right: 20px;margin-left: 5px\" ng-disabled=getInfo().disabled()></select>{{'--.field.dateSimple.at' | translateText}}<select ng-options=\"hour.value as hour.key for hour in hours\" ng-model=hour style=\"width: 100px;margin-right: 20px;margin-left: 5px\" ng-disabled=getInfo().disabled()></select></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-md\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldDocument/template.html",
     "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=\"form-group row\"><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle |translateText}}</label><div ng-class=\"getInfo().fullSize==true?'col-md-12':'col-md-6'\"><div style=\"text-align: center\"><div><div ng-show=\"inDownload=== true &amp;&amp; percent != 100\" class=document-question-progress-bar><div ng-style=style><spa></spa></div></div><div ng-show=\"inDownload=== true && percent != 100\" class=document-question-progress-percentage>{{percent}} %</div><div ng-show=\"inDownload=== true && percent == 100\">{{'--.field.document.inTreatment' | translateText}}</div><span class=\"btn btn-default btn-file field-document-btn\" ng-hide=\"inDownload === true || getInfo().disabled()\">{{((getInfo().field[getInfo().fieldName]!=null)?'--.download.button.update':'--.download.button.new') | translateText}} <input name=\"{{ id }}\" type=file ng-file-select=\"onFileSelect($files)\"></span><div ng-show=\"success && getInfo().disabled()!=true\">{{'--.field.document.success' | translateText}}</div></div><img ng-show=\"  getInfo().field[getInfo().fieldName]!=null\" ng-style={width:getInfo().posx,height:getInfo().posy} style=\"border:1px solid #999999;max-width: 850px\" ng-src=\"{{getInfo().field[getInfo().fieldName] | image}}\"></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldImageMutiple/template.html",
@@ -6009,7 +6032,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/form/businessCategory/template.html",
     "<div class=form><div class=business-category ng-class=\"{'disabled' : isDisabled()}\"><div class=\"panel panel-default\"><div class=panel-heading>{{'--.businessCategory.column.category' | translateText}}</div><div class=panel-body><button name={{category.name}} ng-disabled=isDisabled() ng-repeat=\"category in categories\" class=category-box ng-class=\"{'category-selected':category.selected === true}\" ng-click=select(category)>{{category.translationName | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.businessCategory.column.subcategory' | translateText}}</div><div class=panel-body><button name={{subcategory.name}} ng-repeat=\"subcategory in subcategories\" ng-disabled=isDisabled() class=category-box ng-class=\"{'subcategory-selected':subcategory.selected === true}\" ng-click=selectSubcategory(subcategory)>{{subcategory.translationName | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.businessCategory.column.subsubcategory' | translateText}}</div><div class=panel-body><button name={{subsubcategory.name}} ng-repeat=\"subsubcategory in subsubcategories\" ng-disabled=isDisabled() class=category-box ng-class=\"{'subsubcategory-selected':subsubcategory.selected === true}\" ng-click=selectSubSubcategory(subsubcategory)>{{subsubcategory.translationName | translateText}}</button></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/form/businessNotification/template.html",
-    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date ng-info=fields.startDate></dir-field-date><dir-field-date ng-info=fields.endDate></dir-field-date><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><h3>{{'--.publication.previsualization' | translateText}}</h3><publication-widget-ctrl ng-info={publication:getInfo().dto,previsualization:true}></publication-widget-ctrl></div>");
+    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date-simple ng-info=fields.startDate></dir-field-date-simple><dir-field-date-simple ng-info=fields.endDate></dir-field-date-simple><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><h3>{{'--.publication.previsualization' | translateText}}</h3><publication-widget-ctrl ng-info={publication:getInfo().dto,previsualization:true}></publication-widget-ctrl></div>");
   $templateCache.put("/assets/javascripts/directive/form/businessSocialNetwork/template.html",
     "<div class=form><div class=modal-description>{{'--.business.socialNetwork.form.description' | translateText}}</div><dir-field-text ng-info=fields.facebook></dir-field-text><dir-field-text ng-info=fields.twitter></dir-field-text><dir-field-text ng-info=fields.instagram></dir-field-text>{{'--.business.socialNetwork.other' | translateText}} {{'--.business.socialNetwork.other' | translateText}}<dir-field-text ng-info=fields.delivery></dir-field-text><dir-field-text ng-info=fields.ecommerce></dir-field-text><dir-field-text ng-info=fields.opinion></dir-field-text><dir-field-text ng-info=fields.reservation></dir-field-text></div>");
   $templateCache.put("/assets/javascripts/directive/form/contact/template.html",
