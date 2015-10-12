@@ -144,13 +144,31 @@
     .attendance-close {
         background-color: @color-grey !important;
     }
+    .attendance-appointment{
+        background-color: #096ac8 !important;
+    }
     .attendance-light {
-        background-color: @color-green-light !important;
+        background-color: green !important;
     }
     .attendance-moderate {
-        background-color: @color-yellow !important;
+        background-color: orange !important;
     }
     .attendance-heavy {
-        background-color: @color-red !important;
+        background-color: red !important;
+    }
+
+    .attendance-close,
+    .attendance-appointment,
+    .attendance-light ,
+    .attendance-moderate ,
+    .attendance-heavy {
+        color: @color-white;
+    }
+
+    .schedule-legend{
+        & > div{
+            padding: 2px 10px;
+            margin-top: 4px;
+        }
     }
 }

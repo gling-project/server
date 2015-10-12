@@ -30,22 +30,13 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
-                        scope.startDate = new Date().getTime();
-                        scope.endDate = new Date();
-                        scope.endDate.setSeconds(0);
-                        scope.endDate.setMinutes(0);
-                        scope.endDate.setHours(0);
-                        scope.endDate.setMilliseconds(0);
-                        addDays(scope.endDate,28);
-
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
                             startDate: new Date(),
-                            endDate:scope.endDate
+                            endDate:addDays(new Date(),28)//.setMonth(new Date().getDay()+28)
                         };
                     }
                     else {
-                        scope.startDate = scope.getInfo().dto.startDate;
                         scope.editMode=true;
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
@@ -104,9 +95,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                 return scope.getInfo().disabled || scope.editMode===true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'startDate',
-                            startDate:scope.startDate,
-                            maxDay:30
+                            fieldName: 'startDate'
                         },
                         endDate: {
                             name: 'endDate',
@@ -122,9 +111,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'endDate',
-                            startDate:scope.startDate,
-                            maxDay:28,
-                            defaultSelection:'lastDay'
+                            startDate:scope.startDate
                         },
                         illustration: {
                             fieldTitle: "--.promotion.illustration",

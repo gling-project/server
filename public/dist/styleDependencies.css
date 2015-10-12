@@ -2403,14 +2403,28 @@ ul.messenger .messenger-spinner {
 .schedule-form .attendance-close {
   background-color: #cccccc !important;
 }
+.schedule-form .attendance-appointment {
+  background-color: #096ac8 !important;
+}
 .schedule-form .attendance-light {
-  background-color: #1ad2aa !important;
+  background-color: green !important;
 }
 .schedule-form .attendance-moderate {
-  background-color: #ff9900 !important;
+  background-color: orange !important;
 }
 .schedule-form .attendance-heavy {
-  background-color: #cc0033 !important;
+  background-color: red !important;
+}
+.schedule-form .attendance-close,
+.schedule-form .attendance-appointment,
+.schedule-form .attendance-light,
+.schedule-form .attendance-moderate,
+.schedule-form .attendance-heavy {
+  color: #f4f4f4;
+}
+.schedule-form .schedule-legend > div {
+  padding: 2px 10px;
+  margin-top: 4px;
 }
 .business-page .business-right-column {
   width: 680px;

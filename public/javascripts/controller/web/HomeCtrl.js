@@ -1,4 +1,4 @@
-myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
+myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route) {
 
 
 
@@ -6,6 +6,19 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+
+    var original = $location.path;
+    var path = function (path) {
+        //$location.path(path,false);
+
+        //var lastRoute = $route.current;
+        //var un = $rootScope.$on('$locationChangeSuccess', function () {
+        //    $route.current = lastRoute;
+        //    un();
+        //});
+        //return original.apply($location, [path]);
+    };
 
 
     $scope.displaySharePositionAdvertissement = function () {
@@ -72,10 +85,19 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.switchFollowedMode = function (n) {
 
         if (n != null) {
+            console.log('CAA -------------------');
             $scope.followedMode = n;
         }
         else {
             $scope.followedMode = !$scope.followedMode;
+        }
+        if ($scope.followedMode) {
+            console.log('MERDE -------------------');
+            path('/follow');
+        }
+        else {
+            console.log('MERDE STOP -------------------');
+            path('/');
         }
     };
 

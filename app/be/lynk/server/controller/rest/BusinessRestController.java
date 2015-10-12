@@ -6,9 +6,11 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotati
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
+import be.lynk.server.dto.post.BusinessRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
+import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,14 @@ public class BusinessRestController extends AbstractController {
     @Autowired
     private CustomerInterestService customerInterestService;
 
+
+
+
+    /* ////////////////////////////////////////////////////
+     * READ FUNCTION
+     /////////////////////////////////////////////////// */
+
+
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result getFollowed() {
@@ -69,12 +79,6 @@ public class BusinessRestController extends AbstractController {
 
         return ok(new ListDTO<>(map));
     }
-
-
-
-    /* ////////////////////////////////////////////////////
-     * READ FUNCTION
-     /////////////////////////////////////////////////// */
 
     /**
      * return only public data for all users / non-users
@@ -381,6 +385,50 @@ public class BusinessRestController extends AbstractController {
         return ok(dozerService.map(business, BusinessCategoryLittleContainerDTO.class));
 
     }
+
+//    @Transactional
+//    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+//    public Result convertCustomerToBusiness(){
+//
+//        Account currentUser = securityController.getCurrentUser();
+//
+//        if(!currentUser.getType().equals(AccountTypeEnum.CUSTOMER)){
+//            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
+//        }
+//
+//        currentUser.setType();
+//
+//
+//        BusinessRegistrationDTO dto = initialization(BusinessRegistrationDTO.class);
+//
+//        //business
+//        Business business = dozerService.map(dto.getBusiness(), Business.class);
+//        business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
+//        //TODO temp
+//        business.getAddress().setCountry("BELGIUM");
+//
+//        //control address
+//        try {
+//            localizationService.validAddress(business.getAddress());
+//        } catch (Exception e) {
+//            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+//        }
+//
+//        //add categories
+//        business.setBusinessCategories(new ArrayList<>());
+//        for (BusinessCategoryDTO businessCategoryDTO : dto.getBusiness().getBusinessCategories()) {
+//            business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
+//        }
+//
+//        account.setBusiness(business);
+//        business.setAccount(account);
+//
+//        //send email
+//        emailController.sendApplicationRegistrationBusinessEmail(account);
+//
+//        accountService.saveOrUpdate(account);
+//
+//    }
 
 
     /* ////////////////////////////////////////////////////

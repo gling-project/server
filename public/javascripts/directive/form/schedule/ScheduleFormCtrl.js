@@ -31,6 +31,7 @@ myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
                     scope.attendance_selected = 'LIGHT';
                     scope.select_day = null;
                     scope.attendance_class = {
+                        APPOINTMENT:'attendance-appointment',
                         LIGHT: 'attendance-light',
                         MODERATE: 'attendance-moderate',
                         IMPORTANT: 'attendance-heavy'

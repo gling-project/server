@@ -18,13 +18,11 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
 
                     scope.update = scope.getInfo().dto != null;
                     scope.completePromotion = true;
-                    scope.editMode=false;
 
                     //
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
-                        scope.editMode=true;
                         scope.getInfo().dto = {
                             type: 'PROMOTION',
                             startDate: new Date()
@@ -34,6 +32,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     else {
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
+
+
 
                     //complete for previsualization
                     scope.getInfo().dto.businessName = scope.getInfo().business.name;
@@ -90,11 +90,11 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode===true;
+                                return scope.getInfo().disabled;
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'startDate',
-                            startDate:scope.getInfo().dto.startDate,
+                            startDate:new Date().getTime(),
                             maxDay:30
                         },
                         endDate: {
@@ -104,14 +104,14 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             minimalDelay: 'hour',
                             details:'--.promotion.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode===true;
+                                return scope.getInfo().disabled;
                             },
                             validationFct: function () {
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'endDate',
-                            startDate:scope.getInfo().dto.startDate,
+                            startDate:new Date().getTime(),
                             maxDay:14,
                             defaultSelection:'lastDay'
                         },

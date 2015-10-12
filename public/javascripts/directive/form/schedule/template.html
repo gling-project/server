@@ -35,6 +35,13 @@
                 <input type="radio" ng-model="attendance_selected" value="IMPORTANT"/>
                 {{'--.schedule.heavy' | translateText}}
             </div>
+
+            <div class="attendance-appointment"
+                 id="schedule-edit-btn-attendance-appointment"
+                 ng-click="selectAttendance('APPOINTMENT')">
+                <input type="radio" ng-model="attendance_selected" value="APPOINTMENT"/>
+                {{'--.schedule.appointment' | translateText}}
+            </div>
         </div>
         <!--Start-->
         <!--<select ng-model="startHour"-->

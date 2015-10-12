@@ -38,6 +38,7 @@ myApp.directive('scheduleCtrl', function (directiveService) {
                     };
 
                     scope.attendance_class = {
+                        APPOINTMENT:'attendance-appointment',
                         LIGHT: 'attendance-light',
                         MODERATE: 'attendance-moderate',
                         IMPORTANT: 'attendance-heavy'

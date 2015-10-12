@@ -42,27 +42,30 @@ public class MongoDBOperator {
 
             List<MongoCredential> mongoCredential = new ArrayList<>();
 
-            if (Play.isProd()) {
-
-//                mongoCredential.add(MongoCredential.createMongoCRCredential(, , CREDENTIAL.split(":")[1].toCharArray()));
-            }
-
-            ServerAddress serverAddress = new ServerAddress();
-
             String user = CREDENTIAL.split(":")[0];
             String password = CREDENTIAL.split(":")[1];
             String dbName = DATABASE;
             String host = SERVER.split(":")[0];
             String port = SERVER.split(":")[1];
+            MongoClient mongoClient;
 
-            String uriS = "mongodb://" + user + ":" + password + "@" + host + ":" + port + "/" + dbName;
+            if (Play.isProd()) {
 
-            Logger.info("--------------------------------=>" + uriS);
+                String uriS = "mongodb://" + user + ":" + password + "@" + host + ":" + port + "/" + dbName;
 
-            MongoClientURI uri = new MongoClientURI(uriS);
-            MongoClient mongoClient = new MongoClient(uri);
+                Logger.info("--------------------------------=>" + uriS);
 
-            db = mongoClient.getDB(uri.getDatabase());
+                MongoClientURI uri = new MongoClientURI(uriS);
+
+                mongoClient = new MongoClient(uri);
+            }
+            else{
+                ServerAddress serverAddress = new ServerAddress(SERVER.split(":")[0], Integer.parseInt(SERVER.split(":")[1]));
+
+                mongoClient = new MongoClient(serverAddress, mongoCredential);
+            }
+
+            db = mongoClient.getDB(dbName);
 
 
         } catch (Exception e) {

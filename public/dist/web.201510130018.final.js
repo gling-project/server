@@ -236,6 +236,21 @@ app.config(['$locationProvider', function ($locationProvider) {
         requireBase: false
     });
 }]);
+
+app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
+
+    var original = $location.path;
+    $location.path = function (path, reload) {
+        if (reload === false) {
+            var lastRoute = $route.current;
+            var un = $rootScope.$on('$locationChangeSuccess', function () {
+                $route.current = lastRoute;
+                un();
+            });
+        }
+        return original.apply($location, [path]);
+    };
+}]);
 myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams,helpMessage) {
 
     $scope.loading = false;
@@ -1293,7 +1308,7 @@ myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'titl
     };
 
 }]);
-myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService) {
+myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', '$location', '$route', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route) {
 
 
 
@@ -1301,6 +1316,19 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+
+    var original = $location.path;
+    var path = function (path) {
+        //$location.path(path,false);
+
+        //var lastRoute = $route.current;
+        //var un = $rootScope.$on('$locationChangeSuccess', function () {
+        //    $route.current = lastRoute;
+        //    un();
+        //});
+        //return original.apply($location, [path]);
+    };
 
 
     $scope.displaySharePositionAdvertissement = function () {
@@ -1367,10 +1395,19 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.switchFollowedMode = function (n) {
 
         if (n != null) {
+            console.log('CAA -------------------');
             $scope.followedMode = n;
         }
         else {
             $scope.followedMode = !$scope.followedMode;
+        }
+        if ($scope.followedMode) {
+            console.log('MERDE -------------------');
+            path('/follow');
+        }
+        else {
+            console.log('MERDE STOP -------------------');
+            path('/');
         }
     };
 

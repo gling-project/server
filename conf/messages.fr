@@ -592,3 +592,6 @@ day_abrv_sunday=Di
 --.businessNotification.dayMax.details=La durée d'une actualité ne peut excéder 28 jours
 --.field.dateSimple.to=Le
 --.field.dateSimple.at=à
+--.generic.legend=Légende
+--.schedule.appointment=Uniquement sur rendez-vous
+--.error.customerToBusiness.alreadyBusiness=Vous avez déjà un commerce
