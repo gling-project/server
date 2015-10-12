@@ -6,6 +6,7 @@ import com.mongodb.*;
 import org.mongojack.JacksonDBCollection;
 import org.springframework.stereotype.Component;
 import play.Configuration;
+import play.Logger;
 import play.Play;
 import play.libs.F;
 import play.mvc.Http;
@@ -43,14 +44,25 @@ public class MongoDBOperator {
 
             if (Play.isProd()) {
 
-                mongoCredential.add(MongoCredential.createMongoCRCredential(CREDENTIAL.split(":")[0], DATABASE, CREDENTIAL.split(":")[1].toCharArray()));
+//                mongoCredential.add(MongoCredential.createMongoCRCredential(, , CREDENTIAL.split(":")[1].toCharArray()));
             }
 
-            ServerAddress serverAddress = new ServerAddress(SERVER.split(":")[0], Integer.parseInt(SERVER.split(":")[1]));
+            ServerAddress serverAddress = new ServerAddress();
 
-            MongoClient mongoClient = new MongoClient(serverAddress, mongoCredential);
+            String user = CREDENTIAL.split(":")[0];
+            String password = CREDENTIAL.split(":")[1];
+            String dbName = DATABASE;
+            String host = SERVER.split(":")[0];
+            String port = SERVER.split(":")[1];
 
-            db = mongoClient.getDB(DATABASE);
+            String uriS = "mongodb://" + user + ":" + password + "@" + host + ":" + port + "/" + dbName;
+
+            Logger.info("--------------------------------=>" + uriS);
+
+            MongoClientURI uri = new MongoClientURI(uriS);
+            MongoClient mongoClient = new MongoClient(uri);
+
+            db = mongoClient.getDB(uri.getDatabase());
 
 
         } catch (Exception e) {
