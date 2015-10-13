@@ -5,6 +5,7 @@ import be.lynk.server.model.entities.Address;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.geocode.GeocodeUtil;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
@@ -32,11 +33,14 @@ import java.util.Map;
 @Service
 public class LocalizationServiceImpl implements LocalizationService {
 
-    private final static String GOOGLE_API_KEY = Configuration.root().getString("google.api.key");
+    private final static String GOOGLE_API_KEY         = Configuration.root().getString("google.api.key");
+    private final static String GOOGLE_OAUTH_CLIENT_ID = Configuration.root().getString("google.oauth.clientid");
+    private final static String GOOGLE_OAUTH_KEY       = Configuration.root().getString("google.oauth.key");
 
     @Override
     public void validAddress(Address address) throws Exception {
-        final Geocoder geocoder = new Geocoder();
+
+        final GeocodeUtil geocoder = new GeocodeUtil(GOOGLE_API_KEY);
         String addressString = addressToString(address);
 
         GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
@@ -46,8 +50,8 @@ public class LocalizationServiceImpl implements LocalizationService {
         try {
             GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
             if (!geocoderResponse.getStatus().equals(GeocoderStatus.OK)) {
-                Logger.error("wrong status from google map : "+geocoderResponse.getStatus());
-                Logger.error(geocoderResponse.getResults()+"");
+                Logger.error("wrong status from google map : " + geocoderResponse.getStatus());
+                Logger.error(geocoderResponse.getResults() + "");
                 throw new Exception();
             }
             address.setPosx(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue());
@@ -57,6 +61,10 @@ public class LocalizationServiceImpl implements LocalizationService {
             throw new MyRuntimeException("fatal error : " + e.getMessage());
         }
     }
+
+    //Server returned HTTP response code: 403 for URL: https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=Boulevard+du+Souverain+230%2C1160%2CAuderghem%2CBelgique&language=en&client=838426561398&signature=8pJm_GbgJjOKNnk2LRK57-6j7A4=
+
+    //https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=Boulevard+du+Souverain+230%2C1160%2CAuderghem%2CBelgique&language=en&client=838426561398-hldj6led93uonp13lchjlhjrnjmrntr6.apps.googleusercontent.com&signature=8pJm_GbgJjOKNnk2LRK57-6j7A4=
 
     @Override
     public Map<Business, Long> distanceBetweenAddresses(Address origin, List<Business> destinations) {
@@ -92,7 +100,7 @@ public class LocalizationServiceImpl implements LocalizationService {
         Map<Business, Long> map = new HashMap<>();
 
         for (Business destination : destinations) {
-            long l=distance(
+            long l = distance(
                     origin.getX(),
                     origin.getY(),
                     destination.getAddress().getPosx(),
@@ -152,8 +160,8 @@ public class LocalizationServiceImpl implements LocalizationService {
 
     @Override
     public Double distance(double lat1, double lon1, double lat2, double lon2, Character unit) {
-        if(unit==null){
-            unit='m';
+        if (unit == null) {
+            unit = 'm';
         }
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
@@ -162,7 +170,7 @@ public class LocalizationServiceImpl implements LocalizationService {
         dist = dist * 60 * 1.1515;
         if (unit == 'K') {
             dist = dist * 1.609344;
-        } else if(unit == 'm'){
+        } else if (unit == 'm') {
             dist = dist * 1.609344 * 1000;
         } else if (unit == 'N') {
             dist = dist * 0.8684;
