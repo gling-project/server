@@ -148,7 +148,6 @@ myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageS
                     });
 
                     var completePositions = function () {
-                        console.log("---- completePositions : "+geolocationService.position);
                         scope.positions = angular.copy(scope.positionBasicData);
                         if(geolocationService.position == null){
                             scope.positions.splice(0,0,{key: 'default', translation: '--.position.brussel'});

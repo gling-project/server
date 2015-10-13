@@ -48,7 +48,7 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getNearBusinessByInterest(Long interestID) {
 
-        initialization();
+        //already initialized by extractPosition
 
         //create category list
         CustomerInterest interest = customerInterestService.findById(interestID);
@@ -72,7 +72,7 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getNearBusiness() {
 
-        initialization();
+        //already initialized by extractPosition
 
         Position position = extractPosition();
 
@@ -128,7 +128,7 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getByDefault(Integer page) {
 
-        initialization();
+        //already initialized by extractPosition
 
         Logger.info("Serach Default page " + page);
 
@@ -145,7 +145,7 @@ public class SearchRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result getByFollowed(Integer page) {
 
-        initialization();
+        //already initialized by extractPosition
 
         long t = new Date().getTime();
 
@@ -164,7 +164,7 @@ public class SearchRestController extends AbstractRestController {
     @Transactional
     public Result getByInterest(Integer page, long id) {
 
-        initialization();
+        //already initialized by extractPosition
 
         long t = new Date().getTime();
 
@@ -206,9 +206,11 @@ public class SearchRestController extends AbstractRestController {
 
         //TODO do not compute distance for little
 
+
         int max = 20;
 
-        SearchDTO searchDTO = initialization(SearchDTO.class);
+        //already initialized by extractPosition
+        SearchDTO searchDTO = initialization(SearchDTO.class,false,false);
 
         Position position = extractPosition(searchDTO.getPosition());
 
@@ -259,7 +261,8 @@ public class SearchRestController extends AbstractRestController {
 
         int max = 4;
 
-        SearchDTO searchDTO = initialization(SearchDTO.class);
+        //already initialized by extractPosition
+        SearchDTO searchDTO = initialization(SearchDTO.class,false,false);
 
         List<AbstractPublication> finalList = new ArrayList<>();
 
