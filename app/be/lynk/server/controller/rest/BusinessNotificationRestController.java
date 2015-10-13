@@ -23,6 +23,8 @@ import play.mvc.Result;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by florian on 1/06/15.
@@ -31,9 +33,9 @@ import java.time.LocalDateTime;
 public class BusinessNotificationRestController extends AbstractRestController {
 
     @Autowired
-    private PublicationService publicationService;
+    private PublicationService      publicationService;
     @Autowired
-    private StoredFileService storedFileService;
+    private StoredFileService       storedFileService;
     @Autowired
     private CustomerInterestService customerInterestService;
 
@@ -53,23 +55,23 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         //control start date
-        if(businessNotification.getStartDate().compareTo(LocalDateTime.now().minusHours(1))==-1){
+        if (businessNotification.getStartDate().compareTo(LocalDateTime.now().minusHours(1)) == -1) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_STARTDATE_BEFORE_NOW);
         }
 
         //control date
-        Duration duration= Duration.between(businessNotification.getStartDate(),businessNotification.getEndDate());
+        Duration duration = Duration.between(businessNotification.getStartDate(), businessNotification.getEndDate());
         long seconds = duration.getSeconds();
-        long x= Constant.NOTIFICATION_PERIOD_MAX_DAY*24*60*60;
+        long x = Constant.NOTIFICATION_PERIOD_MAX_DAY * 24 * 60 * 60;
         //add 1 hour
-        x += 60*60;
-        if(duration.getSeconds() > x){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOTIFICATION_DURATION_TOO_LONG,Constant.NOTIFICATION_PERIOD_MAX_DAY);
+        x += 60 * 60;
+        if (duration.getSeconds() > x) {
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOTIFICATION_DURATION_TOO_LONG, Constant.NOTIFICATION_PERIOD_MAX_DAY);
         }
 
         //control number by day
-        if(publicationService.countPublicationForToday(businessNotification.getStartDate(),securityController.getBusiness())>=Constant.PUBLICATION_MAX_BY_DAY){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_DAY);
+        if (publicationService.countPublicationForToday(businessNotification.getStartDate(), securityController.getBusiness()) >= Constant.PUBLICATION_MAX_BY_DAY) {
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_DAY);
         }
 
         //TODO control file
@@ -116,8 +118,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
         //control business
         Business business = businessNotificationToEdit.getBusiness();
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !((BusinessAccount) securityController.getCurrentUser()).getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -130,8 +132,53 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         publicationService.saveOrUpdate(businessNotificationToEdit);
 
+
+        Map<StoredFile, Boolean> newPictures = new HashMap<>();
+
         for (StoredFile storedFile : businessNotification.getPictures()) {
-            storedFileService.saveOrUpdate(storedFile);
+            newPictures.put(storedFile, false);
+        }
+
+        int biggestOrder=0;
+        for (int i = businessNotificationToEdit.getPictures().size() - 1; i >= 0; i--) {
+
+            StoredFile storedFile = businessNotificationToEdit.getPictures().get(i);
+
+            boolean founded = false;
+            for (Map.Entry<StoredFile, Boolean> storedFileBooleanEntry : newPictures.entrySet()) {
+                if (storedFile.getStoredName().equals(storedFileBooleanEntry.getKey().getStoredName())) {
+                    founded = true;
+                    storedFileBooleanEntry.setValue(true);
+                    if(storedFile.getFileOrder()>biggestOrder){
+                        biggestOrder=storedFile.getFileOrder();
+                    }
+                }
+            }
+
+            //not found ? remove!
+            if (!founded) {
+                businessNotificationToEdit.getPictures().remove(storedFile);
+                publicationService.saveOrUpdate(businessNotificationToEdit);
+                storedFileService.remove(storedFile);
+            }
+        }
+
+
+        for (Map.Entry<StoredFile, Boolean> storedFileBooleanEntry : newPictures.entrySet()) {
+            if (!storedFileBooleanEntry.getValue()) {
+
+                StoredFile storedFile = storedFileBooleanEntry.getKey();
+
+                StoredFile originalStoredFile = storedFileService.findByStoredName(storedFile.getStoredName());
+                originalStoredFile.setPublication(businessNotificationToEdit);
+
+                //add comments
+                originalStoredFile.setComment(storedFile.getComment());
+
+                originalStoredFile.setFileOrder(++biggestOrder);
+
+                storedFileService.saveOrUpdate(originalStoredFile);
+            }
         }
 
         return ok(dozerService.map(businessNotificationToEdit, BusinessNotificationDTO.class));

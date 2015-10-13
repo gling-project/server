@@ -29,6 +29,9 @@ public class DTO implements Content{
     @JsonIgnoreProperties
     protected Map<String, String> requestParams = new HashMap<>();
 
+    @JsonIgnoreProperties
+    protected String sessionId;
+
     protected Long currentAccountId;
 
 
@@ -109,5 +112,13 @@ public class DTO implements Content{
 
     public void setRequestParams(Map<String, String> requestParams) {
         this.requestParams = requestParams;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

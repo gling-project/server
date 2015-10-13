@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -74,18 +75,18 @@ public abstract class AbstractController extends Controller {
             resultList.add(item);
         }
 
-        saveInMongo(new ListDTO<>(resultList),ListDTO.class);
+        saveInMongo(new ListDTO<>(resultList), ListDTO.class);
 
 
         return resultList;
     }
 
 
-    protected <T extends DTO> T initialization(Class<T> dtoClass, boolean nullable){
-        return initialization(dtoClass,nullable,true);
+    protected <T extends DTO> T initialization(Class<T> dtoClass, boolean nullable) {
+        return initialization(dtoClass, nullable, true);
     }
 
-    protected <T extends DTO> T initialization(Class<T> dtoClass, boolean nullable,boolean saveIntoMongo) {
+    protected <T extends DTO> T initialization(Class<T> dtoClass, boolean nullable, boolean saveIntoMongo) {
 
         T dto;
 
@@ -115,7 +116,7 @@ public abstract class AbstractController extends Controller {
         //write
 
         //build params list
-        if(saveIntoMongo) {
+        if (saveIntoMongo) {
             saveInMongo(dto, dtoClass);
         }
 
@@ -124,10 +125,8 @@ public abstract class AbstractController extends Controller {
     }
 
 
-    private <T extends DTO> void saveInMongo(T dto,Class<T> dtoClass){
+    private <T extends DTO> void saveInMongo(T dto, Class<T> dtoClass) {
 
-
-        Map<String, Object> args = ctx().args;
 
         String route = (String) ctx().args.get("ROUTE_CONTROLLER");
         String action = (String) ctx().args.get("ROUTE_ACTION_METHOD");
@@ -145,7 +144,15 @@ public abstract class AbstractController extends Controller {
 
         dto.setRequestParams(params);
 
-        mongoDBOperator.write(route+"."+action, dto, dtoClass);
+        String uuid = session("uuid");
+        if (uuid == null) {
+            uuid = java.util.UUID.randomUUID().toString();
+            session("uuid", uuid);
+        }
+        dto.setSessionId(uuid);
+
+
+        mongoDBOperator.write(route + "." + action, dto, dtoClass);
 
 
         play.Logger.info(request().uri() + ",dto:" + dto);

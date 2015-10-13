@@ -41,9 +41,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
         if (!$scope.businessNotificationParam.isValid) {
             $scope.businessNotificationParam.displayErrorMessage = true;
         }
-        else {
-
-
+        else if($scope.loading===false){
             $scope.loading = true;
             if ($scope.update) {
                 businessNotificationService.edit($scope.businessNotificationParam.dto, function (data) {

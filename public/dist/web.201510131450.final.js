@@ -1051,7 +1051,7 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
             if ($scope.promotionParam.minimalQuantity > $scope.promotionParam.quantity) {
                 $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
             }
-            else {
+            else if($scope.loading===false){
 
                 $scope.loading = true;
                 if ($scope.update) {
@@ -1122,9 +1122,7 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
         if (!$scope.businessNotificationParam.isValid) {
             $scope.businessNotificationParam.displayErrorMessage = true;
         }
-        else {
-
-
+        else if($scope.loading===false){
             $scope.loading = true;
             if ($scope.update) {
                 businessNotificationService.edit($scope.businessNotificationParam.dto, function (data) {

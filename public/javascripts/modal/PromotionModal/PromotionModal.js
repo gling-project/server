@@ -47,7 +47,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
             if ($scope.promotionParam.minimalQuantity > $scope.promotionParam.quantity) {
                 $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
             }
-            else {
+            else if($scope.loading===false){
 
                 $scope.loading = true;
                 if ($scope.update) {

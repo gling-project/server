@@ -29,3 +29,24 @@
         </td>
     </tr>
 </table>
+
+    <ui-gmap-google-map
+            center='map.center'
+            dragging='true'
+            zoom='11'>
+
+        <ui-gmap-marker
+                ng-repeat="business in businesses"
+                idKey='1'
+                coords='{latitude:business.address.posx,longitude:business.address.posy}'
+                >
+            <ui-gmap-window>
+                <div>{{business.name}}</div>
+            </ui-gmap-window>
+        </ui-gmap-marker>
+
+
+
+
+
+    </ui-gmap-google-map>

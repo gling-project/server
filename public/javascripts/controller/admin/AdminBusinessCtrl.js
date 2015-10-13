@@ -33,4 +33,13 @@ myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTab
         });
 
     };
+
+
+    $scope.map = {
+        center: {
+            latitude: 50.8471417,
+            longitude: 4.3528959
+        }
+    };
+
 });

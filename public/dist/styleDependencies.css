@@ -2404,16 +2404,16 @@ ul.messenger .messenger-spinner {
   background-color: #cccccc !important;
 }
 .schedule-form .attendance-appointment {
-  background-color: #096ac8 !important;
+  background-color: #aad4f2 !important;
 }
 .schedule-form .attendance-light {
-  background-color: green !important;
+  background-color: #1ad2aa !important;
 }
 .schedule-form .attendance-moderate {
-  background-color: orange !important;
+  background-color: #ff9900 !important;
 }
 .schedule-form .attendance-heavy {
-  background-color: red !important;
+  background-color: #cc0033 !important;
 }
 .schedule-form .attendance-close,
 .schedule-form .attendance-appointment,
