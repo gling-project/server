@@ -34,8 +34,6 @@ import java.util.Map;
 public class LocalizationServiceImpl implements LocalizationService {
 
     private final static String GOOGLE_API_KEY         = Configuration.root().getString("google.api.key");
-    private final static String GOOGLE_OAUTH_CLIENT_ID = Configuration.root().getString("google.oauth.clientid");
-    private final static String GOOGLE_OAUTH_KEY       = Configuration.root().getString("google.oauth.key");
 
     @Override
     public void validAddress(Address address) throws Exception {
