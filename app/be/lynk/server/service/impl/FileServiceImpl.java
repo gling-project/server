@@ -89,14 +89,12 @@ public class FileServiceImpl implements FileService {
 
                 //1) sizeX and sizeY are the minimal size :
                 if ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey)) {
-                    if(sizey==null){
+                    if (sizey == null) {
                         throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
-                    }
-                    else if(sizex==null){
+                    } else if (sizex == null) {
                         throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
 
-                    }
-                    else{
+                    } else {
                         throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
                     }
                 }
@@ -114,10 +112,17 @@ public class FileServiceImpl implements FileService {
                         int targetedX = (int) ((xProportion < yProportion) ? sizex : sizexPicture / proportionToResize);
                         int targetedY = (int) ((xProportion < yProportion) ? sizeyPicture / proportionToResize : sizey);
 
+                        if (targetedX < sizex) {
+                            targetedX = sizex;
+                        }
+                        if (targetedY < sizey) {
+                            targetedY = sizey;
+                        }
+
                         //3 resize
                         originalImage = resizeImage(originalImage
-                                , targetedX
-                                , targetedY
+                                , targetedX + 1 //add 1 to be sure. If not, resize with -1
+                                , targetedY + 1 //add 1 to be sure. If not, resize with -1
                                 , RenderingHints.VALUE_RENDER_QUALITY
                                 , true);
 
@@ -139,8 +144,8 @@ public class FileServiceImpl implements FileService {
 
                         //2 resize
                         originalImage = resizeImage(originalImage
-                                , sizex
-                                , (int) (sizeyPicture / xProportion)
+                                , sizex + 1 //add 1 to be sure. If not, resize with -1
+                                , (int) (sizeyPicture / xProportion) + 1
                                 , RenderingHints.VALUE_RENDER_QUALITY
                                 , true);
                     } else if (sizey != null && sizey != sizeyPicture) {
@@ -149,8 +154,8 @@ public class FileServiceImpl implements FileService {
 
                         //2 resize
                         originalImage = resizeImage(originalImage
-                                , (int) (sizexPicture / yProportion)
-                                , sizey
+                                , (int) (sizexPicture / yProportion) + 1
+                                , sizey + 1 //add 1 to be sure. If not, resize with -1
                                 , RenderingHints.VALUE_RENDER_QUALITY
                                 , true);
                     }
@@ -295,29 +300,31 @@ public class FileServiceImpl implements FileService {
     }
 
     private BufferedImage cropImage(BufferedImage src, Integer width, Integer height) {
-        int x, y, w, h;
-        if (width != null && height != null) {
-            int difference = src.getWidth() - width;
-            int difference2 = src.getHeight() - height;
-            return src.getSubimage(
-                    difference / 2,
-                    difference2 / 2,
-                    src.getWidth() - difference / 2,
-                    src.getHeight() - difference2 / 2);
 
-        } else if (width != null) {
-            int difference = src.getWidth() - width;
-            x = difference / 2;
-            y = 0;
-            w = width;
-            h = src.getHeight();
-        } else {
-            int difference = src.getHeight() - height;
-            x = 0;
-            y = difference / 2;
-            w = src.getWidth();
-            h = height;
+        if (height == null) {
+            height = src.getHeight();
         }
-        return src.getSubimage(x, y, w, h);
+        if (width == null) {
+            width = src.getWidth();
+        }
+
+        int left, right, top, bottom;
+
+        //compute width
+        int differenceW = src.getWidth() - width;
+        left = differenceW / 2;
+        right = src.getWidth() - differenceW / 2;
+        if (right - left < width) {
+            left = left - (width - (right - left));
+        }
+
+        //compute height
+        int differenceH = src.getHeight() - height;
+        top = differenceH / 2;
+        bottom = src.getHeight() - differenceH / 2;
+        if (bottom - top < height) {
+            top = top - (height - (bottom - top));
+        }
+        return src.getSubimage(left,top, right,  bottom);
     }
 }

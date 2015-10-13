@@ -22,14 +22,15 @@
                             <tab-heading>
                                 {{'--.generic.business' | translateText}} ({{businessTab.totalToDisplay}})
                             </tab-heading>
-                            <business-list-ctrl ng-info="{data:businessTab.data}"></business-list-ctrl>
+                            <business-list-mobile-ctrl ng-info="{data:businessTab.data}"></business-list-mobile-ctrl>
                         </tab>
                         <!-- publication -->
                         <tab ng-show="publicationTab.display" active="publicationTab.active">
                             <tab-heading>
                                 {{'--.generic.publication' | translateText}} ({{publicationTab.totalToDisplay}})
                             </tab-heading>
-                            <publication-list-ctrl ng-info="{data:publicationTab.data}"></publication-list-ctrl>
+                            <publication-list-mobile-ctrl ng-info="{data:publicationTab.data}">
+                            </publication-list-mobile-ctrl>
                         </tab>
                         <!-- category -->
                         <tab ng-show="categoryTab.display" active="categoryTab.active">

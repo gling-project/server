@@ -111,6 +111,8 @@ public class AbstractImporter {
 
 
     protected File copyFileUsingFileStreams(File source) {
+        return source;
+        /*
         InputStream input = null;
         OutputStream output = null;
         try {
@@ -133,6 +135,6 @@ public class AbstractImporter {
             } catch (IOException e) {
                 throw new MyRuntimeException(e.getMessage());
             }
-        }
+        }*/
     }
 }

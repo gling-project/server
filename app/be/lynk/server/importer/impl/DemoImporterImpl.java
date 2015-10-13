@@ -96,7 +96,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
         importBusiness(sheet);
 
-        importPublication(sheetPublication);
+//        importPublication(sheetPublication);
 
         return "success";
     }
