@@ -184,7 +184,6 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
         return JPA.em().createQuery(request, AbstractPublication.class)
                   .setParameter("idList", ids)
-                  .setParameter("businessStatus", BusinessStatusEnum.PUBLISHED)
                   .getResultList();
     }
 
