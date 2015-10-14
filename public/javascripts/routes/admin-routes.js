@@ -35,6 +35,17 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 })
+                .when('/admin/stat', {
+                    templateUrl: '/assets/javascripts/view/admin/adminStat.html',
+                    controller: 'AdminStatCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                })
                 .when('/admin/', {
                     templateUrl: '/assets/javascripts/view/admin/welcome.html',
                     controller: 'WelcomeCtrl'

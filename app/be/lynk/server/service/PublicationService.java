@@ -44,4 +44,9 @@ public interface PublicationService extends CrudService<AbstractPublication> {
 
     int countPublicationForToday(LocalDateTime day,Business business);
 
+    Long countAll();
+
+    Long countActive();
+
+    Long countActiveFrom(LocalDateTime localDateTime);
 }

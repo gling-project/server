@@ -4,18 +4,17 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.PublicationTypeEnum;
 import be.lynk.server.model.SearchResult;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.PublicationService;
+import be.lynk.server.util.AccountTypeEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -181,10 +180,11 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         }
         List<Long> ids = searchResults.stream().map(s -> s.getPublicationId()).collect(Collectors.toList());
 
-        String request = "SELECT p FROM AbstractPublication p where p.id in :idList";
+        String request = "SELECT p FROM AbstractPublication p where p.id in :idList and p.business.status = :businessStatus";
 
         return JPA.em().createQuery(request, AbstractPublication.class)
                   .setParameter("idList", ids)
+                  .setParameter("businessStatus", BusinessStatusEnum.PUBLISHED)
                   .getResultList();
     }
 
@@ -226,6 +226,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(address.get("zip"), zip.toString())
+                , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
                 , cb.equal(from.get("type"), PublicationTypeEnum.NOTIFICATION));
         cq.orderBy(cb.desc(from.get("startDate")));
 
@@ -247,6 +248,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(address.get("zip"), zip.toString())
+                , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
                 , cb.equal(from.get("type"), PublicationTypeEnum.PROMOTION));
         cq.orderBy(cb.desc(from.get("startDate")));
 
@@ -257,7 +259,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
     }
 
     @Override
-    public int countPublicationForToday(LocalDateTime day,Business business){
+    public int countPublicationForToday(LocalDateTime day, Business business) {
 
         String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business";
 
@@ -270,5 +272,48 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         return c.intValue();
 
 
+    }
+
+    @Override
+    public Long countAll() {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        cq.select(cb.count(from));
+
+        return JPA.em().createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public Long countActive() {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        cq.select(cb.count(from));
+        Path<Business> business = from.get("business");
+
+        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+
+        return JPA.em().createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public Long countActiveFrom(LocalDateTime localDateTime) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        cq.select(cb.count(from));
+        Path<Business> business = from.get("business");
+
+        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("creationDate"), localDateTime)
+                , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+
+        return JPA.em().createQuery(cq).getSingleResult();
     }
 }

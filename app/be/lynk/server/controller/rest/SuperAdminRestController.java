@@ -4,6 +4,7 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
+import be.lynk.server.dto.admin.AdminStatDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
@@ -11,12 +12,14 @@ import be.lynk.server.importer.DemoImporter;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.CustomerInterestServiceImpl;
+import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +45,8 @@ public class SuperAdminRestController extends AbstractRestController {
     private BusinessCategoryService     businessCategoryService;
     @Autowired
     private CategoryInterestLinkService categoryInterestLinkService;
+    @Autowired
+    private PublicationService          publicationService;
 
 
     @Transactional
@@ -152,6 +157,34 @@ public class SuperAdminRestController extends AbstractRestController {
         businessService.saveOrUpdate(business);
 
         return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result getStats() {
+
+        AdminStatDTO adminStatDTO = new AdminStatDTO();
+
+        Long nbCustomer = accountService.countByType(AccountTypeEnum.CUSTOMER);
+
+        //utilisateur
+        adminStatDTO.getStats().put("Nombre de compte consommateurs", nbCustomer + "");
+
+        adminStatDTO.getStats().put("Nouveaux consommateurs 1 jour", "+ " + accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(1)));
+
+        adminStatDTO.getStats().put("Nouveaux consommateurs 7 jours", "+ " + accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(7)));
+
+        //publication
+        adminStatDTO.getStats().put("Nombre total de publications", publicationService.countAll() + "");
+
+        adminStatDTO.getStats().put("Nombre de publications actives", publicationService.countActive() + "");
+
+        adminStatDTO.getStats().put("Nouvelles publications depuis 1 jour", "+ " + publicationService.countActiveFrom(LocalDateTime.now().minusDays(1)));
+
+        adminStatDTO.getStats().put("Nouvelles publications 7 jours", "+ " + publicationService.countActiveFrom(LocalDateTime.now().minusDays(7)));
+
+
+        return ok(adminStatDTO);
     }
 
     @Transactional
