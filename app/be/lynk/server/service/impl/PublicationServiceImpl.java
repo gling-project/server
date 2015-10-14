@@ -180,7 +180,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         }
         List<Long> ids = searchResults.stream().map(s -> s.getPublicationId()).collect(Collectors.toList());
 
-        String request = "SELECT p FROM AbstractPublication p where p.id in :idList and p.business.status = :businessStatus";
+        String request = "SELECT p FROM AbstractPublication p where p.id in :idList";
 
         return JPA.em().createQuery(request, AbstractPublication.class)
                   .setParameter("idList", ids)
