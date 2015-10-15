@@ -166,6 +166,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 );
         cq.orderBy(cb.desc(from.get("startDate")));
 
+
+
+
         return JPA.em().createQuery(cq)
                   .setFirstResult(page * maxResult)
                   .setMaxResults(maxResult)
