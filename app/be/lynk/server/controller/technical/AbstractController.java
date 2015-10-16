@@ -189,11 +189,33 @@ public abstract class AbstractController extends Controller {
         String userAgent = ctx().request().getHeader("User-Agent");
         boolean mobile = false;
         if (userAgent.indexOf("Mobile") != -1) {
-            mobile = true;
+            return true;
         }
-        return mobile;
+        return false;
     }
 
+    protected boolean isAndroid() {
+
+        String userAgent = ctx().request().getHeader("User-Agent");
+        boolean mobile = false;
+        if (userAgent.indexOf("Android") != -1) {
+            return true;
+        }
+        return false;
+    }
+
+
+    protected boolean isAppleDevice() {
+
+        String userAgent = ctx().request().getHeader("User-Agent");
+        boolean mobile = false;
+        if (userAgent.indexOf("iPhone") != -1 ||
+                userAgent.indexOf("iPod") != -1 ||
+                userAgent.indexOf("iPad") != -1) {
+            return true;
+        }
+        return false;
+    }
 
     protected BusinessToDisplayDTO convertBusiness(Business business) {
 

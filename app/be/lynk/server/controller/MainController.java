@@ -28,8 +28,10 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-//    private String AWSBuckect     =
-    private String fileBucketUrl  = Configuration.root().getString("aws.accesFile.url");//"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
+    //    private String AWSBuckect     =
+    private String fileBucketUrl  = Configuration.root().getString("aws.accesFile.url");
+    //"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
+    //"https://s3.amazonaws.com/" + AWSBuckect; (gling-prod)
     private String urlBase        = Configuration.root().getString("site.url.base");
     private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
     private String lastVersion    = Configuration.root().getString("project.lastVersion");
@@ -41,6 +43,16 @@ public class MainController extends AbstractController {
     private LocalizationService     localizationService;
     @Autowired
     private CustomerInterestService customerInterestService;
+
+    public Result application() {
+        if (isAndroid()) {
+            final String appPackageName = "be.gling.fakeapp";
+            return redirect("https://play.google.com/store/apps/details?id=" + appPackageName);
+        }
+        else {
+            return redirect("/");
+        }
+    }
 
     public Result comingSoon() {
         return ok(be.lynk.server.views.html.comingSoon.render());
@@ -78,7 +90,7 @@ public class MainController extends AbstractController {
         if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
             addAlreadyVisitedCookie();
         }
-        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(),dozerService.map(lang(), LangDTO.class)));
+        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(), dozerService.map(lang(), LangDTO.class)));
     }
 
 
@@ -86,7 +98,7 @@ public class MainController extends AbstractController {
 
         if (!isMobileDevice() && !forceMobile && ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
             addAlreadyVisitedCookie();
-            return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(),dozerService.map(lang(), LangDTO.class)));
+            return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(), dozerService.map(lang(), LangDTO.class)));
         } else {
 
 

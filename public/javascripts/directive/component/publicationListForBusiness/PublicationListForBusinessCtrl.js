@@ -59,6 +59,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                                 scope.loadSemaphore = true;
                                 scope.currentPage = scope.currentPage + 1;
 
+                                console.log("-- from scrolling");
                                 scope.search();
                             }
                         }
@@ -68,10 +69,11 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                         scope.currentPage = 0;
                         scope.publications = [];
                         scope.type = type;
-                        scope.search();
+                        //will be reloaded by type watching
                     };
 
                     scope.search = function () {
+                        console.log("scope.search !! : "+scope.type+"/"+scope.currentPage);
                         if (scope.allLoaded == true) {
                             return;
                         }
@@ -89,6 +91,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                     scope.$watch('type', function (n, o) {
                         if (n != o) {
                             scope.allLoaded = false;
+                            console.log("-- from watch type");
                             scope.search();
                         }
                     });
