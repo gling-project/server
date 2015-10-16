@@ -1,8 +1,8 @@
 package be.lynk.server.module.mongo;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.entities.Account;
 import com.mongodb.*;
+import com.mongodb.client.MongoDatabase;
 import org.mongojack.JacksonDBCollection;
 import org.springframework.stereotype.Component;
 import play.Configuration;
@@ -37,6 +37,14 @@ public class MongoDBOperator {
 //    mongodb.servers=${MongodbServer}
 
 
+    public DB getDB() {
+        if (db == null) {
+            initialization();
+        }
+        return null;//db;
+    }
+
+
     private void initialization() {
         try {
 
@@ -65,7 +73,7 @@ public class MongoDBOperator {
                 mongoClient = new MongoClient(serverAddress, mongoCredential);
             }
 
-            db = mongoClient.getDB(dbName);
+//            db = mongoClient.getDatabase(dbName);
 
 
         } catch (Exception e) {
