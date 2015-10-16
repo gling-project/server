@@ -892,209 +892,186 @@ ul.messenger .messenger-spinner {
 }
 
 @font-face {
-	font-family: 'glingicon';
-	src:url('/assets/fonts/glingicon.eot?9l655s');
-	src:url('/assets/fonts/glingicon.eot?9l655s#iefix') format('embedded-opentype'),
-		url('/assets/fonts/glingicon.ttf?9l655s') format('truetype'),
-		url('/assets/fonts/glingicon.woff?9l655s') format('woff'),
-		url('/assets/fonts/glingicon.svg?9l655s#glingicon') format('svg');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'glingicon';
+    src:url('fonts/glingicon.eot?jxbxrm');
+    src:url('fonts/glingicon.eot?jxbxrm#iefix') format('embedded-opentype'),
+    url('fonts/glingicon.ttf?jxbxrm') format('truetype'),
+    url('fonts/glingicon.woff?jxbxrm') format('woff'),
+    url('fonts/glingicon.svg?jxbxrm#glingicon') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
+[class^="gling-icon-"], [class*=" gling-icon-"] {
+    font-family: 'glingicon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-
-.gling-icon{ /*[class^="gling-icon-"], [class*=" gling-icon-"] {*/
-	/*font-family: 'glingicon';*/
-	/*speak: none;*/
-	/*font-style: normal;*/
-	/*font-weight: normal;*/
-	/*font-variant: normal;*/
-	/*text-transform: none;*/
-	/*line-height: 1;*/
-
-    display: inline-block;
-    font: normal normal normal 14px/1 glingicon;
-    font-size: inherit;
-    text-rendering: auto;
+    /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transform: translate(0, 0);
-
-	/* Better Font Rendering =========== */
-	/*-webkit-font-smoothing: antialiased;*/
-	/*-moz-osx-font-smoothing: grayscale;*/
 }
 
+.gling-icon-location:before {
+    content: "\e801";
+}
+.gling-icon-exit:before {
+    content: "\e800";
+}
 .gling-icon-fidelisation:before {
-	content: "\e62a";
+    content: "\e62a";
 }
 .gling-icon-geolocalisation:before {
-	content: "\e62b";
-}
-.gling-icon-nouveau-client .path1:before {
-	content: "\e62c";
-	color: rgb(0, 0, 0);
-}
-.gling-icon-nouveau-client .path2:before {
-	content: "\e62d";
-	margin-left: -1em;
-	color: rgb(0, 0, 0);
-}
-.gling-icon-nouveau-client .path3:before {
-	content: "\e62e";
-	margin-left: -1em;
-	color: rgb(0, 0, 0);
-}
-.gling-icon-nouveau-client .path4:before {
-	content: "\e62f";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
-}
-.gling-icon-nouveau-client .path5:before {
-	content: "\e630";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
-}
-.gling-icon-home:before {
-	content: "\e627";
+    content: "\e62b";
 }
 .gling-icon-logogling:before {
-	content: "\e628";
+    content: "\e628";
+}
+.gling-icon-home:before {
+    content: "\e627";
 }
 .gling-icon-logoapp:before {
-	content: "\e629";
+    content: "\e629";
+}
+.gling-icon-pixel:before {
+    content: "\e802";
+}
+.gling-icon-nouveau-client:before {
+    content: "\e803";
 }
 .gling-icon-money:before {
-	content: "\e631";
+    content: "\e631";
 }
-.gling-icon-sleep:before {
-	content: "\e632";
+.gling-icon-sleep2:before {
+    content: "\e632";
 }
 .gling-icon-arrow_right:before {
-	content: "\e600";
+    content: "\e600";
 }
 .gling-icon-arrow_left:before {
-	content: "\e601";
+    content: "\e601";
 }
 .gling-icon-arrow_down:before {
-	content: "\e602";
+    content: "\e602";
 }
 .gling-icon-arrow_up:before {
-	content: "\e603";
+    content: "\e603";
 }
 .gling-icon-shop:before {
-	content: "\e604";
+    content: "\e604";
 }
 .gling-icon-people:before {
-	content: "\e605";
+    content: "\e605";
 }
 .gling-icon-profil:before {
-	content: "\e606";
+    content: "\e606";
 }
 .gling-icon-heart:before {
-	content: "\e607";
+    content: "\e607";
 }
 .gling-icon-star:before {
-	content: "\e608";
+    content: "\e608";
 }
 .gling-icon-mail:before {
-	content: "\e609";
+    content: "\e609";
 }
 .gling-icon-promo:before {
-	content: "\e60a";
+    content: "\e60a";
 }
 .gling-icon-earth:before {
-	content: "\e60b";
+    content: "\e60b";
 }
 .gling-icon-phone:before {
-	content: "\e60c";
+    content: "\e60c";
 }
 .gling-icon-clock:before {
-	content: "\e60d";
+    content: "\e60d";
 }
 .gling-icon-glass:before {
-	content: "\e60e";
+    content: "\e60e";
 }
 .gling-icon-bell2:before {
-	content: "\e60f";
+    content: "\e60f";
 }
 .gling-icon-bell:before {
-	content: "\e610";
+    content: "\e610";
 }
 .gling-icon-calendar:before {
-	content: "\e611";
+    content: "\e611";
 }
 .gling-icon-facebook:before {
-	content: "\e612";
+    content: "\e612";
 }
 .gling-icon-play:before {
-	content: "\e613";
+    content: "\e613";
 }
 .gling-icon-technology:before {
-	content: "\e614";
+    content: "\e614";
 }
 .gling-icon-music:before {
-	content: "\e615";
+    content: "\e615";
 }
 .gling-icon-garden:before {
-	content: "\e616";
+    content: "\e616";
 }
 .gling-icon-read:before {
-	content: "\e617";
+    content: "\e617";
 }
 .gling-icon-doityourself:before {
-	content: "\e618";
+    content: "\e618";
 }
 .gling-icon-baby:before {
-	content: "\e619";
+    content: "\e619";
+}
+.gling-icon-sleep:before {
+    content: "\e61a";
 }
 .gling-icon-travel:before {
-	content: "\e61b";
+    content: "\e61b";
 }
 .gling-icon-pets:before {
-	content: "\e61c";
+    content: "\e61c";
 }
 .gling-icon-sport:before {
-	content: "\e61d";
+    content: "\e61d";
 }
 .gling-icon-welness:before {
-	content: "\e61e";
+    content: "\e61e";
 }
 .gling-icon-decor:before {
-	content: "\e61f";
+    content: "\e61f";
 }
 .gling-icon-clothe:before {
-	content: "\e620";
+    content: "\e620";
 }
 .gling-icon-supermarket:before {
-	content: "\e621";
+    content: "\e621";
 }
 .gling-icon-shopping:before {
-	content: "\e622";
+    content: "\e622";
 }
 .gling-icon-culture:before {
-	content: "\e623";
+    content: "\e623";
 }
 .gling-icon-going_out:before {
-	content: "\e624";
+    content: "\e624";
 }
 .gling-icon-drink:before {
-	content: "\e625";
+    content: "\e625";
 }
 .gling-icon-eat:before {
-	content: "\e626";
+    content: "\e626";
 }
 .gling-icon-images:before {
-	content: "\e90e";
-}
-.gling-icon-location:before {
-	content: "\e947";
+    content: "\e804";
 }
 .gling-icon-info:before {
-	content: "\ea0c";
+    content: "\e805";
 }
-
 
 @font-face {
   font-family: myFont;
