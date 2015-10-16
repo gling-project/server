@@ -11,7 +11,6 @@ import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Application;
 import play.Configuration;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
@@ -27,6 +26,8 @@ import java.util.regex.Pattern;
  */
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
+
+    private static final String APP_PACKAGE_NAME = "be.gling.fakeapp";
 
     //    private String AWSBuckect     =
     private String fileBucketUrl  = Configuration.root().getString("aws.accesFile.url");
@@ -44,16 +45,7 @@ public class MainController extends AbstractController {
     @Autowired
     private CustomerInterestService customerInterestService;
 
-    public Result application() {
-        if (isAndroid()) {
-            final String appPackageName = "be.gling.fakeapp";
-            return redirect("https://play.google.com/store/apps/details?id=" + appPackageName);
-        }
-        else {
-            return redirect("/");
-        }
-    }
-
+    
     public Result comingSoon() {
         return ok(be.lynk.server.views.html.comingSoon.render());
     }
@@ -95,6 +87,10 @@ public class MainController extends AbstractController {
 
 
     public Result generateDefaultPage(String url, boolean forceMobile) {
+
+        if(url!=null && url.equals("/app")){
+            return redirect("market://details?id=" + APP_PACKAGE_NAME);
+        }
 
         if (!isMobileDevice() && !forceMobile && ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
             addAlreadyVisitedCookie();
