@@ -10,6 +10,7 @@ import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
 import be.lynk.server.importer.DemoImporter;
 import be.lynk.server.model.entities.*;
+import be.lynk.server.mongoService.MongoSearchService;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.AccountTypeEnum;
@@ -47,6 +48,8 @@ public class SuperAdminRestController extends AbstractRestController {
     private CategoryInterestLinkService categoryInterestLinkService;
     @Autowired
     private PublicationService          publicationService;
+    @Autowired
+    private MongoSearchService          mongoSearchService;
 
 
     @Transactional
@@ -182,6 +185,8 @@ public class SuperAdminRestController extends AbstractRestController {
         adminStatDTO.getStats().put("Nouvelles publications depuis 1 jour", "+ " + publicationService.countActiveFrom(LocalDateTime.now().minusDays(1)));
 
         adminStatDTO.getStats().put("Nouvelles publications 7 jours", "+ " + publicationService.countActiveFrom(LocalDateTime.now().minusDays(7)));
+
+        mongoSearchService.read();
 
 
         return ok(adminStatDTO);

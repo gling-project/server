@@ -41,7 +41,7 @@ public class MongoDBOperator {
         if (db == null) {
             initialization();
         }
-        return null;//db;
+        return db;
     }
 
 
@@ -73,7 +73,7 @@ public class MongoDBOperator {
                 mongoClient = new MongoClient(serverAddress, mongoCredential);
             }
 
-//            db = mongoClient.getDatabase(dbName);
+            db = mongoClient.getDB(dbName);
 
 
         } catch (Exception e) {
