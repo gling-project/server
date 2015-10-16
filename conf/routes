@@ -135,7 +135,6 @@ POST          /rest/import_category_translation                                 
 
 
 ##welcome
-GET           /app                                                                                                   @be.lynk.server.controller.MainController.application()
 GET           /town/                                                                                                 @be.lynk.server.controller.MainController.toTown()
 GET           /coming_soon/                                                                                          @be.lynk.server.controller.MainController.comingSoon()
 GET           /welcome/                                                                                              @be.lynk.server.controller.MainController.toWelcomePage(lang=null)

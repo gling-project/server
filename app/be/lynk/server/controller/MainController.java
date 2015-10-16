@@ -45,7 +45,7 @@ public class MainController extends AbstractController {
     @Autowired
     private CustomerInterestService customerInterestService;
 
-    
+
     public Result comingSoon() {
         return ok(be.lynk.server.views.html.comingSoon.render());
     }
