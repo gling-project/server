@@ -19,7 +19,7 @@
     transform: translate(0, 0);
 }
 
-.gling-icon-location:before {
+.gling-icon-money:before {
     content: "\e801";
 }
 .gling-icon-fidelisation:before {
@@ -46,7 +46,7 @@
 .gling-icon-nouveau-client:before {
     content: "\e804";
 }
-.gling-icon-euro:before {
+.gling-icon-money2:before {
     content: "\e631";
 }
 .gling-icon-sleep2:before {
@@ -129,9 +129,6 @@
 }
 .gling-icon-baby:before {
     content: "\e619";
-}
-.gling-icon-sleep:before {
-    content: "\e61a";
 }
 .gling-icon-travel:before {
     content: "\e61b";
