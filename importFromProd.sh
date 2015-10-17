@@ -32,6 +32,14 @@ pg_dump \
 -w \
 > $dump_file
 
+DB_CONNECTION="psql -U florian -d lynk -w"
+
+echo "[DROP SCHEMA]"
+echo "DROP SCHEMA public CASCADE;" | eval $DB_CONNECTION
+
+echo "[CREATE SCHEMA]"
+echo "CREATE SCHEMA public;" | eval $DB_CONNECTION
+
 
 echo "[IMPORT TEST SHEMA]"
-psql -h 127.0.0.1 -U florian -d lynk  < $dump_file
+$DB_CONNECTION  < $dump_file

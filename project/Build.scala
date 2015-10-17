@@ -26,7 +26,7 @@ object ApplicationBuild extends Build {
     "org.hibernate" % "hibernate-ehcache" % "4.3.5.Final",
     "org.apache.commons" % "commons-lang3" % "3.1",
     "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api" % "1.0.0.Final",
-    "org.postgresql" % "postgresql" % "9.3-1101-jdbc41",
+    "org.postgresql" % "postgresql" % "9.4-1204-jdbc42",
     "org.jasypt" % "jasypt" % "1.9.2",
     "commons-beanutils" % "commons-beanutils" % "1.9.2",
     "org.apache.velocity" % "velocity" % "1.7",

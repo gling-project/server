@@ -910,7 +910,7 @@ ul.messenger .messenger-spinner {
     transform: translate(0, 0);
 }
 
-.gling-icon-money:before {
+.gling-icon-location:before {
     content: "\e801";
 }
 .gling-icon-fidelisation:before {
@@ -937,10 +937,10 @@ ul.messenger .messenger-spinner {
 .gling-icon-nouveau-client:before {
     content: "\e804";
 }
-.gling-icon-money2:before {
+.gling-icon-money:before {
     content: "\e631";
 }
-.gling-icon-sleep2:before {
+.gling-icon-sleep:before {
     content: "\e632";
 }
 .gling-icon-arrow_right:before {
