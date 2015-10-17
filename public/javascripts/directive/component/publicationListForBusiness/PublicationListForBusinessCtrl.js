@@ -13,6 +13,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.descriptionLimitBase=250;
                     scope.currentPage = 0;
                     scope.allLoaded = false;
                     scope.loadSemaphore = false;
@@ -33,6 +34,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                             scope.publications.push(data[key])
                         }
                         for (var i in scope.publications) {
+                            scope.publications[i].descriptionLimit=scope.descriptionLimitBase;
                             scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
                         }
 

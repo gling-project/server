@@ -595,3 +595,5 @@ day_abrv_sunday=Di
 --.generic.legend=Légende
 --.schedule.appointment=Uniquement sur rendez-vous
 --.error.customerToBusiness.alreadyBusiness=Vous avez déjà un commerce
+--.textReuction.seeMore=Afficher Tout
+--.textReuction.seeLess=Masquer

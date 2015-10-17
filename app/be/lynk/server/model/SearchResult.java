@@ -90,6 +90,7 @@ public class SearchResult implements Comparable<SearchResult>{
 
     @Override
     public int compareTo(SearchResult o) {
-        return this.distance.compareTo(o.distance);
+        return o.startDate.compareTo(this.startDate);
+//        return this.distance.compareTo(o.distance);
     }
 }

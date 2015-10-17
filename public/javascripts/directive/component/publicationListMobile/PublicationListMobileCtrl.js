@@ -13,6 +13,7 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.descriptionLimitBase=250;
                     scope.getInfo().loading = true;
 
                     scope.getInterestClass = function (publication) {
@@ -37,6 +38,7 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
                     scope.$watch("getInfo().data", function () {
                         scope.publications = scope.getInfo().data;
                         for (var i in scope.publications) {
+                            scope.publications[i].descriptionLimit=scope.descriptionLimitBase;
                             scope.publications[i].interval = (scope.publications[i].endDate - new Date());
                         }
                     });

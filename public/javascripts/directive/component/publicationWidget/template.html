@@ -53,7 +53,8 @@
 
                 <!-- distance -->
                 <div class="publication-bubble publication-bordered">
-                    <i class="glyphicon gling-icon gling-icon gling-icon-earth"></i> {{getInfo().publication.distance / 1000 | number:2}} km
+                    <i class="glyphicon gling-icon gling-icon gling-icon-earth"></i> {{getInfo().publication.distance /
+                    1000 | number:2}} km
                 </div>
 
                 <!-- price -->
@@ -84,8 +85,15 @@
                 </span>
             </div>
             <div class="publication-data-body"
-                 ng-show="getInfo().publication.description !=null && getInfo().publication.description.length > 0"
-                 ng-bind-html="getInfo().publication.description | text">
+                 ng-show="getInfo().publication.description !=null && getInfo().publication.description.length > 0">
+                <span ng-bind-html="getInfo().publication.description | text : descriptionLimit"></span>
+
+                <span ng-show="getInfo().publication.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase"
+                      ng-click="descriptionLimit = 10000"
+                        class="link">{{'--.textReuction.seeMore' | translateText}}</span>
+                <span ng-show="getInfo().publication.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase"
+                      ng-click="descriptionLimit = descriptionLimitBase"
+                      class="link">{{'--.textReuction.seeLess' | translateText}}</span>
             </div>
 
         </div>

@@ -85,8 +85,15 @@
 
                 <!-- description -->
                 <div class="publication-data-body"
-                     ng-show="publication.description !=null && publication.description.length > 0"
-                     ng-bind-html="publication.description | text">
+                     ng-show="publication.description !=null && publication.description.length > 0">
+                    <span ng-bind-html="publication.description | text : publication.descriptionLimit"></span>
+
+                <span ng-show="publication.description.length > descriptionLimitBase && publication.descriptionLimit==descriptionLimitBase"
+                      ng-click="publication.descriptionLimit = 10000"
+                      class="link">{{'--.textReuction.seeMore' | translateText}}</span>
+                <span ng-show="publication.description.length > descriptionLimitBase && publication.descriptionLimit!=descriptionLimitBase"
+                      ng-click="publication.descriptionLimit = descriptionLimitBase"
+                      class="link">{{'--.textReuction.seeLess' | translateText}}</span>
                 </div>
 
             </div>

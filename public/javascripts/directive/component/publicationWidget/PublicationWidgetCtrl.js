@@ -11,6 +11,10 @@ myApp.directive('publicationWidgetCtrl', function ($rootScope, businessService, 
         compile: function () {
             return {
                 post: function (scope) {
+
+                    scope.descriptionLimit = 200;
+                    scope.descriptionLimitBase=scope.descriptionLimit;
+
                     directiveService.autoScopeImpl(scope);
 
                     scope.click = function () {

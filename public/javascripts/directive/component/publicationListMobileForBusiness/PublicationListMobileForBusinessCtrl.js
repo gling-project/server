@@ -13,6 +13,12 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.descriptionLimitBase=250;
+                    scope.currentPage = 0;
+                    scope.allLoaded = false;
+                    scope.loadSemaphore = false;
+                    scope.publications = [];
+
 
                     //scrolling
                     $('.scrollable-content-body').on('scroll', function () {
@@ -47,6 +53,9 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                     };
 
                     scope.search = function () {
+                        if (scope.allLoaded == true) {
+                            return;
+                        }
                         scope.loading=true;
                         searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
                     };
@@ -57,11 +66,16 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                             scope.publications = [];
                         }
 
+                        if (data.length == 0) {
+                            scope.allLoaded = true;
+                        }
+
                         scope.loadSemaphore = false;
                         for (var key in data) {
                             scope.publications.push(data[key])
                         }
                         for (var i in scope.publications) {
+                            scope.publications[i].descriptionLimit=scope.descriptionLimitBase;
                             scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
                         }
 
