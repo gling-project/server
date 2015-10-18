@@ -151,7 +151,12 @@
     </head>
     <body ng-app="app" ng-controller="MainCtrl">
 
-            <!-- load data -->
+
+
+        <image-tool-ctrl></image-tool-ctrl>
+
+
+        <!-- load data -->
         <script>
         var data = @Html(new ObjectMapper().writeValueAsString(data)) ;
         var languages = @Html(new ObjectMapper().writeValueAsString(languages.getList)) ;

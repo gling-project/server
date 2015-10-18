@@ -2,53 +2,99 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
+import be.lynk.server.dto.Image64DTO;
 import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.constants.Constant;
+import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.file.FileUtil;
+import be.lynk.server.util.message.ErrorMessageEnum;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.api.libs.Files;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Result;
 import play.mvc.Results;
 
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @org.springframework.stereotype.Controller
 public class FilesController extends AbstractRestController {
 
 
     @Autowired
-    private FileService fileService;
+    private FileService       fileService;
     @Autowired
     private StoredFileService storedFileService;
+
+    @Transactional(readOnly = false)
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result download64() {
+
+        Image64DTO dto = initialization(Image64DTO.class);
+
+        String imageDataBytes = dto.getImage().substring(dto.getImage().indexOf(",") + 1);
+
+        InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(imageDataBytes.getBytes()));
+
+//        String imageString = new String(Base64.getEncoder().encode(
+//                dto.getImage().getBytes(StandardCharsets.UTF_8)));
+
+//        byte dearr[] = Base64.getDecoder().decode(dto.getImage());
+
+        try {
+            File f = new File("./a.png");//.createTempFile("temp", ".png");
+
+
+            FileOutputStream outputStream = new FileOutputStream(f);
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+
+            StoredFile storedFile = fileService.uploadWithSize(f, dto.getName(), securityController.getCurrentUser());
+
+            StoredFileDTO filesUploadedDTO = dozerService.map(storedFile, StoredFileDTO.class);
+
+            return Results.ok(filesUploadedDTO);
+
+        } catch (IOException e) {
+            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
+        }
+    }
 
 
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result uploadForGalleryPicture() {
-        return uploadWithSize(Constant.PUBLICATION_PICTURE_WIDTH,Constant.PUBLICATION_PICTURE_HEIGHT);
+        return uploadWithSize(Constant.PUBLICATION_PICTURE_WIDTH, Constant.PUBLICATION_PICTURE_HEIGHT);
     }
 
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result uploadForBusinessIllustration() {
-        return uploadWithSize(Constant.BUSINESS_ILLUSTRATION_WIDTH,Constant.BUSINESS_ILLUSTRATION_HEIGHT);
+        return uploadWithSize(Constant.BUSINESS_ILLUSTRATION_WIDTH, Constant.BUSINESS_ILLUSTRATION_HEIGHT);
     }
 
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result uploadForBusinessLandscape() {
-        return uploadWithSize(Constant.BUSINESS_LANDSCAPE_WIDTH,Constant.BUSINESS_LANDSCAPE_HEIGHT);
+        return uploadWithSize(Constant.BUSINESS_LANDSCAPE_WIDTH, Constant.BUSINESS_LANDSCAPE_HEIGHT);
     }
 
     @Transactional(readOnly = false)
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result uploadForPublicationPicture() {
-        return uploadWithSize(Constant.PUBLICATION_PICTURE_WIDTH,Constant.PUBLICATION_PICTURE_HEIGHT);
+        return uploadWithSize(Constant.PUBLICATION_PICTURE_WIDTH, Constant.PUBLICATION_PICTURE_HEIGHT);
     }
 
     @Transactional(readOnly = false)

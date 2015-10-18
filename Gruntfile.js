@@ -196,7 +196,10 @@ module.exports = function (grunt) {
                         'public/javascripts/service/ConstantService.js',
                         'public/javascripts/service/ContactService.js',
                         //TODO ??
-                        'public/javascripts/dist/templateCacheWeb.js'
+                        'public/javascripts/dist/templateCacheWeb.js',
+
+                        <!-- tool -->
+                        'public/javascripts/tool/imageTool/ImageToolCtrl.js'
                     ]
                     , 'public/dist/web.js': [
                         'public/components/lodash/lodash.min.js',

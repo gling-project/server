@@ -93,7 +93,8 @@ public abstract class AbstractController extends Controller {
         if (dtoClass != ResultDTO.class) {
 
             //extract the json node
-            JsonNode node = request().body().asJson();
+            Http.RequestBody body = request().body();
+            JsonNode node = body.asJson();
             //extract dto
             dto = DTO.getDTO(node, dtoClass);
             if (dto == null) {

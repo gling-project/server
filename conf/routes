@@ -105,6 +105,7 @@ POST          /rest/file/business_landscape                                     
 POST          /rest/file/publication_picture                                                                         @be.lynk.server.controller.rest.FilesController.uploadForPublicationPicture()
 POST          /rest/file/galley_picture                                                                              @be.lynk.server.controller.rest.FilesController.uploadForGalleryPicture()
 GET           /rest/file/:storedFileId                                                                               @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
+POST          /rest/file64                                                                                           @be.lynk.server.controller.rest.FilesController.download64()
 
 #contact
 POST          /rest/contact                                                                                          @be.lynk.server.controller.rest.ContactRestController.contact()

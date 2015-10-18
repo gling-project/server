@@ -1,0 +1,34 @@
+<div class="image-tool">
+
+    <div class="image-tool-container"
+         style="width:{{canvasWidth + 50}}px;height:{{canvasHeight}}px;">
+
+        <div class="overlay"
+             style="width:{{canvasWidth}}px;">
+            <div class="overlay-inner">
+
+
+                <div class="resize-container" ng-show="image_target!=null">
+                    <span class="resize-handle resize-handle-nw"></span>
+                    <span class="resize-handle resize-handle-ne"></span>
+                    <img class="resize-image" alt="image for resizing"/>
+                    <span class="resize-handle resize-handle-se"></span>
+                    <span class="resize-handle resize-handle-sw"></span>
+                </div>
+
+            </div>
+        </div>
+        <div>
+
+            <div style="font-family: 'Glyphicons Halflings';"
+                 class="menu-btn download-btn btn-crop glyphicon-upload">
+                <input type='file' id="imgInp" />
+            </div>
+
+            <button class="btn-crop js-crop menu-btn" ng-click="zoom(true)">+</button>
+            <button class="btn-crop js-crop menu-btn" ng-click="zoom(false)">-</button>
+        </div>
+
+        <button class="btn-crop js-crop" ng-click="crop()">Crop</button>
+    </div>
+</div>
