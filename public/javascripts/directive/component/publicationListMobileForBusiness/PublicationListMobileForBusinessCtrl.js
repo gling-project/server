@@ -27,6 +27,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                         if ($('.scrollable-content-inner').height() - scrollBottom < 200) {
 
                             if (scope.loadSemaphore == false) {
+                                console.log('-- SERACH FROM SCROOL');
                                 scope.loadSemaphore = true;
                                 scope.currentPage = scope.currentPage + 1;
                                 scope.search();
@@ -50,6 +51,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                         scope.currentPage = 0;
                         scope.publications = [];
                         scope.type = type;
+                        console.log('-- SERACH FROM REFRSH');
                         scope.search();
                     };
 
@@ -60,6 +62,11 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                         scope.loading=true;
                         searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
                     };
+
+                    //initialization
+                    console.log('-- SERACH FROM initialization');
+                    scope.search();
+
 
                     scope.success = function (data) {
 

@@ -120,10 +120,6 @@ this.replace=!0,this.scope={show:"=show",type:"=type",namespace:"=namespace",opt
 this.visualEnabled_&&(this.buttonDiv_.firstChild.style.left=-(2*this.visualSize_.width)+"px",this.buttonDiv_.title=this.visualTips_.off,this.buttonDiv_.style.display=""),google.maps.event.trigger(this,"deactivate",j)}},google.maps.Map.prototype.enableKeyDragZoom=function(a){this.dragZoom_=new b(this,a)},google.maps.Map.prototype.disableKeyDragZoom=function(){var a,b=this.dragZoom_;if(b){for(a=0;a<b.listeners_.length;++a)google.maps.event.removeListener(b.listeners_[a]);for(this.getDiv().removeChild(b.boxDiv_),a=0;a<b.veilDiv_.length;a++)this.getDiv().removeChild(b.veilDiv_[a]);b.visualEnabled_&&this.controls[b.visualPosition_].removeAt(b.controlIndex_),b.prjov_.setMap(null),this.dragZoom_=null}},google.maps.Map.prototype.keyDragZoomEnabled=function(){return null!==this.dragZoom_},google.maps.Map.prototype.getDragZoomObject=function(){return this.dragZoom_}}(),d.prototype.onAdd=function(){var a,b,c=this;this.div_=document.createElement("div"),this.div_.className=this.className_,this.visible_&&this.show(),this.getPanes().overlayMouseTarget.appendChild(this.div_),this.boundsChangedListener_=google.maps.event.addListener(this.getMap(),"bounds_changed",function(){b=a}),google.maps.event.addDomListener(this.div_,"mousedown",function(){a=!0,b=!1}),google.maps.event.addDomListener(this.div_,"click",function(d){if(a=!1,!b){var e,f,g=c.cluster_.getMarkerClusterer();google.maps.event.trigger(g,"click",c.cluster_),google.maps.event.trigger(g,"clusterclick",c.cluster_),g.getZoomOnClick()&&(f=g.getMaxZoom(),e=c.cluster_.getBounds(),g.getMap().fitBounds(e),setTimeout(function(){g.getMap().fitBounds(e),null!==f&&g.getMap().getZoom()>f&&g.getMap().setZoom(f+1)},100)),d.cancelBubble=!0,d.stopPropagation&&d.stopPropagation()}}),google.maps.event.addDomListener(this.div_,"mouseover",function(){var a=c.cluster_.getMarkerClusterer();google.maps.event.trigger(a,"mouseover",c.cluster_)}),google.maps.event.addDomListener(this.div_,"mouseout",function(){var a=c.cluster_.getMarkerClusterer();google.maps.event.trigger(a,"mouseout",c.cluster_)})},d.prototype.onRemove=function(){this.div_&&this.div_.parentNode&&(this.hide(),google.maps.event.removeListener(this.boundsChangedListener_),google.maps.event.clearInstanceListeners(this.div_),this.div_.parentNode.removeChild(this.div_),this.div_=null)},d.prototype.draw=function(){if(this.visible_){var a=this.getPosFromLatLng_(this.center_);this.div_.style.top=a.y+"px",this.div_.style.left=a.x+"px"}},d.prototype.hide=function(){this.div_&&(this.div_.style.display="none"),this.visible_=!1},d.prototype.show=function(){if(this.div_){var a="",b=this.backgroundPosition_.split(" "),c=parseInt(b[0].trim(),10),d=parseInt(b[1].trim(),10),e=this.getPosFromLatLng_(this.center_);this.div_.style.cssText=this.createCss(e),a="<img src='"+this.url_+"' style='position: absolute; top: "+d+"px; left: "+c+"px; ",this.cluster_.getMarkerClusterer().enableRetinaIcons_||(a+="clip: rect("+-1*d+"px, "+(-1*c+this.width_)+"px, "+(-1*d+this.height_)+"px, "+-1*c+"px);"),a+="'>",this.div_.innerHTML=a+"<div style='position: absolute;top: "+this.anchorText_[0]+"px;left: "+this.anchorText_[1]+"px;color: "+this.textColor_+";font-size: "+this.textSize_+"px;font-family: "+this.fontFamily_+";font-weight: "+this.fontWeight_+";font-style: "+this.fontStyle_+";text-decoration: "+this.textDecoration_+";text-align: center;width: "+this.width_+"px;line-height:"+this.height_+"px;'>"+this.sums_.text+"</div>","undefined"==typeof this.sums_.title||""===this.sums_.title?this.div_.title=this.cluster_.getMarkerClusterer().getTitle():this.div_.title=this.sums_.title,this.div_.style.display=""}this.visible_=!0},d.prototype.useStyle=function(a){this.sums_=a;var b=Math.max(0,a.index-1);b=Math.min(this.styles_.length-1,b);var c=this.styles_[b];this.url_=c.url,this.height_=c.height,this.width_=c.width,this.anchorText_=c.anchorText||[0,0],this.anchorIcon_=c.anchorIcon||[parseInt(this.height_/2,10),parseInt(this.width_/2,10)],this.textColor_=c.textColor||"black",this.textSize_=c.textSize||11,this.textDecoration_=c.textDecoration||"none",this.fontWeight_=c.fontWeight||"bold",this.fontStyle_=c.fontStyle||"normal",this.fontFamily_=c.fontFamily||"Arial,sans-serif",this.backgroundPosition_=c.backgroundPosition||"0 0"},d.prototype.setCenter=function(a){this.center_=a},d.prototype.createCss=function(a){var b=[];return b.push("cursor: pointer;"),b.push("position: absolute; top: "+a.y+"px; left: "+a.x+"px;"),b.push("width: "+this.width_+"px; height: "+this.height_+"px;"),b.join("")},d.prototype.getPosFromLatLng_=function(a){var b=this.getProjection().fromLatLngToDivPixel(a);return b.x-=this.anchorIcon_[1],b.y-=this.anchorIcon_[0],b.x=parseInt(b.x,10),b.y=parseInt(b.y,10),b},e.prototype.getSize=function(){return this.markers_.length},e.prototype.getMarkers=function(){return this.markers_},e.prototype.getCenter=function(){return this.center_},e.prototype.getMap=function(){return this.map_},e.prototype.getMarkerClusterer=function(){return this.markerClusterer_},e.prototype.getBounds=function(){var a,b=new google.maps.LatLngBounds(this.center_,this.center_),c=this.getMarkers();for(a=0;a<c.length;a++)b.extend(c[a].getPosition());return b},e.prototype.remove=function(){this.clusterIcon_.setMap(null),this.markers_=[],delete this.markers_},e.prototype.addMarker=function(a){var b,c,d;if(this.isMarkerAlreadyAdded_(a))return!1;if(this.center_){if(this.averageCenter_){var e=this.markers_.length+1,f=(this.center_.lat()*(e-1)+a.getPosition().lat())/e,g=(this.center_.lng()*(e-1)+a.getPosition().lng())/e;this.center_=new google.maps.LatLng(f,g),this.calculateBounds_()}}else this.center_=a.getPosition(),this.calculateBounds_();if(a.isAdded=!0,this.markers_.push(a),c=this.markers_.length,d=this.markerClusterer_.getMaxZoom(),null!==d&&this.map_.getZoom()>d)a.getMap()!==this.map_&&a.setMap(this.map_);else if(c<this.minClusterSize_)a.getMap()!==this.map_&&a.setMap(this.map_);else if(c===this.minClusterSize_)for(b=0;c>b;b++)this.markers_[b].setMap(null);else a.setMap(null);return this.updateIcon_(),!0},e.prototype.isMarkerInClusterBounds=function(a){return this.bounds_.contains(a.getPosition())},e.prototype.calculateBounds_=function(){var a=new google.maps.LatLngBounds(this.center_,this.center_);this.bounds_=this.markerClusterer_.getExtendedBounds(a)},e.prototype.updateIcon_=function(){var a=this.markers_.length,b=this.markerClusterer_.getMaxZoom();if(null!==b&&this.map_.getZoom()>b)return void this.clusterIcon_.hide();if(a<this.minClusterSize_)return void this.clusterIcon_.hide();var c=this.markerClusterer_.getStyles().length,d=this.markerClusterer_.getCalculator()(this.markers_,c);this.clusterIcon_.setCenter(this.center_),this.clusterIcon_.useStyle(d),this.clusterIcon_.show()},e.prototype.isMarkerAlreadyAdded_=function(a){var b;if(this.markers_.indexOf)return-1!==this.markers_.indexOf(a);for(b=0;b<this.markers_.length;b++)if(a===this.markers_[b])return!0;return!1},f.prototype.onAdd=function(){var a=this;this.activeMap_=this.getMap(),this.ready_=!0,this.repaint(),this.listeners_=[google.maps.event.addListener(this.getMap(),"zoom_changed",function(){a.resetViewport_(!1),(this.getZoom()===(this.get("minZoom")||0)||this.getZoom()===this.get("maxZoom"))&&google.maps.event.trigger(this,"idle")}),google.maps.event.addListener(this.getMap(),"idle",function(){a.redraw_()})]},f.prototype.onRemove=function(){var a;for(a=0;a<this.markers_.length;a++)this.markers_[a].getMap()!==this.activeMap_&&this.markers_[a].setMap(this.activeMap_);for(a=0;a<this.clusters_.length;a++)this.clusters_[a].remove();for(this.clusters_=[],a=0;a<this.listeners_.length;a++)google.maps.event.removeListener(this.listeners_[a]);this.listeners_=[],this.activeMap_=null,this.ready_=!1},f.prototype.draw=function(){},f.prototype.setupStyles_=function(){var a,b;if(!(this.styles_.length>0))for(a=0;a<this.imageSizes_.length;a++)b=this.imageSizes_[a],this.styles_.push({url:this.imagePath_+(a+1)+"."+this.imageExtension_,height:b,width:b})},f.prototype.fitMapToMarkers=function(){var a,b=this.getMarkers(),c=new google.maps.LatLngBounds;for(a=0;a<b.length;a++)c.extend(b[a].getPosition());this.getMap().fitBounds(c)},f.prototype.getGridSize=function(){return this.gridSize_},f.prototype.setGridSize=function(a){this.gridSize_=a},f.prototype.getMinimumClusterSize=function(){return this.minClusterSize_},f.prototype.setMinimumClusterSize=function(a){this.minClusterSize_=a},f.prototype.getMaxZoom=function(){return this.maxZoom_},f.prototype.setMaxZoom=function(a){this.maxZoom_=a},f.prototype.getStyles=function(){return this.styles_},f.prototype.setStyles=function(a){this.styles_=a},f.prototype.getTitle=function(){return this.title_},f.prototype.setTitle=function(a){this.title_=a},f.prototype.getZoomOnClick=function(){return this.zoomOnClick_},f.prototype.setZoomOnClick=function(a){this.zoomOnClick_=a},f.prototype.getAverageCenter=function(){return this.averageCenter_},f.prototype.setAverageCenter=function(a){this.averageCenter_=a},f.prototype.getIgnoreHidden=function(){return this.ignoreHidden_},f.prototype.setIgnoreHidden=function(a){this.ignoreHidden_=a},f.prototype.getEnableRetinaIcons=function(){return this.enableRetinaIcons_},f.prototype.setEnableRetinaIcons=function(a){this.enableRetinaIcons_=a},f.prototype.getImageExtension=function(){return this.imageExtension_},f.prototype.setImageExtension=function(a){this.imageExtension_=a},f.prototype.getImagePath=function(){return this.imagePath_},f.prototype.setImagePath=function(a){this.imagePath_=a},f.prototype.getImageSizes=function(){return this.imageSizes_},f.prototype.setImageSizes=function(a){this.imageSizes_=a},f.prototype.getCalculator=function(){return this.calculator_},f.prototype.setCalculator=function(a){this.calculator_=a},f.prototype.getBatchSizeIE=function(){return this.batchSizeIE_},f.prototype.setBatchSizeIE=function(a){this.batchSizeIE_=a},f.prototype.getClusterClass=function(){return this.clusterClass_},f.prototype.setClusterClass=function(a){this.clusterClass_=a},f.prototype.getMarkers=function(){return this.markers_},f.prototype.getTotalMarkers=function(){return this.markers_.length},f.prototype.getClusters=function(){return this.clusters_},f.prototype.getTotalClusters=function(){return this.clusters_.length},f.prototype.addMarker=function(a,b){this.pushMarkerTo_(a),b||this.redraw_()},f.prototype.addMarkers=function(a,b){var c;for(c in a)a.hasOwnProperty(c)&&this.pushMarkerTo_(a[c]);b||this.redraw_()},f.prototype.pushMarkerTo_=function(a){if(a.getDraggable()){var b=this;google.maps.event.addListener(a,"dragend",function(){b.ready_&&(this.isAdded=!1,b.repaint())})}a.isAdded=!1,this.markers_.push(a)},f.prototype.removeMarker=function(a,b){var c=this.removeMarker_(a);return!b&&c&&this.repaint(),c},f.prototype.removeMarkers=function(a,b){var c,d,e=!1;for(c=0;c<a.length;c++)d=this.removeMarker_(a[c]),e=e||d;return!b&&e&&this.repaint(),e},f.prototype.removeMarker_=function(a){var b,c=-1;if(this.markers_.indexOf)c=this.markers_.indexOf(a);else for(b=0;b<this.markers_.length;b++)if(a===this.markers_[b]){c=b;break}return-1===c?!1:(a.setMap(null),this.markers_.splice(c,1),!0)},f.prototype.clearMarkers=function(){this.resetViewport_(!0),this.markers_=[]},f.prototype.repaint=function(){var a=this.clusters_.slice();this.clusters_=[],this.resetViewport_(!1),this.redraw_(),setTimeout(function(){var b;for(b=0;b<a.length;b++)a[b].remove()},0)},f.prototype.getExtendedBounds=function(a){var b=this.getProjection(),c=new google.maps.LatLng(a.getNorthEast().lat(),a.getNorthEast().lng()),d=new google.maps.LatLng(a.getSouthWest().lat(),a.getSouthWest().lng()),e=b.fromLatLngToDivPixel(c);e.x+=this.gridSize_,e.y-=this.gridSize_;var f=b.fromLatLngToDivPixel(d);f.x-=this.gridSize_,f.y+=this.gridSize_;var g=b.fromDivPixelToLatLng(e),h=b.fromDivPixelToLatLng(f);return a.extend(g),a.extend(h),a},f.prototype.redraw_=function(){this.createClusters_(0)},f.prototype.resetViewport_=function(a){var b,c;for(b=0;b<this.clusters_.length;b++)this.clusters_[b].remove();for(this.clusters_=[],b=0;b<this.markers_.length;b++)c=this.markers_[b],c.isAdded=!1,a&&c.setMap(null)},f.prototype.distanceBetweenPoints_=function(a,b){var c=6371,d=(b.lat()-a.lat())*Math.PI/180,e=(b.lng()-a.lng())*Math.PI/180,f=Math.sin(d/2)*Math.sin(d/2)+Math.cos(a.lat()*Math.PI/180)*Math.cos(b.lat()*Math.PI/180)*Math.sin(e/2)*Math.sin(e/2),g=2*Math.atan2(Math.sqrt(f),Math.sqrt(1-f)),h=c*g;return h},f.prototype.isMarkerInBounds_=function(a,b){return b.contains(a.getPosition())},f.prototype.addToClosestCluster_=function(a){var b,c,d,f,g=4e4,h=null;for(b=0;b<this.clusters_.length;b++)d=this.clusters_[b],f=d.getCenter(),f&&(c=this.distanceBetweenPoints_(f,a.getPosition()),g>c&&(g=c,h=d));h&&h.isMarkerInClusterBounds(a)?h.addMarker(a):(d=new e(this),d.addMarker(a),this.clusters_.push(d))},f.prototype.createClusters_=function(a){var b,c,d,e=this;if(this.ready_){0===a&&(google.maps.event.trigger(this,"clusteringbegin",this),"undefined"!=typeof this.timerRefStatic&&(clearTimeout(this.timerRefStatic),delete this.timerRefStatic)),d=this.getMap().getZoom()>3?new google.maps.LatLngBounds(this.getMap().getBounds().getSouthWest(),this.getMap().getBounds().getNorthEast()):new google.maps.LatLngBounds(new google.maps.LatLng(85.02070771743472,-178.48388434375),new google.maps.LatLng(-85.08136444384544,178.00048865625));var f=this.getExtendedBounds(d),g=Math.min(a+this.batchSize_,this.markers_.length);for(b=a;g>b;b++)c=this.markers_[b],!c.isAdded&&this.isMarkerInBounds_(c,f)&&(!this.ignoreHidden_||this.ignoreHidden_&&c.getVisible())&&this.addToClosestCluster_(c);g<this.markers_.length?this.timerRefStatic=setTimeout(function(){e.createClusters_(g)},0):(delete this.timerRefStatic,google.maps.event.trigger(this,"clusteringend",this))}},f.prototype.extend=function(a,b){return function(a){var b;for(b in a.prototype)this.prototype[b]=a.prototype[b];return this}.apply(a,[b])},f.CALCULATOR=function(a,b){for(var c=0,d="",e=a.length.toString(),f=e;0!==f;)f=parseInt(f/10,10),c++;return c=Math.min(c,b),{text:e,index:c,title:d}},f.BATCH_SIZE=2e3,f.BATCH_SIZE_IE=500,f.IMAGE_PATH="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m",f.IMAGE_EXTENSION="png",f.IMAGE_SIZES=[53,56,66,78,90],g(h,google.maps.OverlayView),h.getSharedCross=function(a){var b;return"undefined"==typeof h.getSharedCross.crossDiv&&(b=document.createElement("img"),b.style.cssText="position: absolute; z-index: 1000002; display: none;",b.style.marginLeft="-8px",b.style.marginTop="-9px",b.src=a,h.getSharedCross.crossDiv=b),h.getSharedCross.crossDiv},h.prototype.onAdd=function(){var a,b,c,d,e,f,g,i=this,j=!1,k=!1,l=20,m="url("+this.handCursorURL_+")",n=function(a){a.preventDefault&&a.preventDefault(),a.cancelBubble=!0,a.stopPropagation&&a.stopPropagation()},o=function(){i.marker_.setAnimation(null)};this.getPanes().overlayImage.appendChild(this.labelDiv_),this.getPanes().overlayMouseTarget.appendChild(this.eventDiv_),"undefined"==typeof h.getSharedCross.processed&&(this.getPanes().overlayImage.appendChild(this.crossDiv_),h.getSharedCross.processed=!0),this.listeners_=[google.maps.event.addDomListener(this.eventDiv_,"mouseover",function(a){(i.marker_.getDraggable()||i.marker_.getClickable())&&(this.style.cursor="pointer",google.maps.event.trigger(i.marker_,"mouseover",a))}),google.maps.event.addDomListener(this.eventDiv_,"mouseout",function(a){!i.marker_.getDraggable()&&!i.marker_.getClickable()||k||(this.style.cursor=i.marker_.getCursor(),google.maps.event.trigger(i.marker_,"mouseout",a))}),google.maps.event.addDomListener(this.eventDiv_,"mousedown",function(a){k=!1,i.marker_.getDraggable()&&(j=!0,this.style.cursor=m),(i.marker_.getDraggable()||i.marker_.getClickable())&&(google.maps.event.trigger(i.marker_,"mousedown",a),n(a))}),google.maps.event.addDomListener(document,"mouseup",function(b){var c;if(j&&(j=!1,i.eventDiv_.style.cursor="pointer",google.maps.event.trigger(i.marker_,"mouseup",b)),k){if(e){c=i.getProjection().fromLatLngToDivPixel(i.marker_.getPosition()),c.y+=l,i.marker_.setPosition(i.getProjection().fromDivPixelToLatLng(c));try{i.marker_.setAnimation(google.maps.Animation.BOUNCE),setTimeout(o,1406)}catch(f){}}i.crossDiv_.style.display="none",i.marker_.setZIndex(a),d=!0,k=!1,b.latLng=i.marker_.getPosition(),google.maps.event.trigger(i.marker_,"dragend",b)}}),google.maps.event.addListener(i.marker_.getMap(),"mousemove",function(d){var h;j&&(k?(d.latLng=new google.maps.LatLng(d.latLng.lat()-b,d.latLng.lng()-c),h=i.getProjection().fromLatLngToDivPixel(d.latLng),e&&(i.crossDiv_.style.left=h.x+"px",i.crossDiv_.style.top=h.y+"px",i.crossDiv_.style.display="",h.y-=l),i.marker_.setPosition(i.getProjection().fromDivPixelToLatLng(h)),e&&(i.eventDiv_.style.top=h.y+l+"px"),google.maps.event.trigger(i.marker_,"drag",d)):(b=d.latLng.lat()-i.marker_.getPosition().lat(),c=d.latLng.lng()-i.marker_.getPosition().lng(),a=i.marker_.getZIndex(),f=i.marker_.getPosition(),g=i.marker_.getMap().getCenter(),e=i.marker_.get("raiseOnDrag"),k=!0,i.marker_.setZIndex(1e6),d.latLng=i.marker_.getPosition(),google.maps.event.trigger(i.marker_,"dragstart",d)))}),google.maps.event.addDomListener(document,"keydown",function(a){k&&27===a.keyCode&&(e=!1,i.marker_.setPosition(f),i.marker_.getMap().setCenter(g),google.maps.event.trigger(document,"mouseup",a))}),google.maps.event.addDomListener(this.eventDiv_,"click",function(a){(i.marker_.getDraggable()||i.marker_.getClickable())&&(d?d=!1:(google.maps.event.trigger(i.marker_,"click",a),n(a)))}),google.maps.event.addDomListener(this.eventDiv_,"dblclick",function(a){(i.marker_.getDraggable()||i.marker_.getClickable())&&(google.maps.event.trigger(i.marker_,"dblclick",a),n(a))}),google.maps.event.addListener(this.marker_,"dragstart",function(a){k||(e=this.get("raiseOnDrag"))}),google.maps.event.addListener(this.marker_,"drag",function(a){k||e&&(i.setPosition(l),i.labelDiv_.style.zIndex=1e6+(this.get("labelInBackground")?-1:1))}),google.maps.event.addListener(this.marker_,"dragend",function(a){k||e&&i.setPosition(0)}),google.maps.event.addListener(this.marker_,"position_changed",function(){i.setPosition()}),google.maps.event.addListener(this.marker_,"zindex_changed",function(){i.setZIndex()}),google.maps.event.addListener(this.marker_,"visible_changed",function(){i.setVisible()}),google.maps.event.addListener(this.marker_,"labelvisible_changed",function(){i.setVisible()}),google.maps.event.addListener(this.marker_,"title_changed",function(){i.setTitle()}),google.maps.event.addListener(this.marker_,"labelcontent_changed",function(){i.setContent()}),google.maps.event.addListener(this.marker_,"labelanchor_changed",function(){i.setAnchor()}),google.maps.event.addListener(this.marker_,"labelclass_changed",function(){i.setStyles()}),google.maps.event.addListener(this.marker_,"labelstyle_changed",function(){i.setStyles()})]},h.prototype.onRemove=function(){var a;for(this.labelDiv_.parentNode.removeChild(this.labelDiv_),this.eventDiv_.parentNode.removeChild(this.eventDiv_),a=0;a<this.listeners_.length;a++)google.maps.event.removeListener(this.listeners_[a])},h.prototype.draw=function(){this.setContent(),this.setTitle(),this.setStyles()},h.prototype.setContent=function(){var a=this.marker_.get("labelContent");"undefined"==typeof a.nodeType?(this.labelDiv_.innerHTML=a,this.eventDiv_.innerHTML=this.labelDiv_.innerHTML):(this.labelDiv_.innerHTML="",this.labelDiv_.appendChild(a),a=a.cloneNode(!0),this.eventDiv_.innerHTML="",this.eventDiv_.appendChild(a))},h.prototype.setTitle=function(){this.eventDiv_.title=this.marker_.getTitle()||""},h.prototype.setStyles=function(){var a,b;this.labelDiv_.className=this.marker_.get("labelClass"),this.eventDiv_.className=this.labelDiv_.className,this.labelDiv_.style.cssText="",this.eventDiv_.style.cssText="",b=this.marker_.get("labelStyle");for(a in b)b.hasOwnProperty(a)&&(this.labelDiv_.style[a]=b[a],this.eventDiv_.style[a]=b[a]);this.setMandatoryStyles()},h.prototype.setMandatoryStyles=function(){this.labelDiv_.style.position="absolute",this.labelDiv_.style.overflow="hidden","undefined"!=typeof this.labelDiv_.style.opacity&&""!==this.labelDiv_.style.opacity&&(this.labelDiv_.style.MsFilter='"progid:DXImageTransform.Microsoft.Alpha(opacity='+100*this.labelDiv_.style.opacity+')"',this.labelDiv_.style.filter="alpha(opacity="+100*this.labelDiv_.style.opacity+")"),this.eventDiv_.style.position=this.labelDiv_.style.position,this.eventDiv_.style.overflow=this.labelDiv_.style.overflow,this.eventDiv_.style.opacity=.01,this.eventDiv_.style.MsFilter='"progid:DXImageTransform.Microsoft.Alpha(opacity=1)"',this.eventDiv_.style.filter="alpha(opacity=1)",this.setAnchor(),this.setPosition(),this.setVisible()},h.prototype.setAnchor=function(){var a=this.marker_.get("labelAnchor");this.labelDiv_.style.marginLeft=-a.x+"px",this.labelDiv_.style.marginTop=-a.y+"px",this.eventDiv_.style.marginLeft=-a.x+"px",this.eventDiv_.style.marginTop=-a.y+"px"},h.prototype.setPosition=function(a){var b=this.getProjection().fromLatLngToDivPixel(this.marker_.getPosition());"undefined"==typeof a&&(a=0),this.labelDiv_.style.left=Math.round(b.x)+"px",this.labelDiv_.style.top=Math.round(b.y-a)+"px",this.eventDiv_.style.left=this.labelDiv_.style.left,this.eventDiv_.style.top=this.labelDiv_.style.top,this.setZIndex()},h.prototype.setZIndex=function(){var a=this.marker_.get("labelInBackground")?-1:1;"undefined"==typeof this.marker_.getZIndex()?(this.labelDiv_.style.zIndex=parseInt(this.labelDiv_.style.top,10)+a,this.eventDiv_.style.zIndex=this.labelDiv_.style.zIndex):(this.labelDiv_.style.zIndex=this.marker_.getZIndex()+a,this.eventDiv_.style.zIndex=this.labelDiv_.style.zIndex)},h.prototype.setVisible=function(){this.marker_.get("labelVisible")?this.labelDiv_.style.display=this.marker_.getVisible()?"block":"none":this.labelDiv_.style.display="none",this.eventDiv_.style.display=this.labelDiv_.style.display},g(i,google.maps.Marker),i.prototype.setMap=function(a){google.maps.Marker.prototype.setMap.apply(this,arguments),this.label.setMap(a)},j.prototype=new google.maps.OverlayView,a.RichMarker=j,j.prototype.getVisible=function(){return this.get("visible")},j.prototype.getVisible=j.prototype.getVisible,j.prototype.setVisible=function(a){this.set("visible",a)},j.prototype.setVisible=j.prototype.setVisible,j.prototype.visible_changed=function(){this.ready_&&(this.markerWrapper_.style.display=this.getVisible()?"":"none",this.draw())},j.prototype.visible_changed=j.prototype.visible_changed,j.prototype.setFlat=function(a){this.set("flat",!!a)},j.prototype.setFlat=j.prototype.setFlat,j.prototype.getFlat=function(){return this.get("flat")},j.prototype.getFlat=j.prototype.getFlat,j.prototype.getWidth=function(){return this.get("width")},j.prototype.getWidth=j.prototype.getWidth,j.prototype.getHeight=function(){return this.get("height")},j.prototype.getHeight=j.prototype.getHeight,j.prototype.setShadow=function(a){this.set("shadow",a),this.flat_changed()},j.prototype.setShadow=j.prototype.setShadow,j.prototype.getShadow=function(){return this.get("shadow")},j.prototype.getShadow=j.prototype.getShadow,j.prototype.flat_changed=function(){this.ready_&&(this.markerWrapper_.style.boxShadow=this.markerWrapper_.style.webkitBoxShadow=this.markerWrapper_.style.MozBoxShadow=this.getFlat()?"":this.getShadow())},j.prototype.flat_changed=j.prototype.flat_changed,j.prototype.setZIndex=function(a){this.set("zIndex",a)},j.prototype.setZIndex=j.prototype.setZIndex,j.prototype.getZIndex=function(){return this.get("zIndex")},j.prototype.getZIndex=j.prototype.getZIndex,j.prototype.zIndex_changed=function(){this.getZIndex()&&this.ready_&&(this.markerWrapper_.style.zIndex=this.getZIndex())},j.prototype.zIndex_changed=j.prototype.zIndex_changed,j.prototype.getDraggable=function(){return this.get("draggable")},j.prototype.getDraggable=j.prototype.getDraggable,j.prototype.setDraggable=function(a){this.set("draggable",!!a)},j.prototype.setDraggable=j.prototype.setDraggable,j.prototype.draggable_changed=function(){this.ready_&&(this.getDraggable()?this.addDragging_(this.markerWrapper_):this.removeDragListeners_())},j.prototype.draggable_changed=j.prototype.draggable_changed,j.prototype.getPosition=function(){return this.get("position")},j.prototype.getPosition=j.prototype.getPosition,j.prototype.setPosition=function(a){this.set("position",a)},j.prototype.setPosition=j.prototype.setPosition,j.prototype.position_changed=function(){this.draw()},j.prototype.position_changed=j.prototype.position_changed,j.prototype.getAnchor=function(){return this.get("anchor")},j.prototype.getAnchor=j.prototype.getAnchor,j.prototype.setAnchor=function(a){this.set("anchor",a)},j.prototype.setAnchor=j.prototype.setAnchor,j.prototype.anchor_changed=function(){this.draw()},j.prototype.anchor_changed=j.prototype.anchor_changed,j.prototype.htmlToDocumentFragment_=function(a){var b=document.createElement("DIV");if(b.innerHTML=a,1==b.childNodes.length)return b.removeChild(b.firstChild);for(var c=document.createDocumentFragment();b.firstChild;)c.appendChild(b.firstChild);return c},j.prototype.removeChildren_=function(a){if(a)for(var b;b=a.firstChild;)a.removeChild(b)},j.prototype.setContent=function(a){this.set("content",a)},j.prototype.setContent=j.prototype.setContent,j.prototype.getContent=function(){return this.get("content")},j.prototype.getContent=j.prototype.getContent,j.prototype.content_changed=function(){if(this.markerContent_){this.removeChildren_(this.markerContent_);var a=this.getContent();if(a){"string"==typeof a&&(a=a.replace(/^\s*([\S\s]*)\b\s*$/,"$1"),a=this.htmlToDocumentFragment_(a)),this.markerContent_.appendChild(a);for(var b,c=this,d=this.markerContent_.getElementsByTagName("IMG"),e=0;b=d[e];e++)google.maps.event.addDomListener(b,"mousedown",function(a){c.getDraggable()&&(a.preventDefault&&a.preventDefault(),a.returnValue=!1)}),google.maps.event.addDomListener(b,"load",function(){c.draw()});google.maps.event.trigger(this,"domready")}this.ready_&&this.draw()}},j.prototype.content_changed=j.prototype.content_changed,j.prototype.setCursor_=function(a){if(this.ready_){var b="";-1!==navigator.userAgent.indexOf("Gecko/")?("dragging"==a&&(b="-moz-grabbing"),"dragready"==a&&(b="-moz-grab"),"draggable"==a&&(b="pointer")):(("dragging"==a||"dragready"==a)&&(b="move"),"draggable"==a&&(b="pointer")),this.markerWrapper_.style.cursor!=b&&(this.markerWrapper_.style.cursor=b)}},j.prototype.startDrag=function(a){if(this.getDraggable()&&!this.dragging_){this.dragging_=!0;var b=this.getMap();this.mapDraggable_=b.get("draggable"),b.set("draggable",!1),this.mouseX_=a.clientX,this.mouseY_=a.clientY,this.setCursor_("dragready"),this.markerWrapper_.style.MozUserSelect="none",this.markerWrapper_.style.KhtmlUserSelect="none",this.markerWrapper_.style.WebkitUserSelect="none",this.markerWrapper_.unselectable="on",this.markerWrapper_.onselectstart=function(){return!1},this.addDraggingListeners_(),google.maps.event.trigger(this,"dragstart")}},j.prototype.stopDrag=function(){this.getDraggable()&&this.dragging_&&(this.dragging_=!1,this.getMap().set("draggable",this.mapDraggable_),this.mouseX_=this.mouseY_=this.mapDraggable_=null,this.markerWrapper_.style.MozUserSelect="",this.markerWrapper_.style.KhtmlUserSelect="",this.markerWrapper_.style.WebkitUserSelect="",this.markerWrapper_.unselectable="off",this.markerWrapper_.onselectstart=function(){},this.removeDraggingListeners_(),this.setCursor_("draggable"),google.maps.event.trigger(this,"dragend"),this.draw())},j.prototype.drag=function(a){if(!this.getDraggable()||!this.dragging_)return void this.stopDrag();var b=this.mouseX_-a.clientX,c=this.mouseY_-a.clientY;this.mouseX_=a.clientX,this.mouseY_=a.clientY;var d=parseInt(this.markerWrapper_.style.left,10)-b,e=parseInt(this.markerWrapper_.style.top,10)-c;this.markerWrapper_.style.left=d+"px",this.markerWrapper_.style.top=e+"px";var f=this.getOffset_(),g=new google.maps.Point(d-f.width,e-f.height),h=this.getProjection();this.setPosition(h.fromDivPixelToLatLng(g)),this.setCursor_("dragging"),google.maps.event.trigger(this,"drag")},j.prototype.removeDragListeners_=function(){this.draggableListener_&&(google.maps.event.removeListener(this.draggableListener_),delete this.draggableListener_),this.setCursor_("")},j.prototype.addDragging_=function(a){if(a){var b=this;this.draggableListener_=google.maps.event.addDomListener(a,"mousedown",function(a){b.startDrag(a)}),this.setCursor_("draggable")}},j.prototype.addDraggingListeners_=function(){var b=this;this.markerWrapper_.setCapture?(this.markerWrapper_.setCapture(!0),this.draggingListeners_=[google.maps.event.addDomListener(this.markerWrapper_,"mousemove",function(a){b.drag(a)},!0),google.maps.event.addDomListener(this.markerWrapper_,"mouseup",function(){b.stopDrag(),b.markerWrapper_.releaseCapture()},!0)]):this.draggingListeners_=[google.maps.event.addDomListener(a,"mousemove",function(a){b.drag(a)},!0),google.maps.event.addDomListener(a,"mouseup",function(){b.stopDrag()},!0)]},j.prototype.removeDraggingListeners_=function(){if(this.draggingListeners_){for(var a,b=0;a=this.draggingListeners_[b];b++)google.maps.event.removeListener(a);this.draggingListeners_.length=0}},j.prototype.getOffset_=function(){var a=this.getAnchor();if("object"==typeof a)return a;var b=new google.maps.Size(0,0);if(!this.markerContent_)return b;var c=this.markerContent_.offsetWidth,d=this.markerContent_.offsetHeight;switch(a){case k.TOP_LEFT:break;case k.TOP:b.width=-c/2;break;case k.TOP_RIGHT:b.width=-c;break;case k.LEFT:b.height=-d/2;break;case k.MIDDLE:b.width=-c/2,b.height=-d/2;break;case k.RIGHT:b.width=-c,b.height=-d/2;break;case k.BOTTOM_LEFT:b.height=-d;break;case k.BOTTOM:b.width=-c/2,b.height=-d;break;case k.BOTTOM_RIGHT:b.width=-c,b.height=-d}return b},j.prototype.onAdd=function(){if(this.markerWrapper_||(this.markerWrapper_=document.createElement("DIV"),this.markerWrapper_.style.position="absolute"),this.getZIndex()&&(this.markerWrapper_.style.zIndex=this.getZIndex()),this.markerWrapper_.style.display=this.getVisible()?"":"none",!this.markerContent_){this.markerContent_=document.createElement("DIV"),this.markerWrapper_.appendChild(this.markerContent_);var a=this;google.maps.event.addDomListener(this.markerContent_,"click",function(b){google.maps.event.trigger(a,"click")}),google.maps.event.addDomListener(this.markerContent_,"mouseover",function(b){google.maps.event.trigger(a,"mouseover")}),google.maps.event.addDomListener(this.markerContent_,"mouseout",function(b){google.maps.event.trigger(a,"mouseout")})}this.ready_=!0,this.content_changed(),this.flat_changed(),this.draggable_changed();var b=this.getPanes();b&&b.overlayMouseTarget.appendChild(this.markerWrapper_),google.maps.event.trigger(this,"ready")},j.prototype.onAdd=j.prototype.onAdd,j.prototype.draw=function(){if(this.ready_&&!this.dragging_){var a=this.getProjection();if(a){var b=this.get("position"),c=a.fromLatLngToDivPixel(b),d=this.getOffset_();this.markerWrapper_.style.top=c.y+d.height+"px",this.markerWrapper_.style.left=c.x+d.width+"px";var e=this.markerContent_.offsetHeight,f=this.markerContent_.offsetWidth;f!=this.get("width")&&this.set("width",f),e!=this.get("height")&&this.set("height",e)}}},j.prototype.draw=j.prototype.draw,j.prototype.onRemove=function(){this.markerWrapper_&&this.markerWrapper_.parentNode&&this.markerWrapper_.parentNode.removeChild(this.markerWrapper_),this.removeDragListeners_()},j.prototype.onRemove=j.prototype.onRemove;var k={TOP_LEFT:1,TOP:2,TOP_RIGHT:3,LEFT:4,MIDDLE:5,RIGHT:6,BOTTOM_LEFT:7,BOTTOM:8,BOTTOM_RIGHT:9};a.RichMarkerPosition=k,a.InfoBox=b,a.Cluster=e,a.ClusterIcon=d,a.MarkerClusterer=f,a.MarkerLabel_=h,a.MarkerWithLabel=i,a.RichMarker=j})}}),function(a){function b(d){if(c[d])return c[d].exports;var e=c[d]={exports:{},id:d,loaded:!1};return a[d].call(e.exports,e,e.exports,b),e.loaded=!0,e.exports}var c={};return b.m=a,b.c=c,b.p="",b(0)}([function(a,c,d){b.module("uiGmapgoogle-maps.wrapped").service("uiGmapDataStructures",function(){return{Graph:d(1).Graph,Queue:d(1).Queue}})},function(a,b,c){(function(){
 a.exports={Graph:c(2),Heap:c(3),LinkedList:c(4),Map:c(5),Queue:c(6),RedBlackTree:c(7),Trie:c(8)}}).call(this)},function(a,b){(function(){var b,c={}.hasOwnProperty;b=function(){function a(){this._nodes={},this.nodeSize=0,this.edgeSize=0}return a.prototype.addNode=function(a){return this._nodes[a]?void 0:(this.nodeSize++,this._nodes[a]={_outEdges:{},_inEdges:{}})},a.prototype.getNode=function(a){return this._nodes[a]},a.prototype.removeNode=function(a){var b,d,e,f,g;if(d=this._nodes[a]){f=d._outEdges;for(e in f)c.call(f,e)&&this.removeEdge(a,e);g=d._inEdges;for(b in g)c.call(g,b)&&this.removeEdge(b,a);return this.nodeSize--,delete this._nodes[a],d}},a.prototype.addEdge=function(a,b,c){var d,e,f;return null==c&&(c=1),!this.getEdge(a,b)&&(e=this._nodes[a],f=this._nodes[b],e&&f)?(d={weight:c},e._outEdges[b]=d,f._inEdges[a]=d,this.edgeSize++,d):void 0},a.prototype.getEdge=function(a,b){var c,d;return c=this._nodes[a],d=this._nodes[b],c&&d?c._outEdges[b]:void 0},a.prototype.removeEdge=function(a,b){var c,d,e;return d=this._nodes[a],e=this._nodes[b],(c=this.getEdge(a,b))?(delete d._outEdges[b],delete e._inEdges[a],this.edgeSize--,c):void 0},a.prototype.getInEdgesOf=function(a){var b,d,e,f;e=this._nodes[a],d=[],f=null!=e?e._inEdges:void 0;for(b in f)c.call(f,b)&&d.push(this.getEdge(b,a));return d},a.prototype.getOutEdgesOf=function(a){var b,d,e,f;b=this._nodes[a],d=[],f=null!=b?b._outEdges:void 0;for(e in f)c.call(f,e)&&d.push(this.getEdge(a,e));return d},a.prototype.getAllEdgesOf=function(a){var b,c,d,e,f,g,h;if(c=this.getInEdgesOf(a),d=this.getOutEdgesOf(a),0===c.length)return d;for(e=this.getEdge(a,a),b=f=0,g=c.length;g>=0?g>f:f>g;b=g>=0?++f:--f)if(c[b]===e){h=[c[c.length-1],c[b]],c[b]=h[0],c[c.length-1]=h[1],c.pop();break}return c.concat(d)},a.prototype.forEachNode=function(a){var b,d,e;e=this._nodes;for(b in e)c.call(e,b)&&(d=e[b],a(d,b))},a.prototype.forEachEdge=function(a){var b,d,e,f,g,h;g=this._nodes;for(d in g)if(c.call(g,d)){e=g[d],h=e._outEdges;for(f in h)c.call(h,f)&&(b=h[f],a(b))}},a}(),a.exports=b}).call(this)},function(a,b){(function(){var b,c,d,e;b=function(){function a(a){var b,c,d,e,f,g;for(null==a&&(a=[]),this._data=[void 0],d=0,f=a.length;f>d;d++)c=a[d],null!=c&&this._data.push(c);if(this._data.length>1)for(b=e=2,g=this._data.length;g>=2?g>e:e>g;b=g>=2?++e:--e)this._upHeap(b);this.size=this._data.length-1}return a.prototype.add=function(a){return null!=a?(this._data.push(a),this._upHeap(this._data.length-1),this.size++,a):void 0},a.prototype.removeMin=function(){var a;if(1!==this._data.length)return this.size--,2===this._data.length?this._data.pop():(a=this._data[1],this._data[1]=this._data.pop(),this._downHeap(),a)},a.prototype.peekMin=function(){return this._data[1]},a.prototype._upHeap=function(a){var b,c;for(b=this._data[a];this._data[a]<this._data[d(a)]&&a>1;)c=[this._data[d(a)],this._data[a]],this._data[a]=c[0],this._data[d(a)]=c[1],a=d(a)},a.prototype._downHeap=function(){var a,b,d;for(a=1;c(a<this._data.length)&&(b=c(a),b<this._data.length-1&&this._data[e(a)]<this._data[b]&&(b=e(a)),this._data[b]<this._data[a]);)d=[this._data[a],this._data[b]],this._data[b]=d[0],this._data[a]=d[1],a=b},a}(),d=function(a){return a>>1},c=function(a){return a<<1},e=function(a){return(a<<1)+1},a.exports=b}).call(this)},function(a,b){(function(){var b;b=function(){function a(a){var b,c,d;for(null==a&&(a=[]),this.head={prev:void 0,value:void 0,next:void 0},this.tail={prev:void 0,value:void 0,next:void 0},this.size=0,c=0,d=a.length;d>c;c++)b=a[c],this.add(b)}return a.prototype.at=function(a){var b,c,d,e,f;if(-this.size<=a&&a<this.size){if(a=this._adjust(a),2*a<this.size)for(b=this.head,c=d=1;a>=d;c=d+=1)b=b.next;else for(b=this.tail,c=e=1,f=this.size-a-1;f>=e;c=e+=1)b=b.prev;return b}},a.prototype.add=function(a,b){var c,d,e,f,g;return null==b&&(b=this.size),-this.size<=b&&b<=this.size?(d={value:a},b=this._adjust(b),0===this.size?this.head=d:0===b?(e=[d,this.head,d],this.head.prev=e[0],d.next=e[1],this.head=e[2]):(c=this.at(b-1),f=[c.next,d,d,c],d.next=f[0],null!=(g=c.next)?g.prev=f[1]:void 0,c.next=f[2],d.prev=f[3]),b===this.size&&(this.tail=d),this.size++,a):void 0},a.prototype.removeAt=function(a){var b,c,d;return null==a&&(a=this.size-1),-this.size<=a&&a<this.size&&0!==this.size?(a=this._adjust(a),1===this.size?(c=this.head.value,this.head.value=this.tail.value=void 0):0===a?(c=this.head.value,this.head=this.head.next,this.head.prev=void 0):(b=this.at(a),c=b.value,b.prev.next=b.next,null!=(d=b.next)&&(d.prev=b.prev),a===this.size-1&&(this.tail=b.prev)),this.size--,c):void 0},a.prototype.remove=function(a){var b;if(null!=a){for(b=this.head;b&&b.value!==a;)b=b.next;if(b)return 1===this.size?this.head.value=this.tail.value=void 0:b===this.head?(this.head=this.head.next,this.head.prev=void 0):b===this.tail?(this.tail=this.tail.prev,this.tail.next=void 0):(b.prev.next=b.next,b.next.prev=b.prev),this.size--,a}},a.prototype.indexOf=function(a,b){var c,d;if(null==b&&(b=0),null==this.head.value&&!this.head.next||b>=this.size)return-1;for(b=Math.max(0,this._adjust(b)),c=this.at(b),d=b;c&&c.value!==a;)c=c.next,d++;return d===this.size?-1:d},a.prototype._adjust=function(a){return 0>a?this.size+a:a},a}(),a.exports=b}).call(this)},function(a,b){(function(){var b,c,d,e,f={}.hasOwnProperty;c="_mapId_",b=function(){function a(b){var c,d;this._content={},this._itemId=0,this._id=a._newMapId(),this.size=0;for(c in b)f.call(b,c)&&(d=b[c],this.set(c,d))}return a._mapIdTracker=0,a._newMapId=function(){return this._mapIdTracker++},a.prototype.hash=function(a,b){var f,g;return null==b&&(b=!1),g=d(a),e(a)?(f=c+this._id,b&&!a[f]&&(a[f]=this._itemId++),f+"_"+a[f]):g+"_"+a},a.prototype.set=function(a,b){return this.has(a)||this.size++,this._content[this.hash(a,!0)]=[b,a],b},a.prototype.get=function(a){var b;return null!=(b=this._content[this.hash(a)])?b[0]:void 0},a.prototype.has=function(a){return this.hash(a)in this._content},a.prototype["delete"]=function(a){var b;return b=this.hash(a),b in this._content?(delete this._content[b],e(a)&&delete a[c+this._id],this.size--,!0):!1},a.prototype.forEach=function(a){var b,c,d;d=this._content;for(b in d)f.call(d,b)&&(c=d[b],a(c[1],c[0]))},a}(),e=function(a){var b,c,e,f,g;for(b=["Boolean","Number","String","Undefined","Null","RegExp","Function"],e=d(a),f=0,g=b.length;g>f;f++)if(c=b[f],e===c)return!1;return!0},d=function(a){return Object.prototype.toString.apply(a).match(/\[object (.+)\]/)[1]},a.exports=b}).call(this)},function(a,b){(function(){var b;b=function(){function a(a){null==a&&(a=[]),this._content=a,this._dequeueIndex=0,this.size=this._content.length}return a.prototype.enqueue=function(a){return this.size++,this._content.push(a),a},a.prototype.dequeue=function(){var a;if(0!==this.size)return this.size--,a=this._content[this._dequeueIndex],this._dequeueIndex++,2*this._dequeueIndex>this._content.length&&(this._content=this._content.slice(this._dequeueIndex),this._dequeueIndex=0),a},a.prototype.peek=function(){return this._content[this._dequeueIndex]},a}(),a.exports=b}).call(this)},function(a,b){(function(){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p;c=0,d=1,e=2,h=3,f=1,b=2,g=function(){function a(a){var b,c,d;for(null==a&&(a=[]),this._root,this.size=0,c=0,d=a.length;d>c;c++)b=a[c],null!=b&&this.add(b)}return a.prototype.add=function(a){var g,l,m,n;if(null!=a){if(this.size++,m={value:a,_color:f},this._root){if(l=i(this._root,function(b){return a===b.value?c:a<b.value?b._left?d:(m._parent=b,b._left=m,h):b._right?e:(m._parent=b,b._right=m,h)}),null!=l)return}else this._root=m;for(g=m;;){if(g===this._root){g._color=b;break}if(g._parent._color===b)break;{if((null!=(n=p(g))?n._color:void 0)!==f){!k(g)&&k(g._parent)?(this._rotateLeft(g._parent),g=g._left):k(g)&&!k(g._parent)&&(this._rotateRight(g._parent),g=g._right),g._parent._color=b,j(g)._color=f,k(g)?this._rotateRight(j(g)):this._rotateLeft(j(g));break}g._parent._color=b,p(g)._color=b,j(g)._color=f,g=j(g)}}return a}},a.prototype.has=function(a){var b;return b=i(this._root,function(b){return a===b.value?c:a<b.value?d:e}),b?!0:!1},a.prototype.peekMin=function(){var a;return null!=(a=n(this._root))?a.value:void 0},a.prototype.peekMax=function(){var a;return null!=(a=m(this._root))?a.value:void 0},a.prototype.remove=function(a){var b;return(b=i(this._root,function(b){return a===b.value?c:a<b.value?d:e}))?(this._removeNode(this._root,b),this.size--,a):void 0},a.prototype.removeMin=function(){var a,b;return(a=n(this._root))?(b=a.value,this._removeNode(this._root,a),b):void 0},a.prototype.removeMax=function(){var a,b;return(a=m(this._root))?(b=a.value,this._removeNode(this._root,a),b):void 0},a.prototype._removeNode=function(a,c){var d,e,g,h,i,j,m,p,q,r;if(c._left&&c._right&&(e=n(c._right),c.value=e.value,c=e),e=c._left||c._right,e||(e={color:b,_right:void 0,_left:void 0,isLeaf:!0}),e._parent=c._parent,null!=(g=c._parent)&&(g[l(c)]=e),c._color===b)if(e._color===f)e._color=b,e._parent||(this._root=e);else for(;;){if(!e._parent){e.isLeaf?this._root=void 0:this._root=e;break}if(d=o(e),(null!=d?d._color:void 0)===f&&(e._parent._color=f,d._color=b,k(e)?this._rotateLeft(e._parent):this._rotateRight(e._parent)),d=o(e),e._parent._color!==b||d&&(d._color!==b||d._left&&d._left._color!==b||d._right&&d._right._color!==b)){if(!(e._parent._color!==f||d&&(d._color!==b||d._left&&(null!=(h=d._left)?h._color:void 0)!==b||d._right&&(null!=(i=d._right)?i._color:void 0)!==b))){null!=d&&(d._color=f),e._parent._color=b;break}if((null!=d?d._color:void 0)===b){!k(e)||d._right&&d._right._color!==b||(null!=(j=d._left)?j._color:void 0)!==f?k(e)||d._left&&d._left._color!==b||(null!=(p=d._right)?p._color:void 0)!==f||(d._color=f,null!=(q=d._right)&&(q._color=b),this._rotateLeft(d)):(d._color=f,null!=(m=d._left)&&(m._color=b),this._rotateRight(d));break}d=o(e),d._color=e._parent._color,k(e)?(d._right._color=b,this._rotateRight(e._parent)):(d._left._color=b,this._rotateLeft(e._parent))}else null!=d&&(d._color=f),e.isLeaf&&(e._parent[l(e)]=void 0),e=e._parent}return e.isLeaf&&null!=(r=e._parent)?r[l(e)]=void 0:void 0},a.prototype._rotateLeft=function(a){var b,c;return null!=(b=a._parent)&&(b[l(a)]=a._right),a._right._parent=a._parent,a._parent=a._right,a._right=a._right._left,a._parent._left=a,null!=(c=a._right)&&(c._parent=a),null==a._parent._parent?this._root=a._parent:void 0},a.prototype._rotateRight=function(a){var b,c;return null!=(b=a._parent)&&(b[l(a)]=a._left),a._left._parent=a._parent,a._parent=a._left,a._left=a._left._right,a._parent._right=a,null!=(c=a._left)&&(c._parent=a),null==a._parent._parent?this._root=a._parent:void 0},a}(),k=function(a){return a===a._parent._left},l=function(a){return k(a)?"_left":"_right"},i=function(a,b){var f,g,i;for(g=a,i=void 0;g;){if(f=b(g),f===c){i=g;break}if(f===d)g=g._left;else if(f===e)g=g._right;else if(f===h)break}return i},n=function(a){return i(a,function(a){return a._left?d:c})},m=function(a){return i(a,function(a){return a._right?e:c})},j=function(a){var b;return null!=(b=a._parent)?b._parent:void 0},p=function(a){return j(a)?k(a._parent)?j(a)._right:j(a)._left:void 0},o=function(a){return k(a)?a._parent._right:a._parent._left},a.exports=g}).call(this)},function(a,b,c){(function(){var b,d,e,f,g={}.hasOwnProperty;b=c(6),e="end",d=function(){function a(a){var b,c,d;for(null==a&&(a=[]),this._root={},this.size=0,c=0,d=a.length;d>c;c++)b=a[c],this.add(b)}return a.prototype.add=function(a){var b,c,d,f;if(null!=a){for(this.size++,b=this._root,d=0,f=a.length;f>d;d++)c=a[d],null==b[c]&&(b[c]={}),b=b[c];return b[e]=!0,a}},a.prototype.has=function(a){var b,c,d,f;if(null==a)return!1;for(b=this._root,d=0,f=a.length;f>d;d++){if(c=a[d],null==b[c])return!1;b=b[c]}return b[e]?!0:!1},a.prototype.longestPrefixOf=function(a){var b,c,d,e,f;if(null==a)return"";for(b=this._root,d="",e=0,f=a.length;f>e&&(c=a[e],null!=b[c]);e++)d+=c,b=b[c];return d},a.prototype.wordsWithPrefix=function(a){var c,d,f,h,i,j,k,l,m,n;if(null==a)return[];for(null!=a||(a=""),k=[],d=this._root,l=0,m=a.length;m>l;l++)if(f=a[l],d=d[f],null==d)return[];for(i=new b,i.enqueue([d,""]);0!==i.size;){n=i.dequeue(),h=n[0],c=n[1],h[e]&&k.push(a+c);for(f in h)g.call(h,f)&&(j=h[f],i.enqueue([j,c+f]))}return k},a.prototype.remove=function(a){var b,c,d,g,h,i,j,k;if(null!=a){for(b=this._root,g=[],h=0,j=a.length;j>h;h++){if(d=a[h],null==b[d])return;b=b[d],g.push([d,b])}if(b[e]){if(this.size--,delete b[e],f(b,1))return a;for(c=i=k=g.length-1;(1>=k?1>=i:i>=1)&&!f(g[c][1],1);c=1>=k?++i:--i)delete g[c-1][1][g[c][0]];return f(this._root[g[0][0]],1)||delete this._root[g[0][0]],a}}},a}(),f=function(a,b){var c,d;if(0===b)return!0;d=0;for(c in a)if(g.call(a,c)&&(d++,d>=b))return!0;return!1},a.exports=d}).call(this)}]),b.module("uiGmapgoogle-maps.wrapped").service("uiGmapMarkerSpiderfier",["uiGmapGoogleMapApi",function(b){var c=this,d={}.hasOwnProperty,e=[].slice;return this.OverlappingMarkerSpiderfier=function(){function b(a,b){var e,f,g,h,i,j;this.map=a,null==b&&(b={});for(f in b)d.call(b,f)&&(j=b[f],this[f]=j);for(this.projHelper=new this.constructor.ProjHelper(this.map),this.initMarkerArrays(),this.listeners={},i=["click","zoom_changed","maptypeid_changed"],g=0,h=i.length;h>g;g++)e=i[g],c.addListener(this.map,e,function(a){return function(){return a.unspiderfy()}}(this))}var c,f,g,h,i,j,k,l,m,n,o;for(l=b.prototype,m=[b,l],g=0,j=m.length;j>g;g++)o=m[g],o.VERSION="0.3.3";return f=void 0,c=void 0,k=void 0,n=2*Math.PI,l.keepSpiderfied=!1,l.markersWontHide=!1,l.markersWontMove=!1,l.nearbyDistance=20,l.circleSpiralSwitchover=9,l.circleFootSeparation=23,l.circleStartAngle=n/12,l.spiralFootSeparation=26,l.spiralLengthStart=11,l.spiralLengthFactor=4,l.spiderfiedZIndex=1e3,l.usualLegZIndex=10,l.highlightedLegZIndex=20,l.event="click",l.minZoomLevel=!1,l.legWeight=1.5,l.legColors={usual:{},highlighted:{}},i=l.legColors.usual,h=l.legColors.highlighted,b.initializeGoogleMaps=function(a){return f=a.maps,c=f.event,k=f.MapTypeId,i[k.HYBRID]=i[k.SATELLITE]="#fff",h[k.HYBRID]=h[k.SATELLITE]="#f00",i[k.TERRAIN]=i[k.ROADMAP]="#444",h[k.TERRAIN]=h[k.ROADMAP]="#f00",this.ProjHelper=function(a){return this.setMap(a)},this.ProjHelper.prototype=new f.OverlayView,this.ProjHelper.prototype.draw=function(){}},l.initMarkerArrays=function(){return this.markers=[],this.markerListenerRefs=[]},l.addMarker=function(a){var b;return null!=a._oms?this:(a._oms=!0,b=[c.addListener(a,this.event,function(b){return function(c){return b.spiderListener(a,c)}}(this))],this.markersWontHide||b.push(c.addListener(a,"visible_changed",function(b){return function(){return b.markerChangeListener(a,!1)}}(this))),this.markersWontMove||b.push(c.addListener(a,"position_changed",function(b){return function(){return b.markerChangeListener(a,!0)}}(this))),this.markerListenerRefs.push(b),this.markers.push(a),this)},l.markerChangeListener=function(a,b){return null==a._omsData||!b&&a.getVisible()||null!=this.spiderfying||null!=this.unspiderfying?void 0:this.unspiderfy(b?a:null)},l.getMarkers=function(){return this.markers.slice(0)},l.removeMarker=function(a){var b,d,e,f,g;if(null!=a._omsData&&this.unspiderfy(),b=this.arrIndexOf(this.markers,a),0>b)return this;for(g=this.markerListenerRefs.splice(b,1)[0],d=0,e=g.length;e>d;d++)f=g[d],c.removeListener(f);return delete a._oms,this.markers.splice(b,1),this},l.clearMarkers=function(){var a,b,d,e,f,g,h,i,j;for(this.unspiderfy(),j=this.markers,a=b=0,d=j.length;d>b;a=++b){for(h=j[a],g=this.markerListenerRefs[a],i=0,e=g.length;e>i;i++)f=g[i],c.removeListener(f);delete h._oms}return this.initMarkerArrays(),this},l.addListener=function(a,b){var c;return(null!=(c=this.listeners)[a]?c[a]:c[a]=[]).push(b),this},l.removeListener=function(a,b){var c;return c=this.arrIndexOf(this.listeners[a],b),0>c||this.listeners[a].splice(c,1),this},l.clearListeners=function(a){return this.listeners[a]=[],this},l.trigger=function(){var a,b,c,d,f,g,h,i;for(b=arguments[0],a=2<=arguments.length?e.call(arguments,1):[],h=null!=(g=this.listeners[b])?g:[],i=[],d=0,f=h.length;f>d;d++)c=h[d],i.push(c.apply(null,a));return i},l.generatePtsCircle=function(a,b){var c,d,e,g,h,i,j,k;for(e=this.circleFootSeparation*(2+a),i=e/n,d=n/a,k=[],g=h=0,j=a;j>=0?j>h:h>j;g=j>=0?++h:--h)c=this.circleStartAngle+g*d,k.push(new f.Point(b.x+i*Math.cos(c),b.y+i*Math.sin(c)));return k},l.generatePtsSpiral=function(a,b){var c,d,e,g,h,i,j;for(g=this.spiralLengthStart,c=0,j=[],d=e=0,i=a;i>=0?i>e:e>i;d=i>=0?++e:--e)c+=this.spiralFootSeparation/g+5e-4*d,h=new f.Point(b.x+g*Math.cos(c),b.y+g*Math.sin(c)),g+=n*this.spiralLengthFactor/c,j.push(h);return j},l.spiderListener=function(b,c){var d,e,f,g,h,i,j,k,m,n,o,p,q;if(k=null!=b._omsData,k&&this.keepSpiderfied||("mouseover"===this.event?(d=this,e=function(){return d.unspiderfy()},a.clearTimeout(l.timeout),l.timeout=setTimeout(e,3e3)):this.unspiderfy()),k||this.map.getStreetView().getVisible()||"GoogleEarthAPI"===this.map.getMapTypeId())return this.trigger("click",b,c);for(n=[],o=[],m=this.nearbyDistance,p=m*m,j=this.llToPt(b.position),q=this.markers,f=0,g=q.length;g>f;f++)h=q[f],null!=h.map&&h.getVisible()&&(i=this.llToPt(h.position),this.ptDistanceSq(i,j)<p?n.push({marker:h,markerPt:i}):o.push(h));return 1===n.length?this.trigger("click",b,c):this.spiderfy(n,o)},l.markersNearMarker=function(a,b){var c,d,e,f,g,h,i,j,k,l,m;if(null==b&&(b=!1),null==this.projHelper.getProjection())throw"Must wait for 'idle' event on map before calling markersNearMarker";for(i=this.nearbyDistance,j=i*i,g=this.llToPt(a.position),h=[],k=this.markers,c=0,d=k.length;d>c&&(e=k[c],!(e!==a&&null!=e.map&&e.getVisible()&&(f=this.llToPt(null!=(l=null!=(m=e._omsData)?m.usualPosition:void 0)?l:e.position),this.ptDistanceSq(f,g)<j&&(h.push(e),b))));c++);return h},l.markersNearAnyOtherMarker=function(){var a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u;if(null==this.projHelper.getProjection())throw"Must wait for 'idle' event on map before calling markersNearAnyOtherMarker";for(o=this.nearbyDistance,p=o*o,m=function(){var a,b,c,d,e,f;for(c=this.markers,f=[],a=0,b=c.length;b>a;a++)h=c[a],f.push({pt:this.llToPt(null!=(d=null!=(e=h._omsData)?e.usualPosition:void 0)?d:h.position),willSpiderfy:!1});return f}.call(this),r=this.markers,b=d=0,e=r.length;e>d;b=++d)if(i=r[b],null!=i.map&&i.getVisible()&&(j=m[b],!j.willSpiderfy))for(s=this.markers,c=n=0,f=s.length;f>n;c=++n)if(k=s[c],c!==b&&null!=k.map&&k.getVisible()&&(l=m[c],(!(b>c)||l.willSpiderfy)&&this.ptDistanceSq(j.pt,l.pt)<p)){j.willSpiderfy=l.willSpiderfy=!0;break}for(t=this.markers,u=[],a=q=0,g=t.length;g>q;a=++q)h=t[a],m[a].willSpiderfy&&u.push(h);return u},l.makeHighlightListenerFuncs=function(a){return{highlight:function(b){return function(){return a._omsData.leg.setOptions({strokeColor:b.legColors.highlighted[b.map.mapTypeId],zIndex:b.highlightedLegZIndex})}}(this),unhighlight:function(b){return function(){return a._omsData.leg.setOptions({strokeColor:b.legColors.usual[b.map.mapTypeId],zIndex:b.usualLegZIndex})}}(this)}},l.spiderfy=function(a,b){var d,e,g,h,i,j,k,l,m,n,o;return this.minZoomLevel&&this.map.getZoom()<this.minZoomLevel?!1:(this.spiderfying=!0,n=a.length,d=this.ptAverage(function(){var b,c,d;for(d=[],b=0,c=a.length;c>b;b++)l=a[b],d.push(l.markerPt);return d}()),h=n>=this.circleSpiralSwitchover?this.generatePtsSpiral(n,d).reverse():this.generatePtsCircle(n,d),o=function(){var b,d,l;for(l=[],b=0,d=h.length;d>b;b++)g=h[b],e=this.ptToLl(g),m=this.minExtract(a,function(a){return function(b){return a.ptDistanceSq(b.markerPt,g)}}(this)),k=m.marker,j=new f.Polyline({map:this.map,path:[k.position,e],strokeColor:this.legColors.usual[this.map.mapTypeId],strokeWeight:this.legWeight,zIndex:this.usualLegZIndex}),k._omsData={usualPosition:k.position,leg:j},this.legColors.highlighted[this.map.mapTypeId]!==this.legColors.usual[this.map.mapTypeId]&&(i=this.makeHighlightListenerFuncs(k),k._omsData.hightlightListeners={highlight:c.addListener(k,"mouseover",i.highlight),unhighlight:c.addListener(k,"mouseout",i.unhighlight)}),k.setPosition(e),k.setZIndex(Math.round(this.spiderfiedZIndex+g.y)),l.push(k);return l}.call(this),delete this.spiderfying,this.spiderfied=!0,this.trigger("spiderfy",o,b))},l.unspiderfy=function(a){var b,d,e,f,g,h,i;if(null==a&&(a=null),null==this.spiderfied)return this;for(this.unspiderfying=!0,i=[],g=[],h=this.markers,b=0,d=h.length;d>b;b++)f=h[b],null!=f._omsData?(f._omsData.leg.setMap(null),f!==a&&f.setPosition(f._omsData.usualPosition),f.setZIndex(null),e=f._omsData.hightlightListeners,null!=e&&(c.removeListener(e.highlight),c.removeListener(e.unhighlight)),delete f._omsData,i.push(f)):g.push(f);return delete this.unspiderfying,delete this.spiderfied,this.trigger("unspiderfy",i,g),this},l.ptDistanceSq=function(a,b){var c,d;return c=a.x-b.x,d=a.y-b.y,c*c+d*d},l.ptAverage=function(a){var b,c,d,e,g,h;for(g=h=0,b=0,c=a.length;c>b;b++)e=a[b],g+=e.x,h+=e.y;return d=a.length,new f.Point(g/d,h/d)},l.llToPt=function(a){return this.projHelper.getProjection().fromLatLngToDivPixel(a)},l.ptToLl=function(a){return this.projHelper.getProjection().fromDivPixelToLatLng(a)},l.minExtract=function(a,b){var c,d,e,f,g,h,i;for(e=g=0,h=a.length;h>g;e=++g)f=a[e],i=b(f),("undefined"==typeof c||null===c||d>i)&&(d=i,c=e);return a.splice(c,1)[0]},l.arrIndexOf=function(a,b){var c,d,e,f;if(null!=a.indexOf)return a.indexOf(b);for(c=d=0,e=a.length;e>d;c=++d)if(f=a[c],f===b)return c;return-1},b}(),b.then(function(){c.OverlappingMarkerSpiderfier.initializeGoogleMaps(a.google)}),this.OverlappingMarkerSpiderfier}]),b.module("uiGmapgoogle-maps.extensions").service("uiGmapExtendMarkerClusterer",["uiGmapLodash","uiGmapPropMap",function(b,c){return{init:_.once(function(){(function(){var d={}.hasOwnProperty,e=function(a,b){function c(){this.constructor=a}for(var e in b)d.call(b,e)&&(a[e]=b[e]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a};a.NgMapCluster=function(a){function d(a){d.__super__.constructor.call(this,a),this.markers_=new c}return e(d,a),d.prototype.addMarker=function(a){var b,c;if(this.isMarkerAlreadyAdded_(a)){var d=this.markers_.get(a.key);if(d.getPosition().lat()==a.getPosition().lat()&&d.getPosition().lon()==a.getPosition().lon())return!1}if(this.center_){if(this.averageCenter_){var e=this.markers_.length+1,f=(this.center_.lat()*(e-1)+a.getPosition().lat())/e,g=(this.center_.lng()*(e-1)+a.getPosition().lng())/e;this.center_=new google.maps.LatLng(f,g),this.calculateBounds_()}}else this.center_=a.getPosition(),this.calculateBounds_();return a.isAdded=!0,this.markers_.push(a),b=this.markers_.length,c=this.markerClusterer_.getMaxZoom(),null!==c&&this.map_.getZoom()>c?a.getMap()!==this.map_&&a.setMap(this.map_):b<this.minClusterSize_?a.getMap()!==this.map_&&a.setMap(this.map_):b===this.minClusterSize_?this.markers_.each(function(a){a.setMap(null)}):a.setMap(null),!0},d.prototype.isMarkerAlreadyAdded_=function(a){return b.isNullOrUndefined(this.markers_.get(a.key))},d.prototype.getBounds=function(){var a=new google.maps.LatLngBounds(this.center_,this.center_);return this.getMarkers().each(function(b){a.extend(b.getPosition())}),a},d.prototype.remove=function(){this.clusterIcon_.setMap(null),this.markers_=new c,delete this.markers_},d}(Cluster),a.NgMapMarkerClusterer=function(a){function b(a,d,e){b.__super__.constructor.call(this,a,d,e),this.markers_=new c}return e(b,a),b.prototype.clearMarkers=function(){this.resetViewport_(!0),this.markers_=new c},b.prototype.removeMarker_=function(a){return this.markers_.get(a.key)?(a.setMap(null),this.markers_.remove(a.key),!0):!1},b.prototype.createClusters_=function(a){var b,c,d,e=this;if(this.ready_){0===a&&(google.maps.event.trigger(this,"clusteringbegin",this),"undefined"!=typeof this.timerRefStatic&&(clearTimeout(this.timerRefStatic),delete this.timerRefStatic)),d=this.getMap().getZoom()>3?new google.maps.LatLngBounds(this.getMap().getBounds().getSouthWest(),this.getMap().getBounds().getNorthEast()):new google.maps.LatLngBounds(new google.maps.LatLng(85.02070771743472,-178.48388434375),new google.maps.LatLng(-85.08136444384544,178.00048865625));var f=this.getExtendedBounds(d),g=Math.min(a+this.batchSize_,this.markers_.length),h=this.markers_.values();for(b=a;g>b;b++)c=h[b],!c.isAdded&&this.isMarkerInBounds_(c,f)&&(!this.ignoreHidden_||this.ignoreHidden_&&c.getVisible())&&this.addToClosestCluster_(c);if(g<this.markers_.length)this.timerRefStatic=setTimeout(function(){e.createClusters_(g)},0);else{for(b=0;b<this.clusters_.length;b++)this.clusters_[b].updateIcon_();delete this.timerRefStatic,google.maps.event.trigger(this,"clusteringend",this)}}},b.prototype.addToClosestCluster_=function(a){var b,c,d,e,f=4e4,g=null;for(b=0;b<this.clusters_.length;b++)d=this.clusters_[b],e=d.getCenter(),e&&(c=this.distanceBetweenPoints_(e,a.getPosition()),f>c&&(f=c,g=d));g&&g.isMarkerInClusterBounds(a)?g.addMarker(a):(d=new NgMapCluster(this),d.addMarker(a),this.clusters_.push(d))},b.prototype.redraw_=function(){this.createClusters_(0)},b.prototype.resetViewport_=function(a){var b;for(b=0;b<this.clusters_.length;b++)this.clusters_[b].remove();this.clusters_=[],this.markers_.each(function(b){b.isAdded=!1,a&&b.setMap(null)})},b.prototype.extend=function(a,b){return function(a){var b;for(b in a.prototype)"constructor"!==b&&(this.prototype[b]=a.prototype[b]);return this}.apply(a,[b])},ClusterIcon.prototype.show=function(){if(this.div_){var a="",b=this.backgroundPosition_.split(" "),c=parseInt(b[0].trim(),10),d=parseInt(b[1].trim(),10),e=this.getPosFromLatLng_(this.center_);this.div_.style.cssText=this.createCss(e),a="<img src='"+this.url_+"' style='position: absolute; top: "+d+"px; left: "+c+"px; ",a+=this.cluster_.getMarkerClusterer().enableRetinaIcons_?"width: "+this.width_+"px;height: "+this.height_+"px;":"clip: rect("+-1*d+"px, "+(-1*c+this.width_)+"px, "+(-1*d+this.height_)+"px, "+-1*c+"px);",a+="'>",this.div_.innerHTML=a+"<div style='position: absolute;top: "+this.anchorText_[0]+"px;left: "+this.anchorText_[1]+"px;color: "+this.textColor_+";font-size: "+this.textSize_+"px;font-family: "+this.fontFamily_+";font-weight: "+this.fontWeight_+";font-style: "+this.fontStyle_+";text-decoration: "+this.textDecoration_+";text-align: center;width: "+this.width_+"px;line-height:"+this.height_+"px;'>"+this.sums_.text+"</div>","undefined"==typeof this.sums_.title||""===this.sums_.title?this.div_.title=this.cluster_.getMarkerClusterer().getTitle():this.div_.title=this.sums_.title,this.div_.style.display=""}this.visible_=!0},b}(MarkerClusterer)}).call(this)})}}])}(window,angular);
 //# sourceMappingURL=angular-google-maps_dev_mapped.min.js.map
-!function(){"use strict";function e(t,o){function r(e,t){return function(){return e.apply(t,arguments)}}var i;if(o=o||{},this.trackingClick=!1,this.trackingClickStart=0,this.targetElement=null,this.touchStartX=0,this.touchStartY=0,this.lastTouchIdentifier=0,this.touchBoundary=o.touchBoundary||10,this.layer=t,this.tapDelay=o.tapDelay||200,this.tapTimeout=o.tapTimeout||700,!e.notNeeded(t)){for(var a=["onMouse","onClick","onTouchStart","onTouchMove","onTouchEnd","onTouchCancel"],c=this,u=0,l=a.length;l>u;u++)c[a[u]]=r(c[a[u]],c);n&&(t.addEventListener("mouseover",this.onMouse,!0),t.addEventListener("mousedown",this.onMouse,!0),t.addEventListener("mouseup",this.onMouse,!0)),t.addEventListener("click",this.onClick,!0),t.addEventListener("touchstart",this.onTouchStart,!1),t.addEventListener("touchmove",this.onTouchMove,!1),t.addEventListener("touchend",this.onTouchEnd,!1),t.addEventListener("touchcancel",this.onTouchCancel,!1),Event.prototype.stopImmediatePropagation||(t.removeEventListener=function(e,n,o){var r=Node.prototype.removeEventListener;"click"===e?r.call(t,e,n.hijacked||n,o):r.call(t,e,n,o)},t.addEventListener=function(e,n,o){var r=Node.prototype.addEventListener;"click"===e?r.call(t,e,n.hijacked||(n.hijacked=function(e){e.propagationStopped||n(e)}),o):r.call(t,e,n,o)}),"function"==typeof t.onclick&&(i=t.onclick,t.addEventListener("click",function(e){i(e)},!1),t.onclick=null)}}var t=navigator.userAgent.indexOf("Windows Phone")>=0,n=navigator.userAgent.indexOf("Android")>0&&!t,o=/iP(ad|hone|od)/.test(navigator.userAgent)&&!t,r=o&&/OS 4_\d(_\d)?/.test(navigator.userAgent),i=o&&/OS [6-7]_\d/.test(navigator.userAgent),a=navigator.userAgent.indexOf("BB10")>0;e.prototype.needsClick=function(e){switch(e.nodeName.toLowerCase()){case"button":case"select":case"textarea":if(e.disabled)return!0;break;case"input":if(o&&"file"===e.type||e.disabled)return!0;break;case"label":case"iframe":case"video":return!0}return/\bneedsclick\b/.test(e.className)},e.prototype.needsFocus=function(e){switch(e.nodeName.toLowerCase()){case"textarea":return!0;case"select":return!n;case"input":switch(e.type){case"button":case"checkbox":case"file":case"image":case"radio":case"submit":return!1}return!e.disabled&&!e.readOnly;default:return/\bneedsfocus\b/.test(e.className)}},e.prototype.sendClick=function(e,t){var n,o;document.activeElement&&document.activeElement!==e&&document.activeElement.blur(),o=t.changedTouches[0],n=document.createEvent("MouseEvents"),n.initMouseEvent(this.determineEventType(e),!0,!0,window,1,o.screenX,o.screenY,o.clientX,o.clientY,!1,!1,!1,!1,0,null),n.forwardedTouchEvent=!0,e.dispatchEvent(n)},e.prototype.determineEventType=function(e){return n&&"select"===e.tagName.toLowerCase()?"mousedown":"click"},e.prototype.focus=function(e){var t;o&&e.setSelectionRange&&0!==e.type.indexOf("date")&&"time"!==e.type&&"month"!==e.type?(t=e.value.length,e.setSelectionRange(t,t)):e.focus()},e.prototype.updateScrollParent=function(e){var t,n;if(t=e.fastClickScrollParent,!t||!t.contains(e)){n=e;do{if(n.scrollHeight>n.offsetHeight){t=n,e.fastClickScrollParent=n;break}n=n.parentElement}while(n)}t&&(t.fastClickLastScrollTop=t.scrollTop)},e.prototype.getTargetElementFromEventTarget=function(e){return e.nodeType===Node.TEXT_NODE?e.parentNode:e},e.prototype.onTouchStart=function(e){var t,n,i;if(e.targetTouches.length>1)return!0;if(t=this.getTargetElementFromEventTarget(e.target),n=e.targetTouches[0],o){if(i=window.getSelection(),i.rangeCount&&!i.isCollapsed)return!0;if(!r){if(n.identifier&&n.identifier===this.lastTouchIdentifier)return e.preventDefault(),!1;this.lastTouchIdentifier=n.identifier,this.updateScrollParent(t)}}return this.trackingClick=!0,this.trackingClickStart=e.timeStamp,this.targetElement=t,this.touchStartX=n.pageX,this.touchStartY=n.pageY,e.timeStamp-this.lastClickTime<this.tapDelay&&e.preventDefault(),!0},e.prototype.touchHasMoved=function(e){var t=e.changedTouches[0],n=this.touchBoundary;return Math.abs(t.pageX-this.touchStartX)>n||Math.abs(t.pageY-this.touchStartY)>n?!0:!1},e.prototype.onTouchMove=function(e){return this.trackingClick?((this.targetElement!==this.getTargetElementFromEventTarget(e.target)||this.touchHasMoved(e))&&(this.trackingClick=!1,this.targetElement=null),!0):!0},e.prototype.findControl=function(e){return void 0!==e.control?e.control:e.htmlFor?document.getElementById(e.htmlFor):e.querySelector("button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea")},e.prototype.onTouchEnd=function(e){var t,a,c,u,l,s=this.targetElement;if(!this.trackingClick)return!0;if(e.timeStamp-this.lastClickTime<this.tapDelay)return this.cancelNextClick=!0,!0;if(e.timeStamp-this.trackingClickStart>this.tapTimeout)return!0;if(this.cancelNextClick=!1,this.lastClickTime=e.timeStamp,a=this.trackingClickStart,this.trackingClick=!1,this.trackingClickStart=0,i&&(l=e.changedTouches[0],s=document.elementFromPoint(l.pageX-window.pageXOffset,l.pageY-window.pageYOffset)||s,s.fastClickScrollParent=this.targetElement.fastClickScrollParent),c=s.tagName.toLowerCase(),"label"===c){if(t=this.findControl(s)){if(this.focus(s),n)return!1;s=t}}else if(this.needsFocus(s))return e.timeStamp-a>100||o&&window.top!==window&&"input"===c?(this.targetElement=null,!1):(this.focus(s),this.sendClick(s,e),o&&"select"===c||(this.targetElement=null,e.preventDefault()),!1);return o&&!r&&(u=s.fastClickScrollParent,u&&u.fastClickLastScrollTop!==u.scrollTop)?!0:(this.needsClick(s)||(e.preventDefault(),this.sendClick(s,e)),!1)},e.prototype.onTouchCancel=function(){this.trackingClick=!1,this.targetElement=null},e.prototype.onMouse=function(e){return this.targetElement?e.forwardedTouchEvent?!0:e.cancelable&&(!this.needsClick(this.targetElement)||this.cancelNextClick)?(e.stopImmediatePropagation?e.stopImmediatePropagation():e.propagationStopped=!0,e.stopPropagation(),e.preventDefault(),!1):!0:!0},e.prototype.onClick=function(e){var t;return this.trackingClick?(this.targetElement=null,this.trackingClick=!1,!0):"submit"===e.target.type&&0===e.detail?!0:(t=this.onMouse(e),t||(this.targetElement=null),t)},e.prototype.destroy=function(){var e=this.layer;n&&(e.removeEventListener("mouseover",this.onMouse,!0),e.removeEventListener("mousedown",this.onMouse,!0),e.removeEventListener("mouseup",this.onMouse,!0)),e.removeEventListener("click",this.onClick,!0),e.removeEventListener("touchstart",this.onTouchStart,!1),e.removeEventListener("touchmove",this.onTouchMove,!1),e.removeEventListener("touchend",this.onTouchEnd,!1),e.removeEventListener("touchcancel",this.onTouchCancel,!1)},e.notNeeded=function(e){var t,o,r,i;if("undefined"==typeof window.ontouchstart)return!0;if(o=+(/Chrome\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1]){if(!n)return!0;if(t=document.querySelector("meta[name=viewport]")){if(-1!==t.content.indexOf("user-scalable=no"))return!0;if(o>31&&document.documentElement.scrollWidth<=window.outerWidth)return!0}}if(a&&(r=navigator.userAgent.match(/Version\/([0-9]*)\.([0-9]*)/),r[1]>=10&&r[2]>=3&&(t=document.querySelector("meta[name=viewport]")))){if(-1!==t.content.indexOf("user-scalable=no"))return!0;if(document.documentElement.scrollWidth<=window.outerWidth)return!0}return"none"===e.style.msTouchAction||"manipulation"===e.style.touchAction?!0:(i=+(/Firefox\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1],i>=27&&(t=document.querySelector("meta[name=viewport]"),t&&(-1!==t.content.indexOf("user-scalable=no")||document.documentElement.scrollWidth<=window.outerWidth))?!0:"none"===e.style.touchAction||"manipulation"===e.style.touchAction?!0:!1)},e.attach=function(t,n){return new e(t,n)},"function"==typeof define&&"object"==typeof define.amd&&define.amd?define(function(){return e}):"undefined"!=typeof module&&module.exports?(module.exports=e.attach,module.exports.FastClick=e):window.FastClick=e}(),function(){"use strict";angular.module("mobile-angular-ui.core.activeLinks",[]).run(["$rootScope","$window","$document","$location",function(e,t,n,o){var r=function(){var e,r=o.url(),i=r.indexOf("#"),a=r.indexOf("?"),c=t.location.href,u=c.indexOf(r);-1===i&&-1===a?e=c:-1!==i&&i>a?e=c.slice(0,u+i):-1!==a&&a>i&&(e=c.slice(0,u+a));for(var l=n[0].links,s=0;s<l.length;s++){var d=l[s],f=angular.element(d);f.attr("href")&&""!==f.attr("href")&&d.href===e?f.addClass("active"):f.attr("href")&&""!==f.attr("href")&&d.href&&d.href.length&&f.removeClass("active")}};e.$on("$locationChangeSuccess",r),e.$on("$includeContentLoaded",r)}])}(),function(){"use strict";angular.module("mobile-angular-ui.core.capture",[]).run(["Capture","$rootScope",function(e,t){t.$on("$routeChangeSuccess",function(){e.resetAll()})}]).factory("Capture",["$compile",function(e){var t={};return{resetAll:function(){for(var e in t)t.hasOwnProperty(e)&&this.resetYielder(e)},resetYielder:function(e){var n=t[e];this.setContentFor(e,n.defaultContent,n.defaultScope)},putYielder:function(e,n,o,r){var i={};i.name=e,i.element=n,i.defaultContent=r||"",i.defaultScope=o,t[e]=i},getYielder:function(e){return t[e]},removeYielder:function(e){delete t[e]},setContentFor:function(n,o,r){var i=t[n];i&&(i.element.html(o),e(i.element.contents())(r))}}}]).directive("uiContentFor",["Capture",function(e){return{compile:function(t,n){var o=t.html();return(null===n.uiDuplicate||void 0===n.uiDuplicate)&&(t.html(""),t.remove()),function(t,n,r){e.setContentFor(r.uiContentFor,o,t)}}}}]).directive("uiYieldTo",["$compile","Capture",function(e,t){return{link:function(e,n,o){t.putYielder(o.uiYieldTo,n,e,n.html()),n.on("$destroy",function(){t.removeYielder(o.uiYieldTo)}),e.$on("$destroy",function(){t.removeYielder(o.uiYieldTo)})}}}])}(),function(){"use strict";var e=angular.module("mobile-angular-ui.core.fastclick",[]);e.run(["$window",function(e){function t(e,t){return function(){return e.apply(t,arguments)}}var n=FastClick.prototype.onTouchEnd;FastClick.prototype.onTouchEnd=function(e){e.changedTouches||(e.changedTouches=[{}]),(n=t(n,this))(e)},FastClick.attach(e.document.body)}]),angular.forEach(["select","input","textarea"],function(t){e.directive(t,function(){return{restrict:"E",compile:function(e){e.addClass("needsclick")}}})})}(),function(){"use strict";var e=function(e,t){for(var n=e;n.length>0;){if(n[0]===t[0])return n=null,!0;n=n.parent()}return n=null,!1};angular.module("mobile-angular-ui.core.outerClick",[]).factory("bindOuterClick",["$document","$timeout",function(t,n){return function(o,r,i,a){var c=function(t){e(angular.element(t.target),r)||o.$apply(function(){i(o,{$event:t})})},u=angular.noop,l=null;a?u=o.$watch(a,function(e){n.cancel(l),e?l=n(function(){t.on("click tap",c)},0):t.unbind("click tap",c)}):(n.cancel(l),t.on("click tap",c)),o.$on("$destroy",function(){u(),t.unbind("click tap",c)})}}]).directive("uiOuterClick",["bindOuterClick","$parse",function(e,t){return{restrict:"A",compile:function(n,o){var r=t(o.uiOuterClick),i=o.uiOuterClickIf;return function(t,n){e(t,n,r,i)}}}}])}(),function(){"use strict";var e=angular.module("mobile-angular-ui.core.sharedState",[]);e.factory("SharedState",["$rootScope",function(e){var t={},n={},o={},r={};return{initialize:function(i,a,c){c=c||{};var u=void 0===o[i],l=c.defaultValue,s=c.exclusionGroup;o[i.$id]=o[i.$id]||[],o[i.$id].push(a),n[a]?u&&n[a].references++:(n[a]=angular.extend({},c,{references:1}),e.$broadcast("mobile-angular-ui.state.initialized."+a,l),void 0!==l&&this.setOne(a,l),s&&(r[s]=r[s]||{},r[s][a]=!0)),i.$on("$destroy",function(){for(var c=o[i.$id]||[],u=0;u<c.length;u++){var l=n[c[u]];l.exclusionGroup&&(delete r[l.exclusionGroup][c[u]],0===Object.keys(r[l.exclusionGroup]).length&&delete r[l.exclusionGroup]),l.references--,l.references<=0&&(delete n[c[u]],delete t[c[u]],e.$broadcast("mobile-angular-ui.state.destroyed."+a))}delete o[i.$id]})},setOne:function(o,r){if(void 0!==n[o]){var i=t[o];return t[o]=r,i!==r&&e.$broadcast("mobile-angular-ui.state.changed."+o,r,i),r}console&&console.warn("Warning: Attempt to set uninitialized shared state:",o)},setMany:function(e){angular.forEach(e,function(e,t){this.setOne(t,e)},this)},set:function(e,t){angular.isObject(e)&&angular.isUndefined(t)?this.setMany(e):this.setOne(e,t)},turnOn:function(e){var t=n[e]&&n[e].exclusionGroup;if(t)for(var o=Object.keys(r[t]),i=0;i<o.length;i++){var a=o[i];a!==e&&this.turnOff(a)}return this.setOne(e,!0)},turnOff:function(e){return this.setOne(e,!1)},toggle:function(e){return this.get(e)?this.turnOff(e):this.turnOn(e)},get:function(e){return n[e]&&t[e]},isActive:function(e){return!!this.get(e)},active:function(e){return this.isActive(e)},isUndefined:function(e){return void 0===n[e]||void 0===this.get(e)},has:function(e){return void 0!==n[e]},referenceCount:function(e){var t=n[e];return void 0===t?0:t.references},equals:function(e,t){return this.get(e)===t},eq:function(e,t){return this.equals(e,t)},values:function(){return t}}}]);var t=function(e,t,n,o){n=n||"click tap",t.on(n,function(t){e.$apply(function(){o(e,{$event:t})})})};e.directive("uiState",["SharedState",function(e){return{restrict:"EA",priority:601,link:function(t,n,o){var r=o.uiState||o.id,i=o.uiDefault||o["default"],a=i?t.$eval(i):void 0;e.initialize(t,r,{defaultValue:a,exclusionGroup:o.uiExclusionGroup})}}}]),angular.forEach(["toggle","turnOn","turnOff","set"],function(n){var o="ui"+n[0].toUpperCase()+n.slice(1);e.directive(o,["$parse","$interpolate","SharedState",function(e,r,i){var a=i[n];return{restrict:"A",priority:1,compile:function(c,u){var l=u[o],s=l.match(/\{\{/),d=function(t){var o=l;if(s){var i=r(o);o=i(t)}return"set"===n&&(o=e(o)(t)),o};return function(e,n,o){var r=function(){var t=d(e);return a.call(i,t)};t(e,n,o.uiTriggers,r)}}}}])});var n=function(e){if(!e||""===e)return[];for(var t=e?e.trim().split(/ *, */):[],n=[],o=0;o<t.length;o++){var r=t[o].split(/ *as */);if(r.length>2||r.length<1)throw new Error('Error parsing uiScopeContext="'+e+'"');n.push(r)}return n},o=function(e,t,n){for(var o=0;o<t.length;o++){var r=t[o][0],i=t[o][1]||r;e[i]=r.split(".").reduce(function(e,t){return e[t]},n)}},r=function(e,t,r,i,a,c){var u,l=t[e],s=l.match(/\{\{/);u=s?function(e){var t=c(l),n=a(t(r));return n(e)}:a(l);var d=n(t.uiScopeContext);return function(){var e;return d.length?(e=angular.extend({},i.values()),o(e,d,r)):e=i.values(),u(e)}};e.directive("uiIf",["$animate","SharedState","$parse","$interpolate",function(e,t,n,o){function i(e){var t=e[0],n=e[e.length-1],o=[t];do{if(t=t.nextSibling,!t)break;o.push(t)}while(t!==n);return angular.element(o)}return{multiElement:!0,transclude:"element",priority:600,terminal:!0,restrict:"A",$$tlb:!0,link:function(a,c,u,l,s){var d,f,h,m=r("uiIf",u,a,t,n,o);a.$watch(m,function(t){if(t)f||s(function(t,n){f=n,t[t.length++]=document.createComment(" end uiIf: "+u.uiIf+" "),d={clone:t},e.enter(t,c.parent(),c)});else if(h&&(h.remove(),h=null),f&&(f.$destroy(),f=null),d){h=i(d.clone);var n=function(){h=null},o=e.leave(h,n);o&&o.then(n),d=null}})}}}]),e.directive("uiHide",["$animate","SharedState","$parse","$interpolate",function(e,t,n,o){var i="ng-hide",a="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(c,u,l){var s=r("uiHide",l,c,t,n,o);c.$watch(s,function(t){e[t?"addClass":"removeClass"](u,i,{tempClasses:a})})}}}]),e.directive("uiShow",["$animate","SharedState","$parse","$interpolate",function(e,t,n){var o="ng-hide",i="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(a,c,u){var l=r("uiShow",u,a,t,n);a.$watch(l,function(t){e[t?"removeClass":"addClass"](c,o,{tempClasses:i})})}}}]),e.directive("uiClass",["SharedState","$parse","$interpolate",function(e,t){return{restrict:"A",link:function(n,o,i){var a=r("uiClass",i,n,e,t);n.$watch(a,function(e){var t="",n="";angular.forEach(e,function(e,r){e?t+=" "+r:n+=" "+r,t=t.trim(),n=n.trim(),t.length&&o.addClass(t),n.length&&o.removeClass(n)})},!0)}}}]),e.run(["$rootScope","SharedState",function(e,t){e.Ui=t}])}(),function(){"use strict";var e=angular.module("mobile-angular-ui.core.touchmoveDefaults",[]);e.directive("uiPreventTouchmoveDefaults",function(){var e=function(e){e.allowTouchmoveDefault!==!0&&e.preventDefault()};return{compile:function(t){"ontouchmove"in document&&t.on("touchmove",e)}}}),e.factory("allowTouchmoveDefault",function(){var e=function(){return!0};return"ontouchmove"in document?function(t,n){n=n||e;var o=function(e){n(e)&&(e.allowTouchmoveDefault=!0)};return t=angular.element(t),t.on("touchmove",o),t.on("$destroy",function(){t.off("touchmove",o),t=null}),function(){t&&t.off("touchmove",o)}}:angular.noop})}(),function(){"use strict";angular.module("mobile-angular-ui.core",["mobile-angular-ui.core.fastclick","mobile-angular-ui.core.activeLinks","mobile-angular-ui.core.capture","mobile-angular-ui.core.outerClick","mobile-angular-ui.core.sharedState","mobile-angular-ui.core.touchmoveDefaults"])}(),function(e,t){var n=e.document,o=n.documentElement,r="overthrow-enabled",i="ontouchmove"in n,a="WebkitOverflowScrolling"in o.style||"msOverflowStyle"in o.style||!i&&e.screen.width>800||function(){var t=e.navigator.userAgent,n=t.match(/AppleWebKit\/([0-9]+)/),o=n&&n[1],r=n&&o>=534;return t.match(/Android ([0-9]+)/)&&RegExp.$1>=3&&r||t.match(/ Version\/([0-9]+)/)&&RegExp.$1>=0&&e.blackberry&&r||t.indexOf("PlayBook")>-1&&r&&-1===!t.indexOf("Android 2")||t.match(/Firefox\/([0-9]+)/)&&RegExp.$1>=4||t.match(/wOSBrowser\/([0-9]+)/)&&RegExp.$1>=233&&r||t.match(/NokiaBrowser\/([0-9\.]+)/)&&7.3===parseFloat(RegExp.$1)&&n&&o>=533}();e.overthrow={},e.overthrow.enabledClassName=r,e.overthrow.addClass=function(){-1===o.className.indexOf(e.overthrow.enabledClassName)&&(o.className+=" "+e.overthrow.enabledClassName)},e.overthrow.removeClass=function(){o.className=o.className.replace(e.overthrow.enabledClassName,"")},e.overthrow.set=function(){a&&e.overthrow.addClass()},e.overthrow.canBeFilledWithPoly=i,e.overthrow.forget=function(){e.overthrow.removeClass()},e.overthrow.support=a?"native":"none"}(this),function(e,t){e.overthrow.set()}(this),function(e,t,n){if(t!==n){t.scrollIndicatorClassName="overthrow";var o=e.document,r=o.documentElement,i="native"===t.support,a=t.canBeFilledWithPoly,c=(t.configure,t.set),u=t.forget,l=t.scrollIndicatorClassName;t.closest=function(e,n){return!n&&e.className&&e.className.indexOf(l)>-1&&e||t.closest(e.parentNode)};var s=!1;t.set=function(){if(c(),!s&&!i&&a){e.overthrow.addClass(),s=!0,t.support="polyfilled",t.forget=function(){u(),s=!1,o.removeEventListener&&o.removeEventListener("touchstart",b,!1)};var l,d,f,h,m=[],v=[],p=function(){m=[],d=null},g=function(){v=[],f=null},C=function(e){h=l.querySelectorAll("textarea, input");for(var t=0,n=h.length;n>t;t++)h[t].style.pointerEvents=e},k=function(e,t){if(o.createEvent){var r,i=(!t||t===n)&&l.parentNode||l.touchchild||l;i!==l&&(r=o.createEvent("HTMLEvents"),r.initEvent("touchend",!0,!0),l.dispatchEvent(r),i.touchchild=l,l=i,i.dispatchEvent(e))}},b=function(e){if(t.intercept&&t.intercept(),p(),g(),l=t.closest(e.target),l&&l!==r&&!(e.touches.length>1)){C("none");var n=e,o=l.scrollTop,i=l.scrollLeft,a=l.offsetHeight,c=l.offsetWidth,u=e.touches[0].pageY,s=e.touches[0].pageX,h=l.scrollHeight,b=l.scrollWidth,E=function(e){var t=o+u-e.touches[0].pageY,r=i+s-e.touches[0].pageX,C=t>=(m.length?m[0]:0),E=r>=(v.length?v[0]:0);t>0&&h-a>t||r>0&&b-c>r?e.preventDefault():k(n),d&&C!==d&&p(),f&&E!==f&&g(),d=C,f=E,l.scrollTop=t,l.scrollLeft=r,m.unshift(t),v.unshift(r),m.length>3&&m.pop(),v.length>3&&v.pop()},y=function(e){C("auto"),setTimeout(function(){C("none")},450),l.removeEventListener("touchmove",E,!1),l.removeEventListener("touchend",y,!1)};l.addEventListener("touchmove",E,!1),l.addEventListener("touchend",y,!1)}};o.addEventListener("touchstart",b,!1)}}}}(this,this.overthrow),function(){"use strict";angular.module("mobile-angular-ui.components.modals",[]).directive("modal",["$rootElement",function(e){return{restrict:"C",link:function(t,n){e.addClass("has-modal"),n.on("$destroy",function(){e.removeClass("has-modal")}),t.$on("$destroy",function(){e.removeClass("has-modal")}),n.hasClass("modal-overlay")&&(e.addClass("has-modal-overlay"),n.on("$destroy",function(){e.removeClass("has-modal-overlay")}),t.$on("$destroy",function(){e.removeClass("has-modal-overlay")}))}}}])}(),function(){"use strict";var e=angular.module("mobile-angular-ui.components.navbars",[]);angular.forEach(["top","bottom"],function(t){var n="navbarAbsolute"+t.charAt(0).toUpperCase()+t.slice(1);e.directive(n,["$rootElement",function(e){return{restrict:"C",link:function(n){e.addClass("has-navbar-"+t),n.$on("$destroy",function(){e.removeClass("has-navbar-"+t)})}}}])})}(),function(){"use strict";var e=angular.module("mobile-angular-ui.components.scrollable",["mobile-angular-ui.core.touchmoveDefaults"]),t=function(e){var t=e.touches&&e.touches.length?e.touches:[e],n=e.changedTouches&&e.changedTouches[0]||e.originalEvent&&e.originalEvent.changedTouches&&e.originalEvent.changedTouches[0]||t[0].originalEvent||t[0];return n.clientY};e.directive("scrollableContent",function(){return{restrict:"C",controller:["$element","allowTouchmoveDefault",function(e,n){var o=e[0],r=e.parent()[0];if("ontouchmove"in document){var i,a,c,u,l,s=function(e){i=o.scrollTop>0,a=o.scrollTop<o.scrollHeight-o.clientHeight,c=null,u=null,l=t(e)};e.on("touchstart",s),e.on("$destroy",function(){e.off("touchstart")}),n(e,function(e){var n=t(e),o=n>l,r=!o;return l=n,o&&i||r&&a})}this.scrollableContent=o,this.scrollTo=function(e,t){if(t=t||0,angular.isNumber(e))o.scrollTop=e-t;else{var n=angular.element(e)[0];n.offsetParent&&n.offsetParent!==r?this.scrollTo(n.offsetParent,t-n.offsetTop):o.scrollTop=n.offsetTop-t}}}],link:function(e,t){"native"!==overthrow.support&&(t.addClass("overthrow"),overthrow.forget(),overthrow.set())}}}),angular.forEach(["input","textarea"],function(t){e.directive(t,["$rootScope","$timeout",function(e,t){return{require:"?^^scrollableContent",link:function(e,n,o,r){n.on("focus",function(){if(r&&r.scrollableContent){var e=r.scrollableContent.offsetHeight;t(function(){var t=r.scrollableContent.offsetHeight;e>t&&r.scrollTo(n,10)},500)}})}}}])}),angular.forEach({uiScrollTop:function(e){return 0===e.scrollTop},uiScrollBottom:function(e){return e.scrollHeight===e.scrollTop+e.clientHeight}},function(t,n){e.directive(n,[function(){return{restrict:"A",link:function(e,o,r){o.on("scroll",function(){t(o[0])&&e.$apply(function(){e.$eval(r[n])})})}}}])}),angular.forEach({Top:"scrollableHeader",Bottom:"scrollableFooter"},function(t,n){e.directive(t,["$window",function(e){return{restrict:"C",link:function(t,o){var r=o[0],i=o.parent()[0].style,a=function(){var t=e.getComputedStyle(r),o=parseInt(t.marginTop,10)+parseInt(t.marginBottom,10);i["padding"+n]=r.offsetHeight+o+"px"},c=setInterval(a,30);o.on("$destroy",function(){i["padding"+n]=null,clearInterval(c),c=a=o=null})}}}])})}(),function(){"use strict";var e=angular.module("mobile-angular-ui.components.sidebars",["mobile-angular-ui.core.sharedState","mobile-angular-ui.core.outerClick"]);angular.forEach(["left","right"],function(t){var n="sidebar"+t.charAt(0).toUpperCase()+t.slice(1),o="ui"+n.charAt(0).toUpperCase()+n.slice(1);e.directive(n,["$rootElement","SharedState","bindOuterClick","$location",function(e,n,r,i){return{restrict:"C",link:function(a,c,u){var l="has-sidebar-"+t,s="sidebar-"+t+"-visible",d="sidebar-"+t+"-in";u.id&&(o=u.id);var f=function(){n.turnOff(o)},h=function(){return n.isActive(o)};e.addClass(l),a.$on("$destroy",function(){e.removeClass(l),e.removeClass(s),e.removeClass(d)});var m=void 0!==u.active&&"false"!==u.active;n.initialize(a,o,{defaultValue:m}),a.$on("mobile-angular-ui.state.changed."+o,function(t,n){(""===u.uiTrackAsSearchParam||u.uiTrackAsSearchParam)&&i.search(o,n||null),n?(e.addClass(s),e.addClass(d)):e.removeClass(d)}),a.$on("$routeChangeSuccess",function(){n.turnOff(o)}),a.$on("$routeUpdate",function(){u.uiTrackAsSearchParam&&(i.search()[o]?n.turnOn(o):n.turnOff(o))}),a.$on("mobile-angular-ui.app.transitionend",function(){n.isActive(o)||e.removeClass(s)}),"false"!==u.closeOnOuterClicks&&r(a,c,f,h)}}}])}),e.directive("app",["$rootScope",function(e){return{restrict:"C",link:function(t,n){n.on("transitionend webkitTransitionEnd oTransitionEnd otransitionend",function(){e.$broadcast("mobile-angular-ui.app.transitionend")})}}}])}(),function(){"use strict";angular.module("mobile-angular-ui.components.switch",[]).directive("uiSwitch",["$injector",function(e){var t=e.has("$drag")&&e.get("$drag");return{restrict:"EA",scope:{model:"=ngModel",changeExpr:"@ngChange"},link:function(e,n,o){n.addClass("switch");var r=o.disabled||n.attr("disabled"),i=e.$watch(function(){return o.disabled||n.attr("disabled")},function(e){r=e&&"false"!==e&&"0"!==e?!0:!1}),a=angular.element('<div class="switch-handle"></div>');n.append(a),e.model&&n.addClass("active"),n.addClass("switch-transition-enabled");var c=e.$watch("model",function(e){e?n.addClass("active"):n.removeClass("active")}),u=function(){return!r},l=function(t){u()&&t!==e.model&&(e.model=t,e.$apply(),null!==e.changeExpr&&void 0!==e.changeExpr&&e.$parent.$eval(e.changeExpr))},s=function(){l(!e.model)};n.on("click tap",s);var d=angular.noop;t&&(d=t.bind(a,{transform:t.TRANSLATE_INSIDE(n),start:function(){n.off("click tap",s)},cancel:function(){a.removeAttr("style"),n.off("click tap",s),n.on("click tap",s)},end:function(){var e=a[0].getBoundingClientRect(),t=n[0].getBoundingClientRect();e.left-t.left<e.width/3?(l(!1),a.removeAttr("style")):t.right-e.right<e.width/3?(l(!0),a.removeAttr("style")):a.removeAttr("style"),n.on("click tap",s)}})),n.on("$destroy",function(){d(),i(),c(),u=l=d=c=i=s=null})}}}])}(),function(){"use strict";angular.module("mobile-angular-ui.components",["mobile-angular-ui.components.modals","mobile-angular-ui.components.navbars","mobile-angular-ui.components.sidebars","mobile-angular-ui.components.scrollable","mobile-angular-ui.components.switch"])}(),function(){"use strict";angular.module("mobile-angular-ui",["mobile-angular-ui.core","mobile-angular-ui.components"])}();
-//# sourceMappingURL=mobile-angular-ui.min.js.map
-!function(){"use strict";function e(t,i){function r(e,t){return function(){return e.apply(t,arguments)}}var o;if(i=i||{},this.trackingClick=!1,this.trackingClickStart=0,this.targetElement=null,this.touchStartX=0,this.touchStartY=0,this.lastTouchIdentifier=0,this.touchBoundary=i.touchBoundary||10,this.layer=t,this.tapDelay=i.tapDelay||200,this.tapTimeout=i.tapTimeout||700,!e.notNeeded(t)){for(var a=["onMouse","onClick","onTouchStart","onTouchMove","onTouchEnd","onTouchCancel"],u=this,c=0,l=a.length;l>c;c++)u[a[c]]=r(u[a[c]],u);n&&(t.addEventListener("mouseover",this.onMouse,!0),t.addEventListener("mousedown",this.onMouse,!0),t.addEventListener("mouseup",this.onMouse,!0)),t.addEventListener("click",this.onClick,!0),t.addEventListener("touchstart",this.onTouchStart,!1),t.addEventListener("touchmove",this.onTouchMove,!1),t.addEventListener("touchend",this.onTouchEnd,!1),t.addEventListener("touchcancel",this.onTouchCancel,!1),Event.prototype.stopImmediatePropagation||(t.removeEventListener=function(e,n,i){var r=Node.prototype.removeEventListener;"click"===e?r.call(t,e,n.hijacked||n,i):r.call(t,e,n,i)},t.addEventListener=function(e,n,i){var r=Node.prototype.addEventListener;"click"===e?r.call(t,e,n.hijacked||(n.hijacked=function(e){e.propagationStopped||n(e)}),i):r.call(t,e,n,i)}),"function"==typeof t.onclick&&(o=t.onclick,t.addEventListener("click",function(e){o(e)},!1),t.onclick=null)}}var t=navigator.userAgent.indexOf("Windows Phone")>=0,n=navigator.userAgent.indexOf("Android")>0&&!t,i=/iP(ad|hone|od)/.test(navigator.userAgent)&&!t,r=i&&/OS 4_\d(_\d)?/.test(navigator.userAgent),o=i&&/OS [6-7]_\d/.test(navigator.userAgent),a=navigator.userAgent.indexOf("BB10")>0;e.prototype.needsClick=function(e){switch(e.nodeName.toLowerCase()){case"button":case"select":case"textarea":if(e.disabled)return!0;break;case"input":if(i&&"file"===e.type||e.disabled)return!0;break;case"label":case"iframe":case"video":return!0}return/\bneedsclick\b/.test(e.className)},e.prototype.needsFocus=function(e){switch(e.nodeName.toLowerCase()){case"textarea":return!0;case"select":return!n;case"input":switch(e.type){case"button":case"checkbox":case"file":case"image":case"radio":case"submit":return!1}return!e.disabled&&!e.readOnly;default:return/\bneedsfocus\b/.test(e.className)}},e.prototype.sendClick=function(e,t){var n,i;document.activeElement&&document.activeElement!==e&&document.activeElement.blur(),i=t.changedTouches[0],n=document.createEvent("MouseEvents"),n.initMouseEvent(this.determineEventType(e),!0,!0,window,1,i.screenX,i.screenY,i.clientX,i.clientY,!1,!1,!1,!1,0,null),n.forwardedTouchEvent=!0,e.dispatchEvent(n)},e.prototype.determineEventType=function(e){return n&&"select"===e.tagName.toLowerCase()?"mousedown":"click"},e.prototype.focus=function(e){var t;i&&e.setSelectionRange&&0!==e.type.indexOf("date")&&"time"!==e.type&&"month"!==e.type?(t=e.value.length,e.setSelectionRange(t,t)):e.focus()},e.prototype.updateScrollParent=function(e){var t,n;if(t=e.fastClickScrollParent,!t||!t.contains(e)){n=e;do{if(n.scrollHeight>n.offsetHeight){t=n,e.fastClickScrollParent=n;break}n=n.parentElement}while(n)}t&&(t.fastClickLastScrollTop=t.scrollTop)},e.prototype.getTargetElementFromEventTarget=function(e){return e.nodeType===Node.TEXT_NODE?e.parentNode:e},e.prototype.onTouchStart=function(e){var t,n,o;if(e.targetTouches.length>1)return!0;if(t=this.getTargetElementFromEventTarget(e.target),n=e.targetTouches[0],i){if(o=window.getSelection(),o.rangeCount&&!o.isCollapsed)return!0;if(!r){if(n.identifier&&n.identifier===this.lastTouchIdentifier)return e.preventDefault(),!1;this.lastTouchIdentifier=n.identifier,this.updateScrollParent(t)}}return this.trackingClick=!0,this.trackingClickStart=e.timeStamp,this.targetElement=t,this.touchStartX=n.pageX,this.touchStartY=n.pageY,e.timeStamp-this.lastClickTime<this.tapDelay&&e.preventDefault(),!0},e.prototype.touchHasMoved=function(e){var t=e.changedTouches[0],n=this.touchBoundary;return Math.abs(t.pageX-this.touchStartX)>n||Math.abs(t.pageY-this.touchStartY)>n?!0:!1},e.prototype.onTouchMove=function(e){return this.trackingClick?((this.targetElement!==this.getTargetElementFromEventTarget(e.target)||this.touchHasMoved(e))&&(this.trackingClick=!1,this.targetElement=null),!0):!0},e.prototype.findControl=function(e){return void 0!==e.control?e.control:e.htmlFor?document.getElementById(e.htmlFor):e.querySelector("button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea")},e.prototype.onTouchEnd=function(e){var t,a,u,c,l,s=this.targetElement;if(!this.trackingClick)return!0;if(e.timeStamp-this.lastClickTime<this.tapDelay)return this.cancelNextClick=!0,!0;if(e.timeStamp-this.trackingClickStart>this.tapTimeout)return!0;if(this.cancelNextClick=!1,this.lastClickTime=e.timeStamp,a=this.trackingClickStart,this.trackingClick=!1,this.trackingClickStart=0,o&&(l=e.changedTouches[0],s=document.elementFromPoint(l.pageX-window.pageXOffset,l.pageY-window.pageYOffset)||s,s.fastClickScrollParent=this.targetElement.fastClickScrollParent),u=s.tagName.toLowerCase(),"label"===u){if(t=this.findControl(s)){if(this.focus(s),n)return!1;s=t}}else if(this.needsFocus(s))return e.timeStamp-a>100||i&&window.top!==window&&"input"===u?(this.targetElement=null,!1):(this.focus(s),this.sendClick(s,e),i&&"select"===u||(this.targetElement=null,e.preventDefault()),!1);return i&&!r&&(c=s.fastClickScrollParent,c&&c.fastClickLastScrollTop!==c.scrollTop)?!0:(this.needsClick(s)||(e.preventDefault(),this.sendClick(s,e)),!1)},e.prototype.onTouchCancel=function(){this.trackingClick=!1,this.targetElement=null},e.prototype.onMouse=function(e){return this.targetElement?e.forwardedTouchEvent?!0:e.cancelable&&(!this.needsClick(this.targetElement)||this.cancelNextClick)?(e.stopImmediatePropagation?e.stopImmediatePropagation():e.propagationStopped=!0,e.stopPropagation(),e.preventDefault(),!1):!0:!0},e.prototype.onClick=function(e){var t;return this.trackingClick?(this.targetElement=null,this.trackingClick=!1,!0):"submit"===e.target.type&&0===e.detail?!0:(t=this.onMouse(e),t||(this.targetElement=null),t)},e.prototype.destroy=function(){var e=this.layer;n&&(e.removeEventListener("mouseover",this.onMouse,!0),e.removeEventListener("mousedown",this.onMouse,!0),e.removeEventListener("mouseup",this.onMouse,!0)),e.removeEventListener("click",this.onClick,!0),e.removeEventListener("touchstart",this.onTouchStart,!1),e.removeEventListener("touchmove",this.onTouchMove,!1),e.removeEventListener("touchend",this.onTouchEnd,!1),e.removeEventListener("touchcancel",this.onTouchCancel,!1)},e.notNeeded=function(e){var t,i,r,o;if("undefined"==typeof window.ontouchstart)return!0;if(i=+(/Chrome\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1]){if(!n)return!0;if(t=document.querySelector("meta[name=viewport]")){if(-1!==t.content.indexOf("user-scalable=no"))return!0;if(i>31&&document.documentElement.scrollWidth<=window.outerWidth)return!0}}if(a&&(r=navigator.userAgent.match(/Version\/([0-9]*)\.([0-9]*)/),r[1]>=10&&r[2]>=3&&(t=document.querySelector("meta[name=viewport]")))){if(-1!==t.content.indexOf("user-scalable=no"))return!0;if(document.documentElement.scrollWidth<=window.outerWidth)return!0}return"none"===e.style.msTouchAction||"manipulation"===e.style.touchAction?!0:(o=+(/Firefox\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1],o>=27&&(t=document.querySelector("meta[name=viewport]"),t&&(-1!==t.content.indexOf("user-scalable=no")||document.documentElement.scrollWidth<=window.outerWidth))?!0:"none"===e.style.touchAction||"manipulation"===e.style.touchAction?!0:!1)},e.attach=function(t,n){return new e(t,n)},"function"==typeof define&&"object"==typeof define.amd&&define.amd?define(function(){return e}):"undefined"!=typeof module&&module.exports?(module.exports=e.attach,module.exports.FastClick=e):window.FastClick=e}(),function(){"use strict";angular.module("mobile-angular-ui.core.activeLinks",[]).run(["$rootScope","$window","$document","$location",function(e,t,n,i){var r=function(){var e,r=i.url(),o=r.indexOf("#"),a=r.indexOf("?"),u=t.location.href,c=u.indexOf(r);-1===o&&-1===a?e=u:-1!==o&&o>a?e=u.slice(0,c+o):-1!==a&&a>o&&(e=u.slice(0,c+a));for(var l=n[0].links,s=0;s<l.length;s++){var d=l[s],f=angular.element(d);f.attr("href")&&""!==f.attr("href")&&d.href===e?f.addClass("active"):f.attr("href")&&""!==f.attr("href")&&d.href&&d.href.length&&f.removeClass("active")}};e.$on("$locationChangeSuccess",r),e.$on("$includeContentLoaded",r)}])}(),function(){"use strict";angular.module("mobile-angular-ui.core.capture",[]).run(["Capture","$rootScope",function(e,t){t.$on("$routeChangeSuccess",function(){e.resetAll()})}]).factory("Capture",["$compile",function(e){var t={};return{resetAll:function(){for(var e in t)t.hasOwnProperty(e)&&this.resetYielder(e)},resetYielder:function(e){var n=t[e];this.setContentFor(e,n.defaultContent,n.defaultScope)},putYielder:function(e,n,i,r){var o={};o.name=e,o.element=n,o.defaultContent=r||"",o.defaultScope=i,t[e]=o},getYielder:function(e){return t[e]},removeYielder:function(e){delete t[e]},setContentFor:function(n,i,r){var o=t[n];o&&(o.element.html(i),e(o.element.contents())(r))}}}]).directive("uiContentFor",["Capture",function(e){return{compile:function(t,n){var i=t.html();return(null===n.uiDuplicate||void 0===n.uiDuplicate)&&(t.html(""),t.remove()),function(t,n,r){e.setContentFor(r.uiContentFor,i,t)}}}}]).directive("uiYieldTo",["$compile","Capture",function(e,t){return{link:function(e,n,i){t.putYielder(i.uiYieldTo,n,e,n.html()),n.on("$destroy",function(){t.removeYielder(i.uiYieldTo)}),e.$on("$destroy",function(){t.removeYielder(i.uiYieldTo)})}}}])}(),function(){"use strict";var e=angular.module("mobile-angular-ui.core.fastclick",[]);e.run(["$window",function(e){function t(e,t){return function(){return e.apply(t,arguments)}}var n=FastClick.prototype.onTouchEnd;FastClick.prototype.onTouchEnd=function(e){e.changedTouches||(e.changedTouches=[{}]),(n=t(n,this))(e)},FastClick.attach(e.document.body)}]),angular.forEach(["select","input","textarea"],function(t){e.directive(t,function(){return{restrict:"E",compile:function(e){e.addClass("needsclick")}}})})}(),function(){"use strict";var e=function(e,t){for(var n=e;n.length>0;){if(n[0]===t[0])return n=null,!0;n=n.parent()}return n=null,!1};angular.module("mobile-angular-ui.core.outerClick",[]).factory("bindOuterClick",["$document","$timeout",function(t,n){return function(i,r,o,a){var u=function(t){e(angular.element(t.target),r)||i.$apply(function(){o(i,{$event:t})})},c=angular.noop,l=null;a?c=i.$watch(a,function(e){n.cancel(l),e?l=n(function(){t.on("click tap",u)},0):t.unbind("click tap",u)}):(n.cancel(l),t.on("click tap",u)),i.$on("$destroy",function(){c(),t.unbind("click tap",u)})}}]).directive("uiOuterClick",["bindOuterClick","$parse",function(e,t){return{restrict:"A",compile:function(n,i){var r=t(i.uiOuterClick),o=i.uiOuterClickIf;return function(t,n){e(t,n,r,o)}}}}])}(),function(){"use strict";var e=angular.module("mobile-angular-ui.core.sharedState",[]);e.factory("SharedState",["$rootScope",function(e){var t={},n={},i={},r={};return{initialize:function(o,a,u){u=u||{};var c=void 0===i[o],l=u.defaultValue,s=u.exclusionGroup;i[o.$id]=i[o.$id]||[],i[o.$id].push(a),n[a]?c&&n[a].references++:(n[a]=angular.extend({},u,{references:1}),e.$broadcast("mobile-angular-ui.state.initialized."+a,l),void 0!==l&&this.setOne(a,l),s&&(r[s]=r[s]||{},r[s][a]=!0)),o.$on("$destroy",function(){for(var u=i[o.$id]||[],c=0;c<u.length;c++){var l=n[u[c]];l.exclusionGroup&&(delete r[l.exclusionGroup][u[c]],0===Object.keys(r[l.exclusionGroup]).length&&delete r[l.exclusionGroup]),l.references--,l.references<=0&&(delete n[u[c]],delete t[u[c]],e.$broadcast("mobile-angular-ui.state.destroyed."+a))}delete i[o.$id]})},setOne:function(i,r){if(void 0!==n[i]){var o=t[i];return t[i]=r,o!==r&&e.$broadcast("mobile-angular-ui.state.changed."+i,r,o),r}console&&console.warn("Warning: Attempt to set uninitialized shared state:",i)},setMany:function(e){angular.forEach(e,function(e,t){this.setOne(t,e)},this)},set:function(e,t){angular.isObject(e)&&angular.isUndefined(t)?this.setMany(e):this.setOne(e,t)},turnOn:function(e){var t=n[e]&&n[e].exclusionGroup;if(t)for(var i=Object.keys(r[t]),o=0;o<i.length;o++){var a=i[o];a!==e&&this.turnOff(a)}return this.setOne(e,!0)},turnOff:function(e){return this.setOne(e,!1)},toggle:function(e){return this.get(e)?this.turnOff(e):this.turnOn(e)},get:function(e){return n[e]&&t[e]},isActive:function(e){return!!this.get(e)},active:function(e){return this.isActive(e)},isUndefined:function(e){return void 0===n[e]||void 0===this.get(e)},has:function(e){return void 0!==n[e]},referenceCount:function(e){var t=n[e];return void 0===t?0:t.references},equals:function(e,t){return this.get(e)===t},eq:function(e,t){return this.equals(e,t)},values:function(){return t}}}]);var t=function(e,t,n,i){n=n||"click tap",t.on(n,function(t){e.$apply(function(){i(e,{$event:t})})})};e.directive("uiState",["SharedState",function(e){return{restrict:"EA",priority:601,link:function(t,n,i){var r=i.uiState||i.id,o=i.uiDefault||i["default"],a=o?t.$eval(o):void 0;e.initialize(t,r,{defaultValue:a,exclusionGroup:i.uiExclusionGroup})}}}]),angular.forEach(["toggle","turnOn","turnOff","set"],function(n){var i="ui"+n[0].toUpperCase()+n.slice(1);e.directive(i,["$parse","$interpolate","SharedState",function(e,r,o){var a=o[n];return{restrict:"A",priority:1,compile:function(u,c){var l=c[i],s=l.match(/\{\{/),d=function(t){var i=l;if(s){var o=r(i);i=o(t)}return"set"===n&&(i=e(i)(t)),i};return function(e,n,i){var r=function(){var t=d(e);return a.call(o,t)};t(e,n,i.uiTriggers,r)}}}}])});var n=function(e){if(!e||""===e)return[];for(var t=e?e.trim().split(/ *, */):[],n=[],i=0;i<t.length;i++){var r=t[i].split(/ *as */);if(r.length>2||r.length<1)throw new Error('Error parsing uiScopeContext="'+e+'"');n.push(r)}return n},i=function(e,t,n){for(var i=0;i<t.length;i++){var r=t[i][0],o=t[i][1]||r;e[o]=r.split(".").reduce(function(e,t){return e[t]},n)}},r=function(e,t,r,o,a,u){var c,l=t[e],s=l.match(/\{\{/);c=s?function(e){var t=u(l),n=a(t(r));return n(e)}:a(l);var d=n(t.uiScopeContext);return function(){var e;return d.length?(e=angular.extend({},o.values()),i(e,d,r)):e=o.values(),c(e)}};e.directive("uiIf",["$animate","SharedState","$parse","$interpolate",function(e,t,n,i){function o(e){var t=e[0],n=e[e.length-1],i=[t];do{if(t=t.nextSibling,!t)break;i.push(t)}while(t!==n);return angular.element(i)}return{multiElement:!0,transclude:"element",priority:600,terminal:!0,restrict:"A",$$tlb:!0,link:function(a,u,c,l,s){var d,f,h,m=r("uiIf",c,a,t,n,i);a.$watch(m,function(t){if(t)f||s(function(t,n){f=n,t[t.length++]=document.createComment(" end uiIf: "+c.uiIf+" "),d={clone:t},e.enter(t,u.parent(),u)});else if(h&&(h.remove(),h=null),f&&(f.$destroy(),f=null),d){h=o(d.clone);var n=function(){h=null},i=e.leave(h,n);i&&i.then(n),d=null}})}}}]),e.directive("uiHide",["$animate","SharedState","$parse","$interpolate",function(e,t,n,i){var o="ng-hide",a="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(u,c,l){var s=r("uiHide",l,u,t,n,i);u.$watch(s,function(t){e[t?"addClass":"removeClass"](c,o,{tempClasses:a})})}}}]),e.directive("uiShow",["$animate","SharedState","$parse","$interpolate",function(e,t,n){var i="ng-hide",o="ng-hide-animate";return{restrict:"A",multiElement:!0,link:function(a,u,c){var l=r("uiShow",c,a,t,n);a.$watch(l,function(t){e[t?"removeClass":"addClass"](u,i,{tempClasses:o})})}}}]),e.directive("uiClass",["SharedState","$parse","$interpolate",function(e,t){return{restrict:"A",link:function(n,i,o){var a=r("uiClass",o,n,e,t);n.$watch(a,function(e){var t="",n="";angular.forEach(e,function(e,r){e?t+=" "+r:n+=" "+r,t=t.trim(),n=n.trim(),t.length&&i.addClass(t),n.length&&i.removeClass(n)})},!0)}}}]),e.run(["$rootScope","SharedState",function(e,t){e.Ui=t}])}(),function(){"use strict";var e=angular.module("mobile-angular-ui.core.touchmoveDefaults",[]);e.directive("uiPreventTouchmoveDefaults",function(){var e=function(e){e.allowTouchmoveDefault!==!0&&e.preventDefault()};return{compile:function(t){"ontouchmove"in document&&t.on("touchmove",e)}}}),e.factory("allowTouchmoveDefault",function(){var e=function(){return!0};return"ontouchmove"in document?function(t,n){n=n||e;var i=function(e){n(e)&&(e.allowTouchmoveDefault=!0)};return t=angular.element(t),t.on("touchmove",i),t.on("$destroy",function(){t.off("touchmove",i),t=null}),function(){t&&t.off("touchmove",i)}}:angular.noop})}(),function(){"use strict";angular.module("mobile-angular-ui.core",["mobile-angular-ui.core.fastclick","mobile-angular-ui.core.activeLinks","mobile-angular-ui.core.capture","mobile-angular-ui.core.outerClick","mobile-angular-ui.core.sharedState","mobile-angular-ui.core.touchmoveDefaults"])}();
-//# sourceMappingURL=mobile-angular-ui.core.min.js.map
 var test = function (accountService) {
     var myself = accountService.getMyself();
     if (myself == null) {
@@ -136,157 +132,90 @@ var test = function (accountService) {
 
 
 var initializeCommonRoutes = function () {
-    //angular.module('app').run(function($rootScope, $location) {
-    //    $rootScope.onFormPath = function(period, scope) {
-    //        return $location.path($rootScope.getFormPath() + '/' + period + '/' + scope);
-    //    };
-    //    return $rootScope.getDefaultRoute = function() {
-    //        return '/driver';
-    //    };
-    //});
     myApp
-        .config(['$routeProvider', function ($routeProvider) {
-            $routeProvider
-                .when('/', {
-                    templateUrl: '/assets/javascripts/view/mobile/welcome.html',
-                    controller: 'WelcomeCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) != 'NOT_CONNECTED') {
-                                $location.path('/home');
-                            }
-                        }]
-                    }
-                })
-                .when('/home', {
-                    templateUrl: '/assets/javascripts/view/mobile/home.html',
-                    controller: 'HomeCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) == 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                })
-                .when('/customer_registration', {
-                    templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
-                    controller: 'CustomerRegistrationCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) != 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                })
-                .when('/promotion', {
-                    templateUrl: '/assets/javascripts/view/mobile/promotion.html',
-                    controller: 'PromotionCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            if (test(accountService) == 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                })
-                .when('/profile', {
-                    templateUrl: '/assets/javascripts/view/mobile/profile.html',
-                    controller: 'ProfileCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) == 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                }).when('/business/:businessId', {
-                    templateUrl: '/assets/javascripts/view/mobile/business.html',
-                    controller: 'BusinessCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) == 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                }).when('/business/:businessId/publication/:publicationId', {
-                    templateUrl: '/assets/javascripts/view/mobile/business.html',
-                    controller: 'BusinessCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) == 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                }).when('/search/:param', {
-                    templateUrl: '/assets/javascripts/view/mobile/search_page.html',
-                    controller: 'SearchPageCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) == 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                }).when('/my-businesses', {
-                    templateUrl: '/assets/javascripts/view/mobile/followed_business_page.html',
-                    controller: 'FollowedBusinessPageCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) == 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                }).when('/forgot_password', {
-                    templateUrl: '/assets/javascripts/view/mobile/forgotPassword.html',
-                    controller: 'ForgotPasswordCtrl',
-                    resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
-                            if (test(accountService) != 'NOT_CONNECTED') {
-                                $location.path('/');
-                            }
-                        }]
-                    }
-                }).when('/legal/', {
-                    templateUrl: '/assets/javascripts/view/mobile/legal.html',
-                    controller: 'LegalCtrl'
-                }).when('/help/', {
-                    resolve: {
-                        a: ['$rootScope', function ($rootScope) {
-                            window.location.replace('/help/');
-                        }]
-                    }
-                }).otherwise({
-                    redirectTo: '/'
-                });
+        .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+            $routeProvider.when('/home/:param*?', {
+                templateUrl: '/assets/javascripts/view/web/home.html',
+                controller: 'HomeCtrl',
+                resolve: {
+                    a: ['accountService', '$rootScope', function (accountService, $rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        var status = test(accountService);
+                    }]
+                }
+            }).when('/profile', {
+                templateUrl: '/assets/javascripts/view/web/profile.html',
+                controller: 'ProfileCtrl',
+                resolve: {
+                    a: ['accountService', '$location', '$rootScope', function (accountService, $location, $rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                        if (test(accountService) == 'NOT_CONNECTED') {
+                            $location.path('/');
+                        }
+                    }]
+                }
+            }).when('/search/:param?', {
+                templateUrl: '/assets/javascripts/view/web/search_page.html',
+                controller: 'SearchPageCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
+            }).when('/my-businesses', {
+                templateUrl: '/assets/javascripts/view/web/followed_business_page.html',
+                controller: 'FollowedBusinessPageCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
+            }).when('/business/:businessId', {
+                templateUrl: '/assets/javascripts/view/web/business.html',
+                controller: 'BusinessCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
+            }).when('/business/:businessId/publication/:publicationId', {
+                templateUrl: '/assets/javascripts/view/web/business.html',
+                controller: 'BusinessCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
+            }).when('/welcome/', {
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        window.location.replace('/welcome/');
+                    }]
+                }
+            }).when('/legal/', {
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        window.location.replace('/legal/');
+                    }]
+                }
+            }).when('/help/', {
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        window.location.replace('/help/');
+                    }]
+                }
+            }).otherwise({
+                redirectTo: '/home/'
+            });
+
+
+            // use the HTML5 History API
+            $locationProvider.html5Mode(true);
         }]);
 };
 var myApp = angular.module('app', [
         'ngAnimate',
         'ui.bootstrap',
-        "mobile-angular-ui",
         'ui.bootstrap.datetimepicker',
         "angucomplete",
         'angularFileUpload',
@@ -295,7 +224,9 @@ var myApp = angular.module('app', [
         'geolocation',
         'timer',
         'uiGmapgoogle-maps',
-        'djds4rce.angular-socialshare']
+        'djds4rce.angular-socialshare'
+        //,'ezfb'
+    ]
 );
 
 app.config(['$locationProvider', function ($locationProvider) {
@@ -304,6 +235,86 @@ app.config(['$locationProvider', function ($locationProvider) {
         enabled: true,
         requireBase: false
     });
+}]);
+
+app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
+
+    var original = $location.path;
+    $location.path = function (path, reload) {
+        if (reload === false) {
+            var lastRoute = $route.current;
+            var un = $rootScope.$on('$locationChangeSuccess', function () {
+                $route.current = lastRoute;
+                un();
+            });
+        }
+        return original.apply($location, [path]);
+    };
+}]);
+myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams,helpMessage) {
+
+    $scope.loading = false;
+    $scope.fctToExecute=fctToExecute;
+    $scope.helpMessage=helpMessage;
+
+    $scope.loginFormParam = {
+        facebookSuccess: function (data) {
+            if (fctToExecute != null) {
+                fctToExecute(fctToExecuteParams);
+            }
+            $scope.close();
+        }
+    };
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.save = function () {
+
+        if ($scope.loginFormParam.isValid) {
+
+            $scope.loading = true;
+
+            accountService.login($scope.loginFormParam.dto,
+                function () {
+
+                    $flash.success(translationService.get("--.login.flash.success"));
+                    $scope.loading = false;
+                    $scope.close();
+                    //logout facebook in case
+                    facebookService.logout();
+                    if (accountService.getMyself().type == 'BUSINESS') {
+                        $location.path('/business/'+accountService.getMyself().businessId);
+                    }
+                    if (fctToExecute != null) {
+                        fctToExecute(fctToExecuteParams);
+                    }
+                },
+                function () {
+                    $scope.loading = false;
+                });
+        }
+        else {
+            $scope.loginFormParam.displayErrorMessage = true;
+        }
+    };
+
+    $scope.toForgotPassword = function () {
+        modalService.openForgotPasswordModal($scope.loginFormParam.dto.email);
+        $scope.close();
+    };
+
+    $scope.toBusinessRegistration = function () {
+        $scope.close();
+        modalService.openBusinessRegistrationModal();
+    };
+
+    $scope.toCustomerRegistration = function () {
+        $scope.close();
+        modalService.openCustomerRegistrationModal(fctToExecute, fctToExecuteParams);
+    };
+
 }]);
 myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountService', '$timeout', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
@@ -410,6 +421,509 @@ myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance
     };
 
 }]);
+myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$modalInstance', '$filter', 'email', 'accountService', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
+
+    $scope.loading = false;
+
+    $scope.dto = {
+        email:email
+    };
+
+    $scope.fields = {
+        email: {
+            fieldType: "email",
+            name: 'email',
+            fieldTitle: "--.changeEmailModal.email",
+            validationRegex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            validationMessage: "--.generic.validation.email",
+            focus: function () {
+                return true;
+            },
+            disabled: function () {
+                return $scope.loading;
+            },
+            field: $scope.dto,
+            fieldName: 'email'
+        }
+    };
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    //
+    // validation : watching on field
+    //
+    $scope.$watch('fields', function () {
+        var validation = true;
+
+        for (var key in $scope.fields) {
+            var obj = $scope.fields[key];
+            if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
+                obj.firstAttempt = !$scope.displayErrorMessage;
+                validation = false;
+            }
+        }
+        $scope.isValid = validation;
+    }, true);
+
+    //
+    // display error watching
+    //
+    $scope.$watch('displayErrorMessage', function () {
+        for (var key in $scope.fields) {
+            var obj = $scope.fields[key];
+            obj.firstAttempt = !$scope.displayErrorMessage;
+        }
+    });
+
+    $scope.save = function () {
+
+        if ($scope.isValid) {
+
+            $scope.loading = true;
+
+            accountService.forgotPassword($scope.dto, function () {
+                    $flash.success($filter('translateText')('--.forgotPassword.success'));
+                    $scope.loading = false;
+                    $scope.close();
+                },
+                function () {
+                    $scope.loading = false;
+                });
+        }
+        else {
+            $scope.displayErrorMessage = true;
+        }
+    };
+
+}]);
+myApp.controller('HelpModalCtrl', ['$scope', '$modalInstance', 'message', function ($scope, $modalInstance,message) {
+
+    $scope.message=message;
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+}]);
+myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance', function ($scope, $flash, $modalInstance) {
+
+    $scope.loading=false;
+
+    $scope.fields = {
+        file: {
+            fieldTitle: "generic.file",
+            disabled:function(){
+                return $scope.loading;
+            }
+        }
+    };
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.allFieldValid = function () {
+
+        var validation = true;
+
+        for (var key in $scope.fields) {
+            var obj = $scope.fields[key];
+            if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
+                obj.firstAttempt = false;
+                validation= false;
+            }
+        }
+        return validation;
+    };
+
+    $scope.save = function () {
+        if ($scope.allFieldValid()) {
+            /*
+
+            var dto = {
+                oldPassword: $scope.fields.oldPassword.field,
+                newEmail: $scope.fields.newEmail.field
+            };
+
+            $scope.loading=true;
+
+            $http({
+                'method': "PUT",
+                'url': "/account/email/"+account.id,
+                'headers': "Content-Type:application/json",
+                'data': dto
+            }).success(function (data, status) {
+                $scope.loading=false;
+                $scope.close();
+                setEmail(data.email);
+            })
+            .error(function (data, status) {
+                $scope.loading=false;
+                $flash.error(data.message);
+            });
+             */
+        }
+    }
+
+
+}]);
+myApp.controller('AccountFusionFacebookModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountFusion', 'accountService', 'closeRegistrationModal', function ($scope, $flash, $modalInstance, accountFusion, accountService,closeRegistrationModal) {
+
+    $scope.loading = false;
+
+    $scope.email = accountFusion.email;
+
+    var isValid=false;
+
+    $scope.fields = {
+        password: {
+            name: 'password',
+            fieldTitle: "--.generic.password",
+            validationRegex: "^[a-zA-Z0-9-_%]{6,18}$",
+            validationMessage: "--.generic.validation.password",
+            fieldType: 'password',
+            focus: function () {
+                return true;
+            },
+            disabled: function () {
+                return $scope.loading;
+            },
+            field: accountFusion,
+            fieldName: 'password'
+        }
+    };
+
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    //
+    // validation : watching on field
+    //
+    $scope.$watch('fields', function () {
+
+        var validation = true;
+
+        for (var key in $scope.fields) {
+            var obj = $scope.fields[key];
+            if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
+                obj.firstAttempt = accountFusion.displayErrorMessage;
+                validation = false;
+            }
+        }
+        isValid = validation;
+    }, true);
+
+    $scope.save = function () {
+
+        if (!isValid) {
+            accountFusion.displayErrorMessage = true;
+        }
+        else {
+            $scope.loading = true;
+
+            console.log(accountFusion);
+
+            accountService.accountFusion(accountFusion, function () {
+                    $scope.loading = false;
+                    $scope.close();
+                    closeRegistrationModal();
+                },
+                function () {
+                    $scope.loading = false;
+                });
+        }
+    }
+
+
+}]);
+myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', 'fctToExecute', 'fctToExecuteParams', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, fctToExecute, fctToExecuteParams) {
+
+    var facebookAuthentication = null;
+
+    $scope.accountParam = {};
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.toBusinessRegistration = function () {
+        $scope.close();
+        modalService.openBusinessRegistrationModal();
+    };
+
+    //
+    // facebook connection
+    //
+    $scope.fb_login = function () {
+        $scope.accountParam.disabled = true;
+        $scope.loading = true;
+        facebookService.registration(function (data) {
+
+                var access_token = data.accessToken;
+                var user_id = data.userID;
+
+                //send request
+                var dto = {
+                    userId: user_id,
+                    token: access_token,
+                    accountType: 'CUSTOMER'
+                };
+
+                accountService.testFacebook(dto, function (data2) {
+
+                    $scope.loading = false;
+
+                    if (data2.status == 'ALREADY_REGISTRERED') {
+                        $flash.success('--.customer.registrationModal.alredyRegistred.success');
+                        accountService.setMyself(data2.myself);
+                        $scope.close();
+                    }
+                    else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
+                        $scope.fusion(data2.accountFusion);
+                    }
+                    else if (data2.status == 'OK') {
+                        $scope.accountParam.dto.firstname = data2.firstname;
+                        $scope.accountParam.dto.lastname = data2.lastname;
+                        $scope.accountParam.dto.email = data2.email;
+                        $scope.accountParam.dto.gender = data2.gender;
+                        $scope.accountParam.maskPassword();
+                        if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
+                            ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
+                            ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
+                            ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
+                            $scope.accountParam.disabled = false;
+                            $flash.info('--.registration.facebook.someDataEmpty');
+                        }
+                        else {
+                            $flash.info('--.registration.facebook.validSLAMessage');
+                        }
+                        facebookAuthentication = dto;
+
+                        //else {
+                        //
+                        //    $scope.save();
+                        //}
+                    }
+                });
+            },
+            function (data, status) {
+                $flash.error(data.message);
+                $scope.loading = false;
+                $scope.accountParam.disabled = false;
+            });
+    };
+
+    $scope.fusion = function (accountFusion) {
+
+        modalService.openFacebookFusionModal(accountFusion,$scope.close);
+    };
+
+    $scope.save = function () {
+
+        if (!$scope.accountParam.isValid) {
+            $scope.accountParam.displayErrorMessage = true;
+        }
+        else {
+
+            var dto = {
+                accountRegistration: $scope.accountParam.dto,
+                facebookAuthentication: facebookAuthentication
+            };
+
+            $scope.loading = true;
+            accountService.registration(dto, function () {
+                    $scope.loading = false;
+                    $flash.success(translationService.get("--.login.flash.success"));
+                    if (fctToExecute != null) {
+                        fctToExecute(fctToExecuteParams);
+                    }
+                    $scope.close();
+                },
+                function () {
+                    $scope.loading = false;
+                });
+        }
+    }
+
+}]);
+myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'businessService', 'modalService', '$location', 'addressService', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, modalService, $location, addressService) {
+
+    var facebookAuthentication = null;
+
+    $scope.badgeSelected = 1;
+
+    $scope.accountParam = {};
+
+    $scope.addressFormParam = {
+        addName: false
+    };
+    $scope.businessCategoryFormParam = {
+        value:[]
+    };
+
+    $scope.businessFormParam = {};
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.next = function () {
+        var notValid = false;
+        if ($scope.badgeSelected == 1) {
+            if (!$scope.accountParam.isValid && facebookAuthentication == null) {
+                $scope.accountParam.displayErrorMessage = true;
+                $flash.error(translationService.get("--.generic.stepNotValid"));
+            }
+            else if (facebookAuthentication != null) {
+                $scope.badgeSelected++;
+            } else {
+                $scope.accountParam.disabled = true;
+                $scope.loading = true;
+                accountService.testEmail($scope.accountParam.dto.email, function (value) {
+                    $scope.accountParam.disabled = false;
+                    $scope.loading = false;
+                    if (value) {
+                        $flash.error(translationService.get("--.error.email_already_used"));
+                    }
+                    else {
+                        $scope.badgeSelected++;
+                    }
+                });
+            }
+            //control email
+            notValid = true;
+        }
+        else if ($scope.badgeSelected == 2) {
+            notValid = true;
+            if (!$scope.addressFormParam.isValid || !$scope.businessFormParam.isValid) {
+
+                $scope.addressFormParam.displayErrorMessage = true;
+                $scope.businessFormParam.displayErrorMessage = true;
+                $flash.error(translationService.get("--.generic.stepNotValid"));
+            }
+            else {
+                $scope.loading = true;
+                addressService.testAddress($scope.addressFormParam.dto,
+                    function () {
+                        $scope.loading = false;
+                        $scope.badgeSelected++;
+                    },
+                    function () {
+                        $scope.loading = false;
+                    });
+            }
+        }
+        if (!notValid) {
+            $scope.badgeSelected++;
+        }
+    };
+
+    //
+    // facebook connection
+    //
+    $scope.fb_login = function () {
+        $scope.accountParam.disabled = true;
+        $scope.loading = true;
+        facebookService.registration(function (data) {
+
+                var access_token = data.accessToken;
+                var user_id = data.userID;
+
+                //send request
+                var dto = {
+                    userId: user_id,
+                    token: access_token,
+                    accountType: 'BUSINESS'
+                };
+
+                accountService.testFacebook(dto, function (data2) {
+
+                    $scope.loading = false;
+
+                    if (data2.status == 'ALREADY_REGISTRERED') {
+                        $flash.success('--.customer.registrationModal.alredyRegistred.success');
+                        accountService.setMyself(data2.myself);
+                        $scope.close();
+                    }
+                    else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
+                        $scope.fusion(data2.accountFusion);
+                    }
+                    else if (data2.status == 'OK') {
+                        $scope.accountParam.dto.firstname = data2.firstname;
+                        $scope.accountParam.dto.lastname = data2.lastname;
+                        $scope.accountParam.dto.email = data2.email;
+                        $scope.accountParam.dto.gender = data2.gender;
+                        $scope.accountParam.maskPassword();
+                        if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
+                            ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
+                            ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
+                            ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
+                            $scope.accountParam.disabled = false;
+                            $flash.info('--.registration.facebook.someDataEmpty');
+                        }
+                        facebookAuthentication = dto;
+                        //else {
+                        //
+                        //    $scope.next();
+                        //}
+                    }
+                });
+            },
+            function (data, status) {
+                $flash.error(data.message);
+                $scope.loading = false;
+                $scope.accountParam.disabled = false;
+            });
+    };
+
+    $scope.fusion = function (accountFusion) {
+
+        modalService.openFacebookFusionModal(accountFusion,$scope.close);
+    };
+
+    $scope.previous = function () {
+        $scope.badgeSelected--;
+    };
+
+    $scope.save = function () {
+
+        if (!$scope.businessFormParam.isValid || !$scope.addressFormParam.isValid || !$scope.businessCategoryFormParam.isValid) {
+            $scope.businessFormParam.displayErrorMessage = true;
+            $scope.addressFormParam.displayErrorMessage = true;
+            $scope.accountParam.displayErrorMessage = true;
+            $scope.businessCategoryFormParam.displayErrorMessage = true;
+            $flash.error(translationService.get("--.generic.stepNotValid"));
+        }
+        else {
+
+            var businessDTO = $scope.businessFormParam.dto;
+            businessDTO.address = $scope.addressFormParam.dto;
+            businessDTO.businessCategories = $scope.businessCategoryFormParam.value;
+
+            var dto = {
+                accountRegistration: $scope.accountParam.dto,
+                facebookAuthentication: facebookAuthentication,
+                business: businessDTO
+            };
+
+            $scope.loading = true;
+            businessService.registration(dto, function (result) {
+                    $scope.loading = false;
+                    $flash.success(translationService.get("--.registration.business.flash.success"));
+                    $scope.close();
+                    $location.path("/business/"+result.businessId);
+                },
+                function () {
+                    $scope.loading = false;
+                });
+        }
+    }
+
+}]);
 myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', 'callback', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, addName, dto, isBusiness, callback) {
 
     $scope.loading = false;
@@ -463,6 +977,178 @@ myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'bus
 
 
 }]);
+myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
+
+
+    $scope.customerInterestParam = {
+        result : accountService.getMyself().customerInterests
+    };
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.save = function () {
+        $scope.loading=true;
+        accountService.editCustomerInterest(
+            {customerInterests:$scope.customerInterestParam.result},
+            function () {
+                $scope.loading = false;
+                $scope.close();
+            },
+            function () {
+                $scope.loading = false;
+            });
+    }
+
+}]);
+myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', 'facebookService', 'business', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business) {
+
+    $scope.loading = false;
+
+
+
+    $scope.update = (dto != null);
+
+    $scope.promotionParam = {
+        dto: angular.copy(dto),
+        business:business
+    };
+
+
+    $scope.getHeight = function(){
+        var h = {height:($(window).height() - 190)+'px'};
+        return h;
+    };
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.getIllustration = function(publication){
+        if(publication.pictures.length>0){
+            return publication.pictures[O];
+        }
+        return publication.businessIllustration;
+    };
+
+
+    $scope.success = function (data) {
+
+        $scope.loading = false;
+
+        $scope.close();
+        callback();
+    };
+
+    $scope.save = function (share) {
+
+        if (!$scope.promotionParam.isValid) {
+            $scope.promotionParam.displayErrorMessage = true;
+        }
+        else {
+
+            if ($scope.promotionParam.minimalQuantity > $scope.promotionParam.quantity) {
+                $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
+            }
+            else if($scope.loading===false){
+
+                $scope.loading = true;
+                if ($scope.update) {
+                    promotionService.edit($scope.promotionParam.dto, function (data) {
+                            $scope.success(data);
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
+                else {
+                    promotionService.add($scope.promotionParam.dto, function (data) {
+                            if(share) {
+                                facebookService.sharePublication($scope.promotionParam.business.id, data.id);
+                            }
+                            $scope.success(data);
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
+            }
+        }
+    }
+
+
+}]);
+myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', 'facebookService', 'business', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business) {
+
+    $scope.loading = false;
+
+    $scope.update = (dto != null);
+
+    $scope.businessNotificationParam = {
+        dto: angular.copy(dto),
+        business: business
+    };
+
+
+    $scope.getHeight = function () {
+        var h = {height: ($(window).height() - 190) + 'px'};
+        return h;
+    };
+
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+
+    $scope.getIllustration = function (publication) {
+        if (publication.pictures.length > 0) {
+            return publication.pictures[O];
+        }
+        return publication.businessIllustration;
+    };
+
+    $scope.success = function (data) {
+
+        $scope.loading = false;
+
+        $scope.close();
+        callback();
+    };
+
+    $scope.save = function (share) {
+
+        if (!$scope.businessNotificationParam.isValid) {
+            $scope.businessNotificationParam.displayErrorMessage = true;
+        }
+        else if($scope.loading===false){
+            $scope.loading = true;
+            if ($scope.update) {
+                businessNotificationService.edit($scope.businessNotificationParam.dto, function (data) {
+                        $scope.success(data);
+                    },
+                    function () {
+                        $scope.loading = false;
+                    });
+            }
+            else {
+                businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
+                        if (share) {
+                            facebookService.sharePublication($scope.promotionParam.business.id,data.id);
+                        }
+                        $scope.success(data);
+                    },
+                    function () {
+                        $scope.loading = false;
+                    });
+            }
+
+        }
+    }
+
+
+}]);
 myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'field', 'callback', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
 
     var value = {
@@ -496,41 +1182,43 @@ myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 't
 
 }])
 ;
-myApp.controller('AlertMessageCtrl', ['$scope', '$flash', '$modalInstance', '$compile', 'message', function ($scope, $flash, $modalInstance,  $compile, message) {
+myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'param', '$compile', 'directiveName', 'save', '$timeout', 'title', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
 
-    $scope.message = message;
+    $scope.title = title;
 
-    $scope.close = function () {
-        $modalInstance.close();
-    };
+    var directive = $compile("<" + directiveName + " ng-info=\"param\"/>")($scope);
 
-
-}]);
-myApp.controller('LoadingModalCtrl', ['$scope', '$flash', '$modalInstance', '$compile', function ($scope, $flash, $modalInstance,  $compile) {
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
+    $timeout(function () {
+        $('.inject-data:first').append(directive)
+    }, 1);
 
 
-}]);
-myApp.controller('InterestSelectionModalCtrl', ['$scope', '$flash', '$modalInstance', 'callback', 'customerInterestService', 'listInterest', function ($scope, $flash, $modalInstance, callback, customerInterestService, listInterest) {
+    $scope.loading = false;
+
+    $scope.param = param;
+
 
     $scope.close = function () {
         $modalInstance.close();
     };
 
-    $scope.getHeight = function(){
-        var h = {height:($(window).height() - 190)+'px'};
-        return h;
+    $scope.setLoading = function(value){
+        $scope.loading = value;
     };
 
-    $scope.customerInterests = listInterest;
+    $scope.save = function () {
+        var isValid = true;
+        if (param.isValid != undefined) {
+            isValid = param.isValid;
 
-    $scope.selectInterest = function (target) {
-        callback(target);
-        $scope.close();
+            param.displayErrorMessage = true;
+        }
+        if (isValid) {
+            $scope.loading = true;
+            save($scope.close,$scope.setLoading);
+        }
     }
+
 
 }]);
 myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$compile', 'title', 'message', 'save', function ($scope, $flash, $modalInstance,  $compile, title,message, save) {
@@ -556,438 +1244,147 @@ myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$co
 
 
 }]);
-myApp.directive('galleryMobileCtrl', ['$rootScope', function ($rootScope) {
-
-    return {
-        restrict: "E",
-        scope: {},
-        templateUrl: "/assets/javascripts/directive/mobile/galleryMobile/template.html",
-        replace: true,
-        transclude: true,
-        compile: function () {
-            return {
-                post: function (scope) {
-
-                    scope.display = false;
-                    scope.image=null;
+myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'images', function ($scope, $modalInstance, image, images) {
 
 
-                    $rootScope.$on('DISPLAY_PICTURE_IN_GALLERY',function(event,params){
-                        scope.display = true;
-                        scope.image=params.first;
-                        scope.images=params.list;
-                    });
+    $scope.image = image;
+    $scope.images = images;
+    $scope.imageNb = null;
 
-                    scope.close = function(){
-                        scope.display=false;
-                    };
+    $scope.close = function () {
+        $modalInstance.close();
+    };
 
-                    scope.openGallery = function (image) {
-                        modalService.galleryModal(image, scope.getInfo().images);
-                    };
+    for (var key in $scope.images) {
+        if ($scope.images[key].storedName == $scope.image.storedName) {
+            $scope.imageNb = key - -1;
+        }
+    }
 
-                    scope.previous = function () {
-                        for (var key in scope.images) {
-                            if (scope.images[key].storedName == scope.image.storedName) {
-                                if (scope.images[key - 1] == undefined) {
-                                    scope.image = scope.images[scope.images.length - 1];
-                                    scope.imageNb = scope.images.length;
-                                }
-                                else {
-                                    scope.image = scope.images[key - 1];
-                                    scope.imageNb = key - 1 - -1;
-                                }
-                                break;
-                            }
-                        }
-                    };
+    $scope.previous = function () {
+        for (var key in $scope.images) {
+            if ($scope.images[key].storedName == $scope.image.storedName) {
+                if ($scope.images[key - 1] == undefined) {
+                    $scope.image = $scope.images[$scope.images.length - 1];
+                    $scope.imageNb = $scope.images.length;
+                }
+                else {
+                    $scope.image = $scope.images[key - 1];
+                    $scope.imageNb = key - 1 - -1;
+                }
+                break;
+            }
+        }
+    };
 
-                    scope.next = function () {
-                        for (var key in scope.images) {
-                            if (scope.images[key].storedName == scope.image.storedName) {
-                                var newKey = key - -1;
-                                if (scope.images[newKey] == undefined) {
-                                    scope.image = scope.images[0];
-                                    scope.imageNb = 1;
-                                }
-                                else {
-                                    scope.image = scope.images[newKey];
-                                    scope.imageNb = key - -1 - -1;
-                                }
-                                break;
-                            }
-                        }
-                    };
+    $scope.next = function () {
+        for (var key in $scope.images) {
+            if ($scope.images[key].storedName == $scope.image.storedName) {
+                var newKey = key - -1;
+                if ($scope.images[newKey] == undefined) {
+                    $scope.image = $scope.images[0];
+                    $scope.imageNb = 1;
+                }
+                else {
+                    $scope.image = $scope.images[newKey];
+                    $scope.imageNb = key - -1 - -1;
+                }
+                break;
+            }
+        }
+    };
+
+}]);
+myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'title', 'url', function ($scope, $flash, $modalInstance,title,url) {
+
+
+    $scope.title=title;
+    $scope.url=url;
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+}]);
+myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', '$location', '$route', '$routeParams', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route,$routeParams) {
+
+    //back to the top of the page
+    $(window).scrollTop(0);
+
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    $scope.param = $routeParams.param;
+
+
+    var original = $location.path;
+    var path = function () {
+
+        //build path
+        var path = '/home';
+
+        if ($scope.followedMode) {
+            path+='/following';
+        }
+        for (var i in $scope.customerInterests) {
+            if($scope.customerInterests[i].selected === true){
+                path+='/'+$scope.customerInterests[i].name;
+            }
+        }
+
+        //navigate
+        $location.path(path, false);
+
+        var lastRoute = $route.current;
+        var un = $rootScope.$on('$locationChangeSuccess', function () {
+            $route.current = lastRoute;
+            un();
+        });
+        $rootScope.$broadcast('PROGRESS_BAR_STOP');
+        return original.apply($location, [path]);
+    };
+
+
+    $scope.displaySharePositionAdvertissement = function () {
+        return geolocationService.sharePosition == false && (accountService.getMyself() == null || accountService.getMyself().selectedAddress == null);
+    };
+    $rootScope.$watch(function () {
+        return geolocationService.sharePosition;
+    }, function (n) {
+        $scope.sharePosition = n;
+    });
+
+    $scope.interestDisplayMax = 12;
+    $scope.interestDisplayed = [];
+    $scope.interestDisplayed2 = [];
+    $scope.computeList = function () {
+        $scope.interestDisplayed = $scope.customerInterests.slice(0, $scope.interestDisplayMax);
+        $scope.interestDisplayed2 = $scope.customerInterests.slice($scope.interestDisplayMax, $scope.customerInterests.length);
+    };
+
+    //variable
+    $scope.followedMode = $scope.param != null && $scope.param.indexOf('following')!=-1;
+    $scope.businessInfoParam = {};
+    $scope.businessListParam = {data: []};
+    $scope.accountService = accountService.model;
+    customerInterestService.getAll(function (value) {
+        $scope.customerInterests = value;
+
+        if ($scope.param != null) {
+            for (var i in $scope.customerInterests) {
+                if ($scope.param.indexOf($scope.customerInterests[i].name)!=-1) {
+                    $scope.customerInterests[i].selected = true;
                 }
             }
         }
-    }
-}]);
-myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', '$location', 'accountService', '$flash', 'translationService', '$timeout', 'modalService', 'languageService', function ($rootScope, $scope, $location, accountService, $flash, translationService, $timeout,modalService,languageService) {
 
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
-    modalService.closeLoadingModal();
-
-    //
-    // change lang
-    //
-    $scope.$watch('lang', function () {
-        if (!angular.isUndefined($scope.lang)) {
-            languageService.changeLanguage($scope.lang);
-        }
+        $scope.computeList();
     });
-
-    $scope.languageService = languageService;
-
-    $scope.loginFormParam = {
-        dto: {},
-        mobileVersion: true,
-        facebookSuccess: function (data) {
-            $location.url('/home');
-        }
-    };
-
-    $scope.save = function () {
-
-        if ($scope.loginFormParam.isValid) {
-            $scope.setLoading(true);
-
-            accountService.login($scope.loginFormParam.dto,
-                function () {
-                    $timeout(function () {
-                        $scope.setLoading(false);
-                        $flash.success(translationService.get("--.login.flash.success"));
-                        $location.url('/home');
-                    }, 1);
-                },
-                function () {
-                    $scope.setLoading(false);
-                });
-        }
-        else {
-            $scope.loginFormParam.displayErrorMessage = true;
-        }
-    };
-
-    $scope.setLoading = function (b) {
-        if (b === true) {
-            modalService.openLoadingModal();
-        }
-        else {
-            modalService.closeLoadingModal();
-        }
-    };
-
-}]);
-myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', 'customerInterestService', '$timeout', 'accountService', 'addressService', '$rootScope', 'followService', 'modalService', function ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, addressService, $rootScope, followService, modalService) {
-
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
-    modalService.closeLoadingModal();
-
-    $scope.displayMask = true;
-    $scope.getSelectedInterest = function () {
-
-        for (var i in $scope.customerInterests) {
-            if ($scope.customerInterests[i].selected) {
-                return $scope.customerInterests[i];
-            }
-            ;
-        }
-    };
-
-    $scope.selectInterest = function () {
-        modalService.interestSelection($scope.customerInterests, function (target) {
-            console.log('target');
-            console.log(target);
-            $scope.searchByInterest(target);
-        });
-    };
-
-
-    customerInterestService.getAll(function (value) {
-        $scope.customerInterests = value;
-    });
-
-    $scope.$on('DISPLAY_ADVANCED_SEARCH', function (event, params) {
-        $scope.advancedSearch = params.display;
-    });
-
-    //search function
     $scope.publicationListCtrl = {};
-    $scope.businessInfoParam = {};
-    $scope.businessListParam = {data: []};
     $scope.currentPage = 0;
     $scope.allLoaded = false;
     $scope.loadSemaphore = false;
     $scope.emptyMessage = null;
 
-    //scrolling
-    $('.scrollable-content-body').on('scroll', function () {
-        var scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();
-        if ($('.scrollable-content-inner').height() - scrollBottom < 200) {
-
-            if ($scope.loadSemaphore == false) {
-                $scope.loadSemaphore = true;
-                $scope.currentPage = $scope.currentPage + 1;
-                $scope.search();
-            }
-        }
-    });
-
-    var success = function (data, callbackEmptyResultFunction) {
-        if ($scope.currentPage == 0) {
-            $scope.publicationListCtrl.data = [];
-        }
-        $scope.loadSemaphore = false;
-        $scope.publicationListCtrl.loading = false;
-        if (data == null || data.length <= 5) {
-            $scope.allLoaded = true;
-
-            //if there is no result and this is the first page and there is a callbackFunction,
-            //try something else
-            if ($scope.currentPage == 0 && callbackEmptyResultFunction != null) {
-                callbackEmptyResultFunction();
-                if(data.length!=0){
-                    $scope.emptyMessage = 'moreBusiness';
-                }
-            }
-        }
-        for (var key in data) {
-            $scope.publicationListCtrl.data.push(data[key])
-        }
-    };
-
-    var successBusiness = function (data) {
-        $scope.businessListParam.data = data;
-        $scope.businessListParam.loading = false;
-    };
-
-    //functions
-    //search by interest
-    $scope.searchByInterest = function (interest) {
-
-
-        if (interest == null) {
-            for (var i in $scope.customerInterests) {
-                $scope.customerInterests[i].selected = false;
-            }
-        }
-        else {
-            if (interest.selected == true) {
-                interest.selected = false;
-            }
-            else {
-                for (var i in $scope.customerInterests) {
-                    $scope.customerInterests[i].selected = false;
-                }
-                interest.selected = true;
-            }
-        }
-        console.log('SERACH AFTER searchByInterest ');
-        $scope.currentPage = 0;
-        $scope.allLoaded = false;
-        $scope.search();
-    };
-
-    //watch on change position
-    $scope.$on('POSITION_CHANGED', function () {
-        $scope.currentPage = 0;
-        $scope.allLoaded = false;
-        console.log('SERACH AFTER POSITION_CHANGED');
-        $scope.search();
-    });
-
-    //watch in follow mode
-    $scope.$watch('followedMode', function (o, n) {
-        console.log("xatch followedMode")
-        if (o != n) {
-            $scope.currentPage = 0;
-            $scope.allLoaded = false;
-            console.log('SERACH AFTER followedMode');
-            $scope.search();
-        }
-    });
-
-    $scope.positionBasicData = [
-        {key: 'currentPosition', translation: '--.position.current'},
-        {key: 'createNewAddress', translation: '--.position.newAddress'}
-    ];
-
-    //position
-    $scope.positions = angular.copy($scope.positionBasicData);
-
-    $scope.currentPositionText = 'currentPosition';
-
-    $scope.selectPosition = function (position) {
-        $scope.currentPosition = position;
-        $scope.displayPositionDetails = false;
-    };
-
-    $timeout(function () {
-        completePositions();
-
-        $scope.$watch('currentPosition', function (n, o) {
-            if (n != null && o != n) {
-                if ($scope.currentPosition == 'createNewAddress') {
-                    $scope.currentPosition = o;
-                    modalService.addressModal(true, null, false, function (data) {
-                        $timeout(function () {
-                            $scope.currentPosition = data.name;
-                        }, 1);
-                    });
-                }
-                else if ($scope.currentPosition != $scope.positionCurrenltyComputed) {
-                    $scope.positionCurrenltyComputed = $scope.currentPosition;
-                    addressService.changeAddress($scope.currentPosition, function (result) {
-
-                        if (result.__type.indexOf('AddressDTO') == -1) {
-                            accountService.getMyself().selectedAddress = null;
-                        }
-                        else {
-                            accountService.getMyself().selectedAddress = result;
-                        }
-                        $timeout(function () {
-                            $scope.$broadcast('POSITION_CHANGED');
-                        }, 1);
-                    });
-                }
-            }
-        });
-
-        $rootScope.$watch(function () {
-            return accountService.model.myself;
-        }, function watchCallback(newValue, oldValue) {
-            completePositions();
-        });
-
-    }, 1);
-
-    var completePositions = function () {
-        $scope.positions = angular.copy($scope.positionBasicData);
-        if (accountService.getMyself() != null) {
-            for (var key in accountService.getMyself().addresses) {
-                $scope.positions.splice($scope.positions.length - 1, 0,
-                    {
-                        key: accountService.getMyself().addresses[key].name,
-                        translation: accountService.getMyself().addresses[key].name
-                    });
-            }
-        }
-        $scope.currentPosition = geolocationService.getLocationText();
-        $scope.positionCurrenltyComputed = $scope.currentPosition;
-    };
-    //initialisation
-    completePositions();
-
-    //position panel
-    $scope.displayPositionDetails = false;
-    $scope.openPositionDetails = function () {
-        $scope.displayPositionDetails = !$scope.displayPositionDetails;
-    };
-
-    //favoriteBusiness
-    $scope.displayFavoriteBusiness = false;
-    $scope.openFavoriteBusiness = function () {
-        $scope.displayFavoriteBusiness = !$scope.displayFavoriteBusiness;
-    };
-
-    var refreshFollowList = function () {
-        followService.getFollows(function (list) {
-            $scope.follows = list;
-        });
-    };
-    refreshFollowList();
-
-
-    //mask
-    $scope.$watch('displayPositionDetails', function () {
-        $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
-        $scope.displayFavoriteBusiness = false;
-
-    });
-    $scope.$watch('displayFavoriteBusiness', function () {
-        $scope.displayMask = $scope.displayPositionDetails || $scope.displayFavoriteBusiness;
-        $scope.displayPositionDetails = false;
-    });
-
-
-    $scope.search = function () {
-
-
-        var interestSelected = null;
-        for (var i in $scope.customerInterests) {
-            if ($scope.customerInterests[i].selected) {
-                interestSelected = $scope.customerInterests[i];
-            }
-        }
-
-        //if this is the first page that asked, remove other publication
-        if ($scope.currentPage == 0) {
-            $scope.publicationListCtrl.loading = true;
-            $scope.publicationListCtrl.data = [];
-        }
-
-        if ($scope.followedMode) {
-            if (interestSelected != null) {
-                searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
-                    success(data,
-                        function () {
-                            $scope.emptyMessage = 'followedWithInterest';
-                            $scope.businessListParam.loading = true;
-                            searchService.nearBusinessByInterest(interestSelected.id, function (data) {
-                                successBusiness(data);
-                            });
-                        });
-                });
-
-            }
-            else {
-                searchService.byFollowed($scope.currentPage, function (data) {
-                    success(data,
-                        function () {
-                            $scope.emptyMessage = 'followed';
-                            $scope.businessListParam.loading = true;
-                            searchService.nearBusiness(function (data) {
-                                successBusiness(data);
-                            });
-                        });
-                });
-            }
-        }
-        else {
-            if (interestSelected != null) {
-                searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
-                    success(data,
-                        function () {
-                            $scope.emptyMessage = 'newsFeedWithInterest';
-                            $scope.businessListParam.loading = true;
-                            searchService.nearBusinessByInterest(interestSelected.id, function (data) {
-                                successBusiness(data);
-                            });
-                        });
-                });
-
-            }
-            else {
-                searchService.default($scope.currentPage, function (data) {
-                    success(data,
-                        function () {
-                            $scope.emptyMessage = 'newsFeed';
-                            $scope.businessListParam.loading = true;
-                            searchService.nearBusiness(function (data) {
-                                successBusiness(data);
-                            });
-                        });
-                });
-            }
-        }
-    };
-
-
-    //initialize
-    $scope.currentPage = 0;
-    $scope.allLoaded = false;
-    $scope.search();
 
     $scope.setFollowedMode = function (n) {
         if (n == null) {
@@ -1009,393 +1406,217 @@ myApp.controller('HomeCtrl', ['$scope', 'geolocationService', 'searchService', '
         else {
             $scope.followedMode = !$scope.followedMode;
         }
+
+        path();
     };
 
 
-}]);
-myApp.controller('ForgotPasswordCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$filter', '$flash', 'modalService', function ($rootScope,$scope,facebookService,accountService,$location,$filter,$flash,modalService) {
-
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
-
-    modalService.closeLoadingModal();
-
-    $scope.loading = false;
-
-    $scope.dto = {
+    //open registration modal
+    $scope.customerRegistration = function () {
+        modalService.openCustomerRegistrationModal();
     };
 
-    $scope.fields = {
-        email: {
-            fieldType: "email",
-            name: 'email',
-            fieldTitle: "--.changeEmailModal.email",
-            validationRegex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            validationMessage: "--.generic.validation.email",
-            focus: function () {
-                return true;
-            },
-            disabled: function () {
-                return $scope.loading;
-            },
-            field: $scope.dto,
-            fieldName: 'email'
+    //functions
+    //search by interest
+    $scope.searchByInterest = function (interest) {
+
+        if (interest.selected == true) {
+            interest.selected = false;
         }
-    };
-
-    //
-    // validation : watching on field
-    //
-    $scope.$watch('fields', function () {
-        var validation = true;
-
-        for (var key in $scope.fields) {
-            var obj = $scope.fields[key];
-            if ($scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                obj.firstAttempt = !$scope.displayErrorMessage;
-                validation = false;
+        else {
+            for (var i in $scope.customerInterests) {
+                $scope.customerInterests[i].selected = false;
             }
+            interest.selected = true;
         }
-        $scope.isValid = validation;
-    }, true);
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
+        $scope.search();
 
-    //
-    // display error watching
-    //
-    $scope.$watch('displayErrorMessage', function () {
-        for (var key in $scope.fields) {
-            var obj = $scope.fields[key];
-            obj.firstAttempt = !$scope.displayErrorMessage;
+        path();
+    };
+
+    //watch on change position
+    $scope.$on('POSITION_CHANGED', function () {
+        $scope.currentPage = 0;
+        $scope.allLoaded = false;
+        $scope.search();
+    });
+
+
+    //watch in follow mode
+    $scope.$watch('followedMode', function (o, n) {
+        if (o != n) {
+            $scope.currentPage = 0;
+            $scope.allLoaded = false;
+            $scope.search();
         }
     });
 
-    $scope.save = function () {
-
-        if ($scope.isValid) {
-
-            $scope.loading = true;
-
-            accountService.forgotPassword($scope.dto, function () {
-                    $flash.success($filter('translateText')('--.forgotPassword.success'));
-                    $scope.loading = false;
-                    $location.path('/');
-                },
-                function () {
-                    $scope.loading = false;
-                });
+    $scope.$on('LOGOUT', function () {
+        if ($scope.followedMode) {
+            $scope.followedMode = false;
         }
-        else {
-            $scope.displayErrorMessage = true;
+    });
+
+    //scrolling
+    $(window).on('scroll', function () {
+        var scrollBottom = $(window).scrollTop() + $(window).height();
+        if ($('.container-content').height() - scrollBottom < 200) {
+
+            if ($scope.loadSemaphore == false) {
+                $scope.currentPage = $scope.currentPage + 1;
+                $scope.search();
+            }
+        }
+    });
+
+
+    var success = function (data, callbackEmptyResultFunction) {
+        if ($scope.currentPage == 0) {
+            $scope.publicationListCtrl.data = [];
+        }
+        $scope.loadSemaphore = false;
+        $scope.publicationListCtrl.loading = false;
+        if (data == null || data.length <= 5) {
+            $scope.allLoaded = true;
+
+
+            //if there is no result and this is the first page and there is a callbackFunction,
+            //try something else
+            if ($scope.currentPage == 0 && callbackEmptyResultFunction != null) {
+                callbackEmptyResultFunction();
+                if (data.length != 0) {
+                    $scope.emptyMessage = 'moreBusiness';
+                }
+            }
+        }
+        for (var key in data) {
+            $scope.publicationListCtrl.data.push(data[key]);
         }
     };
 
-
-
-}]);
-myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 'accountService', 'facebookService', 'translationService', 'modalService', '$location', function ($rootScope, $scope, $flash, accountService, facebookService, translationService, modalService, $location) {
-
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
-
-    modalService.closeLoadingModal();
-
-
-    $scope.facebookAppId = facebookService.facebookAppId;
-    $scope.facebookAuthorization = facebookService.facebookAuthorization;
-    $scope.basic_url = location.host;
-    if ($scope.basic_url.indexOf('http') == -1) {
-        $scope.basic_url = 'http://' + $scope.basic_url;
-    }
-
-    var facebookAuthentication = null;
-
-    $scope.accountParam = {
-        mobileVersion: true
+    var successBusiness = function (data) {
+        $scope.businessListParam.data = data;
+        $scope.businessListParam.loading = false;
     };
 
-    //
-    // facebook connection
-    //
-    $scope.facebookSuccess = function (access_token) {
 
-        console.log('facebook registrtion');
-        console.log(data);
+    //search function
+    $scope.search = function () {
+        if ($scope.allLoaded == false) {
 
-        //send request
-        var dto = {
-            token: access_token,
-            accountType: 'CUSTOMER'
-        };
-        console.log(dto);
-
-        accountService.testFacebook(dto, function (data2) {
-
-            $scope.loading(false);
-
-            if (data2.status == 'ALREADY_REGISTRERED') {
-                $flash.success('--.customer.registrationModal.alredyRegistred.success');
-                accountService.setMyself(data2.myself);
-                $location.url('/');
+            var interestSelected = null;
+            for (var i in $scope.customerInterests) {
+                if ($scope.customerInterests[i].selected) {
+                    interestSelected = $scope.customerInterests[i];
+                }
             }
-            else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
-                $scope.fusion(data2.accountFusion);
+
+            $scope.loadSemaphore = true;
+
+            //if this is the first page that asked, remove other publication
+            if ($scope.currentPage == 0) {
+                $scope.publicationListCtrl.loading = true;
+                $scope.emptyMessage = null;
+                $scope.publicationListCtrl.data = [];
+                $scope.businessListParam.data = [];
             }
-            else if (data2.status == 'OK') {
-                dto.userId = data2.userId;
-                $scope.accountParam.dto.firstname = data2.firstname;
-                $scope.accountParam.dto.lastname = data2.lastname;
-                $scope.accountParam.dto.email = data2.email;
-                $scope.accountParam.dto.gender = data2.gender;
-                $scope.accountParam.dto.password = '*********';
-                $scope.accountParam.maskPassword();
-                facebookAuthentication = dto;
-                if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
-                    ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
-                    ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
-                    ($scope.accountParam.dto.gender == null || $scope.accountParam.dto.gender.length == 0)) {
-                    $scope.accountParam.disabled = false;
-                    $flash.info('--.registration.facebook.someDataEmpty');
+
+            if ($scope.followedMode) {
+                if (interestSelected != null) {
+                    searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'followedWithInterest';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                    successBusiness(data);
+                                });
+                            });
+                    });
+
                 }
                 else {
-                    $flash.info('--.registration.facebook.validSLAMessage');
+                    searchService.byFollowed($scope.currentPage, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'followed';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusiness(function (data) {
+                                    successBusiness(data);
+                                });
+                            });
+                    });
                 }
-            }
-            //$location.url('/customer_registration');
-            //history.replaceState({}, document.title, "/customer_registration");
-        });
-    };
-
-
-    $scope.getUrlParam = function (name, url) {
-        if (!url) url = location.href
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-        var regexS = "[\\?&]" + name + "=([^&#]*)";
-        var regex = new RegExp(regexS);
-        var results = regex.exec(url);
-        return results == null ? null : results[1];
-    };
-
-    //try to catch facebook connection
-    //mobile version
-    if (location.href.indexOf('access_token') != -1) {
-        var access_token = $scope.getUrlParam('access_token', location.href);
-        //window.location.hash = '#';
-
-        if (access_token != null) {
-            $scope.facebookSuccess(access_token);
-        }
-    }
-
-    $scope.loading = function (b) {
-        if (b === true) {
-            modalService.openLoadingModal();
-        }
-        else {
-            modalService.closeLoadingModal();
-        }
-    };
-
-    $scope.fusion = function (accountFusion) {
-
-        modalService.openFacebookFusionModal(accountFusion, $scope.close);
-    };
-
-    $scope.save = function () {
-
-        if (!$scope.accountParam.isValid) {
-            $scope.accountParam.displayErrorMessage = true;
-        }
-        else {
-
-            var dto = {
-                accountRegistration: $scope.accountParam.dto,
-                facebookAuthentication: facebookAuthentication
-            };
-
-            $scope.loading(true);
-            accountService.registration(dto, function () {
-                    $scope.loading(false);
-                    $flash.success(translationService.get("--.login.flash.success"));
-                    $location.url('/');
-                },
-                function () {
-                    $scope.loading(false);
-                });
-        }
-    }
-
-
-}]);
-myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$timeout', 'geolocationService', 'modalService', 'addressService', function ($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService) {
-
-
-
-    //mobile menu
-    //default the menu to not show
-    $scope.showmenu = false;
-
-    //this is the toggle function
-    $scope.$on('toggleMenu', function () {
-        $scope.showmenu = ($scope.showmenu) ? false : true;
-    });
-
-    $scope.closeMenu = function () {
-        $scope.showmenu = false;
-    };
-
-    $scope.navigateTo = function (target) {
-
-        $scope.showmenu = false;
-
-        if ($location.path().indexOf(target) == -1) {
-            $rootScope.$broadcast('PROGRESS_BAR_START');
-            modalService.openLoadingModal();
-            $rootScope.$broadcast('SEARCH_CLEAN');
-            $timeout(function () {
-                $location.path(target);
-            }, 1);
-        }
-    };
-
-
-    $scope.logout = function () {
-        if (facebookService.isConnected()) {
-            facebookService.logout();
-        }
-        $scope.$broadcast('LOGOUT');
-        accountService.logout(function () {
-            $location.path('/');
-        });
-    };
-
-    //
-    // POSITION
-    //
-    $scope.currentPosition = null;
-    $scope.suspendWatching = false;
-    $scope.positionBasicData = [
-        {key: 'currentPosition', translation: '--.position.current'},
-        {key: 'createNewAddress', translation: '--.position.newAddress'}
-    ];
-
-    //the user has selected a new address
-    $rootScope.$on("CHANGE_ADDRESS_SELECTED", function () {
-        if (accountService.getMyself().selectedAddress == null) {
-            if (geolocationService.position == null) {
-                $scope.currentPosition = 'default';
             }
             else {
-                $scope.currentPosition = 'currentPosition';
-            }
-            return;
-        }
-        $scope.currentPosition = accountService.getMyself().selectedAddress.name;
-    });
+                if (interestSelected != null) {
+                    searchService.byInterest($scope.currentPage, interestSelected.id, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeedWithInterest';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusinessByInterest(interestSelected.id, function (data) {
+                                    successBusiness(data);
+                                });
+                            });
+                    });
 
-    $timeout(function () {
-        completePositions();
-
-        $scope.$watch('currentPosition', function (n, o) {
-            if (n != null && o != n && $scope.suspendWatching != true) {
-                $scope.suspendWatching = true;
-                if ($scope.currentPosition == 'createNewAddress') {
-                    $scope.currentPosition = o;
-                    if (accountService.getMyself() != null) {
-
-                        //open modal to create new address
-                        modalService.addressModal(true, null, false, function (data) {
-                            $timeout(function () {
-                                $scope.currentPosition = data.name;
-                            }, 1);
-                        });
-                    }
-                    else {
-                        modalService.openLoginModal($scope.createNewAddress, angular.copy(o), '--.loginModal.help.address');
-                    }
                 }
-                else if ($scope.currentPosition == 'currentPosition' && geolocationService.position == null) {
-                    $scope.currentPosition = o;
-                    modalService.messageModal('--.message.modal.notLocalised.title', '--.message.modal.notLocalised.content');
-                }
-                else if ($scope.currentPosition != $scope.positionCurrenltyComputed) {
-
-                    $scope.positionCurrenltyComputed = $scope.currentPosition;
-                    addressService.changeAddress($scope.currentPosition, function (result) {
-
-                        if (accountService.getMyself() != null) {
-                            if (result.__type.indexOf('AddressDTO') == -1) {
-                                accountService.getMyself().selectedAddress = null;
-                            }
-                            else {
-                                accountService.getMyself().selectedAddress = result;
-                            }
-                        }
-                        $timeout(function () {
-                            $rootScope.$broadcast('POSITION_CHANGED');
-                        }, 1);
+                else {
+                    searchService.default($scope.currentPage, function (data) {
+                        success(data,
+                            function () {
+                                $scope.emptyMessage = 'newsFeed';
+                                $scope.businessListParam.loading = true;
+                                searchService.nearBusiness(function (data) {
+                                    successBusiness(data);
+                                });
+                            });
                     });
                 }
-                $timeout(function () {
-                    $scope.suspendWatching = false;
-                }, 1);
             }
-        });
+        }
+    };
 
-        $rootScope.$watch(function () {
-            return accountService.model.myself;
-        }, function watchCallback(newValue, oldValue) {
-            completePositions();
-        });
-
-    }, 1);
-
-    $rootScope.$on('POSITION_CHANGED', function () {
-        console.log('je suis POSITION_CHANGED : ' + $scope.suspendWatching);
-        completePositions();
-    });
-
-    var completePositions = function () {
-
-        $scope.positions = angular.copy($scope.positionBasicData);
-        if (geolocationService.position == null) {
-            $scope.positions.splice(0, 0, {key: 'default', translation: '--.position.brussel'});
+    $scope.createNewAddress = function () {
+        if (accountService.getMyself() != null) {
+            $scope.createNewAddressLaunch();
         }
         else {
-            if ($scope.currentPosition == 'default') {
-                $scope.currentPosition = 'currentPosition';
-            }
+            modalService.openLoginModal($scope.createNewAddressLaunch, null, '--.loginModal.help.address');
         }
-        if (accountService.getMyself() != null) {
-            for (var key in accountService.getMyself().addresses) {
-                $scope.positions.splice($scope.positions.length - 1, 0,
-                    {
-                        key: accountService.getMyself().addresses[key].name,
-                        translation: accountService.getMyself().addresses[key].name
-                    });
-            }
-        }
-        $scope.currentPosition = geolocationService.getLocationText();
     };
 
-    $rootScope.$watch(function () {
-        return accountService.model.myself;
-    }, function watchCallback(n, o) {
-        completePositions();
-    }, true);
+    $scope.createNewAddressLaunch = function () {
+        modalService.addressModal(true, null, false, function (data) {
+            $timeout(function () {
+                addressService.changeAddress(data.name, function (data) {
+                    accountService.getMyself().selectedAddress = data;
+                    $timeout(function () {
+                        $rootScope.$broadcast("CHANGE_ADDRESS_SELECTED");
+                    }, 1);
+                });
+            }, 1);
+        });
+    };
 
+
+    //initialize
+    $scope.currentPage = 0;
+    $scope.allLoaded = false;
+    $scope.search();
 
 }]);
-myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accountService', function ($rootScope,$scope, modalService, accountService) {
+myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$rootScope', '$window', function ($scope, modalService, accountService, $rootScope,$window) {
+
+    //back to the top of the page
+    $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
-    modalService.closeLoadingModal();
 
     $scope.model = accountService.model;
-
-    $scope.activeTab = 'personal';
-
-    $scope.setActiveTab = function(tab){
-        $scope.activeTab = tab;
-    };
-
 
     $scope.accountParam = {
         updateMode: true,
@@ -1407,19 +1628,35 @@ myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accoun
         modalService.openEditPasswordModal();
     };
 
+    $scope.interestEdit = function(){
+        modalService.openEditCustomerInterest();
+    };
+
     $scope.personalEdit = function () {
+        $scope.oldLang = angular.copy($scope.accountParam.dto.lang);
         $scope.accountParam.disabled = false;
     };
 
     $scope.personalSave = function () {
         $scope.accountParam.disabled = true;
-        accountService.editAccount($scope.accountParam.dto);
+        accountService.editAccount($scope.accountParam.dto,function(){
+
+            if($scope.oldLang != $scope.accountParam.dto.lang){
+                $window.location.reload();
+            }
+        });
     };
 
     $scope.personalCancel = function () {
-        $scope.accountParam.dto=angular.copy(accountService.getMyself());
+        $scope.accountParam.dto.firstname=accountService.getMyself().firstname;
+        $scope.accountParam.dto.lastname=accountService.getMyself().lastname;
+        $scope.accountParam.dto.email=accountService.getMyself().email;
+        $scope.accountParam.dto.gender=accountService.getMyself().gender;
         $scope.accountParam.disabled = true;
     };
+
+
+
 
     $scope.addAddress = function () {
         modalService.addressModal(true, null,false);
@@ -1433,116 +1670,362 @@ myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accoun
         accountService.deleteAddress(address);
     };
 
-    //interest
-    $scope.interestParam = {
-        result: angular.copy(accountService.getMyself().customerInterests),
-        disabled: true
-    };
-
-    $scope.interestEdit = function(){
-        $scope.interestParam.disabled=false;
-    };
-
-    $scope.interestCancel = function(){
-        $scope.interestParam.disabled=true;
-    };
-
-    $scope.interestSave = function(){
-        accountService.editCustomerInterest(
-            {customerInterests:$scope.interestParam.result},
-            function () {
-                accountService.getMyself().customerInterests = $scope.interestParam.result;
-                $scope.interestParam.disabled=true;
-                $scope.loading = false;
-            },
-            function () {
-                $scope.loading = false;
-            });
-    };
-
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', '$flash', 'followService', '$filter', 'modalService', 'accountService', function ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, accountService) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', '$location', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, $location) {
+
+    //back to the top of the page
+    //console.log($location.url());
+    $(window).scrollTop(0);
 
 
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+
+    if ($routeParams.publicationId != null) {
+        $scope.publicationIdToGo = $routeParams.publicationId;
+    }
+
+
+    $scope.displayError = false;
     $scope.loading = true;
+    $scope.business = null;
+    $scope.edit = false;
     $scope.myBusiness = false;
-
-    $scope.displayBack = function () {
-        return window.history.length > 0;
-    };
-
-    $scope.back = function () {
-        window.history.back();
-    };
-
-    $scope.descriptionLimitBase = 200;
+    $scope.businessId = $routeParams.businessId;
+    $scope.descriptionLimitBase = 200.
     $scope.descriptionLimit = $scope.descriptionLimitBase;
+
+    //publication timing
+    $scope.publicationOptions = [
+        {key: 'BASIC', value: '--.business.publication.basic'},
+        {key: 'ARCHIVE', value: '--.business.publication.archive'}
+    ];
 
     //address
     $scope.googleMapParams = {};
 
-
-    $scope.followed = function () {
-        var followed = $scope.business.following;
-        followService.addFollow(!followed, $scope.business.id, function () {
-            $scope.business.following = !followed;
-            if ($scope.business.following) {
-                $flash.success($filter('translateText')('--.followWidget.message.add'));
-            }
-            else {
-                $flash.success($filter('translateText')('--.followWidget.message.remove'));
-            }
-        });
+    $scope.displayEditMode = function () {
+        return $scope.myBusiness === true || (accountService.getMyself() != null && accountService.getMyself().role === 'SUPERADMIN');
     };
 
-    $scope.openGallery = function (image) {
-        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {list: $scope.business.galleryPictures, first: image});
+    //publication
+    $scope.publicationListParam = {
+        scrollTo: $scope.publicationIdToGo,
+        displayRemoveIcon: $scope.edit,
+        type: 'BASIC'
     };
+    $scope.$watch('edit', function () {
+        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
+    });
 
-    $scope.displaySchedule = function () {
-        if ($scope.business != null && $scope.business.schedules != null) {
-            for (var i in $scope.business.schedules) {
-                if ($scope.business.schedules[i].length > 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-
+    //loading
     businessService.getBusiness($routeParams.businessId,
         function (data) {
-
-            if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
-                $scope.myBusiness = true;
-                accountService.setMyBusiness(data);
-            }
-
-            //stop loading icons
-            $rootScope.$broadcast('PROGRESS_BAR_STOP');
-            modalService.closeLoadingModal();
-
-
             $scope.loading = false;
             $scope.business = data;
 
-            $scope.interfaceToDisplay = 'home';
+            //publication
+            $scope.publicationListParam.business = $scope.business;
+
+
+            //edit mode ?
+            $scope.$watch('business.businessStatus', function () {
+
+                    if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
+                        if ($scope.business.businessStatus != 'WAITING_CONFIRMATION') {
+                            $scope.edit = true;
+                        }
+                        $scope.myBusiness = true;
+                    }
+
+                    if ($scope.myBusiness) {
+
+                        $scope.publicationOptions.push({
+                            key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
+                        });
+
+                    }
+                }
+            );
+
+            //distance
+            $scope.computeDistance = function () {
+                addressService.distance($scope.business.address.id, function (data) {
+                    $scope.business.distance = data.distance;
+                });
+            };
+
+            //initlaization
+            $scope.computeDistance();
+
+            $scope.$on('POSITION_CHANGED', function () {
+                $scope.computeDistance();
+            });
+
+            $scope.publish = function () {
+
+                modalService.messageModal("--.business.page.askPublication.window.title", "--.business.page.askPublication.window.message",
+                    function (close) {
+                        businessService.publishBusiness();
+                        close();
+                        $flash.info(translationService.get("--.business.page.askPublication.window.flash"));
+                        $scope.business.businessStatus = 'WAITING_CONFIRMATION';
+                    });
+            };
+
+            $scope.cancelPublishRequest = function () {
+
+                modalService.messageModal("--.business.page.cancelPublishRequest.window.title", "--.business.page.cancelPublishRequest.window.message",
+                    function (close) {
+                        businessService.cancelPublishRequest();
+                        close();
+                        $flash.info(translationService.get("--.business.page.cancelPublishRequest.window.flash"));
+                        $scope.business.businessStatus = 'NOT_PUBLISHED';
+                    });
+            };
+
+            $scope.stopPublish = function () {
+
+                modalService.messageModal("--.business.page.stopPublication.window.title", "--.business.page.stopPublication.window.message",
+                    function (close) {
+                        businessService.stopPublication();
+                        close();
+                        $flash.info(translationService.get("--.business.page.stopPublication.window.flash"));
+                        $scope.business.businessStatus = 'NOT_PUBLISHED';
+                    });
+            };
+
+
+            //edit name
+            $scope.editbusiness = function () {
+                var business = angular.copy($scope.business);
+                modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
+                    {
+                        dto: business,
+                        status: business.businessStatus
+                    },
+                    function (close, setLoading) {
+                        businessService.edit(business, function (data) {
+                            $scope.business.name = data.name;
+                            $scope.business.description = data.description;
+                            $scope.business.phone = data.phone;
+                            $scope.business.website = data.website;
+                            $scope.business.email = data.email;
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+            };
+
+            //edit illustration
+            $scope.editIllustration = function () {
+                var business = angular.copy($scope.business);
+                modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
+                    {
+                        dto: business,
+                        target: 'business_illustration',
+                        fieldName: 'illustration',
+                        details: '--.business.logo.edit.modal.description'
+                    },
+                    function (close, setLoading) {
+                        businessService.editIllustration(business.id, business.illustration, function () {
+                            $scope.business.illustration = business.illustration;
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+            };
+
+            //edit landscape
+            $scope.editLandscape = function () {
+                var business = angular.copy($scope.business);
+                modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
+                    {
+                        dto: business,
+                        target: 'business_landscape',
+                        fieldName: 'landscape',
+                        details: '--.business.landscape.edit.modal.description'
+                    },
+                    function (close, setLoading) {
+                        businessService.editLandscape(business.id, business.landscape, function () {
+                            $scope.business.landscape = business.landscape;
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+            };
+
+            //address
+            $scope.googleMapParams.address = $scope.business.address;
+            $timeout(function () {
+                $scope.googleMapParams.refreshNow();
+            }, 1);
+
+            //edit address
+            $scope.editAddress = function () {
+                var address = angular.copy($scope.business.address);
+                modalService.basicModal("--.business.edit.address.modal.title", "address-form-ctrl",
+                    {
+                        dto: address,
+                        addName: false
+                    },
+                    function (close, setLoading) {
+                        //scope.business
+                        businessService.editAddress($scope.business.id, address, function (data) {
+                            $scope.business.address = data;
+                            $scope.googleMapParams.setAddress(data);
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+            };
 
             $scope.categoryLineParams = {
                 categories: $scope.business.categories
             };
 
-            //address
-            $scope.googleMapParams.address = $scope.business.address;
-            $scope.googleMapParams.mobile = true;
+            //edit category
+            $scope.editCategory = function () {
+                var catList = [];
+                for (var key1 in $scope.business.categories) {
+                    var lev2 = $scope.business.categories[key1];
+                    for (var key2 in lev2) {
+                        var lev3 = lev2[key2];
+                        for (var key3 in lev3) {
+                            catList.push(lev3[key3]);
+                        }
+                    }
+                }
 
-            $scope.$watch('interfaceToDisplay', function () {
-                if ($scope.interfaceToDisplay == 'info') {
-                    $timeout(function () {
-                        $scope.googleMapParams.refreshNow();
-                    }, 1);
+                modalService.basicModal("--.business.edit.category.modal.title", "business-category-form-ctrl",
+                    {
+                        value: catList
+                    },
+                    function (close, setLoading) {
+                        //scope.business
+                        businessService.editBusinessCategory($scope.business.id, catList, function (data) {
+                            $scope.business.categories = data.categories;
+                            $scope.categoryLineParams.categories = $scope.business.categories;
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+
+            };
+
+            //schedule
+            $scope.editSchedule = function () {
+                var schedules = angular.copy($scope.business.schedules);
+                modalService.basicModal("--.business.edit.schedule.modal.title", "schedule-form-ctrl",
+                    {
+                        dto: schedules,
+                        disabled: false
+                    },
+                    function (close, setLoading) {
+                        businessService.createSchedule($scope.business.id, {schedules: schedules}, function (data) {
+                            $scope.business.schedules = schedules;
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+
+            };
+
+            $scope.editGallery = function () {
+                var business = angular.copy($scope.business);
+                modalService.basicModal("--.business.edit.address.modal.title", "dir-field-image-mutiple",
+                    {
+                        fieldTitle: "--.business.modal.gallery.title",
+                        validationMessage: '--.error.validation.image',
+                        help: '--.business.gallery.download.help',
+                        details: '--gallery.maximumImage',
+                        field: business,
+                        maxImage: 10,
+                        multiple: true,
+                        target: 'galley_picture',
+                        fieldName: 'galleryPictures'
+                    },
+                    function (close, setLoading) {
+                        //scope.business
+                        businessService.editGallery($scope.business.id, {list: business.galleryPictures}, function (data) {
+                            $scope.business.galleryPictures = data;
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+            };
+
+
+            //edit social network
+            $scope.editSocialNetwork = function () {
+                var socialNetwork = angular.copy($scope.business.socialNetwork);
+                if (socialNetwork == undefined || socialNetwork == null) {
+                    socialNetwork = {};
+                }
+                modalService.basicModal("--.business.edit.socialNetwork.modal.title", "business-social-network-ctrl",
+                    {
+                        dto: socialNetwork
+                    },
+                    function (close, setLoading) {
+                        //scope.business
+                        businessService.editSocialNetwork($scope.business.id, socialNetwork, function (data) {
+                            $scope.business.socialNetwork = socialNetwork;
+                            close();
+                        }, function () {
+                            setLoading(false);
+                        });
+                    });
+            };
+
+            //create publication
+            $scope.createPromotion = function () {
+                modalService.openPromotionModal(null, $scope.business, function () {
+                    $scope.$broadcast('RELOAD_PUBLICATION');
+                });
+
+            };
+            $scope.createNotification = function () {
+                modalService.openBusinessNotificationModal(null, $scope.business, function () {
+                    $scope.$broadcast('RELOAD_PUBLICATION');
+                });
+            };
+            $scope.$on('POSITION_CHANGED', function () {
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            });
+
+            $scope.$watch('publicationListParam.type', function (o, n) {
+                if (o != n) {
+                    $scope.$broadcast('RELOAD_PUBLICATION');
                 }
             });
+
+            $scope.refreshPublications = function () {
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            };
+
+            $scope.$on('RELOAD_PUBLICATION', function () {
+                $scope.publicationListParam.refresh($scope.publicationListParam.type);
+            });
+
+            //initialization
+            if (geolocationService.currentPosition != null) {
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            }
+
+            $scope.displaySchedule = function () {
+                for (var i in $scope.business.schedules) {
+                    if ($scope.business.schedules[i].length > 0) {
+                        return true;
+                    }
+                }
+                return false;
+            };
 
             $scope.displaySocialNetwork = function () {
                 var s = $scope.business.socialNetwork;
@@ -1557,86 +2040,60 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
                     s.reservationLink != null;
             };
 
-            $scope.actions = [{
-                name: 'home',
-                translatableName: '--.business.action.home',
-                icon: 'gling-icon-home',
-                action: function () {
-                    $scope.interfaceToDisplay = 'home'
-                },
-                display: function () {
-                    return true;
+            $scope.computeProgression = function () {
+                var total = 0;
+                if ($scope.business.description != null) {
+                    total++;
                 }
-            }, {
-                name: 'info',
-                translatableName: '--.business.action.info',
-                icon: 'gling-icon-info',
-                action: function () {
-                    $scope.interfaceToDisplay = 'info'
-                },
-                display: function () {
-                    return true;
+                if ($scope.business.illustration != null) {
+                    total++;
                 }
-            }, {
-                name: 'gallery',
-                icon: 'gling-icon-images',
-                translatableName: '--.business.action.gallery',
-                action: function () {
-                    $scope.interfaceToDisplay = 'gallery'
-                },
-                display: function () {
-                    return $scope.business.galleryPictures != null && $scope.business.galleryPictures.length > 0
+                if ($scope.business.landscape != null) {
+                    total++;
                 }
-            }
-            ];
-
-            //distance
-            $scope.computeDistance = function () {
-                addressService.distance($scope.business.address.id, function (data) {
-                    $scope.business.distance = data.distance;
-                });
-            };
-            //initialize
-            $scope.computeDistance();
-
-            $scope.$on('POSITION_CHANGED', function () {
-                $scope.computeDistance();
-            });
-
-
-            $scope.$on('POSITION_CHANGED', function () {
-                $scope.$broadcast('RELOAD_PUBLICATION');
-            });
-
-
-            $scope.refreshPublications = function () {
-                $scope.$broadcast('RELOAD_PUBLICATION');
-                $scope.interfaceToDisplay ='home';
+                if ($scope.business.galleryPictures.length > 0) {
+                    total++;
+                }
+                if ($scope.displaySocialNetwork()) {
+                    total++;
+                }
+                if ($scope.displaySchedule()) {
+                    total++;
+                }
+                return total;
             };
 
-            $scope.$on('RELOAD_PUBLICATION', function () {
-                $scope.publicationListParam.refresh();
-            });
+            $scope.getProgressionStyle = function () {
+                var s = 'width:' + (300 * ($scope.computeProgression() / 5)) + 'px';
+                console.log(s);
+                return s;
+            };
 
-            //initialization
-            if (geolocationService.currentPosition != null) {
-                $scope.$broadcast('RELOAD_PUBLICATION');
-            }
+            $scope.openContact = function () {
+
+                var dto = {target: 'HELP'};
+
+                modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl',
+                    {dto: dto},
+                    function (close) {
+                        contactService.contact(dto, function () {
+                            $flash.success($filter('translateText')('--.contactForm.send.success'));
+                            close();
+                        });
+                    }
+                );
+            };
+
+
+        }, function () {
+            $scope.loading = false;
+            $scope.displayError = true;
 
         });
-    $scope.publicationListParam = {
-        businessId: $routeParams.businessId
-        //scrollTo: $scope.publicationIdToGo,
-        //displayRemoveIcon: $scope.edit
-    };
 
-
-    $scope.createPromotion = function(){
-        $scope.navigateTo('/promotion');
-    }
-
-}]);
-myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', 'modalService', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService, modalService) {
+}])
+;
+myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -1899,21 +2356,19 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
         return totalToAdd;
     };
 
-    //initilization
-    $scope.search();
+    //initialization
+        $scope.search();
 
     $scope.$on('POSITION_CHANGED', function () {
         $scope.search();
     });
 }]);
-myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', 'ngTableParams', '$filter', 'followService', 'modalService', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService,modalService) {
+myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', 'ngTableParams', '$filter', 'followService', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
-
-    modalService.closeLoadingModal();
 
     $scope.businessListParams = {
         loading: true
@@ -1925,55 +2380,56 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
             $scope.businesses = data;
 
-            //$scope.$watch("filter.$", function (o, n) {
-            //    if (n != o) {
-            //        $scope.tableParams.reload();
-            //    }
-            //});
-            //
-            //$scope.tableParams = new ngTableParams({
-            //    page: 1,            // show first page
-            //    count: 10,          // count per page
-            //    sorting: {
-            //        name: 'asc'     // initial sorting
-            //    }
-            //}, {
-            //    counts: [], // hides page sizes
-            //    total: $scope.businesses.length, // length of data
-            //    getData: function ($defer, params) {
-            //
-            //        var filteredData = $filter('filter')($scope.businesses, $scope.filter);
-            //        var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-            //
-            //        //var filteredData = $filter('filter')(data, $scope.filter);
-            //        //// use build-in angular filter
-            //        //var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
-            //
-            //        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            //    }
-            //});
-            //
-            //$scope.checkAll = function (check) {
-            //    for (var key  in $scope.businesses) {
-            //        if ($scope.businesses[key].followingNotification != check) {
-            //            $scope.businesses[key].followingNotification = check;
-            //            $scope.setNotification($scope.businesses[key]);
-            //        }
-            //    }
-            //};
-            //
+            $scope.$watch("filter.$", function (o, n) {
+                if (n != o) {
+                    $scope.tableParams.reload();
+                }
+            });
+
+            $scope.tableParams = new ngTableParams({
+                page: 1,            // show first page
+                count: 10,          // count per page
+                sorting: {
+                    name: 'asc'     // initial sorting
+                }
+            }, {
+                counts: [], // hides page sizes
+                total: $scope.businesses.length, // length of data
+                getData: function ($defer, params) {
+
+                    var filteredData = $filter('filter')($scope.businesses, $scope.filter);
+                    var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+
+                    //var filteredData = $filter('filter')(data, $scope.filter);
+                    //// use build-in angular filter
+                    //var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
+
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+
+            $scope.checkAll = function (check) {
+                for (var key  in $scope.businesses) {
+                    if ($scope.businesses[key].followingNotification != check) {
+                        $scope.businesses[key].followingNotification = check;
+                        $scope.setNotification($scope.businesses[key]);
+                    }
+                }
+            };
+
             $scope.setNotification = function (business) {
-                business.followingNotification=!business.followingNotification;
                 followService.setNotification(business.id, business.followingNotification);
             };
 
             $scope.stopFollow = function (business) {
-                for (var key  in $scope.businesses) {
-                    if ($scope.businesses[key] == business) {
-                        $scope.businesses.splice(key, 1);
+                followService.addFollow(false, business.id, function () {
+                    for (var key  in $scope.businesses) {
+                        if ($scope.businesses[key] == business) {
+                            $scope.businesses.splice(key, 1);
+                        }
                     }
-                }
-                followService.addFollow(false, business.id);
+                    $scope.tableParams.reload();
+                });
             };
 
 
@@ -1985,26 +2441,304 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
-myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', function ($rootScope, $scope, accountService) {
-
-    console.log("accountService.getMyBusiness()");
-    console.log(accountService.getMyBusiness());
-
-
-    $scope.publicationFormParam = {
-        dto: {},
-        business: accountService.getMyBusiness()
-    };
-
-}]);
-myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
 
     return {
         restrict: "E",
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/component/businessListMobile/template.html",
+        templateUrl: "/assets/javascripts/directive/component/publicationList/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+                    directiveService.autoScopeImpl(scope);
+
+                    scope.click = function () {
+                        console.log(scope.publication);
+                    };
+
+                    scope.getInfo().loading = true;
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                    };
+
+                    scope.$watch("getInfo().data", function () {
+                        scope.publications = scope.getInfo().data;
+                        for (var i in scope.publications) {
+                            scope.publications[i].interval = (scope.publications[i].endDate - new Date());
+                        }
+                    });
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
+
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
+
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
+                }
+            }
+        }
+    }
+}]);
+myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
+
+    return {
+        restrict: "E",
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
+        templateUrl: "/assets/javascripts/directive/component/publicationWidget/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    scope.descriptionLimit = 200;
+                    scope.descriptionLimitBase = scope.descriptionLimit;
+
+                    directiveService.autoScopeImpl(scope);
+
+                    scope.click = function () {
+                        console.log(scope.publication);
+                    };
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                    };
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
+
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
+
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
+
+                    scope.getIllustrationClass = function (picture) {
+
+                        if (picture!= undefined && picture.height > picture.width) {
+                            return 'publication-illustration-high';
+                        }
+                        else {
+                            return 'publication-illustration';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}]);
+myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'directiveService', 'searchService', '$timeout', 'publicationService', 'modalService', function ($rootScope, directiveService, searchService, $timeout, publicationService, modalService) {
+
+    return {
+        restrict: "E",
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
+        templateUrl: "/assets/javascripts/directive/component/publicationListForBusiness/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+                    directiveService.autoScopeImpl(scope);
+
+                    scope.descriptionLimitBase=250;
+                    scope.currentPage = 0;
+                    scope.allLoaded = false;
+                    scope.loadSemaphore = false;
+                    scope.publications = [];
+                    scope.loading=false;
+
+                    scope.success = function (data) {
+
+                        if (scope.currentPage == 0) {
+                            scope.publications = [];
+                        }
+
+                        if (data.length == 0) {
+                            scope.allLoaded = true;
+                        }
+
+                        scope.loadSemaphore = false;
+                        for (var key in data) {
+                            scope.publications.push(data[key])
+                        }
+                        for (var i in scope.publications) {
+                            scope.publications[i].descriptionLimit=scope.descriptionLimitBase;
+                            scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
+                        }
+
+                        if (scope.getInfo().scrollTo != null) {
+
+                            //if the user looking for a publication, scroll to it
+                            $timeout(function () {
+                                var target = "#publication" + scope.getInfo().scrollTo;
+                                $(window).scrollTop($(target).offset().top - 70);
+
+                                //scrollTo null to scroll only one time
+                                scope.getInfo().scrollTo = null;
+                                scope.$apply();
+                            }, 1);
+                        }
+                        scope.loading=false;
+                    };
+
+
+                    //scrolling
+                    $(window).on('scroll', function () {
+                        var scrollBottom = $(window).scrollTop() + $(window).height();
+                        if ($('.container-content').height() - scrollBottom < 200) {
+                            if (scope.loadSemaphore == false) {
+                                scope.loadSemaphore = true;
+                                scope.currentPage = scope.currentPage + 1;
+
+                                console.log("-- from scrolling");
+                                scope.search();
+                            }
+                        }
+                    });
+
+                    scope.getInfo().refresh = function (type) {
+                        scope.currentPage = 0;
+                        scope.publications = [];
+                        if(scope.type!=type) {
+                            scope.type = type;
+                            //will be reloaded by type watching
+                        }
+                        else{
+                            scope.allLoaded = false;
+                            console.log("-- from refresh");
+                            scope.search();
+                        }
+
+                    };
+
+                    scope.search = function () {
+                        console.log("scope.search !! : "+scope.type+"/"+scope.currentPage);
+                        if (scope.allLoaded == true) {
+                            return;
+                        }
+                        scope.loading=true;
+                        if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
+                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().business.id, scope.success);
+                        }
+                        else if (scope.type != null && scope.type != undefined && scope.type == 'PREVISUALIZATION') {
+                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().business.id, scope.success);
+                        }
+                        else {
+                            searchService.byBusiness(scope.currentPage, scope.getInfo().business.id, scope.success);
+                        }
+                    };
+
+                    scope.$watch('type', function (n, o) {
+                        if (n != o) {
+                            scope.allLoaded = false;
+                            console.log("-- from watch type");
+                            scope.search();
+                        }
+                    });
+
+                    //initialization
+                    console.log('-- SERACH FROM initialization');
+                    scope.search();
+
+                    //remove
+                    scope.removePublication = function (publication) {
+                        modalService.messageModal('--.business.publication.remove.confirmationModal.title',
+                            '--.business.publication.remove.confirmationModal.body',
+                            function (close) {
+                                publicationService.delete(publication, function () {
+                                    $rootScope.$broadcast('RELOAD_PUBLICATION');
+                                    close();
+                                });
+                            });
+                    };
+
+                    //edit
+                    scope.editPublication = function (publication) {
+                        if (publication.type == 'PROMOTION') {
+                            modalService.openPromotionModal(publication, scope.getInfo().business, function () {
+                                $rootScope.$broadcast('RELOAD_PUBLICATION');
+                            });
+                        }
+                        else {
+                            modalService.openBusinessNotificationModal(publication, scope.getInfo().business, function () {
+                                $rootScope.$broadcast('RELOAD_PUBLICATION');
+                            });
+                        }
+                    };
+
+                    scope.getInterestClass = function (publication) {
+                        if (publication.interest != null) {
+                            return 'gling-icon-' + publication.interest.name;
+                        }
+                        return null;
+                    };
+
+                    var isEmpty = function (val) {
+                        return val == undefined || val === null || val === "";
+                    };
+
+                    scope.descriptionIsEmpty = function (publication) {
+                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
+                    };
+
+                    scope.openGallery = function (image, publication) {
+                        modalService.galleryModal(image, publication.pictures);
+                    };
+
+
+                    scope.getIllustrationClass = function (picture) {
+
+                        if (picture!= undefined && picture.height > picture.width) {
+                            return 'publication-illustration-high';
+                        }
+                        else {
+                            return 'publication-illustration';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}]);
+myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+
+    return {
+        restrict: "E",
+        scope: directiveService.autoScope({
+            ngInfo: '='
+        }),
+        templateUrl: "/assets/javascripts/directive/component/businessList/template.html",
         replace: true,
         transclude: true,
         compile: function () {
@@ -2028,231 +2762,6 @@ myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geo
         }
     }
 }]);
-myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', '$timeout', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location,modalService,$timeout) {
-
-    return {
-        restrict: "E",
-        scope: directiveService.autoScope({
-            ngInfo: '='
-        }),
-        templateUrl: "/assets/javascripts/directive/component/publicationListMobile/template.html",
-        replace: true,
-        transclude: true,
-        compile: function () {
-            return {
-                post: function (scope) {
-                    directiveService.autoScopeImpl(scope);
-
-                    scope.descriptionLimitBase=250;
-                    scope.getInfo().loading = true;
-
-                    scope.getInterestClass = function (publication) {
-                        if (publication.interest != null) {
-                            return 'gling-icon-' + publication.interest.name;
-                        }
-                        return null;
-                    };
-
-                    scope.navigateTo = function (target) {
-                        $rootScope.$broadcast('PROGRESS_BAR_START');
-                        modalService.openLoadingModal();
-                        $timeout(function(){
-                            $location.path(target);
-                        },1);
-                    };
-
-                    scope.openGallery = function (image, publication) {
-                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
-                    };
-
-                    scope.$watch("getInfo().data", function () {
-                        scope.publications = scope.getInfo().data;
-                        for (var i in scope.publications) {
-                            scope.publications[i].descriptionLimit=scope.descriptionLimitBase;
-                            scope.publications[i].interval = (scope.publications[i].endDate - new Date());
-                        }
-                    });
-
-                }
-            }
-        }
-    }
-}]);
-myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', 'publicationService', function ($rootScope, businessService, geolocationService, directiveService, searchService, $timeout, publicationService) {
-
-    return {
-        restrict: "E",
-        scope: directiveService.autoScope({
-            ngInfo: '='
-        }),
-        templateUrl: "/assets/javascripts/directive/component/publicationListMobileForBusiness/template.html",
-        replace: true,
-        transclude: true,
-        compile: function () {
-            return {
-                post: function (scope) {
-                    directiveService.autoScopeImpl(scope);
-
-                    scope.descriptionLimitBase=250;
-                    scope.currentPage = 0;
-                    scope.allLoaded = false;
-                    scope.loadSemaphore = false;
-                    scope.publications = [];
-                    scope.loading=false;
-
-
-                    //scrolling
-                    $('.scrollable-content-body').on('scroll', function () {
-                        var scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();
-                        if ($('.scrollable-content-inner').height() - scrollBottom < 200) {
-
-                            if (scope.loadSemaphore == false) {
-                                scope.loadSemaphore = true;
-                                scope.currentPage = scope.currentPage + 1;
-                                scope.search();
-                            }
-                        }
-                    });
-
-                    scope.openGallery = function (image, publication) {
-                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
-                    };
-
-                    scope.getInterestClass = function (publication) {
-                        if (publication.interest != null) {
-                            return 'gling-icon-' + publication.interest.name;
-                        }
-                        return null;
-                    };
-
-
-                    scope.getInfo().refresh = function (type) {
-                        scope.currentPage = 0;
-                        scope.publications = [];
-                        scope.type = type;
-                        scope.search();
-                    };
-
-                    scope.search = function () {
-                        if (scope.allLoaded == true) {
-                            return;
-                        }
-                        scope.loading=true;
-                        searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
-                    };
-
-                    scope.success = function (data) {
-
-                        if(scope.currentPage==0){
-                            scope.publications = [];
-                        }
-
-                        if (data.length == 0) {
-                            scope.allLoaded = true;
-                        }
-
-                        scope.loadSemaphore = false;
-                        for (var key in data) {
-                            scope.publications.push(data[key])
-                        }
-                        for (var i in scope.publications) {
-                            scope.publications[i].descriptionLimit=scope.descriptionLimitBase;
-                            scope.publications[i].interval = (scope.publications[i].endDate - new Date()) / 1000;
-                        }
-
-                        $timeout(function () {
-                            if (scope.getInfo().scrollTo != null) {
-                                $('.main-body').scrollTop($("#publication" + scope.getInfo().scrollTo).offset().top);
-                                scope.$apply();
-                            }
-                        }, 1);
-                        scope.loading=false;
-                    };
-                }
-            }
-        }
-    }
-}])
-;
-myApp.directive("headerSearchCtrl", ['$rootScope', '$location', '$timeout', 'modalService', function ($rootScope,$location,$timeout,modalService) {
-    return {
-        restrict: "E",
-        scope: {
-            title: '=',
-            displayMenu: '='
-        },
-        templateUrl: "/assets/javascripts/directive/mobile/headerSearch/template.html",
-        replace: true,
-        compile: function () {
-            return {
-                post: function (scope) {
-
-                    scope.showMenu = function(){
-                        $rootScope.$broadcast('toggleMenu');
-                    };
-
-                    scope.displayBack = function(){
-                        return window.history.length>0;
-                    };
-
-
-                    scope.back = function () {
-                        $rootScope.$broadcast('PROGRESS_BAR_START');
-                        modalService.openLoadingModal();
-                        $timeout(function(){
-                            $location.url('/');
-                        },1);
-                    };
-
-
-
-
-                }
-            }
-        }
-    }
-}]);
-
-myApp.directive("mobileTitleCtrl", ['$rootScope', '$location', '$timeout', 'modalService', function ($rootScope,$location,$timeout,modalService) {
-    return {
-        restrict: "E",
-        scope: {
-            title: '=',
-            displayMenu: '='
-        },
-        templateUrl: "/assets/javascripts/directive/mobile/title/template.html",
-        replace: true,
-        compile: function () {
-            return {
-                post: function (scope) {
-
-                    scope.showMenu = function(){
-                        console.log('showMenu');
-                        $rootScope.$broadcast('toggleMenu');
-                    };
-
-                    scope.displayBack = function(){
-                        return window.history.length>0;
-                    };
-
-                    scope.back = function () {
-                        $rootScope.$broadcast('PROGRESS_BAR_START');
-                        modalService.openLoadingModal();
-                        $timeout(function(){
-                            $location.url('/');//window.history.back();
-                        },1);
-
-                    };
-
-
-
-
-                }
-            }
-        }
-    }
-}]);
-
 myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function ($rootScope, businessService, geolocationService, directiveService, $location) {
 
     return {
@@ -2276,12 +2785,258 @@ myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocati
         }
     }
 }]);
-myApp.service("$flash", ['$filter', 'modalService', function($filter,modalService) {
+myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', function (addressService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
+    return {
+        restrict: "E",
+        scope: {},
+        templateUrl: "/assets/javascripts/directive/web/headerBar/template.html",
+        replace: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    scope.currentLang = languageService.currentLang;
+
+
+                    //use the model
+                    scope.myself = accountService.getMyself();
+                    scope.accountService = accountService;
+
+
+                    scope.goToHome = function(){
+                        $(window).scrollTop(0);
+                        scope.navigateTo('/home');
+                    };
+
+                    scope.navigateTo = function (target) {
+                        $location.path(target);
+                    };
+
+
+                    //login open modal
+                    scope.login = function () {
+                        modalService.openLoginModal();
+                    };
+
+                    //registration open modal
+                    scope.registration = function () {
+                        modalService.openCustomerRegistrationModal();
+                    };
+
+                    //edit profile
+                    scope.editProfile = function () {
+                        modalService.openEditProfileModal();
+
+                    };
+
+                    //log out
+                    scope.logout = function () {
+                        if (facebookService.isConnected()) {
+                            facebookService.logout();
+                        }
+                        $rootScope.$broadcast('LOGOUT');
+                        accountService.logout(function () {
+                            $location.path('/');
+                        });
+                    };
+
+                    //
+                    // change lang
+                    //
+                    scope.$watch('lang', function () {
+                        if (!angular.isUndefined(scope.lang)) {
+                            languageService.changeLanguage(scope.lang);
+                        }
+                    });
+
+                    scope.languageService = languageService;
+
+
+                    //
+                    // POSITION
+                    //
+                    scope.currentPosition = null;
+                    scope.suspendWatching=false;
+                    scope.positionBasicData = [
+                        {key: 'currentPosition', translation: '--.position.current'},
+                        {key: 'createNewAddress', translation: '--.position.newAddress'}
+                    ];
+
+                    //the user has selected a new address
+                    $rootScope.$on("CHANGE_ADDRESS_SELECTED", function () {
+                        if (accountService.getMyself().selectedAddress == null) {
+                            if (geolocationService.position == null) {
+                                scope.currentPosition = 'default';
+                            }
+                            else {
+                                scope.currentPosition = 'currentPosition';
+                            }
+                            return;
+                        }
+                        scope.currentPosition = accountService.getMyself().selectedAddress.name;
+                    });
+
+                    $timeout(function () {
+                        completePositions();
+
+                        scope.$watch('currentPosition', function (n, o) {
+                            console.log(n+'/'+o+"=>"+scope.suspendWatching);
+                            if (n != null && o != n && scope.suspendWatching!=true) {
+                                scope.suspendWatching=true;
+                                if (scope.currentPosition == 'createNewAddress') {
+                                    scope.currentPosition = o;
+                                    if (accountService.getMyself() != null) {
+
+                                        //open modal to create new address
+                                        modalService.addressModal(true, null, false, function (data) {
+                                            $timeout(function () {
+                                                scope.currentPosition = data.name;
+                                            }, 1);
+                                        });
+                                    }
+                                    else {
+                                        modalService.openLoginModal(scope.createNewAddress, angular.copy(o), '--.loginModal.help.address');
+                                    }
+                                }
+                                else if (scope.currentPosition == 'currentPosition' && geolocationService.position == null) {
+                                    scope.currentPosition = o;
+                                    modalService.messageModal('--.message.modal.notLocalised.title', '--.message.modal.notLocalised.content');
+                                }
+                                else if (scope.currentPosition != scope.positionCurrenltyComputed) {
+
+                                    scope.positionCurrenltyComputed = scope.currentPosition;
+                                    addressService.changeAddress(scope.currentPosition, function (result) {
+
+                                        if (accountService.getMyself() != null) {
+                                            if (result.__type.indexOf('AddressDTO') == -1) {
+                                                accountService.getMyself().selectedAddress = null;
+                                            }
+                                            else {
+                                                accountService.getMyself().selectedAddress = result;
+                                            }
+                                        }
+                                        $timeout(function () {
+                                            $rootScope.$broadcast('POSITION_CHANGED');
+                                        }, 1);
+                                    });
+                                }
+                                $timeout(function () {
+                                    scope.suspendWatching = false;
+                                }, 1);
+                            }
+                        });
+
+                        $rootScope.$watch(function () {
+                            return accountService.model.myself;
+                        }, function watchCallback(newValue, oldValue) {
+                            completePositions();
+                        });
+
+                    }, 1);
+
+                    $rootScope.$on('POSITION_CHANGED',function(){
+                        console.log('je suis POSITION_CHANGED : '+scope.suspendWatching);
+                        completePositions();
+                    });
+
+                    var completePositions = function () {
+                        scope.positions = angular.copy(scope.positionBasicData);
+                        if(geolocationService.position == null){
+                            scope.positions.splice(0,0,{key: 'default', translation: '--.position.brussel'});
+                        }
+                        else{
+                            if(scope.currentPosition == 'default'){
+                                scope.currentPosition ='currentPosition';
+                            }
+                        }
+                        if (accountService.getMyself() != null) {
+                            for (var key in accountService.getMyself().addresses) {
+                                scope.positions.splice(scope.positions.length - 1, 0,
+                                    {
+                                        key: accountService.getMyself().addresses[key].name,
+                                        translation: accountService.getMyself().addresses[key].name
+                                    });
+                            }
+                        }
+                        scope.currentPosition = geolocationService.getLocationText();
+                    };
+
+                    $rootScope.$watch(function () {
+                        return accountService.model.myself;
+                    }, function watchCallback(n, o) {
+                        completePositions();
+                    }, true);
+                }
+            }
+        }
+    }
+}]);
+
+myApp.directive("footerBarCtrl", ['modalService', 'contactService', '$flash', '$filter', function (modalService,contactService,$flash,$filter) {
+    return {
+        restrict: "E",
+        scope: {},
+        templateUrl: "/assets/javascripts/directive/web/footerBar/template.html",
+        replace: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    scope.openContactForm = function (target) {
+
+                        var dto = {
+                            target: target
+                        };
+
+                        modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl',
+                            {dto: dto},
+                            function (close) {
+                                contactService.contact(dto, function () {
+                                    $flash.success($filter('translateText')('--.contactForm.send.success'));
+                                    close();
+                                });
+                            }
+                        );
+                    };
+                }
+            }
+        }
+    }
+}]);
+
+myApp.directive('toTopCtrl', ['$window', function ($window) {
+
+    return {
+        restrict: "E",
+        scope: {},
+        templateUrl: "/assets/javascripts/directive/component/toTop/template.html",
+        replace: true,
+        transclude: true,
+        compile: function () {
+            return {
+                post: function (scope) {
+
+                    //to top
+                    scope.toTop = function () {
+                        $(window).scrollTop(0);
+                    };
+
+                    scope.displayToTopButton = $(window).scrollTop() > 100;
+                    angular.element($window).bind("scroll", function () {
+                        scope.displayToTopButton = $(window).scrollTop() > 100;
+                        scope.$apply();
+                    });
+                }
+            }
+        }
+    }
+}]);
+myApp.service("$flash", ['$filter', function($filter) {
 
     Messenger.options = {
         extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right cr-messenger',
         theme: 'block'
-    };
+    }
 
     this.success = function(messages) {
         print(messages,'success');
@@ -2307,13 +3062,11 @@ myApp.service("$flash", ['$filter', 'modalService', function($filter,modalServic
             for (var key in messages.split("\n")) {
                 var message = messages.split("\n")[key];
 
-                modalService.alertModal(type,$filter('translateText')(message));
-
-                //Messenger().post({
-                //    message: message,
-                //    type: type,
-                //    showCloseButton: true
-                //});
+                Messenger().post({
+                    message: message,
+                    type: type,
+                    showCloseButton: true
+                });
             }
         };
         return;

@@ -47,6 +47,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
         return false;
     };
 
+    $scope.publicationListParam = {
+        businessId: $routeParams.businessId
+    };
+
     businessService.getBusiness($routeParams.businessId,
         function (data) {
 
@@ -147,6 +151,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
 
 
             $scope.refreshPublications = function () {
+                console.log('-- RELOAD FROM refreshPublications');
                 $scope.$broadcast('RELOAD_PUBLICATION');
                 $scope.interfaceToDisplay ='home';
             };
@@ -161,11 +166,6 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
             }
 
         });
-    $scope.publicationListParam = {
-        businessId: $routeParams.businessId
-        //scrollTo: $scope.publicationIdToGo,
-        //displayRemoveIcon: $scope.edit
-    };
 
 
     $scope.createPromotion = function(){

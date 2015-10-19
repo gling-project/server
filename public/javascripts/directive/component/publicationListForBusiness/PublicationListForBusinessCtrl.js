@@ -109,6 +109,10 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                         }
                     });
 
+                    //initialization
+                    console.log('-- SERACH FROM initialization');
+                    scope.search();
+
                     //remove
                     scope.removePublication = function (publication) {
                         modalService.messageModal('--.business.publication.remove.confirmationModal.title',
