@@ -186,6 +186,17 @@ var initializeCommonRoutes = function () {
                         }]
                     }
                 })
+                .when('/promotion', {
+                    templateUrl: '/assets/javascripts/view/mobile/promotion.html',
+                    controller: 'PromotionCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                })
                 .when('/profile', {
                     templateUrl: '/assets/javascripts/view/mobile/profile.html',
                     controller: 'ProfileCtrl',
@@ -1450,10 +1461,11 @@ myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accoun
     };
 
 }]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', '$flash', 'followService', '$filter', 'modalService', 'customerInterestService', function ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, customerInterestService) {
+myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'businessService', 'geolocationService', 'addressService', '$timeout', '$flash', 'followService', '$filter', 'modalService', 'accountService', function ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, accountService) {
 
 
     $scope.loading = true;
+    $scope.myBusiness = false;
 
     $scope.displayBack = function () {
         return window.history.length > 0;
@@ -1500,6 +1512,11 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
 
     businessService.getBusiness($routeParams.businessId,
         function (data) {
+
+            if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
+                $scope.myBusiness = true;
+                accountService.setMyBusiness(data);
+            }
 
             //stop loading icons
             $rootScope.$broadcast('PROGRESS_BAR_STOP');
@@ -1614,10 +1631,9 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
     };
 
 
-    //TEMP !!
-    customerInterestService.getAll(function (value) {
-        $scope.customerInterests = value;
-    });
+    $scope.createPromotion = function(){
+        $scope.navigateTo('/promotion');
+    }
 
 }]);
 myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', 'modalService', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService, modalService) {
@@ -1969,6 +1985,18 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
+myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', function ($rootScope, $scope, accountService) {
+
+    console.log("accountService.getMyBusiness()");
+    console.log(accountService.getMyBusiness());
+
+
+    $scope.publicationFormParam = {
+        dto: {},
+        business: accountService.getMyBusiness()
+    };
+
+}]);
 myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
 
     return {

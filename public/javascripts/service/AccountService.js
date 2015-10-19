@@ -3,7 +3,8 @@ myApp.service("accountService", function ($flash, $http,translationService) {
     var self = this;
 
     this.model = {
-        myself: null
+        myself: null,
+        myBusiness:null
     };
 
     this.testEmail = function (email, callbackSuccess, callbackError) {
@@ -285,5 +286,13 @@ myApp.service("accountService", function ($flash, $http,translationService) {
 
     this.setMyself = function (dto) {
         this.model.myself = dto;
+    };
+
+    this.getMyBusiness = function () {
+        return this.model.myBusiness;
+    };
+
+    this.setMyBusiness = function (dto) {
+        this.model.myBusiness = dto;
     };
 });

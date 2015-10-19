@@ -60,6 +60,17 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 })
+                .when('/promotion', {
+                    templateUrl: '/assets/javascripts/view/mobile/promotion.html',
+                    controller: 'PromotionCtrl',
+                    resolve: {
+                        a: function (accountService, $location,$rootScope,modalService) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                })
                 .when('/profile', {
                     templateUrl: '/assets/javascripts/view/mobile/profile.html',
                     controller: 'ProfileCtrl',

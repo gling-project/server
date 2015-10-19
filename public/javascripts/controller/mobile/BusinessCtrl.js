@@ -1,7 +1,8 @@
-myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, customerInterestService) {
+myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, accountService) {
 
 
     $scope.loading = true;
+    $scope.myBusiness = false;
 
     $scope.displayBack = function () {
         return window.history.length > 0;
@@ -48,6 +49,11 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
 
     businessService.getBusiness($routeParams.businessId,
         function (data) {
+
+            if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
+                $scope.myBusiness = true;
+                accountService.setMyBusiness(data);
+            }
 
             //stop loading icons
             $rootScope.$broadcast('PROGRESS_BAR_STOP');
@@ -162,9 +168,8 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
     };
 
 
-    //TEMP !!
-    customerInterestService.getAll(function (value) {
-        $scope.customerInterests = value;
-    });
+    $scope.createPromotion = function(){
+        $scope.navigateTo('/promotion');
+    }
 
 });

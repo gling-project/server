@@ -270,6 +270,7 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/MessageModal/MessageModal.js',
                         'public/javascripts/directive/mobile/galleryMobile/GalleryMobileCtrl.js',
 
+                        <!-- controller -->
                         'public/javascripts/controller/mobile/WelcomeCtrl.js',
                         'public/javascripts/controller/mobile/HomeCtrl.js',
                         'public/javascripts/controller/mobile/ForgotPasswordCtrl.js',
@@ -279,6 +280,7 @@ module.exports = function (grunt) {
                         'public/javascripts/controller/mobile/BusinessCtrl.js',
                         'public/javascripts/controller/mobile/SearchPageCtrl.js',
                         'public/javascripts/controller/mobile/FollowedBusinessPageCtrl.js',
+                        'public/javascripts/controller/mobile/PromotionCtrl.js',
 
                         <!-- component -->
                         'public/javascripts/directive/component/businessListMobile/BusinessListMobileCtrl.js',
