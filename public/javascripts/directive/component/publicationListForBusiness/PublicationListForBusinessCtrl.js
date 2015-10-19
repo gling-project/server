@@ -18,6 +18,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                     scope.allLoaded = false;
                     scope.loadSemaphore = false;
                     scope.publications = [];
+                    scope.loading=false;
 
                     scope.success = function (data) {
 
@@ -50,6 +51,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                                 scope.$apply();
                             }, 1);
                         }
+                        scope.loading=false;
                     };
 
 
@@ -70,8 +72,16 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                     scope.getInfo().refresh = function (type) {
                         scope.currentPage = 0;
                         scope.publications = [];
-                        scope.type = type;
-                        //will be reloaded by type watching
+                        if(scope.type!=type) {
+                            scope.type = type;
+                            //will be reloaded by type watching
+                        }
+                        else{
+                            scope.allLoaded = false;
+                            console.log("-- from refresh");
+                            scope.search();
+                        }
+
                     };
 
                     scope.search = function () {
@@ -79,6 +89,7 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                         if (scope.allLoaded == true) {
                             return;
                         }
+                        scope.loading=true;
                         if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
                             searchService.byBusinessArchived(scope.currentPage, scope.getInfo().business.id, scope.success);
                         }
@@ -142,6 +153,17 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                     scope.openGallery = function (image, publication) {
                         modalService.galleryModal(image, publication.pictures);
                     };
+
+
+                    scope.getIllustrationClass = function (picture) {
+
+                        if (picture!= undefined && picture.height > picture.width) {
+                            return 'publication-illustration-high';
+                        }
+                        else {
+                            return 'publication-illustration';
+                        }
+                    }
                 }
             }
         }

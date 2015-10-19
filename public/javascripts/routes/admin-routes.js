@@ -46,9 +46,19 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 })
+                .when('/admin/contact', {
+                    templateUrl: '/assets/javascripts/view/admin/adminContact.html',
+                    controller: 'AdminContactCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                })
                 .when('/admin/', {
-                    templateUrl: '/assets/javascripts/view/admin/welcome.html',
-                    controller: 'WelcomeCtrl'
+                    redirectTo: '/admin/stat'
                 })
                 .otherwise({
                     redirectTo: '/admin/'

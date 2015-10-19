@@ -32,4 +32,6 @@ public interface BusinessService extends CrudService<Business>{
     List<Business> findByFollowed(Account currentUser);
 
     Business findByAccount(Account account);
+
+    Long countAll();
 }

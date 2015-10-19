@@ -18,6 +18,7 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                     scope.allLoaded = false;
                     scope.loadSemaphore = false;
                     scope.publications = [];
+                    scope.loading=false;
 
 
                     //scrolling

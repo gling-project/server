@@ -195,7 +195,8 @@
             </button>
 
             <!-- illustration -->
-            <div class="business-page-illustration-container editable-element">
+            <div class="business-page-illustration-container editable-element"
+                    ng-click="refreshPublications()">
                 <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
                 <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm"
                         id="business-btn-illustration-edit"
@@ -205,7 +206,8 @@
             </div>
 
             <!-- name -->
-            <div class="business-page-name editable-element">
+            <div class="business-page-name editable-element"
+                 ng-click="refreshPublications()">
                 <span>
                     {{business.name}}
                 </span>

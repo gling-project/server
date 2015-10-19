@@ -13,8 +13,10 @@
     <div class="btn-group pull-right">
         <div class="btn btn-navbar" ng-click="followed()">
             <div class="nav-button business-page-follow">
-                <span class="selected" ng-show="business.following">{{'--.followWidget.stopFollow' | translateText}}<i class="gling-icon gling-icon-bell"></i></span>
-                <span ng-hide="business.following">{{'--.followWidget.follow' | translateText}}<i class="gling-icon gling-icon-bell2"></i></span>
+                <span class="selected" ng-show="business.following">{{'--.followWidget.stopFollow' | translateText}}<i
+                        class="gling-icon gling-icon-bell"></i></span>
+                <span ng-hide="business.following">{{'--.followWidget.follow' | translateText}}<i
+                        class="gling-icon gling-icon-bell2"></i></span>
             </div>
         </div>
     </div>
@@ -46,7 +48,7 @@
                         </div>
 
                         <!-- illustration -->
-                        <table>
+                        <table ng-click="refreshPublications()">
                             <tr>
                                 <td>
                                     <div class="business-page-illustration-container">
@@ -84,11 +86,11 @@
                     <div style="overflow: auto">
                         <div class="business-tab-set">
                             <div class="business-tab"
-                                    style="display:inline-block"
-                                    ng-class="{'selected':interfaceToDisplay === action.name}"
-                                    ng-repeat="action in actions"
-                                    ng-show="action.display()"
-                                    ng-click="action.action()">
+                                 style="display:inline-block"
+                                 ng-class="{'selected':interfaceToDisplay === action.name}"
+                                 ng-repeat="action in actions"
+                                 ng-show="action.display()"
+                                 ng-click="action.action()">
                                 <i class="gling-icon {{action.icon}}"></i>
                                 {{action.translatableName | translateText}}
                             </div>
@@ -106,6 +108,25 @@
 
                     <!-- info-->
                     <div class="section" ng-show="interfaceToDisplay=='info'">
+
+                        <!-- description -->
+                        <table class="business-info-line"
+                               ng-show="business.description !=null && business.description.length > 0">
+                            <tr>
+                                <td colspan="2">
+                                    <span ng-bind-html="business.description | text : descriptionLimit"></span>
+
+                                    <span ng-show="business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase"
+                                          ng-click="descriptionLimit = 10000"
+                                          class="link">{{'--.textReuction.seeMore' | translateText}}</span>
+                                    <span ng-show="business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase"
+                                          ng-click="descriptionLimit = descriptionLimitBase"
+                                          class="link">{{'--.textReuction.seeLess' | translateText}}</span>
+
+                                </td>
+                            </tr>
+                        </table>
+
 
                         <!-- address + google map -->
                         <table class="business-info-line">
@@ -176,7 +197,8 @@
                         <table class="business-info-line" ng-show="displaySocialNetwork() === true">
                             <tr>
                                 <td>
-                                    <div ng-show="!!business.socialNetwork.facebookLink" class="business-social-network-box">
+                                    <div ng-show="!!business.socialNetwork.facebookLink"
+                                         class="business-social-network-box">
                                         <a id="welcome-link-facebook"
                                            href="{{business.socialNetwork.facebookLink}}"
                                            title="Facebook"
@@ -185,7 +207,8 @@
                                         </a>
                                     </div>
 
-                                    <div ng-show="!!business.socialNetwork.twitterLink" class="business-social-network-box">
+                                    <div ng-show="!!business.socialNetwork.twitterLink"
+                                         class="business-social-network-box">
                                         <a id="welcome-link-twitter"
                                            href="{{business.socialNetwork.twitterLink}}"
                                            title="Twitter"
@@ -194,7 +217,8 @@
                                         </a>
                                     </div>
 
-                                    <div ng-show="!!business.socialNetwork.instagramLink" class="business-social-network-box">
+                                    <div ng-show="!!business.socialNetwork.instagramLink"
+                                         class="business-social-network-box">
                                         <a id="welcome-link-instagram"
                                            href="{{business.socialNetwork.instagramLink}}"
                                            title="Instagram"
@@ -203,7 +227,8 @@
                                         </a>
                                     </div>
 
-                                    <div ng-show="!!business.socialNetwork.deliveryLink" class="business-social-network-box">
+                                    <div ng-show="!!business.socialNetwork.deliveryLink"
+                                         class="business-social-network-box">
                                         <a id="welcome-link-delivery"
                                            href="{{business.socialNetwork.deliveryLink}}"
                                            title="{{'--.business.socialNetwork.delivery' | translateText}}"
@@ -212,7 +237,8 @@
                                         </a>
                                     </div>
 
-                                    <div ng-show="!!business.socialNetwork.reservationLink" class="business-social-network-box">
+                                    <div ng-show="!!business.socialNetwork.reservationLink"
+                                         class="business-social-network-box">
                                         <a href="{{business.socialNetwork.reservationLink}}"
                                            title="{{'--.business.socialNetwork.reservation' | translateText}}"
                                            target="_blank">
@@ -220,7 +246,8 @@
                                         </a>
                                     </div>
 
-                                    <div ng-show="!!business.socialNetwork.opinionLink" class="business-social-network-box">
+                                    <div ng-show="!!business.socialNetwork.opinionLink"
+                                         class="business-social-network-box">
                                         <a href="{{business.socialNetwork.opinionLink}}"
                                            title="{{'--.business.socialNetwork.opinion' | translateText}}"
                                            target="_blank">
@@ -228,7 +255,8 @@
                                         </a>
                                     </div>
 
-                                    <div ng-show="!!business.socialNetwork.ecommerceLink" class="business-social-network-box">
+                                    <div ng-show="!!business.socialNetwork.ecommerceLink"
+                                         class="business-social-network-box">
                                         <a href="{{business.socialNetwork.ecommerceLink}}"
                                            title="{{'--.business.socialNetwork.ecommerce' | translateText}}"
                                            target="_blank">

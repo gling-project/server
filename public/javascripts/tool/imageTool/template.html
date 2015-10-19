@@ -8,7 +8,7 @@
             <div class="overlay-inner">
 
 
-                <div class="resize-container" ng-show="image_target!=null">
+                <div class="resize-container" ng-show="displayPicture === true">
                     <span class="resize-handle resize-handle-nw"></span>
                     <span class="resize-handle resize-handle-ne"></span>
                     <img class="resize-image" alt="image for resizing"/>
@@ -18,17 +18,23 @@
 
             </div>
         </div>
-        <div>
+        <div style="width: 45px;">
 
             <div style="font-family: 'Glyphicons Halflings';"
-                 class="menu-btn download-btn btn-crop glyphicon-upload">
-                <input type='file' id="imgInp" />
+                 class="menu-btn download-btn gling-button-dark glyphicon-upload">
+                <input type='file' id="imgInp"/>
             </div>
 
-            <button class="btn-crop js-crop menu-btn" ng-click="zoom(true)">+</button>
-            <button class="btn-crop js-crop menu-btn" ng-click="zoom(false)">-</button>
+            <button ng-disabled="displayPicture !== true" class="gling-button-dark js-crop menu-btn"
+                    ng-click="zoom(true)">+
+            </button>
+            <button ng-disabled="displayPicture !== true" class="gling-button-dark js-crop menu-btn"
+                    ng-click="zoom(false)">-
+            </button>
+
+            <button class="gling-button-dark js-crop glyphicon glyphicon-ok" ng-click="crop()">
+            </button>
         </div>
 
-        <button class="btn-crop js-crop" ng-click="crop()">Crop</button>
     </div>
 </div>

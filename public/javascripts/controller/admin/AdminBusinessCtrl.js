@@ -1,4 +1,11 @@
-myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTableParams, $filter, $window,modalService) {
+myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTableParams, $filter, $window, modalService) {
+
+    $scope.displayMap = false;
+
+    $scope.setDisplayMap = function () {
+        $scope.displayMap = !$scope.displayMap;
+    };
+
 
     superAdminService.getAllBusinesses(function (data) {
         $scope.businesses = data.list;

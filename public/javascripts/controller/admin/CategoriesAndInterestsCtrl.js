@@ -41,6 +41,13 @@ myApp.controller('CategoriesAndInterestsCtrl', function ($scope, superAdminServi
             var newValue = event.currentTarget.value;
             superAdminService.saveNewCategoryInterestRelation(category.name, interest.name, newValue);
 
+        };
+
+
+        $scope.disabled = true;
+
+        $scope.setDisabled = function () {
+            $scope.disabled = !$scope.disabled;
         }
 
     });

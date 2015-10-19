@@ -18,7 +18,7 @@ myApp.filter("translateText", function ($sce, translationService) {
             text = translationService.get(input);
 
             if (params != null) {
-                if (typeof params === 'array') {
+                if (Object.prototype.toString.call( params ) === '[object Array]') {
                     for (var key in params) {
                         text = text.replace('{' + key + '}', params[key]);
                     }

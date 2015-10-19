@@ -1,7 +1,9 @@
+<super-admin-menu-ctrl></super-admin-menu-ctrl>
+
 <div class="category_and_interest">
 
     Recherche<input ng-model="search"/>
-
+<button ng-click="setDisabled()">Editer</button>
 
     <table>
         <tr>
@@ -11,7 +13,7 @@
         <tr ng-repeat="category in getCategoryList()">
             <td>{{category.translationName | translateText}}</td>
             <td ng-repeat="interest in interests">
-                <input style="width:40px" value="{{getPriority(category,interest)}}" ng-blur="save($event,category,interest)"/>
+                <input ng-disabled="disabled" style="width:40px" value="{{getPriority(category,interest)}}" ng-blur="save($event,category,interest)"/>
             </td>
         </tr>
 

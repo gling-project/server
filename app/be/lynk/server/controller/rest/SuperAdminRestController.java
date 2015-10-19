@@ -5,15 +5,18 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.admin.AdminStatDTO;
+import be.lynk.server.dto.admin.EmailDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
 import be.lynk.server.importer.DemoImporter;
+import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.mongoService.MongoSearchService;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.AccountTypeEnum;
+import be.lynk.server.util.ContactTargetEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,8 @@ public class SuperAdminRestController extends AbstractRestController {
     private PublicationService          publicationService;
     @Autowired
     private MongoSearchService          mongoSearchService;
+    @Autowired
+    private EmailService                emailService;
 
 
     @Transactional
@@ -177,6 +182,9 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nouveaux consommateurs 7 jours", "+ " + accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(7)));
 
+        //commerce
+        adminStatDTO.getStats().put("Nombre de commerces", businessService.countAll()+ "");
+
         //publication
         adminStatDTO.getStats().put("Nombre total de publications", publicationService.countAll() + "");
 
@@ -257,6 +265,28 @@ public class SuperAdminRestController extends AbstractRestController {
             CategoryInterestLink categoryInterestLink = new CategoryInterestLink(businessCategory, customerInterest, Integer.parseInt(priorityS));
             categoryInterestLinkService.saveOrUpdate(categoryInterestLink);
         }
+
+        return ok();
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result sendEmailToBusinesses() {
+
+        EmailDTO emailDTO = initialization(EmailDTO.class);
+
+        List<EmailMessage.Recipient> emails = new ArrayList<>();
+
+        emails.add(new EmailMessage.Recipient(ContactTargetEnum.NO_REPLY.getEmail(), ContactTargetEnum.NO_REPLY.name()));
+
+        for (Business business : businessService.findAll()) {
+            emails.add(new EmailMessage.Recipient(business.getEmail(), business.getName(), EmailMessage.RecipientTypeEnum.BCC));
+        }
+
+        EmailMessage emailMessage = new EmailMessage(ContactTargetEnum.HELP.getEmail(), emails, emailDTO.getSubject(), emailDTO.getMessage());
+
+        //TODO temp change lang
+        emailService.sendEmail(emailMessage, lang());
 
         return ok();
     }

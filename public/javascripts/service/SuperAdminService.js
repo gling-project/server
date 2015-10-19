@@ -21,7 +21,7 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
     };
 
-    this.getAllBusinesses = function(callbackSuccess, callbackError) {
+    this.getAllBusinesses = function (callbackSuccess, callbackError) {
 
         $http({
             'method': "GET",
@@ -41,7 +41,7 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
     };
 
-    this.getCategoriesAndInterests = function(callbackSuccess, callbackError) {
+    this.getCategoriesAndInterests = function (callbackSuccess, callbackError) {
 
         $http({
             'method': "GET",
@@ -61,11 +61,11 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
     };
 
-    this.saveNewCategoryInterestRelation = function(categoryName, interestName, newValue,callbackSuccess, callbackError) {
+    this.saveNewCategoryInterestRelation = function (categoryName, interestName, newValue, callbackSuccess, callbackError) {
 
         $http({
             'method': "PUT",
-            'url': "/rest/superadmin/category_interest_link/"+categoryName+"/"+interestName+"/"+newValue,
+            'url': "/rest/superadmin/category_interest_link/" + categoryName + "/" + interestName + "/" + newValue,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -82,7 +82,7 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
     };
 
 
-    this.getStat = function(callbackSuccess, callbackError) {
+    this.getStat = function (callbackSuccess, callbackError) {
 
         $http({
             'method': "GET",
@@ -91,6 +91,31 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data.stats);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
+
+    this.getEmailToBusinesses = function (dto, callbackSuccess, callbackError) {
+
+        console.log("dto");
+        console.log(dto);
+
+        $http({
+            'method': "POST",
+            'url': "/rest/superadmin/emailToBusinesses",
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
             }
         })
             .error(function (data, status) {

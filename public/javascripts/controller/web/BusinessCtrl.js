@@ -330,6 +330,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                 }
             });
 
+            $scope.refreshPublications = function(){
+                $scope.$broadcast('RELOAD_PUBLICATION');
+            };
+
             $scope.$on('RELOAD_PUBLICATION', function () {
                 $scope.publicationListParam.refresh($scope.publicationListParam.type);
             });

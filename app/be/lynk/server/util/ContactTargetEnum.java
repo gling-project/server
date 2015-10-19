@@ -5,6 +5,7 @@ package be.lynk.server.util;
  */
 public enum ContactTargetEnum {
 
+    NO_REPLY("no_reply@gling.be","Gling (no reply)"),
     CONTACT("contact@gling.be","Contact"),
     SAV("sav@gling.be","SAV"),
     HELP("help@gling.be","Help");

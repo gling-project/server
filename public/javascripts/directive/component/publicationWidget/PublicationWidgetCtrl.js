@@ -13,7 +13,7 @@ myApp.directive('publicationWidgetCtrl', function ($rootScope, businessService, 
                 post: function (scope) {
 
                     scope.descriptionLimit = 200;
-                    scope.descriptionLimitBase=scope.descriptionLimit;
+                    scope.descriptionLimitBase = scope.descriptionLimit;
 
                     directiveService.autoScopeImpl(scope);
 
@@ -43,6 +43,16 @@ myApp.directive('publicationWidgetCtrl', function ($rootScope, businessService, 
                     scope.openGallery = function (image, publication) {
                         modalService.galleryModal(image, publication.pictures);
                     };
+
+                    scope.getIllustrationClass = function (picture) {
+
+                        if (picture!= undefined && picture.height > picture.width) {
+                            return 'publication-illustration-high';
+                        }
+                        else {
+                            return 'publication-illustration';
+                        }
+                    }
                 }
             }
         }

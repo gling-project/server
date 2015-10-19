@@ -11,6 +11,9 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
         window.history.back();
     };
 
+    $scope.descriptionLimitBase = 200;
+    $scope.descriptionLimit = $scope.descriptionLimitBase;
+
     //address
     $scope.googleMapParams = {};
 
@@ -135,6 +138,12 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
             $scope.$on('POSITION_CHANGED', function () {
                 $scope.$broadcast('RELOAD_PUBLICATION');
             });
+
+
+            $scope.refreshPublications = function () {
+                $scope.$broadcast('RELOAD_PUBLICATION');
+                $scope.interfaceToDisplay ='home';
+            };
 
             $scope.$on('RELOAD_PUBLICATION', function () {
                 $scope.publicationListParam.refresh();

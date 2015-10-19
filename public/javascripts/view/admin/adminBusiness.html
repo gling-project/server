@@ -1,4 +1,6 @@
-<div>Business (Total : {{businesses.length}})</div>
+<super-admin-menu-ctrl></super-admin-menu-ctrl>
+
+<h1>Business (Total : {{businesses.length}})</h1>
 
 
 <table ng-table="tableParams" class="table">
@@ -9,13 +11,13 @@
         <td data-title="'--.generic.status' | translateText" sortable="'businessStatus'">
             {{business.businessStatus}}
         </td>
-        <td data-title="'Création'"  sortable="'creationDate'">
+        <td data-title="'Création'" sortable="'creationDate'">
             {{business.creationDate | date}}
         </td>
         <td data-title="'Followers'" sortable="'totalFollowers'">
             {{business.totalFollowers}}
         </td>
-        <td data-title="'--.generic.action' | translateText"  sortable="'businessStatus'">
+        <td data-title="'--.generic.action' | translateText" sortable="'businessStatus'">
             <button
                     ng-click="toBusiness(business.id)">
                 {{'--.admin.business.toBusiness' | translateText}}
@@ -30,6 +32,9 @@
     </tr>
 </table>
 
+<Button ng-click="setDisplayMap()">Afficher la carte</Button>
+
+<div ng-show="displayMap">
     <ui-gmap-google-map
             center='map.center'
             dragging='true'
@@ -44,9 +49,5 @@
                 <div>{{business.name}}</div>
             </ui-gmap-window>
         </ui-gmap-marker>
-
-
-
-
-
     </ui-gmap-google-map>
+</div>

@@ -597,3 +597,5 @@ day_abrv_sunday=Di
 --.error.customerToBusiness.alreadyBusiness=Vous avez déjà un commerce
 --.textReuction.seeMore=Afficher Tout
 --.textReuction.seeLess=Masquer
+--.imageTool.minimalSize=La taille minimum de l'image doit être de {0} de large et {1} de haut.
+--.generic.success=L'opération est un succés

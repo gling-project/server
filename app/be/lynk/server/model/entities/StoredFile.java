@@ -42,6 +42,12 @@ public class StoredFile extends AbstractEntity {
     @Column(columnDefinition = "int default 0")
     private Integer fileOrder = 0;
 
+    @Basic
+    private Integer height;
+
+    @Basic
+    private Integer width;
+
 
     public StoredFile() {
     }
@@ -52,6 +58,22 @@ public class StoredFile extends AbstractEntity {
         this.size = size;
         this.account = account;
         this.isImage = isImage;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
     }
 
     public String getStoredNameOriginalSize() {

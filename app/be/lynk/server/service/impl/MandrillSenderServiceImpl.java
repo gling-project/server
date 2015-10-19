@@ -44,9 +44,11 @@ public class MandrillSenderServiceImpl implements EmailSenderService {
         }
         //recipients
         ArrayList<MandrillMessage.Recipient> recipients = new ArrayList<>();
-        MandrillMessage.Recipient recipient = new MandrillMessage.Recipient();
         message.setTo(recipients);
         for (EmailMessage.Recipient s : emailMessage.getRecipients()) {
+
+            MandrillMessage.Recipient recipient = new MandrillMessage.Recipient();
+
             recipient.setEmail(s.getEmail());
             recipient.setName(s.getName());
             switch (s.getType()) {

@@ -7,6 +7,7 @@ import be.lynk.server.model.entities.Address;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
 import be.lynk.server.service.BusinessService;
+import be.lynk.server.util.AccountTypeEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
@@ -196,6 +197,18 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         return JPA.em().createQuery(request, Business.class)
                   .setParameter("account", account)
                   .getSingleResult();
+
+    }
+
+    @Override
+    public Long countAll() {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Business> from = cq.from(Business.class);
+        cq.select(cb.count(from));
+
+        return JPA.em().createQuery(cq).getSingleResult();
 
     }
 }

@@ -61,8 +61,8 @@ public class PromotionRestController extends AbstractRestController {
         }
 
         //control number by day
-        if(publicationService.countPublicationForToday(promotion.getStartDate(),securityController.getBusiness())>Constant.PUBLICATION_MAX_BY_DAY){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_DAY+"");
+        if(publicationService.countPublicationForWeek(promotion.getStartDate(),securityController.getBusiness())>=Constant.PUBLICATION_MAX_BY_WEEK){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_WEEK +"");
         }
 
 

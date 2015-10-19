@@ -1,4 +1,4 @@
-myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocationService, directiveService, $timeout, fileService) {
+myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocationService, directiveService, $timeout, fileService,$filter,$flash) {
 
         return {
             restrict: "E",
@@ -16,7 +16,8 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
 
                         scope.image_target = null;
 
-                        scope.container;
+
+                        // Assign the container to a variable
                         scope.orig_src = new Image();
                         scope.constrain = true;
                         scope.min_width = 60; // Change as required
@@ -27,6 +28,7 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
                         scope.resize_canvas = document.createElement('canvas');
                         scope.canvasWidth = 1000;
                         scope.canvasHeight = 500;
+                        scope.displayPicture=false;
 
 
                         scope.saveEventState = function (e) {
@@ -227,6 +229,8 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
 
                         scope.initialize = function (img) {
 
+                            scope.displayPicture=false;
+
 
                             $('.resize-image').attr('src', img);
 
@@ -234,14 +238,9 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
                             scope.image_target = $('.resize-image').get(0);
 
                             // Wrap the image with the container and add resize handles
-                            scope.orig_src.src = img;//scope.image_target.src;
-                            //$('.resize-image').wrap('<div class="resize-container"></div>')
-                            //    .before('<span class="resize-handle resize-handle-nw"></span>')
-                            //    .before('<span class="resize-handle resize-handle-ne"></span>')
-                            //    .after('<span class="resize-handle resize-handle-se"></span>')
-                            //    .after('<span class="resize-handle resize-handle-sw"></span>');
+                            scope.orig_src.src = img;
 
-                            // Assign the container to a variable
+
                             scope.container = $(scope.image_target).parent('.resize-container');
                             // Add events
                             scope.container.on('mousedown touchstart', '.resize-handle', scope.startResize);
@@ -250,32 +249,45 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
 
                             $timeout(function () {
 
-                                //compute proportion
-                                var proportionWidth = scope.image_target.width / scope.canvasWidth;
-                                var proportionHeight = scope.image_target.height / scope.canvasHeight;
+                                var width = scope.image_target.width,
+                                    height = scope.image_target.height;
 
+                                console.log(width+"/"+height);
 
-                                if (proportionWidth < proportionHeight) {
-                                    scope.resize(scope.canvasWidth, scope.image_target.height / proportionWidth);
+                                if (width < scope.canvasWidth || height < scope.canvasHeight) {
+                                    $flash.error($filter('translateText')('--.imageTool.minimalSize',[scope.canvasWidth ,scope.canvasHeight]));
                                 }
                                 else {
-                                    scope.resize(scope.image_target.width / proportionHeight, scope.canvasHeight);
+                                    scope.displayPicture=true;
+
+                                    //compute proportion
+                                    var proportionWidth = scope.image_target.width / scope.canvasWidth;
+                                    var proportionHeight = scope.image_target.height / scope.canvasHeight;
+
+
+                                    if (proportionWidth < proportionHeight) {
+                                        scope.resize(scope.canvasWidth, scope.image_target.height / proportionWidth);
+                                    }
+                                    else {
+                                        scope.resize(scope.image_target.width / proportionHeight, scope.canvasHeight);
+                                    }
+
+                                    $timeout(function () {
+
+                                        var left = ((scope.image_target.width - scope.canvasWidth) / 2 - 1),
+                                            top = ((scope.image_target.height - scope.canvasHeight) / 2 - 1);
+                                        if (left < 1) {
+                                            left = 1;
+                                        }
+                                        if (top < 1) {
+                                            top = 1;
+                                        }
+
+                                        $('.resize-container').css('margin-left', '-' + left + 'px');
+                                        $('.resize-container').css('margin-top', '-' + top + 'px');
+
+                                    }, 1);
                                 }
-
-                                $timeout(function () {
-
-                                    var left = ((scope.image_target.width - scope.canvasWidth) / 2 - 1),
-                                        top = ((scope.image_target.height - scope.canvasHeight) / 2 - 1);
-                                    if (left < 1) {
-                                        left = 1;
-                                    }
-                                    if (top < 1) {
-                                        top = 1;
-                                    }
-
-                                    $('.resize-container').css('margin-left', '-' + left + 'px');
-                                    $('.resize-container').css('margin-top', '-' + top + 'px');
-                                }, 1);
                             }, 1);
                         };
 

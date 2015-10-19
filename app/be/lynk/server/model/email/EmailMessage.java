@@ -6,7 +6,6 @@ import java.util.List;
 public class EmailMessage {
 
     private List<Recipient> recipients;
-    private final List<String> ccAddresses = new ArrayList<>();
     private String subject;
     private String content;
     private String replyTo;
@@ -34,13 +33,6 @@ public class EmailMessage {
         this.content = content;
     }
 
-    public void addCcAddress(String email) {
-        this.ccAddresses.add(email);
-    }
-
-    public List<String> getCcAddresses() {
-        return ccAddresses;
-    }
 
     public void addRecipient(List<Recipient> admins) {
         recipients.addAll(admins);

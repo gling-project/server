@@ -16,9 +16,12 @@ import play.db.jpa.JPA;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -317,5 +320,26 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         return JPA.em().createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public int countPublicationForWeek(LocalDateTime day, Business business) {
+
+        TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
+        LocalDateTime startday = day.with(fieldISO, 1).withHour(0).withMinute(0).withSecond(1);
+        LocalDateTime endday = day.with(fieldISO, 7).withHour(23).withMinute(59).withSecond(59);
+
+
+
+        String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business";
+
+        Long c = JPA.em().createQuery(r, Long.class)
+                    .setParameter("start", startday)
+                    .setParameter("end", endday)
+                    .setParameter("business", business)
+                    .getSingleResult();
+
+        return c.intValue();
+
     }
 }

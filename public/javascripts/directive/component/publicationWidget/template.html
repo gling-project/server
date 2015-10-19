@@ -106,7 +106,7 @@
              ng-click="openGallery(getInfo().publication.pictures[1],getInfo().publication)">
 
             <img ng-src="{{getInfo().publication.pictures[1] | image}}"
-                 class="publication-illustration">
+                 class="{{getIllustrationClass(getInfo().publication.pictures[1])}}">
 
             <div
                     class="publication-illustration-plus-icon">
@@ -121,7 +121,7 @@
              ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)">
 
             <img ng-src="{{getInfo().publication.pictures[0] | image}}"
-                 class="publication-illustration">
+                 class="{{getIllustrationClass(getInfo().publication.pictures[0])}}">
 
             <div ng-show="getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) !== true"
                  class="publication-illustration-plus-icon">

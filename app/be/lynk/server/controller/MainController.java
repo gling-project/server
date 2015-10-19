@@ -88,7 +88,7 @@ public class MainController extends AbstractController {
 
     public Result generateDefaultPage(String url, boolean forceMobile) {
 
-        if(url!=null && url.equals("/app")){
+        if(url!=null && url.equals("app")){
             return redirect("market://details?id=" + APP_PACKAGE_NAME);
         }
 

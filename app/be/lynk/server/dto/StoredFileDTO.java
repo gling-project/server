@@ -3,6 +3,7 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 
 
+import javax.persistence.Basic;
 import java.util.Date;
 
 /**
@@ -23,6 +24,29 @@ public class StoredFileDTO extends DTO implements Comparable<StoredFileDTO> {
     private String comment;
 
     private Integer fileOrder = 0;
+
+    private Integer height;
+
+    private Integer width;
+
+    public StoredFileDTO() {
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
 
     public Integer getFileOrder() {
         return fileOrder;

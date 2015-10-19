@@ -160,6 +160,12 @@ public class FileServiceImpl implements FileService {
                                 , true);
                     }
                 }
+
+                //save new size
+                storedFile.setWidth(originalImage.getWidth());
+                storedFile.setHeight(originalImage.getHeight());
+
+
                 ImageIO.write(originalImage, type, file);
             } catch (IOException e) {
                 e.printStackTrace();

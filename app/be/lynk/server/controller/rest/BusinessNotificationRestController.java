@@ -70,8 +70,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         //control number by day
-        if (publicationService.countPublicationForToday(businessNotification.getStartDate(), securityController.getBusiness()) >= Constant.PUBLICATION_MAX_BY_DAY) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_DAY);
+        if(publicationService.countPublicationForWeek(businessNotification.getStartDate(), securityController.getBusiness())>=Constant.PUBLICATION_MAX_BY_WEEK){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_WEEK);
         }
 
         //TODO control file
