@@ -20,6 +20,9 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                     scope.publications = [];
                     scope.loading=false;
 
+                    scope.isArchived = function(publication){
+                        return publication.endDate < new Date().getTime();
+                    };
 
                     //scrolling
                     $('.scrollable-content-body').on('scroll', function () {

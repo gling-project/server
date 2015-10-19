@@ -5,6 +5,7 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.admin.AdminStatDTO;
+import be.lynk.server.dto.admin.BusinessForAdminDTO;
 import be.lynk.server.dto.admin.EmailDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
@@ -289,6 +290,30 @@ public class SuperAdminRestController extends AbstractRestController {
         emailService.sendEmail(emailMessage, lang());
 
         return ok();
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result getAll() {
+        List<Business> all = businessService.findAll();
+
+        List<BusinessDTO> map = new ArrayList<>();
+
+        for (Business business : all) {
+
+            BusinessForAdminDTO businessDTO = dozerService.map(business, BusinessForAdminDTO.class);
+            map.add(businessDTO);
+
+            businessDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+
+            //add publication nb
+            businessDTO.setNbPublication(publicationService.countByBusiness(business));
+            businessDTO.setNbPublicationActive(publicationService.countActiveByBusiness(business));
+
+        }
+
+
+        return ok(new ListDTO<>(map));
     }
 
 

@@ -285,6 +285,38 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
     }
 
+
+    @Override
+    public Long countByBusiness(Business business) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        cq.select(cb.count(from));
+
+        cq.where(cb.equal(from.get("business"), business));
+
+        return JPA.em().createQuery(cq).getSingleResult();
+
+    }
+
+    @Override
+    public Long countActiveByBusiness(Business business) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        cq.select(cb.count(from));
+
+        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("business"), business));
+
+        return JPA.em().createQuery(cq).getSingleResult();
+
+
+    }
+
     @Override
     public Long countAll() {
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();

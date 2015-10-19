@@ -61,25 +61,6 @@ public class BusinessRestController extends AbstractController {
     }
 
 
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result getAll() {
-        List<Business> all = businessService.findAll();
-
-        List<BusinessDTO> map = new ArrayList<>();
-
-        for (Business business : all) {
-
-            BusinessDTO businessDTO = dozerService.map(business, BusinessDTO.class);
-            map.add(businessDTO);
-
-            businessDTO.setTotalFollowers(followLinkService.countByBusiness(business));
-        }
-
-
-        return ok(new ListDTO<>(map));
-    }
-
     /**
      * return only public data for all users / non-users
      *
