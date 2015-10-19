@@ -58,6 +58,7 @@
             <div class="business-management-progress-el">
                 <input type="checkbox"
                        ng-checked="business.description!=null"/>
+
             <span ng-class="{'completed':business.description!=null}"
                   ng-click="editbusiness()"
                   class="link">
@@ -156,7 +157,8 @@
                 </p>
             </div>
             <h4>{{'--.business.page.management.help.title' | translateText}}</h4>
-            <a class="btn gling-button-dark" class="btn gling-button-dark" href="/assets/document/business_help.pdf" target="_blank">
+            <a class="btn gling-button-dark" class="btn gling-button-dark" href="/assets/document/business_help.pdf"
+               target="_blank">
                 {{'--.business.manager.progress.help' | translateText}}
             </a>
             <button class="btn gling-button-dark" ng-click="openContact()">
@@ -196,7 +198,7 @@
 
             <!-- illustration -->
             <div class="business-page-illustration-container editable-element"
-                    ng-click="refreshPublications()">
+                 ng-click="refreshPublications()">
                 <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
                 <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm"
                         id="business-btn-illustration-edit"
@@ -239,8 +241,13 @@
                     </div>
 
                     <!-- description -->
-                    <span ng-bind-html="business.description | text">
-                    </span>
+                    <span ng-bind-html="business.description | text : descriptionLimit"></span>
+                    <span ng-show="business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase"
+                          ng-click="descriptionLimit = 10000"
+                          class="link">{{'--.textReuction.seeMore' | translateText}}</span>
+                    <span ng-show="business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase"
+                          ng-click="descriptionLimit = descriptionLimitBase"
+                          class="link">{{'--.textReuction.seeLess' | translateText}}</span>
 
                     <br/>
                     <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"

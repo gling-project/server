@@ -18,6 +18,8 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     $scope.edit = false;
     $scope.myBusiness = false;
     $scope.businessId = $routeParams.businessId;
+    $scope.descriptionLimitBase = 200.
+    $scope.descriptionLimit = $scope.descriptionLimitBase;
 
     //publication timing
     $scope.publicationOptions = [
@@ -49,7 +51,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
             $scope.business = data;
 
             //publication
-            $scope.publicationListParam.business= $scope.business;
+            $scope.publicationListParam.business = $scope.business;
 
 
             //edit mode ?
@@ -330,7 +332,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
                 }
             });
 
-            $scope.refreshPublications = function(){
+            $scope.refreshPublications = function () {
                 $scope.$broadcast('RELOAD_PUBLICATION');
             };
 

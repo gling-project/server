@@ -1,23 +1,38 @@
-myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route) {
-
-
+myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route,$routeParams) {
 
     //back to the top of the page
     $(window).scrollTop(0);
 
     $rootScope.$broadcast('PROGRESS_BAR_STOP');
 
+    $scope.param = $routeParams.param;
+
 
     var original = $location.path;
-    var path = function (path) {
-        //$location.path(path,false);
+    var path = function () {
 
-        //var lastRoute = $route.current;
-        //var un = $rootScope.$on('$locationChangeSuccess', function () {
-        //    $route.current = lastRoute;
-        //    un();
-        //});
-        //return original.apply($location, [path]);
+        //build path
+        var path = '/home';
+
+        if ($scope.followedMode) {
+            path+='/following';
+        }
+        for (var i in $scope.customerInterests) {
+            if($scope.customerInterests[i].selected === true){
+                path+='/'+$scope.customerInterests[i].name;
+            }
+        }
+
+        //navigate
+        $location.path(path, false);
+
+        var lastRoute = $route.current;
+        var un = $rootScope.$on('$locationChangeSuccess', function () {
+            $route.current = lastRoute;
+            un();
+        });
+        $rootScope.$broadcast('PROGRESS_BAR_STOP');
+        return original.apply($location, [path]);
     };
 
 
@@ -39,12 +54,20 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     };
 
     //variable
-    $scope.followedMode = false;
+    $scope.followedMode = $scope.param != null && $scope.param.indexOf('following')!=-1;
     $scope.businessInfoParam = {};
     $scope.businessListParam = {data: []};
     $scope.accountService = accountService.model;
     customerInterestService.getAll(function (value) {
         $scope.customerInterests = value;
+
+        if ($scope.param != null) {
+            for (var i in $scope.customerInterests) {
+                if ($scope.param.indexOf($scope.customerInterests[i].name)!=-1) {
+                    $scope.customerInterests[i].selected = true;
+                }
+            }
+        }
 
         $scope.computeList();
     });
@@ -54,21 +77,6 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.loadSemaphore = false;
     $scope.emptyMessage = null;
 
-
-    //selection mode
-    //$scope.left = function () {
-    //    if ($scope.interestDisplayFirst > 0) {
-    //        $scope.interestDisplayFirst--;
-    //        $scope.computeList();
-    //    }
-    //};
-    //
-    //$scope.right = function () {
-    //    if ($scope.interestDisplayFirst < $scope.customerInterests.length - $scope.interestDisplayMax) {
-    //        $scope.interestDisplayFirst++;
-    //        $scope.computeList();
-    //    }
-    //};
 
     $scope.setFollowedMode = function (n) {
         if (n == null) {
@@ -85,20 +93,13 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
     $scope.switchFollowedMode = function (n) {
 
         if (n != null) {
-            console.log('CAA -------------------');
             $scope.followedMode = n;
         }
         else {
             $scope.followedMode = !$scope.followedMode;
         }
-        if ($scope.followedMode) {
-            console.log('MERDE -------------------');
-            path('/follow');
-        }
-        else {
-            console.log('MERDE STOP -------------------');
-            path('/');
-        }
+
+        path();
     };
 
 
@@ -123,6 +124,8 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
         $scope.currentPage = 0;
         $scope.allLoaded = false;
         $scope.search();
+
+        path();
     };
 
     //watch on change position

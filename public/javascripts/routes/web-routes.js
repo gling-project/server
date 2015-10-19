@@ -12,7 +12,7 @@ var test = function (accountService) {
 var initializeCommonRoutes = function () {
     myApp
         .config(function ($routeProvider, $locationProvider) {
-            $routeProvider.when('/', {
+            $routeProvider.when('/home/:param*?', {
                 templateUrl: '/assets/javascripts/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
@@ -83,7 +83,7 @@ var initializeCommonRoutes = function () {
                     }
                 }
             }).otherwise({
-                redirectTo: '/'
+                redirectTo: '/home/'
             });
 
 
