@@ -1752,6 +1752,12 @@ ul.messenger .messenger-spinner {
   position: absolute;
   z-index: 1;
 }
+.publication-box.archived {
+  background-color: #ddd;
+}
+.publication-box.archived > div {
+  opacity: 0.7;
+}
 .publication-box.publication-bordered,
 .publication-box .publication-bordered {
   border: 1px solid #2c265c;

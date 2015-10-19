@@ -118,7 +118,7 @@ public class SearchRestController extends AbstractRestController {
         Business byId = businessService.findById(id);
 
         //load
-        List<SearchResult> searchResults = publicationService.findActivePublicationByBusiness(byId);
+        List<SearchResult> searchResults = publicationService.findPublicationByBusiness(byId);
 
         Result result = selectByPageAndStartDate(page, searchResults);
 

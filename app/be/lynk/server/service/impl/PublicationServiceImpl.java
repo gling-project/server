@@ -56,6 +56,12 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
 
     @Override
+    public List<SearchResult> findPublicationByBusiness(Business business) {
+        return search(null, null, null, Arrays.asList(business), null);
+    }
+
+
+    @Override
     public List<SearchResult> findArchivedPublicationByBusiness(Business business) {
         return search(null, null, PublicationTiming.PASSED, Arrays.asList(business), null);
     }
@@ -96,16 +102,18 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 "b.address = a and " +
                 "b.businessStatus = :businessStatus ";
 
-        switch (publicationTiming) {
-            case FUTURE:
-                request += " AND p.startDate > NOW() ";
-                break;
-            case PASSED:
-                request += " AND p.endDate < NOW() ";
-                break;
-            case NOW:
-                request += " AND p.startDate < NOW() and  p.endDate > NOW() ";
-                break;
+        if (publicationTiming != null) {
+            switch (publicationTiming) {
+                case FUTURE:
+                    request += " AND p.startDate > NOW() ";
+                    break;
+                case PASSED:
+                    request += " AND p.endDate < NOW() ";
+                    break;
+                case NOW:
+                    request += " AND p.startDate < NOW() and  p.endDate > NOW() ";
+                    break;
+            }
         }
 
         if (position != null && maxDistance != null) {
@@ -168,8 +176,6 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
                 );
         cq.orderBy(cb.desc(from.get("startDate")));
-
-
 
 
         return JPA.em().createQuery(cq)
@@ -328,7 +334,6 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
         LocalDateTime startday = day.with(fieldISO, 1).withHour(0).withMinute(0).withSecond(1);
         LocalDateTime endday = day.with(fieldISO, 7).withHour(23).withMinute(59).withSecond(59);
-
 
 
         String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business";

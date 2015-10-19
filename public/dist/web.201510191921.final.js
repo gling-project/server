@@ -2578,6 +2578,12 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'directiveServi
                     scope.publications = [];
                     scope.loading=false;
 
+
+
+                    scope.isArchived = function(publication){
+                        return publication.endDate < new Date().getTime();
+                    };
+
                     scope.success = function (data) {
 
                         if (scope.currentPage == 0) {
@@ -2725,7 +2731,7 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'directiveServi
                         else {
                             return 'publication-illustration';
                         }
-                    }
+                    };
                 }
             }
         }

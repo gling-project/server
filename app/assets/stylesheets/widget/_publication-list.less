@@ -17,6 +17,13 @@
         z-index: 1;
     }
 
+    &.archived{
+        background-color: #ddd;
+        &>div{
+            opacity: 0.7;
+        }
+    }
+
     &.publication-bordered,
     .publication-bordered {
         border: @border-size solid @publication-border-color;

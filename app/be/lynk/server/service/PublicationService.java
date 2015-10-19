@@ -51,4 +51,6 @@ public interface PublicationService extends CrudService<AbstractPublication> {
     Long countActiveFrom(LocalDateTime localDateTime);
 
     int countPublicationForWeek(LocalDateTime startDate, Business business);
+
+    List<SearchResult> findPublicationByBusiness(Business byId);
 }
