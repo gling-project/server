@@ -19,8 +19,6 @@ public class CustomerRegistrationDTO extends DTO   {
     private FacebookAuthenticationDTO facebookAuthentication;
 
     private AccountRegistrationDTO accountRegistration;
-
-    private AddressDTO address;
     private List<CustomerInterestDTO> customerInterests = new ArrayList<>();
 
 
@@ -40,20 +38,11 @@ public class CustomerRegistrationDTO extends DTO   {
         this.accountRegistration = accountRegistration;
     }
 
-    public AddressDTO getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressDTO address) {
-        this.address = address;
-    }
-
     @Override
     public String toString() {
         return "CustomerRegistrationDTO{" +
                 "facebookAuthentication=" + facebookAuthentication +
                 ", accountRegistration=" + accountRegistration +
-                ", address=" + address +
                 '}';
     }
 

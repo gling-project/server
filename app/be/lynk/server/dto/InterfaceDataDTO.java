@@ -30,15 +30,16 @@ public class InterfaceDataDTO extends DTO  {
     private String urlBase;
 
     private String projectLastVersion;
+    private String addStatus;
 
     public InterfaceDataDTO() {
     }
 
-    public String getProjectLastVersion(){
+    public String getProjectLastVersion() {
         return this.projectLastVersion;
     }
 
-    public void  setProjectLastVersion(String projectLastVersion){
+    public void setProjectLastVersion(String projectLastVersion) {
         this.projectLastVersion = projectLastVersion;
     }
 
@@ -120,5 +121,13 @@ public class InterfaceDataDTO extends DTO  {
 
     public String getUrlBase() {
         return urlBase;
+    }
+
+    public void setAddStatus(String addStatus) {
+        this.addStatus = addStatus;
+    }
+
+    public String getAddStatus() {
+        return addStatus;
     }
 }

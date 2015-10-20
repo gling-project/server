@@ -3,6 +3,7 @@ package be.lynk.server.dto.post;
 import be.lynk.server.dto.LangDTO;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.model.GenderEnum;
+import be.lynk.server.util.constants.ValidationRegex;
 
 
 import javax.validation.constraints.NotNull;
@@ -19,19 +20,19 @@ public class AccountRegistrationDTO extends DTO  {
     private GenderEnum gender;
 
     @NotNull
-    @Pattern(regexp = ".{2,50}",message = "--.validation.dto.size")
+    @Pattern(regexp = ".{2,50}", message = "--.validation.dto.size")
     private String firstname;
 
     @NotNull
-    @Pattern(regexp = ".{2,50}",message = "--.validation.dto.size")
+    @Pattern(regexp = ".{2,50}", message = "--.validation.dto.size")
     private String lastname;
 
     @NotNull
-    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",message = "--.validation.dto.email")
+    @Pattern(regexp = ValidationRegex.EMAIL, message = "validation.dto.email")
     private String email;
 
     @NotNull
-    @Pattern(regexp = "[a-zA-Z0-9-_]{6,18}",message = "--.validation.dto.password")
+    @Pattern(regexp = "[a-zA-Z0-9-_]{6,18}", message = "--.validation.dto.password")
     private String password;
 
     private LangDTO lang;

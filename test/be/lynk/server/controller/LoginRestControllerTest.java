@@ -110,13 +110,13 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         registrationDTO.setKeepSessionOpen(true);
 
         //address
-        AddressDTO addressDTO = new AddressDTO();
-        addressDTO.setName(ADDRESS_NAME_1);
-        addressDTO.setStreet(ADDRESS_STREET_1);
-        addressDTO.setZip(ADDRESS_ZIP_1);
-        addressDTO.setCity(ADDRESS_CITY_1);
-        addressDTO.setCountry(ADDRESS_COUNTRY);
-        dto.setAddress(addressDTO);
+//        AddressDTO addressDTO = new AddressDTO();
+//        addressDTO.setName(ADDRESS_NAME_1);
+//        addressDTO.setStreet(ADDRESS_STREET_1);
+//        addressDTO.setZip(ADDRESS_ZIP_1);
+//        addressDTO.setCity(ADDRESS_CITY_1);
+//        addressDTO.setCountry(ADDRESS_COUNTRY);
+//        dto.setAddress(addressDTO);
 
         //interest
         dto.getCustomerInterests().add(new CustomerInterestDTO(customerInterestListDTO.get(0).getName()));
@@ -140,14 +140,14 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         //interest
         assertEquals(3, formDTO.getCustomerInterests().size());
 
-        //address
-        assertEquals(1, formDTO.getAddresses().size());
-        addressDTO = formDTO.getAddresses().get(0);
-        assertEquals(ADDRESS_NAME_1, addressDTO.getName());
-        assertEquals(ADDRESS_STREET_1, addressDTO.getStreet());
-        assertEquals(ADDRESS_ZIP_1, addressDTO.getZip());
-        assertEquals(ADDRESS_CITY_1, addressDTO.getCity());
-        assertEquals(ADDRESS_COUNTRY, addressDTO.getCountry());
+//        //address
+//        assertEquals(1, formDTO.getAddresses().size());
+//        addressDTO = formDTO.getAddresses().get(0);
+//        assertEquals(ADDRESS_NAME_1, addressDTO.getName());
+//        assertEquals(ADDRESS_STREET_1, addressDTO.getStreet());
+//        assertEquals(ADDRESS_ZIP_1, addressDTO.getZip());
+//        assertEquals(ADDRESS_CITY_1, addressDTO.getCity());
+//        assertEquals(ADDRESS_COUNTRY, addressDTO.getCountry());
 
         // ****
         // *** TEST is connected ?

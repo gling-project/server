@@ -36,6 +36,8 @@ public class MainController extends AbstractController {
     private String urlBase        = Configuration.root().getString("site.url.base");
     private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
     private String lastVersion    = Configuration.root().getString("project.lastVersion");
+    private String appStatus    = Configuration.root().getString("app.status");
+
 
 
     @Autowired
@@ -168,6 +170,7 @@ public class MainController extends AbstractController {
         interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
         interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
         interfaceDataDTO.setAppId(facebookAppId);
+        interfaceDataDTO.setAddStatus(appStatus);
         interfaceDataDTO.setUrlBase(urlBase);
         interfaceDataDTO.setProjectLastVersion(lastVersion);
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());

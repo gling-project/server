@@ -273,29 +273,6 @@ public class LoginRestController extends AbstractRestController {
         Account account = createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), true);
         account.setRole(RoleEnum.CUSTOMER);
 
-        //address ?
-        if (dto.getAddress() != null) {
-            Address address = dozerService.map(dto.getAddress(), Address.class);
-            //TODO temp
-            address.setCountry("BELGIUM");
-
-            //control address
-            try {
-                localizationService.validAddress(address);
-            } catch (Exception e) {
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
-            }
-
-            account.getAddresses().add(address);
-        }
-
-        //interest  ?
-        if (dto.getCustomerInterests() != null) {
-            for (CustomerInterestDTO customerInterestDTO : dto.getCustomerInterests()) {
-                account.getCustomerInterests().add(customerInterestService.findByName(customerInterestDTO.getName()));
-            }
-        }
-
         //send email
         emailController.sendApplicationRegistrationCustomerEmail(account);
 
