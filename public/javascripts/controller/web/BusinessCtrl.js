@@ -38,7 +38,8 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     $scope.publicationListParam = {
         scrollTo: $scope.publicationIdToGo,
         displayRemoveIcon: $scope.edit,
-        type: 'BASIC'
+        type: 'BASIC',
+        businessId:$routeParams.businessId
     };
     $scope.$watch('edit', function () {
         $scope.publicationListParam.displayRemoveIcon = $scope.edit;

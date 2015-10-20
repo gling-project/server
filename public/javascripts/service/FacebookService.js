@@ -169,8 +169,10 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
+            if(data !=null && data != undefined && data != ""){
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
             }
         })
             .error(function (data, status) {
@@ -187,8 +189,10 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
             'url': "/rest/login/facebook/"+accessToken,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
+            if(data !=null && data != undefined && data != ""){
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
             }
         })
             .error(function (data, status) {

@@ -97,13 +97,13 @@ myApp.directive('publicationListForBusinessCtrl', function ($rootScope, directiv
                         }
                         scope.loading=true;
                         if (scope.type != null && scope.type != undefined && scope.type == 'ARCHIVE') {
-                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().business.id, scope.success);
+                            searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
                         }
                         else if (scope.type != null && scope.type != undefined && scope.type == 'PREVISUALIZATION') {
-                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().business.id, scope.success);
+                            searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().businessId, scope.success);
                         }
                         else {
-                            searchService.byBusiness(scope.currentPage, scope.getInfo().business.id, scope.success);
+                            searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
                         }
                     };
 

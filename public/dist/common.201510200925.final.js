@@ -4044,8 +4044,10 @@ myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languag
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
+            if(data !=null && data != undefined && data != ""){
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
             }
         })
             .error(function (data, status) {
@@ -4062,8 +4064,10 @@ myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languag
             'url': "/rest/login/facebook/"+accessToken,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
+            if(data !=null && data != undefined && data != ""){
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
             }
         })
             .error(function (data, status) {
