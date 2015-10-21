@@ -13,15 +13,8 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    scope.click = function () {
-                        console.log(scope.publication);
-                    };
-
                     scope.getInfo().loading = true;
 
-                    scope.navigateTo = function (target) {
-                        $location.path(target);
-                    };
 
                     scope.$watch("getInfo().data", function () {
                         scope.publications = scope.getInfo().data;
@@ -30,24 +23,6 @@ myApp.directive('publicationListCtrl', function ($rootScope, businessService, ge
                         }
                     });
 
-                    scope.getInterestClass = function (publication) {
-                        if (publication.interest != null) {
-                            return 'gling-icon-' + publication.interest.name;
-                        }
-                        return null;
-                    };
-
-                    var isEmpty = function (val) {
-                        return val == undefined || val === null || val === "";
-                    };
-
-                    scope.descriptionIsEmpty = function (publication) {
-                        return publication.type != 'PROMOTION' && isEmpty(publication.description);
-                    };
-
-                    scope.openGallery = function (image, publication) {
-                        modalService.galleryModal(image, publication.pictures);
-                    };
                 }
             }
         }

@@ -556,22 +556,22 @@ public class SearchRestController extends AbstractRestController {
 
         String s = "";
 
-        s += "====== Default selectByPageAndAlgorithme\n";
+        s += "================== Default selectByPageAndAlgorithme\n";
 
 
-        s += "====== Find : " + (new Date().getTime() - t) + "\n";
+        s += "================== Find : " + (new Date().getTime() - t) + "\n";
 
         //compute distance
         for (SearchResult publication : searchResults) {
             publication.setDistance(localizationService.distance(position.getX(), position.getY(), publication.getPosx(), publication.getPosy(), null));
         }
 
-        s += "====== DISTANCE : " + (new Date().getTime() - t) + "\n";
+        s += "================== DISTANCE : " + (new Date().getTime() - t) + "\n";
 
         //sort
         Collections.sort(searchResults);
 
-        s += "====== SORT : " + (new Date().getTime() - t) + "\n";
+        s += "================== SORT : " + (new Date().getTime() - t) + "\n";
 
         //select
         int min = page * NUMBER_RESULT_BY_PAGE;
@@ -584,17 +584,17 @@ public class SearchRestController extends AbstractRestController {
         }
         List<SearchResult> finalResult = searchResults.subList(min, max);
 
-        s += "====== SELECT : " + (new Date().getTime() - t) + "\n";
+        s += "================== SELECT : " + (new Date().getTime() - t) + "\n";
 
         //load publication
         List<AbstractPublication> publications = publicationService.findBySearchResults(finalResult);
 
-        s += "====== LOAD : " + (new Date().getTime() - t) + "\n";
+        s += "================== LOAD : " + (new Date().getTime() - t) + "\n";
 
 
         ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(position, publications, t));
 
-        s += "====== Finalize : " + (new Date().getTime() - t) + "\n";
+        s += "================== Finalize : " + (new Date().getTime() - t) + "\n";
 
         Logger.info(s);
 

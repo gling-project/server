@@ -289,6 +289,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/mobile/headerSearch/HeaderSearchCtrl.js',
                         'public/javascripts/directive/mobile/title/MobileTitleCtrl.js',
                         'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
+                        'public/javascripts/directive/component/publicationWidgetForMobile/PublicationWidgetCtrl.js',
 
                         <!-- service -->
                         'public/javascripts/service/mobile/FlashService.js',

@@ -13,27 +13,8 @@ myApp.directive('publicationListMobileCtrl', function ($rootScope, businessServi
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    scope.descriptionLimitBase=250;
                     scope.getInfo().loading = true;
 
-                    scope.getInterestClass = function (publication) {
-                        if (publication.interest != null) {
-                            return 'gling-icon-' + publication.interest.name;
-                        }
-                        return null;
-                    };
-
-                    scope.navigateTo = function (target) {
-                        $rootScope.$broadcast('PROGRESS_BAR_START');
-                        modalService.openLoadingModal();
-                        $timeout(function(){
-                            $location.path(target);
-                        },1);
-                    };
-
-                    scope.openGallery = function (image, publication) {
-                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
-                    };
 
                     scope.$watch("getInfo().data", function () {
                         scope.publications = scope.getInfo().data;

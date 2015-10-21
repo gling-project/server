@@ -1,0 +1,114 @@
+
+<div class="publication-box-mobile publication-publication">
+
+    <!-- interest -->
+    <i
+            ng-show="getInterestClass(getInfo().publication)!=null"
+            class="publication-interest gling-icon {{getInterestClass(getInfo().publication)}}">
+    </i>
+
+    <table class="publication-header"
+           ng-click="navigateTo('/business/'+getInfo().publication.businessId)">
+        <tr>
+            <td>
+                <img class="illustration"
+                     ng-src="{{getInfo().publication.businessIllustration | image}}"/>
+
+            </td>
+            <td>
+                <div class="title-box">
+
+                    <div class="title">
+                        <i ng-show="getInfo().publication.following === true"
+                           class="gling-icon gling-icon gling-icon-bell">
+                        </i>
+                        {{getInfo().publication.businessName}}
+                    </div>
+                    <div class="title-data">
+                        {{'--.publication.publishTo' | translateText}}
+                        {{getInfo().publication.startDate | date:'dd MMM yyyy'}} -
+                        {{getInfo().publication.distance / 1000 | number:2}} km
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- publication title -->
+    <div class="publication-title">
+        {{getInfo().publication.title}}
+    </div>
+
+
+    <div class="publication-body">
+        <div class="publication-data"
+             ng-class="{'publication-body-two':getInfo().publication.pictures.length>0}"
+             ng-hide="descriptionIsEmpty(getInfo().publication) === true">
+
+            <!-- promotion data -->
+            <table ng-show="getInfo().publication.type === 'PROMOTION'"
+                   class="publication-data-promotion">
+                <tr>
+                    <td>
+                        - {{getInfo().publication.offPercent * 100 | number:0}}%
+                    </td>
+                    <td class="publication-box-price"
+                        ng-show="getInfo().publication.originalPrice!=null">
+                        <span>{{(getInfo().publication.originalPrice * (1.0 - getInfo().publication.offPercent)) | number:2}} €</span>
+                        <span>{{getInfo().publication.originalPrice | number:2}} €</span>
+                    </td>
+                    <td>
+                        &gt; {{getInfo().publication.endDate | date:'dd MMM HH:mm'}}
+                    </td>
+                </tr>
+            </table>
+
+            <!-- description -->
+            <div class="publication-data-body"
+                 ng-show="getInfo().publication.description !=null && getInfo().publication.description.length > 0">
+                <span ng-bind-html="getInfo().publication.description | text : getInfo().publication.descriptionLimit"></span>
+
+                <span ng-show="getInfo().publication.description.length > descriptionLimitBase && getInfo().publication.descriptionLimit==descriptionLimitBase"
+                      ng-click="getInfo().publication.descriptionLimit = 10000"
+                      class="link">{{'--.textReuction.seeMore' | translateText}}</span>
+                <span ng-show="getInfo().publication.description.length > descriptionLimitBase && getInfo().publication.descriptionLimit!=descriptionLimitBase"
+                      ng-click="getInfo().publication.descriptionLimit = descriptionLimitBase"
+                      class="link">{{'--.textReuction.seeLess' | translateText}}</span>
+            </div>
+
+        </div>
+
+        <!-- gallery -->
+        <!-- picture 1 -->
+        <div class="publication-gallery"
+             ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}"
+             ng-show="getInfo().publication.pictures.length > 0 "
+             ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)">
+
+            <div class="publication-gallery-image-box">
+
+                <img ng-src="{{getInfo().publication.pictures[0] | image}}"
+                     class="publication-illustration">
+
+
+                <div ng-show="getInfo().publication.pictures.length > 1"
+                     class="publication-illustration-plus-icon">
+                    <span>+{{getInfo().publication.pictures.length - 1}}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="publication-footer">
+
+        <!-- publication date -->
+
+
+        <!-- facebook -->
+        <div class="publication-footer-facebook">
+            <facebook-share-publication-ctrl
+                    ng-info="{businessId:getInfo().publication.businessId,publicationId:getInfo().publication.id}"></facebook-share-publication-ctrl>
+        </div>
+
+    </div>
+</div>
