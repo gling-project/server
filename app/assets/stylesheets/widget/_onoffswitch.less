@@ -1,3 +1,15 @@
+.onoffswitchtable {
+    td:last-child,
+    td:first-child {
+        width: 50%;
+    }
+    td:nth-child(2){
+        width:100px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
 .onoffswitch {
     position: relative;
     width: 80px;
@@ -80,11 +92,11 @@
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner,
-.followedMode .onoffswitch-inner{
+.followedMode .onoffswitch-inner {
     margin-left: 0px;
 }
 
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch ,
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch,
 .followedMode .onoffswitch-switch {
     right: 0px;
 }

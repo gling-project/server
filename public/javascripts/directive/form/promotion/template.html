@@ -13,11 +13,10 @@
 
     <dir-field-image-mutiple ng-info="fields.illustration"></dir-field-image-mutiple>
 
-    <div class="row">
-        <div class="form-group">
-            <label class="control-label col-xs-5">{{'--.promotion.simplePromotion' | translateText}}</label>
-
-            <div class="col-xs-2">
+    <table class="onoffswitchtable">
+        <tr>
+            <td>{{'--.promotion.simplePromotion' | translateText}}</td>
+            <td>
                 <div class="onoffswitch">
                     <input type="checkbox" name="onoffswitch"
                            class="onoffswitch-checkbox"
@@ -28,11 +27,10 @@
                         <span class="onoffswitch-switch"></span>
                     </label>
                 </div>
-            </div>
-            <label style="text-align: left" class="control-label col-xs-5">{{'--.promotion.completePromotion' |
-                translateText}}</label>
-        </div>
-    </div>
+            </td>
+            <td>{{'--.promotion.completePromotion' | translateText}}</td>
+        </tr>
+    </table>
 
     <dir-field-text ng-info="fields.originalPrice"></dir-field-text>
 

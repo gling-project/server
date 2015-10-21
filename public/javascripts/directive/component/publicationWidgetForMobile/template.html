@@ -1,6 +1,9 @@
 
 <div class="publication-box-mobile publication-publication">
 
+    <div ng-show="getInfo().previsualization === true" class="publication-box-previsualization">
+    </div>
+
     <!-- interest -->
     <i
             ng-show="getInterestClass(getInfo().publication)!=null"

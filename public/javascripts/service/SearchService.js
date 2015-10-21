@@ -179,11 +179,13 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             'headers': "Content-Type:application/json;charset=utf-8",
             timeout: this.canceler.promise
         }).success(function (data, status) {
+            console.log('success');
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
             }
         })
             .error(function (data, status) {
+                console.log('error');
                 if(data!=null) {
                     $flash.error(data.message);
                 }

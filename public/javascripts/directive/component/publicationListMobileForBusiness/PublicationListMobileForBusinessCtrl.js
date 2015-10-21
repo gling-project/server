@@ -58,18 +58,6 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                         scope.search();
                     };
 
-                    scope.search = function () {
-                        if (scope.allLoaded == true) {
-                            return;
-                        }
-                        scope.loading=true;
-                        searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
-                    };
-
-                    //initialization
-                    console.log('-- SERACH FROM initialization');
-                    scope.search();
-
 
                     scope.success = function (data) {
 
@@ -98,6 +86,20 @@ myApp.directive('publicationListMobileForBusinessCtrl', function ($rootScope, bu
                         }, 1);
                         scope.loading=false;
                     };
+
+
+
+                    scope.search = function () {
+                        if (scope.allLoaded == true) {
+                            return;
+                        }
+                        scope.loading=true;
+                        searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
+                    };
+
+                    //initialization
+                    console.log('-- SERACH FROM initialization');
+                    scope.search();
                 }
             }
         }

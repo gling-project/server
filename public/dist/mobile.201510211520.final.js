@@ -1985,16 +1985,61 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
-myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', function ($rootScope, $scope, accountService) {
-
-    console.log("accountService.getMyBusiness()");
-    console.log(accountService.getMyBusiness());
+myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', function ($rootScope, $scope, accountService,$flash,translationService,facebookService,modalService) {
 
 
     $scope.publicationFormParam = {
         dto: {},
         business: accountService.getMyBusiness()
     };
+
+    $scope.success = function (data) {
+
+        modalService.closeLoadingModal();
+        $scope.loading = false;
+
+        $scope.close();
+        callback();
+    };
+
+    $scope.save = function (share) {
+
+        if (!$scope.publicationFormParam.isValid) {
+            $scope.publicationFormParam.displayErrorMessage = true;
+        }
+        else {
+
+            if ($scope.publicationFormParam.minimalQuantity > $scope.publicationFormParam.quantity) {
+                $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
+            }
+            else if($scope.loading===false){
+
+                modalService.openLoadingModal();
+                $scope.loading = true;
+                if ($scope.update) {
+                    promotionService.edit($scope.publicationFormParam.dto, function (data) {
+                            $scope.success(data);
+                        },
+                        function () {
+                            modalService.closeLoadingModal();
+                            $scope.loading = false;
+                        });
+                }
+                else {
+                    promotionService.add($scope.publicationFormParam.dto, function (data) {
+                            if(share) {
+                                facebookService.sharePublication($scope.publicationFormParam.business.id, data.id);
+                            }
+                            $scope.success(data);
+                        },
+                        function () {
+                            modalService.closeLoadingModal();
+                            $scope.loading = false;
+                        });
+                }
+            }
+        }
+    }
 
 }]);
 myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
@@ -2119,18 +2164,6 @@ myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'business
                         scope.search();
                     };
 
-                    scope.search = function () {
-                        if (scope.allLoaded == true) {
-                            return;
-                        }
-                        scope.loading=true;
-                        searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
-                    };
-
-                    //initialization
-                    console.log('-- SERACH FROM initialization');
-                    scope.search();
-
 
                     scope.success = function (data) {
 
@@ -2159,6 +2192,20 @@ myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'business
                         }, 1);
                         scope.loading=false;
                     };
+
+
+
+                    scope.search = function () {
+                        if (scope.allLoaded == true) {
+                            return;
+                        }
+                        scope.loading=true;
+                        searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
+                    };
+
+                    //initialization
+                    console.log('-- SERACH FROM initialization');
+                    scope.search();
                 }
             }
         }

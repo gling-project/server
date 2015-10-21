@@ -8,11 +8,29 @@
              ng-show="displayMask"></div>
 
         <div class="scrollable">
-            <div class="scrollable-content scrollable-content-body">
+            <div class="section  scrollable-content scrollable-content-body">
 
                 <div class="scrollable-content-inner">
 
                     <promotion-form-ctrl ng-info="publicationFormParam"></promotion-form-ctrl>
+
+
+                    <button ng-disabled="loading"
+                            id="promotion-modal-btn-save"
+                            type="button"
+                            class="btn gling-button-dark"
+                            ng-click="save(false)">
+                        {{'--.generic.save' | translateText}}
+                    </button>
+
+                    <button ng-disabled="loading"
+                            id="promotion-modal-btn-save-and-share"
+                            type="button"
+                            class="btn gling-button-dark"
+                            ng-click="save(true)">
+                        {{'--.publication.modal.publicAndShare' | translateText}}
+                    </button>
+
 
                 </div>
 
