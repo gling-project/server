@@ -259,7 +259,6 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     };
 
                     scope.$watch('fields.startDate.field', function () {
-                        console.log('je suis watching');
                         scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
                     }, true);
 

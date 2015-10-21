@@ -15,7 +15,6 @@ myApp.controller('PromotionCtrl', function ($rootScope, $scope, accountService,$
 
         $scope.navigateTo('/business/'+accountService.getMyBusiness().id);
         $flash.success('--.generic.success');
-        callback();
     };
 
     $scope.save = function (share) {

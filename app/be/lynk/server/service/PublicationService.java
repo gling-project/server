@@ -24,6 +24,8 @@ public interface PublicationService extends CrudService<AbstractPublication> {
 
     List<AbstractPublication> search(String criteria, int page,int max);
 
+    List<SearchResult> findPassedPublicationByBusiness(Business business);
+
     List<SearchResult> findActivePublicationByBusiness(Business business);
 
     List<SearchResult> findArchivedPublicationByBusiness(Business byId);

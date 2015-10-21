@@ -9,11 +9,9 @@ myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accou
     $scope.success = function (data) {
 
         modalService.closeLoadingModal();
-        //$scope.loading = false;
 
         $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
         $flash.success('--.generic.success');
-        callback();
     };
 
     $scope.save = function (share) {
@@ -23,7 +21,6 @@ myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accou
         }
         else {
             modalService.openLoadingModal();
-            //$scope.loading = true;
             if ($scope.update) {
 
                 businessNotificationService.edit($scope.businessNotificationFormParam.dto, function (data) {
@@ -31,7 +28,6 @@ myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accou
                     },
                     function () {
                         modalService.closeLoadingModal();
-                        //$scope.loading = false;
                     });
             }
             else {
@@ -44,7 +40,6 @@ myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accou
                     },
                     function () {
                         modalService.closeLoadingModal();
-                        //$scope.loading = false;
                     });
             }
         }

@@ -2162,7 +2162,6 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                     };
 
                     scope.$watch('fields.startDate.field', function () {
-                        console.log('je suis watching');
                         scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
                     }, true);
 
@@ -2401,6 +2400,10 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                             fieldName: 'interest'
                         }
                     };
+
+                    scope.$watch('fields.startDate.field', function () {
+                        scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
+                    }, true);
 
                     //
                     // validation : watching on field

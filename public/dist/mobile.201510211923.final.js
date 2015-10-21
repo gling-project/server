@@ -2018,7 +2018,6 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
 
         $scope.navigateTo('/business/'+accountService.getMyBusiness().id);
         $flash.success('--.generic.success');
-        callback();
     };
 
     $scope.save = function (share) {
@@ -2089,11 +2088,9 @@ myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountSe
     $scope.success = function (data) {
 
         modalService.closeLoadingModal();
-        //$scope.loading = false;
 
         $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
         $flash.success('--.generic.success');
-        callback();
     };
 
     $scope.save = function (share) {
@@ -2103,7 +2100,6 @@ myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountSe
         }
         else {
             modalService.openLoadingModal();
-            //$scope.loading = true;
             if ($scope.update) {
 
                 businessNotificationService.edit($scope.businessNotificationFormParam.dto, function (data) {
@@ -2111,7 +2107,6 @@ myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountSe
                     },
                     function () {
                         modalService.closeLoadingModal();
-                        //$scope.loading = false;
                     });
             }
             else {
@@ -2124,7 +2119,6 @@ myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountSe
                     },
                     function () {
                         modalService.closeLoadingModal();
-                        //$scope.loading = false;
                     });
             }
         }

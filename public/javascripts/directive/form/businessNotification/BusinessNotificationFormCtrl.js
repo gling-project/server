@@ -160,6 +160,10 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         }
                     };
 
+                    scope.$watch('fields.startDate.field', function () {
+                        scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
+                    }, true);
+
                     //
                     // validation : watching on field
                     //

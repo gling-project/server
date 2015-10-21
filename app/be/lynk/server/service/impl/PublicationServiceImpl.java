@@ -33,7 +33,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
     private static final Boolean OPT1 = false;
 
-    private static enum PublicationTiming {FUTURE, PASSED, NOW}
+    private static enum PublicationTiming {FUTURE, PASSED, NOW,NOW_AND_PASSED}
 
 
     @Override
@@ -47,6 +47,11 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                                                                 Double maxDistance,
                                                                 List<Business> businesses) {
         return search(position, maxDistance, PublicationTiming.NOW, businesses, null);
+    }
+
+    @Override
+    public List<SearchResult> findPassedPublicationByBusiness(Business business) {
+        return search(null, null, PublicationTiming.NOW_AND_PASSED, Arrays.asList(business), null);
     }
 
     @Override
@@ -112,6 +117,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                     break;
                 case NOW:
                     request += " AND p.startDate < NOW() and  p.endDate > NOW() ";
+                    break;
+                case NOW_AND_PASSED:
+                    request += " AND p.startDate < NOW() ";
                     break;
             }
         }
