@@ -61,14 +61,16 @@ module.exports = function (grunt) {
                     {
                         dest: 'public/dist/styleMobile.css',
 
-                        src: ['public/components/angucomplete/angucomplete.css',
+                        src: [
+                            'public/components/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css',
+
+                            'public/components/angucomplete/angucomplete.css',
                             'public/components/bootstrap/dist/css/bootstrap.min.css',
                             'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
                             'public/components/messenger/build/css/messenger.css',
                             'public/components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
                             'public/components/font-awesome/css/font-awesome.min.css',
 
-                            'public/components/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css',
                             'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
                             'target/scala-2.10/resource_managed/main/public/stylesheets/mobile.css'
