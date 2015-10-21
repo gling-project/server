@@ -1989,7 +1989,7 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
 
 
     $scope.publicationFormParam = {
-        dto: {},
+        dto: null,
         business: accountService.getMyBusiness()
     };
 

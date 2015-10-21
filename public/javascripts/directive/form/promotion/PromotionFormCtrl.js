@@ -23,16 +23,24 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
+                        var startDate = new Date();
+                        startDate.setMinutes(0);
+                        startDate.setSeconds(0);
+                        startDate.setMilliseconds(0);
+                        var endDate = angular.copy(startDate);
+                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
+                        console.log('startDate:'+startDate);
+                        console.log('endDate:'+endDate);
                         scope.getInfo().dto = {
                             type: 'PROMOTION',
-                            startDate: new Date()
+                            startDate: startDate,
+                            endDate:endDate
                             //minimalQuantity: 1
                         };
                     }
                     else {
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
-
 
 
                     //complete for previsualization
@@ -94,15 +102,15 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'startDate',
-                            startDate:new Date().getTime(),
-                            maxDay:30
+                            startDate: new Date(),
+                            maxDay: 30
                         },
                         endDate: {
                             name: 'endDate',
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
-                            details:'--.promotion.dayMax.details',
+                            details: '--.promotion.dayMax.details',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -111,14 +119,14 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'endDate',
-                            startDate:new Date().getTime(),
-                            maxDay:14,
-                            defaultSelection:'lastDay'
+                            startDate: new Date(),
+                            maxDay: 14,
+                            defaultSelection: 'lastDay'
                         },
                         illustration: {
                             name: 'illustration',
                             fieldTitle: "--.promotion.illustration",
-                            details:'--promotion.illustration.maximumImage',
+                            details: '--promotion.illustration.maximumImage',
                             validationMessage: '--.error.validation.image',
                             target: 'publication_picture',
                             //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
@@ -126,7 +134,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            maxImage:4,
+                            maxImage: 4,
                             optional: function () {
                                 return true;
                             },
@@ -250,10 +258,10 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                         }
                     };
 
-                    scope.$watch('fields.startDate.field',function(){
+                    scope.$watch('fields.startDate.field', function () {
                         console.log('je suis watching');
                         scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
-                    },true);
+                    }, true);
 
                     //
                     // specific treatment

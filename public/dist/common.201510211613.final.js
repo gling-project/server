@@ -147,38 +147,16 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                         scope.hours = [];
 
                         //build hour
-                        for (var i = 0; i <= 23; i++) {
-                            scope.hours.push({value: i, key: i + ':00'});
-                        }
+                        if(scope.getInfo().startDate!=null && scope.getInfo().startDate!=undefined) {
+                            for (var i = 0; i <= 23; i++) {
+                                scope.hours.push({value: i, key: i + ':00'});
+                            }
 
-                        //build day
-                        for (var i = 0; i < scope.getInfo().maxDay; i++) {
+                            //build day
 
-                            var date = new Date(scope.getInfo().startDate + (i * 24 * 60 * 60 * 1000));
-                            date.setHours(0);
-                            date.setMinutes(0);
-                            date.setSeconds(0);
-                            date.setMilliseconds(0);
-                            var day = date.getDate();
-                            var month = date.getMonth() + 1;
-                            var time = date.getTime();
+                            for (var i = 0; i < scope.getInfo().maxDay; i++) {
 
-                            scope.days.push({value: time, key: day + "/" + month});
-
-                        }
-
-                        //reinitialize model
-                        if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
-                            console.log('devient null !!! ');
-                            scope.day = null;
-                        }
-
-                        //select default value
-                        if (scope.day == null) {
-                            console.log('je suis null !!! ');
-                            if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
-                                var date = new Date(scope.getInfo().field[scope.getInfo().fieldName]);
-                                var hour = date.getHours();
+                                var date = new Date(scope.getInfo().startDate.getTime() + (i * 24 * 60 * 60 * 1000));
                                 date.setHours(0);
                                 date.setMinutes(0);
                                 date.setSeconds(0);
@@ -187,20 +165,42 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                                 var month = date.getMonth() + 1;
                                 var time = date.getTime();
 
-                                scope.day = time;
-                                scope.hour = hour;
+
+                                scope.days.push({value: time, key: day + "/" + month});
 
                             }
-                            else {
-                                console.log('scope.getInfo().defaultSelection:'+scope.getInfo().defaultSelection);
-                                if (scope.getInfo().defaultSelection == 'lastDay') {
-                                    scope.day = scope.days[scope.days.length - 1].value;
+
+                            //reinitialize model
+                            if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
+                                scope.day = null;
+                            }
+
+                            //select default value
+                            if (scope.day == null) {
+                                if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+
+                                    var date = scope.getInfo().field[scope.getInfo().fieldName];
+                                    date.setMinutes(0);
+                                    date.setSeconds(0);
+                                    date.setMilliseconds(0);
+                                    var hour = date.getHours();
+                                    date.setHours(0);
+                                    var day = date.getTime();
+
+                                    scope.day = day;
+                                    scope.hour = hour;
+
                                 }
                                 else {
-                                    scope.day = scope.days[0].value;
-                                }
-                                if (scope.hour == null) {
-                                    scope.hour = new Date().getHours();
+                                    if (scope.getInfo().defaultSelection == 'lastDay') {
+                                        scope.day = scope.days[scope.days.length - 1].value;
+                                    }
+                                    else {
+                                        scope.day = scope.days[0].value;
+                                    }
+                                    if (scope.hour == null) {
+                                        scope.hour = new Date().getHours();
+                                    }
                                 }
                             }
                         }
@@ -218,7 +218,7 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                     scope.compileValue = function () {
                         var time = scope.day;
                         time += scope.hour * 60 * 60 * 1000;
-                        scope.getInfo().field[scope.getInfo().fieldName] = time;
+                        scope.getInfo().field[scope.getInfo().fieldName] = new Date(time);
                         scope.isValid();
                     };
 
@@ -1924,16 +1924,24 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
+                        var startDate = new Date();
+                        startDate.setMinutes(0);
+                        startDate.setSeconds(0);
+                        startDate.setMilliseconds(0);
+                        var endDate = angular.copy(startDate);
+                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
+                        console.log('startDate:'+startDate);
+                        console.log('endDate:'+endDate);
                         scope.getInfo().dto = {
                             type: 'PROMOTION',
-                            startDate: new Date()
+                            startDate: startDate,
+                            endDate:endDate
                             //minimalQuantity: 1
                         };
                     }
                     else {
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
-
 
 
                     //complete for previsualization
@@ -1995,15 +2003,15 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'startDate',
-                            startDate:new Date().getTime(),
-                            maxDay:30
+                            startDate: new Date(),
+                            maxDay: 30
                         },
                         endDate: {
                             name: 'endDate',
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
-                            details:'--.promotion.dayMax.details',
+                            details: '--.promotion.dayMax.details',
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -2012,14 +2020,14 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'endDate',
-                            startDate:new Date().getTime(),
-                            maxDay:14,
-                            defaultSelection:'lastDay'
+                            startDate: new Date(),
+                            maxDay: 14,
+                            defaultSelection: 'lastDay'
                         },
                         illustration: {
                             name: 'illustration',
                             fieldTitle: "--.promotion.illustration",
-                            details:'--promotion.illustration.maximumImage',
+                            details: '--promotion.illustration.maximumImage',
                             validationMessage: '--.error.validation.image',
                             target: 'publication_picture',
                             //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
@@ -2027,7 +2035,7 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
-                            maxImage:4,
+                            maxImage: 4,
                             optional: function () {
                                 return true;
                             },
@@ -2151,10 +2159,10 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                         }
                     };
 
-                    scope.$watch('fields.startDate.field',function(){
+                    scope.$watch('fields.startDate.field', function () {
                         console.log('je suis watching');
                         scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
-                    },true);
+                    }, true);
 
                     //
                     // specific treatment
@@ -5983,7 +5991,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/businessList/template.html",
     "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"business in businesses\" class=publication-box ng-class=\"{'publication-followed':business.following === true}\" ng-click=click()><table class=publication-header><tr><td rowspan=2><div class=publication-business-illustration><img ng-click=\"navigateTo('/business/'+business.id)\" ng-src=\"{{business.illustration | image}}\"></div></td><td class=publication-header-business><div ng-click=\"navigateTo('/business/'+business.id)\" class=\"publication-bordered-bottom-hover publication-bordered-bottom\"><span class=publication-main-title><i ng-show=\"business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{business.name}}</span></div></td></tr><tr><td class=publication-header-title><div class=\"publication-bubble publication-bordered\"><i class=\"gling-icon gling-icon-earth\"></i> {{business.distance / 1000 | number:2}} km</div><div class=\"publication-bubble publication-bordered\"><span>{{business.address.street}}<br>{{business.address.zip}}, {{business.address.city}}</span></div></td></tr></table><div class=publication-body><div class=publication-data ng-hide=\"business.description == null\"><div class=publication-data-body><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl>{{business.description}}</div></div></div><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/businessListMobile/template.html",
-    "<div class=publication-list-mobile><div ng-show=\"loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"loading===true\" ng-repeat=\"business in businesses\" class=publication-publication ng-click=click()><table class=publication-header ng-click=\"navigateTo('/business/'+business.id)\"><tr><td><img class=illustration ng-src=\"{{business.illustration | image}}\"></td><td><div class=title-box><div class=title><i ng-show=\"business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{business.name}}</div><div class=title-data>{{business.address.street}}<br>{{business.address.zip}}, {{business.address.city}} - {{business.distance / 1000 | number:2}} km</div></div></td></tr></table><div class=business-list-business-data><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl>{{business.description}}</div><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div>");
+    "<div class=publication-list-mobile><div ng-show=\"loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"loading===true\" ng-repeat=\"business in businesses\" class=publication-box-mobile ng-click=click()><table class=publication-header ng-click=\"navigateTo('/business/'+business.id)\"><tr><td><img class=illustration ng-src=\"{{business.illustration | image}}\"></td><td><div class=title-box><div class=title><i ng-show=\"business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{business.name}}</div><div class=title-data>{{business.address.street}}<br>{{business.address.zip}}, {{business.address.city}} - {{business.distance / 1000 | number:2}} km</div></div></td></tr></table><div class=business-list-business-data><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl>{{business.description}}</div><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/categoryLine/template.html",
     "<div><table class=category-line-tree><tr ng-repeat=\"(catLev1Key,lev2) in getInfo().categories\"><td style=\"white-space: nowrap\"><a ng-click=searchCat(catLev1Key)>{{catLev1Key | translateText}}</a> <span class=transition>>></span></td><td><table><tr ng-repeat=\"(catLev2Key, lev3) in lev2\"><td style=\"white-space: nowrap\"><a ng-click=searchCat(catLev2Key)>{{catLev2Key | translateText}}</a> <span class=transition>>></span></td><td><span ng-repeat=\"catLev3 in lev3\"><span class=transition ng-show=\"$index>0\">/</span> <a ng-click=searchCat(catLev3.translationName)>{{catLev3.translationName | translateText}}</a></span></td></tr></table></td></tr></table></div>");
   $templateCache.put("/assets/javascripts/directive/component/facebookSharePublication/template.html",
@@ -6060,7 +6068,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/form/login/template.html",
     "<div class=\"form login-form\"><div class=facebook-login-btn-container><a href=\"https://www.facebook.com/dialog/oauth/?client_id={{facebookAppId}}&redirect_uri={{basic_url}}/&state=BELGIUM&scope={{facebookAuthorization}}&response_type=token\" ng-click=setLoading(true) ng-show=getInfo().mobileVersion class=\"facebook-login-btn btn gling-button-dark\"><img src=\"/assets/images/facebook/login_icon.png\"> <span>{{'--.loginModal.facebook.btn' |translateText}}</span></a> <button ng-click=fb_login(); class=\"facebook-login-btn btn gling-button-dark\" ng-hide=getInfo().mobileVersion><img src=\"/assets/images/facebook/login_icon.png\"> <span>{{'--.loginModal.facebook.btn' |translateText}}</span></button></div><table class=horizontal-split><tr><td><div></div></td><td>{{'--.generic.or' | translateText}}</td><td><div></div></td></tr></table><dir-field-text ng-info=fields.email></dir-field-text><dir-field-text ng-info=fields.password></dir-field-text><dir-field-check ng-info=fields.keepSessionOpen></dir-field-check></div>");
   $templateCache.put("/assets/javascripts/directive/form/promotion/template.html",
-    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date ng-info=fields.startDate></dir-field-date><dir-field-date ng-info=fields.endDate></dir-field-date><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><table class=onoffswitchtable><tr><td>{{'--.promotion.simplePromotion' | translateText}}</td><td><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitchFromPromotionForm checked ng-model=completePromotion><label class=onoffswitch-label for=myonoffswitchFromPromotionForm><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div></td><td>{{'--.promotion.completePromotion' | translateText}}</td></tr></table><dir-field-text ng-info=fields.originalPrice></dir-field-text><dir-field-text ng-info=fields.offPercent></dir-field-text><dir-field-text ng-info=fields.offPrice></dir-field-text><h3>{{'--.publication.previsualization' | translateText}}</h3><publication-widget-ctrl ng-info={publication:getInfo().dto,previsualization:true}></publication-widget-ctrl></div>");
+    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date-simple ng-info=fields.startDate></dir-field-date-simple><dir-field-date-simple ng-info=fields.endDate></dir-field-date-simple><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><table class=onoffswitchtable><tr><td>{{'--.promotion.simplePromotion' | translateText}}</td><td><div class=onoffswitch><input type=checkbox name=onoffswitch class=onoffswitch-checkbox id=myonoffswitchFromPromotionForm checked ng-model=completePromotion><label class=onoffswitch-label for=myonoffswitchFromPromotionForm><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div></td><td>{{'--.promotion.completePromotion' | translateText}}</td></tr></table><dir-field-text ng-info=fields.originalPrice></dir-field-text><dir-field-text ng-info=fields.offPercent></dir-field-text><dir-field-text ng-info=fields.offPrice></dir-field-text><h3>{{'--.publication.previsualization' | translateText}}</h3><publication-widget-ctrl ng-info={publication:getInfo().dto,previsualization:true}></publication-widget-ctrl></div>");
   $templateCache.put("/assets/javascripts/directive/form/schedule/template.html",
     "<div class=schedule-form><div class=modal-description>{{'--.business.schedule.edit.modal.description' | translateText}}</div><div ng-show=\"startSection!=null\" class=schedule-info ng-style=infoStyle>{{selectedTiming}}</div><div><div class=schedule-form-radio><div class=attendance-close id=schedule-edit-btn-attendance-close ng-click=\"selectAttendance('CLOSE')\"><input type=radio ng-model=attendance_selected value=\"CLOSE\"> {{'--.schedule.closed' | translateText}}</div><div class=attendance-light id=schedule-edit-btn-attendance-light ng-click=\"selectAttendance('LIGHT')\"><input type=radio ng-model=attendance_selected value=\"LIGHT\"> {{'--.schedule.light' | translateText}}</div><div class=attendance-moderate id=schedule-edit-btn-attendance-moderate ng-click=\"selectAttendance('MODERATE')\"><input type=radio ng-model=attendance_selected value=\"MODERATE\"> {{'--.schedule.moderate' | translateText}}</div><div class=attendance-heavy id=schedule-edit-btn-attendance-heavy ng-click=\"selectAttendance('IMPORTANT')\"><input type=radio ng-model=attendance_selected value=\"IMPORTANT\"> {{'--.schedule.heavy' | translateText}}</div><div class=attendance-appointment id=schedule-edit-btn-attendance-appointment ng-click=\"selectAttendance('APPOINTMENT')\"><input type=radio ng-model=attendance_selected value=\"APPOINTMENT\"> {{'--.schedule.appointment' | translateText}}</div></div><table class=editable><tr><td></td><td ng-repeat=\"hour in hours\"><div class=hour-block-info><div>{{hour.text}}</div></div></td></tr><tr ng-repeat=\"day in days\"><td>{{day}}</td><td ng-repeat=\"section in sections[day]\"><button class=hour-block ng-class=attendance_class[section.attendance] ng-mousedown=select(day,section) ng-mouseover=progress($event,day,section)></button></td></tr></table></div></div>");
   $templateCache.put("/assets/javascripts/directive/mobile/galleryMobile/template.html",

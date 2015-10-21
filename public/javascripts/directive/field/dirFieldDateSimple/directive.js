@@ -36,38 +36,16 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                         scope.hours = [];
 
                         //build hour
-                        for (var i = 0; i <= 23; i++) {
-                            scope.hours.push({value: i, key: i + ':00'});
-                        }
+                        if(scope.getInfo().startDate!=null && scope.getInfo().startDate!=undefined) {
+                            for (var i = 0; i <= 23; i++) {
+                                scope.hours.push({value: i, key: i + ':00'});
+                            }
 
-                        //build day
-                        for (var i = 0; i < scope.getInfo().maxDay; i++) {
+                            //build day
 
-                            var date = new Date(scope.getInfo().startDate + (i * 24 * 60 * 60 * 1000));
-                            date.setHours(0);
-                            date.setMinutes(0);
-                            date.setSeconds(0);
-                            date.setMilliseconds(0);
-                            var day = date.getDate();
-                            var month = date.getMonth() + 1;
-                            var time = date.getTime();
+                            for (var i = 0; i < scope.getInfo().maxDay; i++) {
 
-                            scope.days.push({value: time, key: day + "/" + month});
-
-                        }
-
-                        //reinitialize model
-                        if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
-                            console.log('devient null !!! ');
-                            scope.day = null;
-                        }
-
-                        //select default value
-                        if (scope.day == null) {
-                            console.log('je suis null !!! ');
-                            if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
-                                var date = new Date(scope.getInfo().field[scope.getInfo().fieldName]);
-                                var hour = date.getHours();
+                                var date = new Date(scope.getInfo().startDate.getTime() + (i * 24 * 60 * 60 * 1000));
                                 date.setHours(0);
                                 date.setMinutes(0);
                                 date.setSeconds(0);
@@ -76,20 +54,42 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                                 var month = date.getMonth() + 1;
                                 var time = date.getTime();
 
-                                scope.day = time;
-                                scope.hour = hour;
+
+                                scope.days.push({value: time, key: day + "/" + month});
 
                             }
-                            else {
-                                console.log('scope.getInfo().defaultSelection:'+scope.getInfo().defaultSelection);
-                                if (scope.getInfo().defaultSelection == 'lastDay') {
-                                    scope.day = scope.days[scope.days.length - 1].value;
+
+                            //reinitialize model
+                            if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
+                                scope.day = null;
+                            }
+
+                            //select default value
+                            if (scope.day == null) {
+                                if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+
+                                    var date = scope.getInfo().field[scope.getInfo().fieldName];
+                                    date.setMinutes(0);
+                                    date.setSeconds(0);
+                                    date.setMilliseconds(0);
+                                    var hour = date.getHours();
+                                    date.setHours(0);
+                                    var day = date.getTime();
+
+                                    scope.day = day;
+                                    scope.hour = hour;
+
                                 }
                                 else {
-                                    scope.day = scope.days[0].value;
-                                }
-                                if (scope.hour == null) {
-                                    scope.hour = new Date().getHours();
+                                    if (scope.getInfo().defaultSelection == 'lastDay') {
+                                        scope.day = scope.days[scope.days.length - 1].value;
+                                    }
+                                    else {
+                                        scope.day = scope.days[0].value;
+                                    }
+                                    if (scope.hour == null) {
+                                        scope.hour = new Date().getHours();
+                                    }
                                 }
                             }
                         }
@@ -107,7 +107,7 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                     scope.compileValue = function () {
                         var time = scope.day;
                         time += scope.hour * 60 * 60 * 1000;
-                        scope.getInfo().field[scope.getInfo().fieldName] = time;
+                        scope.getInfo().field[scope.getInfo().fieldName] = new Date(time);
                         scope.isValid();
                     };
 

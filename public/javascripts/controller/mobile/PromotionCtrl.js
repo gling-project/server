@@ -2,7 +2,7 @@ myApp.controller('PromotionCtrl', function ($rootScope, $scope, accountService,$
 
 
     $scope.publicationFormParam = {
-        dto: {},
+        dto: null,
         business: accountService.getMyBusiness()
     };
 
