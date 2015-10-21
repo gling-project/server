@@ -147,7 +147,7 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                         scope.hours = [];
 
                         //build hour
-                        if(scope.getInfo().startDate!=null && scope.getInfo().startDate!=undefined) {
+                        if (scope.getInfo().startDate != null && scope.getInfo().startDate != undefined) {
                             for (var i = 0; i <= 23; i++) {
                                 scope.hours.push({value: i, key: i + ':00'});
                             }
@@ -171,35 +171,37 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                             }
 
                             //reinitialize model
-                            if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
-                                scope.day = null;
-                            }
-
-                            //select default value
-                            if (scope.day == null) {
-                                if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
-
-                                    var date = scope.getInfo().field[scope.getInfo().fieldName];
-                                    date.setMinutes(0);
-                                    date.setSeconds(0);
-                                    date.setMilliseconds(0);
-                                    var hour = date.getHours();
-                                    date.setHours(0);
-                                    var day = date.getTime();
-
-                                    scope.day = day;
-                                    scope.hour = hour;
-
+                            if (scope.days.length > 0) {
+                                if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
+                                    scope.day = null;
                                 }
-                                else {
-                                    if (scope.getInfo().defaultSelection == 'lastDay') {
-                                        scope.day = scope.days[scope.days.length - 1].value;
+
+                                //select default value
+                                if (scope.day == null) {
+                                    if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+
+                                        var date = scope.getInfo().field[scope.getInfo().fieldName];
+                                        date.setMinutes(0);
+                                        date.setSeconds(0);
+                                        date.setMilliseconds(0);
+                                        var hour = date.getHours();
+                                        date.setHours(0);
+                                        var day = date.getTime();
+
+                                        scope.day = day;
+                                        scope.hour = hour;
+
                                     }
                                     else {
-                                        scope.day = scope.days[0].value;
-                                    }
-                                    if (scope.hour == null) {
-                                        scope.hour = new Date().getHours();
+                                        if (scope.getInfo().defaultSelection == 'lastDay') {
+                                            scope.day = scope.days[scope.days.length - 1].value;
+                                        }
+                                        else {
+                                            scope.day = scope.days[0].value;
+                                        }
+                                        if (scope.hour == null) {
+                                            scope.hour = new Date().getHours();
+                                        }
                                     }
                                 }
                             }
@@ -2270,10 +2272,16 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
+                        var startDate = new Date();
+                        startDate.setMinutes(0);
+                        startDate.setSeconds(0);
+                        startDate.setMilliseconds(0);
+                        var endDate = angular.copy(startDate);
+                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
-                            startDate: new Date(),
-                            endDate:addDays(new Date(),28)//.setMonth(new Date().getDay()+28)
+                            startDate: startDate,
+                            endDate:endDate
                         };
                     }
                     else {
@@ -2335,7 +2343,9 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                                 return scope.getInfo().disabled || scope.editMode===true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'startDate'
+                            startDate: new Date(),
+                            fieldName: 'startDate',
+                            maxDay: 30
                         },
                         endDate: {
                             name: 'endDate',
@@ -2350,8 +2360,10 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
+                            startDate: new Date(),
                             fieldName: 'endDate',
-                            startDate:scope.startDate
+                            maxDay: 28
+
                         },
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
@@ -6054,7 +6066,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/form/businessCategory/template.html",
     "<div class=form><div class=business-category ng-class=\"{'disabled' : isDisabled()}\"><div class=\"panel panel-default\"><div class=panel-heading>{{'--.businessCategory.column.category' | translateText}}</div><div class=panel-body><button name={{category.name}} ng-disabled=isDisabled() ng-repeat=\"category in categories\" class=category-box ng-class=\"{'category-selected':category.selected === true}\" ng-click=select(category)>{{category.translationName | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.businessCategory.column.subcategory' | translateText}}</div><div class=panel-body><button name={{subcategory.name}} ng-repeat=\"subcategory in subcategories\" ng-disabled=isDisabled() class=category-box ng-class=\"{'subcategory-selected':subcategory.selected === true}\" ng-click=selectSubcategory(subcategory)>{{subcategory.translationName | translateText}}</button></div></div><div class=\"panel panel-default\"><div class=panel-heading>{{'--.businessCategory.column.subsubcategory' | translateText}}</div><div class=panel-body><button name={{subsubcategory.name}} ng-repeat=\"subsubcategory in subsubcategories\" ng-disabled=isDisabled() class=category-box ng-class=\"{'subsubcategory-selected':subsubcategory.selected === true}\" ng-click=selectSubSubcategory(subsubcategory)>{{subsubcategory.translationName | translateText}}</button></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/form/businessNotification/template.html",
-    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date ng-info=fields.startDate></dir-field-date><dir-field-date ng-info=fields.endDate></dir-field-date><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><h3>{{'--.publication.previsualization' | translateText}}</h3><publication-widget-ctrl ng-info={publication:getInfo().dto,previsualization:true}></publication-widget-ctrl></div>");
+    "<div class=form><dir-field-select ng-info=fields.interests></dir-field-select><dir-field-text ng-info=fields.title></dir-field-text><dir-field-text-area ng-info=fields.description></dir-field-text-area><dir-field-date-simple ng-info=fields.startDate></dir-field-date-simple><dir-field-date-simple ng-info=fields.endDate></dir-field-date-simple><dir-field-image-mutiple ng-info=fields.illustration></dir-field-image-mutiple><h3>{{'--.publication.previsualization' | translateText}}</h3><publication-widget-ctrl ng-info={publication:getInfo().dto,previsualization:true}></publication-widget-ctrl></div>");
   $templateCache.put("/assets/javascripts/directive/form/businessSocialNetwork/template.html",
     "<div class=form><div class=modal-description>{{'--.business.socialNetwork.form.description' | translateText}}</div><dir-field-text ng-info=fields.facebook></dir-field-text><dir-field-text ng-info=fields.twitter></dir-field-text><dir-field-text ng-info=fields.instagram></dir-field-text>{{'--.business.socialNetwork.other' | translateText}} {{'--.business.socialNetwork.other' | translateText}}<dir-field-text ng-info=fields.delivery></dir-field-text><dir-field-text ng-info=fields.ecommerce></dir-field-text><dir-field-text ng-info=fields.opinion></dir-field-text><dir-field-text ng-info=fields.reservation></dir-field-text></div>");
   $templateCache.put("/assets/javascripts/directive/form/contact/template.html",
@@ -6141,6 +6153,8 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "<super-admin-menu-ctrl></super-admin-menu-ctrl><h1>Stats</h1><table class=admin_stat><tr ng-repeat=\"(title, value) in stats\"><td>{{title}}</td><td>{{value}}</td></tr></table>");
   $templateCache.put("/assets/javascripts/view/mobile/business.html",
     "<div class=\"navbar navbar-app navbar-absolute-top\" ng-class=\"{'header-with-advanced-search':advancedSearch}\"><div class=\"btn-group pull-left\"><div class=\"btn btn-navbar\" ng-click=back()><div class=nav-button><i class=\"glyphicon glyphicon-chevron-left\"></i></div></div></div><div class=\"btn-group pull-right\"><div class=\"btn btn-navbar\" ng-click=followed()><div class=\"nav-button business-page-follow\"><span class=selected ng-show=business.following>{{'--.followWidget.stopFollow' | translateText}}<i class=\"gling-icon gling-icon-bell\"></i></span> <span ng-hide=business.following>{{'--.followWidget.follow' | translateText}}<i class=\"gling-icon gling-icon-bell2\"></i></span></div></div></div></div><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"scrollable-content business-mobile-page scrollable-content-body\"><div class=scrollable-content-inner><div class=business-page-header ng-style=\"{'background-image':'url('+(business.landscape | image)+')' }\"><div class=\"edit-button-container landscape-edit\"><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editLandscape()>{{'--.business.page.edit.landscape' | translateText}}</button></div><table ng-click=refreshPublications()><tr><td><div class=business-page-illustration-container><img class=business-illustration ng-src=\"{{business.illustration | image}}\"><div class=edit-button-container><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm\" ng-show=edit ng-click=editIllustration()>{{'--.business.page.edit.illustration' | translateText}}</button></div></div></td><td><div class=business-page-name>{{business.name}}<div class=edit-button-container><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit\" ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div></div></td></tr></table></div><category-line-ctrl ng-info=categoryLineParams></category-line-ctrl><div style=\"overflow: auto\"><div class=business-tab-set><div class=business-tab style=display:inline-block ng-class=\"{'selected':interfaceToDisplay === action.name}\" ng-repeat=\"action in actions\" ng-show=action.display() ng-click=action.action()><i class=\"gling-icon {{action.icon}}\"></i> {{action.translatableName | translateText}}</div></div></div><div ng-show=\"interfaceToDisplay=='home'\"><div ng-show=\"myBusiness===true\"><button id=business-btn-promotion-add class=\"btn gling-button-dark\" ng-click=createPromotion() ng-disabled=\"business.businessStatus !== 'PUBLISHED'\">{{'--.business.publication.btn.promotion' | translateText}}</button> <button class=\"btn gling-button-dark\" ng-click=createNotification() ng-disabled=\"business.businessStatus !== 'PUBLISHED'\">{{'--.business.publication.btn.notification' | translateText}}</button></div><publication-list-mobile-for-business-ctrl ng-info=publicationListParam></publication-list-mobile-for-business-ctrl></div><div class=section ng-show=\"interfaceToDisplay=='info'\"><table class=business-info-line ng-show=\"business.description !=null && business.description.length > 0\"><tr><td colspan=2><span ng-bind-html=\"business.description | text : descriptionLimit\"></span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase\" ng-click=\"descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase\" ng-click=\"descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></td></tr></table><table class=business-info-line><tr><td colspan=2><div class=business-info-line-action><google-map-widget-ctrl ng-info=googleMapParams></google-map-widget-ctrl></div></td></tr><tr><td><div class=business-address>{{business.address.street}}<br>{{business.address.zip}},{{business.address.city}}</div></td><td class=td-action>{{business.distance / 1000 | number:2}} Km</td></tr></table><table class=business-info-line ng-show=\"business.phone!=null\"><tr><td>{{business.phone}}</td><td class=td-action><a class=\"business-info-line-action glyphicon glyphicon-earphone\" href=tel:{{business.phone}}></a></td></tr></table><table class=business-info-line ng-show=\"business.website!=null\"><tr><td>{{'--.generic.site' | translateText}}</td><td class=td-action><a href={{business.website}} target=_blank>{{business.website}}</a></td></tr></table><table class=business-info-line ng-show=\"business.email!=null\"><tr><td>{{business.email}}</td><td class=td-action><a class=\"business-info-line-action glyphicon glyphicon-envelope\" href=mailto:{{business.email}}></a></td></tr></table><table class=business-info-line ng-show=\"displaySocialNetwork() === true\"><tr><td><div ng-show=!!business.socialNetwork.facebookLink class=business-social-network-box><a id=welcome-link-facebook href={{business.socialNetwork.facebookLink}} title=Facebook target=_blank><img src=/assets/images/social_network/facebook.png></a></div><div ng-show=!!business.socialNetwork.twitterLink class=business-social-network-box><a id=welcome-link-twitter href={{business.socialNetwork.twitterLink}} title=Twitter target=_blank><img src=/assets/images/social_network/twitter.png></a></div><div ng-show=!!business.socialNetwork.instagramLink class=business-social-network-box><a id=welcome-link-instagram href={{business.socialNetwork.instagramLink}} title=Instagram target=_blank><img src=/assets/images/social_network/instagram.png></a></div><div ng-show=!!business.socialNetwork.deliveryLink class=business-social-network-box><a id=welcome-link-delivery href={{business.socialNetwork.deliveryLink}} title=\"{{'--.business.socialNetwork.delivery' | translateText}}\" target=_blank><img src=/assets/images/social_network/delivery.png></a></div><div ng-show=!!business.socialNetwork.reservationLink class=business-social-network-box><a href={{business.socialNetwork.reservationLink}} title=\"{{'--.business.socialNetwork.reservation' | translateText}}\" target=_blank><img src=/assets/images/social_network/reservation.png></a></div><div ng-show=!!business.socialNetwork.opinionLink class=business-social-network-box><a href={{business.socialNetwork.opinionLink}} title=\"{{'--.business.socialNetwork.opinion' | translateText}}\" target=_blank><img src=/assets/images/social_network/opinion.png></a></div><div ng-show=!!business.socialNetwork.ecommerceLink class=business-social-network-box><a href={{business.socialNetwork.ecommerceLink}} title=\"{{'--.business.socialNetwork.ecommerce' | translateText}}\" target=_blank><img src=/assets/images/social_network/e_commerce.png></a></div></td></tr></table><table class=business-info-line ng-show=\"displaySchedule() === true\"><tr><td><schedule-ctrl ng-info={dto:business.schedules}></schedule-ctrl></td></tr></table></div><div class=\"section gallery-mobile\" ng-show=\"interfaceToDisplay=='gallery'\"><h4>{{'--.generic.gallery' | translateText}}</h4><img ng-repeat=\"image in business.galleryPictures\" style=\"margin-top: 5px\" ng-click=openGallery(image) ng-src=\"{{image | image}}\"></div></div></div></div></div></div>");
+  $templateCache.put("/assets/javascripts/view/mobile/businessNotification.html",
+    "<mobile-title-ctrl display-menu=false title=\"'--.promotion.modal.title.create'\"></mobile-title-ctrl><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"section scrollable-content scrollable-content-body\"><div class=scrollable-content-inner><business-notification-form-ctrl ng-info=businessNotificationFormParam></business-notification-form-ctrl><button id=promotion-modal-btn-save type=button class=\"btn gling-button-dark\" ng-click=save(false)>{{'--.generic.save' | translateText}}</button> <button id=promotion-modal-btn-save-and-share type=button class=\"btn gling-button-dark\" ng-click=save(true)>{{'--.publication.modal.publicAndShare' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/mobile/customer_registration.html",
     "<mobile-title-ctrl title=\"'--.page.customer_registration.title'\" display-menu=false></mobile-title-ctrl><div class=app-body><div class=\"app-content modal-login\"><div class=scrollable><div class=\"section customer-registration scrollable-content\"><div class=modal-description>{{'--.customer.registrationModal.help.business' |translateText}}<br></div><div class=facebook-login-btn-container><a href=\"https://www.facebook.com/dialog/oauth/?client_id={{facebookAppId}}&redirect_uri={{basic_url}}/customer_registration&state=BELGIUM&scope={{facebookAuthorization}}&response_type=token\" class=\"facebook-login-btn btn gling-button-dark\"><img src=\"/assets/images/facebook/login_icon.png\"> <span>{{'--.loginModal.facebook.btn' |translateText}}</span></a></div><table class=horizontal-split><tr><td><div></div></td><td>{{'--.generic.or' | translateText}}</td><td><div></div></td></tr></table><account-form-ctrl ng-info=accountParam></account-form-ctrl><div class=generic-center><button class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.registration' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/mobile/followed_business_page.html",
@@ -6154,7 +6168,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/view/mobile/profile.html",
     "<mobile-title-ctrl title=\"'--.page.profile.title'\" display-menu=true></mobile-title-ctrl><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"section scrollable-content\"><div ui-state=activeTab default><ul class=\"nav nav-tabs\"><li ng-click=\"setActiveTab('personal')\" ng-class=\"{'active':activeTab == 'personal'}\"><a ui-set=\"{'activeTab': 1}\">{{'--.customer.profile.personalInformation' | translateText}}</a></li><li ng-click=\"setActiveTab('address')\" ng-class=\"{'active':activeTab == 'address'}\"><a ui-set=\"{'activeTab': 2}\">{{'--.customer.profile.myAddresses' | translateText}}</a></li><li ng-click=\"setActiveTab('interest')\" ng-class=\"{'active':activeTab == 'interest'}\"><a ui-set=\"{'activeTab': 3}\">{{'--.customer.profile.interest' | translateText}}</a></li></ul><div ng-show=\"activeTab == 'personal'\"><div ng-show=\"model.myself.facebookAccount===true\">{{'--.profile.connectedByFacebook' | translateText}}</div><div ng-hide=\"model.myself.facebookAccount===true\"><account-form-ctrl ng-info=accountParam></account-form-ctrl><button class=\"btn gling-button-dark glyphicon glyphicon-edit\" ng-show=accountParam.disabled ng-click=personalEdit()>{{'--.generic.edit' |translateText}}</button> <button class=\"btn gling-button-dark\" ng-hide=accountParam.disabled ng-click=personalSave()>{{'--.generic.save' | translateText}}</button> <button class=\"btn gling-button-dark\" ng-hide=accountParam.disabled ng-click=personalCancel()>{{'--.generic.cancel' | translateText}}</button><div class=col-md-3 ng-show=\"account.loginAccount==true\"></div><button ng-show=\"account.facebookAccount!==true\" type=button class=\"btn gling-button-dark\">{{'--.changePasswordModal.title' | translateText}}</button></div></div><div ng-show=\"activeTab == 'address'\"><button class=\"btn gling-button-dark\" ng-click=addAddress()>{{'--.customer.profile.address.create' | translateText}}</button><div class=\"panel panel-gling\" ng-repeat=\"address in model.myself.addresses\"><div class=panel-heading>{{address.name}}</div><div class=panel-body><div class=address-box><div><span>{{'--.generic.street' | translateText}}</span>{{address.street}}</div><div><span>{{'--.generic.zip' | translateText}}</span>{{address.zip}}</div><div><span>{{'--.generic.city' | translateText}}</span>{{address.city}}</div><div><span>{{'--.generic.country' | translateText}}</span>{{address.country}}</div></div><button class=\"btn gling-button-dark glyphicon glyphicon-edit\" ng-click=editAddress(address)>{{'--.generic.edit' | translateText}}</button> <button class=\"btn gling-button-dark glyphicon glyphicon-remove\" ng-click=deleteAddress(address)>{{'--.generic.remove' |translateText}}</button></div></div></div><div ng-show=\"activeTab == 'interest'\"><div ng-repeat=\"interest in model.myself.customerInterests\" ng-show=interestParam.disabled class=category-box>{{interest.translationName |translateText}}</div><customer-interest-form-ctrl ng-hide=interestParam.disabled ng-info=interestParam></customer-interest-form-ctrl><button class=\"btn gling-button-dark glyphicon glyphicon-edit\" ng-show=interestParam.disabled ng-click=interestEdit()>{{'--.generic.edit' |translateText}}</button> <button class=\"btn gling-button-dark\" ng-hide=interestParam.disabled ng-click=interestSave()>{{'--.generic.save' | translateText}}</button> <button class=\"btn gling-button-dark\" ng-hide=interestParam.disabled ng-click=interestCancel()>{{'--.generic.cancel' | translateText}}</button></div></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/mobile/promotion.html",
-    "<mobile-title-ctrl display-menu=false title=\"'--.promotion.modal.title.create'\"></mobile-title-ctrl><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"section scrollable-content scrollable-content-body\"><div class=scrollable-content-inner><promotion-form-ctrl ng-info=publicationFormParam></promotion-form-ctrl><button ng-disabled=loading id=promotion-modal-btn-save type=button class=\"btn gling-button-dark\" ng-click=save(false)>{{'--.generic.save' | translateText}}</button> <button ng-disabled=loading id=promotion-modal-btn-save-and-share type=button class=\"btn gling-button-dark\" ng-click=save(true)>{{'--.publication.modal.publicAndShare' | translateText}}</button></div></div></div></div></div>");
+    "<mobile-title-ctrl display-menu=false title=\"'--.promotion.modal.title.create'\"></mobile-title-ctrl><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"section scrollable-content scrollable-content-body\"><div class=scrollable-content-inner><promotion-form-ctrl ng-info=publicationFormParam></promotion-form-ctrl><button id=promotion-modal-btn-save type=button class=\"btn gling-button-dark\" ng-click=save(false)>{{'--.generic.save' | translateText}}</button> <button id=promotion-modal-btn-save-and-share type=button class=\"btn gling-button-dark\" ng-click=save(true)>{{'--.publication.modal.publicAndShare' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/mobile/search_page.html",
     "<header-search-ctrl display-menu=false></header-search-ctrl><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"scrollable-content scrollable-content-body\"><div ng-show=\"results == null\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-hide=\"results==null\"><tabset><tab ng-show=businessTab.display active=businessTab.active><tab-heading>{{'--.generic.business' | translateText}} ({{businessTab.totalToDisplay}})</tab-heading><business-list-mobile-ctrl ng-info={data:businessTab.data}></business-list-mobile-ctrl></tab><tab ng-show=publicationTab.display active=publicationTab.active><tab-heading>{{'--.generic.publication' | translateText}} ({{publicationTab.totalToDisplay}})</tab-heading><publication-list-mobile-ctrl ng-info={data:publicationTab.data}></publication-list-mobile-ctrl></tab><tab ng-show=categoryTab.display active=categoryTab.active><tab-heading>{{'--.generic.category' | translateText}} ({{categoryTab.totalToDisplay}})</tab-heading><div ng-show=\"categoryTab == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"(cat,value) in categoryTab.data\"><span class=\"search-category link search-category-lev1\" ng-click=\"navigateTo('/search/category:'+cat)\"></span> <span ng-repeat=\"(sCat,value2) in value\"><span class=\"search-category link search-category-lev2\" ng-click=\"navigateTo('/search/category:'+sCat)\"></span> <span ng-repeat=\"(ssCat,value3) in value2\"><span class=\"search-category link search-category-lev3\" ng-click=\"navigateTo('/search/category:'+ssCat)\">{{cat | translateText}} >> {{sCat | translateText}} >> {{ssCat | translateText}}</span><business-list-mobile-ctrl ng-info={data:value3,loading:false}></business-list-mobile-ctrl></span></span></div></tab></tabset></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/mobile/welcome.html",

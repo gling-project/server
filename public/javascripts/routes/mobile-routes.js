@@ -71,6 +71,17 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 })
+                .when('/businessNotification', {
+                    templateUrl: '/assets/javascripts/view/mobile/businessNotification.html',
+                    controller: 'BusinessNotificationCtrl',
+                    resolve: {
+                        a: function (accountService, $location,$rootScope,modalService) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                })
                 .when('/profile', {
                     templateUrl: '/assets/javascripts/view/mobile/profile.html',
                     controller: 'ProfileCtrl',

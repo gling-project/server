@@ -515,7 +515,7 @@ day_abrv_sunday=Di
 --.business.page.management.contact.btn=Contactez-nous!
 --.error.promotion.duration.tooLong=La durée maximum d'une promotion est de {0} jours
 --.error.notification.duration.tooLong=La durée maximum d'une actualité est de {0} jours
---.error.promotion.TooMuchToday=Vous avez déjà publié {0} publications aujourd'hui. Attendez demain pour publier à nouveau
+--.error.promotion.TooMuchToday=Vous avez déjà publié {0} publications pour cette semaine. Attendez demain pour publier à nouveau
 --.error.publication.startDateBeforeNow=La publication doit commencer au plus tard maintenant
 
 ##  directive/form/account/AccountFormCtrl.js (//)

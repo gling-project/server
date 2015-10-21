@@ -197,6 +197,17 @@ var initializeCommonRoutes = function () {
                         }]
                     }
                 })
+                .when('/businessNotification', {
+                    templateUrl: '/assets/javascripts/view/mobile/businessNotification.html',
+                    controller: 'BusinessNotificationCtrl',
+                    resolve: {
+                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }]
+                    }
+                })
                 .when('/profile', {
                     templateUrl: '/assets/javascripts/view/mobile/profile.html',
                     controller: 'ProfileCtrl',
@@ -1259,6 +1270,7 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
     $scope.logout = function () {
         if (facebookService.isConnected()) {
             facebookService.logout();
+            $scope.closeMenu();
         }
         $scope.$broadcast('LOGOUT');
         accountService.logout(function () {
@@ -1633,6 +1645,10 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
 
     $scope.createPromotion = function(){
         $scope.navigateTo('/promotion');
+    };
+
+    $scope.createNotification = function(){
+        $scope.navigateTo('/businessNotification');
     }
 
 }]);
@@ -1985,7 +2001,7 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
-myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', function ($rootScope, $scope, accountService,$flash,translationService,facebookService,modalService) {
+myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'promotionService', function ($rootScope, $scope, accountService,$flash,translationService,facebookService,modalService,promotionService) {
 
 
     $scope.publicationFormParam = {
@@ -1995,37 +2011,55 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
 
     $scope.success = function (data) {
 
-        modalService.closeLoadingModal();
-        $scope.loading = false;
+        console.log('SCUCESS');
 
-        $scope.close();
+        modalService.closeLoadingModal();
+        //$scope.loading = false;
+
+        $scope.navigateTo('/business/'+accountService.getMyBusiness().id);
+        $flash.success('--.generic.success');
         callback();
     };
 
     $scope.save = function (share) {
+
+        console.log('1');
 
         if (!$scope.publicationFormParam.isValid) {
             $scope.publicationFormParam.displayErrorMessage = true;
         }
         else {
 
+            console.log('2');
+            console.log('2E : '+$scope.publicationFormParam.minimalQuantity +'/'+ $scope.publicationFormParam.quantity);
             if ($scope.publicationFormParam.minimalQuantity > $scope.publicationFormParam.quantity) {
+
+
                 $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
             }
-            else if($scope.loading===false){
+            //else if($scope.loading===false){
+
+                console.log('3');
 
                 modalService.openLoadingModal();
-                $scope.loading = true;
+                //$scope.loading = true;
                 if ($scope.update) {
+
+                    console.log('4');
+
                     promotionService.edit($scope.publicationFormParam.dto, function (data) {
                             $scope.success(data);
                         },
                         function () {
+                            console.log('4E');
+
                             modalService.closeLoadingModal();
-                            $scope.loading = false;
+                            //$scope.loading = false;
                         });
                 }
                 else {
+
+                    console.log('5');
                     promotionService.add($scope.publicationFormParam.dto, function (data) {
                             if(share) {
                                 facebookService.sharePublication($scope.publicationFormParam.business.id, data.id);
@@ -2033,10 +2067,65 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
                             $scope.success(data);
                         },
                         function () {
+
+                            console.log('5E');
                             modalService.closeLoadingModal();
-                            $scope.loading = false;
+                            //$scope.loading = false;
                         });
                 }
+            //}
+        }
+    }
+
+}]);
+myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'businessNotificationService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, businessNotificationService) {
+
+
+    $scope.businessNotificationFormParam = {
+        dto: null,
+        business: accountService.getMyBusiness()
+    };
+
+    $scope.success = function (data) {
+
+        modalService.closeLoadingModal();
+        //$scope.loading = false;
+
+        $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
+        $flash.success('--.generic.success');
+        callback();
+    };
+
+    $scope.save = function (share) {
+
+        if (!$scope.businessNotificationFormParam.isValid) {
+            $scope.businessNotificationFormParam.displayErrorMessage = true;
+        }
+        else {
+            modalService.openLoadingModal();
+            //$scope.loading = true;
+            if ($scope.update) {
+
+                businessNotificationService.edit($scope.businessNotificationFormParam.dto, function (data) {
+                        $scope.success(data);
+                    },
+                    function () {
+                        modalService.closeLoadingModal();
+                        //$scope.loading = false;
+                    });
+            }
+            else {
+
+                businessNotificationService.add($scope.businessNotificationFormParam.dto, function (data) {
+                        if (share) {
+                            facebookService.sharePublication($scope.businessNotificationFormParam.business.id, data.id);
+                        }
+                        $scope.success(data);
+                    },
+                    function () {
+                        modalService.closeLoadingModal();
+                        //$scope.loading = false;
+                    });
             }
         }
     }

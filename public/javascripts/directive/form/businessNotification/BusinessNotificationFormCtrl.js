@@ -30,10 +30,16 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                     // initialize default data
                     //
                     if (scope.getInfo().dto == null) {
+                        var startDate = new Date();
+                        startDate.setMinutes(0);
+                        startDate.setSeconds(0);
+                        startDate.setMilliseconds(0);
+                        var endDate = angular.copy(startDate);
+                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
-                            startDate: new Date(),
-                            endDate:addDays(new Date(),28)//.setMonth(new Date().getDay()+28)
+                            startDate: startDate,
+                            endDate:endDate
                         };
                     }
                     else {
@@ -95,7 +101,9 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                 return scope.getInfo().disabled || scope.editMode===true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'startDate'
+                            startDate: new Date(),
+                            fieldName: 'startDate',
+                            maxDay: 30
                         },
                         endDate: {
                             name: 'endDate',
@@ -110,8 +118,10 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
+                            startDate: new Date(),
                             fieldName: 'endDate',
-                            startDate:scope.startDate
+                            maxDay: 28
+
                         },
                         illustration: {
                             fieldTitle: "--.promotion.illustration",

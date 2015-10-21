@@ -1502,6 +1502,9 @@ ul.messenger .messenger-spinner {
 .field-image-multiple .image-block-container .image-block .image-container img {
   height: 100%;
 }
+.onoffswitchtable {
+  width: 100%;
+}
 .onoffswitchtable td:last-child,
 .onoffswitchtable td:first-child {
   width: 50%;

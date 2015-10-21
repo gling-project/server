@@ -170,6 +170,10 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
 
     $scope.createPromotion = function(){
         $scope.navigateTo('/promotion');
+    };
+
+    $scope.createNotification = function(){
+        $scope.navigateTo('/businessNotification');
     }
 
 });

@@ -36,7 +36,7 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                         scope.hours = [];
 
                         //build hour
-                        if(scope.getInfo().startDate!=null && scope.getInfo().startDate!=undefined) {
+                        if (scope.getInfo().startDate != null && scope.getInfo().startDate != undefined) {
                             for (var i = 0; i <= 23; i++) {
                                 scope.hours.push({value: i, key: i + ':00'});
                             }
@@ -60,35 +60,37 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                             }
 
                             //reinitialize model
-                            if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
-                                scope.day = null;
-                            }
-
-                            //select default value
-                            if (scope.day == null) {
-                                if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
-
-                                    var date = scope.getInfo().field[scope.getInfo().fieldName];
-                                    date.setMinutes(0);
-                                    date.setSeconds(0);
-                                    date.setMilliseconds(0);
-                                    var hour = date.getHours();
-                                    date.setHours(0);
-                                    var day = date.getTime();
-
-                                    scope.day = day;
-                                    scope.hour = hour;
-
+                            if (scope.days.length > 0) {
+                                if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
+                                    scope.day = null;
                                 }
-                                else {
-                                    if (scope.getInfo().defaultSelection == 'lastDay') {
-                                        scope.day = scope.days[scope.days.length - 1].value;
+
+                                //select default value
+                                if (scope.day == null) {
+                                    if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
+
+                                        var date = scope.getInfo().field[scope.getInfo().fieldName];
+                                        date.setMinutes(0);
+                                        date.setSeconds(0);
+                                        date.setMilliseconds(0);
+                                        var hour = date.getHours();
+                                        date.setHours(0);
+                                        var day = date.getTime();
+
+                                        scope.day = day;
+                                        scope.hour = hour;
+
                                     }
                                     else {
-                                        scope.day = scope.days[0].value;
-                                    }
-                                    if (scope.hour == null) {
-                                        scope.hour = new Date().getHours();
+                                        if (scope.getInfo().defaultSelection == 'lastDay') {
+                                            scope.day = scope.days[scope.days.length - 1].value;
+                                        }
+                                        else {
+                                            scope.day = scope.days[0].value;
+                                        }
+                                        if (scope.hour == null) {
+                                            scope.hour = new Date().getHours();
+                                        }
                                     }
                                 }
                             }
