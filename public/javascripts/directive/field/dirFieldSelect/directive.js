@@ -37,7 +37,7 @@ myApp.directive("dirFieldSelect", function (directiveService, $timeout, modalSer
                             return;
                         }
 
-                        isValid = scope.getInfo().optional === true || scope.getInfo().field[scope.getInfo().fieldName] != null;
+                        isValid = (scope.getInfo().optional!=undefined && scope.getInfo().optional() === true) || scope.getInfo().field[scope.getInfo().fieldName] != null;
 
                         scope.getInfo().isValid = isValid;
                     };

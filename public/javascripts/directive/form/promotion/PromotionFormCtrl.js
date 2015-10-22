@@ -203,13 +203,10 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             validationMessage: '--.error.validation.not_null',
                             options: [],
                             optional: function () {
-                                return false;
+                                return true;
                             },
                             disabled: function () {
                                 return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return false
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'interest',

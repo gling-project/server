@@ -151,7 +151,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             validationMessage: '--.error.validation.not_null',
                             options: [],
                             optional: function () {
-                                return false;
+                                return true;
                             },
                             disabled: function () {
                                 return scope.getInfo().disabled;
