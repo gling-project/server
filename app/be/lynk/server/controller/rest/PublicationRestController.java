@@ -44,7 +44,7 @@ public class PublicationRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
-        publication.setEndDate(LocalDateTime.now());
+        publication.setWasRemoved(true);
 
         publicationService.saveOrUpdate(publication);
 

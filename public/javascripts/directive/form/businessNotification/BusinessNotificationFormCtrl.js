@@ -1,4 +1,4 @@
-myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService,constantService) {
+myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService, constantService) {
 
     return {
         restrict: "E",
@@ -18,13 +18,13 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
 
 
                     //add day function
-                    var addDays = function(date, days) {
+                    var addDays = function (date, days) {
                         var result = new Date(date);
                         result.setDate(result.getDate() + days);
                         return result;
                     };
 
-                    scope.editMode=false;
+                    scope.editMode = false;
 
                     //
                     // initialize default data
@@ -35,15 +35,16 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         startDate.setSeconds(0);
                         startDate.setMilliseconds(0);
                         var endDate = angular.copy(startDate);
-                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
+                        endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
                             startDate: startDate,
-                            endDate:endDate
+                            endDate: endDate
                         };
                     }
                     else {
-                        scope.editMode=true;
+                        var startDate = scope.getInfo().dto.startDate;
+                        scope.editMode = true;
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
 
@@ -59,18 +60,21 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             scope.fields.interests.active = function () {
                                 return true;
                             };
+                            var list = [];
                             for (var key in scope.interests) {
                                 var interest = scope.interests[key];
-                                scope.fields.interests.options.push({
+                                list.push({
                                     key: interest,
                                     value: interest.translationName
                                 });
                             }
+                            scope.fields.interests.options = list;
                         }
-                        else if(scope.interests.length == 1){
+                        else if (scope.interests.length == 1) {
                             scope.getInfo().dto.interest = scope.interests[0];
                         }
                     });
+
 
                     scope.fields = {
                         title: {
@@ -98,10 +102,10 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode===true;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             field: scope.getInfo().dto,
-                            startDate: new Date(),
+                            startDate: startDate,
                             fieldName: 'startDate',
                             maxDay: 30
                         },
@@ -110,15 +114,15 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
-                            details:'--.businessNotification.dayMax.details',
+                            details: '--.businessNotification.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode===true;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             validationFct: function () {
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
-                            startDate: new Date(),
+                            startDate: startDate,
                             fieldName: 'endDate',
                             maxDay: 28
 
@@ -126,14 +130,14 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            details:'--promotion.illustration.maximumImage',
-                            target:'publication_picture',
+                            details: '--promotion.illustration.maximumImage',
+                            target: 'publication_picture',
                             //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
                             //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
                             optional: function () {
                                 return true;
                             },
-                            maxImage:4,
+                            maxImage: 4,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -156,7 +160,11 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                                 return false
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'interest'
+                            fieldName: 'interest',
+                            comparableFct: function (a, b) {
+                                console.log('-------!!!-    ? :' + a.name + '/' + b.name);
+                                return a.name == b.name;
+                            }
                         }
                     };
 

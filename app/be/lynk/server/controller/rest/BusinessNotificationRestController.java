@@ -123,11 +123,11 @@ public class BusinessNotificationRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
-
+        businessNotificationToEdit.setInterest(customerInterestService.findByName(businessNotification.getInterest().getName()));
         businessNotificationToEdit.setTitle(businessNotification.getTitle());
         businessNotificationToEdit.setDescription(businessNotification.getDescription());
-        businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
-        businessNotificationToEdit.setStartDate(businessNotification.getStartDate());
+//        businessNotificationToEdit.setEndDate(businessNotification.getStartDate().plusMonths(1));
+//        businessNotificationToEdit.setStartDate(businessNotification.getStartDate());
 
 
         publicationService.saveOrUpdate(businessNotificationToEdit);

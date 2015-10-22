@@ -54,7 +54,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
             else {
                 businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
                         if (share) {
-                            facebookService.sharePublication($scope.promotionParam.business.id,data.id);
+                            facebookService.sharePublication($scope.businessNotificationParam.business.id,data.id);
                         }
                         $scope.success(data);
                     },

@@ -33,7 +33,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
     private static final Boolean OPT1 = false;
 
-    private static enum PublicationTiming {FUTURE, PASSED, NOW,NOW_AND_PASSED}
+    private static enum PublicationTiming {FUTURE, PASSED, NOW, NOW_AND_PASSED}
 
 
     @Override
@@ -105,6 +105,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 " WHERE " +
                 "p.business=b and " +
                 "b.address = a and " +
+                "p.wasRemoved =false and " +
                 "b.businessStatus = :businessStatus ";
 
         if (publicationTiming != null) {
@@ -181,6 +182,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.where(cb.like(from.get("searchableTitle"), criteria)
                 , cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
                 );
         cq.orderBy(cb.desc(from.get("startDate")));
@@ -224,7 +226,8 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.select(from);
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
-                , cb.equal(from.get("business"), business));
+                , cb.equal(from.get("business"), business)
+                , cb.equal(from.get("wasRemoved"), false));
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)
@@ -244,6 +247,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.select(from);
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
                 , cb.equal(address.get("zip"), zip.toString())
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
                 , cb.equal(from.get("type"), PublicationTypeEnum.NOTIFICATION));
@@ -266,6 +270,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.select(from);
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
                 , cb.equal(address.get("zip"), zip.toString())
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
                 , cb.equal(from.get("type"), PublicationTypeEnum.PROMOTION));
@@ -280,11 +285,12 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
     @Override
     public int countPublicationForToday(LocalDateTime day, Business business) {
 
-        String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business";
+        String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business and p.wasRemoved=:wasRemoved";
 
         Long c = JPA.em().createQuery(r, Long.class)
                     .setParameter("start", day.withHour(0).withMinute(0).withSecond(0))
                     .setParameter("end", day.withHour(23).withMinute(59).withSecond(59))
+                    .setParameter("wasRemoved", false)
                     .setParameter("business", business)
                     .getSingleResult();
 
@@ -318,6 +324,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
                 , cb.equal(from.get("business"), business));
 
         return JPA.em().createQuery(cq).getSingleResult();
@@ -346,6 +353,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         return JPA.em().createQuery(cq).getSingleResult();
@@ -362,6 +370,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
 
         cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
                 , cb.greaterThan(from.get("creationDate"), localDateTime)
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
@@ -376,11 +385,12 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         LocalDateTime endday = day.with(fieldISO, 7).withHour(23).withMinute(59).withSecond(59);
 
 
-        String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business";
+        String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business and p.wasRemoved=:wasRemoved";
 
         Long c = JPA.em().createQuery(r, Long.class)
                     .setParameter("start", startday)
                     .setParameter("end", endday)
+                    .setParameter("wasRemoved", false)
                     .setParameter("business", business)
                     .getSingleResult();
 

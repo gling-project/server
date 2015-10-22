@@ -52,7 +52,19 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
     @Enumerated(value = EnumType.STRING)
     protected PublicationTypeEnum type;
 
+    @Basic(optional = false)
+    @Column(columnDefinition = "boolean default false")
+    protected Boolean wasRemoved=false;
+
     public AbstractPublication() {
+    }
+
+    public Boolean getWasRemoved() {
+        return wasRemoved;
+    }
+
+    public void setWasRemoved(Boolean wasRemoved) {
+        this.wasRemoved = wasRemoved;
     }
 
     public PublicationTypeEnum getType() {

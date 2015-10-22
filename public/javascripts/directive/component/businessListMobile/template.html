@@ -73,7 +73,14 @@
         <div class="business-list-business-data">
             <category-line-ctrl ng-info="{categories:business.categories}"></category-line-ctrl>
 
-            {{business.description}}
+            <span ng-bind-html="business.description | text : descriptionLimit"></span>
+
+            <span ng-show="business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase"
+                  ng-click="descriptionLimit = 10000"
+                  class="link">{{'--.textReuction.seeMore' | translateText}}</span>
+            <span ng-show="business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase"
+                  ng-click="descriptionLimit = descriptionLimitBase"
+                  class="link">{{'--.textReuction.seeLess' | translateText}}</span>
 
         </div>
 

@@ -45,7 +45,7 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
 
                             for (var i = 0; i < scope.getInfo().maxDay; i++) {
 
-                                var date = new Date(scope.getInfo().startDate.getTime() + (i * 24 * 60 * 60 * 1000));
+                                var date = new Date(scope.getTime(scope.getInfo().startDate) + (i * 24 * 60 * 60 * 1000));
                                 date.setHours(0);
                                 date.setMinutes(0);
                                 date.setSeconds(0);
@@ -53,7 +53,6 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                                 var day = date.getDate();
                                 var month = date.getMonth() + 1;
                                 var time = date.getTime();
-
 
                                 scope.days.push({value: time, key: day + "/" + month});
 
@@ -69,7 +68,7 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                                 if (scope.day == null) {
                                     if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
 
-                                        var date = scope.getInfo().field[scope.getInfo().fieldName];
+                                        var date = scope.getDate(scope.getInfo().field[scope.getInfo().fieldName]);
                                         date.setMinutes(0);
                                         date.setSeconds(0);
                                         date.setMilliseconds(0);
@@ -134,6 +133,23 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                             isValid = isValid && scope.getInfo().validationFct();
                         }
                         scope.getInfo().isValid = isValid;
+                    };
+
+                    //get time from date or time
+                    scope.getTime = function (param) {
+                        if (param instanceof Date) {
+                            return param.getTime();
+                        }
+                        return param;
+                    };
+
+
+                    //get date from date or time
+                    scope.getDate = function (param) {
+                        if (param instanceof Date) {
+                            return param;
+                        }
+                        return new Date(param);
                     };
                 }
             };

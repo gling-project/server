@@ -118,14 +118,15 @@ public class PromotionRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
+        promotionToEdit.setInterest(customerInterestService.findByName(promotion.getInterest().getName()));
         promotionToEdit.setTitle(promotion.getTitle());
         promotionToEdit.setDescription(promotion.getDescription());
-        promotionToEdit.setEndDate(promotion.getEndDate());
+//        promotionToEdit.setEndDate(promotion.getEndDate());
+//        promotionToEdit.setStartDate(promotion.getStartDate());
         promotionToEdit.setMinimalQuantity(promotion.getMinimalQuantity());
         promotionToEdit.setOriginalPrice(promotion.getOriginalPrice());
         promotionToEdit.setOffPercent(promotion.getOffPercent());
         promotionToEdit.setQuantity(promotion.getQuantity());
-        promotionToEdit.setStartDate(promotion.getStartDate());
 
         //TODO control file
 //        if (promotion.getIllustration() != null) {

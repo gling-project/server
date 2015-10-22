@@ -156,7 +156,7 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
 
                             for (var i = 0; i < scope.getInfo().maxDay; i++) {
 
-                                var date = new Date(scope.getInfo().startDate.getTime() + (i * 24 * 60 * 60 * 1000));
+                                var date = new Date(scope.getTime(scope.getInfo().startDate) + (i * 24 * 60 * 60 * 1000));
                                 date.setHours(0);
                                 date.setMinutes(0);
                                 date.setSeconds(0);
@@ -164,7 +164,6 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                                 var day = date.getDate();
                                 var month = date.getMonth() + 1;
                                 var time = date.getTime();
-
 
                                 scope.days.push({value: time, key: day + "/" + month});
 
@@ -180,7 +179,7 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                                 if (scope.day == null) {
                                     if (scope.getInfo().field[scope.getInfo().fieldName] != null) {
 
-                                        var date = scope.getInfo().field[scope.getInfo().fieldName];
+                                        var date = scope.getDate(scope.getInfo().field[scope.getInfo().fieldName]);
                                         date.setMinutes(0);
                                         date.setSeconds(0);
                                         date.setMilliseconds(0);
@@ -246,6 +245,23 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                         }
                         scope.getInfo().isValid = isValid;
                     };
+
+                    //get time from date or time
+                    scope.getTime = function (param) {
+                        if (param instanceof Date) {
+                            return param.getTime();
+                        }
+                        return param;
+                    };
+
+
+                    //get date from date or time
+                    scope.getDate = function (param) {
+                        if (param instanceof Date) {
+                            return param;
+                        }
+                        return new Date(param);
+                    };
                 }
             };
         }
@@ -298,9 +314,27 @@ myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService
 
                     scope.isValid();
 
-                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                    scope.$watch('getInfo().options', function (n, o) {
+                        scope.computeResult();
                         return scope.isValid();
                     });
+
+                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                        if (n != o) {
+                            scope.computeResult();
+                        }
+                        return scope.isValid();
+                    });
+
+                    scope.computeResult = function () {
+                        if (scope.getInfo().comparableFct != undefined && scope.getInfo().field[scope.getInfo().fieldName] != null) {
+                            for (var key in scope.getInfo().options) {
+                                if (scope.getInfo().comparableFct(scope.getInfo().options[key].key, scope.getInfo().field[scope.getInfo().fieldName])) {
+                                    scope.getInfo().field[scope.getInfo().fieldName] = scope.getInfo().options[key].key;
+                                }
+                            }
+                        }
+                    };
 
                     scope.logField = function () {
                         return console.log(scope.getInfo());
@@ -1931,17 +1965,18 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                         startDate.setSeconds(0);
                         startDate.setMilliseconds(0);
                         var endDate = angular.copy(startDate);
-                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
-                        console.log('startDate:'+startDate);
-                        console.log('endDate:'+endDate);
+                        endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
+                        console.log('startDate:' + startDate);
+                        console.log('endDate:' + endDate);
                         scope.getInfo().dto = {
                             type: 'PROMOTION',
                             startDate: startDate,
-                            endDate:endDate
+                            endDate: endDate
                             //minimalQuantity: 1
                         };
                     }
                     else {
+                        var startDate = scope.getInfo().dto.startDate;
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
 
@@ -1959,13 +1994,15 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             scope.fields.interests.active = function () {
                                 return true;
                             };
+                            var list = [];
                             for (var key in scope.interests) {
                                 var interest = scope.interests[key];
-                                scope.fields.interests.options.push({
+                                list.push({
                                     key: interest,
                                     value: interest.translationName
                                 });
                             }
+                            scope.fields.interests.options=list;
                         }
                         else if (scope.interests.length == 1) {
                             scope.getInfo().dto.interest = scope.interests[0];
@@ -2001,11 +2038,11 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             field: scope.getInfo().dto,
+                            startDate: startDate,
                             fieldName: 'startDate',
-                            startDate: new Date(),
                             maxDay: 30
                         },
                         endDate: {
@@ -2013,18 +2050,18 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
-                            details: '--.promotion.dayMax.details',
+                            details: '--.businessNotification.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             validationFct: function () {
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
+                            startDate: startDate,
                             fieldName: 'endDate',
-                            startDate: new Date(),
-                            maxDay: 14,
-                            defaultSelection: 'lastDay'
+                            maxDay: 28
+
                         },
                         illustration: {
                             name: 'illustration',
@@ -2045,51 +2082,6 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             multiple: true,
                             fieldName: 'pictures'
                         },
-                        //quantity: {
-                        //    name:'quantity',
-                        //    fieldTitle: "--.promotion.quantity",
-                        //    numbersOnly: 'integer',
-                        //    validationRegex: "^[0-9,.]{1,9}$",
-                        //    validationMessage: '--.generic.validation.numberExpected',
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    active: function () {
-                        //        return scope.completePromotion;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'quantity'
-                        //},
-                        //minimalQuantity: {
-                        //    name:'minimalQuantity',
-                        //    fieldTitle: "--.promotion.minimalQuantity",
-                        //    numbersOnly: 'integer',
-                        //    validationRegex: "^[0-9,.]{1,9}$",
-                        //    validationMessage: '--.promotion.validation.minimalQuantityMustBeLowerThanQuantity',
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    field: 1,
-                        //    active: function () {
-                        //        return scope.completePromotion;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'minimalQuantity'
-                        //},
-                        //unit: {
-                        //    name:'unit',
-                        //    fieldTitle: "--.promotion.unit",
-                        //    validationRegex: "^.{0,30}$",
-                        //    validationMessage: ['--.generic.validation.max', '30'],
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    active: function () {
-                        //        return scope.completePromotion;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'unit'
-                        //},
                         originalPrice: {
                             name: 'originalPrice',
                             fieldTitle: "--.promotion.originalUnitPrice",
@@ -2157,7 +2149,10 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                                 return false
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'interest'
+                            fieldName: 'interest',
+                            comparableFct: function (a, b) {
+                                return a.name == b.name;
+                            }
                         }
                     };
 
@@ -2239,7 +2234,7 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
 
 }])
 ;
-myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', 'businessService', 'constantService', function ($flash, directiveService, businessService,constantService) {
+myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', 'businessService', 'constantService', function ($flash, directiveService, businessService, constantService) {
 
     return {
         restrict: "E",
@@ -2259,13 +2254,13 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
 
 
                     //add day function
-                    var addDays = function(date, days) {
+                    var addDays = function (date, days) {
                         var result = new Date(date);
                         result.setDate(result.getDate() + days);
                         return result;
                     };
 
-                    scope.editMode=false;
+                    scope.editMode = false;
 
                     //
                     // initialize default data
@@ -2276,15 +2271,16 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                         startDate.setSeconds(0);
                         startDate.setMilliseconds(0);
                         var endDate = angular.copy(startDate);
-                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
+                        endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
                         scope.getInfo().dto = {
                             type: 'NOTIFICATION',
                             startDate: startDate,
-                            endDate:endDate
+                            endDate: endDate
                         };
                     }
                     else {
-                        scope.editMode=true;
+                        var startDate = scope.getInfo().dto.startDate;
+                        scope.editMode = true;
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
 
@@ -2300,18 +2296,21 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                             scope.fields.interests.active = function () {
                                 return true;
                             };
+                            var list = [];
                             for (var key in scope.interests) {
                                 var interest = scope.interests[key];
-                                scope.fields.interests.options.push({
+                                list.push({
                                     key: interest,
                                     value: interest.translationName
                                 });
                             }
+                            scope.fields.interests.options = list;
                         }
-                        else if(scope.interests.length == 1){
+                        else if (scope.interests.length == 1) {
                             scope.getInfo().dto.interest = scope.interests[0];
                         }
                     });
+
 
                     scope.fields = {
                         title: {
@@ -2339,10 +2338,10 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode===true;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             field: scope.getInfo().dto,
-                            startDate: new Date(),
+                            startDate: startDate,
                             fieldName: 'startDate',
                             maxDay: 30
                         },
@@ -2351,15 +2350,15 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
-                            details:'--.businessNotification.dayMax.details',
+                            details: '--.businessNotification.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode===true;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             validationFct: function () {
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
-                            startDate: new Date(),
+                            startDate: startDate,
                             fieldName: 'endDate',
                             maxDay: 28
 
@@ -2367,14 +2366,14 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                         illustration: {
                             fieldTitle: "--.promotion.illustration",
                             validationMessage: '--.error.validation.image',
-                            details:'--promotion.illustration.maximumImage',
-                            target:'publication_picture',
+                            details: '--promotion.illustration.maximumImage',
+                            target: 'publication_picture',
                             //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
                             //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
                             optional: function () {
                                 return true;
                             },
-                            maxImage:4,
+                            maxImage: 4,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -2397,7 +2396,11 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                                 return false
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'interest'
+                            fieldName: 'interest',
+                            comparableFct: function (a, b) {
+                                console.log('-------!!!-    ? :' + a.name + '/' + b.name);
+                                return a.name == b.name;
+                            }
                         }
                     };
 
@@ -6004,9 +6007,9 @@ myApp.service("contactService", ['$flash', '$http', function ($flash, $http) {
 angular.module('app').run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("/assets/javascripts/directive/component/businessList/template.html",
-    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"business in businesses\" class=publication-box ng-class=\"{'publication-followed':business.following === true}\" ng-click=click()><table class=publication-header><tr><td rowspan=2><div class=publication-business-illustration><img ng-click=\"navigateTo('/business/'+business.id)\" ng-src=\"{{business.illustration | image}}\"></div></td><td class=publication-header-business><div ng-click=\"navigateTo('/business/'+business.id)\" class=\"publication-bordered-bottom-hover publication-bordered-bottom\"><span class=publication-main-title><i ng-show=\"business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{business.name}}</span></div></td></tr><tr><td class=publication-header-title><div class=\"publication-bubble publication-bordered\"><i class=\"gling-icon gling-icon-earth\"></i> {{business.distance / 1000 | number:2}} km</div><div class=\"publication-bubble publication-bordered\"><span>{{business.address.street}}<br>{{business.address.zip}}, {{business.address.city}}</span></div></td></tr></table><div class=publication-body><div class=publication-data ng-hide=\"business.description == null\"><div class=publication-data-body><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl>{{business.description}}</div></div></div><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div>");
+    "<div class=publication-list><div ng-show=\"getInfo().loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"getInfo().loading!=true && businesses.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"business in businesses\" class=publication-box ng-class=\"{'publication-followed':business.following === true}\" ng-click=click()><table class=publication-header><tr><td rowspan=2><div class=publication-business-illustration><img ng-click=\"navigateTo('/business/'+business.id)\" ng-src=\"{{business.illustration | image}}\"></div></td><td class=publication-header-business><div ng-click=\"navigateTo('/business/'+business.id)\" class=\"publication-bordered-bottom-hover publication-bordered-bottom\"><span class=publication-main-title><i ng-show=\"business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{business.name}}</span></div></td></tr><tr><td class=publication-header-title><div class=\"publication-bubble publication-bordered\"><i class=\"gling-icon gling-icon-earth\"></i> {{business.distance / 1000 | number:2}} km</div><div class=\"publication-bubble publication-bordered\"><span>{{business.address.street}}<br>{{business.address.zip}}, {{business.address.city}}</span></div></td></tr></table><div class=publication-body><div class=publication-data ng-hide=\"business.description == null\"><div class=publication-data-body><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl><span ng-bind-html=\"business.description | text : descriptionLimit\"></span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase\" ng-click=\"descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase\" ng-click=\"descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></div></div></div><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/businessListMobile/template.html",
-    "<div class=publication-list-mobile><div ng-show=\"loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"loading===true\" ng-repeat=\"business in businesses\" class=publication-box-mobile ng-click=click()><table class=publication-header ng-click=\"navigateTo('/business/'+business.id)\"><tr><td><img class=illustration ng-src=\"{{business.illustration | image}}\"></td><td><div class=title-box><div class=title><i ng-show=\"business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{business.name}}</div><div class=title-data>{{business.address.street}}<br>{{business.address.zip}}, {{business.address.city}} - {{business.distance / 1000 | number:2}} km</div></div></td></tr></table><div class=business-list-business-data><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl>{{business.description}}</div><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div>");
+    "<div class=publication-list-mobile><div ng-show=\"loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-show=\"loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-hide=\"loading===true\" ng-repeat=\"business in businesses\" class=publication-box-mobile ng-click=click()><table class=publication-header ng-click=\"navigateTo('/business/'+business.id)\"><tr><td><img class=illustration ng-src=\"{{business.illustration | image}}\"></td><td><div class=title-box><div class=title><i ng-show=\"business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{business.name}}</div><div class=title-data>{{business.address.street}}<br>{{business.address.zip}}, {{business.address.city}} - {{business.distance / 1000 | number:2}} km</div></div></td></tr></table><div class=business-list-business-data><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl><span ng-bind-html=\"business.description | text : descriptionLimit\"></span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase\" ng-click=\"descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase\" ng-click=\"descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></div><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/categoryLine/template.html",
     "<div><table class=category-line-tree><tr ng-repeat=\"(catLev1Key,lev2) in getInfo().categories\"><td style=\"white-space: nowrap\"><a ng-click=searchCat(catLev1Key)>{{catLev1Key | translateText}}</a> <span class=transition>>></span></td><td><table><tr ng-repeat=\"(catLev2Key, lev3) in lev2\"><td style=\"white-space: nowrap\"><a ng-click=searchCat(catLev2Key)>{{catLev2Key | translateText}}</a> <span class=transition>>></span></td><td><span ng-repeat=\"catLev3 in lev3\"><span class=transition ng-show=\"$index>0\">/</span> <a ng-click=searchCat(catLev3.translationName)>{{catLev3.translationName | translateText}}</a></span></td></tr></table></td></tr></table></div>");
   $templateCache.put("/assets/javascripts/directive/component/facebookSharePublication/template.html",
@@ -6155,7 +6158,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/view/admin/adminStat.html",
     "<super-admin-menu-ctrl></super-admin-menu-ctrl><h1>Stats</h1><table class=admin_stat><tr ng-repeat=\"(title, value) in stats\"><td>{{title}}</td><td>{{value}}</td></tr></table>");
   $templateCache.put("/assets/javascripts/view/mobile/business.html",
-    "<div class=\"navbar navbar-app navbar-absolute-top\" ng-class=\"{'header-with-advanced-search':advancedSearch}\"><div class=\"btn-group pull-left\"><div class=\"btn btn-navbar\" ng-click=back()><div class=nav-button><i class=\"glyphicon glyphicon-chevron-left\"></i></div></div></div><div class=\"btn-group pull-right\"><div class=\"btn btn-navbar\" ng-click=followed()><div class=\"nav-button business-page-follow\"><span class=selected ng-show=business.following>{{'--.followWidget.stopFollow' | translateText}}<i class=\"gling-icon gling-icon-bell\"></i></span> <span ng-hide=business.following>{{'--.followWidget.follow' | translateText}}<i class=\"gling-icon gling-icon-bell2\"></i></span></div></div></div></div><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"scrollable-content business-mobile-page scrollable-content-body\"><div class=scrollable-content-inner><div class=business-page-header ng-style=\"{'background-image':'url('+(business.landscape | image)+')' }\"><div class=\"edit-button-container landscape-edit\"><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editLandscape()>{{'--.business.page.edit.landscape' | translateText}}</button></div><table ng-click=refreshPublications()><tr><td><div class=business-page-illustration-container><img class=business-illustration ng-src=\"{{business.illustration | image}}\"><div class=edit-button-container><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm\" ng-show=edit ng-click=editIllustration()>{{'--.business.page.edit.illustration' | translateText}}</button></div></div></td><td><div class=business-page-name>{{business.name}}<div class=edit-button-container><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit\" ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div></div></td></tr></table></div><category-line-ctrl ng-info=categoryLineParams></category-line-ctrl><div style=\"overflow: auto\"><div class=business-tab-set><div class=business-tab style=display:inline-block ng-class=\"{'selected':interfaceToDisplay === action.name}\" ng-repeat=\"action in actions\" ng-show=action.display() ng-click=action.action()><i class=\"gling-icon {{action.icon}}\"></i> {{action.translatableName | translateText}}</div></div></div><div ng-show=\"interfaceToDisplay=='home'\"><div ng-show=\"myBusiness===true\"></div><publication-list-mobile-for-business-ctrl ng-info=publicationListParam></publication-list-mobile-for-business-ctrl></div><div class=section ng-show=\"interfaceToDisplay=='info'\"><table class=business-info-line ng-show=\"business.description !=null && business.description.length > 0\"><tr><td colspan=2><span ng-bind-html=\"business.description | text : descriptionLimit\"></span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase\" ng-click=\"descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase\" ng-click=\"descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></td></tr></table><table class=business-info-line><tr><td colspan=2><div class=business-info-line-action><google-map-widget-ctrl ng-info=googleMapParams></google-map-widget-ctrl></div></td></tr><tr><td><div class=business-address>{{business.address.street}}<br>{{business.address.zip}},{{business.address.city}}</div></td><td class=td-action>{{business.distance / 1000 | number:2}} Km</td></tr></table><table class=business-info-line ng-show=\"business.phone!=null\"><tr><td>{{business.phone}}</td><td class=td-action><a class=\"business-info-line-action glyphicon glyphicon-earphone\" href=tel:{{business.phone}}></a></td></tr></table><table class=business-info-line ng-show=\"business.website!=null\"><tr><td>{{'--.generic.site' | translateText}}</td><td class=td-action><a href={{business.website}} target=_blank>{{business.website}}</a></td></tr></table><table class=business-info-line ng-show=\"business.email!=null\"><tr><td>{{business.email}}</td><td class=td-action><a class=\"business-info-line-action glyphicon glyphicon-envelope\" href=mailto:{{business.email}}></a></td></tr></table><table class=business-info-line ng-show=\"displaySocialNetwork() === true\"><tr><td><div ng-show=!!business.socialNetwork.facebookLink class=business-social-network-box><a id=welcome-link-facebook href={{business.socialNetwork.facebookLink}} title=Facebook target=_blank><img src=/assets/images/social_network/facebook.png></a></div><div ng-show=!!business.socialNetwork.twitterLink class=business-social-network-box><a id=welcome-link-twitter href={{business.socialNetwork.twitterLink}} title=Twitter target=_blank><img src=/assets/images/social_network/twitter.png></a></div><div ng-show=!!business.socialNetwork.instagramLink class=business-social-network-box><a id=welcome-link-instagram href={{business.socialNetwork.instagramLink}} title=Instagram target=_blank><img src=/assets/images/social_network/instagram.png></a></div><div ng-show=!!business.socialNetwork.deliveryLink class=business-social-network-box><a id=welcome-link-delivery href={{business.socialNetwork.deliveryLink}} title=\"{{'--.business.socialNetwork.delivery' | translateText}}\" target=_blank><img src=/assets/images/social_network/delivery.png></a></div><div ng-show=!!business.socialNetwork.reservationLink class=business-social-network-box><a href={{business.socialNetwork.reservationLink}} title=\"{{'--.business.socialNetwork.reservation' | translateText}}\" target=_blank><img src=/assets/images/social_network/reservation.png></a></div><div ng-show=!!business.socialNetwork.opinionLink class=business-social-network-box><a href={{business.socialNetwork.opinionLink}} title=\"{{'--.business.socialNetwork.opinion' | translateText}}\" target=_blank><img src=/assets/images/social_network/opinion.png></a></div><div ng-show=!!business.socialNetwork.ecommerceLink class=business-social-network-box><a href={{business.socialNetwork.ecommerceLink}} title=\"{{'--.business.socialNetwork.ecommerce' | translateText}}\" target=_blank><img src=/assets/images/social_network/e_commerce.png></a></div></td></tr></table><table class=business-info-line ng-show=\"displaySchedule() === true\"><tr><td><schedule-ctrl ng-info={dto:business.schedules}></schedule-ctrl></td></tr></table></div><div class=\"section gallery-mobile\" ng-show=\"interfaceToDisplay=='gallery'\"><h4>{{'--.generic.gallery' | translateText}}</h4><img ng-repeat=\"image in business.galleryPictures\" style=\"margin-top: 5px\" ng-click=openGallery(image) ng-src=\"{{image | image}}\"></div></div></div></div></div></div>");
+    "<div class=\"navbar navbar-app navbar-absolute-top\" ng-class=\"{'header-with-advanced-search':advancedSearch}\"><div class=\"btn-group pull-left\"><div class=\"btn btn-navbar\" ng-click=back()><div class=nav-button><i class=\"glyphicon glyphicon-chevron-left\"></i></div></div></div><div class=\"btn-group pull-right\"><div class=\"btn btn-navbar\" ng-click=followed()><div class=\"nav-button business-page-follow\"><span class=selected ng-show=business.following>{{'--.followWidget.stopFollow' | translateText}}<i class=\"gling-icon gling-icon-bell\"></i></span> <span ng-hide=business.following>{{'--.followWidget.follow' | translateText}}<i class=\"gling-icon gling-icon-bell2\"></i></span></div></div></div></div><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"scrollable-content business-mobile-page scrollable-content-body\"><div class=scrollable-content-inner><div class=business-page-header ng-style=\"{'background-image':'url('+(business.landscape | image)+')' }\"><div class=\"edit-button-container landscape-edit\"><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit\" ng-show=edit ng-click=editLandscape()>{{'--.business.page.edit.landscape' | translateText}}</button></div><table ng-click=refreshPublications()><tr><td><div class=business-page-illustration-container><img class=business-illustration ng-src=\"{{business.illustration | image}}\"><div class=edit-button-container><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm\" ng-show=edit ng-click=editIllustration()>{{'--.business.page.edit.illustration' | translateText}}</button></div></div></td><td><div class=business-page-name>{{business.name}}<div class=edit-button-container><button class=\"btn gling-button-dark btn-xs glyphicon glyphicon-edit\" ng-show=\"edit && business.businessStatus === 'NOT_PUBLISHED'\" ng-click=editbusiness()>{{'--.business.page.edit.business' | translateText}}</button></div></div></td></tr></table></div><category-line-ctrl ng-info=categoryLineParams></category-line-ctrl><div style=\"overflow: auto\"><div class=business-tab-set><div class=business-tab style=display:inline-block ng-class=\"{'selected':interfaceToDisplay === action.name}\" ng-repeat=\"action in actions\" ng-show=action.display() ng-click=action.action()><i class=\"gling-icon {{action.icon}}\"></i> {{action.translatableName | translateText}}</div></div></div><div ng-show=\"interfaceToDisplay=='home'\"><div ng-show=\"myBusiness===true\"><button id=business-btn-promotion-add class=\"btn gling-button-dark\" ng-click=createPromotion() ng-disabled=\"business.businessStatus !== 'PUBLISHED'\">{{'--.business.publication.btn.promotion' | translateText}}</button> <button class=\"btn gling-button-dark\" ng-click=createNotification() ng-disabled=\"business.businessStatus !== 'PUBLISHED'\">{{'--.business.publication.btn.notification' | translateText}}</button></div><publication-list-mobile-for-business-ctrl ng-info=publicationListParam></publication-list-mobile-for-business-ctrl></div><div class=section ng-show=\"interfaceToDisplay=='info'\"><table class=business-info-line ng-show=\"business.description !=null && business.description.length > 0\"><tr><td colspan=2><span ng-bind-html=\"business.description | text : descriptionLimit\"></span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase\" ng-click=\"descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase\" ng-click=\"descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></td></tr></table><table class=business-info-line><tr><td colspan=2><div class=business-info-line-action><google-map-widget-ctrl ng-info=googleMapParams></google-map-widget-ctrl></div></td></tr><tr><td><div class=business-address>{{business.address.street}}<br>{{business.address.zip}},{{business.address.city}}</div></td><td class=td-action>{{business.distance / 1000 | number:2}} Km</td></tr></table><table class=business-info-line ng-show=\"business.phone!=null\"><tr><td>{{business.phone}}</td><td class=td-action><a class=\"business-info-line-action glyphicon glyphicon-earphone\" href=tel:{{business.phone}}></a></td></tr></table><table class=business-info-line ng-show=\"business.website!=null\"><tr><td>{{'--.generic.site' | translateText}}</td><td class=td-action><a href={{business.website}} target=_blank>{{business.website}}</a></td></tr></table><table class=business-info-line ng-show=\"business.email!=null\"><tr><td>{{business.email}}</td><td class=td-action><a class=\"business-info-line-action glyphicon glyphicon-envelope\" href=mailto:{{business.email}}></a></td></tr></table><table class=business-info-line ng-show=\"displaySocialNetwork() === true\"><tr><td><div ng-show=!!business.socialNetwork.facebookLink class=business-social-network-box><a id=welcome-link-facebook href={{business.socialNetwork.facebookLink}} title=Facebook target=_blank><img src=/assets/images/social_network/facebook.png></a></div><div ng-show=!!business.socialNetwork.twitterLink class=business-social-network-box><a id=welcome-link-twitter href={{business.socialNetwork.twitterLink}} title=Twitter target=_blank><img src=/assets/images/social_network/twitter.png></a></div><div ng-show=!!business.socialNetwork.instagramLink class=business-social-network-box><a id=welcome-link-instagram href={{business.socialNetwork.instagramLink}} title=Instagram target=_blank><img src=/assets/images/social_network/instagram.png></a></div><div ng-show=!!business.socialNetwork.deliveryLink class=business-social-network-box><a id=welcome-link-delivery href={{business.socialNetwork.deliveryLink}} title=\"{{'--.business.socialNetwork.delivery' | translateText}}\" target=_blank><img src=/assets/images/social_network/delivery.png></a></div><div ng-show=!!business.socialNetwork.reservationLink class=business-social-network-box><a href={{business.socialNetwork.reservationLink}} title=\"{{'--.business.socialNetwork.reservation' | translateText}}\" target=_blank><img src=/assets/images/social_network/reservation.png></a></div><div ng-show=!!business.socialNetwork.opinionLink class=business-social-network-box><a href={{business.socialNetwork.opinionLink}} title=\"{{'--.business.socialNetwork.opinion' | translateText}}\" target=_blank><img src=/assets/images/social_network/opinion.png></a></div><div ng-show=!!business.socialNetwork.ecommerceLink class=business-social-network-box><a href={{business.socialNetwork.ecommerceLink}} title=\"{{'--.business.socialNetwork.ecommerce' | translateText}}\" target=_blank><img src=/assets/images/social_network/e_commerce.png></a></div></td></tr></table><table class=business-info-line ng-show=\"displaySchedule() === true\"><tr><td><schedule-ctrl ng-info={dto:business.schedules}></schedule-ctrl></td></tr></table></div><div class=\"section gallery-mobile\" ng-show=\"interfaceToDisplay=='gallery'\"><h4>{{'--.generic.gallery' | translateText}}</h4><img ng-repeat=\"image in business.galleryPictures\" style=\"margin-top: 5px\" ng-click=openGallery(image) ng-src=\"{{image | image}}\"></div></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/mobile/businessNotification.html",
     "<mobile-title-ctrl display-menu=false title=\"'--.promotion.modal.title.create'\"></mobile-title-ctrl><div class=app-body><div class=app-content><div class=body-mask ng-show=displayMask></div><div class=scrollable><div class=\"section scrollable-content scrollable-content-body\"><div class=scrollable-content-inner><business-notification-form-ctrl ng-info=businessNotificationFormParam></business-notification-form-ctrl><button id=promotion-modal-btn-save type=button class=\"btn gling-button-dark\" ng-click=save(false)>{{'--.generic.save' | translateText}}</button> <button id=promotion-modal-btn-save-and-share type=button class=\"btn gling-button-dark\" ng-click=save(true)>{{'--.publication.modal.publicAndShare' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/mobile/customer_registration.html",

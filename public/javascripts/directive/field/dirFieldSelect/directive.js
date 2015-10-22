@@ -44,9 +44,27 @@ myApp.directive("dirFieldSelect", function (directiveService, $timeout, modalSer
 
                     scope.isValid();
 
-                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                    scope.$watch('getInfo().options', function (n, o) {
+                        scope.computeResult();
                         return scope.isValid();
                     });
+
+                    scope.$watch('getInfo().field[getInfo().fieldName]', function (n, o) {
+                        if (n != o) {
+                            scope.computeResult();
+                        }
+                        return scope.isValid();
+                    });
+
+                    scope.computeResult = function () {
+                        if (scope.getInfo().comparableFct != undefined && scope.getInfo().field[scope.getInfo().fieldName] != null) {
+                            for (var key in scope.getInfo().options) {
+                                if (scope.getInfo().comparableFct(scope.getInfo().options[key].key, scope.getInfo().field[scope.getInfo().fieldName])) {
+                                    scope.getInfo().field[scope.getInfo().fieldName] = scope.getInfo().options[key].key;
+                                }
+                            }
+                        }
+                    };
 
                     scope.logField = function () {
                         return console.log(scope.getInfo());

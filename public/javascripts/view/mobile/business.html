@@ -101,17 +101,17 @@
                     <div ng-show="interfaceToDisplay=='home'">
 
                         <div ng-show="myBusiness===true">
-                            <!--<button id="business-btn-promotion-add"-->
-                                    <!--class="btn gling-button-dark"-->
-                                    <!--ng-click="createPromotion()"-->
-                                    <!--ng-disabled="business.businessStatus !== 'PUBLISHED'">-->
-                                <!--{{'--.business.publication.btn.promotion' | translateText}}-->
-                            <!--</button>-->
-                            <!--<button class="btn gling-button-dark"-->
-                                    <!--ng-click="createNotification()"-->
-                                    <!--ng-disabled="business.businessStatus !== 'PUBLISHED'">-->
-                                <!--{{'--.business.publication.btn.notification' | translateText}}-->
-                            <!--</button>-->
+                            <button id="business-btn-promotion-add"
+                                    class="btn gling-button-dark"
+                                    ng-click="createPromotion()"
+                                    ng-disabled="business.businessStatus !== 'PUBLISHED'">
+                                {{'--.business.publication.btn.promotion' | translateText}}
+                            </button>
+                            <button class="btn gling-button-dark"
+                                    ng-click="createNotification()"
+                                    ng-disabled="business.businessStatus !== 'PUBLISHED'">
+                                {{'--.business.publication.btn.notification' | translateText}}
+                            </button>
                         </div>
 
                         <publication-list-mobile-for-business-ctrl

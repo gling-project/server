@@ -13,6 +13,8 @@ myApp.directive('businessListMobileCtrl', function ($rootScope, businessService,
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.descriptionLimitBase = 200;
+                    scope.descriptionLimit = scope.descriptionLimitBase;
 
                     scope.getInfo().loading = true;
 

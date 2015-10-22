@@ -14,6 +14,10 @@ myApp.directive('businessListCtrl', function ($rootScope, businessService, geolo
                     directiveService.autoScopeImpl(scope);
 
 
+                    scope.descriptionLimitBase = 200;
+                    scope.descriptionLimit = scope.descriptionLimitBase;
+
+
                     scope.getInfo().loading = true;
 
 

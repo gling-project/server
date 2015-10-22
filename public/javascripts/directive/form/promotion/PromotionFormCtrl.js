@@ -28,17 +28,18 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                         startDate.setSeconds(0);
                         startDate.setMilliseconds(0);
                         var endDate = angular.copy(startDate);
-                        endDate = new Date(endDate.getTime() + 3600*1000*24*7);
-                        console.log('startDate:'+startDate);
-                        console.log('endDate:'+endDate);
+                        endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
+                        console.log('startDate:' + startDate);
+                        console.log('endDate:' + endDate);
                         scope.getInfo().dto = {
                             type: 'PROMOTION',
                             startDate: startDate,
-                            endDate:endDate
+                            endDate: endDate
                             //minimalQuantity: 1
                         };
                     }
                     else {
+                        var startDate = scope.getInfo().dto.startDate;
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
 
@@ -56,13 +57,15 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             scope.fields.interests.active = function () {
                                 return true;
                             };
+                            var list = [];
                             for (var key in scope.interests) {
                                 var interest = scope.interests[key];
-                                scope.fields.interests.options.push({
+                                list.push({
                                     key: interest,
                                     value: interest.translationName
                                 });
                             }
+                            scope.fields.interests.options=list;
                         }
                         else if (scope.interests.length == 1) {
                             scope.getInfo().dto.interest = scope.interests[0];
@@ -98,11 +101,11 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldTitle: "--.promotion.startDate",
                             minimalDelay: 'hour',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             field: scope.getInfo().dto,
+                            startDate: startDate,
                             fieldName: 'startDate',
-                            startDate: new Date(),
                             maxDay: 30
                         },
                         endDate: {
@@ -110,18 +113,18 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             fieldTitle: "--.promotion.endDate",
                             validationMessage: '--.promotion.validation.endDateBeforeStartDate',
                             minimalDelay: 'hour',
-                            details: '--.promotion.dayMax.details',
+                            details: '--.businessNotification.dayMax.details',
                             disabled: function () {
-                                return scope.getInfo().disabled;
+                                return scope.getInfo().disabled || scope.editMode === true;
                             },
                             validationFct: function () {
                                 return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
                             },
                             field: scope.getInfo().dto,
+                            startDate: startDate,
                             fieldName: 'endDate',
-                            startDate: new Date(),
-                            maxDay: 14,
-                            defaultSelection: 'lastDay'
+                            maxDay: 28
+
                         },
                         illustration: {
                             name: 'illustration',
@@ -142,51 +145,6 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             multiple: true,
                             fieldName: 'pictures'
                         },
-                        //quantity: {
-                        //    name:'quantity',
-                        //    fieldTitle: "--.promotion.quantity",
-                        //    numbersOnly: 'integer',
-                        //    validationRegex: "^[0-9,.]{1,9}$",
-                        //    validationMessage: '--.generic.validation.numberExpected',
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    active: function () {
-                        //        return scope.completePromotion;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'quantity'
-                        //},
-                        //minimalQuantity: {
-                        //    name:'minimalQuantity',
-                        //    fieldTitle: "--.promotion.minimalQuantity",
-                        //    numbersOnly: 'integer',
-                        //    validationRegex: "^[0-9,.]{1,9}$",
-                        //    validationMessage: '--.promotion.validation.minimalQuantityMustBeLowerThanQuantity',
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    field: 1,
-                        //    active: function () {
-                        //        return scope.completePromotion;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'minimalQuantity'
-                        //},
-                        //unit: {
-                        //    name:'unit',
-                        //    fieldTitle: "--.promotion.unit",
-                        //    validationRegex: "^.{0,30}$",
-                        //    validationMessage: ['--.generic.validation.max', '30'],
-                        //    disabled: function () {
-                        //        return scope.getInfo().disabled;
-                        //    },
-                        //    active: function () {
-                        //        return scope.completePromotion;
-                        //    },
-                        //    field: scope.getInfo().dto,
-                        //    fieldName: 'unit'
-                        //},
                         originalPrice: {
                             name: 'originalPrice',
                             fieldTitle: "--.promotion.originalUnitPrice",
@@ -254,7 +212,10 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                                 return false
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'interest'
+                            fieldName: 'interest',
+                            comparableFct: function (a, b) {
+                                return a.name == b.name;
+                            }
                         }
                     };
 
