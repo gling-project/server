@@ -515,7 +515,7 @@ day_abrv_sunday=Zon
 --.business.page.management.contact.btn=Neem contact op met ons!
 --.error.promotion.duration.tooLong=De maximale duur van een promotie is {0} dagen
 --.error.notification.duration.tooLong=De maximale duur van een nieuws is {0} dagen
---.error.promotion.TooMuchToday=U heeft vandaag al {0} publicaties vrijgegeven. U moet tot morgen wachten om opnieuw te kunnen publiceren.
+--.error.promotion.TooMuchToday=U heeft al {0} berichten gepubliceerd voor deze week. Mogen wij U vriendelijk vragen even geduld te hebben tot morgen om opnieuw te kunnen publiceren a.u.b.
 --.error.publication.startDateBeforeNow=La publication doit commencer au plus tard maintenant
 
 ##  directive/form/account/AccountFormCtrl.js (//)
