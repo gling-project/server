@@ -199,6 +199,8 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nombre de session depuis 7 jours", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(7)));
 
+        adminStatDTO.getStats().put("Nombre de session depuis le 13/10", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.of(2015,10,10,00,00,00)));//now().minusDays(7)));
+
 
         return ok(adminStatDTO);
     }

@@ -28,6 +28,9 @@ import static java.util.Arrays.asList;
 @Service
 public class MongoSearchServiceImpl implements MongoSearchService {
 
+    private final static Long[] ACCOUNT_ID_EXCLUDE_LIST = {1L, 2L, 3L};
+
+
     private final static String BY_DEFAULT = "be.lynk.server.controller.rest.SearchRestController.getByDefault";
 
 
@@ -36,12 +39,15 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
 
     @Override
-    public int numberSessionsFrom(LocalDateTime localDateTime){
+    public int numberSessionsFrom(LocalDateTime localDateTime) {
 
         Date from = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 
         DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
-                                         .find(new BasicDBObject("_id", new BasicDBObject("$gt", from)));
+                                         .find(new BasicDBObject("$and",
+                                                                 new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
+                                                                         , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
+                                              );
 
         List<Session> sessions = new ArrayList<>();
 

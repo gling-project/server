@@ -1270,11 +1270,11 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
     $scope.logout = function () {
         if (facebookService.isConnected()) {
             facebookService.logout();
-            $scope.closeMenu();
         }
         $scope.$broadcast('LOGOUT');
         accountService.logout(function () {
             $location.path('/');
+            $scope.closeMenu();
         });
     };
 
