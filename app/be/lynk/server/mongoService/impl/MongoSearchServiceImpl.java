@@ -28,7 +28,7 @@ import static java.util.Arrays.asList;
 @Service
 public class MongoSearchServiceImpl implements MongoSearchService {
 
-    private final static Long[] ACCOUNT_ID_EXCLUDE_LIST = {1L, 2L, 3L};
+    private final static Long[] ACCOUNT_ID_EXCLUDE_LIST = {1L, 2L, 3L, 51L, 104L, 128L};
 
 
     private final static String BY_DEFAULT = "be.lynk.server.controller.rest.SearchRestController.getByDefault";
