@@ -21,6 +21,8 @@ myApp.controller('SearchPageCtrl', function ($rootScope, $scope, searchService, 
     $scope.search = function () {
         searchService.searchByString(0, param, function (result) {
 
+            modalService.closeLoadingModal();
+
             //compute witch tab must be displayed
             $scope.businessTab.display = false;
             $scope.categoryTab.display = false;
