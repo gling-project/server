@@ -1,4 +1,4 @@
-myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business) {
+myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business,modalService) {
 
     $scope.loading = false;
 
@@ -53,10 +53,8 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
             }
             else {
                 businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
-                        if (share) {
-                            facebookService.sharePublication($scope.businessNotificationParam.business.id,data.id);
-                        }
                         $scope.success(data);
+                        modalService.successAndShare($scope.businessNotificationParam.business.id,data.id);
                     },
                     function () {
                         $scope.loading = false;

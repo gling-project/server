@@ -350,6 +350,26 @@ myApp.service("modalService", function ($modal) {
             size: "lg",
             resolve: resolve
         });
-    }
+    };
+
+
+
+    this.successAndShare = function (businessId, publicationId) {
+        var resolve = {
+            businessId: function () {
+                return businessId;
+            },
+            publicationId: function () {
+                return publicationId;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/ConfirmAndShareModal/view.html",
+            controller: "ConfirmAndShareModalCtrl",
+            size: "l",
+            resolve: resolve,
+            backdrop:true
+        });
+    };
 
 });

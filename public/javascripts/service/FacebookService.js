@@ -147,7 +147,9 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
     };
 
     this.sharePublication = function(businessId,publicationId){
-        var obj = {method: 'share',href: constantService.urlBase+'/business/'+businessId+'/publication/'+publicationId};
+        var url = constantService.urlBase+'/business/'+businessId+'/publication/'+publicationId;
+        console.log('url:'+url);
+        var obj = {method: 'share',href: url};
         function callback(response) {}
         FB.ui(obj, callback);
     };

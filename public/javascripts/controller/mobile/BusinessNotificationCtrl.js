@@ -11,7 +11,6 @@ myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accou
         modalService.closeLoadingModal();
 
         $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
-        $flash.success('--.generic.success');
     };
 
     $scope.save = function (share) {
@@ -33,10 +32,8 @@ myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accou
             else {
 
                 businessNotificationService.add($scope.businessNotificationFormParam.dto, function (data) {
-                        if (share) {
-                            facebookService.sharePublication($scope.businessNotificationFormParam.business.id, data.id);
-                        }
                         $scope.success(data);
+                        modalService.successAndShare($scope.businessNotificationFormParam.business.id, data.id);
                     },
                     function () {
                         modalService.closeLoadingModal();

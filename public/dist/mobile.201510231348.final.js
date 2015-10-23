@@ -2001,7 +2001,7 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
-myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'promotionService', function ($rootScope, $scope, accountService,$flash,translationService,facebookService,modalService,promotionService) {
+myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'promotionService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService) {
 
 
     $scope.publicationFormParam = {
@@ -2011,68 +2011,42 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
 
     $scope.success = function (data) {
 
-        console.log('SCUCESS');
-
         modalService.closeLoadingModal();
-        //$scope.loading = false;
 
-        $scope.navigateTo('/business/'+accountService.getMyBusiness().id);
-        $flash.success('--.generic.success');
+        $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
     };
 
     $scope.save = function (share) {
-
-        console.log('1');
 
         if (!$scope.publicationFormParam.isValid) {
             $scope.publicationFormParam.displayErrorMessage = true;
         }
         else {
 
-            console.log('2');
-            console.log('2E : '+$scope.publicationFormParam.minimalQuantity +'/'+ $scope.publicationFormParam.quantity);
             if ($scope.publicationFormParam.minimalQuantity > $scope.publicationFormParam.quantity) {
-
-
                 $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
             }
-            //else if($scope.loading===false){
-
-                console.log('3');
+            else {
 
                 modalService.openLoadingModal();
-                //$scope.loading = true;
                 if ($scope.update) {
-
-                    console.log('4');
 
                     promotionService.edit($scope.publicationFormParam.dto, function (data) {
                             $scope.success(data);
                         },
                         function () {
-                            console.log('4E');
-
                             modalService.closeLoadingModal();
-                            //$scope.loading = false;
                         });
                 }
                 else {
-
-                    console.log('5');
                     promotionService.add($scope.publicationFormParam.dto, function (data) {
-                            if(share) {
-                                facebookService.sharePublication($scope.publicationFormParam.business.id, data.id);
-                            }
                             $scope.success(data);
                         },
                         function () {
-
-                            console.log('5E');
                             modalService.closeLoadingModal();
-                            //$scope.loading = false;
                         });
                 }
-            //}
+            }
         }
     }
 
@@ -2090,7 +2064,6 @@ myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountSe
         modalService.closeLoadingModal();
 
         $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
-        $flash.success('--.generic.success');
     };
 
     $scope.save = function (share) {
@@ -2112,10 +2085,8 @@ myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountSe
             else {
 
                 businessNotificationService.add($scope.businessNotificationFormParam.dto, function (data) {
-                        if (share) {
-                            facebookService.sharePublication($scope.businessNotificationFormParam.business.id, data.id);
-                        }
                         $scope.success(data);
+                        modalService.successAndShare($scope.businessNotificationFormParam.business.id, data.id);
                     },
                     function () {
                         modalService.closeLoadingModal();

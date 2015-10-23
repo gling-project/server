@@ -179,7 +179,7 @@
 
 ##  directive/form/business/BusinessFormCtrl.js
 --.business.website=Site web (en option)
---.business.contactEmail=Email de contact (en option)
+--.business.contactEmail=Email de contact
 --.validation.dto.notNull=Ce champs ne peut pas être laissé vide.
 
 ##  view/business_welcome.html
@@ -599,3 +599,5 @@ day_abrv_sunday=Di
 --.textReuction.seeLess=Masquer
 --.imageTool.minimalSize=La taille minimum de l'image doit être de {0} de large et {1} de haut.
 --.generic.success=L'opération est un succés
+--.publication.success.shareOnFacebook=Partager sur Facebook
+--.publication.success.message=Votre publication a bien été créée!

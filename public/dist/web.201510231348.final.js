@@ -1002,7 +1002,7 @@ myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal',
     }
 
 }]);
-myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', 'facebookService', 'business', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business) {
+myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', 'facebookService', 'business', 'modalService', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business,modalService) {
 
     $scope.loading = false;
 
@@ -1064,10 +1064,8 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
                 }
                 else {
                     promotionService.add($scope.promotionParam.dto, function (data) {
-                            if(share) {
-                                facebookService.sharePublication($scope.promotionParam.business.id, data.id);
-                            }
                             $scope.success(data);
+                            modalService.successAndShare($scope.promotionParam.business.id, data.id);
                         },
                         function () {
                             $scope.loading = false;
@@ -1079,7 +1077,7 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
 
 
 }]);
-myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', 'facebookService', 'business', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business) {
+myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', 'facebookService', 'business', 'modalService', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business,modalService) {
 
     $scope.loading = false;
 
@@ -1134,10 +1132,8 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
             }
             else {
                 businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
-                        if (share) {
-                            facebookService.sharePublication($scope.businessNotificationParam.business.id,data.id);
-                        }
                         $scope.success(data);
+                        modalService.successAndShare($scope.businessNotificationParam.business.id,data.id);
                     },
                     function () {
                         $scope.loading = false;

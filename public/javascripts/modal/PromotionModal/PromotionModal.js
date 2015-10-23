@@ -1,4 +1,4 @@
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business) {
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business,modalService) {
 
     $scope.loading = false;
 
@@ -60,10 +60,8 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                 }
                 else {
                     promotionService.add($scope.promotionParam.dto, function (data) {
-                            if(share) {
-                                facebookService.sharePublication($scope.promotionParam.business.id, data.id);
-                            }
                             $scope.success(data);
+                            modalService.successAndShare($scope.promotionParam.business.id, data.id);
                         },
                         function () {
                             $scope.loading = false;

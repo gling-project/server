@@ -2382,6 +2382,14 @@ ul.messenger .messenger-spinner {
 .navbar {
   position: absolute !important;
 }
+.sp_plugin-button-2x {
+  background-image: url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y5/r/KxVPs0eEy36.png);
+  background-size: 30px 72px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+}
 .publication-box-mobile {
   background-color: #ffffff;
   padding: 4px;

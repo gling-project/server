@@ -179,7 +179,7 @@
 
 ##  directive/form/business/BusinessFormCtrl.js
 --.business.website=Website (optioneel)
---.business.contactEmail=Contact e-mail (optioneel)
+--.business.contactEmail=Contact e-mail
 --.validation.dto.notNull=Dit veld mag niet leeg zijn.
 
 ##  view/business_welcome.html
