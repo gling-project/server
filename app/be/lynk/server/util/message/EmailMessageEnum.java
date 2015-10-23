@@ -10,7 +10,9 @@ public enum EmailMessageEnum {
     REGISTRATION_BUSINESS_SUBJECT("--.email.registration.business.subject"),
     REGISTRATION_BUSINESS_BODY("--.email.registration.business.body"),
     REGISTRATION_CUSTOMER_SUBJECT("--.email.registration.customer.subject"),
-    REGISTRATION_CUSTOMER_BODY("--.email.registration.customer.body");
+    REGISTRATION_CUSTOMER_BODY("--.email.registration.customer.body"),
+    PUBLICATION_EDIT_BY_ADMIN_SUBJECT("--.publication.editByAdmin.email.subject"),
+    PUBLICATION_EDIT_BY_ADMIN_BODY("--.publication.editByAdmin.email.body");
 
     private final String key;
 

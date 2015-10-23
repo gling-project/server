@@ -41,7 +41,17 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
 
     private CustomerInterestDTO interest;
 
+    private String editionReason;
+
     public AbstractPublicationDTO() {
+    }
+
+    public String getEditionReason() {
+        return editionReason;
+    }
+
+    public void setEditionReason(String editionReason) {
+        this.editionReason = editionReason;
     }
 
     public CustomerInterestDTO getInterest() {
@@ -160,7 +170,7 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
     @Override
     public int compareTo(AbstractPublicationDTO o) {
 //        if (this.getDistance() == null || this.getDistance().compareTo(o.getDistance()) == 0) {
-            return o.startDate.compareTo(this.startDate);
+        return o.startDate.compareTo(this.startDate);
 //        }
 //        return this.getDistance().compareTo(o.getDistance());
     }

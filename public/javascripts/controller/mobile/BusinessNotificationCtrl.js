@@ -1,4 +1,4 @@
-myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, businessNotificationService, businessService) {
+myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, businessNotificationService, businessService,$compile) {
 
     businessService.getBusiness(accountService.getMyself().businessId, function (business) {
 
@@ -9,6 +9,11 @@ myApp.controller('BusinessNotificationCtrl', function ($rootScope, $scope, accou
             dto: null,
             business: $scope.business
         };
+
+        //inject directive
+        var directive = $compile("<business-notification-form-ctrl ng-info='businessNotificationFormParam'></business-notification-form-ctrl>")($scope);
+
+        $('.inject-box').append(directive);
 
         $scope.success = function (data) {
 

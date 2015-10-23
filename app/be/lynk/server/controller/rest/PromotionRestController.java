@@ -6,20 +6,24 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.PromotionDTO;
 import be.lynk.server.dto.StoredFileDTO;
+import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.CustomerInterestService;
+import be.lynk.server.service.EmailService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.EmailMessageEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.db.jpa.Transactional;
+import play.i18n.Lang;
 import play.mvc.Result;
 
 import java.time.Duration;
@@ -32,11 +36,13 @@ import java.time.LocalDateTime;
 public class PromotionRestController extends AbstractRestController {
 
     @Autowired
-    private PublicationService publicationService;
+    private PublicationService      publicationService;
     @Autowired
-    private StoredFileService storedFileService;
+    private StoredFileService       storedFileService;
     @Autowired
     private CustomerInterestService customerInterestService;
+    @Autowired
+    private EmailService            emailService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -50,19 +56,19 @@ public class PromotionRestController extends AbstractRestController {
         Business business = account.getBusiness();
 
         //control start date
-        if(promotion.getStartDate().compareTo(LocalDateTime.now().minusHours(1))==-1){
+        if (promotion.getStartDate().compareTo(LocalDateTime.now().minusHours(1)) == -1) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_STARTDATE_BEFORE_NOW);
         }
 
         //control date
-        Duration duration= Duration.between(promotion.getStartDate(), promotion.getEndDate());
-        if(duration.getSeconds() > Constant.PROMOTION_PERIOD_MAX_DAY*24*60*60){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PROMOTION_DURATION_TOO_LONG,Constant.PROMOTION_PERIOD_MAX_DAY+"");
+        Duration duration = Duration.between(promotion.getStartDate(), promotion.getEndDate());
+        if (duration.getSeconds() > Constant.PROMOTION_PERIOD_MAX_DAY * 24 * 60 * 60) {
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PROMOTION_DURATION_TOO_LONG, Constant.PROMOTION_PERIOD_MAX_DAY + "");
         }
 
         //control number by day
-        if(publicationService.countPublicationForWeek(promotion.getStartDate(),securityController.getBusiness())>=Constant.PUBLICATION_MAX_BY_WEEK){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY,Constant.PUBLICATION_MAX_BY_WEEK +"");
+        if (publicationService.countPublicationForWeek(promotion.getStartDate(), securityController.getBusiness()) >= Constant.PUBLICATION_MAX_BY_WEEK) {
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_WEEK + "");
         }
 
 
@@ -118,6 +124,8 @@ public class PromotionRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
+        String oldName = promotionToEdit.getTitle();
+
         promotionToEdit.setInterest(customerInterestService.findByName(promotion.getInterest().getName()));
         promotionToEdit.setTitle(promotion.getTitle());
         promotionToEdit.setDescription(promotion.getDescription());
@@ -136,6 +144,21 @@ public class PromotionRestController extends AbstractRestController {
         promotionToEdit.setUnit(promotion.getUnit());
 
         publicationService.saveOrUpdate(promotionToEdit);
+
+
+
+        //send email if user is superadmin
+        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
+
+            Lang lang = business.getAccount().getLang();
+
+            String title = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_SUBJECT,lang);
+            String message = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_BODY,lang,oldName,dto.getEditionReason());
+
+            EmailMessage emailMessage = new EmailMessage(new EmailMessage.Recipient(business.getAccount()),title,message);
+
+            emailService.sendEmail(emailMessage,lang);
+        }
 
         return ok(dozerService.map(promotionToEdit, PromotionDTO.class));
     }

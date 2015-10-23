@@ -2011,17 +2011,22 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
-myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'promotionService', 'businessService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService,businessService) {
+myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'promotionService', 'businessService', '$compile', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService, businessService, $compile) {
 
-    businessService.getBusiness(accountService.getMyself().businessId,function(business){
+    businessService.getBusiness(accountService.getMyself().businessId, function (business) {
 
         modalService.closeLoadingModal();
-        $scope.business=business;
+        $scope.business = business;
 
         $scope.publicationFormParam = {
             dto: null,
-            business:$scope.business
+            business: $scope.business
         };
+
+        //inject directive
+        var directive = $compile("<promotion-form-ctrl ng-info='publicationFormParam'></promotion-form-ctrl>")($scope);
+
+        $('.inject-box').append(directive);
 
         $scope.success = function (data) {
 
@@ -2067,10 +2072,8 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
     });
 
 
-
-
 }]);
-myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'businessNotificationService', 'businessService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, businessNotificationService, businessService) {
+myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'businessNotificationService', 'businessService', '$compile', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, businessNotificationService, businessService,$compile) {
 
     businessService.getBusiness(accountService.getMyself().businessId, function (business) {
 
@@ -2081,6 +2084,11 @@ myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountSe
             dto: null,
             business: $scope.business
         };
+
+        //inject directive
+        var directive = $compile("<business-notification-form-ctrl ng-info='businessNotificationFormParam'></business-notification-form-ctrl>")($scope);
+
+        $('.inject-box').append(directive);
 
         $scope.success = function (data) {
 

@@ -6,19 +6,20 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessNotificationDTO;
 import be.lynk.server.dto.StoredFileDTO;
+import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.BusinessNotification;
-import be.lynk.server.service.CustomerInterestService;
-import be.lynk.server.service.PublicationService;
-import be.lynk.server.service.StoredFileService;
+import be.lynk.server.service.*;
 import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.message.EmailMessageEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.db.jpa.Transactional;
+import play.i18n.Lang;
 import play.mvc.Result;
 
 import java.time.Duration;
@@ -38,6 +39,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
     private StoredFileService       storedFileService;
     @Autowired
     private CustomerInterestService customerInterestService;
+    @Autowired
+    private EmailService            emailService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -70,7 +73,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         //control number by day
-        if(publicationService.countPublicationForWeek(businessNotification.getStartDate(), securityController.getBusiness())>=Constant.PUBLICATION_MAX_BY_WEEK){
+        if (publicationService.countPublicationForWeek(businessNotification.getStartDate(), securityController.getBusiness()) >= Constant.PUBLICATION_MAX_BY_WEEK) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_WEEK);
         }
 
@@ -123,6 +126,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
+        String oldName = businessNotificationToEdit.getTitle();
+
         businessNotificationToEdit.setInterest(customerInterestService.findByName(businessNotification.getInterest().getName()));
         businessNotificationToEdit.setTitle(businessNotification.getTitle());
         businessNotificationToEdit.setDescription(businessNotification.getDescription());
@@ -139,7 +144,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
             newPictures.put(storedFile, false);
         }
 
-        int biggestOrder=0;
+        int biggestOrder = 0;
         for (int i = businessNotificationToEdit.getPictures().size() - 1; i >= 0; i--) {
 
             StoredFile storedFile = businessNotificationToEdit.getPictures().get(i);
@@ -149,8 +154,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
                 if (storedFile.getStoredName().equals(storedFileBooleanEntry.getKey().getStoredName())) {
                     founded = true;
                     storedFileBooleanEntry.setValue(true);
-                    if(storedFile.getFileOrder()>biggestOrder){
-                        biggestOrder=storedFile.getFileOrder();
+                    if (storedFile.getFileOrder() > biggestOrder) {
+                        biggestOrder = storedFile.getFileOrder();
                     }
                 }
             }
@@ -179,6 +184,20 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
                 storedFileService.saveOrUpdate(originalStoredFile);
             }
+        }
+
+        //send email if user is superadmin
+        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
+
+            Lang lang = business.getAccount().getLang();
+            EmailMessage.Recipient target = new EmailMessage.Recipient(securityController.getCurrentUser());//business.getAccount());
+
+            String title = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_SUBJECT, lang);
+            String message = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_BODY, lang, oldName, dto.getEditionReason());
+
+            EmailMessage emailMessage = new EmailMessage(target, title, message);
+
+            emailService.sendEmail(emailMessage, lang);
         }
 
         return ok(dozerService.map(businessNotificationToEdit, BusinessNotificationDTO.class));

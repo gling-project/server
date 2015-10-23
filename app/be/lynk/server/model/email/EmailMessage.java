@@ -1,14 +1,16 @@
 package be.lynk.server.model.email;
 
+import be.lynk.server.model.entities.Account;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmailMessage {
 
     private List<Recipient> recipients;
-    private String subject;
-    private String content;
-    private String replyTo;
+    private String          subject;
+    private String          content;
+    private String          replyTo;
 
 
     public EmailMessage(Recipient recipients, String subject, String content) {
@@ -23,7 +25,7 @@ public class EmailMessage {
         this.recipients.add(recipients);
         this.subject = subject;
         this.content = content;
-        this.replyTo=replyTo;
+        this.replyTo = replyTo;
     }
 
     public EmailMessage(String replyTo, List<Recipient> recipients, String subject, String content) {
@@ -80,28 +82,34 @@ public class EmailMessage {
     }
 
 
-    public static class Recipient{
+    public static class Recipient {
 
-        private final String email;
-        private final String name;
+        private final String            email;
+        private final String            name;
         private final RecipientTypeEnum type;
+
+        public Recipient(Account account) {
+            this.email = account.getEmail();
+            this.name = account.getFirstname() + " " + account.getLastname();
+            type = RecipientTypeEnum.TO;
+        }
 
         public Recipient(String email) {
             this.email = email;
             this.name = email;
-            this.type= RecipientTypeEnum.TO;
+            this.type = RecipientTypeEnum.TO;
         }
 
         public Recipient(String email, String name) {
             this.email = email;
             this.name = name;
-            this.type= RecipientTypeEnum.TO;
+            this.type = RecipientTypeEnum.TO;
         }
 
-        public Recipient(String email, String name,RecipientTypeEnum type) {
+        public Recipient(String email, String name, RecipientTypeEnum type) {
             this.email = email;
             this.name = name;
-            this.type=type;
+            this.type = type;
         }
 
         public RecipientTypeEnum getType() {
@@ -117,7 +125,7 @@ public class EmailMessage {
         }
     }
 
-    public static enum RecipientTypeEnum{
+    public static enum RecipientTypeEnum {
         TO, BCC, CC
     }
 }

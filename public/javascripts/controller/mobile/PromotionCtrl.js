@@ -1,14 +1,19 @@
-myApp.controller('PromotionCtrl', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService,businessService) {
+myApp.controller('PromotionCtrl', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService, businessService, $compile) {
 
-    businessService.getBusiness(accountService.getMyself().businessId,function(business){
+    businessService.getBusiness(accountService.getMyself().businessId, function (business) {
 
         modalService.closeLoadingModal();
-        $scope.business=business;
+        $scope.business = business;
 
         $scope.publicationFormParam = {
             dto: null,
-            business:$scope.business
+            business: $scope.business
         };
+
+        //inject directive
+        var directive = $compile("<promotion-form-ctrl ng-info='publicationFormParam'></promotion-form-ctrl>")($scope);
+
+        $('.inject-box').append(directive);
 
         $scope.success = function (data) {
 
@@ -52,8 +57,6 @@ myApp.controller('PromotionCtrl', function ($rootScope, $scope, accountService, 
         }
 
     });
-
-
 
 
 });

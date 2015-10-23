@@ -38,8 +38,8 @@ public class EmailServiceImpl implements EmailService {
             Map<String, Object> values = new HashMap<>();
             values.put("projectName", translationService.getTranslation("--.site.name", lang));
             values.put("projectUrl", emailProperties.getUrl());
-//            values.put("logoUrl", new DefaultParam(lang).logoUrl);
-//            values.put("websiteUrl", new DefaultParam(lang).websiteUrl);
+            emailMessage.setSubject(emailMessage.getSubject());
+            emailMessage.setContent(emailMessage.getContent());
             values.put("content", emailMessage.getContent());
 
             //use the default email template
