@@ -38,7 +38,7 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     @Basic
     private String website;
 
-    @Basic
+    @Basic(optional = true)
     private String email;
 
     @Basic
