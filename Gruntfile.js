@@ -201,7 +201,10 @@ module.exports = function (grunt) {
                         'public/javascripts/dist/templateCacheWeb.js',
 
                         <!-- tool -->
-                        'public/javascripts/tool/imageTool/ImageToolCtrl.js'
+                        'public/javascripts/tool/imageTool/ImageToolCtrl.js',
+
+                        <!-- modal -->
+                        'public/javascripts/modal/ConfirmAndShareModal/ConfirmAndShareModal.js'
                     ]
                     , 'public/dist/web.js': [
                         'public/components/lodash/lodash.min.js',
