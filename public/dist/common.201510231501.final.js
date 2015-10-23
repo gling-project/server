@@ -165,13 +165,13 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                                 var month = date.getMonth() + 1;
                                 var time = date.getTime();
 
-                                scope.days.push({value: time, key: day + "/" + month});
+                                scope.days.push(time);
 
                             }
 
                             //reinitialize model
                             if (scope.days.length > 0) {
-                                if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
+                                if (scope.day < scope.days[0] || scope.day > scope.days[scope.days.length - 1]) {
                                     scope.day = null;
                                 }
 
@@ -193,10 +193,10 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
                                     }
                                     else {
                                         if (scope.getInfo().defaultSelection == 'lastDay') {
-                                            scope.day = scope.days[scope.days.length - 1].value;
+                                            scope.day = scope.days[scope.days.length - 1];
                                         }
                                         else {
-                                            scope.day = scope.days[0].value;
+                                            scope.day = scope.days[0];
                                         }
                                         if (scope.hour == null) {
                                             scope.hour = new Date().getHours();
@@ -1953,274 +1953,280 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    scope.update = scope.getInfo().dto != null;
-                    scope.completePromotion = true;
+                    scope.$watch('getInfo()', function (n) {
 
-                    //
-                    // initialize default data
-                    //
-                    if (scope.getInfo().dto == null) {
-                        var startDate = new Date();
-                        startDate.setMinutes(0);
-                        startDate.setSeconds(0);
-                        startDate.setMilliseconds(0);
-                        var endDate = angular.copy(startDate);
-                        endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
-                        console.log('startDate:' + startDate);
-                        console.log('endDate:' + endDate);
-                        scope.getInfo().dto = {
-                            type: 'PROMOTION',
-                            startDate: startDate,
-                            endDate: endDate
-                            //minimalQuantity: 1
-                        };
-                    }
-                    else {
-                        var startDate = scope.getInfo().dto.startDate;
-                        scope.completePromotion = scope.getInfo().dto.originalPrice != null;
-                    }
+                        if (n != null) {
 
+                            scope.update = scope.getInfo().dto != null;
+                            scope.completePromotion = true;
 
-                    //complete for previsualization
-                    scope.getInfo().dto.businessName = scope.getInfo().business.name;
-                    scope.getInfo().dto.businessIllustration = scope.getInfo().business.illustration;
-                    scope.getInfo().dto.distance = scope.getInfo().business.distance;
+                            //
+                            // initialize default data
+                            //
+                            if (scope.getInfo().dto == null) {
+                                var startDate = new Date();
+                                startDate.setMinutes(0);
+                                startDate.setSeconds(0);
+                                startDate.setMilliseconds(0);
+                                var endDate = angular.copy(startDate);
+                                endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
+                                console.log('startDate:' + startDate);
+                                console.log('endDate:' + endDate);
+                                scope.getInfo().dto = {
+                                    type: 'PROMOTION',
+                                    startDate: startDate,
+                                    endDate: endDate
+                                    //minimalQuantity: 1
+                                };
+                            }
+                            else {
+                                var startDate = scope.getInfo().dto.startDate;
+                                scope.completePromotion = scope.getInfo().dto.originalPrice != null;
+                            }
 
 
-                    //load interests
-                    businessService.getInterests(function (data) {
-                        scope.interests = data;
-                        if (scope.interests.length > 1) {
-                            scope.fields.interests.active = function () {
-                                return true;
+                            //complete for previsualization
+                            scope.getInfo().dto.businessName = scope.getInfo().business.name;
+                            scope.getInfo().dto.businessIllustration = scope.getInfo().business.illustration;
+                            scope.getInfo().dto.distance = scope.getInfo().business.distance;
+
+
+                            //load interests
+                            businessService.getInterests(function (data) {
+                                scope.interests = data;
+                                if (scope.interests.length > 1) {
+                                    scope.fields.interests.active = function () {
+                                        return true;
+                                    };
+                                    var list = [];
+                                    for (var key in scope.interests) {
+                                        var interest = scope.interests[key];
+                                        list.push({
+                                            key: interest,
+                                            value: interest.translationName
+                                        });
+                                    }
+                                    scope.fields.interests.options = list;
+                                }
+                                else if (scope.interests.length == 1) {
+                                    scope.getInfo().dto.interest = scope.interests[0];
+                                }
+                            });
+
+                            //build field + dto binding
+                            scope.fields = {
+                                title: {
+                                    name: 'title',
+                                    fieldTitle: "--.generic.title",
+                                    validationRegex: "^.{2,100}$",
+                                    validationMessage: ['--.generic.validation.size', '2', '100'],
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'title'
+                                },
+                                description: {
+                                    name: 'description',
+                                    fieldTitle: "--.publication.description",
+                                    validationRegex: /^[\s\S]{0,1000}$/gi,
+                                    validationMessage: ['--.generic.validation.size', '0', '1000'],
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'description'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    fieldTitle: "--.promotion.startDate",
+                                    minimalDelay: 'hour',
+                                    disabled: function () {
+                                        return scope.getInfo().disabled || scope.editMode === true;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    startDate: startDate,
+                                    fieldName: 'startDate',
+                                    maxDay: 30
+                                },
+                                endDate: {
+                                    name: 'endDate',
+                                    fieldTitle: "--.promotion.endDate",
+                                    validationMessage: '--.promotion.validation.endDateBeforeStartDate',
+                                    minimalDelay: 'hour',
+                                    details: '--.businessNotification.dayMax.details',
+                                    disabled: function () {
+                                        return scope.getInfo().disabled || scope.editMode === true;
+                                    },
+                                    validationFct: function () {
+                                        return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    startDate: startDate,
+                                    fieldName: 'endDate',
+                                    maxDay: 28
+
+                                },
+                                illustration: {
+                                    name: 'illustration',
+                                    fieldTitle: "--.promotion.illustration",
+                                    details: '--promotion.illustration.maximumImage',
+                                    validationMessage: '--.error.validation.image',
+                                    target: 'publication_picture',
+                                    //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
+                                    //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    maxImage: 4,
+                                    optional: function () {
+                                        return true;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    multiple: true,
+                                    fieldName: 'pictures'
+                                },
+                                originalPrice: {
+                                    name: 'originalPrice',
+                                    fieldTitle: "--.promotion.originalUnitPrice",
+                                    numbersOnly: 'double',
+                                    validationMessage: '--.generic.validation.numberExpected',
+                                    validationFct: function () {
+                                        return scope.getInfo().dto.originalPrice != null;
+                                    },
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    money: "€",
+                                    active: function () {
+                                        return scope.completePromotion;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'originalPrice'
+                                },
+                                offPercent: {
+                                    name: 'offPercent',
+                                    fieldTitle: "--.promotion.offPercent",
+                                    numbersOnly: 'percent',
+                                    validationFct: function () {
+                                        return scope.getInfo().dto.offPercent != null && parseFloat(scope.getInfo().dto.offPercent) > 0 && parseFloat(scope.getInfo().dto.offPercent) <= 1;
+                                    },
+                                    validationMessage: '--.promotion.validation.offPercent',
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    money: "%",
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'offPercent'
+                                },
+                                offPrice: {
+                                    name: 'offPrice',
+                                    fieldTitle: "--.promotion.offPrice",
+                                    numbersOnly: 'double',
+                                    validationMessage: '--.promotion.validation.offPrice',
+                                    validationFct: function () {
+                                        return scope.getInfo().dto.offPrice != null && parseFloat(scope.getInfo().dto.offPrice) < parseFloat(scope.getInfo().dto.originalPrice);
+                                    },
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    money: "€",
+                                    active: function () {
+                                        return scope.completePromotion;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'offPrice'
+                                },
+                                interests: {
+                                    name: 'interests',
+                                    fieldTitle: "--.promotion.interest",
+                                    details: '--.promotion.interest.help',
+                                    validationMessage: '--.error.validation.not_null',
+                                    options: [],
+                                    optional: function () {
+                                        return true;
+                                    },
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'interest',
+                                    comparableFct: function (a, b) {
+                                        return a.name == b.name;
+                                    }
+                                }
                             };
-                            var list = [];
-                            for (var key in scope.interests) {
-                                var interest = scope.interests[key];
-                                list.push({
-                                    key: interest,
-                                    value: interest.translationName
-                                });
+
+                            scope.$watch('fields.startDate.field', function () {
+                                scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
+                            }, true);
+
+                            //
+                            // specific treatment
+                            //
+                            var suspendWatch = false;
+                            scope.$watch('getInfo().dto.originalPrice', function (o, n) {
+                                if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
+                                    suspendWatch = true;
+                                    scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
+                                    $timeout(function () {
+                                        suspendWatch = false;
+                                    }, 1);
+                                }
+                            });
+                            scope.$watch('getInfo().dto.offPercent', function (o, n) {
+                                if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
+                                    suspendWatch = true;
+                                    scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
+                                    $timeout(function () {
+                                        suspendWatch = false;
+                                    }, 1);
+                                }
+                            });
+                            scope.$watch('getInfo().dto.offPrice', function (o, n) {
+                                if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPrice && suspendWatch == false) {
+                                    suspendWatch = true;
+                                    scope.getInfo().dto.offPercent = 1 - (parseFloat(scope.getInfo().dto.offPrice) / parseFloat(scope.getInfo().dto.originalPrice));
+                                    $timeout(function () {
+                                        suspendWatch = false;
+                                    }, 1);
+                                }
+                            });
+
+                            //compute first
+                            if (scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
+                                suspendWatch = true;
+                                scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
+                                $timeout(function () {
+                                    suspendWatch = false;
+                                }, 1);
                             }
-                            scope.fields.interests.options=list;
-                        }
-                        else if (scope.interests.length == 1) {
-                            scope.getInfo().dto.interest = scope.interests[0];
-                        }
-                    });
 
-                    //build field + dto binding
-                    scope.fields = {
-                        title: {
-                            name: 'title',
-                            fieldTitle: "--.generic.title",
-                            validationRegex: "^.{2,100}$",
-                            validationMessage: ['--.generic.validation.size', '2', '100'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'title'
-                        },
-                        description: {
-                            name: 'description',
-                            fieldTitle: "--.publication.description",
-                            validationRegex: /^[\s\S]{0,1000}$/gi,
-                            validationMessage: ['--.generic.validation.size', '0', '1000'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'description'
-                        },
-                        startDate: {
-                            name: 'startDate',
-                            fieldTitle: "--.promotion.startDate",
-                            minimalDelay: 'hour',
-                            disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode === true;
-                            },
-                            field: scope.getInfo().dto,
-                            startDate: startDate,
-                            fieldName: 'startDate',
-                            maxDay: 30
-                        },
-                        endDate: {
-                            name: 'endDate',
-                            fieldTitle: "--.promotion.endDate",
-                            validationMessage: '--.promotion.validation.endDateBeforeStartDate',
-                            minimalDelay: 'hour',
-                            details: '--.businessNotification.dayMax.details',
-                            disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode === true;
-                            },
-                            validationFct: function () {
-                                return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
-                            },
-                            field: scope.getInfo().dto,
-                            startDate: startDate,
-                            fieldName: 'endDate',
-                            maxDay: 28
+                            //
+                            // validation : watching on field
+                            //
+                            scope.$watch('fields', function () {
+                                var validation = true;
 
-                        },
-                        illustration: {
-                            name: 'illustration',
-                            fieldTitle: "--.promotion.illustration",
-                            details: '--promotion.illustration.maximumImage',
-                            validationMessage: '--.error.validation.image',
-                            target: 'publication_picture',
-                            //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
-                            //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            maxImage: 4,
-                            optional: function () {
-                                return true;
-                            },
-                            field: scope.getInfo().dto,
-                            multiple: true,
-                            fieldName: 'pictures'
-                        },
-                        originalPrice: {
-                            name: 'originalPrice',
-                            fieldTitle: "--.promotion.originalUnitPrice",
-                            numbersOnly: 'double',
-                            validationMessage: '--.generic.validation.numberExpected',
-                            validationFct: function () {
-                                return scope.getInfo().dto.originalPrice != null;
-                            },
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            money: "€",
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'originalPrice'
-                        },
-                        offPercent: {
-                            name: 'offPercent',
-                            fieldTitle: "--.promotion.offPercent",
-                            numbersOnly: 'percent',
-                            validationFct: function () {
-                                return scope.getInfo().dto.offPercent != null && parseFloat(scope.getInfo().dto.offPercent) > 0 && parseFloat(scope.getInfo().dto.offPercent) <= 1;
-                            },
-                            validationMessage: '--.promotion.validation.offPercent',
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            money: "%",
-                            field: scope.getInfo().dto,
-                            fieldName: 'offPercent'
-                        },
-                        offPrice: {
-                            name: 'offPrice',
-                            fieldTitle: "--.promotion.offPrice",
-                            numbersOnly: 'double',
-                            validationMessage: '--.promotion.validation.offPrice',
-                            validationFct: function () {
-                                return scope.getInfo().dto.offPrice != null && parseFloat(scope.getInfo().dto.offPrice) < parseFloat(scope.getInfo().dto.originalPrice);
-                            },
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            money: "€",
-                            active: function () {
-                                return scope.completePromotion;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'offPrice'
-                        },
-                        interests: {
-                            name: 'interests',
-                            fieldTitle: "--.promotion.interest",
-                            details: '--.promotion.interest.help',
-                            validationMessage: '--.error.validation.not_null',
-                            options: [],
-                            optional: function () {
-                                return true;
-                            },
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'interest',
-                            comparableFct: function (a, b) {
-                                return a.name == b.name;
-                            }
-                        }
-                    };
+                                for (var key in scope.fields) {
+                                    var obj = scope.fields[key];
+                                    if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
+                                        obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                                        validation = false;
+                                    }
+                                }
+                                scope.getInfo().isValid = validation;
+                            }, true);
 
-                    scope.$watch('fields.startDate.field', function () {
-                        scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
-                    }, true);
-
-                    //
-                    // specific treatment
-                    //
-                    var suspendWatch = false;
-                    scope.$watch('getInfo().dto.originalPrice', function (o, n) {
-                        if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
-                            suspendWatch = true;
-                            scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
-                            $timeout(function () {
-                                suspendWatch = false;
-                            }, 1);
-                        }
-                    });
-                    scope.$watch('getInfo().dto.offPercent', function (o, n) {
-                        if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
-                            suspendWatch = true;
-                            scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
-                            $timeout(function () {
-                                suspendWatch = false;
-                            }, 1);
-                        }
-                    });
-                    scope.$watch('getInfo().dto.offPrice', function (o, n) {
-                        if (o != n && scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPrice && suspendWatch == false) {
-                            suspendWatch = true;
-                            scope.getInfo().dto.offPercent = 1 - (parseFloat(scope.getInfo().dto.offPrice) / parseFloat(scope.getInfo().dto.originalPrice));
-                            $timeout(function () {
-                                suspendWatch = false;
-                            }, 1);
-                        }
-                    });
-
-                    //compute first
-                    if (scope.getInfo().dto.originalPrice != null && scope.getInfo().dto.offPercent != null && suspendWatch == false) {
-                        suspendWatch = true;
-                        scope.getInfo().dto.offPrice = parseFloat(scope.getInfo().dto.originalPrice) * (1 - parseFloat(scope.getInfo().dto.offPercent));
-                        $timeout(function () {
-                            suspendWatch = false;
-                        }, 1);
-                    }
-
-                    //
-                    // validation : watching on field
-                    //
-                    scope.$watch('fields', function () {
-                        var validation = true;
-
-                        for (var key in scope.fields) {
-                            var obj = scope.fields[key];
-                            if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                                obj.firstAttempt = !scope.getInfo().displayErrorMessage;
-                                validation = false;
-                            }
-                        }
-                        scope.getInfo().isValid = validation;
-                    }, true);
-
-                    //
-                    // display error watching
-                    //
-                    scope.$watch('getInfo().displayErrorMessage', function () {
-                        for (var key in scope.fields) {
-                            var obj = scope.fields[key];
-                            obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                            //
+                            // display error watching
+                            //
+                            scope.$watch('getInfo().displayErrorMessage', function () {
+                                for (var key in scope.fields) {
+                                    var obj = scope.fields[key];
+                                    obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                                }
+                            });
                         }
                     });
                 }
@@ -2249,186 +2255,192 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
+                    scope.$watch('getInfo()', function (n) {
 
-                    //add day function
-                    var addDays = function (date, days) {
-                        var result = new Date(date);
-                        result.setDate(result.getDate() + days);
-                        return result;
-                    };
+                        if (n != null) {
 
-                    scope.editMode = false;
-
-                    //
-                    // initialize default data
-                    //
-                    if (scope.getInfo().dto == null) {
-                        var startDate = new Date();
-                        startDate.setMinutes(0);
-                        startDate.setSeconds(0);
-                        startDate.setMilliseconds(0);
-                        var endDate = angular.copy(startDate);
-                        endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
-                        scope.getInfo().dto = {
-                            type: 'NOTIFICATION',
-                            startDate: startDate,
-                            endDate: endDate
-                        };
-                    }
-                    else {
-                        var startDate = scope.getInfo().dto.startDate;
-                        scope.editMode = true;
-                        scope.completePromotion = scope.getInfo().dto.originalPrice != null;
-                    }
-
-                    //complete for previsualization
-                    scope.getInfo().dto.businessName = scope.getInfo().business.name;
-                    scope.getInfo().dto.businessIllustration = scope.getInfo().business.illustration;
-                    scope.getInfo().dto.distance = scope.getInfo().business.distance;
-
-                    //load interests
-                    businessService.getInterests(function (data) {
-                        scope.interests = data;
-                        if (scope.interests.length > 1) {
-                            scope.fields.interests.active = function () {
-                                return true;
+                            //add day function
+                            var addDays = function (date, days) {
+                                var result = new Date(date);
+                                result.setDate(result.getDate() + days);
+                                return result;
                             };
-                            var list = [];
-                            for (var key in scope.interests) {
-                                var interest = scope.interests[key];
-                                list.push({
-                                    key: interest,
-                                    value: interest.translationName
-                                });
+
+                            scope.editMode = false;
+
+                            //
+                            // initialize default data
+                            //
+                            if (scope.getInfo().dto == null) {
+                                var startDate = new Date();
+                                startDate.setMinutes(0);
+                                startDate.setSeconds(0);
+                                startDate.setMilliseconds(0);
+                                var endDate = angular.copy(startDate);
+                                endDate = new Date(endDate.getTime() + 3600 * 1000 * 24 * 7);
+                                scope.getInfo().dto = {
+                                    type: 'NOTIFICATION',
+                                    startDate: startDate,
+                                    endDate: endDate
+                                };
                             }
-                            scope.fields.interests.options = list;
-                        }
-                        else if (scope.interests.length == 1) {
-                            scope.getInfo().dto.interest = scope.interests[0];
-                        }
-                    });
-
-
-                    scope.fields = {
-                        title: {
-                            fieldTitle: "--.generic.title",
-                            validationRegex: "^.{2,100}$",
-                            validationMessage: ['--.generic.validation.size', '2', '100'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'title'
-                        },
-                        description: {
-                            fieldTitle: "--.publication.description",
-                            validationRegex: /^[\s\S]{0,1000}$/gi,
-                            validationMessage: ['--.generic.validation.size', '0', '1000'],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'description'
-                        },
-                        startDate: {
-                            name: 'startDate',
-                            fieldTitle: "--.promotion.startDate",
-                            minimalDelay: 'hour',
-                            disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode === true;
-                            },
-                            field: scope.getInfo().dto,
-                            startDate: startDate,
-                            fieldName: 'startDate',
-                            maxDay: 30
-                        },
-                        endDate: {
-                            name: 'endDate',
-                            fieldTitle: "--.promotion.endDate",
-                            validationMessage: '--.promotion.validation.endDateBeforeStartDate',
-                            minimalDelay: 'hour',
-                            details: '--.businessNotification.dayMax.details',
-                            disabled: function () {
-                                return scope.getInfo().disabled || scope.editMode === true;
-                            },
-                            validationFct: function () {
-                                return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
-                            },
-                            field: scope.getInfo().dto,
-                            startDate: startDate,
-                            fieldName: 'endDate',
-                            maxDay: 28
-
-                        },
-                        illustration: {
-                            fieldTitle: "--.promotion.illustration",
-                            validationMessage: '--.error.validation.image',
-                            details: '--promotion.illustration.maximumImage',
-                            target: 'publication_picture',
-                            //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
-                            //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
-                            optional: function () {
-                                return true;
-                            },
-                            maxImage: 4,
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: scope.getInfo().dto,
-                            multiple: true,
-                            fieldName: 'pictures'
-                        },
-                        interests: {
-                            fieldTitle: "--.promotion.interest",
-                            details: '--.promotion.interest.help',
-                            validationMessage: '--.error.validation.not_null',
-                            options: [],
-                            optional: function () {
-                                return true;
-                            },
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return false
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'interest',
-                            comparableFct: function (a, b) {
-                                console.log('-------!!!-    ? :' + a.name + '/' + b.name);
-                                return a.name == b.name;
+                            else {
+                                var startDate = scope.getInfo().dto.startDate;
+                                scope.editMode = true;
+                                scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                             }
+
+                            //complete for previsualization
+                            scope.getInfo().dto.businessName = scope.getInfo().business.name;
+                            scope.getInfo().dto.businessIllustration = scope.getInfo().business.illustration;
+                            scope.getInfo().dto.distance = scope.getInfo().business.distance;
+
+                            //load interests
+                            businessService.getInterests(function (data) {
+                                scope.interests = data;
+                                if (scope.interests.length > 1) {
+                                    scope.fields.interests.active = function () {
+                                        return true;
+                                    };
+                                    var list = [];
+                                    for (var key in scope.interests) {
+                                        var interest = scope.interests[key];
+                                        list.push({
+                                            key: interest,
+                                            value: interest.translationName
+                                        });
+                                    }
+                                    scope.fields.interests.options = list;
+                                }
+                                else if (scope.interests.length == 1) {
+                                    scope.getInfo().dto.interest = scope.interests[0];
+                                }
+                            });
+
+
+                            scope.fields = {
+                                title: {
+                                    fieldTitle: "--.generic.title",
+                                    validationRegex: "^.{2,100}$",
+                                    validationMessage: ['--.generic.validation.size', '2', '100'],
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'title'
+                                },
+                                description: {
+                                    fieldTitle: "--.publication.description",
+                                    validationRegex: /^[\s\S]{0,1000}$/gi,
+                                    validationMessage: ['--.generic.validation.size', '0', '1000'],
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'description'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    fieldTitle: "--.promotion.startDate",
+                                    minimalDelay: 'hour',
+                                    disabled: function () {
+                                        return scope.getInfo().disabled || scope.editMode === true;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    startDate: startDate,
+                                    fieldName: 'startDate',
+                                    maxDay: 30
+                                },
+                                endDate: {
+                                    name: 'endDate',
+                                    fieldTitle: "--.promotion.endDate",
+                                    validationMessage: '--.promotion.validation.endDateBeforeStartDate',
+                                    minimalDelay: 'hour',
+                                    details: '--.businessNotification.dayMax.details',
+                                    disabled: function () {
+                                        return scope.getInfo().disabled || scope.editMode === true;
+                                    },
+                                    validationFct: function () {
+                                        return scope.getInfo().dto.endDate >= scope.getInfo().dto.startDate;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    startDate: startDate,
+                                    fieldName: 'endDate',
+                                    maxDay: 28
+
+                                },
+                                illustration: {
+                                    fieldTitle: "--.promotion.illustration",
+                                    validationMessage: '--.error.validation.image',
+                                    details: '--promotion.illustration.maximumImage',
+                                    target: 'publication_picture',
+                                    //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
+                                    //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
+                                    optional: function () {
+                                        return true;
+                                    },
+                                    maxImage: 4,
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    field: scope.getInfo().dto,
+                                    multiple: true,
+                                    fieldName: 'pictures'
+                                },
+                                interests: {
+                                    fieldTitle: "--.promotion.interest",
+                                    details: '--.promotion.interest.help',
+                                    validationMessage: '--.error.validation.not_null',
+                                    options: [],
+                                    optional: function () {
+                                        return true;
+                                    },
+                                    disabled: function () {
+                                        return scope.getInfo().disabled;
+                                    },
+                                    active: function () {
+                                        return false
+                                    },
+                                    field: scope.getInfo().dto,
+                                    fieldName: 'interest',
+                                    comparableFct: function (a, b) {
+                                        console.log('-------!!!-    ? :' + a.name + '/' + b.name);
+                                        return a.name == b.name;
+                                    }
+                                }
+                            };
+
+                            scope.$watch('fields.startDate.field', function () {
+                                scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
+                            }, true);
+
+                            //
+                            // validation : watching on field
+                            //
+                            scope.$watch('fields', function () {
+                                var validation = true;
+
+                                for (var key in scope.fields) {
+                                    var obj = scope.fields[key];
+                                    if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
+                                        obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                                        validation = false;
+                                    }
+                                }
+                                scope.getInfo().isValid = validation;
+                            }, true);
+
+                            //
+                            // display error watching
+                            //
+                            scope.$watch('getInfo().displayErrorMessage', function () {
+                                for (var key in scope.fields) {
+                                    var obj = scope.fields[key];
+                                    obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                                }
+                            });
                         }
-                    };
 
-                    scope.$watch('fields.startDate.field', function () {
-                        scope.fields.endDate.startDate = scope.fields.startDate.field[scope.fields.startDate.fieldName];
-                    }, true);
-
-                    //
-                    // validation : watching on field
-                    //
-                    scope.$watch('fields', function () {
-                        var validation = true;
-
-                        for (var key in scope.fields) {
-                            var obj = scope.fields[key];
-                            if (scope.fields.hasOwnProperty(key) && (obj.isValid == null || obj.isValid === false)) {
-                                obj.firstAttempt = !scope.getInfo().displayErrorMessage;
-                                validation = false;
-                            }
-                        }
-                        scope.getInfo().isValid = validation;
-                    }, true);
-
-                    //
-                    // display error watching
-                    //
-                    scope.$watch('getInfo().displayErrorMessage', function () {
-                        for (var key in scope.fields) {
-                            var obj = scope.fields[key];
-                            obj.firstAttempt = !scope.getInfo().displayErrorMessage;
-                        }
                     });
                 }
             }
@@ -6069,7 +6081,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/field/dirFieldDate/template.html",
     "<div class=\"row form-group has-feedback\" ng-class=\"{'error' : displayError()===true}\" ng-click=logField() ng-hide=\"isActive() === false\"><div><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div class=dropdown></div><a id={{id}} role=button data-toggle=dropdown data-target=# href=\"\" class=dropdown-toggle><div class=input-group><input ng-disabled=getInfo().disabled() name={{getInfo().name}} ng-model=resultFormated class=\"form-control\"> <span class=input-group-addon><i class=\"glyphicon glyphicon-calendar\"></i></span></div><ul role=menu aria-labelledby=dLabel class=\"dropdown-menu date_input\"><datetimepicker data-ng-model=result data-datetimepicker-config=\"{ dropdownSelector: '{{idHtag}}',minView:'{{getInfo().minimalDelay}}' }\"></datetimepicker></ul></a></div><div ng-transclude></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-xs\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldDateSimple/template.html",
-    "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div>{{'--.field.dateSimple.to' | translateText}}<select ng-options=\"day.value as day.key for day in days\" ng-model=day style=\"width: 100px;margin-right: 20px;margin-left: 5px\" ng-disabled=getInfo().disabled()></select>{{'--.field.dateSimple.at' | translateText}}<select ng-options=\"hour.value as hour.key for hour in hours\" ng-model=hour style=\"width: 100px;margin-right: 20px;margin-left: 5px\" ng-disabled=getInfo().disabled()></select></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-md\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
+    "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=form-group><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle | translateText}}</label><div class=col-md-6><div>{{'--.field.dateSimple.to' | translateText}}<select ng-options=\"day as day | date:'EEE dd MMM' for day in days\" ng-model=day style=\"min-width: 100px;margin-right: 20px;margin-left: 5px\" ng-disabled=getInfo().disabled()></select>{{'--.field.dateSimple.at' | translateText}}<select ng-options=\"hour.value as hour.key for hour in hours\" ng-model=hour style=\"min-width: 100px;margin-right: 20px;margin-left: 5px\" ng-disabled=getInfo().disabled()></select></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div><div class=\"col-md-3 hidden-sm hidden-md\"></div><div class=\"col-md-6 help\" ng-show=\"getInfo().details!=null\">{{getInfo().details | translateText}}</div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldDocument/template.html",
     "<div class=\"input-text field_text row\" ng-class=\"{'error' : displayError()===true,'has-calculator': getInfo().hasCalculator===true}\" ng-hide=\"isActive() === false\"><div class=\"form-group row\"><label class=\"control-label col-md-3\" ng-show=getInfo().fieldTitle>{{getInfo().fieldTitle |translateText}}</label><div ng-class=\"getInfo().fullSize==true?'col-md-12':'col-md-6'\"><div style=\"text-align: center\"><div><div ng-show=\"inDownload=== true &amp;&amp; percent != 100\" class=document-question-progress-bar><div ng-style=style><spa></spa></div></div><div ng-show=\"inDownload=== true && percent != 100\" class=document-question-progress-percentage>{{percent}} %</div><div ng-show=\"inDownload=== true && percent == 100\">{{'--.field.document.inTreatment' | translateText}}</div><span class=\"btn btn-default btn-file field-document-btn\" ng-hide=\"inDownload === true || getInfo().disabled()\">{{((getInfo().field[getInfo().fieldName]!=null)?'--.download.button.update':'--.download.button.new') | translateText}} <input name=\"{{ id }}\" type=file ng-file-select=\"onFileSelect($files)\"></span><div ng-show=\"success && getInfo().disabled()!=true\">{{'--.field.document.success' | translateText}}</div></div><img ng-show=\"  getInfo().field[getInfo().fieldName]!=null\" ng-style={width:getInfo().posx,height:getInfo().posy} style=\"border:1px solid #999999;max-width: 850px\" ng-src=\"{{getInfo().field[getInfo().fieldName] | image}}\"></div></div><div class=\"col-md-3 errors\" ng-show=\"displayError()===true\">{{getInfo().validationMessage | translateText}}</div></div></div>");
   $templateCache.put("/assets/javascripts/directive/field/dirFieldImageMutiple/template.html",

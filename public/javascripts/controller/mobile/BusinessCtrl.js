@@ -56,7 +56,6 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
 
             if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
                 $scope.myBusiness = true;
-                accountService.setMyBusiness(data);
             }
 
             //stop loading icons
@@ -169,10 +168,12 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
 
 
     $scope.createPromotion = function(){
+        modalService.openLoadingModal();
         $scope.navigateTo('/promotion');
     };
 
     $scope.createNotification = function(){
+        modalService.openLoadingModal();
         $scope.navigateTo('/businessNotification');
     }
 

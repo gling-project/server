@@ -8,15 +8,15 @@
 
 
                 {{'--.field.dateSimple.to' | translateText}}
-                <select ng-options="day.value as day.key for day in days"
+                <select ng-options="day as day | date:'EEE dd MMM' for day in days"
                         ng-model="day"
-                        style="width: 100px;margin-right: 20px;margin-left: 5px;"
+                        style="min-width: 100px;margin-right: 20px;margin-left: 5px;"
                         ng-disabled="getInfo().disabled()">
                 </select>
                 {{'--.field.dateSimple.at' | translateText}}
                 <select ng-options="hour.value as hour.key for hour in hours"
                         ng-model="hour"
-                        style="width: 100px;margin-right: 20px;margin-left: 5px;"
+                        style="min-width: 100px;margin-right: 20px;margin-left: 5px;"
                         ng-disabled="getInfo().disabled()">
                 </select>
 

@@ -177,9 +177,7 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
                     controller: 'CustomerRegistrationCtrl',
                     resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
+                        a: ['accountService', '$location', function (accountService, $location) {
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -191,7 +189,9 @@ var initializeCommonRoutes = function () {
                     controller: 'PromotionCtrl',
                     resolve: {
                         a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            if (test(accountService) == 'NOT_CONNECTED') {
+                            console.log("!!!!");
+                            console.log(accountService.getMyself().businessId);
+                            if (test(accountService) == 'NOT_CONNECTED' || accountService.getMyself().businessId == null) {
                                 $location.path('/');
                             }
                         }]
@@ -201,8 +201,10 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/businessNotification.html',
                     controller: 'BusinessNotificationCtrl',
                     resolve: {
-                        a: ['accountService', '$location', '$rootScope', 'modalService', function (accountService, $location,$rootScope,modalService) {
-                            if (test(accountService) == 'NOT_CONNECTED') {
+                        a: ['accountService', '$location', function (accountService, $location) {
+                            console.log("!!!!");
+                            console.log(accountService.getMyself().businessId);
+                            if (test(accountService) == 'NOT_CONNECTED' || accountService.getMyself().businessId == null) {
                                 $location.path('/');
                             }
                         }]
@@ -1242,6 +1244,11 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
     //mobile menu
     //default the menu to not show
     $scope.showmenu = false;
+    $scope.myBusiness = null;
+
+    if (accountService.getMyself() != null && accountService.getMyself().businessId != null) {
+        $scope.myBusiness = accountService.getMyself().businessId;
+    }
 
     //this is the toggle function
     $scope.$on('toggleMenu', function () {
@@ -1531,7 +1538,6 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
 
             if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
                 $scope.myBusiness = true;
-                accountService.setMyBusiness(data);
             }
 
             //stop loading icons
@@ -1644,10 +1650,12 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
 
 
     $scope.createPromotion = function(){
+        modalService.openLoadingModal();
         $scope.navigateTo('/promotion');
     };
 
     $scope.createNotification = function(){
+        modalService.openLoadingModal();
         $scope.navigateTo('/businessNotification');
     }
 
@@ -2003,37 +2011,94 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 }])
 ;
-myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'promotionService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService) {
+myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'promotionService', 'businessService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService,businessService) {
 
-
-    $scope.publicationFormParam = {
-        dto: null,
-        business: accountService.getMyBusiness()
-    };
-
-    $scope.success = function (data) {
+    businessService.getBusiness(accountService.getMyself().businessId,function(business){
 
         modalService.closeLoadingModal();
+        $scope.business=business;
 
-        $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
-    };
+        $scope.publicationFormParam = {
+            dto: null,
+            business:$scope.business
+        };
 
-    $scope.save = function (share) {
+        $scope.success = function (data) {
 
-        if (!$scope.publicationFormParam.isValid) {
-            $scope.publicationFormParam.displayErrorMessage = true;
-        }
-        else {
+            modalService.closeLoadingModal();
 
-            if ($scope.publicationFormParam.minimalQuantity > $scope.publicationFormParam.quantity) {
-                $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
+            $scope.navigateTo('/business/' + $scope.business.id);
+        };
+
+        $scope.save = function (share) {
+
+            if (!$scope.publicationFormParam.isValid) {
+                $scope.publicationFormParam.displayErrorMessage = true;
             }
             else {
 
+                if ($scope.publicationFormParam.minimalQuantity > $scope.publicationFormParam.quantity) {
+                    $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
+                }
+                else {
+
+                    modalService.openLoadingModal();
+                    if ($scope.update) {
+
+                        promotionService.edit($scope.publicationFormParam.dto, function (data) {
+                                $scope.success(data);
+                            },
+                            function () {
+                                modalService.closeLoadingModal();
+                            });
+                    }
+                    else {
+                        promotionService.add($scope.publicationFormParam.dto, function (data) {
+                                $scope.success(data);
+                            },
+                            function () {
+                                modalService.closeLoadingModal();
+                            });
+                    }
+                }
+            }
+        }
+
+    });
+
+
+
+
+}]);
+myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'businessNotificationService', 'businessService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, businessNotificationService, businessService) {
+
+    businessService.getBusiness(accountService.getMyself().businessId, function (business) {
+
+        modalService.closeLoadingModal();
+        $scope.business = business;
+
+        $scope.businessNotificationFormParam = {
+            dto: null,
+            business: $scope.business
+        };
+
+        $scope.success = function (data) {
+
+            modalService.closeLoadingModal();
+
+            $scope.navigateTo('/business/' + $scope.business.id);
+        };
+
+        $scope.save = function (share) {
+
+            if (!$scope.businessNotificationFormParam.isValid) {
+                $scope.businessNotificationFormParam.displayErrorMessage = true;
+            }
+            else {
                 modalService.openLoadingModal();
                 if ($scope.update) {
 
-                    promotionService.edit($scope.publicationFormParam.dto, function (data) {
+                    businessNotificationService.edit($scope.businessNotificationFormParam.dto, function (data) {
                             $scope.success(data);
                         },
                         function () {
@@ -2041,8 +2106,10 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
                         });
                 }
                 else {
-                    promotionService.add($scope.publicationFormParam.dto, function (data) {
+
+                    businessNotificationService.add($scope.businessNotificationFormParam.dto, function (data) {
                             $scope.success(data);
+                            modalService.successAndShare($scope.businessNotificationFormParam.business.id, data.id);
                         },
                         function () {
                             modalService.closeLoadingModal();
@@ -2050,52 +2117,8 @@ myApp.controller('PromotionCtrl', ['$rootScope', '$scope', 'accountService', '$f
                 }
             }
         }
-    }
 
-}]);
-myApp.controller('BusinessNotificationCtrl', ['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'businessNotificationService', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, businessNotificationService) {
-
-
-    $scope.businessNotificationFormParam = {
-        dto: null,
-        business: accountService.getMyBusiness()
-    };
-
-    $scope.success = function (data) {
-
-        modalService.closeLoadingModal();
-
-        $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
-    };
-
-    $scope.save = function (share) {
-
-        if (!$scope.businessNotificationFormParam.isValid) {
-            $scope.businessNotificationFormParam.displayErrorMessage = true;
-        }
-        else {
-            modalService.openLoadingModal();
-            if ($scope.update) {
-
-                businessNotificationService.edit($scope.businessNotificationFormParam.dto, function (data) {
-                        $scope.success(data);
-                    },
-                    function () {
-                        modalService.closeLoadingModal();
-                    });
-            }
-            else {
-
-                businessNotificationService.add($scope.businessNotificationFormParam.dto, function (data) {
-                        $scope.success(data);
-                        modalService.successAndShare($scope.businessNotificationFormParam.business.id, data.id);
-                    },
-                    function () {
-                        modalService.closeLoadingModal();
-                    });
-            }
-        }
-    }
+    });
 
 }]);
 myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location) {

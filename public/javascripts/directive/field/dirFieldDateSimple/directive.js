@@ -54,13 +54,13 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                                 var month = date.getMonth() + 1;
                                 var time = date.getTime();
 
-                                scope.days.push({value: time, key: day + "/" + month});
+                                scope.days.push(time);
 
                             }
 
                             //reinitialize model
                             if (scope.days.length > 0) {
-                                if (scope.day < scope.days[0].value || scope.day > scope.days[scope.days.length - 1].value) {
+                                if (scope.day < scope.days[0] || scope.day > scope.days[scope.days.length - 1]) {
                                     scope.day = null;
                                 }
 
@@ -82,10 +82,10 @@ myApp.directive("dirFieldDateSimple", function (directiveService, $filter, gener
                                     }
                                     else {
                                         if (scope.getInfo().defaultSelection == 'lastDay') {
-                                            scope.day = scope.days[scope.days.length - 1].value;
+                                            scope.day = scope.days[scope.days.length - 1];
                                         }
                                         else {
-                                            scope.day = scope.days[0].value;
+                                            scope.day = scope.days[0];
                                         }
                                         if (scope.hour == null) {
                                             scope.hour = new Date().getHours();

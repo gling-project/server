@@ -51,9 +51,7 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/customer_registration.html',
                     controller: 'CustomerRegistrationCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope,modalService) {
-                            //$rootScope.$broadcast('PROGRESS_BAR_START');
-                            //modalService.openLoadingModal();
+                        a: function (accountService, $location) {
                             if (test(accountService) != 'NOT_CONNECTED') {
                                 $location.path('/');
                             }
@@ -65,7 +63,9 @@ var initializeCommonRoutes = function () {
                     controller: 'PromotionCtrl',
                     resolve: {
                         a: function (accountService, $location,$rootScope,modalService) {
-                            if (test(accountService) == 'NOT_CONNECTED') {
+                            console.log("!!!!");
+                            console.log(accountService.getMyself().businessId);
+                            if (test(accountService) == 'NOT_CONNECTED' || accountService.getMyself().businessId == null) {
                                 $location.path('/');
                             }
                         }
@@ -75,8 +75,10 @@ var initializeCommonRoutes = function () {
                     templateUrl: '/assets/javascripts/view/mobile/businessNotification.html',
                     controller: 'BusinessNotificationCtrl',
                     resolve: {
-                        a: function (accountService, $location,$rootScope,modalService) {
-                            if (test(accountService) == 'NOT_CONNECTED') {
+                        a: function (accountService, $location) {
+                            console.log("!!!!");
+                            console.log(accountService.getMyself().businessId);
+                            if (test(accountService) == 'NOT_CONNECTED' || accountService.getMyself().businessId == null) {
                                 $location.path('/');
                             }
                         }

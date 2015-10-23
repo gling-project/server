@@ -149,6 +149,7 @@
                     <div class="scrollable-content">
                         <div class="list-group">
 
+                            <!-- location -->
                             <div class="list-group-item generic-pointer">
                                 <select
                                 ng-model="currentPosition"
@@ -157,24 +158,35 @@
                                 <span class="gling-icon gling-icon-location"></span>
                             </div>
 
+                                <!-- home -->
                             <div class="list-group-item generic-pointer"
                             ng-click="navigateTo('/home')">
                                 <span class="gling-icon gling-icon-home"></span>
                                 {{'--.generic.home' | translateText}}
                             </div>
 
+                                <!-- profile -->
                             <div class="list-group-item generic-pointer"
                             ng-click="navigateTo('/profile')">
                                 <span class="gling-icon gling-icon-profil"></span>
                                 {{'--.welcome.myProfile' | translateText}}
                             </div>
 
+                                <!-- businesses -->
                             <div class="list-group-item generic-pointer"
                             ng-click="navigateTo('/my-businesses')">
                                 <span class="gling-icon gling-icon-shop"></span>
                                 {{'--.welcome.myBusinesses' | translateText}}
                             </div>
 
+                                <!-- myBusiness -->
+                            <div class="list-group-item generic-pointer"
+                                ng-show="myBusiness!=null"
+                                ng-click="navigateTo('/business/'+myBusiness)">
+                                {{'--.welcome.myBusiness' | translateText}}
+                            </div>
+
+                                <!-- logout -->
                             <div class="list-group-item generic-pointer"
                             ng-click="logout()">
                                 <span class="glyphicon glyphicon-off" ></span>

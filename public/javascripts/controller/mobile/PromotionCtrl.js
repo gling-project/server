@@ -1,50 +1,59 @@
-myApp.controller('PromotionCtrl', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService) {
+myApp.controller('PromotionCtrl', function ($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService,businessService) {
 
-
-    $scope.publicationFormParam = {
-        dto: null,
-        business: accountService.getMyBusiness()
-    };
-
-    $scope.success = function (data) {
+    businessService.getBusiness(accountService.getMyself().businessId,function(business){
 
         modalService.closeLoadingModal();
+        $scope.business=business;
 
-        $scope.navigateTo('/business/' + accountService.getMyBusiness().id);
-    };
+        $scope.publicationFormParam = {
+            dto: null,
+            business:$scope.business
+        };
 
-    $scope.save = function (share) {
+        $scope.success = function (data) {
 
-        if (!$scope.publicationFormParam.isValid) {
-            $scope.publicationFormParam.displayErrorMessage = true;
-        }
-        else {
+            modalService.closeLoadingModal();
 
-            if ($scope.publicationFormParam.minimalQuantity > $scope.publicationFormParam.quantity) {
-                $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
+            $scope.navigateTo('/business/' + $scope.business.id);
+        };
+
+        $scope.save = function (share) {
+
+            if (!$scope.publicationFormParam.isValid) {
+                $scope.publicationFormParam.displayErrorMessage = true;
             }
             else {
 
-                modalService.openLoadingModal();
-                if ($scope.update) {
-
-                    promotionService.edit($scope.publicationFormParam.dto, function (data) {
-                            $scope.success(data);
-                        },
-                        function () {
-                            modalService.closeLoadingModal();
-                        });
+                if ($scope.publicationFormParam.minimalQuantity > $scope.publicationFormParam.quantity) {
+                    $flash.error(translationService.get('--.promotion.validation.minimalQuantityMustBeLowerThanQuantity'))
                 }
                 else {
-                    promotionService.add($scope.publicationFormParam.dto, function (data) {
-                            $scope.success(data);
-                        },
-                        function () {
-                            modalService.closeLoadingModal();
-                        });
+
+                    modalService.openLoadingModal();
+                    if ($scope.update) {
+
+                        promotionService.edit($scope.publicationFormParam.dto, function (data) {
+                                $scope.success(data);
+                            },
+                            function () {
+                                modalService.closeLoadingModal();
+                            });
+                    }
+                    else {
+                        promotionService.add($scope.publicationFormParam.dto, function (data) {
+                                $scope.success(data);
+                            },
+                            function () {
+                                modalService.closeLoadingModal();
+                            });
+                    }
                 }
             }
         }
-    }
+
+    });
+
+
+
 
 });

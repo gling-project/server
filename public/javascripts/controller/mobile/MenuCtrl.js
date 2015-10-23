@@ -5,6 +5,11 @@ myApp.controller('MenuCtrl', function ($rootScope, $scope, facebookService, acco
     //mobile menu
     //default the menu to not show
     $scope.showmenu = false;
+    $scope.myBusiness = null;
+
+    if (accountService.getMyself() != null && accountService.getMyself().businessId != null) {
+        $scope.myBusiness = accountService.getMyself().businessId;
+    }
 
     //this is the toggle function
     $scope.$on('toggleMenu', function () {
