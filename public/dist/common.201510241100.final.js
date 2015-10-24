@@ -3538,8 +3538,8 @@ myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followSe
 
                     scope.followed = function () {
 
-                        scope.getInfo().business.following = !followed;
-                        if (scope.getInfo().business.following) {
+                        scope.getInfo().business.following = !scope.getInfo().business.following;
+                        if (scope.getInfo().business.following===true) {
                             scope.getInfo().business.totalFollowers++;
                             $flash.success($filter('translateText')('--.followWidget.message.add'));
                         }
@@ -3548,7 +3548,6 @@ myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followSe
                             scope.getInfo().business.totalFollowers--;
                         }
 
-                        var followed = scope.getInfo().business.following;
                         followService.addFollow(scope.getInfo().business.following, scope.getInfo().business.id);
 
                     };
