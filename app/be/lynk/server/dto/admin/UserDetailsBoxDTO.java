@@ -20,6 +20,7 @@ public class UserDetailsBoxDTO extends DTO {
     private Map<Long, Integer> nbFollows = new HashMap<>();
 
     private Map<Long, Integer> nbAddresses = new HashMap<>();
+    private int total;
 
     public UserDetailsBoxDTO() {
     }
@@ -54,5 +55,13 @@ public class UserDetailsBoxDTO extends DTO {
 
     public void setNbFollows(Map<Long, Integer> nbFollows) {
         this.nbFollows = nbFollows;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getTotal() {
+        return total;
     }
 }

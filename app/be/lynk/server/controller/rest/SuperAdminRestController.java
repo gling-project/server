@@ -250,6 +250,7 @@ public class SuperAdminRestController extends AbstractRestController {
         UserDetailsBoxDTO userDetailsBoxDTO = new UserDetailsBoxDTO();
 
         userDetailsBoxDTO.setList(mongoSearchService.generateUserHistory(from));
+        userDetailsBoxDTO.setTotal(userDetailsBoxDTO.getList().size());
 
         //compute session nb
         for (UserHistoryDTO userHistoryDTO : userDetailsBoxDTO.getList()) {
