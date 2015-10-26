@@ -86,12 +86,25 @@ public class MongoSearchServiceImpl implements MongoSearchService {
         List<Account> accounts = new ArrayList<>();
 
         if (from == null) {
-            accounts.addAll(accountService.findByRole(RoleEnum.CUSTOMER));
+            for (Account account : accountService.findByRole(RoleEnum.CUSTOMER)) {
+                boolean founded = false;
+                for (Long aLong : ACCOUNT_ID_EXCLUDE_LIST) {
+                    if (account.getId().equals(aLong)) {
+                        founded = true;
+                        break;
+                    }
+
+                }
+                if (!founded) {
+                    accounts.add(account);
+                }
+
+            }
         } else {
             //load all session from
             DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
                     .find(new BasicDBObject("$and",
-                                    new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", dozerService.map(from,Date.class)))
+                                    new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", dozerService.map(from, Date.class)))
                                             , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
                     );
 
@@ -99,7 +112,10 @@ public class MongoSearchServiceImpl implements MongoSearchService {
             while (cursor.hasNext()) {
                 DBObject next = cursor.next();
                 if (next.get("currentAccountId") != null) {
-                    accounts.add(accountService.findById((Long) next.get("currentAccountId")));
+                    Account currentAccountId = accountService.findById((Long) next.get("currentAccountId"));
+                    if (currentAccountId.getRole().equals(RoleEnum.CUSTOMER)) {
+                        accounts.add(currentAccountId);
+                    }
                 }
             }
         }
