@@ -792,7 +792,7 @@ myApp.directive("dirFieldCheck", ['directiveService', '$timeout', function (dire
     };
 }]);
 
-myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$filter', 'generateId', '$window', function(directiveService, $upload, $flash, $filter,generateId,$window) {
+myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$filter', 'generateId', '$window', function (directiveService, $upload, $flash, $filter, generateId, $window) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -810,17 +810,16 @@ myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$
                     console.log(scope.getInfo());
 
 
-
                     scope.id = generateId.generate();
                     scope.errorMessage = "";
 
-                    scope.isActive = function(){
+                    scope.isActive = function () {
 
-                        return !(scope.getInfo().active!=null && scope.getInfo().active!=undefined && scope.getInfo().active() == false);
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
                     };
 
                     scope.isValid = function () {
-                        scope.getInfo().isValid = (scope.getInfo().optional!=null && scope.getInfo().optional()) || scope.isActive() == false || scope.getInfo().field[scope.getInfo().fieldName] != null;
+                        scope.getInfo().isValid = (scope.getInfo().optional != null && scope.getInfo().optional()) || scope.isActive() == false || scope.getInfo().field[scope.getInfo().fieldName] != null;
                     };
                     scope.isValid();
 
@@ -834,7 +833,7 @@ myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$
 
                     scope.inDownload = false;
                     scope.percent = 0;
-                    scope.$watch('percent', function() {
+                    scope.$watch('percent', function () {
                         var _ref;
                         return scope.style = {
                             "width": scope.percent + "%",
@@ -845,19 +844,19 @@ myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$
                     });
 
                     scope.success = false;
-                    scope.onFileSelect = function($files) {
+                    scope.onFileSelect = function ($files) {
                         var file, i;
                         scope.inDownload = true;
                         i = 0;
                         while (i < $files.length) {
                             file = $files[i];
 
+                            var url = "/rest/file/" + scope.getInfo().target;
 
-                            var url = "/rest/file/"+scope.getInfo().target;
+
+                            console.log("-- scope.getInfo()");
                             console.log(scope.getInfo());
-                            //if(scope.getInfo().sizex !=null && scope.getInfo().sizex != undefined){
-                            //    url += "/"+scope.getInfo().sizex+"/"+scope.getInfo().sizey;
-                            //}
+                            console.log("-- url:"+url);
 
                             scope.upload = $upload.upload({
                                 url: url,
@@ -865,13 +864,13 @@ myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$
                                     myObj: scope.myModelObj
                                 },
                                 file: file
-                            }).progress(function(evt) {
+                            }).progress(function (evt) {
                                 scope.percent = parseInt(100.0 * evt.loaded / evt.total);
                             }).success(function (data, status) {
                                 scope.success = true;
                                 scope.percent = 100.0;
                                 scope.getInfo().field[scope.getInfo().fieldName] = data;
-                                scope.inDownload=false;
+                                scope.inDownload = false;
                             })
                                 .error(function (data, status) {
                                     scope.percent = 0;

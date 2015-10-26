@@ -96,13 +96,13 @@ POST          /rest/search/business/near                                        
 POST          /rest/search/business/near/interest/$interestId<[0-9]+>                                                @be.lynk.server.controller.rest.SearchRestController.getNearBusinessByInterest(interestId:Long)
 
 #file
-POST          /rest/file                                                                                             @be.lynk.server.controller.rest.FilesController.upload()
 POST          /rest/file/:sizex/:sizey                                                                               @be.lynk.server.controller.rest.FilesController.uploadWithSize(sizex:Integer,sizey:Integer)
 POST          /rest/file/business_illustration                                                                       @be.lynk.server.controller.rest.FilesController.uploadForBusinessIllustration()
 POST          /rest/file/business_landscape                                                                          @be.lynk.server.controller.rest.FilesController.uploadForBusinessLandscape()
 POST          /rest/file/publication_picture                                                                         @be.lynk.server.controller.rest.FilesController.uploadForPublicationPicture()
 POST          /rest/file/galley_picture                                                                              @be.lynk.server.controller.rest.FilesController.uploadForGalleryPicture()
 GET           /rest/file/:storedFileId                                                                               @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
+POST          /rest/file                                                                                             @be.lynk.server.controller.rest.FilesController.upload()
 POST          /rest/file64                                                                                           @be.lynk.server.controller.rest.FilesController.download64()
 
 #contact

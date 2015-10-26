@@ -190,7 +190,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
 
             Lang lang = business.getAccount().getLang();
-            EmailMessage.Recipient target = new EmailMessage.Recipient(securityController.getCurrentUser());//business.getAccount());
+            EmailMessage.Recipient target = new EmailMessage.Recipient(business.getAccount());
 
             String title = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_SUBJECT, lang);
             String message = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_BODY, lang, oldName, dto.getEditionReason());

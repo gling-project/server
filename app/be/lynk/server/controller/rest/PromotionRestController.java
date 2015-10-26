@@ -151,13 +151,14 @@ public class PromotionRestController extends AbstractRestController {
         if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
 
             Lang lang = business.getAccount().getLang();
+            EmailMessage.Recipient target = new EmailMessage.Recipient(business.getAccount());
 
-            String title = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_SUBJECT,lang);
-            String message = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_BODY,lang,oldName,dto.getEditionReason());
+            String title = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_SUBJECT, lang);
+            String message = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_BODY, lang, oldName, dto.getEditionReason());
 
-            EmailMessage emailMessage = new EmailMessage(new EmailMessage.Recipient(business.getAccount()),title,message);
+            EmailMessage emailMessage = new EmailMessage(target, title, message);
 
-            emailService.sendEmail(emailMessage,lang);
+            emailService.sendEmail(emailMessage, lang);
         }
 
         return ok(dozerService.map(promotionToEdit, PromotionDTO.class));

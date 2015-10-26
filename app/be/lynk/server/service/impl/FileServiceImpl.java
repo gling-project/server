@@ -331,6 +331,6 @@ public class FileServiceImpl implements FileService {
         if (bottom - top < height) {
             top = top - (height - (bottom - top));
         }
-        return src.getSubimage(left,top, right,  bottom);
+        return src.getSubimage(left,top, width,  height);
     }
 }
