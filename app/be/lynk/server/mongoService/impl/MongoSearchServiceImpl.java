@@ -44,10 +44,10 @@ public class MongoSearchServiceImpl implements MongoSearchService {
         Date from = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 
         DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
-                                         .find(new BasicDBObject("$and",
-                                                                 new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
-                                                                         , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
-                                              );
+                .find(new BasicDBObject("$and",
+                                new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
+                                        , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
+                );
 
         List<Session> sessions = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
 
             DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
-                                             .find(new BasicDBObject("currentAccountId", account.getId()));
+                    .find(new BasicDBObject("currentAccountId", account.getId()));
 
 
             long lastSession = Date.from(account.getCreationDate().atZone(ZoneId.systemDefault()).toInstant()).getTime();
@@ -102,8 +102,10 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
             while (cursor.hasNext()) {
                 DBObject next = cursor.next();
-                if (lastSession > Date.from(account.getCreationDate().atZone(ZoneId.systemDefault()).toInstant()).getTime() * 3600 * 1000) {
-                    lastSession = ((Date) next.get("_id")).getTime();
+                long visitT = ((Date) next.get("_id")).getTime();
+                long t = lastSession + 3600 * 1000;
+                if (t < visitT) {
+                    lastSession = visitT;
                     nbSession++;
                 }
             }
