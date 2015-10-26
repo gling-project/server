@@ -12,5 +12,5 @@ public interface MongoSearchService {
 
     public int numberSessionsFrom(LocalDateTime localDateTime);
 
-    List<UserHistoryDTO> generateUserHistory();
+    List<UserHistoryDTO> generateUserHistory(LocalDateTime from);
 }

@@ -5,6 +5,7 @@ import be.lynk.server.dto.admin.UserHistoryDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.AccountService;
 import be.lynk.server.service.AddressService;
+import be.lynk.server.service.DozerService;
 import be.lynk.server.service.FollowLinkService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
@@ -42,12 +43,14 @@ public class MongoSearchServiceImpl implements MongoSearchService {
     private FollowLinkService followLinkService;
     @Autowired
     private AddressService    addressService;
+    @Autowired
+    private DozerService      dozerService;
 
 
     @Override
     public int numberSessionsFrom(LocalDateTime localDateTime) {
 
-        Date from = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        Date from = dozerService.map(localDateTime, Date.class);
 
         DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
                 .find(new BasicDBObject("$and",
@@ -77,9 +80,29 @@ public class MongoSearchServiceImpl implements MongoSearchService {
     }
 
     @Override
-    public List<UserHistoryDTO> generateUserHistory() {
+    public List<UserHistoryDTO> generateUserHistory(LocalDateTime from) {
 
-        List<Account> accounts = accountService.findByRole(RoleEnum.CUSTOMER);
+
+        List<Account> accounts = new ArrayList<>();
+
+        if (from == null) {
+            accounts.addAll(accountService.findByRole(RoleEnum.CUSTOMER));
+        } else {
+            //load all session from
+            DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
+                    .find(new BasicDBObject("$and",
+                                    new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", dozerService.map(from,Date.class)))
+                                            , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
+                    );
+
+            //load account
+            while (cursor.hasNext()) {
+                DBObject next = cursor.next();
+                if (next.get("currentAccountId") != null) {
+                    accounts.add(accountService.findById((Long) next.get("currentAccountId")));
+                }
+            }
+        }
 
 
         List<UserHistoryDTO> userHistoryDTOs = new ArrayList<>();
@@ -102,7 +125,11 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
 
             DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
-                    .find(new BasicDBObject("currentAccountId", account.getId()));
+                    .find(new BasicDBObject("$and",
+                            new BasicDBObject[]{
+                                    new BasicDBObject("currentAccountId", account.getId())
+                                    , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))
+                            }));
 
 
             long lastSession = Date.from(account.getCreationDate().atZone(ZoneId.systemDefault()).toInstant()).getTime();

@@ -62,6 +62,27 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
     };
 
+
+    this.getUserDetailsForToday = function (callbackSuccess, callbackError) {
+
+        $http({
+            'method': "GET",
+            'url': "/rest/superadmin/accountDetailsForToday",
+            'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
     this.getCategoriesAndInterests = function (callbackSuccess, callbackError) {
 
         $http({

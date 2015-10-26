@@ -6,28 +6,37 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
         });
     };
 
-    $scope.nbSessionChartParam=null;
-    $scope.nbFollowChartParam=null;
-    $scope.nbAddressChartParam = null;
+    $scope.details = [];
 
     $scope.refreshDetails = function () {
+        $scope.details = [];
         superAdminService.getUserDetails(function (data) {
-            $scope.userDetails = data.list;
-            $scope.nbSessionChartParam = {
-                title: 'Nombre de session par utilisateur',
-                data: data.nbSessions
-            };
-            $scope.nbFollowChartParam = {
-                title: 'Nombre de suivit par utilisateur',
-                data: data.nbFollows
-            };
-            $scope.nbAddressChartParam = {
-                title: 'Nombre d\'adresse par utilisateur',
-                data: data.nbAddresses
-            }
+            $scope.completeObj('Aujourd\'hui', data.today);
+            $scope.completeObj('7 derniers jours', data.week);
+            $scope.completeObj('Tout', data.all);
 
         });
     };
+
+    $scope.completeObj = function (title, data) {
+
+        $scope.details.push({
+                title: title,
+                nbSessionChartParam: {
+                    title: 'Nombre de session par utilisateur',
+                    data: data.nbSessions
+                }
+                ,
+                nbFollowChartParam: {
+                    title: 'Nombre de suivit par utilisateur',
+                    data: data.nbFollows
+                }, nbAddressChartParam: {
+                    title: 'Nombre d\'adresse par utilisateur',
+                    data: data.nbAddresses
+                }
+            }
+        )
+    }
 
     $scope.refreshStat();
 
@@ -35,4 +44,5 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
         $scope.refreshDetails();
     }, 100);
 
-});
+})
+;

@@ -233,9 +233,23 @@ public class SuperAdminRestController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result getUserDetails() {
+
+
+        UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
+
+        userDetailsDTO.setToday(getUserDetails(LocalDateTime.now().minusDays(1)));
+
+        userDetailsDTO.setWeek(getUserDetails(LocalDateTime.now().minusDays(7)));
+
+        userDetailsDTO.setAll(getUserDetails(null));
+
+        return ok(userDetailsDTO);
+    }
+
+    private UserDetailsBoxDTO getUserDetails(LocalDateTime from) {
         UserDetailsBoxDTO userDetailsBoxDTO = new UserDetailsBoxDTO();
 
-        userDetailsBoxDTO.setList(mongoSearchService.generateUserHistory());
+        userDetailsBoxDTO.setList(mongoSearchService.generateUserHistory(from));
 
         //compute session nb
         for (UserHistoryDTO userHistoryDTO : userDetailsBoxDTO.getList()) {
@@ -267,7 +281,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         Collections.sort(userDetailsBoxDTO.getList());
 
-        return ok(userDetailsBoxDTO);
+        return userDetailsBoxDTO;
     }
 
 

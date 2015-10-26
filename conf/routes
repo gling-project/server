@@ -118,6 +118,7 @@ PUT           /rest/superadmin/category_interest_link/$categoryName<[a-z_]+>/$in
 POST          /rest/superadmin/emailToBusinesses                                                                     @be.lynk.server.controller.rest.SuperAdminRestController.sendEmailToBusinesses()
 GET           /rest/superadmin/accountDetails                                                                        @be.lynk.server.controller.rest.SuperAdminRestController.getUserDetails()
 
+
 ## town
 GET           /rest/town/business/zip/$zip<[0-9]+>/$page<[0-9]+>                                                     @be.lynk.server.controller.rest.TownRestController.getBusinessesByZip(zip:Integer,page:Integer)
 GET           /rest/town/business/zip/$zip<[0-9]+>/$search<[^/]+>/$page<[0-9]+>                                      @be.lynk.server.controller.rest.TownRestController.getBusinessesByZipAndSearch(zip:Integer,search:String,page:Integer)
