@@ -114,7 +114,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                 if (next.get("currentAccountId") != null) {
                     Account currentAccountId = accountService.findById((Long) next.get("currentAccountId"));
 
-                    if (currentAccountId.getRole().equals(RoleEnum.CUSTOMER)) {
+                    if (currentAccountId.getRole().equals(RoleEnum.CUSTOMER) && !accounts.contains(currentAccountId)) {
                         accounts.add(currentAccountId);
                     }
                 }
