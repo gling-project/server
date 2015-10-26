@@ -237,12 +237,21 @@ public class SuperAdminRestController extends AbstractRestController {
 
         userDetailsBoxDTO.setList(mongoSearchService.generateUserHistory());
 
-        //compute stat
+        //compute session nb
         for (UserHistoryDTO userHistoryDTO : userDetailsBoxDTO.getList()) {
             if (userDetailsBoxDTO.getNbSessions().containsKey(userHistoryDTO.getNbSessions())) {
                 userDetailsBoxDTO.getNbSessions().put(userHistoryDTO.getNbSessions(), userDetailsBoxDTO.getNbSessions().get(userHistoryDTO.getNbSessions()) + 1);
             } else {
                 userDetailsBoxDTO.getNbSessions().put(userHistoryDTO.getNbSessions(), 1);
+            }
+        }
+
+        //compute follow nb
+        for (UserHistoryDTO userHistoryDTO : userDetailsBoxDTO.getList()) {
+            if (userDetailsBoxDTO.getNbFollows().containsKey(userHistoryDTO.getNbFollow())) {
+                userDetailsBoxDTO.getNbFollows().put(userHistoryDTO.getNbFollow(), userDetailsBoxDTO.getNbFollows().get(userHistoryDTO.getNbFollow()) + 1);
+            } else {
+                userDetailsBoxDTO.getNbFollows().put(userHistoryDTO.getNbFollow(), 1);
             }
         }
 

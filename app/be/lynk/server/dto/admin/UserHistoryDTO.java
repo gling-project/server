@@ -15,6 +15,18 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
     private Date    creationDate;
     private boolean facebook;
     private int     nbSessions;
+    private long    nbFollow;
+
+    public UserHistoryDTO() {
+    }
+
+    public long getNbFollow() {
+        return nbFollow;
+    }
+
+    public void setNbFollow(long nbFollow) {
+        this.nbFollow = nbFollow;
+    }
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
@@ -50,6 +62,6 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
 
     @Override
     public int compareTo(UserHistoryDTO o) {
-        return o.getCreationDate().compareTo(this.getCreationDate());
+        return this.getCreationDate().compareTo(o.getCreationDate());
     }
 }

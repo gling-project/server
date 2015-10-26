@@ -4,6 +4,7 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.admin.UserHistoryDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.AccountService;
+import be.lynk.server.service.FollowLinkService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -33,9 +34,11 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
 
     @Autowired
-    private MongoDBOperator mongoDBOperator;
+    private MongoDBOperator   mongoDBOperator;
     @Autowired
-    private AccountService  accountService;
+    private AccountService    accountService;
+    @Autowired
+    private FollowLinkService followLinkService;
 
 
     @Override
@@ -109,6 +112,8 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                     nbSession++;
                 }
             }
+
+            userHistoryDTO.setNbFollow(followLinkService.countByAccount(account));
 
             userHistoryDTO.setNbSessions(nbSession);
         }

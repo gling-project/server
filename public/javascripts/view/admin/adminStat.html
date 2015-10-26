@@ -11,16 +11,39 @@
 <button ng-click="refreshStat()">Refrech</button>
 
 
-
 <h1>User Details</h1>
 
-<table class="admin_stat">
-    <tr ng-repeat="userDetail in userDetails">
-        <td>{{userDetail.creationDate | date}}</td>
-        <td>{{userDetail.nbSessions}}</td>
+<table>
+    <tr>
+        <td style="vertical-align: top">
+
+            <table class="admin_stat">
+                <tr>
+                    <td>id</td>
+                    <td>enregistré depuis</td>
+                    <td>nb de session</td>
+                    <td>nb de follow</td>
+                </tr>
+                <tr ng-repeat="userDetail in userDetails">
+                    <td>{{userDetail.accountId}}</td>
+                    <td>{{userDetail.creationDate | date}}</td>
+                    <td>{{userDetail.nbSessions}}</td>
+                    <td>{{userDetail.nbFollow}}</td>
+                </tr>
+            </table>
+        </td>
+        <td style="vertical-align: top">
+
+            <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
+                              ng-info="nbSessionChartParam"></donut-chart-ctrl>
+
+            <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
+                              ng-info="nbFollowChartParam"></donut-chart-ctrl>
+        </td>
+    </tr>
+    <tr collapse="2">
+        <button ng-click="refreshDetails()">Refrech</button>
     </tr>
 </table>
 
-<donut-chart-ctrl ng-info="nbSessionChartParam"></donut-chart-ctrl>
 
-<button ng-click="refreshDetails()">Refrech</button>

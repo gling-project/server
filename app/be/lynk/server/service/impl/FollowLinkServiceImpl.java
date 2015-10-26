@@ -4,11 +4,13 @@ import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.FollowLink;
 import be.lynk.server.service.FollowLinkService;
+import be.lynk.server.util.AccountTypeEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,10 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
                 .setParameter("business", business)
                 .setParameter("account", customerAccount)
                 .getResultList();
-        if(resultList.size()==0){
+        if (resultList.size() == 0) {
             return null;
         }
-        if(resultList.size()>1){
+        if (resultList.size() > 1) {
             throw new RuntimeException();
         }
         return resultList.get(0);
@@ -48,7 +50,7 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
 
     @Override
     public Integer countByBusiness(Business business) {
-        return JPA.em().createQuery("select count(f) from FollowLink f where f.business=:business",Long.class)
+        return JPA.em().createQuery("select count(f) from FollowLink f where f.business=:business", Long.class)
                 .setParameter("business", business)
                 .getSingleResult().intValue();
     }
@@ -61,10 +63,10 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
 //        cq.select(cb.count(cq.from(FollowLink.class)));
 //        cq.where(cb.equal(from.get("business"), business));
 //        cq.where(cb.equal(from.get("account"), customerAccount));
-        return JPA.em().createQuery("select count(f) from FollowLink f where f.business=:business and f.account=:account",Long.class)
+        return JPA.em().createQuery("select count(f) from FollowLink f where f.business=:business and f.account=:account", Long.class)
                 .setParameter("business", business)
-                .setParameter("account",customerAccount)
-                .getSingleResult()>0;
+                .setParameter("account", customerAccount)
+                .getSingleResult() > 0;
     }
 
     @Override
@@ -84,5 +86,19 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
 
 
         return l;
+    }
+
+    @Override
+    public long countByAccount(Account account) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<FollowLink> from = cq.from(FollowLink.class);
+        cq.select(cb.count(from));
+
+
+        cq.where(cb.equal(from.get("account"), account));
+
+        return JPA.em().createQuery(cq).getSingleResult();
+
     }
 }

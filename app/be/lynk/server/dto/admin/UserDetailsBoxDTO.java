@@ -2,6 +2,7 @@ package be.lynk.server.dto.admin;
 
 import be.lynk.server.dto.technical.DTO;
 
+import javax.management.openmbean.TabularData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,11 @@ public class UserDetailsBoxDTO extends DTO {
     private List<UserHistoryDTO> list = new ArrayList<>();
 
     private Map<Integer, Integer> nbSessions = new HashMap<>();
+
+    private Map<Long, Integer> nbFollows = new HashMap<>();
+
+    public UserDetailsBoxDTO() {
+    }
 
     public List<UserHistoryDTO> getList() {
         return list;
@@ -30,5 +36,13 @@ public class UserDetailsBoxDTO extends DTO {
 
     public void setNbSessions(Map<Integer, Integer> nbSessions) {
         this.nbSessions = nbSessions;
+    }
+
+    public Map<Long,Integer> getNbFollows() {
+        return nbFollows;
+    }
+
+    public void setNbFollows(Map<Long, Integer> nbFollows) {
+        this.nbFollows = nbFollows;
     }
 }
