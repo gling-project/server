@@ -50,7 +50,7 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
-                callbackSuccess(data.list);
+                callbackSuccess(data);
             }
         })
             .error(function (data, status) {

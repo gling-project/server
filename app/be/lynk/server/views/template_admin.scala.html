@@ -14,12 +14,14 @@
         <script src="@routes.Assets.at("components/lodash/lodash.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("components/angular-google-maps/dist/angular-google-maps.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("components/angular-google-maps/dist/angular-google-maps_dev_mapped.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("components/highcharts/highcharts.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("components/highcharts/highcharts-all.js")" type="text/javascript"></script>
 
             <!-- routes -->
         <script src="@routes.Assets.at("javascripts/routes/admin-routes.js")" type="text/javascript"></script>
 
             <!-- init -->
-        <script src="@routes.Assets.at("javascripts/Init.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/InitAdmin.js")" type="text/javascript"></script>
 
             <!-- common angularsj elements -->
         @header.header()
@@ -38,9 +40,11 @@
         <!-- service -->
         <script src="@routes.Assets.at("javascripts/service/SuperAdminService.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/service/FlashService.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/service/GenerateIdService.js")" type="text/javascript"></script>
 
         <!-- component -->
         <script src="@routes.Assets.at("javascripts/directive/superAdmin/menu/SuperAdminMenuCtrl.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/directive/admin/donutChart/donutChart.js")" type="text/javascript"></script>
 
             <!-- css -->
             <!-- main -->

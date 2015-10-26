@@ -4,10 +4,7 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
-import be.lynk.server.dto.admin.AdminStatDTO;
-import be.lynk.server.dto.admin.BusinessForAdminDTO;
-import be.lynk.server.dto.admin.EmailDTO;
-import be.lynk.server.dto.admin.UserHistoryDTO;
+import be.lynk.server.dto.admin.*;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
@@ -186,7 +183,7 @@ public class SuperAdminRestController extends AbstractRestController {
         adminStatDTO.getStats().put("Nouveaux consommateurs 7 jours", "+ " + accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(7)));
 
         //commerce
-        adminStatDTO.getStats().put("Nombre de commerces", businessService.countAll()+ "");
+        adminStatDTO.getStats().put("Nombre de commerces", businessService.countAll() + "");
 
         //publication
         adminStatDTO.getStats().put("Nombre total de publications", publicationService.countAll() + "");
@@ -201,7 +198,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nombre de session depuis 7 jours", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(7)));
 
-        adminStatDTO.getStats().put("Nombre de session depuis le 13/10", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.of(2015,10,10,00,00,00)));//now().minusDays(7)));
+        adminStatDTO.getStats().put("Nombre de session depuis le 13/10", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.of(2015, 10, 10, 00, 00, 00)));//now().minusDays(7)));
 
 
         return ok(adminStatDTO);
@@ -235,12 +232,24 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result getUserDetails(){
-        List<UserHistoryDTO> userHistoryDTOs = mongoSearchService.generateUserHistory();
+    public Result getUserDetails() {
+        UserDetailsBoxDTO userDetailsBoxDTO = new UserDetailsBoxDTO();
 
-        Collections.sort(userHistoryDTOs);
+        userDetailsBoxDTO.setList(mongoSearchService.generateUserHistory());
 
-        return ok(new ListDTO<>(userHistoryDTOs));
+        //compute stat
+        for (UserHistoryDTO userHistoryDTO : userDetailsBoxDTO.getList()) {
+            if (userDetailsBoxDTO.getNbSessions().containsKey(userHistoryDTO.getNbSessions())) {
+                userDetailsBoxDTO.getNbSessions().put(userHistoryDTO.getNbSessions(), userDetailsBoxDTO.getNbSessions().get(userHistoryDTO.getNbSessions()) + 1);
+            } else {
+                userDetailsBoxDTO.getNbSessions().put(userHistoryDTO.getNbSessions(), 1);
+            }
+        }
+
+
+        Collections.sort(userDetailsBoxDTO.getList());
+
+        return ok(userDetailsBoxDTO);
     }
 
 

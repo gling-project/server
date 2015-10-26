@@ -9,7 +9,12 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
 
     $scope.refreshDetails = function () {
         superAdminService.getUserDetails(function (data) {
-            $scope.userDetails = data;
+            $scope.userDetails = data.list;
+            $scope.nbSessionChartParam = {
+                title: 'Nombre de session par utilisateur',
+                data: data.nbSessions
+            };
+
         });
     };
 
