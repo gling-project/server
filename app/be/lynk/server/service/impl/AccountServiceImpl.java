@@ -65,8 +65,8 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
 //        String s = "select c from BusinessCategory c where c.translationName = t and v.translation=t and v.lang=:lang and v.searchableContent like :criteria";
 
         return JPA.em().createQuery(r, Account.class)
-                  .setParameter("facebookCredential", facebookCredential)
-                  .getSingleResult();
+                .setParameter("facebookCredential", facebookCredential)
+                .getSingleResult();
 
 //        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
 //        CriteriaQuery<Account> cq = cb.createQuery(Account.class);
@@ -90,7 +90,7 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
 
         if (accountType.equals(AccountTypeEnum.CUSTOMER)) {
             cq.where(cb.or(cb.equal(from.get("type"), accountType),
-                           cb.isNull(from.get("type"))));
+                    cb.isNull(from.get("type"))));
         } else {
             cq.where(cb.equal(from.get("type"), accountType));
         }
@@ -109,7 +109,7 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
 
         if (accountType.equals(AccountTypeEnum.CUSTOMER)) {
             predicates.add(cb.or(cb.equal(from.get("type"), accountType),
-                                 cb.isNull(from.get("type"))));
+                    cb.isNull(from.get("type"))));
         } else {
             predicates.add(cb.equal(from.get("type"), accountType));
         }
@@ -122,13 +122,20 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
     }
 
     @Override
-    public List<Account> findByRole(RoleEnum customer) {
+    public List<Account> findByRole(RoleEnum role) {
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Account> cq = cb.createQuery(Account.class);
         Root<Account> from = cq.from(Account.class);
         cq.select(from);
-        cq.where(cb.equal(from.get("role"), RoleEnum.CUSTOMER));
+
+        if (role.equals(RoleEnum.CUSTOMER)) {
+            cq.where(cb.or(cb.isNull(from.get("role")), cb.equal(from.get("role"), role)));
+        }
+        else{
+            cq.where(cb.equal(from.get("role"), role));
+        }
+
         return JPA.em().createQuery(cq).getResultList();
     }
 

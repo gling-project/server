@@ -4,16 +4,17 @@ import be.lynk.server.dto.technical.DTO;
 
 import java.time.LocalDateTime;
 import java.lang.Comparable;
+import java.util.Date;
 
 /**
  * Created by florian on 26/10/15.
  */
 public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
 
-    private Long          accountId;
-    private LocalDateTime creationDate;
-    private boolean       facebook;
-    private int           nbSessions;
+    private Long    accountId;
+    private Date    creationDate;
+    private boolean facebook;
+    private int     nbSessions;
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
@@ -23,12 +24,12 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
         return accountId;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public void setFacebook(boolean facebook) {

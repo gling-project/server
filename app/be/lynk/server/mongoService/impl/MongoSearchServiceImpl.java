@@ -86,10 +86,10 @@ public class MongoSearchServiceImpl implements MongoSearchService {
         for (Account account : accounts) {
 
             UserHistoryDTO userHistoryDTO = new UserHistoryDTO();
-
+            userHistoryDTOs.add(userHistoryDTO);
 
             userHistoryDTO.setAccountId(account.getId());
-            userHistoryDTO.setCreationDate(account.getCreationDate());
+            userHistoryDTO.setCreationDate(Date.from(account.getCreationDate().atZone(ZoneId.systemDefault()).toInstant()));
             userHistoryDTO.setFacebook(account.getFacebookCredential() != null);
 
 

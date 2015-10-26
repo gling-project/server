@@ -8,13 +8,16 @@
         <td>{{value}}</td>
     </tr>
 </table>
+<button ng-click="refreshStat()">Refrech</button>
 
 
-User Details
+
+<h1>User Details</h1>
 
 <table class="admin_stat">
     <tr ng-repeat="userDetail in userDetails">
-        <td>{{userDetail.creationDate}}</td>
+        <td>{{userDetail.creationDate | date}}</td>
         <td>{{userDetail.nbSessions}}</td>
     </tr>
 </table>
+<button ng-click="refreshDetails()">Refrech</button>
