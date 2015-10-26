@@ -19,7 +19,17 @@ public class UserDetailsBoxDTO extends DTO {
 
     private Map<Long, Integer> nbFollows = new HashMap<>();
 
+    private Map<Long, Integer> nbAddresses = new HashMap<>();
+
     public UserDetailsBoxDTO() {
+    }
+
+    public Map<Long, Integer> getNbAddresses() {
+        return nbAddresses;
+    }
+
+    public void setNbAddresses(Map<Long, Integer> nbAddresses) {
+        this.nbAddresses = nbAddresses;
     }
 
     public List<UserHistoryDTO> getList() {

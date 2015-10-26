@@ -2,6 +2,7 @@ package be.lynk.server.service.impl;
 
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Address;
+import be.lynk.server.model.entities.FollowLink;
 import be.lynk.server.service.AddressService;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
@@ -28,5 +29,20 @@ public class AddressServiceImpl extends CrudServiceImpl<Address> implements Addr
         cq.where(cb.equal(from.get("name"), name),
                  cb.equal(from.get("account"), currentUser));
         return getSingleResultOrNull(cq);
+    }
+
+    @Override
+    public long countByAccount(Account account) {
+
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Address> from = cq.from(Address.class);
+        cq.select(cb.count(from));
+
+
+        cq.where(cb.equal(from.get("account"), account));
+
+        return JPA.em().createQuery(cq).getSingleResult();
     }
 }

@@ -8,4 +8,6 @@ import be.lynk.server.model.entities.Address;
  */
 public interface AddressService extends CrudService<Address> {
     Address findByNameAndAccount(String name, Account currentUser);
+
+    long countByAccount(Account account);
 }

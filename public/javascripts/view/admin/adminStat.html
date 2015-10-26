@@ -23,12 +23,14 @@
                     <td>enregistré depuis</td>
                     <td>nb de session</td>
                     <td>nb de follow</td>
+                    <td>nb d'address</td>
                 </tr>
                 <tr ng-repeat="userDetail in userDetails">
                     <td>{{userDetail.accountId}}</td>
                     <td>{{userDetail.creationDate | date}}</td>
                     <td>{{userDetail.nbSessions}}</td>
                     <td>{{userDetail.nbFollow}}</td>
+                    <td>{{userDetail.nbAddresses}}</td>
                 </tr>
             </table>
         </td>
@@ -39,6 +41,9 @@
 
             <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
                               ng-info="nbFollowChartParam"></donut-chart-ctrl>
+
+            <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
+                              ng-info="nbAddressChartParam"></donut-chart-ctrl>
         </td>
     </tr>
     <tr collapse="2">

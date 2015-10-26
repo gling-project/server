@@ -16,6 +16,7 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
     private boolean facebook;
     private int     nbSessions;
     private long    nbFollow;
+    private long    nbAddresses;
 
     public UserHistoryDTO() {
     }
@@ -26,6 +27,14 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
 
     public void setNbFollow(long nbFollow) {
         this.nbFollow = nbFollow;
+    }
+
+    public long getNbAddresses() {
+        return nbAddresses;
+    }
+
+    public void setNbAddresses(long nbAddresses) {
+        this.nbAddresses = nbAddresses;
     }
 
     public void setAccountId(Long accountId) {

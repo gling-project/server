@@ -8,6 +8,7 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
 
     $scope.nbSessionChartParam=null;
     $scope.nbFollowChartParam=null;
+    $scope.nbAddressChartParam = null;
 
     $scope.refreshDetails = function () {
         superAdminService.getUserDetails(function (data) {
@@ -20,6 +21,10 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
                 title: 'Nombre de suivit par utilisateur',
                 data: data.nbFollows
             };
+            $scope.nbAddressChartParam = {
+                title: 'Nombre d\'adresse par utilisateur',
+                data: data.nbAddresses
+            }
 
         });
     };

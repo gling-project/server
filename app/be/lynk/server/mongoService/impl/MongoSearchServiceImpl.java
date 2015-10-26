@@ -4,6 +4,7 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.admin.UserHistoryDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.AccountService;
+import be.lynk.server.service.AddressService;
 import be.lynk.server.service.FollowLinkService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
@@ -39,6 +40,8 @@ public class MongoSearchServiceImpl implements MongoSearchService {
     private AccountService    accountService;
     @Autowired
     private FollowLinkService followLinkService;
+    @Autowired
+    private AddressService    addressService;
 
 
     @Override
@@ -94,6 +97,8 @@ public class MongoSearchServiceImpl implements MongoSearchService {
             userHistoryDTO.setAccountId(account.getId());
             userHistoryDTO.setCreationDate(Date.from(account.getCreationDate().atZone(ZoneId.systemDefault()).toInstant()));
             userHistoryDTO.setFacebook(account.getFacebookCredential() != null);
+            userHistoryDTO.setNbFollow(followLinkService.countByAccount(account));
+            userHistoryDTO.setNbAddresses(addressService.countByAccount(account));
 
 
             DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
@@ -113,7 +118,6 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                 }
             }
 
-            userHistoryDTO.setNbFollow(followLinkService.countByAccount(account));
 
             userHistoryDTO.setNbSessions(nbSession);
         }

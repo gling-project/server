@@ -90,6 +90,7 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
 
     @Override
     public long countByAccount(Account account) {
+
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<FollowLink> from = cq.from(FollowLink.class);

@@ -255,6 +255,15 @@ public class SuperAdminRestController extends AbstractRestController {
             }
         }
 
+        //compute follow nb
+        for (UserHistoryDTO userHistoryDTO : userDetailsBoxDTO.getList()) {
+            if (userDetailsBoxDTO.getNbAddresses().containsKey(userHistoryDTO.getNbAddresses())) {
+                userDetailsBoxDTO.getNbAddresses().put(userHistoryDTO.getNbAddresses(), userDetailsBoxDTO.getNbAddresses().get(userHistoryDTO.getNbAddresses()) + 1);
+            } else {
+                userDetailsBoxDTO.getNbAddresses().put(userHistoryDTO.getNbAddresses(), 1);
+            }
+        }
+
 
         Collections.sort(userDetailsBoxDTO.getList());
 
