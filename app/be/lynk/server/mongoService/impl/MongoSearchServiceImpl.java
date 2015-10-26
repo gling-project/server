@@ -1,14 +1,14 @@
 package be.lynk.server.mongoService.impl;
 
+import be.lynk.server.controller.technical.security.role.RoleEnum;
+import be.lynk.server.dto.admin.UserHistoryDTO;
+import be.lynk.server.model.entities.Account;
+import be.lynk.server.service.AccountService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.mongoService.MongoSearchService;
-import com.mongodb.Block;
-import com.mongodb.client.FindIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Sorts.ascending;
-import static java.util.Arrays.asList;
 
 /**
  * Created by florian on 16/10/15.
@@ -36,6 +34,8 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
     @Autowired
     private MongoDBOperator mongoDBOperator;
+    @Autowired
+    private AccountService  accountService;
 
 
     @Override
@@ -68,6 +68,50 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
         int sessionNb = sessions.size();
         return sessionNb;
+    }
+
+    @Override
+    public List<UserHistoryDTO> generateUserHistory() {
+
+        List<Account> accounts = accountService.findByRole(RoleEnum.CUSTOMER);
+
+
+        List<UserHistoryDTO> userHistoryDTOs = new ArrayList<>();
+        //load all connection request
+        //registration
+
+        //load all default
+
+        //load
+        for (Account account : accounts) {
+
+            UserHistoryDTO userHistoryDTO = new UserHistoryDTO();
+
+
+            userHistoryDTO.setAccountId(account.getId());
+            userHistoryDTO.setCreationDate(account.getCreationDate());
+            userHistoryDTO.setFacebook(account.getFacebookCredential() != null);
+
+
+            DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
+                                             .find(new BasicDBObject("currentAccountId", account.getId()));
+
+
+            long lastSession = Date.from(account.getCreationDate().atZone(ZoneId.systemDefault()).toInstant()).getTime();
+            int nbSession = 1;
+
+            while (cursor.hasNext()) {
+                DBObject next = cursor.next();
+                if (lastSession > Date.from(account.getCreationDate().atZone(ZoneId.systemDefault()).toInstant()).getTime() * 3600 * 1000) {
+                    lastSession = ((Date) next.get("_id")).getTime();
+                    nbSession++;
+                }
+            }
+
+            userHistoryDTO.setNbSessions(nbSession);
+        }
+
+        return userHistoryDTOs;
     }
 
     private class Session {

@@ -1,5 +1,6 @@
 package be.lynk.server.service.impl;
 
+import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.FacebookCredential;
 import be.lynk.server.service.AccountService;
@@ -90,8 +91,7 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
         if (accountType.equals(AccountTypeEnum.CUSTOMER)) {
             cq.where(cb.or(cb.equal(from.get("type"), accountType),
                            cb.isNull(from.get("type"))));
-        }
-        else{
+        } else {
             cq.where(cb.equal(from.get("type"), accountType));
         }
         return JPA.em().createQuery(cq).getSingleResult();
@@ -110,8 +110,7 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
         if (accountType.equals(AccountTypeEnum.CUSTOMER)) {
             predicates.add(cb.or(cb.equal(from.get("type"), accountType),
                                  cb.isNull(from.get("type"))));
-        }
-        else{
+        } else {
             predicates.add(cb.equal(from.get("type"), accountType));
         }
 
@@ -120,6 +119,17 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
         cq.where(predicates.toArray(new Predicate[predicates.size()]));
 
         return JPA.em().createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public List<Account> findByRole(RoleEnum customer) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Account> cq = cb.createQuery(Account.class);
+        Root<Account> from = cq.from(Account.class);
+        cq.select(from);
+        cq.where(cb.equal(from.get("role"), RoleEnum.CUSTOMER));
+        return JPA.em().createQuery(cq).getResultList();
     }
 
 

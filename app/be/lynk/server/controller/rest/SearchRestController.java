@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class SearchRestController extends AbstractRestController {
 
     private static final Double MAX_DISTANCE          = 20.0;
-    private static final int    NUMBER_RESULT_BY_PAGE = 20;
+    private static final int    NUMBER_RESULT_BY_PAGE = 10;
 
 
     @Autowired

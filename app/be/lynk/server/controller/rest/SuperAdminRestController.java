@@ -7,6 +7,7 @@ import be.lynk.server.dto.*;
 import be.lynk.server.dto.admin.AdminStatDTO;
 import be.lynk.server.dto.admin.BusinessForAdminDTO;
 import be.lynk.server.dto.admin.EmailDTO;
+import be.lynk.server.dto.admin.UserHistoryDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
@@ -26,6 +27,7 @@ import play.mvc.Result;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -229,6 +231,16 @@ public class SuperAdminRestController extends AbstractRestController {
         categoriesAndInterestsDTO.setInterests(dozerService.map(customerInterestService.findAll(), CustomerInterestDTO.class));
 
         return ok(categoriesAndInterestsDTO);
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result getUserDetails(){
+        List<UserHistoryDTO> userHistoryDTOs = mongoSearchService.generateUserHistory();
+
+        Collections.sort(userHistoryDTOs);
+
+        return ok(new ListDTO<>(userHistoryDTOs));
     }
 
 

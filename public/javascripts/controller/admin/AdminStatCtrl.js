@@ -4,4 +4,8 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, ngTablePa
         $scope.stats = data;
     });
 
+    superAdminService.getUserDetails(function (data) {
+        $scope.userDetails = data;
+    });
+
 });
