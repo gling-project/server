@@ -174,31 +174,51 @@ public class SuperAdminRestController extends AbstractRestController {
         AdminStatDTO adminStatDTO = new AdminStatDTO();
 
         Long nbCustomer = accountService.countByType(AccountTypeEnum.CUSTOMER);
+        Long nbBusiness = businessService.countAll();
+        Long nbTotalPublication = publicationService.countAll();
+        int nbSessions = mongoSearchService.numberSessionsFrom(LocalDateTime.of(2015, 10, 10, 00, 00, 00));
+
 
         //utilisateur
-        adminStatDTO.getStats().put("Nombre de compte consommateurs", nbCustomer + "");
+        adminStatDTO.getStats().put("Nombre de compte consommateurs", new AdminStatDTO.Data(nbCustomer));
 
-        adminStatDTO.getStats().put("Nouveaux consommateurs 1 jour", "+ " + accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(1)));
+        adminStatDTO.getStats().put("Nouveaux consommateurs 1 jour", AdminStatDTO.Data.createPercent(accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(1)).doubleValue(), nbCustomer.doubleValue()));
 
-        adminStatDTO.getStats().put("Nouveaux consommateurs 7 jours", "+ " + accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(7)));
+        adminStatDTO.getStats().put("Nouveaux consommateurs 7 jours", AdminStatDTO.Data.createPercent(accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(7)).doubleValue(), nbCustomer.doubleValue()));
+
+        adminStatDTO.getStats().put("Nouveaux consommateurs 28 jours", AdminStatDTO.Data.createPercent(accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(28)).doubleValue(), nbCustomer.doubleValue()));
 
         //commerce
-        adminStatDTO.getStats().put("Nombre de commerces", businessService.countAll() + "");
+        adminStatDTO.getStats().put("Nombre de commerces", new AdminStatDTO.Data(nbBusiness));
+
+        adminStatDTO.getStats().put("Nombre de commerces publiés", AdminStatDTO.Data.createPercent(businessService.countByStatus(BusinessStatusEnum.PUBLISHED), nbBusiness));
+
+        adminStatDTO.getStats().put("Nombre de commerces ayant publié au moins une fois", AdminStatDTO.Data.createPercent(businessService.countAtLeastOnePublication(), nbBusiness));
+
+        adminStatDTO.getStats().put("Nombre de commerces ayant au moins une publication active", AdminStatDTO.Data.createPercent(businessService.countAtLeastOneActivePublication(), nbBusiness));
+
+        adminStatDTO.getStats().put("Nombre de commerces ayant publié au moins une fois depuis ces 7 derniers jours", AdminStatDTO.Data.createPercent(businessService.countAtLeastOnePublicationFrom(LocalDateTime.now().minusDays(7)), nbBusiness));
+
+        adminStatDTO.getStats().put("Nombre de commerces ayant publié au moins une fois depuis ces 28 derniers jours", AdminStatDTO.Data.createPercent(businessService.countAtLeastOnePublicationFrom(LocalDateTime.now().minusDays(28)), nbBusiness));
 
         //publication
-        adminStatDTO.getStats().put("Nombre total de publications", publicationService.countAll() + "");
+        adminStatDTO.getStats().put("Nombre total de publications", new AdminStatDTO.Data(nbTotalPublication));
 
-        adminStatDTO.getStats().put("Nombre de publications actives", publicationService.countActive() + "");
+        adminStatDTO.getStats().put("Nombre de publications actives", AdminStatDTO.Data.createPercent(publicationService.countActive(), nbTotalPublication));
 
-        adminStatDTO.getStats().put("Nouvelles publications depuis 1 jour", "+ " + publicationService.countActiveFrom(LocalDateTime.now().minusDays(1)));
+        adminStatDTO.getStats().put("Nouvelles publications depuis 1 jour", AdminStatDTO.Data.createPercent(publicationService.countActiveFrom(LocalDateTime.now().minusDays(1)), nbTotalPublication));
 
-        adminStatDTO.getStats().put("Nouvelles publications 7 jours", "+ " + publicationService.countActiveFrom(LocalDateTime.now().minusDays(7)));
+        adminStatDTO.getStats().put("Nouvelles publications depuis 7 jour", AdminStatDTO.Data.createPercent(publicationService.countActiveFrom(LocalDateTime.now().minusDays(7)), nbTotalPublication));
 
-        adminStatDTO.getStats().put("Nombre de session depuis 1 jour", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(1)));
+        adminStatDTO.getStats().put("Nouvelles publications depuis 28 jour", AdminStatDTO.Data.createPercent(publicationService.countActiveFrom(LocalDateTime.now().minusDays(28)), nbTotalPublication));
 
-        adminStatDTO.getStats().put("Nombre de session depuis 7 jours", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(7)));
+        adminStatDTO.getStats().put("Nombre de session total", new AdminStatDTO.Data(nbSessions));
 
-        adminStatDTO.getStats().put("Nombre de session depuis le 13/10", "+ " + mongoSearchService.numberSessionsFrom(LocalDateTime.of(2015, 10, 10, 00, 00, 00)));//now().minusDays(7)));
+        adminStatDTO.getStats().put("Nombre de session depuis 1 jour", AdminStatDTO.Data.createPercent(mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(1)), nbSessions));
+
+        adminStatDTO.getStats().put("Nombre de session depuis 7 jour", AdminStatDTO.Data.createPercent(mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(7)), nbSessions));
+
+        adminStatDTO.getStats().put("Nombre de session depuis 28 jour", AdminStatDTO.Data.createPercent(mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(28)), nbSessions));
 
 
         return ok(adminStatDTO);

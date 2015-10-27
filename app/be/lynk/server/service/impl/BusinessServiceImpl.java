@@ -6,12 +6,14 @@ import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Address;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
+import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.util.AccountTypeEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
 import javax.persistence.criteria.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +33,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
         cq.where(cb.equal(from.get("name"), businessName),
-                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+                cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
         return JPA.em().createQuery(cq).getResultList();
 
     }
@@ -46,14 +48,14 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
         cq.where(cb.like(from.get("searchableName"), criteria),
-                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+                cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
     @Override
@@ -70,14 +72,14 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         Join<Business, BusinessCategory> businessCategories = from.join("businessCategories");
         cq.select(from);
         cq.where(cb.equal(businessCategories, businessCategory),
-                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+                cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
     @Override
@@ -95,15 +97,15 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         cq.select(from);
 
         cq.where(cb.equal(addressRel.get("zip"), zip),
-                 cb.like(from.get("searchableName"), criteria),
-                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+                cb.like(from.get("searchableName"), criteria),
+                cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
     @Override
@@ -117,14 +119,14 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         cq.select(from);
 
         cq.where(cb.equal(addressRel.get("zip"), zip),
-                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+                cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
     @Override
@@ -141,15 +143,15 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         cq.select(from);
 
         cq.where(cb.greaterThan(addressRel.get("posx"), maxCoordinate[0]),
-                 cb.lessThan(addressRel.get("posx"), maxCoordinate[1]),
-                 cb.greaterThan(addressRel.get("posy"), maxCoordinate[2]),
-                 cb.lessThan(addressRel.get("posy"), maxCoordinate[3]),
-                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+                cb.lessThan(addressRel.get("posx"), maxCoordinate[1]),
+                cb.greaterThan(addressRel.get("posy"), maxCoordinate[2]),
+                cb.lessThan(addressRel.get("posy"), maxCoordinate[3]),
+                cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
 
         cq.orderBy(cb.asc(from.get("searchableName")));
 
         return JPA.em().createQuery(cq)
-                  .getResultList();
+                .getResultList();
 
     }
 
@@ -167,13 +169,13 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         String request = "select b from Business b inner join b.businessCategories c where c in :categories and b.address.posx > :coord1 and b.address.posx < :coord2 and b.address.posy > :coord3 and b.address.posy < :coord4 and b.businessStatus = :status order by searchableName";
 
         List<Business> resultList = JPA.em().createQuery(request, Business.class)
-                                       .setParameter("categories", categories)
-                                       .setParameter("coord1", doubles[0])
-                                       .setParameter("coord2", doubles[1])
-                                       .setParameter("coord3", doubles[2])
-                                       .setParameter("coord4", doubles[3])
-                                       .setParameter("status", BusinessStatusEnum.PUBLISHED)
-                                       .getResultList();
+                .setParameter("categories", categories)
+                .setParameter("coord1", doubles[0])
+                .setParameter("coord2", doubles[1])
+                .setParameter("coord3", doubles[2])
+                .setParameter("coord4", doubles[3])
+                .setParameter("status", BusinessStatusEnum.PUBLISHED)
+                .getResultList();
         HashSet<Business> businesses = new HashSet<>(resultList);
         return businesses;
     }
@@ -184,9 +186,9 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         String request = "Select b from Business b, FollowLink f where b.businessStatus = :status and f.business=b and f.account=:account";
 
         return JPA.em().createQuery(request, Business.class)
-                  .setParameter("account", currentUser)
-                  .setParameter("status", BusinessStatusEnum.PUBLISHED)
-                  .getResultList();
+                .setParameter("account", currentUser)
+                .setParameter("status", BusinessStatusEnum.PUBLISHED)
+                .getResultList();
     }
 
     @Override
@@ -195,8 +197,8 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         String request = "Select b from Business b where b.account= :account";
 
         return JPA.em().createQuery(request, Business.class)
-                  .setParameter("account", account)
-                  .getSingleResult();
+                .setParameter("account", account)
+                .getSingleResult();
 
     }
 
@@ -210,5 +212,73 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
 
         return JPA.em().createQuery(cq).getSingleResult();
 
+    }
+
+    @Override
+    public long countByStatus(BusinessStatusEnum published) {
+
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Business> from = cq.from(Business.class);
+        cq.select(cb.count(from));
+
+        cq.where(cb.equal(from.get("businessStatus"), published));
+
+        return JPA.em().createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public long countAtLeastOneActivePublication() {
+
+        long total = 0;
+
+        for (Business business : findAll()) {
+
+            if (business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)) {
+                for (AbstractPublication publication : business.getPublications()) {
+                    if (publication.getEndDate().compareTo(LocalDateTime.now()) > 0) {
+                        total++;
+                        break;
+                    }
+                }
+            }
+        }
+        return total;
+
+
+    }
+
+    @Override
+    public long countAtLeastOnePublication() {
+
+        long total = 0;
+
+        for (Business business : findAll()) {
+
+            if (business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED) && business.getPublications().size() > 0) {
+                total++;
+            }
+        }
+
+        return total;
+    }
+
+    @Override
+    public long countAtLeastOnePublicationFrom(LocalDateTime from) {
+        long total = 0;
+
+        for (Business business : findAll()) {
+
+            if (business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)) {
+                for (AbstractPublication publication : business.getPublications()) {
+                    if (publication.getStartDate().compareTo(from) > 0) {
+                        total++;
+                        break;
+                    }
+                }
+            }
+        }
+        return total;
     }
 }

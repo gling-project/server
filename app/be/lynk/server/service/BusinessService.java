@@ -1,11 +1,13 @@
 package be.lynk.server.service;
 
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessCategory;
 import be.lynk.server.model.entities.CustomerInterest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -34,4 +36,12 @@ public interface BusinessService extends CrudService<Business>{
     Business findByAccount(Account account);
 
     Long countAll();
+
+    long countByStatus(BusinessStatusEnum published);
+
+    long countAtLeastOneActivePublication();
+
+    long countAtLeastOnePublication();
+
+    long countAtLeastOnePublicationFrom(LocalDateTime localDateTime);
 }

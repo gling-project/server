@@ -3,9 +3,10 @@
 <h1>Stats</h1>
 
 <table class="admin_stat">
-    <tr ng-repeat="(title, value) in stats">
+    <tr ng-repeat="(title, val) in stats">
         <td>{{title}}</td>
-        <td>{{value}}</td>
+        <td>{{val.value1}}</td>
+        <td>{{val.value2 * 100 | number:2}} % </td>
     </tr>
 </table>
 <button ng-click="refreshStat()">Refrech</button>

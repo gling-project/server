@@ -62,6 +62,13 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
         while (cursor.hasNext()) {
             DBObject next = cursor.next();
+
+            if (next.get("currentAccountId") != null) {
+                Account currentAccountId = accountService.findById((Long) next.get("currentAccountId"));
+                if (!currentAccountId.getRole().equals(RoleEnum.CUSTOMER)) {
+                    continue;
+                }
+            }
             Session session = new Session((Long) next.get("currentAccountId"), (String) next.get("sessionId"), (Date) next.get("_id"));
             boolean founded = false;
             for (Session session1 : sessions) {
@@ -160,7 +167,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                     lastSession = visitT;
                     nbSession++;
                 }
-                if(next.get("__type")!=null && next.get("__type").equals("be.lynk.server.dto.PositionDTO")){
+                if (next.get("__type") != null && next.get("__type").equals("be.lynk.server.dto.PositionDTO")) {
                     userHistoryDTO.setSharePosition(true);
                 }
             }
