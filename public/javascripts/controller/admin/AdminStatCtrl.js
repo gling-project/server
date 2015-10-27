@@ -36,7 +36,7 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
                     data: data.nbAddresses
                 }, sharePositionChartParam:{
                     title: 'Partage sa position par utilisateur',
-                    data: data.sharePosition
+                    data: data.sharePositions
                 }
             }
         )
