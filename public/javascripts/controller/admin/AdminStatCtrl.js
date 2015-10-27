@@ -22,7 +22,7 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
 
         $scope.details.push({
                 title: title,
-                total:data.total,
+                total: data.total,
                 nbSessionChartParam: {
                     title: 'Nombre de session par utilisateur',
                     data: data.nbSessions
@@ -34,6 +34,9 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
                 }, nbAddressChartParam: {
                     title: 'Nombre d\'adresse par utilisateur',
                     data: data.nbAddresses
+                }, sharePositionChartParam:{
+                    title: 'Partage sa position par utilisateur',
+                    data: data.sharePosition
                 }
             }
         )

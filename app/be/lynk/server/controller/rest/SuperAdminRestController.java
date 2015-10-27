@@ -279,6 +279,15 @@ public class SuperAdminRestController extends AbstractRestController {
             }
         }
 
+        //sharePosition
+        for (UserHistoryDTO userHistoryDTO : userDetailsBoxDTO.getList()) {
+            if (userDetailsBoxDTO.getSharePositions().containsKey(userHistoryDTO.getSharePosition())) {
+                userDetailsBoxDTO.getSharePositions().put(userHistoryDTO.getSharePosition(), userDetailsBoxDTO.getSharePositions().get(userHistoryDTO.getSharePosition()) + 1);
+            } else {
+                userDetailsBoxDTO.getSharePositions().put(userHistoryDTO.getSharePosition(), 1);
+            }
+        }
+
 
         Collections.sort(userDetailsBoxDTO.getList());
 

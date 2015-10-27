@@ -17,6 +17,7 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
     private int     nbSessions;
     private long    nbFollow;
     private long    nbAddresses;
+    private boolean sharePosition = false;
 
     public UserHistoryDTO() {
     }
@@ -72,5 +73,13 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
     @Override
     public int compareTo(UserHistoryDTO o) {
         return this.getCreationDate().compareTo(o.getCreationDate());
+    }
+
+    public void setSharePosition(boolean sharePosition) {
+        this.sharePosition = sharePosition;
+    }
+
+    public boolean getSharePosition() {
+        return sharePosition;
     }
 }

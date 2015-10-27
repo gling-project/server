@@ -160,6 +160,9 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                     lastSession = visitT;
                     nbSession++;
                 }
+                if(next.get("__type")!=null && next.get("__type").equals("be.lynk.server.dto.PositionDTO")){
+                    userHistoryDTO.setSharePosition(true);
+                }
             }
 
 

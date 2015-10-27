@@ -13,13 +13,11 @@ import java.util.Map;
  */
 public class UserDetailsBoxDTO extends DTO {
 
-    private List<UserHistoryDTO> list = new ArrayList<>();
-
-    private Map<Integer, Integer> nbSessions = new HashMap<>();
-
-    private Map<Long, Integer> nbFollows = new HashMap<>();
-
-    private Map<Long, Integer> nbAddresses = new HashMap<>();
+    private List<UserHistoryDTO>  list           = new ArrayList<>();
+    private Map<Integer, Integer> nbSessions     = new HashMap<>();
+    private Map<Long, Integer>    nbFollows      = new HashMap<>();
+    private Map<Long, Integer>    nbAddresses    = new HashMap<>();
+    private Map<Boolean, Integer> sharePositions = new HashMap<>();
     private int total;
 
     public UserDetailsBoxDTO() {
@@ -49,7 +47,7 @@ public class UserDetailsBoxDTO extends DTO {
         this.nbSessions = nbSessions;
     }
 
-    public Map<Long,Integer> getNbFollows() {
+    public Map<Long, Integer> getNbFollows() {
         return nbFollows;
     }
 
@@ -63,5 +61,13 @@ public class UserDetailsBoxDTO extends DTO {
 
     public int getTotal() {
         return total;
+    }
+
+    public Map<Boolean, Integer> getSharePositions() {
+        return sharePositions;
+    }
+
+    public void setSharePositions(Map<Boolean, Integer> sharePositions) {
+        this.sharePositions = sharePositions;
     }
 }
