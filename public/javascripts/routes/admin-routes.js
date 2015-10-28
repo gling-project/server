@@ -57,6 +57,17 @@ var initializeCommonRoutes = function () {
                         }
                     }
                 })
+                .when('/admin/map', {
+                    templateUrl: '/assets/javascripts/view/admin/adminMap.html',
+                    controller: 'AdminMapCtrl',
+                    resolve: {
+                        a: function (accountService, $location) {
+                            if (test(accountService) == 'NOT_CONNECTED') {
+                                $location.path('/');
+                            }
+                        }
+                    }
+                })
                 .when('/admin/', {
                     redirectTo: '/admin/stat'
                 })

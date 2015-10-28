@@ -117,6 +117,7 @@ PUT           /rest/superadmin/category_interest_link/$categoryName<[a-z_]+>/$in
 PUT           /rest/superadmin/category_interest_link/$categoryName<[a-z_]+>/$interestName<[a-z_]+>/                 @be.lynk.server.controller.rest.SuperAdminRestController.setCategoryInterestLink(categoryName:String,interestName:String,priority=null)
 POST          /rest/superadmin/emailToBusinesses                                                                     @be.lynk.server.controller.rest.SuperAdminRestController.sendEmailToBusinesses()
 GET           /rest/superadmin/accountDetails                                                                        @be.lynk.server.controller.rest.SuperAdminRestController.getUserDetails()
+GET           /rest/superadmin/customerPosition                                                                      @be.lynk.server.controller.rest.SuperAdminRestController.getCustomerPositions()
 
 
 ## town

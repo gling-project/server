@@ -169,6 +169,14 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result getCustomerPositions() {
+        List<PositionDTO> customerPosition = mongoSearchService.getCustomerPosition(null);
+
+        return ok(new ListDTO<>(customerPosition));
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result getStats() {
 
         AdminStatDTO adminStatDTO = new AdminStatDTO();

@@ -1,5 +1,6 @@
 package be.lynk.server.mongoService;
 
+import be.lynk.server.dto.PositionDTO;
 import be.lynk.server.dto.admin.UserHistoryDTO;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,8 @@ import java.util.List;
 public interface MongoSearchService {
 
     public int numberSessionsFrom(LocalDateTime localDateTime);
+
+    List<PositionDTO> getCustomerPosition(LocalDateTime from);
 
     List<UserHistoryDTO> generateUserHistory(LocalDateTime from);
 }

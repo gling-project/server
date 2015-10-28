@@ -1,6 +1,7 @@
 package be.lynk.server.mongoService.impl;
 
 import be.lynk.server.controller.technical.security.role.RoleEnum;
+import be.lynk.server.dto.PositionDTO;
 import be.lynk.server.dto.admin.UserHistoryDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.AccountService;
@@ -49,41 +50,20 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
     @Override
     public int numberSessionsFrom(LocalDateTime localDateTime) {
+        return getCustomerSession(localDateTime).size();
+    }
 
-        Date from = dozerService.map(localDateTime, Date.class);
+    @Override
+    public List<PositionDTO> getCustomerPosition(LocalDateTime from) {
+        List<PositionDTO> p = new ArrayList<>();
 
-        DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
-                .find(new BasicDBObject("$and",
-                                new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
-                                        , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
-                );
-
-        List<Session> sessions = new ArrayList<>();
-
-        while (cursor.hasNext()) {
-            DBObject next = cursor.next();
-
-            if (next.get("currentAccountId") != null) {
-                Account currentAccountId = accountService.findById((Long) next.get("currentAccountId"));
-                if (!currentAccountId.getRole().equals(RoleEnum.CUSTOMER)) {
-                    continue;
-                }
-            }
-            Session session = new Session((Long) next.get("currentAccountId"), (String) next.get("sessionId"), (Date) next.get("_id"));
-            boolean founded = false;
-            for (Session session1 : sessions) {
-                if (session1.sameSession(session)) {
-                    founded = true;
-                    break;
-                }
-            }
-            if (!founded) {
-                sessions.add(session);
+        for (Session session : getCustomerSession(from)) {
+            PositionDTO position = session.getPosition();
+            if (position != null) {
+                p.add(position);
             }
         }
-
-        int sessionNb = sessions.size();
-        return sessionNb;
+        return p;
     }
 
     @Override
@@ -179,16 +159,70 @@ public class MongoSearchServiceImpl implements MongoSearchService {
         return userHistoryDTOs;
     }
 
+    private List<Session> getCustomerSession(LocalDateTime localDateTime) {
+
+
+        Date from = dozerService.map(localDateTime, Date.class);
+
+        DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
+                .find(new BasicDBObject("$and",
+                                new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
+                                        , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
+                );
+
+        List<Session> sessions = new ArrayList<>();
+
+        while (cursor.hasNext())
+
+        {
+            DBObject next = cursor.next();
+
+            if (next.get("currentAccountId") != null) {
+                Account currentAccountId = accountService.findById((Long) next.get("currentAccountId"));
+                if (!currentAccountId.getRole().equals(RoleEnum.CUSTOMER)) {
+                    continue;
+                }
+            }
+            Session session = new Session((Long) next.get("currentAccountId"), (String) next.get("sessionId"), (Date) next.get("_id"));
+            boolean founded = false;
+            for (Session session1 : sessions) {
+                if (session1.sameSession(session)) {
+                    founded = true;
+                    break;
+                }
+            }
+
+            if (next.get("x") != null) {
+                session.setPosition(((double) next.get("x")), ((double) next.get("y")));
+            }
+
+            if (!founded) {
+                sessions.add(session);
+            }
+        }
+
+        return sessions;
+    }
+
     private class Session {
 
-        private Long   userId;
-        private String sessionKey;
-        private Date   date;
+        private Long        userId;
+        private String      sessionKey;
+        private Date        date;
+        private PositionDTO position;
 
         public Session(Long userId, String sessionKey, Date date) {
             this.userId = userId;
             this.sessionKey = sessionKey;
             this.date = date;
+        }
+
+        public void setPosition(double posX, double posY) {
+            position = new PositionDTO(posX, posY);
+        }
+
+        public PositionDTO getPosition() {
+            return position;
         }
 
         public Long getUserId() {
