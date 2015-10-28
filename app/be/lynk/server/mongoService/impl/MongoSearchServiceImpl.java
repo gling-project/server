@@ -183,17 +183,20 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                     continue;
                 }
             }
+
+            PositionDTO position = null;
+            if (next.get("x") != null) {
+                position = new PositionDTO(((double) next.get("x")), ((double) next.get("y")));
+            }
             Session session = new Session((Long) next.get("currentAccountId"), (String) next.get("sessionId"), (Date) next.get("_id"));
+            session.setPosition(position);
             boolean founded = false;
             for (Session session1 : sessions) {
                 if (session1.sameSession(session)) {
                     founded = true;
+                    session1.setPosition(position);
                     break;
                 }
-            }
-
-            if (next.get("x") != null) {
-                session.setPosition(((double) next.get("x")), ((double) next.get("y")));
             }
 
             if (!founded) {
@@ -206,10 +209,10 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
     private class Session {
 
-        private Long        userId;
-        private String      sessionKey;
-        private Date        date;
-        private PositionDTO position;
+        private Long   userId;
+        private String sessionKey;
+        private Date   date;
+        private PositionDTO position = null;
 
         public Session(Long userId, String sessionKey, Date date) {
             this.userId = userId;
@@ -245,6 +248,10 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                 return true;
             }
             return false;
+        }
+
+        public void setPosition(PositionDTO position) {
+            this.position = position;
         }
     }
 

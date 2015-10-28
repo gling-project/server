@@ -170,7 +170,7 @@ public class SuperAdminRestController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result getCustomerPositions() {
-        List<PositionDTO> customerPosition = mongoSearchService.getCustomerPosition(null);
+        List<PositionDTO> customerPosition = mongoSearchService.getCustomerPosition(LocalDateTime.of(2015,10,1,00,00));
 
         return ok(new ListDTO<>(customerPosition));
     }
