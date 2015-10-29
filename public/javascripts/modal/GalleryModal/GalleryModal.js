@@ -10,14 +10,14 @@ myApp.controller('GalleryModalCtrl', function ($scope, $modalInstance, image, im
     };
 
     for (var key in $scope.images) {
-        if ($scope.images[key].storedName == $scope.image.storedName) {
+        if ($scope.images[key] == $scope.image) {
             $scope.imageNb = key - -1;
         }
     }
 
     $scope.previous = function () {
         for (var key in $scope.images) {
-            if ($scope.images[key].storedName == $scope.image.storedName) {
+            if ($scope.images[key] == $scope.image) {
                 if ($scope.images[key - 1] == undefined) {
                     $scope.image = $scope.images[$scope.images.length - 1];
                     $scope.imageNb = $scope.images.length;
@@ -33,7 +33,7 @@ myApp.controller('GalleryModalCtrl', function ($scope, $modalInstance, image, im
 
     $scope.next = function () {
         for (var key in $scope.images) {
-            if ($scope.images[key].storedName == $scope.image.storedName) {
+            if ($scope.images[key] == $scope.image) {
                 var newKey = key - -1;
                 if ($scope.images[newKey] == undefined) {
                     $scope.image = $scope.images[0];

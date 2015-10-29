@@ -13,7 +13,9 @@ object ApplicationBuild extends Build {
   val appDependencies = Seq(
     javaCore,
     javaJdbc,
-    javaJpa.exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api"),
+    javaJpa
+      .exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api")
+    .exclude("javax.persistence.persistence-api","persistence-api-1.0.2"),
     cache,
     filters,
     "org.springframework" % "spring-context" % "4.1.6.RELEASE",

@@ -79,9 +79,6 @@ module.exports = function (grunt) {
                     {
 
 
-
-
-
                         dest: 'public/dist/styleDependencies.css',
 
                         src: ['public/components/angucomplete/angucomplete.css',
@@ -139,6 +136,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/field/dirFieldCheck/directive.js',
                         'public/javascripts/directive/field/dirFieldDocument/directive.js',
                         'public/javascripts/directive/field/dirFieldImageMutiple/directive.js',
+                        'public/javascripts/directive/field/dirFieldImageMultipleResizable/directive.js',
                         'public/javascripts/directive/technical/compile.js',
                         <!-- form -->
                         'public/javascripts/directive/form/login/LoginFormCtrl.js',
@@ -197,6 +195,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/PublicationService.js',
                         'public/javascripts/service/ConstantService.js',
                         'public/javascripts/service/ContactService.js',
+                        'public/javascripts/service/ImageService.js',
                         //TODO ??
                         'public/javascripts/dist/templateCacheWeb.js',
 
