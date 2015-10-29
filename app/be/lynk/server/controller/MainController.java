@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-    private static final String APP_PACKAGE_NAME = "be.gling.fakeapp";
+    private static final String APP_PACKAGE_NAME = "be.gling.android";
 
     //    private String AWSBuckect     =
     private String fileBucketUrl  = Configuration.root().getString("aws.accesFile.url");
