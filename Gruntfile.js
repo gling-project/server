@@ -195,6 +195,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/PublicationService.js',
                         'public/javascripts/service/ConstantService.js',
                         'public/javascripts/service/ContactService.js',
+                        'public/javascripts/service/FileService.js',
                         'public/javascripts/service/ImageService.js',
                         //TODO ??
                         'public/javascripts/dist/templateCacheWeb.js',

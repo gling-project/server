@@ -1013,7 +1013,7 @@ myApp.directive("dirFieldImageMutiple", ['directiveService', '$upload', '$flash'
         }
     };
 }]);
-myApp.directive("dirFieldImageMultipleResizable", ['directiveService', '$upload', '$flash', '$filter', 'generateId', 'imageService', 'modalService', 'constantService', function (directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
+myApp.directive("dirFieldImageMultipleResizable", ['$rootScope', 'directiveService', '$upload', '$flash', '$filter', 'generateId', 'imageService', 'modalService', 'constantService', function ($rootScope,directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -6243,6 +6243,32 @@ myApp.service("contactService", ['$flash', '$http', function ($flash, $http) {
             });
     };
 }]);
+myApp.service("fileService", ['$flash', '$http', function ($flash, $http) {
+
+    this.uploadFile64 = function (name, img, callbackSuccess, callbackError) {
+
+        var dto = {image: img, name: name};
+
+        $http({
+            'method': "POST",
+            'url': "/rest/file64",
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': dto
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+
+}]);
 myApp.service("imageService", function () {
 
     this.resizeImage = function (img, width, height) {
@@ -6431,7 +6457,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/modal/mobile/LoadingModal/view.html",
     "<div class=modal-body><img src=\"/assets/images/loading_big.gif\"><br>{{'--.generic.loading' | translateText}}</div>");
   $templateCache.put("/assets/javascripts/tool/imageTool/template.html",
-    "<div class=image-tool><div class=image-tool-container style=\"width:{{canvasWidth + 50}}px;height:{{canvasHeight}}px\"><div class=overlay style=width:{{canvasWidth}}px><div class=overlay-inner><div class=resize-container ng-show=\"displayPicture === true\"><span class=\"resize-handle resize-handle-nw\"></span> <span class=\"resize-handle resize-handle-ne\"></span> <img class=resize-image alt=\"image for resizing\"> <span class=\"resize-handle resize-handle-se\"></span> <span class=\"resize-handle resize-handle-sw\"></span></div></div></div><div style=\"width: 45px\"><button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(true)>+</button> <button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(false)>-</button> <button class=\"gling-button-dark js-crop glyphicon glyphicon-ok\" ng-click=crop()></button></div></div></div>");
+    "<div class=image-tool><div class=image-tool-container style=\"width:{{canvasWidth + 50}}px;height:{{canvasHeight}}px\"><div class=image-tool-overlay style=width:{{canvasWidth}}px><div class=image-tool-overlay-inner><div class=resize-container ng-show=\"displayPicture === true\"><span class=\"resize-handle resize-handle-nw\"></span> <span class=\"resize-handle resize-handle-ne\"></span> <img class=resize-image alt=\"image for resizing\"> <span class=\"resize-handle resize-handle-se\"></span> <span class=\"resize-handle resize-handle-sw\"></span></div></div></div><div style=\"width: 45px\"><button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(true)>+</button> <button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(false)>-</button> <button class=\"gling-button-dark js-crop glyphicon glyphicon-ok\" ng-click=crop()></button></div></div></div>");
   $templateCache.put("/assets/javascripts/view/admin/CategoriesAndInterests.html",
     "<super-admin-menu-ctrl></super-admin-menu-ctrl><div class=category_and_interest>Recherche<input ng-model=\"search\"> <button ng-click=setDisabled()>Editer</button><table><tr><td></td><td ng-repeat=\"interest in interests\">{{interest.name}}</td></tr><tr ng-repeat=\"category in getCategoryList()\"><td>{{category.translationName | translateText}}</td><td ng-repeat=\"interest in interests\"><input ng-disabled=disabled style=width:40px value={{getPriority(category,interest)}} ng-blur=\"save($event,category,interest)\"></td></tr></table></div>");
   $templateCache.put("/assets/javascripts/view/admin/adminBusiness.html",

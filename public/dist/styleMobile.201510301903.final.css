@@ -1462,6 +1462,7 @@ ul.messenger .messenger-spinner {
 }
 .field-image-multiple .image-block-container {
   display: inline-block;
+  vertical-align: top;
   margin: 5px;
   width: 120px;
 }
@@ -1469,7 +1470,6 @@ ul.messenger .messenger-spinner {
   display: inline-block;
   position: relative;
   width: 100%;
-  height: 120px;
   border: 1px solid #999999;
 }
 .field-image-multiple .image-block-container .image-block .image-remove {
@@ -1497,10 +1497,9 @@ ul.messenger .messenger-spinner {
   overflow: hidden;
   max-width: 850px;
   width: 100%;
-  height: 100%;
 }
 .field-image-multiple .image-block-container .image-block .image-container img {
-  height: 100%;
+  width: 100%;
 }
 .onoffswitchtable {
   width: 100%;
@@ -3091,6 +3090,112 @@ ul.messenger .messenger-spinner {
 }
 .link:hover {
   color: #1a0dab;
+}
+.image-tool {
+  z-index: 1000;
+  background-color: #f4f4f4;
+}
+.image-tool .image-tool-container > div {
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid red;
+}
+.image-tool .image-tool-container > div:last-child {
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow: hidden;
+  position: relative;
+}
+.image-tool .image-tool-container .form {
+  z-index: 1;
+}
+.image-tool .image-tool-container .resize-container {
+  position: relative;
+  display: inline-block;
+  cursor: move;
+  margin: 0 auto;
+}
+.image-tool .image-tool-container .resize-container img {
+  display: block;
+}
+.image-tool .image-tool-container .resize-container:hover img,
+.image-tool .image-tool-container .resize-container:active img {
+  outline: 2px dashed rgba(222, 60, 80, 0.9);
+}
+.image-tool .image-tool-container .resize-handle-ne,
+.image-tool .image-tool-container .resize-handle-se,
+.image-tool .image-tool-container .resize-handle-nw,
+.image-tool .image-tool-container .resize-handle-sw {
+  position: absolute;
+  display: block;
+  z-index: 999;
+}
+.image-tool .image-tool-container .resize-handle-nw {
+  top: -5px;
+  left: -5px;
+}
+.image-tool .image-tool-container .resize-handle-sw {
+  bottom: -5px;
+  left: -5px;
+}
+.image-tool .image-tool-container .resize-handle-ne {
+  top: -5px;
+  right: -5px;
+}
+.image-tool .image-tool-container .resize-handle-se {
+  bottom: -5px;
+  right: -5px;
+}
+.image-tool .image-tool-container .image-tool-overlay {
+  overflow: hidden;
+  z-index: 999;
+}
+.image-tool .image-tool-container .image-tool-overlay-inner:before {
+  left: 0;
+  margin-left: -40px;
+  margin-top: -2px;
+}
+.image-tool .image-tool-container .image-tool-overlay-inner:after {
+  right: 0;
+  margin-right: -40px;
+  margin-top: -2px;
+}
+.image-tool .image-tool-container .resize-container {
+  overflow: hidden;
+}
+.image-tool .image-tool-container .menu-btn {
+  display: block;
+  font-weight: bold;
+  width: 40px;
+  z-index: 1000;
+  margin: 2px;
+  height: 34px;
+}
+.image-tool .image-tool-container .btn-crop {
+  vertical-align: bottom;
+  padding: 6px 10px;
+  background-color: #de3c50;
+  border: none;
+  border-radius: 5px;
+  color: #FFF;
+}
+.image-tool .image-tool-container .btn-crop img {
+  vertical-align: middle;
+  margin-left: 8px;
+}
+.image-tool .image-tool-container .download-btn {
+  position: relative;
+  overflow: hidden;
+}
+.image-tool .image-tool-container .download-btn input {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 body {
   color: #555555;

@@ -1,4 +1,4 @@
-myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
+myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
