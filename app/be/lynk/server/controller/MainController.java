@@ -10,6 +10,7 @@ import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.AppUtil;
+import be.lynk.server.util.constants.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.db.jpa.Transactional;
@@ -36,8 +37,7 @@ public class MainController extends AbstractController {
     private String urlBase        = Configuration.root().getString("site.url.base");
     private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
     private String lastVersion    = Configuration.root().getString("project.lastVersion");
-    private String appStatus    = Configuration.root().getString("app.status");
-
+    private String appStatus      = Configuration.root().getString("app.status");
 
 
     @Autowired
@@ -90,7 +90,7 @@ public class MainController extends AbstractController {
 
     public Result generateDefaultPage(String url, boolean forceMobile) {
 
-        if(url!=null && url.equals("app")){
+        if (url != null && url.equals("app")) {
             return redirect("market://details?id=" + APP_PACKAGE_NAME);
         }
 
@@ -174,6 +174,11 @@ public class MainController extends AbstractController {
         interfaceDataDTO.setUrlBase(urlBase);
         interfaceDataDTO.setProjectLastVersion(lastVersion);
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+
+        //constant
+        interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_HEIGHT", Constant.PUBLICATION_PICTURE_HEIGHT + "");
+        interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_WIDTH", Constant.PUBLICATION_PICTURE_WIDTH + "");
+
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();
 

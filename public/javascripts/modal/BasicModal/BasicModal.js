@@ -24,6 +24,9 @@ myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, bus
 
     $scope.save = function () {
         var isValid = true;
+        if(param.callBackSave!=null){
+            param.callBackSave();
+        }
         if (param.isValid != undefined) {
             isValid = param.isValid;
 

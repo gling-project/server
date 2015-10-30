@@ -4,9 +4,6 @@ myApp.service("fileService", function ($flash, $http) {
 
         var dto = {image: img, name: name};
 
-        console.log('DTO');
-        console.log(dto);
-
         $http({
             'method': "POST",
             'url': "/rest/file64",

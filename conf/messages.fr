@@ -606,3 +606,4 @@ day_abrv_sunday=Di
 
 --.publication.editByAdmin.email.subject=Modification d''une publication
 --.publication.editByAdmin.email.body=Bonjour,<br/><br/>l''une de vos publications ( {0} ) a été modifié par un administrateur de Gling, et ceci parce que votre publication ne respectait pas la charte de publication de Gling. <br/><br/>La raison invoquée par l''administrateur : {1}. <br/><br/>Pensez à consulter nos conseils de publication : <a href="https://www.gling.be/assets/document/business_help.pdf">Télécharger notre guide</a><br/><br/>L''équipe Gling
+--.field.imageMultipleResize.resizeModal.title=Recadrer l''image

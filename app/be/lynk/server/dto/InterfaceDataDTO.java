@@ -3,9 +3,7 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by florian on 29/12/14.
@@ -32,7 +30,17 @@ public class InterfaceDataDTO extends DTO  {
     private String projectLastVersion;
     private String addStatus;
 
+    private Map<String, String> constants = new HashMap<>();
+
     public InterfaceDataDTO() {
+    }
+
+    public Map<String, String> getConstants() {
+        return constants;
+    }
+
+    public void setConstants(Map<String, String> constants) {
+        this.constants = constants;
     }
 
     public String getProjectLastVersion() {

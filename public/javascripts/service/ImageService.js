@@ -17,7 +17,6 @@ myApp.service("imageService", function () {
         var xscale = width / src.width;
         var yscale = height / src.height;
         var scale = crop ? Math.min(xscale, yscale) : Math.max(xscale, yscale);
-        console.log(scale, width, src.width);
 
         // create empty canvas
         var canvas = document.createElement("canvas");
@@ -31,6 +30,7 @@ myApp.service("imageService", function () {
         top = ((src.height * scale) - canvas.height) * 0.5;
         canvas.getContext("2d").drawImage(src, - (right / scale), -(top / scale));
         var image64 = canvas.toDataURL();
+
         return image64;
     }
 

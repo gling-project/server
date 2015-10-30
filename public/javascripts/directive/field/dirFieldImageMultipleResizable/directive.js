@@ -1,4 +1,4 @@
-myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $upload, $flash, $filter, generateId, imageService,modalService) {
+myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $upload, $flash, $filter, generateId, imageService, modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -16,127 +16,113 @@ myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $u
                     scope.errorMessage = "";
                     scope.images = [];
 
-                    //scope.isActive = function () {
-                    //
-                    //    return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
-                    //};
-                    //
-                    //if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
-                    //    scope.getInfo().field[scope.getInfo().fieldName] = [];
-                    //}
-                    //
-                    //scope.isValid = function () {
-                    //    if((scope.getInfo().optional != null && scope.getInfo().optional()) || scope.isActive() == false){
-                    //        scope.getInfo().isValid = true;
-                    //    }
-                    //    else {
-                    //        scope.getInfo().isValid = scope.getInfo().field[scope.getInfo().fieldName].length > 0;
-                    //    }
-                    //
-                    //};
-                    //scope.isValid();
-                    //
-                    //scope.displayError = function () {
-                    //    if (scope.getInfo().isValid == false && scope.getInfo().firstAttempt === false) {
-                    //        return true;
-                    //    }
-                    //    return false;
-                    //};
-                    //
-                    //scope.remove = function (imageContainer) {
-                    //    for (var key in scope.images) {
-                    //        if (scope.images[key] == imageContainer) {
-                    //            scope.images.splice(key, 1);
-                    //        }
-                    //    }
-                    //};
-                    //
-                    //scope.success = false;
-                    //scope.images = [];
+                    scope.isActive = function () {
+
+                        return !(scope.getInfo().active != null && scope.getInfo().active != undefined && scope.getInfo().active() == false);
+                    };
+
+                    if (scope.getInfo().field[scope.getInfo().fieldName] == null) {
+                        scope.getInfo().field[scope.getInfo().fieldName] = [];
+                    }
+
+                    scope.isValid = function () {
+                        if ((scope.getInfo().optional != null && scope.getInfo().optional()) || scope.isActive() == false) {
+                            scope.getInfo().isValid = true;
+                        }
+                        else {
+                            scope.getInfo().isValid = scope.getInfo().field[scope.getInfo().fieldName].length > 0;
+                        }
+
+                    };
+                    scope.isValid();
+
+                    scope.displayError = function () {
+                        if (scope.getInfo().isValid == false && scope.getInfo().firstAttempt === false) {
+                            return true;
+                        }
+                        return false;
+                    };
+
+                    scope.remove = function (imageContainer) {
+                        for (var key in scope.images) {
+                            if (scope.images[key] == imageContainer) {
+                                scope.images.splice(key, 1);
+                            }
+                        }
+                    };
+
+                    scope.success = false;
                     //
                     ////build images (first time)
                     //for (var key in scope.getInfo().field[scope.getInfo().fieldName]) {
                     //    scope.images.push({
                     //        image: scope.getInfo().field[scope.getInfo().fieldName][key]
                     //    });
-                    //}
-                    //
-                    //
-                    //scope.onFileSelect = function ($files) {
-                    //
-                    //    //create a new object
-                    //    var imgContainer = {};
-                    //
-                    //    var file, i;
-                    //    scope.inDownload = true;
-                    //    i = 0;
-                    //    while (i < $files.length) {
-                    //        file = $files[i];
-                    //
-                    //
-                    //        var url = "/rest/file/"+scope.getInfo().target;
-                    //
-                    //        if(scope.unique!==true) {
-                    //            scope.images.push(imgContainer);
-                    //        }
-                    //        scope.upload = $upload.upload({
-                    //            url: url,
-                    //            data: {
-                    //                myObj: scope.myModelObj
-                    //            },
-                    //            file: file
-                    //        }).progress(function (evt) {
-                    //            imgContainer.percent = parseInt(100.0 * evt.loaded / evt.total);
-                    //        }).success(function (data, status) {
-                    //            scope.success = true;
-                    //            imgContainer.percent = 100.0;
-                    //            imgContainer.image = data;
-                    //            scope.inDownload = false;
-                    //        })
-                    //            .error(function (data, status) {
-                    //                console.log('je suis un échec !! : '+data.message);
-                    //                console.log(data);
-                    //                for(var key in scope.images){
-                    //                    if(scope.images[key] == imgContainer){
-                    //                        scope.images.splice(key,1);
-                    //                    }
-                    //                }
-                    //
-                    //                imgContainer.percent = 0;
-                    //                scope.inDownload = false;
-                    //                $flash.error(data.message);
-                    //            });
-                    //        i++;
-                    //    }
-                    //};
-                    //
-                    //scope.$watch('images', function () {
-                    //    scope.getInfo().field[scope.getInfo().fieldName] = [];
-                    //    for (var key in scope.images) {
-                    //        scope.getInfo().field[scope.getInfo().fieldName].push(scope.images[key].image);
-                    //    }
-                    //    scope.isValid();
-                    //}, true);
+
+                    scope.resize = function (imageContainer) {
+                        var dto = {
+                            image: angular.copy(imageContainer.originalImage),
+                            maxWidth: scope.getInfo().maxWidth,
+                            maxHeight: scope.getInfo().maxHeight
+                        };
+                        modalService.basicModal('--.field.imageMultipleResize.resizeModal.title', 'image-tool-ctrl', dto
+                            , function (close) {
+                                close();
+                                imageContainer.image = dto.result;
+                            });
+                    };
+
+                    scope.$watch('images', function () {
+                        scope.getInfo().field[scope.getInfo().fieldName] = [];
+                        for (var key in scope.images) {
+                            scope.getInfo().field[scope.getInfo().fieldName].push({
+                                originalName: scope.images[key].originalName,
+                                image64: scope.images[key].image,
+                                comment: scope.images[key].comment
+                            });
+                        }
+                        scope.isValid();
+                    }, true);
 
 
                     //resize the image by default
-                    scope.defaultResize = function(img){
-                        return imageService.resizeImage(img,600,null);
+                    scope.defaultResize = function (img) {
+                        return imageService.resizeImage(img, scope.getInfo().maxWidth, scope.getInfo().maxHeight);
                     };
 
                     //create the file with default resizing
-                    scope.treatFile = function(img){
-                        console.log('treat file !! ');
-                        scope.images.push({
-                            originalImage:img,
-                            image:scope.defaultResize(angular.copy(img))
-                        });
-                        scope.$apply();
+                    scope.treatFile = function (img, fileName) {
+
+                        //control size
+                        //convert img to htmlImage
+                        var imgHtml = document.createElement("img");
+                        imgHtml.setAttribute('src', img);
+                        var src = imgHtml, success = true;
+
+
+                        if (scope.getInfo().maxHeight != null && scope.getInfo().maxHeight > src.height) {
+                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalHeight', scope.getInfo().maxHeight));
+                            success = false;
+                        }
+                        if (scope.getInfo().maxWidth != null && scope.getInfo().maxWidth > src.width) {
+                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalWidth', scope.getInfo().maxWidth));
+                            success = false;
+                        }
+
+                        if (success) {
+                            scope.images.push({
+                                originalName: fileName,
+                                originalImage: img,
+                                comment: null,
+                                image: scope.defaultResize(angular.copy(img))
+                            });
+                            scope.$apply();
+                        }
                     };
 
-                    scope.fullSize = function(image){
+                    scope.fullSize = function (image) {
                         var images = [];
-                        for(var key in scope.images){
+                        for (var key in scope.images) {
                             images.push(scope.images[key].image);
                         }
                         modalService.galleryModal(image, images);
@@ -145,15 +131,13 @@ myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $u
                     //read file and convert to base64
                     scope.readURL = function (input) {
 
-                        console.log('read url!! ');
-
                         if (input.files && input.files[0]) {
                             var reader = new FileReader();
 
-                            scope.fileName = input.files[0].name;
+                            var fileName = input.files[0].name;
 
                             reader.onload = function (e) {
-                                scope.treatFile(e.target.result);
+                                scope.treatFile(e.target.result, fileName);
                             };
 
                             reader.readAsDataURL(input.files[0]);
@@ -162,10 +146,30 @@ myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $u
 
                     //catch change value of input and call readURL
                     $("#a").change(function () {
-                        console.log('changement !! ');
                         scope.readURL(this);
                     });
 
+                    scope.convertToNumber = function (number) {
+
+                        number = parseInt(number);
+                        if (isNaN(number)) {
+                            number = null;
+                        }
+                        return number;
+                    };
+
+                    scope.$watch('getInfo().maxHeight', function (n, o) {
+                        if (n != o) {
+                            scope.getInfo().maxHeight = scope.convertToNumber(scope.getInfo().maxHeight);
+                        }
+                    });
+                    scope.$watch('getInfo().maxWidth', function (n, o) {
+                        if (n != o) {
+                            scope.getInfo().maxWidth = scope.convertToNumber(scope.getInfo().maxWidth);
+                        }
+                    });
+                    scope.getInfo().maxHeight = scope.convertToNumber(scope.getInfo().maxHeight);
+                    scope.getInfo().maxWidth = scope.convertToNumber(scope.getInfo().maxWidth);
 
 
                 }

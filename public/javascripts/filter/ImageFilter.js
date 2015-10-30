@@ -1,7 +1,8 @@
 myApp.filter("image", function (constantService) {
-    return function (input,orginal) {
-        if(input.storedName!=null && input.storedName!=undefined) {
-            if (input != null && input != undefined) {
+    return function (input, orginal) {
+        if (input != null && input != undefined) {
+            if (input.storedName != null && input.storedName != undefined) {
+
                 if (orginal != undefined && orginal == true) {
                     return constantService.fileBucketUrl + '/' + input.storedNameOriginalSize;
                 }
@@ -9,9 +10,9 @@ myApp.filter("image", function (constantService) {
                     return constantService.fileBucketUrl + '/' + input.storedName;
                 }
             }
-        }
-        else{
-            return input;
+            else {
+                return input;
+            }
         }
         return null;
     };

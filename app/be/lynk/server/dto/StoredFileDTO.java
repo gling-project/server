@@ -29,7 +29,18 @@ public class StoredFileDTO extends DTO implements Comparable<StoredFileDTO> {
 
     private Integer width;
 
+    //used to transfert image to server in base64
+    private String image64;
+
     public StoredFileDTO() {
+    }
+
+    public String getImage64() {
+        return image64;
+    }
+
+    public void setImage64(String image64) {
+        this.image64 = image64;
     }
 
     public Integer getHeight() {

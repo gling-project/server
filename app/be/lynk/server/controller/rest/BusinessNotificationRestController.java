@@ -41,6 +41,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
     private CustomerInterestService customerInterestService;
     @Autowired
     private EmailService            emailService;
+    @Autowired
+    private FileService             fileService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -83,16 +85,16 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         int order = 0;
 
-        for (StoredFile storedFile : businessNotification.getPictures()) {
-            StoredFile originalStoredFile = storedFileService.findByStoredName(storedFile.getStoredName());
-            originalStoredFile.setPublication(businessNotification);
+        for (StoredFileDTO storedFileDTO : dto.getPictures()) {
+
+            StoredFile storedFile = fileService.updateBase64(storedFileDTO.getImage64(), storedFileDTO.getOriginalName(), securityController.getCurrentUser());
 
             //add comments
-            originalStoredFile.setComment(storedFile.getComment());
+            storedFile.setPublication(businessNotification);
+            storedFile.setComment(storedFileDTO.getComment());
+            storedFile.setFileOrder(++order);
 
-            originalStoredFile.setFileOrder(++order);
-
-            storedFileService.saveOrUpdate(originalStoredFile);
+            storedFileService.saveOrUpdate(storedFile);
         }
 
 

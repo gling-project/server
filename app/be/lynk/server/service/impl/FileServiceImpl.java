@@ -1,5 +1,6 @@
 package be.lynk.server.service.impl;
 
+import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
@@ -15,13 +16,14 @@ import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
+import play.mvc.Results;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.Base64;
 
 /**
  * Created by florian on 7/07/15.
@@ -74,16 +76,17 @@ public class FileServiceImpl implements FileService {
         //create the entity
         StoredFile storedFile = new StoredFile(fileName, generateStorageKey(), 0, account, isImage);
 
+        BufferedImage originalImage = null;
+        try {
+            originalImage = ImageIO.read(file);
 
-        //Treatment
-        if (sizex != null || sizey != null) {
+            //Treatment
+            if (sizex != null || sizey != null) {
 
-            //start to save the original file
-            storedFile.setStoredNameOriginalSize(generateStorageKey());
-            FileUtil.save(file, storedFile.getStoredNameOriginalSize());
+                //start to save the original file
+                storedFile.setStoredNameOriginalSize(generateStorageKey());
+                FileUtil.save(file, storedFile.getStoredNameOriginalSize());
 
-            try {
-                BufferedImage originalImage = ImageIO.read(file);
                 int sizexPicture = originalImage.getWidth(),
                         sizeyPicture = originalImage.getHeight();
 
@@ -161,15 +164,16 @@ public class FileServiceImpl implements FileService {
                     }
                 }
 
-                //save new size
-                storedFile.setWidth(originalImage.getWidth());
-                storedFile.setHeight(originalImage.getHeight());
-
 
                 ImageIO.write(originalImage, type, file);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+            //save new size
+            storedFile.setWidth(originalImage.getWidth());
+            storedFile.setHeight(originalImage.getHeight());
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         //and save
@@ -179,6 +183,37 @@ public class FileServiceImpl implements FileService {
 
 
         return storedFile;
+    }
+
+    @Override
+    public StoredFile updateBase64(String imageBase64, String fileName, Account account) {
+
+        imageBase64 = imageBase64.substring(imageBase64.indexOf(",") + 1);
+
+
+        InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(imageBase64));
+
+
+        try {
+            File f = File.createTempFile("temp", ".png");
+
+
+            FileOutputStream outputStream = new FileOutputStream(f);
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+
+            StoredFile storedFile = uploadWithSize(f, fileName, account);
+
+            return storedFile;
+
+        } catch (IOException e) {
+            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
+        }
     }
 
 //    private static BufferedImage resizeImage(BufferedImage originalImage, int type, int width, int height) {
@@ -331,6 +366,6 @@ public class FileServiceImpl implements FileService {
         if (bottom - top < height) {
             top = top - (height - (bottom - top));
         }
-        return src.getSubimage(left,top, width,  height);
+        return src.getSubimage(left, top, width, height);
     }
 }

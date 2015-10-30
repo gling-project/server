@@ -1,4 +1,4 @@
-myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService, accountService) {
+myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService, accountService,constantService) {
 
     return {
         restrict: "E",
@@ -132,8 +132,8 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             validationMessage: '--.error.validation.image',
                             details: '--promotion.illustration.maximumImage',
                             target: 'publication_picture',
-                            //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
-                            //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
+                            maxHeight: constantService.PUBLICATION_PICTURE_HEIGHT,
+                            maxWidth: constantService.PUBLICATION_PICTURE_WIDTH,
                             optional: function () {
                                 return true;
                             },

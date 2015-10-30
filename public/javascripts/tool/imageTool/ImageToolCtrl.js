@@ -1,4 +1,4 @@
-myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocationService, directiveService, $timeout, fileService,$filter,$flash) {
+myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocationService, directiveService, $timeout, fileService, $filter, $flash) {
 
         return {
             restrict: "E",
@@ -26,9 +26,9 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
                         scope.max_height = 10000;
                         scope.event_state = {};
                         scope.resize_canvas = document.createElement('canvas');
-                        scope.canvasWidth = 1000;
-                        scope.canvasHeight = 500;
-                        scope.displayPicture=false;
+                        scope.canvasWidth = scope.getInfo().maxWidth != null ? scope.getInfo().maxWidth : scope.getInfo().maxHeight * 1.5;
+                        scope.canvasHeight = scope.getInfo().maxHeight != null ? scope.getInfo().maxHeight : scope.getInfo().maxWidth * 1.5;
+                        scope.displayPicture = false;
 
 
                         scope.saveEventState = function (e) {
@@ -112,7 +112,7 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
                             }
                         };
 
-                        scope.crop = function () {
+                        scope.getInfo().callBackSave = function () {
 
                             if (scope.image_target != null) {
 
@@ -129,7 +129,9 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
 
                                 crop_canvas.getContext('2d').drawImage(scope.image_target, left, top, width, height, 0, 0, width, height);
                                 var image64 = crop_canvas.toDataURL();
-                                fileService.uploadFile64(scope.fileName, image64);
+                                scope.getInfo().result = image64;
+
+                                //fileService.uploadFile64(scope.fileName, image64);
                             }
                         };
 
@@ -227,18 +229,21 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
                         };
 
 
-                        scope.initialize = function (img) {
+                        //scope.initialize = function (img) {
 
-                            scope.displayPicture=false;
+                        $timeout(function () {
 
 
-                            $('.resize-image').attr('src', img);
+                            scope.displayPicture = false;
+
+
+                            $('.resize-image').attr('src', scope.getInfo().image);
 
                             // Some variable and settings
                             scope.image_target = $('.resize-image').get(0);
 
                             // Wrap the image with the container and add resize handles
-                            scope.orig_src.src = img;
+                            scope.orig_src.src = scope.getInfo().image;
 
 
                             scope.container = $(scope.image_target).parent('.resize-container');
@@ -252,65 +257,66 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
                                 var width = scope.image_target.width,
                                     height = scope.image_target.height;
 
-                                console.log(width+"/"+height);
+                                console.log(width + "/" + height);
 
-                                if (width < scope.canvasWidth || height < scope.canvasHeight) {
-                                    $flash.error($filter('translateText')('--.imageTool.minimalSize',[scope.canvasWidth ,scope.canvasHeight]));
+                                //if (width < scope.canvasWidth || height < scope.canvasHeight) {
+                                //    $flash.error($filter('translateText')('--.imageTool.minimalSize', [scope.canvasWidth, scope.canvasHeight]));
+                                //}
+                                //else {
+                                scope.displayPicture = true;
+
+                                //compute proportion
+                                var proportionWidth = scope.image_target.width / scope.canvasWidth;
+                                var proportionHeight = scope.image_target.height / scope.canvasHeight;
+
+                                if (proportionWidth < proportionHeight || scope.getInfo().maxHeight == null) {
+                                    scope.resize(scope.canvasWidth, scope.image_target.height / proportionWidth);
                                 }
                                 else {
-                                    scope.displayPicture=true;
-
-                                    //compute proportion
-                                    var proportionWidth = scope.image_target.width / scope.canvasWidth;
-                                    var proportionHeight = scope.image_target.height / scope.canvasHeight;
-
-
-                                    if (proportionWidth < proportionHeight) {
-                                        scope.resize(scope.canvasWidth, scope.image_target.height / proportionWidth);
-                                    }
-                                    else {
-                                        scope.resize(scope.image_target.width / proportionHeight, scope.canvasHeight);
-                                    }
-
-                                    $timeout(function () {
-
-                                        var left = ((scope.image_target.width - scope.canvasWidth) / 2 - 1),
-                                            top = ((scope.image_target.height - scope.canvasHeight) / 2 - 1);
-                                        if (left < 1) {
-                                            left = 1;
-                                        }
-                                        if (top < 1) {
-                                            top = 1;
-                                        }
-
-                                        $('.resize-container').css('margin-left', '-' + left + 'px');
-                                        $('.resize-container').css('margin-top', '-' + top + 'px');
-
-                                    }, 1);
+                                    scope.resize(scope.image_target.width / proportionHeight, scope.canvasHeight);
                                 }
+
+                                $timeout(function () {
+
+                                    var left = ((scope.image_target.width - scope.canvasWidth) / 2 - 1),
+                                        top = ((scope.image_target.height - scope.canvasHeight) / 2 - 1);
+                                    if (left < 1) {
+                                        left = 1;
+                                    }
+                                    if (top < 1) {
+                                        top = 1;
+                                    }
+
+                                    $('.resize-container').css('margin-left', '-' + left + 'px');
+                                    $('.resize-container').css('margin-top', '-' + top + 'px');
+
+                                }, 1);
+                                //}
                             }, 1);
-                        };
+
+                        }, 1);
+                        //};
 
 
-                        scope.readURL = function (input) {
-
-                            if (input.files && input.files[0]) {
-                                var reader = new FileReader();
-
-                                scope.fileName = input.files[0].name;
-
-                                reader.onload = function (e) {
-                                    scope.initialize(e.target.result);
-                                };
-
-                                reader.readAsDataURL(input.files[0]);
-                            }
-                        };
-
-
-                        $("#imgInp").change(function () {
-                            scope.readURL(this);
-                        });
+                        //scope.readURL = function (input) {
+                        //
+                        //    if (input.files && input.files[0]) {
+                        //        var reader = new FileReader();
+                        //
+                        //        scope.fileName = input.files[0].name;
+                        //
+                        //        reader.onload = function (e) {
+                        //            scope.initialize(e.target.result);
+                        //        };
+                        //
+                        //        reader.readAsDataURL(input.files[0]);
+                        //    }
+                        //};
+                        //
+                        //
+                        //$("#imgInp").change(function () {
+                        //    scope.readURL(this);
+                        //});
 
 
                     }

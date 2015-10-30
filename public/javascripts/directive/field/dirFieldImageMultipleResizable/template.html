@@ -31,9 +31,9 @@
 
                     </div>
                     <button ng-click="fullSize(imageContainer.image)">Voir en taille réelle</button>
-                    <button ng-click="">Recadrer</button>
+                    <button ng-click="resize(imageContainer)">Recadrer</button>
                     {{'--.generic.comment' | translateText}}
-                    <textarea ng-model="imageContainer.image.comment"></textarea>
+                    <textarea ng-model="imageContainer.comment"></textarea>
 
                 </div>
                 <div class="add-image-button image-block"

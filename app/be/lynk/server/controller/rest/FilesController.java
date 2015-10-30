@@ -39,37 +39,12 @@ public class FilesController extends AbstractRestController {
 
         Image64DTO dto = initialization(Image64DTO.class);
 
-        String imageDataBytes = dto.getImage().substring(dto.getImage().indexOf(",") + 1);
+        StoredFile storedFile1 = fileService.updateBase64(dto.getImage(), dto.getName(), securityController.getCurrentUser());
 
-        InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(imageDataBytes.getBytes()));
+        StoredFileDTO filesUploadedDTO = dozerService.map(storedFile1, StoredFileDTO.class);
 
-//        String imageString = new String(Base64.getEncoder().encode(
-//                dto.getImage().getBytes(StandardCharsets.UTF_8)));
+        return Results.ok(filesUploadedDTO);
 
-//        byte dearr[] = Base64.getDecoder().decode(dto.getImage());
-
-        try {
-            File f = new File("./a.png");//.createTempFile("temp", ".png");
-
-
-            FileOutputStream outputStream = new FileOutputStream(f);
-
-            int read = 0;
-            byte[] bytes = new byte[1024];
-
-            while ((read = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, read);
-            }
-
-            StoredFile storedFile = fileService.uploadWithSize(f, dto.getName(), securityController.getCurrentUser());
-
-            StoredFileDTO filesUploadedDTO = dozerService.map(storedFile, StoredFileDTO.class);
-
-            return Results.ok(filesUploadedDTO);
-
-        } catch (IOException e) {
-            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
-        }
     }
 
 
