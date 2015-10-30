@@ -31,6 +31,7 @@ public class InterfaceDataDTO extends DTO  {
     private String addStatus;
 
     private Map<String, String> constants = new HashMap<>();
+    private boolean isMobile;
 
     public InterfaceDataDTO() {
     }
@@ -137,5 +138,17 @@ public class InterfaceDataDTO extends DTO  {
 
     public String getAddStatus() {
         return addStatus;
+    }
+
+    public void setIsMobile(boolean isMobile) {
+        this.isMobile = isMobile;
+    }
+
+    public boolean isMobile() {
+        return isMobile;
+    }
+
+    public void setMobile(boolean isMobile) {
+        this.isMobile = isMobile;
     }
 }

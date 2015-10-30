@@ -198,6 +198,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/ImageService.js',
                         //TODO ??
                         'public/javascripts/dist/templateCacheWeb.js',
+                        'public/javascripts/modal/BasicModal/BasicModal.js',
 
                         <!-- tool -->
                         'public/javascripts/tool/imageTool/ImageToolCtrl.js',

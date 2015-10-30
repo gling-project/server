@@ -1,4 +1,4 @@
-myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $upload, $flash, $filter, generateId, imageService, modalService) {
+myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -125,7 +125,12 @@ myApp.directive("dirFieldImageMultipleResizable", function (directiveService, $u
                         for (var key in scope.images) {
                             images.push(scope.images[key].image);
                         }
-                        modalService.galleryModal(image, images);
+                        if(constantService.isMobile === true) {
+                            modalService.galleryModal(image, images);
+                        }
+                        else{
+                            $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:images,first:image});
+                        }
                     };
 
                     //read file and convert to base64

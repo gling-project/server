@@ -1013,7 +1013,7 @@ myApp.directive("dirFieldImageMutiple", ['directiveService', '$upload', '$flash'
         }
     };
 }]);
-myApp.directive("dirFieldImageMultipleResizable", ['directiveService', '$upload', '$flash', '$filter', 'generateId', 'imageService', 'modalService', function (directiveService, $upload, $flash, $filter, generateId, imageService, modalService) {
+myApp.directive("dirFieldImageMultipleResizable", ['directiveService', '$upload', '$flash', '$filter', 'generateId', 'imageService', 'modalService', 'constantService', function (directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -1140,7 +1140,12 @@ myApp.directive("dirFieldImageMultipleResizable", ['directiveService', '$upload'
                         for (var key in scope.images) {
                             images.push(scope.images[key].image);
                         }
-                        modalService.galleryModal(image, images);
+                        if(constantService.isMobile === true) {
+                            modalService.galleryModal(image, images);
+                        }
+                        else{
+                            $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:images,first:image});
+                        }
                     };
 
                     //read file and convert to base64
@@ -3909,6 +3914,7 @@ myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationSer
         for (var key in data.constants) {
             constantService[key] = data.constants[key];
         }
+        constantService.isMobile = data.isMobile;
     }
 
     //import data
@@ -6470,6 +6476,48 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "<to-top-ctrl></to-top-ctrl><div class=search-page><div ng-show=\"results == null\" class=loading><img src=\"/assets/images/big_loading.gif\"></div><div ng-hide=\"results==null\"><tabset><tab ng-show=businessTab.display active=businessTab.active><tab-heading>{{'--.generic.business' | translateText}} ({{businessTab.totalToDisplay}})</tab-heading><business-list-ctrl ng-info={data:businessTab.data}></business-list-ctrl></tab><tab ng-show=publicationTab.display active=publicationTab.active><tab-heading>{{'--.generic.publication' | translateText}} ({{publicationTab.totalToDisplay}})</tab-heading><publication-list-ctrl ng-info={data:publicationTab.data}></publication-list-ctrl></tab><tab ng-show=categoryTab.display active=categoryTab.active><tab-heading>{{'--.generic.category' | translateText}} ({{categoryTab.totalToDisplay}})</tab-heading><div ng-show=\"categoryTab == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"(cat,value) in categoryTab.data\"><div class=\"search-category link search-category-lev1\" ng-click=\"navigateTo('/search/category:'+cat)\">{{cat | translateText}}</div><div ng-repeat=\"(sCat,value2) in value\"><div class=\"search-category link search-category-lev2\" ng-click=\"navigateTo('/search/category:'+sCat)\">{{sCat | translateText}}</div><div ng-repeat=\"(ssCat,value3) in value2\"><div class=\"search-category link search-category-lev3\" ng-click=\"navigateTo('/search/category:'+ssCat)\">{{ssCat | translateText}}</div><business-list-ctrl ng-info={data:value3,loading:false}></business-list-ctrl></div></div></div></tab></tabset></div></div>");
 }]);
 
+myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'param', '$compile', 'directiveName', 'save', '$timeout', 'title', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
+
+    $scope.title = title;
+
+    var directive = $compile("<" + directiveName + " ng-info=\"param\"/>")($scope);
+
+    $timeout(function () {
+        $('.inject-data:first').append(directive)
+    }, 1);
+
+
+    $scope.loading = false;
+
+    $scope.param = param;
+
+
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+    $scope.setLoading = function(value){
+        $scope.loading = value;
+    };
+
+    $scope.save = function () {
+        var isValid = true;
+        if(param.callBackSave!=null){
+            param.callBackSave();
+        }
+        if (param.isValid != undefined) {
+            isValid = param.isValid;
+
+            param.displayErrorMessage = true;
+        }
+        if (isValid) {
+            $scope.loading = true;
+            save($scope.close,$scope.setLoading);
+        }
+    }
+
+
+}]);
 myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$timeout', 'fileService', '$filter', '$flash', function ($rootScope, businessService, geolocationService, directiveService, $timeout, fileService, $filter, $flash) {
 
         return {

@@ -67,7 +67,7 @@ public class MainController extends AbstractController {
         String facebookAppId = AppUtil.getFacebookAppId();
 
         //try with param
-        InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO();
+        InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(false);
 
 
         return ok(be.lynk.server.views.html.template_admin.render(getAvaiableLanguage(), interfaceDataDTO));
@@ -94,13 +94,15 @@ public class MainController extends AbstractController {
             return redirect("market://details?id=" + APP_PACKAGE_NAME);
         }
 
+        boolean isMobile =(isMobileDevice() || forceMobile) && mobileDisabled == null;
+
         if (!isMobileDevice() && !forceMobile && ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
             addAlreadyVisitedCookie();
             return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(), dozerService.map(lang(), LangDTO.class)));
         } else {
 
 
-            InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO();
+            InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(isMobile);
 
 
             AbstractPublicationDTO publicationDTO = null;
@@ -120,7 +122,7 @@ public class MainController extends AbstractController {
             //try with param
 
 
-            if ((isMobileDevice() || forceMobile) && mobileDisabled == null) {
+            if (isMobile) {
                 return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
             } else {
                 return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, publicationDTO));
@@ -160,7 +162,7 @@ public class MainController extends AbstractController {
         ctx().response().setCookie(CommonSecurityController.COOKIE_ALREADY_VISITED, "true", 2592000);
     }
 
-    private InterfaceDataDTO generateInterfaceDTO() {
+    private InterfaceDataDTO generateInterfaceDTO(boolean isMobile) {
 
 
         String facebookAppId = AppUtil.getFacebookAppId();
@@ -174,6 +176,7 @@ public class MainController extends AbstractController {
         interfaceDataDTO.setUrlBase(urlBase);
         interfaceDataDTO.setProjectLastVersion(lastVersion);
         interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+        interfaceDataDTO.setIsMobile(isMobile);
 
         //constant
         interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_HEIGHT", Constant.PUBLICATION_PICTURE_HEIGHT + "");
