@@ -2429,7 +2429,7 @@ myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocati
         }
     }
 }]);
-myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', '$timeout', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService,$timeout) {
+myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', '$timeout', function ($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService, $timeout) {
 
     return {
         restrict: "E",
@@ -2444,7 +2444,8 @@ myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geol
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    scope.descriptionLimitBase=250;
+                    scope.descriptionLimitBase = 250;
+                    scope.descriptionLimit = scope.descriptionLimitBase;
                     scope.getInfo().loading = true;
 
                     scope.getInterestClass = function (publication) {
@@ -2457,13 +2458,13 @@ myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geol
                     scope.navigateTo = function (target) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         modalService.openLoadingModal();
-                        $timeout(function(){
+                        $timeout(function () {
                             $location.path(target);
-                        },1);
+                        }, 1);
                     };
 
                     scope.openGallery = function (image, publication) {
-                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:publication.pictures,first:image});
+                        $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {list: publication.pictures, first: image});
                     };
                 }
             }
