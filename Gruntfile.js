@@ -275,6 +275,7 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/mobile/InterestSelectionModal/InterestSelectionModal.js',
                         'public/javascripts/modal/MessageModal/MessageModal.js',
                         'public/javascripts/directive/mobile/galleryMobile/GalleryMobileCtrl.js',
+                        'public/javascripts/modal/ResizeImageMobileModal/ResizeImageMobileModal.js',
 
                         <!-- controller -->
                         'public/javascripts/controller/mobile/WelcomeCtrl.js',

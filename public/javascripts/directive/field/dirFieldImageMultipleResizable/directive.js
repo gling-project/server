@@ -65,11 +65,20 @@ myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directive
                             maxWidth: scope.getInfo().maxWidth,
                             maxHeight: scope.getInfo().maxHeight
                         };
-                        modalService.basicModal('--.field.imageMultipleResize.resizeModal.title', 'image-tool-ctrl', dto
-                            , function (close) {
-                                close();
-                                imageContainer.image = dto.result;
-                            });
+                        if(constantService.isMobile) {
+                            modalService.resizeImageMobileModal(dto
+                                , function (close) {
+                                    close();
+                                    imageContainer.image = dto.result;
+                                });
+                        }
+                        else{
+                            modalService.basicModal('--.field.imageMultipleResize.resizeModal.title', 'image-tool-ctrl', dto
+                                , function (close) {
+                                    close();
+                                    imageContainer.image = dto.result;
+                                });
+                        }
                     };
 
                     scope.$watch('images', function () {

@@ -7,9 +7,6 @@
     .image-tool-container {
 
         & > div {
-            height: 100%;
-            display: inline-block;
-            vertical-align: top;
             border: 1px solid red;
         }
 
@@ -50,6 +47,10 @@
             //            height: 10px;
             //            background: rgba(222, 60, 80, .9);
             z-index: 999;
+        }
+
+        .resize-image {
+            max-width: 1000% !important;
         }
 
         .resize-handle-nw {
@@ -94,13 +95,12 @@
         }
 
         .resize-container {
-            overflow: hidden;
+//            overflow: hidden;
             //            left: 50%;
             //            top: 50%;
         }
 
         .menu-btn {
-            display: block;
             font-weight: bold;
             width: 40px;
             z-index: 1000;

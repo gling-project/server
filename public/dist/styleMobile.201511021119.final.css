@@ -3096,9 +3096,6 @@ ul.messenger .messenger-spinner {
   background-color: #f4f4f4;
 }
 .image-tool .image-tool-container > div {
-  height: 100%;
-  display: inline-block;
-  vertical-align: top;
   border: 1px solid red;
 }
 .image-tool .image-tool-container > div:last-child {
@@ -3131,6 +3128,9 @@ ul.messenger .messenger-spinner {
   display: block;
   z-index: 999;
 }
+.image-tool .image-tool-container .resize-image {
+  max-width: 1000% !important;
+}
 .image-tool .image-tool-container .resize-handle-nw {
   top: -5px;
   left: -5px;
@@ -3161,11 +3161,7 @@ ul.messenger .messenger-spinner {
   margin-right: -40px;
   margin-top: -2px;
 }
-.image-tool .image-tool-container .resize-container {
-  overflow: hidden;
-}
 .image-tool .image-tool-container .menu-btn {
-  display: block;
   font-weight: bold;
   width: 40px;
   z-index: 1000;
@@ -3212,8 +3208,11 @@ button > span.fa {
   margin-left: 3px;
   margin-right: 3px;
 }
+.modal-dialog {
+  margin: 0px !important;
+}
 .modal-alert-content .modal-dialog {
-  margin-top: 200px;
+  margin-top: 200px !important;
 }
 .modal-alert-content.modal-alert-content-error .modal-content {
   background-color: red;
@@ -3232,8 +3231,7 @@ button > span.fa {
   padding-top: 50px;
 }
 .loading-modal .modal-dialog {
-  width: 200px;
-  margin: 100px auto;
+  width: 200px !important;
 }
 .loading-modal .modal-body {
   text-align: center;

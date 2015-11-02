@@ -372,4 +372,25 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
+
+
+
+
+
+    this.resizeImageMobileModal = function (params,save) {
+        var resolve = {
+            params: function () {
+                return params;
+            },
+            save:function(){
+                return save;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/ResizeImageMobileModal/view.html",
+            controller: "ResizeImageMobileModalCtrl",
+            size: "l",
+            resolve: resolve
+        });
+    };
 });

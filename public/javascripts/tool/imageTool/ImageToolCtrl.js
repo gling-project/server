@@ -118,18 +118,28 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
 
                                 //Find the part of the image that is inside the crop box
                                 var crop_canvas,
-                                    left = $('.overlay').offset().left - scope.container.offset().left,
-                                    top = $('.overlay').offset().top - scope.container.offset().top,
-                                    width = $('.overlay').width(),
-                                    height = $('.overlay').height();
+                                    left = $('.image-tool-overlay').offset().left - scope.container.offset().left,
+                                    top = $('.image-tool-overlay').offset().top - scope.container.offset().top,
+                                    width = scope.canvasWidth,
+                                    height = scope.canvasHeight;
 
                                 crop_canvas = document.createElement('canvas');
                                 crop_canvas.width = width;
                                 crop_canvas.height = height;
 
-                                crop_canvas.getContext('2d').drawImage(scope.image_target, left, top, width, height, 0, 0, width, height);
+                                console.log("result : " + left + "/" + top + "/" + width + "/" + height);
+
+                                crop_canvas
+                                    .getContext('2d')
+                                    .scale(scope.scale, scope.scale);
+                                crop_canvas
+                                    .getContext('2d')
+                                    .drawImage(scope.image_target, left, top, width, height, 0, 0, width, height);
                                 var image64 = crop_canvas.toDataURL();
                                 scope.getInfo().result = image64;
+
+
+                                console.log(image64);
 
                                 //fileService.uploadFile64(scope.fileName, image64);
                             }
@@ -141,6 +151,7 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
 
                                 var width, height, factor = 0.1, left, top;
                                 if (plus) {
+                                    console.log(scope.image_target.width + '/' + (1 + factor) + '/' + scope.image_target.width * (1 + factor));
                                     width = scope.image_target.width * (1 + factor);
                                     height = width / scope.orig_src.width * scope.orig_src.height;
                                     left = scope.container.offset().left - (Math.abs(scope.image_target.width - width) / 2);
@@ -259,10 +270,6 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
 
                                 console.log(width + "/" + height);
 
-                                //if (width < scope.canvasWidth || height < scope.canvasHeight) {
-                                //    $flash.error($filter('translateText')('--.imageTool.minimalSize', [scope.canvasWidth, scope.canvasHeight]));
-                                //}
-                                //else {
                                 scope.displayPicture = true;
 
                                 //compute proportion
@@ -275,6 +282,17 @@ myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocat
                                 else {
                                     scope.resize(scope.image_target.width / proportionHeight, scope.canvasHeight);
                                 }
+
+                                //need scale ??
+                                console.log(".image-tool-overlay=>" + $(".image-tool-overlay").width());
+                                if ($(".image-tool-overlay").width() < scope.canvasWidth) {
+                                    scope.scale = scope.canvasWidth / $(".image-tool-overlay").width();
+                                }
+                                else {
+                                    scope.scale = 1;
+                                }
+                                console.log(scope.canvasHeight + '/' + scope.scale);
+                                scope.imageToolOverlayHeight = scope.canvasHeight / scope.scale;
 
                                 $timeout(function () {
 

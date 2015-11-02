@@ -2895,9 +2895,6 @@ ul.messenger .messenger-spinner {
   background-color: #f4f4f4;
 }
 .image-tool .image-tool-container > div {
-  height: 100%;
-  display: inline-block;
-  vertical-align: top;
   border: 1px solid red;
 }
 .image-tool .image-tool-container > div:last-child {
@@ -2930,6 +2927,9 @@ ul.messenger .messenger-spinner {
   display: block;
   z-index: 999;
 }
+.image-tool .image-tool-container .resize-image {
+  max-width: 1000% !important;
+}
 .image-tool .image-tool-container .resize-handle-nw {
   top: -5px;
   left: -5px;
@@ -2946,16 +2946,16 @@ ul.messenger .messenger-spinner {
   bottom: -5px;
   right: -5px;
 }
-.image-tool .image-tool-container .overlay {
+.image-tool .image-tool-container .image-tool-overlay {
   overflow: hidden;
   z-index: 999;
 }
-.image-tool .image-tool-container .overlay-inner:before {
+.image-tool .image-tool-container .image-tool-overlay-inner:before {
   left: 0;
   margin-left: -40px;
   margin-top: -2px;
 }
-.image-tool .image-tool-container .overlay-inner:after {
+.image-tool .image-tool-container .image-tool-overlay-inner:after {
   right: 0;
   margin-right: -40px;
   margin-top: -2px;
@@ -2964,7 +2964,6 @@ ul.messenger .messenger-spinner {
   overflow: hidden;
 }
 .image-tool .image-tool-container .menu-btn {
-  display: block;
   font-weight: bold;
   width: 40px;
   z-index: 1000;

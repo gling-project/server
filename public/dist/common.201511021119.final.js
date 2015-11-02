@@ -1080,11 +1080,20 @@ myApp.directive("dirFieldImageMultipleResizable", ['$rootScope', 'directiveServi
                             maxWidth: scope.getInfo().maxWidth,
                             maxHeight: scope.getInfo().maxHeight
                         };
-                        modalService.basicModal('--.field.imageMultipleResize.resizeModal.title', 'image-tool-ctrl', dto
-                            , function (close) {
-                                close();
-                                imageContainer.image = dto.result;
-                            });
+                        if(constantService.isMobile) {
+                            modalService.resizeImageMobileModal(dto
+                                , function (close) {
+                                    close();
+                                    imageContainer.image = dto.result;
+                                });
+                        }
+                        else{
+                            modalService.basicModal('--.field.imageMultipleResize.resizeModal.title', 'image-tool-ctrl', dto
+                                , function (close) {
+                                    close();
+                                    imageContainer.image = dto.result;
+                                });
+                        }
                     };
 
                     scope.$watch('images', function () {
@@ -5429,6 +5438,27 @@ myApp.service("modalService", ['$modal', function ($modal) {
         });
     };
 
+
+
+
+
+
+    this.resizeImageMobileModal = function (params,save) {
+        var resolve = {
+            params: function () {
+                return params;
+            },
+            save:function(){
+                return save;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/javascripts/modal/ResizeImageMobileModal/view.html",
+            controller: "ResizeImageMobileModalCtrl",
+            size: "l",
+            resolve: resolve
+        });
+    };
 }]);
 myApp.service("promotionService", ['$http', '$flash', '$rootScope', function ($http, $flash, $rootScope) {
 
@@ -6450,6 +6480,8 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "<div class=modal-header><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{'--.loginModal.title' | translateText}}</h4></div><div class=\"modal-body modal-login\"><dir-field-text ng-info=text></dir-field-text></div><div class=modal-footer><button ng-disabled=loading type=button class=\"btn btn-default\" ng-click=close()>{{'--.generic.close' | translateText}}</button> <button ng-disabled=loading type=button class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.valid' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
   $templateCache.put("/assets/javascripts/modal/PromotionModal/view.html",
     "<div class=modal-header><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 ng-show=update class=modal-title>{{'--.promotion.modal.title.update' | translateText}}</h4><h4 ng-hide=update class=modal-title>{{'--.promotion.modal.title.create' | translateText}}</h4></div><div class=modal-body ng-style=getHeight()><promotion-form-ctrl ng-info=promotionParam></promotion-form-ctrl></div><div class=modal-footer><button ng-disabled=loading type=button class=\"btn btn-default\" ng-click=close()>{{'--.generic.close' | translateText}}</button> <button ng-disabled=loading id=promotion-modal-btn-save type=button class=\"btn gling-button-dark\" ng-click=save(false)>{{'--.generic.save' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
+  $templateCache.put("/assets/javascripts/modal/ResizeImageMobileModal/view.html",
+    "<div class=modal-body><div style=\"margin: -15px\"><image-tool-ctrl ng-info=params></image-tool-ctrl></div><button style=\"margin-top: 30px\" ng-click=save()>save</button></div>");
   $templateCache.put("/assets/javascripts/modal/mobile/AlertModal/view.html",
     "<div class=modal-body ng-click=close()>{{message}}</div>");
   $templateCache.put("/assets/javascripts/modal/mobile/InterestSelectionModal/view.html",
@@ -6457,7 +6489,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/modal/mobile/LoadingModal/view.html",
     "<div class=modal-body><img src=\"/assets/images/loading_big.gif\"><br>{{'--.generic.loading' | translateText}}</div>");
   $templateCache.put("/assets/javascripts/tool/imageTool/template.html",
-    "<div class=image-tool><div class=image-tool-container style=\"width:{{canvasWidth + 50}}px;height:{{canvasHeight}}px\"><div class=image-tool-overlay style=width:{{canvasWidth}}px><div class=image-tool-overlay-inner><div class=resize-container ng-show=\"displayPicture === true\"><span class=\"resize-handle resize-handle-nw\"></span> <span class=\"resize-handle resize-handle-ne\"></span> <img class=resize-image alt=\"image for resizing\"> <span class=\"resize-handle resize-handle-se\"></span> <span class=\"resize-handle resize-handle-sw\"></span></div></div></div><div style=\"width: 45px\"><button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(true)>+</button> <button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(false)>-</button> <button class=\"gling-button-dark js-crop glyphicon glyphicon-ok\" ng-click=crop()></button></div></div></div>");
+    "<div class=image-tool><div><button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(true)>+</button> <button ng-disabled=\"displayPicture !== true\" class=\"gling-button-dark js-crop menu-btn\" ng-click=zoom(false)>-</button> <button class=\"gling-button-dark js-crop glyphicon glyphicon-ok\" ng-click=crop()></button></div><div class=image-tool-container><div class=image-tool-overlay style=max-width:{{canvasWidth}}px;height:{{imageToolOverlayHeight}}px><div class=image-tool-overlay-inner><div class=resize-container ng-show=\"displayPicture === true\"><span class=\"resize-handle resize-handle-nw\"></span> <span class=\"resize-handle resize-handle-ne\"></span> <img class=resize-image alt=\"image for resizing\"> <span class=\"resize-handle resize-handle-se\"></span> <span class=\"resize-handle resize-handle-sw\"></span></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/admin/CategoriesAndInterests.html",
     "<super-admin-menu-ctrl></super-admin-menu-ctrl><div class=category_and_interest>Recherche<input ng-model=\"search\"> <button ng-click=setDisabled()>Editer</button><table><tr><td></td><td ng-repeat=\"interest in interests\">{{interest.name}}</td></tr><tr ng-repeat=\"category in getCategoryList()\"><td>{{category.translationName | translateText}}</td><td ng-repeat=\"interest in interests\"><input ng-disabled=disabled style=width:40px value={{getPriority(category,interest)}} ng-blur=\"save($event,category,interest)\"></td></tr></table></div>");
   $templateCache.put("/assets/javascripts/view/admin/adminBusiness.html",
@@ -6664,18 +6696,28 @@ myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationS
 
                                 //Find the part of the image that is inside the crop box
                                 var crop_canvas,
-                                    left = $('.overlay').offset().left - scope.container.offset().left,
-                                    top = $('.overlay').offset().top - scope.container.offset().top,
-                                    width = $('.overlay').width(),
-                                    height = $('.overlay').height();
+                                    left = $('.image-tool-overlay').offset().left - scope.container.offset().left,
+                                    top = $('.image-tool-overlay').offset().top - scope.container.offset().top,
+                                    width = scope.canvasWidth,
+                                    height = scope.canvasHeight;
 
                                 crop_canvas = document.createElement('canvas');
                                 crop_canvas.width = width;
                                 crop_canvas.height = height;
 
-                                crop_canvas.getContext('2d').drawImage(scope.image_target, left, top, width, height, 0, 0, width, height);
+                                console.log("result : " + left + "/" + top + "/" + width + "/" + height);
+
+                                crop_canvas
+                                    .getContext('2d')
+                                    .scale(scope.scale, scope.scale);
+                                crop_canvas
+                                    .getContext('2d')
+                                    .drawImage(scope.image_target, left, top, width, height, 0, 0, width, height);
                                 var image64 = crop_canvas.toDataURL();
                                 scope.getInfo().result = image64;
+
+
+                                console.log(image64);
 
                                 //fileService.uploadFile64(scope.fileName, image64);
                             }
@@ -6687,6 +6729,7 @@ myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationS
 
                                 var width, height, factor = 0.1, left, top;
                                 if (plus) {
+                                    console.log(scope.image_target.width + '/' + (1 + factor) + '/' + scope.image_target.width * (1 + factor));
                                     width = scope.image_target.width * (1 + factor);
                                     height = width / scope.orig_src.width * scope.orig_src.height;
                                     left = scope.container.offset().left - (Math.abs(scope.image_target.width - width) / 2);
@@ -6805,10 +6848,6 @@ myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationS
 
                                 console.log(width + "/" + height);
 
-                                //if (width < scope.canvasWidth || height < scope.canvasHeight) {
-                                //    $flash.error($filter('translateText')('--.imageTool.minimalSize', [scope.canvasWidth, scope.canvasHeight]));
-                                //}
-                                //else {
                                 scope.displayPicture = true;
 
                                 //compute proportion
@@ -6821,6 +6860,17 @@ myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationS
                                 else {
                                     scope.resize(scope.image_target.width / proportionHeight, scope.canvasHeight);
                                 }
+
+                                //need scale ??
+                                console.log(".image-tool-overlay=>" + $(".image-tool-overlay").width());
+                                if ($(".image-tool-overlay").width() < scope.canvasWidth) {
+                                    scope.scale = scope.canvasWidth / $(".image-tool-overlay").width();
+                                }
+                                else {
+                                    scope.scale = 1;
+                                }
+                                console.log(scope.canvasHeight + '/' + scope.scale);
+                                scope.imageToolOverlayHeight = scope.canvasHeight / scope.scale;
 
                                 $timeout(function () {
 

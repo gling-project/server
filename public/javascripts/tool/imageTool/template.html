@@ -1,10 +1,21 @@
 <div class="image-tool">
 
-    <div class="image-tool-container"
-         style="width:{{canvasWidth + 50}}px;height:{{canvasHeight}}px;">
+    <div>
+
+        <button ng-disabled="displayPicture !== true" class="gling-button-dark js-crop menu-btn"
+                ng-click="zoom(true)">+
+        </button>
+        <button ng-disabled="displayPicture !== true" class="gling-button-dark js-crop menu-btn"
+                ng-click="zoom(false)">-
+        </button>
+
+        <button class="gling-button-dark js-crop glyphicon glyphicon-ok" ng-click="crop()">
+        </button>
+    </div>
+    <div class="image-tool-container">
 
         <div class="image-tool-overlay"
-             style="width:{{canvasWidth}}px;">
+             style="max-width:{{canvasWidth}}px;height:{{imageToolOverlayHeight}}px;">
             <div class="image-tool-overlay-inner">
 
 
@@ -17,18 +28,6 @@
                 </div>
 
             </div>
-        </div>
-        <div style="width: 45px;">
-
-            <button ng-disabled="displayPicture !== true" class="gling-button-dark js-crop menu-btn"
-                    ng-click="zoom(true)">+
-            </button>
-            <button ng-disabled="displayPicture !== true" class="gling-button-dark js-crop menu-btn"
-                    ng-click="zoom(false)">-
-            </button>
-
-            <button class="gling-button-dark js-crop glyphicon glyphicon-ok" ng-click="crop()">
-            </button>
         </div>
 
     </div>
