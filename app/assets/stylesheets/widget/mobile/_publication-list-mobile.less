@@ -102,7 +102,12 @@
         }
 
         .publication-header {
+            width: 100%;
             padding-bottom: 5px;
+
+            .illustration{
+                cursor: pointer;
+            }
 
             .title-box {
                 margin-left: 10px;
@@ -110,6 +115,8 @@
                     font-size: 18px;
                     color: @color-blue-dark;
                     font-weight: bold;
+                    display: inline-block;
+//                    cursor: pointer;
                 }
                 .title-data{
                     font-size: 14px;
@@ -117,15 +124,30 @@
                 }
             }
 
-            & > *:nth-child(n+2) {
-                margin-top: 10px;
-
-            }
-
-            & > * {
-                display: inline-block;
+            & td{
                 vertical-align: top;
             }
+
+            & td:first-child{
+                width: 60px;
+            }
+
+            .publication-following-widget{
+                font-size: 14px;
+                font-weight: normal;
+                display: inline-block;
+                float: right;
+            }
+
+//            & > *:nth-child(n+2) {
+//                margin-top: 10px;
+//
+//            }
+//
+//            & > * {
+////                display: inline-block;
+//                vertical-align: top;
+//            }
 //            & > *:last-child {
 //                float: right;
 //                border: 1px solid @color-blue-dark;

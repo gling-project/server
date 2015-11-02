@@ -1,11 +1,11 @@
-myApp.directive('followWidgetCtrl', function (accountService,modalService,followService,directiveService,$filter,$flash) {
+myApp.directive('followWidgetForPublicationCtrl', function (accountService,modalService,followService,directiveService,$filter,$flash) {
 
     return {
         restrict: "E",
         scope: directiveService.autoScope({
             ngInfo: '='
         }),
-        templateUrl: "/assets/javascripts/directive/component/followWidget/template.html",
+        templateUrl: "/assets/javascripts/directive/component/followWidgetForPublication/template.html",
         replace: true,
         transclude: true,
         compile: function () {
@@ -29,17 +29,17 @@ myApp.directive('followWidgetCtrl', function (accountService,modalService,follow
 
                     scope.followed = function () {
 
-                        scope.getInfo().business.following = !scope.getInfo().business.following;
-                        if (scope.getInfo().business.following===true) {
-                            scope.getInfo().business.totalFollowers++;
+                        scope.getInfo().publication.following = !scope.getInfo().publication.following;
+                        if (scope.getInfo().publication.following===true) {
+                            scope.getInfo().publication.totalFollowers++;
                             $flash.success($filter('translateText')('--.followWidget.message.add'));
                         }
                         else {
                             $flash.success($filter('translateText')('--.followWidget.message.remove'));
-                            scope.getInfo().business.totalFollowers--;
+                            scope.getInfo().publication.totalFollowers--;
                         }
 
-                        followService.addFollow(scope.getInfo().business.following, scope.getInfo().business.id);
+                        followService.addFollow(scope.getInfo().publication.following, scope.getInfo().publication.businessId);
 
                     };
                 }

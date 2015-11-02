@@ -25,9 +25,15 @@
             <td class="publication-header-business">
 
                 <!-- business name -->
-                <div ng-click="navigateTo('/business/'+getInfo().publication.businessId)"
-                     class="publication-bordered-bottom-hover publication-bordered-bottom">
-                    <span class="publication-main-title">
+                <div class="publication-bordered-bottom">
+
+                    <!-- following -->
+                    <div class="publication-following-widget">
+                        <follow-widget-for-publication-ctrl ng-info="{displayText:true,publication:getInfo().publication}"></follow-widget-for-publication-ctrl>
+                    </div>
+
+                    <span class="publication-main-title"
+                          ng-click="navigateTo('/business/'+getInfo().publication.businessId)">
                         <i ng-show="getInfo().publication.following === true"
                            class="gling-icon gling-icon gling-icon-bell">
                         </i>

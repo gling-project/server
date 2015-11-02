@@ -1810,9 +1810,14 @@ ul.messenger .messenger-spinner {
 }
 .publication-box .publication-header-business > div {
   height: 100%;
-  cursor: pointer;
+}
+.publication-box .publication-following-widget {
+  margin-top: 15px;
+  margin-right: 10px;
+  float: right;
 }
 .publication-box .publication-main-title {
+  cursor: pointer;
   margin-top: 12px;
   display: inline-block;
   font-size: 24px;
@@ -1825,9 +1830,6 @@ ul.messenger .messenger-spinner {
 }
 .publication-box .publication-header {
   width: 100%;
-}
-.publication-box .publication-header .publication-header-business > div {
-  cursor: pointer;
 }
 .publication-box .publication-header td:first-child {
   width: 10%;
@@ -2959,9 +2961,6 @@ ul.messenger .messenger-spinner {
   right: 0;
   margin-right: -40px;
   margin-top: -2px;
-}
-.image-tool .image-tool-container .resize-container {
-  overflow: hidden;
 }
 .image-tool .image-tool-container .menu-btn {
   font-weight: bold;

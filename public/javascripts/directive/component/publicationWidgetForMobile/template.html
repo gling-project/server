@@ -4,16 +4,9 @@
     <div ng-show="getInfo().previsualization === true" class="publication-box-previsualization">
     </div>
 
-    <!-- interest -->
-    <i
-            ng-show="getInterestClass(getInfo().publication)!=null"
-            class="publication-interest gling-icon {{getInterestClass(getInfo().publication)}}">
-    </i>
-
-    <table class="publication-header"
-           ng-click="navigateTo('/business/'+getInfo().publication.businessId)">
+    <table class="publication-header">
         <tr>
-            <td>
+            <td ng-click="navigateTo('/business/'+getInfo().publication.businessId)">
                 <img class="illustration"
                      ng-src="{{getInfo().publication.businessIllustration | image}}"/>
 
@@ -21,18 +14,33 @@
             <td>
                 <div class="title-box">
 
-                    <div class="title">
+                    <div class="title"
+                         ng-click="navigateTo('/business/'+getInfo().publication.businessId)">
                         <i ng-show="getInfo().publication.following === true"
                            class="gling-icon gling-icon gling-icon-bell">
                         </i>
                         {{getInfo().publication.businessName}}
                     </div>
+
+                    <!-- following -->
+                    <div class="publication-following-widget">
+                        <follow-widget-for-publication-ctrl ng-info="{displayText:true,publication:getInfo().publication}"></follow-widget-for-publication-ctrl>
+                    </div>
+
                     <div class="title-data">
                         {{'--.publication.publishTo' | translateText}}
                         {{getInfo().publication.startDate | date:'dd MMM yyyy'}} -
                         {{getInfo().publication.distance / 1000 | number:2}} km
                     </div>
                 </div>
+            </td>
+            <td>
+
+                <!-- interest -->
+                <i
+                        ng-show="getInterestClass(getInfo().publication)!=null"
+                        class="publication-interest gling-icon {{getInterestClass(getInfo().publication)}}">
+                </i>
             </td>
         </tr>
     </table>

@@ -2478,7 +2478,11 @@ ul.messenger .messenger-spinner {
   color: #f4f4f4;
 }
 .publication-box-mobile .publication-header {
+  width: 100%;
   padding-bottom: 5px;
+}
+.publication-box-mobile .publication-header .illustration {
+  cursor: pointer;
 }
 .publication-box-mobile .publication-header .title-box {
   margin-left: 10px;
@@ -2487,17 +2491,23 @@ ul.messenger .messenger-spinner {
   font-size: 18px;
   color: #2c265c;
   font-weight: bold;
+  display: inline-block;
 }
 .publication-box-mobile .publication-header .title-box .title-data {
   font-size: 14px;
   color: #999999;
 }
-.publication-box-mobile .publication-header > *:nth-child(n+2) {
-  margin-top: 10px;
-}
-.publication-box-mobile .publication-header > * {
-  display: inline-block;
+.publication-box-mobile .publication-header td {
   vertical-align: top;
+}
+.publication-box-mobile .publication-header td:first-child {
+  width: 60px;
+}
+.publication-box-mobile .publication-header .publication-following-widget {
+  font-size: 14px;
+  font-weight: normal;
+  display: inline-block;
+  float: right;
 }
 .publication-box-mobile .publication-data .publication-data-promotion {
   width: 100%;

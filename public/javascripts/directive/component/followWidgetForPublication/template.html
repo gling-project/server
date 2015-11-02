@@ -1,0 +1,25 @@
+<div class="follow-widget">
+
+
+    <div class="follow-text" ng-hide="getInfo().displayText===true">
+        <div>
+            {{'--.followWidget.follow' | translateText:null:true}}
+        </div>
+    </div>
+
+    <div ng-hide="getInfo().displayText===true" class="follow-widget-icon"  ng-click="follow()">
+
+        <button>
+            <span class="gling-icon gling-icon gling-icon-bell selected" ng-show="getInfo().publication.following"></span>
+            <span class="gling-icon gling-icon gling-icon-bell2" ng-hide="getInfo().publication.following"></span>
+        </button>
+    </div>
+    <div class="follow-text" ng-show="getInfo().displayText===true">
+        <div class="link" ng-hide="getInfo().publication.following" ng-click="follow()">
+            {{'--.followWidget.follow' | translateText}}
+        </div>
+        <div class="link" ng-show="getInfo().publication.following" ng-click="follow()">
+            {{'--.followWidget.stopFollow' | translateText}}
+        </div>
+    </div>
+</div>

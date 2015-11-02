@@ -159,6 +159,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/component/searchResult/SearchResultCtrl.js',
                         'public/javascripts/directive/component/searchBar/SearchBarCtrl.js',
                         'public/javascripts/directive/component/followWidget/FollowWidgetCtrl.js',
+                        'public/javascripts/directive/component/followWidgetForPublication/FollowWidgetForPublicationCtrl.js',
                         'public/javascripts/directive/component/facebookSharePublication/FacebookSharePublicationCtrl.js',
                         'public/javascripts/directive/component/helpPopup/HelpPopupCtrl.js',
 
