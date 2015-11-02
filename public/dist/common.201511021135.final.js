@@ -1125,11 +1125,11 @@ myApp.directive("dirFieldImageMultipleResizable", ['$rootScope', 'directiveServi
 
 
                         if (scope.getInfo().maxHeight != null && scope.getInfo().maxHeight > src.height) {
-                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalHeight', scope.getInfo().maxHeight));
+                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalHeight', [scope.getInfo().maxHeight,src.height]));
                             success = false;
                         }
                         if (scope.getInfo().maxWidth != null && scope.getInfo().maxWidth > src.width) {
-                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalWidth', scope.getInfo().maxWidth));
+                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalWidth', [scope.getInfo().maxWidth,src.width] ));
                             success = false;
                         }
 
