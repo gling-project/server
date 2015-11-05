@@ -2141,14 +2141,15 @@ ul.messenger .messenger-spinner {
   position: relative;
   width: 100%;
   border: 1px solid #999999;
+  min-height: 60px;
+  background-color: #cccccc;
 }
 .field-image-multiple .image-block-container .image-block .image-percentage {
+  color: #f4f4f4;
   z-index: 10;
   position: absolute;
   text-align: center;
   vertical-align: middle;
-  right: 0;
-  left: 0;
   top: 0;
   bottom: 0;
   padding-top: 20px;
@@ -2156,12 +2157,10 @@ ul.messenger .messenger-spinner {
   font-size: 18px;
 }
 .field-image-multiple .image-block-container .image-block .image-percentage-background {
-  background-color: green;
+  background-color: #1ad2aa;
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
-  right: 0;
 }
 .field-image-multiple .image-block-container .image-block .image-remove {
   position: absolute;
