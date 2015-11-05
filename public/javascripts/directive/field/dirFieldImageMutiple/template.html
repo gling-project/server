@@ -12,16 +12,20 @@
         </label>
 
         <div ng-class="getInfo().fullSize==true?'col-md-12':'col-md-6'">
-            <div ng-class="{'input-group':!!getInfo().money}">
+            <div ng-class="{'input-group':!!getInfo().money}" >
 
                 <div ng-repeat="imageContainer in images"
                      class="image-block-container">
                     <div class="image-block">
-                        <div ng-show="imageContainer.percent>0 && imageContainer.percent < 100">
+                        <div class="image-percentage" ng-show="imageContainer.percent>0 && imageContainer.percent < 100">
                             {{imageContainer.percent}} %
                         </div>
+                        <div ng-show="imageContainer.percent>0 && imageContainer.percent < 100"
+                                class="image-percentage-background"
+                                ng-style="width: {{imageContainer.percent}}%"></div>
 
-                        <div class="image-container">
+                        <div ng-hide="imageContainer.percent>0 && imageContainer.percent < 100"
+                                class="image-container">
                             <img ng-src="{{imageContainer.image| image}}"/>
                         </div>
 

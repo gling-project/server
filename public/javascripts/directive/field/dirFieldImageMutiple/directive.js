@@ -14,6 +14,7 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
 
                     scope.id = generateId.generate();
                     scope.errorMessage = "";
+                    scope.inDownload = false;
 
                     scope.isActive = function () {
 
@@ -24,12 +25,16 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
                         scope.getInfo().field[scope.getInfo().fieldName] = [];
                     }
 
+                    scope.$watch('inDownload', function () {
+                        scope.isValid();
+                    });
+
                     scope.isValid = function () {
-                        if((scope.getInfo().optional != null && scope.getInfo().optional()) || scope.isActive() == false){
+                        if ((scope.getInfo().optional != null && scope.getInfo().optional()) || scope.isActive() == false || scope.inDownload != true) {
                             scope.getInfo().isValid = true;
                         }
                         else {
-                            scope.getInfo().isValid = scope.getInfo().field[scope.getInfo().fieldName].length > 0;
+                            scope.getInfo().isValid = scope.getInfo().field[scope.getInfo().fieldName].length > 0 && scope.inDownload != true;
                         }
 
                     };
@@ -73,9 +78,9 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
                             file = $files[i];
 
 
-                            var url = "/rest/file/"+scope.getInfo().target;
+                            var url = "/rest/file/" + scope.getInfo().target;
 
-                            if(scope.unique!==true) {
+                            if (scope.unique !== true) {
                                 scope.images.push(imgContainer);
                             }
                             scope.upload = $upload.upload({
@@ -93,11 +98,11 @@ myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $fl
                                 scope.inDownload = false;
                             })
                                 .error(function (data, status) {
-                                    console.log('je suis un échec !! : '+data.message);
+                                    console.log('je suis un échec !! : ' + data.message);
                                     console.log(data);
-                                    for(var key in scope.images){
-                                        if(scope.images[key] == imgContainer){
-                                            scope.images.splice(key,1);
+                                    for (var key in scope.images) {
+                                        if (scope.images[key] == imgContainer) {
+                                            scope.images.splice(key, 1);
                                         }
                                     }
 
