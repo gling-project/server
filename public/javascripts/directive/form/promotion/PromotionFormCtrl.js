@@ -19,6 +19,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
 
                     scope.update = scope.getInfo().dto != null;
                     scope.completePromotion = true;
+                    scope.editMode = false;
 
                     //
                     // initialize default data
@@ -41,6 +42,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     }
                     else {
                         var startDate = scope.getInfo().dto.startDate;
+                        scope.editMode = true;
                         scope.completePromotion = scope.getInfo().dto.originalPrice != null;
                     }
 
