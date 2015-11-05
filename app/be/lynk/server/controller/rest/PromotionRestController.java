@@ -4,6 +4,7 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
+import be.lynk.server.dto.BusinessNotificationDTO;
 import be.lynk.server.dto.PromotionDTO;
 import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.email.EmailMessage;
@@ -11,6 +12,7 @@ import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
+import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.EmailService;
@@ -28,6 +30,8 @@ import play.mvc.Result;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by florian on 23/05/15.
@@ -108,6 +112,65 @@ public class PromotionRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.PUBLISHED})
     public Result update(Long id) {
+//        PromotionDTO dto = initialization(PromotionDTO.class);
+//
+//        Promotion promotion = dozerService.map(dto, Promotion.class);
+//
+//        //load
+//        Promotion promotionToEdit = (Promotion) publicationService.findById(id);
+//
+//        //control business
+//        Business business = promotionToEdit.getBusiness();
+//        Account account = securityController.getCurrentUser();
+//
+//        if(!account.getRole().equals(RoleEnum.SUPERADMIN) &&
+//                !((BusinessAccount)account).getBusiness().equals(business)){
+//            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+//        }
+//
+//        String oldName = promotionToEdit.getTitle();
+//
+//        promotionToEdit.setInterest(customerInterestService.findByName(promotion.getInterest().getName()));
+//        promotionToEdit.setTitle(promotion.getTitle());
+//        promotionToEdit.setDescription(promotion.getDescription());
+////        promotionToEdit.setEndDate(promotion.getEndDate());
+////        promotionToEdit.setStartDate(promotion.getStartDate());
+//        promotionToEdit.setMinimalQuantity(promotion.getMinimalQuantity());
+//        promotionToEdit.setOriginalPrice(promotion.getOriginalPrice());
+//        promotionToEdit.setOffPercent(promotion.getOffPercent());
+//        promotionToEdit.setQuantity(promotion.getQuantity());
+//
+//        //TODO control file
+////        if (promotion.getIllustration() != null) {
+////            //TODO control file
+////            promotionToEdit.setIllustration(storedFileService.findById(promotion.getIllustration().getId()));
+////        }
+//        promotionToEdit.setUnit(promotion.getUnit());
+//
+//        publicationService.saveOrUpdate(promotionToEdit);
+//
+//
+//
+//        //send email if user is superadmin
+//        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
+//
+//            Lang lang = business.getAccount().getLang();
+//            EmailMessage.Recipient target = new EmailMessage.Recipient(business.getAccount());
+//
+//            String title = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_SUBJECT, lang);
+//            String message = translationService.getTranslation(EmailMessageEnum.PUBLICATION_EDIT_BY_ADMIN_BODY, lang, oldName, dto.getEditionReason());
+//
+//            EmailMessage emailMessage = new EmailMessage(target, title, message);
+//
+//            emailService.sendEmail(emailMessage, lang);
+//        }
+//
+//        return ok(dozerService.map(promotionToEdit, PromotionDTO.class));
+
+
+
+
+
         PromotionDTO dto = initialization(PromotionDTO.class);
 
         Promotion promotion = dozerService.map(dto, Promotion.class);
@@ -115,12 +178,12 @@ public class PromotionRestController extends AbstractRestController {
         //load
         Promotion promotionToEdit = (Promotion) publicationService.findById(id);
 
+
         //control business
         Business business = promotionToEdit.getBusiness();
-        Account account = securityController.getCurrentUser();
 
-        if(!account.getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)account).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !((BusinessAccount) securityController.getCurrentUser()).getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -136,16 +199,57 @@ public class PromotionRestController extends AbstractRestController {
         promotionToEdit.setOffPercent(promotion.getOffPercent());
         promotionToEdit.setQuantity(promotion.getQuantity());
 
-        //TODO control file
-//        if (promotion.getIllustration() != null) {
-//            //TODO control file
-//            promotionToEdit.setIllustration(storedFileService.findById(promotion.getIllustration().getId()));
-//        }
-        promotionToEdit.setUnit(promotion.getUnit());
 
         publicationService.saveOrUpdate(promotionToEdit);
 
 
+        Map<StoredFile, Boolean> newPictures = new HashMap<>();
+
+        for (StoredFile storedFile : promotion.getPictures()) {
+            newPictures.put(storedFile, false);
+        }
+
+        int biggestOrder = 0;
+        for (int i = promotionToEdit.getPictures().size() - 1; i >= 0; i--) {
+
+            StoredFile storedFile = promotionToEdit.getPictures().get(i);
+
+            boolean founded = false;
+            for (Map.Entry<StoredFile, Boolean> storedFileBooleanEntry : newPictures.entrySet()) {
+                if (storedFile.getStoredName().equals(storedFileBooleanEntry.getKey().getStoredName())) {
+                    founded = true;
+                    storedFileBooleanEntry.setValue(true);
+                    if (storedFile.getFileOrder() > biggestOrder) {
+                        biggestOrder = storedFile.getFileOrder();
+                    }
+                }
+            }
+
+            //not found ? remove!
+            if (!founded) {
+                promotionToEdit.getPictures().remove(storedFile);
+                publicationService.saveOrUpdate(promotionToEdit);
+                storedFileService.remove(storedFile);
+            }
+        }
+
+
+        for (Map.Entry<StoredFile, Boolean> storedFileBooleanEntry : newPictures.entrySet()) {
+            if (!storedFileBooleanEntry.getValue()) {
+
+                StoredFile storedFile = storedFileBooleanEntry.getKey();
+
+                StoredFile originalStoredFile = storedFileService.findByStoredName(storedFile.getStoredName());
+                originalStoredFile.setPublication(promotionToEdit);
+
+                //add comments
+                originalStoredFile.setComment(storedFile.getComment());
+
+                originalStoredFile.setFileOrder(++biggestOrder);
+
+                storedFileService.saveOrUpdate(originalStoredFile);
+            }
+        }
 
         //send email if user is superadmin
         if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
