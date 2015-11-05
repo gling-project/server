@@ -15,7 +15,7 @@ object ApplicationBuild extends Build {
     javaJdbc,
     javaJpa
       .exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api")
-    .exclude("javax.persistence.persistence-api","persistence-api-1.0.2"),
+      .exclude("javax.persistence.persistence-api", "persistence-api-1.0.2"),
     cache,
     filters,
     "org.springframework" % "spring-context" % "4.1.6.RELEASE",
@@ -50,6 +50,7 @@ object ApplicationBuild extends Build {
       ExclusionRule(organization = "javax.jms")),
     "org.mongodb" % "mongodb-driver" % "3.0.4",
     "org.mongojack" % "mongojack" % "2.1.0",
+    "org.jsoup" % "jsoup" % "1.8.3",
 
     //    "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0",
 

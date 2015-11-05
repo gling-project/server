@@ -17,7 +17,10 @@ import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.ContactTargetEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.httpRequest.HttpRequest;
+import be.lynk.server.util.httpRequest.HttpRequestException;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import org.apache.xerces.parsers.DOMParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
@@ -27,6 +30,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.transform.OutputKeys;
 /**
  * Created by florian on 5/07/15.
  */
@@ -55,6 +70,8 @@ public class SuperAdminRestController extends AbstractRestController {
     private MongoSearchService          mongoSearchService;
     @Autowired
     private EmailService                emailService;
+    @Autowired
+    private HttpRequest                 httpRequest;
 
 
     @Transactional
@@ -170,7 +187,7 @@ public class SuperAdminRestController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result getCustomerPositions() {
-        List<PositionDTO> customerPosition = mongoSearchService.getCustomerPosition(LocalDateTime.of(2015,10,1,00,00));
+        List<PositionDTO> customerPosition = mongoSearchService.getCustomerPosition(LocalDateTime.of(2015, 10, 1, 00, 00));
 
         return ok(new ListDTO<>(customerPosition));
     }
@@ -407,6 +424,61 @@ public class SuperAdminRestController extends AbstractRestController {
 
 
         return ok(new ListDTO<>(map));
+    }
+
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result test() {
+
+
+//        String url = "https://www.facebook.com/gling.be";
+//
+//        try {
+//            String urlResult = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, url, null);
+//
+//
+//            final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//
+//            final DocumentBuilder builder = factory.newDocumentBuilder();
+//
+//            DOMParser parser = new DOMParser();
+//                parser.parse(urlResult);//new InputSource(inStream));
+//            final Document document=parser.getDocument();
+//
+////            final Document document = builder.parse(urlResult);
+//
+//            final Element racine = document.getDocumentElement();
+//
+//            Element elementByClass = findElementByClass(racine, "_xlg img");
+//
+//            String landscape = elementByClass.getAttribute("src");
+//
+//            int i = 5;
+//
+//
+//            //class landscape picture : _xlg img
+//
+//            //class illustration : profilePic
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new MyRuntimeException(e.getMessage());
+//        }
+        return ok();
+    }
+
+    private Element findElementByClass(Element element, String clazz) {
+        if (element.getAttribute("class") != null && element.getAttribute("class").contains(clazz)) {
+            return element;
+        }
+        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
+            Element elementByClass = findElementByClass((Element) element.getChildNodes().item(i),clazz);
+            if (elementByClass != null) {
+                return elementByClass;
+            }
+        }
+        return null;
     }
 
 

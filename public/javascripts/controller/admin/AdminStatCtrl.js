@@ -34,13 +34,16 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
                 }, nbAddressChartParam: {
                     title: 'Nombre d\'adresse par utilisateur',
                     data: data.nbAddresses
-                }, sharePositionChartParam:{
+                }, sharePositionChartParam: {
                     title: 'Partage sa position par utilisateur',
                     data: data.sharePositions
                 }
             }
         )
-    }
+    };
+
+    //test
+    superAdminService.test();
 
     $scope.refreshStat();
 
