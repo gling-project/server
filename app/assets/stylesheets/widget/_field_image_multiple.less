@@ -72,8 +72,11 @@
             position: relative;
             width: 100%;
             border: 1px solid @color-grey-dark;
+            min-height: 60px;
+            background-color: @color-grey;
 
             .image-percentage{
+                color: @color-white;
                 z-index: 10;
                 position: absolute;
                 text-align: center;
@@ -86,12 +89,10 @@
             }
 
             .image-percentage-background {
-                background-color: green;
+                background-color: @color-green-light;
                 position: absolute;
                 top: 0;
                 bottom: 0;
-                left: 0;
-                right: 0;
             }
 
             .image-remove {
