@@ -87,7 +87,13 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         for (StoredFileDTO storedFileDTO : dto.getPictures()) {
 
-            StoredFile storedFile = fileService.updateBase64(storedFileDTO.getImage64(), storedFileDTO.getOriginalName(), securityController.getCurrentUser());
+            StoredFile storedFile;
+            if(storedFileDTO.getImage64()!=null) {
+                storedFile = fileService.updateBase64(storedFileDTO.getImage64(), storedFileDTO.getOriginalName(), securityController.getCurrentUser());
+            }
+            else{
+                storedFile = storedFileService.findByStoredName(storedFileDTO.getStoredName());
+            }
 
             //add comments
             storedFile.setPublication(businessNotification);

@@ -2,6 +2,12 @@
 
 <h1>Business (Total : {{businesses.length}})</h1>
 
+Importer un nouveau commerce depuis une page facebook<br/>
+Indiquer ici le nom du commerce
+<input ng-disabled="importBusinessLoading === true" type="text" ng-model="importBusinessInput"/>
+<button ng-disabled="importBusinessLoading === true" ng-click="importBusinessStart()">Importer !</button>
+<img src="/assets/images/modal-loading.gif" ng-show="importBusinessLoading === true"/>
+
 
 <table ng-table="tableParams" class="table">
     <tr ng-repeat="business in $data">
@@ -38,22 +44,22 @@
     </tr>
 </table>
 
-<Button ng-click="setDisplayMap()">Afficher la carte</Button>
+<!--<Button ng-click="setDisplayMap()">Afficher la carte</Button>-->
 
-<div ng-show="displayMap">
-    <!--<ui-gmap-google-map-->
-            <!--center='map.center'-->
-            <!--dragging='true'-->
-            <!--zoom='11'>-->
+<!--<div ng-show="displayMap">-->
+<!--<ui-gmap-google-map-->
+<!--center='map.center'-->
+<!--dragging='true'-->
+<!--zoom='11'>-->
 
-        <!--<ui-gmap-marker-->
-                <!--ng-repeat="business in businesses"-->
-                <!--idKey='1'-->
-                <!--coords='{latitude:business.address.posx,longitude:business.address.posy}'-->
-                <!-->-->
-            <!--<ui-gmap-window>-->
-                <!--<div>{{business.name}}</div>-->
-            <!--</ui-gmap-window>-->
-        <!--</ui-gmap-marker>-->
-    <!--</ui-gmap-google-map>-->
-</div>
+<!--<ui-gmap-marker-->
+<!--ng-repeat="business in businesses"-->
+<!--idKey='1'-->
+<!--coords='{latitude:business.address.posx,longitude:business.address.posy}'-->
+<!-->-->
+<!--<ui-gmap-window>-->
+<!--<div>{{business.name}}</div>-->
+<!--</ui-gmap-window>-->
+<!--</ui-gmap-marker>-->
+<!--</ui-gmap-google-map>-->
+<!--</div>-->

@@ -112,7 +112,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
 
                 Business business = new Business();
                 business.setName(bName);
-                business.setDescription(getString(sheet, COL_BUSINESS_DESC, rowCounter));
+//                business.setDescription(getString(sheet, COL_BUSINESS_DESC, rowCounter));
                 business.setPhone(getString(sheet, COL_BUSINESS_PHONE, rowCounter));
                 business.setBusinessStatus(BusinessStatusEnum.PUBLISHED);
                 business.setAddress(new Address(

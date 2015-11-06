@@ -1,4 +1,4 @@
-myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTableParams, $filter, $window, modalService) {
+myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTableParams, $filter, $window, modalService, $flash) {
 
     $scope.displayMap = false;
 
@@ -48,5 +48,18 @@ myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTab
             longitude: 4.3528959
         }
     };
+
+    $scope.importBusinessInput = "uopclibrairie";
+    $scope.importBusinessLoading = false;
+    $scope.importBusinessStart = function () {
+        $scope.importBusinessStart = true;
+        superAdminService.importBusiness($scope.importBusinessInput, function () {
+            //success
+            $scope.importBusinessStart = false;
+            $flash.success('le commerce a bien été importé');
+        }, function () {
+            $scope.importBusinessStart = false;
+        });
+    }
 
 });

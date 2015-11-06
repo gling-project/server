@@ -19,7 +19,7 @@ import java.util.Set;
 public class Business extends AbstractEntity implements Comparable<Business> {
 
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = true, fetch = FetchType.LAZY)
     private Account account;
 
     @Basic(optional = false)
@@ -28,17 +28,17 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     @Basic(optional = false)
     private String searchableName;
 
-    @Basic(optional = false)
-    @Column(columnDefinition = "text not null")
+    @Basic
+    @Column(columnDefinition = "text")
     private String description;
 
-    @Basic(optional = false)
+    @Basic
     private String phone;
 
     @Basic
     private String website;
 
-    @Basic(optional = true)
+    @Basic
     private String email;
 
     @Basic

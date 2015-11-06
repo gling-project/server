@@ -5,6 +5,8 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.admin.*;
+import be.lynk.server.dto.externalDTO.FacebookPageDataDTO;
+import be.lynk.server.dto.externalDTO.FacebookPhotoDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
@@ -16,32 +18,24 @@ import be.lynk.server.service.*;
 import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.ContactTargetEnum;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
-import be.lynk.server.util.httpRequest.HttpRequest;
-import be.lynk.server.util.httpRequest.HttpRequestException;
+import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
-import org.apache.xerces.parsers.DOMParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.transform.OutputKeys;
 /**
  * Created by florian on 5/07/15.
  */
@@ -71,7 +65,11 @@ public class SuperAdminRestController extends AbstractRestController {
     @Autowired
     private EmailService                emailService;
     @Autowired
-    private HttpRequest                 httpRequest;
+    private FacebookRequest             facebookRequest;
+    @Autowired
+    private LocalizationService         localizationService;
+    @Autowired
+    private FileService                 fileService;
 
 
     @Transactional
@@ -429,57 +427,108 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result test() {
+    public Result importBusiness(String name) {
+
+        FacebookPageDataDTO pageData = facebookRequest.getPageData(name);
+
+        Business business = new Business();
+
+        business.setName(pageData.getName());
+        business.setDescription(pageData.getDescription());
+
+        Address address = new Address(pageData.getLocation().getStreet(), pageData.getLocation().getZip(), pageData.getLocation().getCity(), pageData.getLocation().getCountry());
+
+        try {
+            localizationService.validAddress(address);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyRuntimeException(e.getMessage());
+        }
+
+        business.setAddress(address);
+        if (pageData.getEmails().size() > 0) {
+            business.setEmail(pageData.getEmails().get(0));
+        }
+        business.setPhone(pageData.getPhone());
+        //TODO temp
+        business.setBusinessCategories(Arrays.asList(businessCategoryService.findByName("eat")));
+        //TODO create new status ?
+        business.setBusinessStatus(BusinessStatusEnum.PUBLISHED);
+
+        BusinessSocialNetwork businessSocialNetwork = new BusinessSocialNetwork();
+        businessSocialNetwork.setFacebookLink(pageData.getLink());
+        business.setSocialNetwork(businessSocialNetwork);
+
+        //landscape
+        business.setLandscape(createImageFromUrl("landscape for " + business.getName(), pageData.getCover().getSource(), Constant.BUSINESS_LANDSCAPE_WIDTH, Constant.BUSINESS_LANDSCAPE_HEIGHT));
+
+        //illustration
+        business.setIllustration(createImageFromUrl("illustration for " + business.getName(), pageData.getPhotos(), Constant.BUSINESS_ILLUSTRATION_WIDTH, Constant.BUSINESS_ILLUSTRATION_HEIGHT));
+        //business.setIllustration(createImageFromUrl("landscape for " + business.getName(), pageData.getCover().getSource(), Constant.BUSINESS_ILLUSTRATION_WIDTH, Constant.BUSINESS_ILLUSTRATION_HEIGHT));
+
+        businessService.saveOrUpdate(business);
 
 
-//        String url = "https://www.facebook.com/gling.be";
-//
-//        try {
-//            String urlResult = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, url, null);
-//
-//
-//            final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//
-//            final DocumentBuilder builder = factory.newDocumentBuilder();
-//
-//            DOMParser parser = new DOMParser();
-//                parser.parse(urlResult);//new InputSource(inStream));
-//            final Document document=parser.getDocument();
-//
-////            final Document document = builder.parse(urlResult);
-//
-//            final Element racine = document.getDocumentElement();
-//
-//            Element elementByClass = findElementByClass(racine, "_xlg img");
-//
-//            String landscape = elementByClass.getAttribute("src");
-//
-//            int i = 5;
-//
-//
-//            //class landscape picture : _xlg img
-//
-//            //class illustration : profilePic
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new MyRuntimeException(e.getMessage());
-//        }
         return ok();
     }
 
-    private Element findElementByClass(Element element, String clazz) {
-        if (element.getAttribute("class") != null && element.getAttribute("class").contains(clazz)) {
-            return element;
-        }
-        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
-            Element elementByClass = findElementByClass((Element) element.getChildNodes().item(i),clazz);
-            if (elementByClass != null) {
-                return elementByClass;
+    private StoredFile createImageFromUrl(String name, FacebookPageDataDTO.Photo photo, int width, int height) {
+
+        if (photo.getData().size() > 0) {
+            FacebookPhotoDTO facebookPhoto = facebookRequest.getPhoto(photo.getData().get(0).getId());
+
+            FacebookPhotoDTO.Image selectedImage = null;
+
+            //select best picture
+            for (FacebookPhotoDTO.Image image : facebookPhoto.getImages()) {
+                if (image.getHeight() > height && image.getWidth() > width) {
+                    selectedImage = image;
+                    break;
+                } else if (selectedImage == null) {
+                    selectedImage = image;
+                } else if (image.getHeight() > selectedImage.getHeight()) {
+                    selectedImage = image;
+                }
             }
+
+            //create storedFile
+            File file = callImage(name, selectedImage.getSource());
+            return fileService.uploadWithSize(file, name, width, height, securityController.getCurrentUser(),true);
         }
+
+
         return null;
     }
 
+    private StoredFile createImageFromUrl(String name, String urlS, int width, int height) {
 
+        //load image
+        //convert url to image
+        File file = callImage(name, urlS);
+
+        return fileService.uploadWithSize(file, name, width, height, securityController.getCurrentUser(),true);
+    }
+
+    private File callImage(String name, String urlS) {
+        URL url = null;
+        try {
+            url = new URL(urlS);
+            URLConnection conn = url.openConnection();
+            InputStream in = conn.getInputStream();
+            File file = File.createTempFile(name, "png");
+
+            FileOutputStream outputStream = new FileOutputStream(file);
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+            return file;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyRuntimeException(e.getMessage());
+        }
+    }
 }

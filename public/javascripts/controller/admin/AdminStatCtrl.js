@@ -42,9 +42,6 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
         )
     };
 
-    //test
-    superAdminService.test();
-
     $scope.refreshStat();
 
     $timeout(function () {

@@ -3,6 +3,7 @@ package be.lynk.server.service.impl;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.service.CrudService;
+import be.lynk.server.util.exception.MyRuntimeException;
 import play.db.jpa.JPA;
 
 import javax.persistence.NoResultException;
@@ -20,7 +21,7 @@ import java.util.List;
 public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudService<T> {
 
 
-    private static final Double  EARTH_RADIUS = 6371.0;
+    private static final Double EARTH_RADIUS = 6371.0;
 
     protected Class<T> entityClass;
 
@@ -31,10 +32,15 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
 
     @Override
     public void saveOrUpdate(T entity) {
-        if (entity.getId() == null) {
-            JPA.em().persist(entity);
-        } else {
-            JPA.em().persist(entity);
+        try {
+            if (entity.getId() == null) {
+                JPA.em().persist(entity);
+            } else {
+                JPA.em().persist(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyRuntimeException(e.getMessage());
         }
     }
 
@@ -97,19 +103,18 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
         return null;
     }
 
-    protected String normalizeForSearch(String s){
+    protected String normalizeForSearch(String s) {
 
-        s="%"+s.replaceAll(" ","%")+"%";
-        s=s.toLowerCase();
-        s= Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = "%" + s.replaceAll(" ", "%") + "%";
+        s = s.toLowerCase();
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
         s = s.replaceAll("[^\\p{ASCII}]", "");
         s = s.replaceAll("\\p{M}", "");
         return s;
     }
 
 
-
-    protected double[] computeMaxCoordinate(Position position, double maxDistance){
+    protected double[] computeMaxCoordinate(Position position, double maxDistance) {
         double r = maxDistance / EARTH_RADIUS;
 
         double lat = Math.toRadians(position.getX());
@@ -124,6 +129,6 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
         double lonMin = Math.toDegrees(lonMinR);
         double lonMax = Math.toDegrees(lonMaxR);
 
-        return new double[]{latMin,latMax,lonMin,lonMax};
+        return new double[]{latMin, latMax, lonMin, lonMax};
     }
 }

@@ -192,11 +192,11 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
     };
 
-    this.test = function (callbackSuccess, callbackError) {
+    this.importBusiness = function (name,callbackSuccess, callbackError) {
 
         $http({
             'method': "GET",
-            'url': "/rest/superadmin/test",
+            'url': "/rest/superadmin/importBusiness/"+name,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

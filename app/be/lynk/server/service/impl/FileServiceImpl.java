@@ -61,6 +61,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public StoredFile uploadWithSize(File file, String fileName, Integer sizex, Integer sizey, Account account) {
+        return uploadWithSize(file,fileName,sizex,sizey,account,false);
+    }
+
+    @Override
+    public StoredFile uploadWithSize(File file, String fileName, Integer sizex, Integer sizey, Account account,boolean continueIfTooLittle) {
 
         String[] split = fileName.split("\\.");
         String type = split[split.length - 1];
@@ -92,17 +97,19 @@ public class FileServiceImpl implements FileService {
 
                 //1) sizeX and sizeY are the minimal size :
                 if ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey)) {
-                    if (sizey == null) {
-                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
-                    } else if (sizex == null) {
-                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
+                    if(!continueIfTooLittle) {
+                        if (sizey == null) {
+                            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
+                        } else if (sizex == null) {
+                            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
 
-                    } else {
-                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
+                        } else {
+                            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
+                        }
                     }
                 }
 
-                if (sizex != null && sizey != null) {
+                else if (sizex != null && sizey != null) {
 
                     if (sizex != sizexPicture || sizey != sizeyPicture) {
                         //=> two dimension

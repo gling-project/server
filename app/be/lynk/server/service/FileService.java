@@ -18,5 +18,7 @@ public interface FileService {
 
     StoredFile uploadWithSize(File file, String fileName, Integer sizex, Integer sizey, Account account);
 
+    StoredFile uploadWithSize(File file, String fileName, Integer sizex, Integer sizey, Account account,boolean continueIfTooLittle);
+
     StoredFile updateBase64(String imageBase64,String fileName,Account account);
 }
