@@ -2,51 +2,45 @@ package be.lynk.server.dto.externalDTO;
 
 import be.lynk.server.dto.technical.DTO;
 
-import java.awt.*;
 import java.util.List;
 
 /**
- * Created by florian on 6/11/15.
+ * Created by florian on 7/11/15.
  */
 public class FacebookPhotoDTO extends DTO {
 
-    private List<Image> images;
+    private Photo photos;
 
-    public List<Image> getImages() {
-        return images;
+    public Photo getPhotos() {
+        return photos;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setPhotos(Photo photos) {
+        this.photos = photos;
     }
 
-    public static class Image extends DTO {
-        private Integer height;
-        private Integer width;
-        private String  source;
+    public static class Photo extends DTO {
+        private List<Data> data;
 
-        public Integer getHeight() {
-            return height;
+        public List<Data> getData() {
+            return data;
         }
 
-        public void setHeight(Integer height) {
-            this.height = height;
+        public void setData(List<Data> data) {
+            this.data = data;
         }
 
-        public Integer getWidth() {
-            return width;
-        }
+        public static class Data extends DTO {
 
-        public void setWidth(Integer width) {
-            this.width = width;
-        }
+            private String id;
 
-        public String getSource() {
-            return source;
-        }
+            public String getId() {
+                return id;
+            }
 
-        public void setSource(String source) {
-            this.source = source;
+            public void setId(String id) {
+                this.id = id;
+            }
         }
     }
 }

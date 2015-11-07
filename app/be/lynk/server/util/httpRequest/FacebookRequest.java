@@ -1,6 +1,7 @@
 package be.lynk.server.util.httpRequest;
 
 import be.lynk.server.dto.externalDTO.FacebookPageDataDTO;
+import be.lynk.server.dto.externalDTO.FacebookImageDTO;
 import be.lynk.server.dto.externalDTO.FacebookPhotoDTO;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.util.exception.MyRuntimeException;
@@ -50,7 +51,7 @@ public class FacebookRequest {
             //https://graph.facebook.com/v2.5/uopclibrairie?fields=description,phone,cover,link,name,location,category,emails,hours,payment_options,website,photos
 
             Map<String, String> map = new HashMap<>();
-            map.put("fields", "description,phone,cover,link,name,location,category,emails,hours,payment_options,website,photos");
+            map.put("fields", "description,phone,cover,link,name,location,category,emails,hours,payment_options,website,photos,albums");
             map.put("access_token", accessToken);
 
 
@@ -72,10 +73,31 @@ public class FacebookRequest {
 
             String accessToken = getAppAccessToken();
             Map<String, String> map = new HashMap<>();
-            map.put("fields", "images");
+            map.put("fields", "photos");
             map.put("access_token", accessToken);
 
             FacebookPhotoDTO pageContent = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, url, map, FacebookPhotoDTO.class);
+
+            return pageContent;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyRuntimeException(e.getMessage());
+        }
+    }
+
+    public FacebookImageDTO getImage(String photoId) {
+        String url = "https://graph.facebook.com/v2.5/" + photoId;
+
+
+        try {
+
+            String accessToken = getAppAccessToken();
+            Map<String, String> map = new HashMap<>();
+            map.put("fields", "images");
+            map.put("access_token", accessToken);
+
+            FacebookImageDTO pageContent = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, url, map, FacebookImageDTO.class);
 
             return pageContent;
 
@@ -111,7 +133,8 @@ public class FacebookRequest {
 
         //recover the access token of the app
         String accessTokenS = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/oauth/access_token", params);
-        return accessTokenS.split("=")[1];
+        String a = accessTokenS.split("=")[1].replace("\r", "");
+        return a;
 
     }
 }

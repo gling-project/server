@@ -6,11 +6,13 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.admin.*;
 import be.lynk.server.dto.externalDTO.FacebookPageDataDTO;
+import be.lynk.server.dto.externalDTO.FacebookImageDTO;
 import be.lynk.server.dto.externalDTO.FacebookPhotoDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
 import be.lynk.server.importer.DemoImporter;
+import be.lynk.server.model.AttendanceEnum;
 import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.mongoService.MongoSearchService;
@@ -23,16 +25,15 @@ import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -70,6 +71,19 @@ public class SuperAdminRestController extends AbstractRestController {
     private LocalizationService         localizationService;
     @Autowired
     private FileService                 fileService;
+
+
+    private static Map<String, DayOfWeek> DAY_EQUIVALENCE = new HashMap<String, DayOfWeek>() {{
+        put("mon", DayOfWeek.MONDAY);
+        put("tue", DayOfWeek.TUESDAY);
+        put("wed", DayOfWeek.WEDNESDAY);
+        put("thu", DayOfWeek.THURSDAY);
+        put("fri", DayOfWeek.FRIDAY);
+        put("sat", DayOfWeek.SATURDAY);
+        put("sun", DayOfWeek.SUNDAY);
+    }};
+
+    private static final Integer MAX_GALLERY_IMAGE = 10;
 
 
     @Transactional
@@ -460,11 +474,20 @@ public class SuperAdminRestController extends AbstractRestController {
         business.setSocialNetwork(businessSocialNetwork);
 
         //landscape
-        business.setLandscape(createImageFromUrl("landscape for " + business.getName(), pageData.getCover().getSource(), Constant.BUSINESS_LANDSCAPE_WIDTH, Constant.BUSINESS_LANDSCAPE_HEIGHT));
+        business.setLandscape(createImageFromUrl(pageData.getCover().getSource(), Constant.BUSINESS_LANDSCAPE_WIDTH, Constant.BUSINESS_LANDSCAPE_HEIGHT));
 
         //illustration
-        business.setIllustration(createImageFromUrl("illustration for " + business.getName(), pageData.getPhotos(), Constant.BUSINESS_ILLUSTRATION_WIDTH, Constant.BUSINESS_ILLUSTRATION_HEIGHT));
-        //business.setIllustration(createImageFromUrl("landscape for " + business.getName(), pageData.getCover().getSource(), Constant.BUSINESS_ILLUSTRATION_WIDTH, Constant.BUSINESS_ILLUSTRATION_HEIGHT));
+        business.setIllustration(createImageFromUrl(pageData.getPhotos(), Constant.BUSINESS_ILLUSTRATION_WIDTH, Constant.BUSINESS_ILLUSTRATION_HEIGHT));
+
+        //schedule
+        buildSchedule(pageData.getHours(), business);
+
+        //save before add gallery
+        businessService.saveOrUpdate(business);
+
+        //gallery
+        createGallery(pageData.getAlbums(), business);
+
 
         businessService.saveOrUpdate(business);
 
@@ -472,15 +495,60 @@ public class SuperAdminRestController extends AbstractRestController {
         return ok();
     }
 
-    private StoredFile createImageFromUrl(String name, FacebookPageDataDTO.Photo photo, int width, int height) {
+    private void createGallery(FacebookPageDataDTO.Photo albums, Business business) {
+
+        int width = Constant.PUBLICATION_PICTURE_WIDTH;
+
+
+        for (FacebookPageDataDTO.Photo.Data data : albums.getData()) {
+
+            //load picture
+            FacebookPhotoDTO facebookPhoto = facebookRequest.getPhoto(data.getId());
+
+            for (FacebookPhotoDTO.Photo.Data data1 : facebookPhoto.getPhotos().getData()) {
+
+                //load picture
+
+
+                FacebookImageDTO facebookImageDTO = facebookRequest.getImage(data1.getId());
+
+                FacebookImageDTO.Image selectedImage = null;
+
+                //select best picture
+                for (FacebookImageDTO.Image image : facebookImageDTO.getImages()) {
+                    if (image.getWidth() > width) {
+                        selectedImage = image;
+                        break;
+                    } else if (selectedImage == null) {
+                        selectedImage = image;
+                    } else if (image.getHeight() > selectedImage.getHeight()) {
+                        selectedImage = image;
+                    }
+                }
+
+                String name = selectedImage.getSource().split("\\?")[0];
+                File file = callImage(name, selectedImage.getSource());
+
+                StoredFile storedFile = fileService.uploadWithSize(file, name, width, null, securityController.getCurrentUser(), true);
+                storedFile.setBusinessGalleryPicture(business);
+                business.getGalleryPictures().add(storedFile);
+
+                if (business.getGalleryPictures().size() >= MAX_GALLERY_IMAGE) {
+                    return;
+                }
+            }
+        }
+    }
+
+    private StoredFile createImageFromUrl(FacebookPageDataDTO.Photo photo, int width, int height) {
 
         if (photo.getData().size() > 0) {
-            FacebookPhotoDTO facebookPhoto = facebookRequest.getPhoto(photo.getData().get(0).getId());
+            FacebookImageDTO facebookPhoto = facebookRequest.getImage(photo.getData().get(0).getId());
 
-            FacebookPhotoDTO.Image selectedImage = null;
+            FacebookImageDTO.Image selectedImage = null;
 
             //select best picture
-            for (FacebookPhotoDTO.Image image : facebookPhoto.getImages()) {
+            for (FacebookImageDTO.Image image : facebookPhoto.getImages()) {
                 if (image.getHeight() > height && image.getWidth() > width) {
                     selectedImage = image;
                     break;
@@ -492,21 +560,23 @@ public class SuperAdminRestController extends AbstractRestController {
             }
 
             //create storedFile
+            String name = selectedImage.getSource().split("\\?")[0];
             File file = callImage(name, selectedImage.getSource());
-            return fileService.uploadWithSize(file, name, width, height, securityController.getCurrentUser(),true);
+            return fileService.uploadWithSize(file, name, width, height, securityController.getCurrentUser(), true);
         }
 
 
         return null;
     }
 
-    private StoredFile createImageFromUrl(String name, String urlS, int width, int height) {
+    private StoredFile createImageFromUrl(String urlS, int width, int height) {
 
         //load image
         //convert url to image
+        String name = urlS.split("\\?")[0];
         File file = callImage(name, urlS);
 
-        return fileService.uploadWithSize(file, name, width, height, securityController.getCurrentUser(),true);
+        return fileService.uploadWithSize(file, name, width, height, securityController.getCurrentUser(), true);
     }
 
     private File callImage(String name, String urlS) {
@@ -529,6 +599,48 @@ public class SuperAdminRestController extends AbstractRestController {
         } catch (Exception e) {
             e.printStackTrace();
             throw new MyRuntimeException(e.getMessage());
+        }
+    }
+
+    private void buildSchedule(Map<String, String> scheduleMap, Business business) {
+
+        if (scheduleMap == null) {
+            return;
+        }
+
+        BusinessSchedulePart businessSchedulePart = null;
+
+        for (Map.Entry<String, String> entry : scheduleMap.entrySet()) {
+            String[] split = entry.getKey().split("_");
+            DayOfWeek day = DAY_EQUIVALENCE.get(split[0]);
+            String action = split[2];
+            Integer hour = Integer.parseInt(entry.getValue().split(":")[0]);
+            Integer minute = Integer.parseInt(entry.getValue().split(":")[1]);
+            if (minute != 0 && minute != 30) {
+                minute = 0;
+            }
+            if (action.equals("open")) {
+
+                //select businessSchedule
+                BusinessSchedule businessSchedule = null;
+                for (BusinessSchedule businessScheduleToTest : business.getSchedules()) {
+                    if (businessScheduleToTest.getDayOfWeek().equals(day)) {
+                        businessSchedule = businessScheduleToTest;
+                    }
+                }
+                if (businessSchedule == null) {
+                    businessSchedule = new BusinessSchedule(day, business);
+                    business.getSchedules().add(businessSchedule);
+                }
+
+                //complete with part
+                businessSchedulePart = new BusinessSchedulePart(hour * 60 + minute, AttendanceEnum.LIGHT, businessSchedule);
+                businessSchedule.getParts().add(businessSchedulePart);
+
+            } else {
+                businessSchedulePart.setTo(hour * 60 + minute);
+                businessSchedulePart = null;
+            }
         }
     }
 }

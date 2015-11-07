@@ -69,7 +69,7 @@ public class FileServiceImpl implements FileService {
 
         String[] split = fileName.split("\\.");
         String type = split[split.length - 1];
-        File resizeFile = null;
+        File resizeFile=null;
 
         boolean isImage = false;
         for (String s : IMAGE_POST) {
@@ -83,6 +83,9 @@ public class FileServiceImpl implements FileService {
 
         BufferedImage originalImage = null;
         try {
+
+            resizeFile = File.createTempFile("temp",".png");
+
             originalImage = ImageIO.read(file);
 
             //Treatment
@@ -172,7 +175,7 @@ public class FileServiceImpl implements FileService {
                 }
 
 
-                ImageIO.write(originalImage, type, file);
+                ImageIO.write(originalImage, type, resizeFile);
             }
 
             //save new size
@@ -186,7 +189,7 @@ public class FileServiceImpl implements FileService {
         //and save
         storedFileService.saveOrUpdate(storedFile);
 
-        FileUtil.save(file, storedFile.getStoredName());
+        FileUtil.save(resizeFile, storedFile.getStoredName());
 
 
         return storedFile;

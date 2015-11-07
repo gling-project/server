@@ -29,6 +29,12 @@ public class BusinessSchedulePart extends AbstractEntity{
     public BusinessSchedulePart() {
     }
 
+    public BusinessSchedulePart(Integer from, AttendanceEnum attendance, BusinessSchedule businessSchedule) {
+        this.from = from;
+        this.attendance = attendance;
+        this.businessSchedule = businessSchedule;
+    }
+
     public BusinessSchedule getBusinessSchedule() {
         return businessSchedule;
     }

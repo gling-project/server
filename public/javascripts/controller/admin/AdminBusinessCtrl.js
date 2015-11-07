@@ -7,25 +7,29 @@ myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTab
     };
 
 
-    superAdminService.getAllBusinesses(function (data) {
-        $scope.businesses = data.list;
+    $scope.refresh = function() {
+        $scope.businesses=[];
+        superAdminService.getAllBusinesses(function (data) {
+            $scope.businesses = data.list;
 
-        $scope.tableParams = new ngTableParams({
-            page: 1,            // show first page
-            count: 10,          // count per page
-            sorting: {
-                name: 'asc'     // initial sorting
-            }
-        }, {
-            total: $scope.businesses.length, // length of data
-            getData: function ($defer, params) {
-                // use build-in angular filter
-                var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
+            $scope.tableParams = new ngTableParams({
+                page: 1,            // show first page
+                count: 10,          // count per page
+                sorting: {
+                    name: 'asc'     // initial sorting
+                }
+            }, {
+                total: $scope.businesses.length, // length of data
+                getData: function ($defer, params) {
+                    // use build-in angular filter
+                    var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
 
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            }
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
         });
-    });
+    }
+    $scope.refresh();
 
     $scope.toBusiness = function (businessId) {
         $window.open("/#business/" + businessId, '_blank');
@@ -52,13 +56,14 @@ myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTab
     $scope.importBusinessInput = "uopclibrairie";
     $scope.importBusinessLoading = false;
     $scope.importBusinessStart = function () {
-        $scope.importBusinessStart = true;
+        $scope.importBusinessLoading = true;
         superAdminService.importBusiness($scope.importBusinessInput, function () {
             //success
-            $scope.importBusinessStart = false;
+            $scope.importBusinessLoading = false;
             $flash.success('le commerce a bien été importé');
+            $scope.refresh();
         }, function () {
-            $scope.importBusinessStart = false;
+            $scope.importBusinessLoading = false;
         });
     }
 

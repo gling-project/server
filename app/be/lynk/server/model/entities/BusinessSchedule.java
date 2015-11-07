@@ -23,6 +23,14 @@ public class BusinessSchedule extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Business business;
 
+    public BusinessSchedule() {
+    }
+
+    public BusinessSchedule(DayOfWeek dayOfWeek, Business business) {
+        this.dayOfWeek = dayOfWeek;
+        this.business = business;
+    }
+
     public List<BusinessSchedulePart> getParts() {
         return parts;
     }

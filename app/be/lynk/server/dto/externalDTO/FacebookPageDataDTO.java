@@ -24,6 +24,18 @@ public class FacebookPageDataDTO extends DTO {
     private String              website;
     private String              id;
     private Photo               photos;
+    private Photo               albums;
+
+    public FacebookPageDataDTO() {
+    }
+
+    public Photo getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(Photo albums) {
+        this.albums = albums;
+    }
 
     public String getDescription() {
         return description;
@@ -173,7 +185,7 @@ public class FacebookPageDataDTO extends DTO {
 
         public static class Data extends DTO {
 
-            private String        id;
+            private String id;
 
             public String getId() {
                 return id;
