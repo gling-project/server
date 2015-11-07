@@ -13,6 +13,7 @@ import java.util.Map;
 public class FacebookPageDataDTO extends DTO {
 
     private String              description;
+    private String              about;
     private String              phone;
     private AddressDTO          location;
     private Map<String, String> hours;
@@ -27,6 +28,14 @@ public class FacebookPageDataDTO extends DTO {
     private Photo               albums;
 
     public FacebookPageDataDTO() {
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public Photo getAlbums() {

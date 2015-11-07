@@ -454,7 +454,7 @@ public class SuperAdminRestController extends AbstractRestController {
         //build business
         Business business = new Business();
         business.setName(pageData.getName());
-        business.setDescription(pageData.getDescription());
+        business.setDescription((pageData.getDescription() != null) ? pageData.getDescription() : pageData.getAbout());
         business.setPhone(pageData.getPhone());
         if (pageData.getEmails().size() > 0) {
             business.setEmail(pageData.getEmails().get(0));
@@ -661,8 +661,8 @@ public class SuperAdminRestController extends AbstractRestController {
             DayOfWeek day = DAY_EQUIVALENCE.get(split[0]);
             String action = split[2];
             Integer hour = Integer.parseInt(entry.getValue().split(":")[0]);
-            if(hour==0){
-                hour=24;
+            if (hour == 0) {
+                hour = 24;
             }
             Integer minute = Integer.parseInt(entry.getValue().split(":")[1]);
             if (minute != 0 && minute != 30) {
@@ -690,8 +690,8 @@ public class SuperAdminRestController extends AbstractRestController {
                 for (Map.Entry<String, String> entry2 : scheduleMap.entrySet()) {
                     if (entry2.getKey().equals(split[0] + "_" + split[1] + "_close")) {
                         Integer hourTo = Integer.parseInt(entry2.getValue().split(":")[0]);
-                        if(hourTo==0){
-                            hourTo=24;
+                        if (hourTo == 0) {
+                            hourTo = 24;
                         }
                         Integer minuteTo = Integer.parseInt(entry2.getValue().split(":")[1]);
                         businessSchedulePart.setTo(hourTo * 60 + minuteTo);

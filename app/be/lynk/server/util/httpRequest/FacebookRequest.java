@@ -51,7 +51,7 @@ public class FacebookRequest {
             //https://graph.facebook.com/v2.5/uopclibrairie?fields=description,phone,cover,link,name,location,category,emails,hours,payment_options,website,photos
 
             Map<String, String> map = new HashMap<>();
-            map.put("fields", "description,phone,cover,link,name,location,category,emails,hours,payment_options,website,photos,albums");
+            map.put("fields", "description,phone,cover,link,name,location,category,emails,hours,payment_options,website,photos,albums,about");
             map.put("access_token", accessToken);
 
 

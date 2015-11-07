@@ -53,7 +53,7 @@ myApp.controller('AdminBusinessCtrl', function ($scope, superAdminService, ngTab
         }
     };
 
-    $scope.importBusinessInput = "uopclibrairie";
+    $scope.importBusinessInput = "";
     $scope.importBusinessLoading = false;
     $scope.importBusinessStart = function () {
         $scope.importBusinessLoading = true;
