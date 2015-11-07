@@ -16,6 +16,7 @@ import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
+import play.libs.F;
 import play.mvc.Results;
 
 import javax.imageio.ImageIO;
@@ -24,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.*;
 import java.util.Base64;
+import java.util.Date;
 
 /**
  * Created by florian on 7/07/15.
@@ -61,46 +63,53 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public StoredFile uploadWithSize(File file, String fileName, Integer sizex, Integer sizey, Account account) {
-        return uploadWithSize(file,fileName,sizex,sizey,account,false);
+        return uploadWithSize(file, fileName, sizex, sizey, account, false);
     }
 
     @Override
-    public StoredFile uploadWithSize(File file, String fileName, Integer sizex, Integer sizey, Account account,boolean continueIfTooLittle) {
+    public StoredFile uploadWithSize(File file, String fileName, Integer sizex, Integer sizey, Account account, boolean continueIfTooLittle) {
 
-        String[] split = fileName.split("\\.");
-        String type = split[split.length - 1];
-        File resizeFile=null;
-
-        boolean isImage = false;
-        for (String s : IMAGE_POST) {
-            if (s.equalsIgnoreCase(type)) {
-                isImage = true;
-            }
-        }
-
-        //create the entity
-        StoredFile storedFile = new StoredFile(fileName, generateStorageKey(), 0, account, isImage);
-
-        BufferedImage originalImage = null;
         try {
+            long t = new Date().getTime();
 
-            resizeFile = File.createTempFile("temp",".png");
+            String[] split = fileName.split("\\.");
+            String type = split[split.length - 1];
 
+
+            boolean isImage = false;
+            for (String s : IMAGE_POST) {
+                if (s.equalsIgnoreCase(type)) {
+                    isImage = true;
+                }
+            }
+
+            Logger.info("..>T1 : " + (new Date().getTime() - t));
+
+            //create the entity
+            StoredFile storedFile = new StoredFile(fileName, generateStorageKey(), 0, account, isImage);
+
+            BufferedImage originalImage = null;
+
+            Logger.info("..>T1.1 : " + (new Date().getTime() - t));
+            File resizeFile = File.createTempFile("temp", ".png");
+            Logger.info("..>T1.2 : " + (new Date().getTime() - t));
             originalImage = ImageIO.read(file);
+
+            Logger.info("..>T2 : " + (new Date().getTime() - t));
 
             //Treatment
             if (sizex != null || sizey != null) {
 
                 //start to save the original file
                 storedFile.setStoredNameOriginalSize(generateStorageKey());
-                FileUtil.save(file, storedFile.getStoredNameOriginalSize());
+//                FileUtil.save(file, storedFile.getStoredNameOriginalSize());
 
                 int sizexPicture = originalImage.getWidth(),
                         sizeyPicture = originalImage.getHeight();
 
                 //1) sizeX and sizeY are the minimal size :
                 if ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey)) {
-                    if(!continueIfTooLittle) {
+                    if (!continueIfTooLittle) {
                         if (sizey == null) {
                             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
                         } else if (sizex == null) {
@@ -110,9 +119,7 @@ public class FileServiceImpl implements FileService {
                             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
                         }
                     }
-                }
-
-                else if (sizex != null && sizey != null) {
+                } else if (sizex != null && sizey != null) {
 
                     if (sizex != sizexPicture || sizey != sizeyPicture) {
                         //=> two dimension
@@ -174,25 +181,39 @@ public class FileServiceImpl implements FileService {
                     }
                 }
 
+                Logger.info("..>T3 : " + (new Date().getTime() - t));
 
                 ImageIO.write(originalImage, type, resizeFile);
+
+                Logger.info("..>T4 : " + (new Date().getTime() - t));
             }
 
             //save new size
             storedFile.setWidth(originalImage.getWidth());
             storedFile.setHeight(originalImage.getHeight());
 
+
+
+            Logger.info("..>T5 : " + (new Date().getTime() - t));
+
+            //and save
+            storedFileService.saveOrUpdate(storedFile);
+
+            F.Promise.promise(() -> {
+                FileUtil.save(resizeFile, storedFile.getStoredName());
+                return null;
+            });
+            Logger.info("..>T5.2 : " + (new Date().getTime() - t));
+
+            Logger.info("..>T6 : " + (new Date().getTime() - t));
+
+
+            return storedFile;
+
         } catch (IOException e) {
             e.printStackTrace();
+            throw new MyRuntimeException(e.getMessage());
         }
-
-        //and save
-        storedFileService.saveOrUpdate(storedFile);
-
-        FileUtil.save(resizeFile, storedFile.getStoredName());
-
-
-        return storedFile;
     }
 
     @Override
@@ -268,76 +289,20 @@ public class FileServiceImpl implements FileService {
                                      Object hint,
                                      boolean higherQuality) {
 
+
         try {
-            return Thumbnails.of(img)//new URL("http://i.stack.imgur.com/X0aPT.jpg"))
+            BufferedImage bufferedImage = Thumbnails.of(img)//new URL("http://i.stack.imgur.com/X0aPT.jpg"))
                     .height(targetHeight)
                     .width(targetWidth)
                     .antialiasing(Antialiasing.ON)
                     .rendering(Rendering.QUALITY)
                     .asBufferedImage();
+
+            return bufferedImage;
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("caca");
         }
-
-        // public static void processPicture(String inputFile, String outputFilePath, double scaleFactor, int interpolationMethod, double sigmaFactor) {
-
-//        processPicture("X0aPT.jpg", "output.jpg", 0.0198, ImageProcessor.NONE, 0.3);
-
-//        ImageProcessor ip = openUsingImageIO("merde", img).getProcessor();//opener.openImage(inputFile).getProcessor();
-//        ip.blurGaussian( 0.0198/ 0.3);
-//        ip.setInterpolationMethod(ImageProcessor.NONE);
-//
-//        ImageProcessor outputProcessor = ip.resize(targetWidth, targetHeight);
-//        ImagePlus imagePlus = new ImagePlus("", outputProcessor);
-//
-//        return imagePlus.getBufferedImage();
-//        ip.getBufferedImage();
-//            IJ.saveAs(, outputFilePath.substring(outputFilePath.lastIndexOf('.') + 1), outputFilePath);
-
-
-//        int type = (img.getTransparency() == Transparency.OPAQUE) ?
-//                BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-//        BufferedImage ret = (BufferedImage)img;
-//        int w, h;
-//        if (higherQuality) {
-//            // Use multi-step technique: start with original size, then
-//            // scale down in multiple passes with drawImage()
-//            // until the target size is reached
-//            w = img.getWidth();
-//            h = img.getHeight();
-//        } else {
-//            // Use one-step technique: scale directly from original
-//            // size to target size with a single drawImage() call
-//            w = targetWidth;
-//            h = targetHeight;
-//        }
-//
-//        do {
-//            if (higherQuality && w > targetWidth) {
-//                w /= 2;
-//                if (w < targetWidth) {
-//                    w = targetWidth;
-//                }
-//            }
-//
-//            if (higherQuality && h > targetHeight) {
-//                h /= 2;
-//                if (h < targetHeight) {
-//                    h = targetHeight;
-//                }
-//            }
-//
-//            BufferedImage tmp = new BufferedImage(w, h, type);
-//            Graphics2D g2 = tmp.createGraphics();
-//            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//            g2.drawImage(ret, 0, 0, w, h, null);
-//            g2.dispose();
-//
-//            ret = tmp;
-//        } while (w != targetWidth || h != targetHeight);
-//
-//        return ret;
     }
 
     private String generateStorageKey() {
@@ -376,6 +341,8 @@ public class FileServiceImpl implements FileService {
         if (bottom - top < height) {
             top = top - (height - (bottom - top));
         }
-        return src.getSubimage(left, top, width, height);
+        BufferedImage subimage = src.getSubimage(left, top, width, height);
+
+        return subimage;
     }
 }
