@@ -101,7 +101,7 @@ public class CommonSecurityController extends Security.Authenticator {
             String authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
             play.Logger.info("HAVE  authenticationKy : " + authentication);
             Account byAuthenticationKey = USER_SERVICE.findByAuthenticationKey(authentication);
-
+            storeAccount(Http.Context.current(), byAuthenticationKey);
             return byAuthenticationKey;
         }
 
@@ -220,15 +220,4 @@ public class CommonSecurityController extends Security.Authenticator {
         return ((BusinessAccount) currentUser).getBusiness();
     }
 
-    public void addLoginCookie(Http.Context context) {
-        play.Logger.info("====-=-=== CREATE NEW COOKIE ?? "+isAuthenticated(Http.Context.current()) +"/"+
-                (context.request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null));
-
-        if (isAuthenticated(Http.Context.current()) &&
-                context.request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null) {
-            play.Logger.info("====-=-=== CREATE NEW COOKIE !! ");
-            context.response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
-        }
-
-    }
 }
