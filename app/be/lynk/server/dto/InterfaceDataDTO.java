@@ -151,4 +151,23 @@ public class InterfaceDataDTO extends DTO  {
     public void setMobile(boolean isMobile) {
         this.isMobile = isMobile;
     }
+
+    @Override
+    public String toString() {
+        return "InterfaceDataDTO{" +
+                "mySelf=" + mySelf +
+                ", translations=" + translations +
+                ", langId='" + langId + '\'' +
+                ", languages=" + languages +
+                ", searchCriterias=" + searchCriterias +
+                ", customerInterests=" + customerInterests +
+                ", appId='" + appId + '\'' +
+                ", fileBucketUrl='" + fileBucketUrl + '\'' +
+                ", urlBase='" + urlBase + '\'' +
+                ", projectLastVersion='" + projectLastVersion + '\'' +
+                ", addStatus='" + addStatus + '\'' +
+                ", constants=" + constants +
+                ", isMobile=" + isMobile +
+                "} " + super.toString();
+    }
 }

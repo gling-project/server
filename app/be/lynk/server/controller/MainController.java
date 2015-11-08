@@ -13,6 +13,7 @@ import be.lynk.server.util.AppUtil;
 import be.lynk.server.util.constants.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
@@ -120,7 +121,7 @@ public class MainController extends AbstractController {
             }
 
             //try with param
-
+            Logger.info("=>>>>>>>>>>>>"+interfaceDataDTO);
 
             if (isMobile) {
                 return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
