@@ -1151,40 +1151,51 @@ myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 
 
     //
     // facebook connection
+    // this function is called if Facebook is connected to the application.
+    // This function will be connect the facebook account to the backend
+    // the access_token is the access_token from Facebook
     //
     $scope.facebookSuccess = function (access_token) {
-
-        console.log('facebook registrtion');
-        console.log(data);
 
         //send request
         var dto = {
             token: access_token,
             accountType: 'CUSTOMER'
         };
-        console.log(dto);
 
+        //test the facebook account
         accountService.testFacebook(dto, function (data2) {
 
             $scope.loading(false);
 
+            // An account using the facebook account already exists. The user is now connected.
+            // The user is redirect to the default page
             if (data2.status == 'ALREADY_REGISTRERED') {
                 $flash.success('--.customer.registrationModal.alredyRegistred.success');
                 accountService.setMyself(data2.myself);
                 $location.url('/');
             }
+            // an account already used the email from the Facebook account but this is not an Facebbok account.
+            // fusion with this account and the facebook account is possible
             else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
                 $scope.fusion(data2.accountFusion);
             }
+            //the facebook account is not used and can be used to create a new account.
             else if (data2.status == 'OK') {
-                dto.userId = data2.userId;
+
+                //assign data from Facebook to fields
                 $scope.accountParam.dto.firstname = data2.firstname;
                 $scope.accountParam.dto.lastname = data2.lastname;
                 $scope.accountParam.dto.email = data2.email;
                 $scope.accountParam.dto.gender = data2.gender;
                 $scope.accountParam.dto.password = '*********';
                 $scope.accountParam.maskPassword();
+
+                //complete facebookAuthentication DTO
                 facebookAuthentication = dto;
+                facebookAuthentication.userId = data2.userId;
+
+                //control data. If one of required data are missing, the user need to complete data.
                 if (($scope.accountParam.dto.firstname == null || $scope.accountParam.dto.length == 0) ||
                     ($scope.accountParam.dto.lastname == null || $scope.accountParam.dto.lastname.length == 0) ||
                     ($scope.accountParam.dto.email == null || $scope.accountParam.dto.email.length == 0) ||
@@ -1193,11 +1204,10 @@ myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 
                     $flash.info('--.registration.facebook.someDataEmpty');
                 }
                 else {
+                    //if all required data are present, the user need to accept the SLA
                     $flash.info('--.registration.facebook.validSLAMessage');
                 }
             }
-            //$location.url('/customer_registration');
-            //history.replaceState({}, document.title, "/customer_registration");
         });
     };
 

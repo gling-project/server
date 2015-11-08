@@ -56,7 +56,6 @@ public class LoginRestController extends AbstractRestController {
     private BusinessService           businessService;
 
 
-
     @Transactional
     public Result forgotPassword() {
 
@@ -96,18 +95,18 @@ public class LoginRestController extends AbstractRestController {
 
 
     @Transactional
-    public Result loginFacebook(boolean forBusinessApplication) {
+    public Result loginFacebook() {
 
 
         //extract DTO
-        FacebookAuthenticationDTO dto = initialization(FacebookAuthenticationDTO.class,false,false);
+        FacebookAuthenticationDTO dto = initialization(FacebookAuthenticationDTO.class, false, false);
 
-        return loginFacebookSimple(dto.getToken(),forBusinessApplication);
+        return loginFacebookSimple(dto.getToken());
 
     }
 
     @Transactional
-    public Result loginFacebookSimple(String facebookToken,boolean forBusinessApplication) {
+    public Result loginFacebookSimple(String facebookToken) {
 
         initialization();
 
@@ -123,7 +122,7 @@ public class LoginRestController extends AbstractRestController {
         }
         account = facebookCredential.getAccount();
 
-        return ok(finalizeConnection(account, forBusinessApplication));
+        return ok(finalizeConnection(account));
     }
 
     @Transactional
@@ -163,7 +162,7 @@ public class LoginRestController extends AbstractRestController {
         }
 
         //connection
-        return ok(finalizeConnection(account, false));
+        return ok(finalizeConnection(account));
     }
 
     /**
@@ -175,7 +174,7 @@ public class LoginRestController extends AbstractRestController {
      * Create also a session
      */
     @Transactional
-    public Result login(boolean forBusinessApplication) {
+    public Result login() {
 
         //extract DTO
         LoginDTO dto = initialization(LoginDTO.class);
@@ -198,7 +197,7 @@ public class LoginRestController extends AbstractRestController {
         }
 
 
-        DTO result = finalizeConnection(account, forBusinessApplication);
+        DTO result = finalizeConnection(account);
 
         return ok(result);
     }
@@ -256,7 +255,7 @@ public class LoginRestController extends AbstractRestController {
         accountService.saveOrUpdate(account);
 
         //return
-        return ok(finalizeConnection(account,false));
+        return ok(finalizeConnection(account));
     }
 
     /**
@@ -278,7 +277,7 @@ public class LoginRestController extends AbstractRestController {
 
         accountService.saveOrUpdate(account);
 
-        return ok(finalizeConnection(account,false));
+        return ok(finalizeConnection(account));
 
     }
 
@@ -318,51 +317,31 @@ public class LoginRestController extends AbstractRestController {
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result getBusinessData() {
-        return ok(finalizeConnection(securityController.getCurrentUser(),true));
+        return ok(finalizeConnection(securityController.getCurrentUser()));
     }
 
-    private DTO finalizeConnection(Account account, boolean forBusinessApplication) {
+    private DTO finalizeConnection(Account account) {
 
 //        forBusinessApplication=true;
 
-        if (forBusinessApplication) {
 
-            AccountDTO accountDTO = dozerService.map(account, AccountDTO.class);
+        sessionService.saveOrUpdate(new Session(account, securityController.getSource(ctx())));
 
-            if (accountDTO.getType()==null || !accountDTO.getType().equals(AccountTypeEnum.BUSINESS)) {
-                throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_BUSINESS_ACCOUNT);
-            }
-            LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
-            loginSuccessDTO.setAccount(accountDTO);
-            loginSuccessDTO.setBusiness(dozerService.map(businessService.findByAccount(account), BusinessDTO.class));
-
-            if (account.getAuthenticationKey() != null) {
-                generateEncryptingPassword(KeyGenerator.generateRandomKey(40));
-                accountService.saveOrUpdate(account);
-            }
-
-            loginSuccessDTO.setAuthenticationKey(account.getAuthenticationKey());
-
-            return loginSuccessDTO;
-
-        } else {
-            sessionService.saveOrUpdate(new Session(account, securityController.getSource(ctx())));
-
-            //build success dto
-            MyselfDTO myselfDTO = dozerService.map(account, MyselfDTO.class);
-            myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
-            myselfDTO.setLoginAccount(account.getLoginCredential() != null);
-            myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
-            if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
-                myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
-            }
-
-
-            //storage
-            securityController.storeAccount(ctx(), account);
-
-            return myselfDTO;
+        //build success dto
+        MyselfDTO myselfDTO = dozerService.map(account, MyselfDTO.class);
+        myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
+        myselfDTO.setLoginAccount(account.getLoginCredential() != null);
+        myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
+        if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
+            myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
         }
+
+
+        //storage
+        securityController.storeAccount(ctx(), account);
+
+        return myselfDTO;
+
 
     }
 
@@ -386,7 +365,8 @@ public class LoginRestController extends AbstractRestController {
             //founded ! the user is already registered
             Account account = facebookCredential.getAccount();
             testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED);
-            testFacebookDTO.setMyself((MyselfDTO) finalizeConnection(account,false));
+            testFacebookDTO.setMyself((MyselfDTO) finalizeConnection(account));
+
         } else if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
 
             //test if there is an account with the same email address than the facebook account

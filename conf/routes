@@ -11,12 +11,10 @@ GET           /assets/*file                                                     
 
 ## registration and login
 ## tested by LoginRestControllerTest
-POST          /rest/login                                                                                            @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication:Boolean=false)
-POST          /rest/login/facebook                                                                                   @be.lynk.server.controller.rest.LoginRestController.loginFacebook(forBusinessApplication:Boolean=false)
-POST          /rest/login_for_business                                                                               @be.lynk.server.controller.rest.LoginRestController.login(forBusinessApplication:Boolean=true)
+POST          /rest/login                                                                                            @be.lynk.server.controller.rest.LoginRestController.login()
+POST          /rest/login/facebook                                                                                   @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
 GET           /rest/business_data                                                                                    @be.lynk.server.controller.rest.LoginRestController.getBusinessData()
-GET           /rest/login_for_business/facebook/:access_token                                                        @be.lynk.server.controller.rest.LoginRestController.loginFacebookSimple(access_token:String,forBusinessApplication:Boolean=true)
-GET           /rest/login/facebook/:access_token                                                                     @be.lynk.server.controller.rest.LoginRestController.loginFacebookSimple(access_token:String,forBusinessApplication:Boolean=false)
+GET           /rest/login/facebook/:access_token                                                                     @be.lynk.server.controller.rest.LoginRestController.loginFacebookSimple(access_token:String)
 POST          /rest/account/fusion                                                                                   @be.lynk.server.controller.rest.LoginRestController.fusion()
 POST          /rest/registration/customer                                                                            @be.lynk.server.controller.rest.LoginRestController.customerRegistration()
 POST          /rest/registration/business                                                                            @be.lynk.server.controller.rest.LoginRestController.businessRegistration()
