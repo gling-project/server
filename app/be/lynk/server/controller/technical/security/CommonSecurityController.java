@@ -17,6 +17,8 @@ import play.mvc.Results;
 import play.mvc.Security;
 import play.mvc.SimpleResult;
 
+import java.util.logging.Logger;
+
 /**
  * Created by florian on 10/11/14.
  */
@@ -87,14 +89,20 @@ public class CommonSecurityController extends Security.Authenticator {
 
         //by session
         if (Http.Context.current().session().get(SESSION_IDENTIFIER_STORE) != null) {
+
             Account byEmail = USER_SERVICE.findByEmail(Http.Context.current().session().get(SESSION_IDENTIFIER_STORE));
             return byEmail;
         }
 
         //by request
+        play.Logger.info("CONTENT authenticationKey ???? ");
         if (Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY) != null) {
+
             String authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
-            return USER_SERVICE.findByAuthenticationKey(authentication);
+            play.Logger.info("HAVE  authenticationKy : "+authentication);
+            Account byAuthenticationKey = USER_SERVICE.findByAuthenticationKey(authentication);
+            play.Logger.info("AUTH user ?? : "+byAuthenticationKey);
+            return byAuthenticationKey;
         }
 
         //by coockie
