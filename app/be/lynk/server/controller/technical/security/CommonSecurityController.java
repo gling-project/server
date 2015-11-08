@@ -102,11 +102,6 @@ public class CommonSecurityController extends Security.Authenticator {
             play.Logger.info("HAVE  authenticationKy : " + authentication);
             Account byAuthenticationKey = USER_SERVICE.findByAuthenticationKey(authentication);
 
-            //add a cookie
-            if (byAuthenticationKey != null &&
-                    Http.Context.current().request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null) {
-                Http.Context.current().response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
-            }
             return byAuthenticationKey;
         }
 
@@ -223,5 +218,14 @@ public class CommonSecurityController extends Security.Authenticator {
     public Business getBusiness() {
         Account currentUser = getCurrentUser();
         return ((BusinessAccount) currentUser).getBusiness();
+    }
+
+    public void addLoginCookie() {
+
+        if (isAuthenticated(Http.Context.current()) &&
+                Http.Context.current().request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null) {
+            Http.Context.current().response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
+        }
+
     }
 }

@@ -16,6 +16,7 @@ import play.Configuration;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import java.util.ArrayList;
@@ -119,6 +120,9 @@ public class MainController extends AbstractController {
                     publicationDTO.setBusinessId(publication.getBusiness().getId());
                 }
             }
+
+            //add a cookie
+            securityController.addLoginCookie();
 
             //try with param
             if (isMobile) {
