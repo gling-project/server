@@ -121,8 +121,6 @@ public class MainController extends AbstractController {
             }
 
             //try with param
-            Logger.info("=>>>>>>>>>>>>"+interfaceDataDTO);
-
             if (isMobile) {
                 return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
             } else {
