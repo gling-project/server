@@ -99,9 +99,14 @@ public class CommonSecurityController extends Security.Authenticator {
         if (Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY) != null) {
 
             String authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
-            play.Logger.info("HAVE  authenticationKy : "+authentication);
+            play.Logger.info("HAVE  authenticationKy : " + authentication);
             Account byAuthenticationKey = USER_SERVICE.findByAuthenticationKey(authentication);
-            play.Logger.info("AUTH user ?? : "+byAuthenticationKey);
+
+            //add a cookie
+            if (byAuthenticationKey != null &&
+                    Http.Context.current().request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null) {
+                Http.Context.current().response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
+            }
             return byAuthenticationKey;
         }
 
