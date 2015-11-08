@@ -220,11 +220,14 @@ public class CommonSecurityController extends Security.Authenticator {
         return ((BusinessAccount) currentUser).getBusiness();
     }
 
-    public void addLoginCookie() {
+    public void addLoginCookie(Http.Context context) {
+        play.Logger.info("====-=-=== CREATE NEW COOKIE ?? "+isAuthenticated(Http.Context.current()) +"/"+
+                (context.request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null));
 
         if (isAuthenticated(Http.Context.current()) &&
-                Http.Context.current().request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null) {
-            Http.Context.current().response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
+                context.request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) == null) {
+            play.Logger.info("====-=-=== CREATE NEW COOKIE !! ");
+            context.response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
         }
 
     }

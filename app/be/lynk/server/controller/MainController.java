@@ -122,7 +122,8 @@ public class MainController extends AbstractController {
             }
 
             //add a cookie
-            securityController.addLoginCookie();
+            Logger.info("?????? JE CREE UN COOOKie ????");
+            securityController.addLoginCookie(ctx());
 
             //try with param
             if (isMobile) {
