@@ -1,5 +1,7 @@
 myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout) {
 
+    $scope.tab = 'main';
+
     $scope.refreshStat = function () {
         superAdminService.getStat(function (data) {
             $scope.stats = data;
@@ -14,6 +16,32 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
             $scope.completeObj('Aujourd\'hui', data.today);
             $scope.completeObj('7 derniers jours', data.week);
             $scope.completeObj('Tout', data.all);
+
+        });
+    };
+
+    $scope.refreshInterest = function () {
+        $scope.interestStat = [];
+        superAdminService.getInterestStats(function (data) {
+            console.log('succes !! ');
+            console.log(data);
+
+            $scope.interestGraph1 = {
+                title: 'Intérêts sélectionnés sur les dernières 24 heures',
+                data: data.from1
+            };
+            $scope.interestGraph7 = {
+                title: 'Intérêts sélectionnés sur les derniers 7 jours',
+                data: data.from7
+            };
+            $scope.interestGraph14 = {
+                title: 'Intérêts sélectionnés sur les derniers 14 jours',
+                data: data.from14
+            };
+            $scope.interestGraph28 = {
+                title: 'Intérêts sélectionnés sur les derniers 28 jours',
+                data: data.from28
+            };
 
         });
     };
@@ -40,6 +68,19 @@ myApp.controller('AdminStatCtrl', function ($scope, superAdminService, $timeout)
                 }
             }
         )
+    };
+
+    $scope.setTab = function (tab) {
+        $scope.tab = tab;
+        if ($scope.tab == 'main') {
+            $scope.refreshStat();
+        }
+        else if ($scope.tab == 'users') {
+            $scope.refreshDetails();
+        }
+        else if ($scope.tab == 'interest') {
+            $scope.refreshInterest();
+        }
     };
 
     $scope.refreshStat();

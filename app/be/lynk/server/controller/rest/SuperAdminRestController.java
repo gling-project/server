@@ -207,6 +207,25 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result getInterestStats() {
+
+        InterestStatDTO interestStatDTO = new InterestStatDTO();
+
+        interestStatDTO.setFrom1(mongoSearchService.getInterestVisits(LocalDateTime.now().minusDays(1)));
+
+        interestStatDTO.setFrom7(mongoSearchService.getInterestVisits(LocalDateTime.now().minusDays(7)));
+
+        interestStatDTO.setFrom14(mongoSearchService.getInterestVisits(LocalDateTime.now().minusDays(14)));
+
+        interestStatDTO.setFrom28(mongoSearchService.getInterestVisits(LocalDateTime.now().minusDays(28)));
+
+        return ok(interestStatDTO);
+
+    }
+
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result getStats() {
 
         AdminStatDTO adminStatDTO = new AdminStatDTO();

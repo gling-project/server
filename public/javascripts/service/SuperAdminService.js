@@ -170,8 +170,6 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
     };
 
 
-
-
     this.getCustomerPositions = function (callbackSuccess, callbackError) {
 
         $http({
@@ -192,11 +190,11 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
 
     };
 
-    this.importBusiness = function (name,callbackSuccess, callbackError) {
+    this.importBusiness = function (name, callbackSuccess, callbackError) {
 
         $http({
             'method': "GET",
-            'url': "/rest/superadmin/importBusiness/"+name,
+            'url': "/rest/superadmin/importBusiness/" + name,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -209,7 +207,25 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
                     callbackError(data, status);
                 }
             });
+    };
 
+    this.getInterestStats = function (callbackSuccess, callbackError) {
+
+        $http({
+            'method': "GET",
+            'url': "/rest/superadmin/interestStats",
+            'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
     };
 
 

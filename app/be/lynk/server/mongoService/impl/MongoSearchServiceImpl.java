@@ -4,10 +4,8 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.PositionDTO;
 import be.lynk.server.dto.admin.UserHistoryDTO;
 import be.lynk.server.model.entities.Account;
-import be.lynk.server.service.AccountService;
-import be.lynk.server.service.AddressService;
-import be.lynk.server.service.DozerService;
-import be.lynk.server.service.FollowLinkService;
+import be.lynk.server.model.entities.CustomerInterest;
+import be.lynk.server.service.*;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -18,9 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.mongodb.client.model.Sorts.ascending;
 
@@ -33,19 +29,22 @@ public class MongoSearchServiceImpl implements MongoSearchService {
     private final static Long[] ACCOUNT_ID_EXCLUDE_LIST = {1L, 2L, 3L, 51L, 104L, 128L};
 
 
-    private final static String BY_DEFAULT = "be.lynk.server.controller.rest.SearchRestController.getByDefault";
+    private final static String SEARCH_BY_DEFAULT  = "be.lynk.server.controller.rest.SearchRestController.getByDefault";
+    private final static String SEARCH_BY_INTEREST = "be.lynk.server.controller.rest.SearchRestController.getByInterest";
 
 
     @Autowired
-    private MongoDBOperator   mongoDBOperator;
+    private MongoDBOperator         mongoDBOperator;
     @Autowired
-    private AccountService    accountService;
+    private AccountService          accountService;
     @Autowired
-    private FollowLinkService followLinkService;
+    private FollowLinkService       followLinkService;
     @Autowired
-    private AddressService    addressService;
+    private AddressService          addressService;
     @Autowired
-    private DozerService      dozerService;
+    private DozerService            dozerService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
 
     @Override
@@ -64,6 +63,45 @@ public class MongoSearchServiceImpl implements MongoSearchService {
             }
         }
         return p;
+    }
+
+    @Override
+    public Map<String, Integer> getInterestVisits(LocalDateTime localDateTime) {
+
+        Map<Long, Integer> interests = new HashMap<>();
+        Map<String, Integer> finalMap = new HashMap<>();
+
+        Date from = dozerService.map(localDateTime, Date.class);
+
+        DBCursor cursor = mongoDBOperator.getDB().getCollection(SEARCH_BY_INTEREST)
+                .find(new BasicDBObject("$and",
+                                new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))})
+                );
+
+
+        while (cursor.hasNext()) {
+            DBObject next = cursor.next();
+
+            DBObject requestParams = (DBObject) next.get("requestParams");
+
+            Long param5 = Long.parseLong((String) requestParams.get("param5"));
+
+            if (param5 != null) {
+                if (interests.containsKey(param5)) {
+                    interests.put(param5, interests.get(param5) + 1);
+                } else {
+                    interests.put(param5, 1);
+                }
+            }
+        }
+
+        for (Map.Entry<Long, Integer> entry : interests.entrySet()) {
+            CustomerInterest byId = customerInterestService.findById(entry.getKey());
+            finalMap.put(byId.getName(), entry.getValue());
+        }
+
+
+        return finalMap;
     }
 
     @Override
@@ -89,7 +127,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
             }
         } else {
             //load all session from
-            DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
+            DBCursor cursor = mongoDBOperator.getDB().getCollection(SEARCH_BY_DEFAULT)
                     .find(new BasicDBObject("$and",
                                     new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", dozerService.map(from, Date.class)))
                                             , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
@@ -128,7 +166,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
             userHistoryDTO.setNbAddresses(addressService.countByAccount(account));
 
 
-            DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
+            DBCursor cursor = mongoDBOperator.getDB().getCollection(SEARCH_BY_DEFAULT)
                     .find(new BasicDBObject("$and",
                             new BasicDBObject[]{
                                     new BasicDBObject("currentAccountId", account.getId())
@@ -164,7 +202,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
         Date from = dozerService.map(localDateTime, Date.class);
 
-        DBCursor cursor = mongoDBOperator.getDB().getCollection(BY_DEFAULT)
+        DBCursor cursor = mongoDBOperator.getDB().getCollection(SEARCH_BY_DEFAULT)
                 .find(new BasicDBObject("$and",
                                 new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
                                         , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
@@ -172,9 +210,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
         List<Session> sessions = new ArrayList<>();
 
-        while (cursor.hasNext())
-
-        {
+        while (cursor.hasNext()) {
             DBObject next = cursor.next();
 
             if (next.get("currentAccountId") != null) {

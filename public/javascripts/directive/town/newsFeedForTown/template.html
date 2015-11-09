@@ -2,19 +2,47 @@
 
     <div>
 
+        <!-- publication list -->
         <div class="publication" ng-repeat="publication in publications">
-            <div class="title">{{publication.businessName}}</div>
-            {{publication.title}}
+            <table>
+                <tr>
+                    <td rowspan="2">
+                        <img ng-src="{{publication.businessIllustration | image}}"/>
+                    </td>
+                    <td class="title">
+                        {{publication.businessName}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{publication.title}}
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 
     <div>
 
+        <!-- promotion list -->
         <div class="promotion" ng-repeat="promotion in promotions">
-            <div><span class="title">{{promotion.businessName}}</span> -
-                {{promotion.endDate | date:'dd MMM yyyy hh:mm'}}
-            </div>
-            {{promotion.title}}<span style="float: right" class="title">- {{(promotion.offPercent * 100) | number:0}} %</span>
+            <table>
+                <tr>
+                    <td rowspan="2">
+                        <img ng-src="{{promotion.businessIllustration | image}}"/>
+                    </td>
+                    <td>
+                        <span class="title">{{promotion.businessName}}</span> -
+                        {{promotion.endDate | date:'dd MMM yyyy hh:mm'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{promotion.title}}<span style="float: right"
+                                                 class="title">- {{(promotion.offPercent * 100) | number:0}} %</span>
+                    </td>
+                </tr>
+            </table>
         </div>
 
     </div>

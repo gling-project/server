@@ -33,3 +33,21 @@
       background-color: #d1d1d1;
     }
 }
+
+
+.my-tabs{
+    margin-top: 10px;
+    margin-left:  10px;
+    & > div{
+        display: inline-block;
+
+        padding: 4px 10px;
+        border-top: 1px solid #000000;
+        border-right: 1px solid #000000;
+        border-left: 1px solid #000000;
+        cursor: pointer;
+        &.selected{
+            background-color: #ffffff;
+        }
+    }
+}

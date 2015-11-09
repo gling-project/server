@@ -1,23 +1,41 @@
-.news-feed-list{
+.news-feed-list {
+
+    img {
+        width: 40px;
+        height: 40px;
+        margin-right: 6px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        tr:first-child {
+            td:first-child {
+                width: 1em;
+            }
+        }
+    }
+
     width: 100%;
-    & > div{
+    & > div {
         width: 49%;
         display: inline-block;
         vertical-align: top;
     }
 
-    .title{
+    .title {
         font-weight: bold;
     }
 
-    .publication{
+    .publication {
         border: 2px solid @color-green;
         border-radius: 10px;
         padding: 10px;
         margin: 10px 0;
     }
 
-    .promotion{
+    .promotion {
         border: 2px solid @color-green;
         background-color: @color-green;
         border-radius: 10px;
