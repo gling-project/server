@@ -30,7 +30,7 @@
 --.generic.name=Naam
 --.generic.stepNotValid=Gelieve eerst deze stap te vervolledigen alvorens door te gaan naar de volgende.
 --.generic.home=Startpagina
---.generic.numberOnly=Slechts ��n nummer
+--.generic.numberOnly=Slechts één nummer
 --.generic.stepNotValidOrSkip=Gelieve eerst deze stap te vervolledigen alvorens door te gaan naar de volgende.
 --.generic.validation.wrongRepeatPassword=Het herhaalde wachtwoord komt niet overeen met het hierboven vermelde wachtwoord.
 --.generic.street=Straat
@@ -44,7 +44,7 @@
 --.generic.remove=Verwijderen
 --.generic.login.btn=Aanmelden
 --.generic.validation.max=Maximum {0} letters
---.generic.validation.numberExpected=Slechts ��n nummer
+--.generic.validation.numberExpected=Slechts één nummer
 --.generic.contact=Contact
 --.generic.valid=Bevestigen
 --.generic.action=Actie
@@ -164,12 +164,12 @@
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=-
---.error.facebook.notAccountFound=Deze Facebook-account werd niet geregistreerd. Om te registreren, volgt ��n van de twee onderstaande links.
+--.error.facebook.notAccountFound=Deze Facebook-account werd niet geregistreerd. Om te registreren, volgt één van de twee onderstaande links.
 --.error.account.withoutLoginCredential=Dit account maakt gebruik van de Facebook-verbinding systeem en gebruikt geen wachtwoord.
 --.error.account.emailUnknown=Dit e-mail adres is onbekend.
 --.error.googleMap=Google Map komt een fout tegen.
 --.error.wrongAddress=Dit adres is door Google Map niet bekend. Gelieve een ander adres op te geven.
---.error.search.wrongCriteria=E�n van de selectiecriteria voldoet niet.
+--.error.search.wrongCriteria=Eén van de selectiecriteria voldoet niet.
 --.error.address.nameNotExists=De naam ontbreekt.
 --.error.address.wrongOldPassword=Het oude wachtwoord komt niet overeen.
 --.error.address.nameAlreadyUsed=Deze naam werd door een andere gebruiker gekozen. Gelieve een  andere naam te kiezen a.u.b.!
@@ -370,19 +370,19 @@ day_abrv_sunday=Zon
 
 
 ##  directive/component/searchResult/template.html
---.search.category=Categorie�n
+--.search.category=Categorieën
 --.search.publication=Publicaties
 --.search.business.seeMore=Meer winkels zien
 --.search.seeMore=Meer resultaten zien
 --.search.business=Winkel
 --.search.nothing=Geen resultaten
 --.search.publication.seeMore=Zie meer publicaties
---.search.category.seeMore=Zie meer categorie�n
+--.search.category.seeMore=Zie meer categorieën
 
 ##  be/lynk/server/model/SearchCriteriaEnum.java
 --.search.criteria.business=Winkelen
 --.search.criteria.publication=Publicaties
---.search.criteria.category=Categorie�n
+--.search.criteria.category=Categorieën
 
 
 ##  directive/form/businessSocialNetwork/template.html
@@ -441,7 +441,7 @@ day_abrv_sunday=Zon
 --.followedBusiness.table.business=Winkel
 --.followedBusiness.table.followingFrom=Volgend sinds
 --.followedBusiness.table.notification=Kennisgevingen ontvangen.
---.followedBusiness.table.categories=Categorie�n
+--.followedBusiness.table.categories=Categorieën
 
 #--.gallery.title=Galerij
 --.publication.description=Beschrijving (optioneel)
@@ -585,3 +585,27 @@ day_abrv_sunday=Zon
 --.position.brussel=Brussel
 --.message.modal.notLocalised.title=Onmogelijk  U te lokaliseren
 --.message.modal.notLocalised.content=U moet uw positie aan ons meedelen om te lokaliseren worden.
+
+
+--.error.businessApplication.notBusinessAccount=Ce compte n''est pas un compte commerçant. Seuls les comptes commerçants peuvent se connecter via cette application.
+--.promotion.dayMax.details=La durée d''une promotion ne peut excéder 14 jours
+--.businessNotification.dayMax.details=La durée d''une actualité ne peut excéder 28 jours
+--.field.dateSimple.to=Le
+--.field.dateSimple.at=à
+--.generic.legend=Légende
+--.schedule.appointment=Uniquement sur réservation
+--.error.customerToBusiness.alreadyBusiness=Vous avez déjà un commerce
+--.textReuction.seeMore=Voir plus
+--.textReuction.seeLess=Masquer
+--.imageTool.minimalSize=La taille minimum de l''image doit être de {0} de large et {1} de haut.
+--.generic.success=L''opération est un succés
+--.publication.success.shareOnFacebook=Partager sur Facebook
+--.publication.success.message=Votre publication a bien été créée!
+--.publication.editionJustification=Raison de la modification
+
+
+--.publication.editByAdmin.email.subject=Modification d''une publication
+--.publication.editByAdmin.email.body=Bonjour,<br/><br/>l''une de vos publications ( {0} ) a été modifié par un administrateur de Gling, et ceci parce que votre publication ne respectait pas la charte de publication de Gling. <br/><br/>La raison invoquée par l''administrateur : {1}. <br/><br/>Pensez à consulter nos conseils de publication : <a href="https://www.gling.be/assets/document/business_help.pdf">Télécharger notre guide</a><br/><br/>L''équipe Gling
+--.field.imageMultipleResize.resizeModal.title=Recadrer l''image
+--.field.imageMultipleResize.minimalHeight=La hauteur minimal de l''image doit être de {0} (actuellement {1})
+--.field.imageMultipleResize.minimalWidth=La largeur minimal de l''image doit être de {0} (actuellement {1})

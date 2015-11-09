@@ -270,9 +270,9 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Bienvenue sur Gling {0}!<br/><br/>...
---.email.registration.business.subject=Bienvenu sur Gling !
---.email.registration.customer.body=Bienvenue !<br/><br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces favoris selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be<br/><br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.business.body=Bienvenue sur Gling {0}!<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.business.subject=Bienvenue sur Gling !
+--.email.registration.customer.body=Bienvenue !<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces favoris selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
 --.email.registration.customer.subject=Bienvenue sur Gling !
 
 ##  view/mobile/welcome.html
@@ -593,9 +593,9 @@ day_abrv_sunday=Di
 --.field.dateSimple.to=Le
 --.field.dateSimple.at=à
 --.generic.legend=Légende
---.schedule.appointment=Uniquement sur rendez-vous
+--.schedule.appointment=Uniquement sur réservation
 --.error.customerToBusiness.alreadyBusiness=Vous avez déjà un commerce
---.textReuction.seeMore=Afficher Tout
+--.textReuction.seeMore=Voir plus
 --.textReuction.seeLess=Masquer
 --.imageTool.minimalSize=La taille minimum de l''image doit être de {0} de large et {1} de haut.
 --.generic.success=L''opération est un succés
