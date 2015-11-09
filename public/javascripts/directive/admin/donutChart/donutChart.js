@@ -47,7 +47,7 @@ myApp.directive('donutChartCtrl', function (directiveService, $timeout, generate
                                         cursor: 'pointer',
                                         dataLabels: {
                                             enabled: true,
-                                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                            format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y})',
                                             style: {
                                                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                                             }
