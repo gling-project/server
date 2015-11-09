@@ -270,9 +270,9 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Bienvenue sur Gling {0}!<br/><br/>...
---.email.registration.business.subject=Bienvenu sur Gling !
---.email.registration.customer.body=Bienvenue !<br/><br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces favoris selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be<br/><br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.business.body=Bienvenue sur Gling {0}!<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.business.subject=Bienvenue sur Gling !
+--.email.registration.customer.body=Bienvenue !<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces favoris selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
 --.email.registration.customer.subject=Bienvenue sur Gling !
 
 ##  view/mobile/welcome.html
