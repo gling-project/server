@@ -505,7 +505,7 @@ var myApp = angular.module('app', [
 myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
 
     //???
-    this.ROOT_URL = "https://gling-prod.herokuapp.com";
+    this.ROOT_URL = "http://localhost:9000";
     //this.ROOT_URL = "";
 
     this.getBusinessByZip = function (zip, page,callbackSuccess, callbackError) {
@@ -562,10 +562,10 @@ myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
             });
     };
 
-    this.getTranslations = function (callbackSuccess, callbackError) {
+    this.getInitialization = function (callbackSuccess, callbackError) {
         $http({
             'method': "GET",
-            'url': this.ROOT_URL +"/rest/town/translations",
+            'url': this.ROOT_URL +"/rest/town/initialization",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
@@ -862,17 +862,19 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'imag
 //
 // main ctrl
 //
-myApp.controller('TownMainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$location', 'townService', function ($rootScope, $scope, $locale, translationService,$location,townService) {
+myApp.controller('TownMainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$location', 'townService', 'constantService', function ($rootScope, $scope, $locale, translationService,$location,townService,constantService) {
 
     $scope.navigateTo = function (target) {
         $location.path(target);
     };
 
-    console.log('TownMainCtrl');
-    townService.getTranslations(function(data){
-        console.log('insert');
-        console.log(data);
-        translationService.set(data);
+    townService.getInitialization(function(data){
+        translationService.set(data.translations);
+
+        //add constants
+        for (var key in data.constants) {
+            constantService[key] = data.constants[key];
+        }
     });
 
 }]);

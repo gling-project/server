@@ -1,7 +1,7 @@
 myApp.service("townService", function ($flash, $http) {
 
     //???
-    this.ROOT_URL = "https://gling-prod.herokuapp.com";
+    this.ROOT_URL = "http://localhost:9000";
     //this.ROOT_URL = "";
 
     this.getBusinessByZip = function (zip, page,callbackSuccess, callbackError) {
@@ -58,10 +58,10 @@ myApp.service("townService", function ($flash, $http) {
             });
     };
 
-    this.getTranslations = function (callbackSuccess, callbackError) {
+    this.getInitialization = function (callbackSuccess, callbackError) {
         $http({
             'method': "GET",
-            'url': this.ROOT_URL +"/rest/town/translations",
+            'url': this.ROOT_URL +"/rest/town/initialization",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {

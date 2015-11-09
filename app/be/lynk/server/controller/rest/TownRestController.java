@@ -4,18 +4,21 @@ import be.lynk.server.dto.AbstractPublicationDTO;
 import be.lynk.server.dto.BusinessDTO;
 import be.lynk.server.dto.ListDTO;
 import be.lynk.server.dto.StoredFileDTO;
+import be.lynk.server.dto.town.TownInitializationDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.publication.AbstractPublication;
-import be.lynk.server.model.entities.publication.BusinessNotification;
-import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.PublicationService;
+import be.lynk.server.util.constants.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Configuration;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by florian on 9/09/15.
@@ -28,6 +31,8 @@ public class TownRestController extends AbstractRestController {
     private BusinessService    businessService;
     @Autowired
     private PublicationService publicationService;
+
+    private String fileBucketUrl = Configuration.root().getString("aws.accesFile.url");
 
     @Transactional
     public Result getPublication(Integer zip, Integer page) {
@@ -135,9 +140,14 @@ public class TownRestController extends AbstractRestController {
     }
 
     @Transactional
-    public Result getTranslations() {
+    public Result getInitialization() {
+
+        TownInitializationDTO townInitializationDTO = new TownInitializationDTO();
 
         initialization();
+
+        //compile translation
+        townInitializationDTO.getConstants().put("fileBucketUrl", fileBucketUrl);
 
         response().setHeader("Access-Control-Allow-Origin", "*");
         response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
@@ -145,7 +155,9 @@ public class TownRestController extends AbstractRestController {
         response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
         response().setHeader("Access-Control-Allow-Credentials", "true");
 
-        return ok(translationService.getTranslations(lang()));
+        townInitializationDTO.setTranslations(translationService.getTranslations(lang()));
+
+        return ok(townInitializationDTO);
 
     }
 }

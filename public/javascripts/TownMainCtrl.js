@@ -9,17 +9,19 @@
 //
 // main ctrl
 //
-myApp.controller('TownMainCtrl', function ($rootScope, $scope, $locale, translationService,$location,townService) {
+myApp.controller('TownMainCtrl', function ($rootScope, $scope, $locale, translationService,$location,townService,constantService) {
 
     $scope.navigateTo = function (target) {
         $location.path(target);
     };
 
-    console.log('TownMainCtrl');
-    townService.getTranslations(function(data){
-        console.log('insert');
-        console.log(data);
-        translationService.set(data);
+    townService.getInitialization(function(data){
+        translationService.set(data.translations);
+
+        //add constants
+        for (var key in data.constants) {
+            constantService[key] = data.constants[key];
+        }
     });
 
 });

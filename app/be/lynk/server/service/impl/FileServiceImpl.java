@@ -101,7 +101,7 @@ public class FileServiceImpl implements FileService {
             if (sizex != null || sizey != null) {
 
                 //start to save the original file
-                storedFile.setStoredNameOriginalSize(generateStorageKey());
+//                storedFile.setStoredNameOriginalSize(generateStorageKey());
 //                FileUtil.save(file, storedFile.getStoredNameOriginalSize());
 
                 int sizexPicture = originalImage.getWidth(),
@@ -193,16 +193,13 @@ public class FileServiceImpl implements FileService {
             storedFile.setHeight(originalImage.getHeight());
 
 
-
             Logger.info("..>T5 : " + (new Date().getTime() - t));
 
             //and save
             storedFileService.saveOrUpdate(storedFile);
 
-            F.Promise.promise(() -> {
-                FileUtil.save(resizeFile, storedFile.getStoredName());
-                return null;
-            });
+            FileUtil.save(resizeFile, storedFile.getStoredName());
+
             Logger.info("..>T5.2 : " + (new Date().getTime() - t));
 
             Logger.info("..>T6 : " + (new Date().getTime() - t));
