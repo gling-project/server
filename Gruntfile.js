@@ -56,7 +56,9 @@ module.exports = function (grunt) {
                             //'public/components/highcharts/highcharts-more.js',
                             'public/components/angular-socialshare/angular-socialshare.js',
                             //TODO ???
-                            'public/javascripts/externalDependence/facebook_sdk.js']
+                            'public/javascripts/externalDependence/facebook_sdk.js',
+                            'public/components/ngmap/build/scripts/ng-map.min.js'
+                        ]
                     },
                     {
                         dest: 'public/dist/styleMobile.css',
@@ -210,7 +212,6 @@ module.exports = function (grunt) {
                     ]
                     , 'public/dist/web.js': [
                         'public/components/lodash/lodash.min.js',
-                        'public/components/ngmap/build/scripts/ng-map.min.js',
 
                         <!-- routes -->
                         'public/javascripts/routes/web-routes.js',
@@ -258,7 +259,6 @@ module.exports = function (grunt) {
                         'public/javascripts/service/FlashService.js'],
                     'public/dist/mobile.js': [
                         'public/components/lodash/lodash.min.js',
-                        'public/components/ngmap/build/scripts/ng-map.min.js',
                         'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.min.js',
                         'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.core.min.js',
                         'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.components.min.js',
