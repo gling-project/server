@@ -316,6 +316,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/FlashService.js',
                         'public/javascripts/service/DirectiveService.js',
                         'public/javascripts/service/TranslationService.js',
+                        'public/javascripts/service/ConstantService.js',
                         'public/javascripts/filter/ImageFilter.js',
                         'public/javascripts/filter/TranslateTextFilter.js',
                         'public/javascripts/modal/GalleryModal/GalleryModal.js',
