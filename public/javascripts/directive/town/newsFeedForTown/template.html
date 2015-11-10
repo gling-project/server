@@ -1,10 +1,12 @@
 <div class="news-feed-list">
 
-    <div>
+    <h3  style="text-align: center">Suivez les nouveautés des commerces de votre commune</h3>
 
+    <div>
         <!-- publication list -->
+        <h4 style="text-align: center">Les dernières actualités</h4>
         <a class="publication" ng-repeat="notification in notifications"
-             href="http://www.shops1160.be/index.php/commerces/#/business/{{publication.businessId}}">
+             href="http://www.shops1160.be/index.php/commerces/#/business/{{notification.businessId}}">
             <table>
                 <tr>
                     <td rowspan="2">
@@ -29,6 +31,7 @@
     <div>
 
         <!-- promotion list -->
+        <h4 style="text-align: center">Les dernières promotions</h4>
         <a class="promotion" ng-repeat="promotion in promotions"
            href="http://www.shops1160.be/index.php/commerces/#/business/{{promotion.businessId}}">
             <table>
