@@ -2394,7 +2394,7 @@ myApp.directive("mobileTitleCtrl", ['$rootScope', '$location', '$timeout', 'moda
     }
 }]);
 
-myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function ($rootScope, businessService, geolocationService, directiveService, $location) {
+myApp.directive('categoryLineCtrl', ['$rootScope', 'directiveService', '$location', function ($rootScope,directiveService, $location) {
 
     return {
         restrict: "E",

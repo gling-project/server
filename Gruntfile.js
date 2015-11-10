@@ -310,6 +310,7 @@ module.exports = function (grunt) {
                         'public/components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                         'public/components/angular-i18n/angular-locale_fr-fr.js',
                         'public/components/bootstrap/js/transition.js',
+                        'public/components/ngmap/build/scripts/ng-map.min.js',
                         'public/javascripts/InitTown.js',
                         'public/javascripts/service/town/TownService.js',
                         'public/javascripts/service/FlashService.js',
@@ -322,6 +323,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/town/townBusiness/TownBusinessCtrl.js',
                         'public/javascripts/directive/town/newsFeedForTown/NewsFeedForTownCtrl.js',
                         'public/javascripts/directive/town/publicationListForTown/PublicationListForTownCtrl.js',
+                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
                         'public/javascripts/dist/templateCacheWeb-town.js'
                     ]
                 }

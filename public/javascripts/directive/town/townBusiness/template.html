@@ -7,9 +7,18 @@
         <div class="search-box">
             <div class="input-group">
                 <span class="input-group-addon glyphicon glyphicon-search" id="basic-addon1"></span>
-                <input type="text" class="form-control" placeholder="Par nom, adresse, type,..." aria-describedby="basic-addon1">
+                <input ng-model="search"
+                       type="text"
+                       class="form-control"
+                       placeholder="Par nom, adresse, type,..."
+                       aria-describedby="basic-addon1">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                      style="pointer-events: visible;cursor: pointer;"
+                      ng-show="search.length > 0"
+                      ng-click="search = ''">
+
+                </span>
             </div>
-            <button class="btn gling-button-dark">Ok</button>
         </div>
 
         Cliquer sur les images pour obtenir plus d'information
@@ -18,6 +27,7 @@
         <div>
 
             <div class="town-business-list-element"
+                 ng-hide="business.visible === false"
                  ng-repeat="business in businesses"
                  ng-click="selectBusiness(business)">
 
@@ -29,6 +39,12 @@
                 </div>
             </div>
         </div>
+
+        <div ng-show="loading === true">
+            <img src="https://www.gling.be/assets/images/modal-loading.gif" ng-show="loading"/>
+        </div>
+
+        <div ng-show="loading == false && emptyResult()">Aucun résultat ne correspond à votre recherche</div>
 
     </div>
     <div ng-show="elementToDisplay === 'businessDetails'">
@@ -56,6 +72,7 @@
                         </div>
                     </div>
                 </div>
+                <category-line-ctrl ng-info="{categories:selectedBusiness.categories}"></category-line-ctrl>
                 <div class="business-description">{{selectedBusiness.description}}</div>
             </div>
 

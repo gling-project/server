@@ -2723,7 +2723,7 @@ myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocati
         }
     }
 }]);
-myApp.directive('categoryLineCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function ($rootScope, businessService, geolocationService, directiveService, $location) {
+myApp.directive('categoryLineCtrl', ['$rootScope', 'directiveService', '$location', function ($rootScope,directiveService, $location) {
 
     return {
         restrict: "E",

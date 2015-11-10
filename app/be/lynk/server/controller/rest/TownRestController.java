@@ -27,6 +27,9 @@ import java.util.Map;
 public class TownRestController extends AbstractRestController {
 
 
+    private static final Integer PUBLICATION_MAX_RESULTS             = 10;
+    private static final Integer PUBLICATION_BY_BUSINESS_MAX_RESULTS = 4;
+
     @Autowired
     private BusinessService    businessService;
     @Autowired
@@ -45,7 +48,7 @@ public class TownRestController extends AbstractRestController {
         response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
         response().setHeader("Access-Control-Allow-Credentials", "true");
 
-        List<AbstractPublication> publications = publicationService.findActivePublicationByTypeAndZip(zip, page, 20);
+        List<AbstractPublication> publications = publicationService.findActivePublicationByTypeAndZip(zip, page, PUBLICATION_MAX_RESULTS);
 
         List<AbstractPublicationDTO> publicationDTOs = new ArrayList<>();
 
@@ -73,7 +76,7 @@ public class TownRestController extends AbstractRestController {
         response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
         response().setHeader("Access-Control-Allow-Credentials", "true");
 
-        List<AbstractPublication> publications = publicationService.findActivePromotionByTypeAndZip(zip, page, 20);
+        List<AbstractPublication> publications = publicationService.findActivePromotionByTypeAndZip(zip, page, PUBLICATION_MAX_RESULTS);
 
         List<AbstractPublicationDTO> publicationDTOs = new ArrayList<>();
 
@@ -102,13 +105,13 @@ public class TownRestController extends AbstractRestController {
 
         Business business = businessService.findById(id);
 
-        List<AbstractPublication> abstractPublications = publicationService.findByBusinessForTown(business, page, 20);
+        List<AbstractPublication> abstractPublications = publicationService.findByBusinessForTown(business, page, PUBLICATION_BY_BUSINESS_MAX_RESULTS);
 
         return ok(new ListDTO<>(dozerService.map(abstractPublications, AbstractPublicationDTO.class)));
     }
 
     @Transactional
-    public Result getBusinessesByZip(Integer zip,Integer page) {
+    public Result getBusinessesByZip(Integer zip) {
 
         initialization();
 
@@ -118,23 +121,8 @@ public class TownRestController extends AbstractRestController {
         response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
         response().setHeader("Access-Control-Allow-Credentials", "true");
 
-        List<Business> businessList = businessService.findByZip(zip.toString(),page,20);
-
-        return ok(new ListDTO<>(dozerService.map(businessList, BusinessDTO.class)));
-    }
-
-    @Transactional
-    public Result getBusinessesByZipAndSearch(Integer zip,String search,Integer page) {
-
-        initialization();
-
-        response().setHeader("Access-Control-Allow-Origin", "*");
-        response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
-        response().setHeader("Access-Control-Max-Age", "3600");
-        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
-        response().setHeader("Access-Control-Allow-Credentials", "true");
-
-        List<Business> businessList = businessService.findByZipAndDeepSearch(zip.toString(),search,page,20);
+        //!! LIMITED TO 100
+        List<Business> businessList = businessService.findByZip(zip.toString(), 0, 100);
 
         return ok(new ListDTO<>(dozerService.map(businessList, BusinessDTO.class)));
     }

@@ -1,4 +1,4 @@
-myApp.directive('newsFeedForTownCtrl', function ($rootScope, directiveService, townService,$modal) {
+myApp.directive('newsFeedForTownCtrl', function ($rootScope, directiveService, townService, $modal) {
 
     return {
         restrict: "E",
@@ -13,14 +13,17 @@ myApp.directive('newsFeedForTownCtrl', function ($rootScope, directiveService, t
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    townService.getPublications('1160',0,function(data){
-                        console.log(data);
-                        scope.publications=data;
+                    scope.publicationLoading = true;
+                    scope.promotionLoading = true;
+
+                    townService.getPublications('1160', 0, function (data) {
+                        scope.publicationLoading = false;
+                        scope.publications = data;
                     });
 
-                    townService.getPromotions('1160',0,function(data){
-                        console.log(data);
-                        scope.promotions=data;
+                    townService.getPromotions('1160', 0, function (data) {
+                        scope.promotionLoading = false;
+                        scope.promotions = data;
                     });
 
                 }

@@ -3030,7 +3030,7 @@ ul.messenger .messenger-spinner {
   cursor: pointer;
 }
 .google-map-container map {
-  height: calc(100% + 20px) !important;
+  height: 110% !important;
   width: 100% !important;
 }
 h1 {

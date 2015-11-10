@@ -1,4 +1,4 @@
-myApp.directive('categoryLineCtrl', function ($rootScope, businessService, geolocationService, directiveService, $location) {
+myApp.directive('categoryLineCtrl', function ($rootScope,directiveService, $location) {
 
     return {
         restrict: "E",
