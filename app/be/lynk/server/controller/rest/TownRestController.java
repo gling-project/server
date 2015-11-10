@@ -1,24 +1,21 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.dto.AbstractPublicationDTO;
-import be.lynk.server.dto.BusinessDTO;
-import be.lynk.server.dto.ListDTO;
-import be.lynk.server.dto.StoredFileDTO;
+import be.lynk.server.dto.*;
 import be.lynk.server.dto.town.TownInitializationDTO;
+import be.lynk.server.dto.town.TownPublicationsDTO;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.model.entities.publication.BusinessNotification;
+import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.PublicationService;
-import be.lynk.server.util.constants.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by florian on 9/09/15.
@@ -38,7 +35,9 @@ public class TownRestController extends AbstractRestController {
     private String fileBucketUrl = Configuration.root().getString("aws.accesFile.url");
 
     @Transactional
-    public Result getPublication(Integer zip, Integer page) {
+    public Result getPublications(Integer zip, Integer page) {
+
+        TownPublicationsDTO townPublicationsDTO = new TownPublicationsDTO();
 
         initialization();
 
@@ -48,48 +47,36 @@ public class TownRestController extends AbstractRestController {
         response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
         response().setHeader("Access-Control-Allow-Credentials", "true");
 
-        List<AbstractPublication> publications = publicationService.findActivePublicationByTypeAndZip(zip, page, PUBLICATION_MAX_RESULTS);
+        List<AbstractPublication> publications = publicationService.findActiveNotificationByTypeAndZip(zip, page, PUBLICATION_MAX_RESULTS);
 
-        List<AbstractPublicationDTO> publicationDTOs = new ArrayList<>();
+
+        List<BusinessNotificationDTO> publicationDTOs = new ArrayList<>();
 
         for (AbstractPublication publication : publications) {
-            AbstractPublicationDTO map = dozerService.map(publication, AbstractPublicationDTO.class);
+            BusinessNotificationDTO map = dozerService.map(publication, BusinessNotificationDTO.class);
             map.setBusinessId(publication.getBusiness().getId());
             map.setBusinessName(publication.getBusiness().getName());
             map.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
 
             publicationDTOs.add(map);
         }
+        townPublicationsDTO.setNotifications(publicationDTOs);
 
+        List<AbstractPublication> promotions = publicationService.findActivePromotionByTypeAndZip(zip, page, PUBLICATION_MAX_RESULTS);
 
-        return ok(new ListDTO<>(publicationDTOs));
-    }
+        List<PromotionDTO> promotionDTOs = new ArrayList<>();
 
-    @Transactional
-    public Result getPromotion(Integer zip, Integer page) {
-
-        initialization();
-
-        response().setHeader("Access-Control-Allow-Origin", "*");
-        response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
-        response().setHeader("Access-Control-Max-Age", "3600");
-        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
-        response().setHeader("Access-Control-Allow-Credentials", "true");
-
-        List<AbstractPublication> publications = publicationService.findActivePromotionByTypeAndZip(zip, page, PUBLICATION_MAX_RESULTS);
-
-        List<AbstractPublicationDTO> publicationDTOs = new ArrayList<>();
-
-        for (AbstractPublication publication : publications) {
-            AbstractPublicationDTO map = dozerService.map(publication, AbstractPublicationDTO.class);
+        for (AbstractPublication publication : promotions) {
+            PromotionDTO map = dozerService.map(publication, PromotionDTO.class);
             map.setBusinessId(publication.getBusiness().getId());
             map.setBusinessName(publication.getBusiness().getName());
             map.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
 
-            publicationDTOs.add(map);
+            promotionDTOs.add(map);
         }
+        townPublicationsDTO.setPromotions(promotionDTOs);
 
-        return ok(new ListDTO<>(publicationDTOs));
+        return ok(townPublicationsDTO);
     }
 
     @Transactional

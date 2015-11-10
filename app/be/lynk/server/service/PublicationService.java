@@ -40,7 +40,7 @@ public interface PublicationService extends CrudService<AbstractPublication> {
 
     List<AbstractPublication> findByBusinessForTown(Business business, Integer page,Integer maxResult);
 
-    List<AbstractPublication> findActivePublicationByTypeAndZip(Integer zip, Integer page, Integer maxResult);
+    List<AbstractPublication> findActiveNotificationByTypeAndZip(Integer zip, Integer page, Integer maxResult);
 
     List<AbstractPublication> findActivePromotionByTypeAndZip(Integer zip, Integer page, Integer maxResult);
 

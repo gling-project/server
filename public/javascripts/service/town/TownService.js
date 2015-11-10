@@ -1,7 +1,7 @@
 myApp.service("townService", function ($flash, $http) {
 
-    //this.ROOT_URL = "http://localhost:9000";
-    this.ROOT_URL = "https://www.gling.be";
+    this.ROOT_URL = "http://localhost:9000";
+    //this.ROOT_URL = "https://www.gling.be";
 
     this.getBusinessByZip = function (zip,callbackSuccess, callbackError) {
         $http({
@@ -66,7 +66,7 @@ myApp.service("townService", function ($flash, $http) {
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
-                callbackSuccess(data.list);
+                callbackSuccess(data);
             }
         })
             .error(function (data, status) {

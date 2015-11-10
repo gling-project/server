@@ -519,8 +519,8 @@ var myApp = angular.module('app', [
 );
 myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
 
-    //this.ROOT_URL = "http://localhost:9000";
-    this.ROOT_URL = "https://www.gling.be";
+    this.ROOT_URL = "http://localhost:9000";
+    //this.ROOT_URL = "https://www.gling.be";
 
     this.getBusinessByZip = function (zip,callbackSuccess, callbackError) {
         $http({
@@ -585,7 +585,7 @@ myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
             if (callbackSuccess != null) {
-                callbackSuccess(data.list);
+                callbackSuccess(data);
             }
         })
             .error(function (data, status) {
@@ -878,7 +878,7 @@ myApp.controller('TownMainCtrl', ['$rootScope', '$scope', '$locale', 'translatio
     });
 
 }]);
-myApp.directive("townBusinessCtrl", ['townService', function (townService) {
+myApp.directive("townBusinessCtrl", ['townService', '$location', function (townService, $location) {
     return {
         restrict: "E",
         scope: {},
@@ -891,18 +891,36 @@ myApp.directive("townBusinessCtrl", ['townService', function (townService) {
                     scope.loading = true;
                     scope.elementToDisplay = 'list';
 
+
                     scope.selectBusiness = function (business) {
                         scope.elementToDisplay = 'businessDetails';
                         scope.selectedBusiness = business;
+                        var baseUrl = $location.url().split('#')[0]
+                        $location.url('business/' + business.id);
                     };
                     scope.backToList = function () {
                         scope.elementToDisplay = 'list';
+                        $location.url('');
                     };
 
 
                     townService.getBusinessByZip(1160, function (data) {
                         scope.businesses = data;
                         scope.loading = false;
+
+
+                        if ($location.url().indexOf('business/') != -1) {
+                            //go to business
+                            var myRegexp =/business\/([0-9]+)/;
+                            var match = myRegexp.exec($location.url());
+                            var businessId = match[1];
+                            for (var key in scope.businesses) {
+                                if (scope.businesses[key].id == businessId) {
+                                    scope.elementToDisplay = 'businessDetails';
+                                    scope.selectedBusiness = scope.businesses[key];
+                                }
+                            }
+                        }
 
                         scope.testCategories = function (categories, search) {
                             for (var key in categories) {
@@ -958,7 +976,7 @@ myApp.directive("townBusinessCtrl", ['townService', function (townService) {
     }
 }]);
 
-myApp.directive('newsFeedForTownCtrl', ['$rootScope', 'directiveService', 'townService', '$modal', function ($rootScope, directiveService, townService, $modal) {
+myApp.directive('newsFeedForTownCtrl', ['$rootScope', 'directiveService', 'townService', '$location', function ($rootScope, directiveService, townService, $location) {
 
     return {
         restrict: "E",
@@ -973,18 +991,14 @@ myApp.directive('newsFeedForTownCtrl', ['$rootScope', 'directiveService', 'townS
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    scope.publicationLoading = true;
-                    scope.promotionLoading = true;
+                    scope.loading = true;
 
                     townService.getPublications('1160', 0, function (data) {
-                        scope.publicationLoading = false;
-                        scope.publications = data;
+                        scope.notifications = data.notifications;
+                        scope.promotions = data.promotions;
+                        scope.loading = false;
                     });
 
-                    townService.getPromotions('1160', 0, function (data) {
-                        scope.promotionLoading = false;
-                        scope.promotions = data;
-                    });
 
                 }
             }
@@ -1070,9 +1084,9 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/town/publicationListForTown/template.html",
     "<div class=town-business-publication-list><div class=town-business-publication-list-element ng-repeat=\"publication in publications\"><div class=title>{{publication.title}} <span ng-show=\"publication.type === 'PROMOTION'\">{{publication.endDate | date:'medium'}}</span></div><table class=body><tr><td>{{publication.description}}</td><td ng-show=\"publication.pictures.length > 0\"><img ng-click=openGallery(publication.pictures[0],publication) ng-src=\"{{publication.pictures[0] | image}}\"></td></tr></table><div class=publicationDate>{{publication.endDate | date:'medium'}}</div></div></div>");
   $templateCache.put("/assets/javascripts/directive/town/townBusiness/template.html",
-    "<div><div class=town-business-list ng-show=\"elementToDisplay === 'list'\"><h3>Les commerces de votre commune.</h3><div class=search-box><div class=input-group><span class=\"input-group-addon glyphicon glyphicon-search\" id=basic-addon1></span> <input ng-model=search class=form-control placeholder=\"Par nom, adresse, type,...\" aria-describedby=basic-addon1> <span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=true style=\"pointer-events: visible;cursor: pointer\" ng-show=\"search.length > 0\" ng-click=\"search = ''\"></span></div></div>Cliquer sur les images pour obtenir plus d'information<br><div><div class=town-business-list-element ng-hide=\"business.visible === false\" ng-repeat=\"business in businesses\" ng-click=selectBusiness(business)><img ng-src=\"{{business.illustration | image}}\"><div class=town-business-list-element-data><div class=business-name>{{business.name}}</div><div class=address>{{business.address.street}}</div></div></div></div><div ng-show=\"loading === true\"><img src=https://www.gling.be/assets/images/modal-loading.gif ng-show=\"loading\"></div><div ng-show=\"loading == false && emptyResult()\">Aucun résultat ne correspond à votre recherche</div></div><div ng-show=\"elementToDisplay === 'businessDetails'\"><div><button ng-click=backToList() class=\"btn gling-button-dark glyphicon glyphicon-chevron-left\">Retourner à la liste des commerces</button></div><div class=town-business-details><div class=town-business-details-left><div class=town-business-details-header><img ng-src=\"{{selectedBusiness.illustration | image}}\"><div><div class=business-header-name>{{selectedBusiness.name}}</div><div class=business-header-details>{{selectedBusiness.address.street}}<br>{{selectedBusiness.phone}}<br><a href=mailto:{{selectedBusiness.email}}>{{selectedBusiness.email}}</a></div></div></div><category-line-ctrl ng-info={categories:selectedBusiness.categories}></category-line-ctrl><div class=business-description>{{selectedBusiness.description}}</div></div><div class=town-business-details-right><schedule-ctrl ng-info={dto:selectedBusiness.schedules}></schedule-ctrl><publication-list-for-town-ctrl ng-info={businessId:selectedBusiness.id}></publication-list-for-town-ctrl></div></div></div></div>");
+    "<div><div class=town-business-list ng-show=\"elementToDisplay === 'list'\"><h3>Les commerces de votre commune.</h3><div class=search-box><div class=input-group><span class=\"input-group-addon glyphicon glyphicon-search\" id=basic-addon1></span> <input ng-model=search class=form-control placeholder=\"Par nom, adresse, type,...\" aria-describedby=basic-addon1> <span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=true style=\"pointer-events: visible;cursor: pointer\" ng-show=\"search.length > 0\" ng-click=\"search = ''\"></span></div></div>Cliquer sur les images pour obtenir plus d'information<br><div><div class=town-business-list-element ng-hide=\"business.visible === false\" ng-repeat=\"business in businesses\" ng-click=selectBusiness(business)><img ng-src=\"{{business.illustration | image}}\"><div class=town-business-list-element-data><div class=business-name>{{business.name}}</div><div class=address>{{business.address.street}}</div></div></div></div><div ng-show=\"loading === true\"><img src=https://www.gling.be/assets/images/modal-loading.gif ng-show=\"loading\"></div><div ng-show=\"loading == false && emptyResult()\">Aucun résultat ne correspond à votre recherche</div></div><div ng-show=\"elementToDisplay === 'businessDetails'\"><div><button ng-click=backToList() class=\"btn gling-button-dark glyphicon glyphicon-chevron-left\">Retourner à la liste des commerces</button></div><div class=town-business-details><div class=town-business-details-left><div class=town-business-details-header><img ng-src=\"{{selectedBusiness.illustration | image}}\"><div><div class=business-header-name>{{selectedBusiness.name}}</div><div class=business-header-details>{{selectedBusiness.address.street}}<br>{{selectedBusiness.phone}}<br><a href=mailto:{{selectedBusiness.email}}>{{selectedBusiness.email}}</a></div></div></div><category-line-ctrl></category-line-ctrl><div class=business-description>{{selectedBusiness.description}}</div></div><div class=town-business-details-right><schedule-ctrl ng-info={dto:selectedBusiness.schedules}></schedule-ctrl><publication-list-for-town-ctrl ng-info={businessId:selectedBusiness.id}></publication-list-for-town-ctrl></div></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/town/newsFeedForTown/template.html",
-    "<div class=news-feed-list><div><div class=publication ng-repeat=\"publication in publications\"><table><tr><td rowspan=2><img ng-src=\"{{publication.businessIllustration | image}}\"></td><td class=title>{{publication.businessName}}</td></tr><tr><td>{{publication.title}}</td></tr></table></div><div ng-show=\"publicationLoading === true\"><img src=https://www.gling.be/assets/images/modal-loading.gif ng-show=\"loading\"></div></div><div><div class=promotion ng-repeat=\"promotion in promotions\"><table><tr><td rowspan=2><img ng-src=\"{{promotion.businessIllustration | image}}\"></td><td><span class=title>{{promotion.businessName}}</span> - {{promotion.endDate | date:'dd MMM yyyy hh:mm'}}</td></tr><tr><td>{{promotion.title}}<span style=\"float: right\" class=title>- {{(promotion.offPercent * 100) | number:0}} %</span></td></tr></table></div><div ng-show=\"promotionLoading === true\"><img src=https://www.gling.be/assets/images/modal-loading.gif ng-show=\"loading\"></div></div></div>");
+    "<div class=news-feed-list><div><a class=publication ng-repeat=\"notification in notifications\" href=http://www.shops1160.be/index.php/commerces/#/business/{{publication.businessId}}><table><tr><td rowspan=2><img ng-src=\"{{notification.businessIllustration | image}}\"></td><td class=title>{{notification.businessName}}</td></tr><tr><td>{{notification.title}}</td></tr></table></a><div ng-show=\"loading === true\"><img src=https://www.gling.be/assets/images/modal-loading.gif ng-show=\"loading\"></div></div><div><a class=promotion ng-repeat=\"promotion in promotions\" href=http://www.shops1160.be/index.php/commerces/#/business/{{promotion.businessId}}><table><tr><td rowspan=2><img ng-src=\"{{promotion.businessIllustration | image}}\"></td><td><span class=title>{{promotion.businessName}}</span> - {{promotion.endDate | date:'dd MMM yyyy hh:mm'}}</td></tr><tr><td>{{promotion.title}}<span style=\"float: right\" class=title>- {{(promotion.offPercent * 100) | number:0}} %</span></td></tr></table></a><div ng-show=\"loading === true\"><img src=https://www.gling.be/assets/images/modal-loading.gif ng-show=\"loading\"></div></div></div>");
   $templateCache.put("/assets/javascripts/modal/GalleryModal/view.html",
     "<div class=\"modal-body gallery-modal\"><div><img class=gallery-picture ng-src=\"{{image | image}}\"></div><div class=comment-container><button class=\"btn glyphicon glyphicon-remove\" style=float:right ng-click=close()></button> {{image.comment}}</div><table ng-show=\"images.length > 1\" style=\"width: 100%\"><tr><td><button type=button&quot; id=gallery-modal-btn-previous class=\"btn gling-button-dark\" ng-click=previous()>{{'--.gallery.modal.previous' | translateText}}</button></td><td><span id=gallery-modal-span-number-page>{{imageNb}} / {{images.length}}</span></td><td><button type=button&quot; id=gallery-modal-btn-next style=\"float: right\" class=\"btn gling-button-dark\" ng-click=next()>{{'--.gallery.modal.next' | translateText}}</button></td></tr></table></div>");
 }]);

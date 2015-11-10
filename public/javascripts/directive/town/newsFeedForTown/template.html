@@ -3,32 +3,34 @@
     <div>
 
         <!-- publication list -->
-        <div class="publication" ng-repeat="publication in publications">
+        <a class="publication" ng-repeat="notification in notifications"
+             href="http://www.shops1160.be/index.php/commerces/#/business/{{publication.businessId}}">
             <table>
                 <tr>
                     <td rowspan="2">
-                        <img ng-src="{{publication.businessIllustration | image}}"/>
+                        <img ng-src="{{notification.businessIllustration | image}}"/>
                     </td>
                     <td class="title">
-                        {{publication.businessName}}
+                        {{notification.businessName}}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        {{publication.title}}
+                        {{notification.title}}
                     </td>
                 </tr>
             </table>
-        </div>
-        <div ng-show="publicationLoading === true">
-            <img src="https://www.gling.be/assets/images/modal-loading.gif" ng-show="loading" />
+        </a>
+        <div ng-show="loading === true">
+            <img src="https://www.gling.be/assets/images/modal-loading.gif" ng-show="loading"/>
         </div>
     </div>
 
     <div>
 
         <!-- promotion list -->
-        <div class="promotion" ng-repeat="promotion in promotions">
+        <a class="promotion" ng-repeat="promotion in promotions"
+           href="http://www.shops1160.be/index.php/commerces/#/business/{{promotion.businessId}}">
             <table>
                 <tr>
                     <td rowspan="2">
@@ -46,9 +48,10 @@
                     </td>
                 </tr>
             </table>
-        </div>
-        <div ng-show="promotionLoading === true">
-            <img src="https://www.gling.be/assets/images/modal-loading.gif" ng-show="loading" />
+        </a>
+
+        <div ng-show="loading === true">
+            <img src="https://www.gling.be/assets/images/modal-loading.gif" ng-show="loading"/>
         </div>
 
     </div>

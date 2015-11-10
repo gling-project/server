@@ -4,12 +4,12 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.PublicationTypeEnum;
 import be.lynk.server.model.SearchResult;
-import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.CustomerInterest;
 import be.lynk.server.model.entities.publication.AbstractPublication;
+import be.lynk.server.model.entities.publication.BusinessNotification;
+import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.PublicationService;
-import be.lynk.server.util.AccountTypeEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
@@ -237,7 +237,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
     }
 
     @Override
-    public List<AbstractPublication> findActivePublicationByTypeAndZip(Integer zip, Integer page, Integer maxResult) {
+    public List<AbstractPublication> findActiveNotificationByTypeAndZip(Integer zip, Integer page, Integer maxResult) {
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
