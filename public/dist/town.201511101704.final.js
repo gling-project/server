@@ -519,8 +519,8 @@ var myApp = angular.module('app', [
 );
 myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
 
-    this.ROOT_URL = "http://localhost:9000";
-    //this.ROOT_URL = "https://www.gling.be";
+    //this.ROOT_URL = "http://localhost:9000";
+    this.ROOT_URL = "https://www.gling.be";
 
     this.getBusinessByZip = function (zip,callbackSuccess, callbackError) {
         $http({
@@ -946,7 +946,6 @@ myApp.directive("townBusinessCtrl", ['townService', '$location', function (townS
                         };
 
                         scope.$watch('search', function (n, o) {
-                            console.log(n);
                             if (n != o) {
                                 if (n != null && n != "") {
                                     for (var key in scope.businesses) {
@@ -1005,7 +1004,7 @@ myApp.directive('newsFeedForTownCtrl', ['$rootScope', 'directiveService', 'townS
         }
     }
 }]);
-myApp.directive('publicationListForTownCtrl', ['$rootScope', 'directiveService', 'townService', '$modal', function ($rootScope, directiveService, townService,$modal) {
+myApp.directive('publicationListForTownCtrl', ['$rootScope', 'directiveService', 'townService', '$modal', function ($rootScope, directiveService, townService, $modal) {
 
     return {
         restrict: "E",
@@ -1020,11 +1019,9 @@ myApp.directive('publicationListForTownCtrl', ['$rootScope', 'directiveService',
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    console.log('heloooooo');
-
                     scope.$watch('getInfo().businessId', function () {
                         if (scope.getInfo().businessId != null) {
-                            console.log('watcher !! ');
+                            scope.publications = null;
                             townService.getPublicationByBusiness(scope.getInfo().businessId, 0, function (data) {
                                 scope.publications = data;
                             });
@@ -1032,7 +1029,7 @@ myApp.directive('publicationListForTownCtrl', ['$rootScope', 'directiveService',
                     });
 
 
-                    scope.openGallery = function (image,publication) {
+                    scope.openGallery = function (image, publication) {
                         var resolve = {
                             image: function () {
                                 return image;
@@ -1044,7 +1041,7 @@ myApp.directive('publicationListForTownCtrl', ['$rootScope', 'directiveService',
                         $modal.open({
                             templateUrl: "/assets/javascripts/modal/GalleryModal/view.html",
                             controller: "GalleryModalCtrl",
-                            windowClass:'modal-gallery-content',
+                            windowClass: 'modal-gallery-content',
                             size: "lg",
                             resolve: resolve
                         });

@@ -1,4 +1,4 @@
-myApp.directive('publicationListForTownCtrl', function ($rootScope, directiveService, townService,$modal) {
+myApp.directive('publicationListForTownCtrl', function ($rootScope, directiveService, townService, $modal) {
 
     return {
         restrict: "E",
@@ -13,11 +13,9 @@ myApp.directive('publicationListForTownCtrl', function ($rootScope, directiveSer
                 post: function (scope) {
                     directiveService.autoScopeImpl(scope);
 
-                    console.log('heloooooo');
-
                     scope.$watch('getInfo().businessId', function () {
                         if (scope.getInfo().businessId != null) {
-                            console.log('watcher !! ');
+                            scope.publications = null;
                             townService.getPublicationByBusiness(scope.getInfo().businessId, 0, function (data) {
                                 scope.publications = data;
                             });
@@ -25,7 +23,7 @@ myApp.directive('publicationListForTownCtrl', function ($rootScope, directiveSer
                     });
 
 
-                    scope.openGallery = function (image,publication) {
+                    scope.openGallery = function (image, publication) {
                         var resolve = {
                             image: function () {
                                 return image;
@@ -37,7 +35,7 @@ myApp.directive('publicationListForTownCtrl', function ($rootScope, directiveSer
                         $modal.open({
                             templateUrl: "/assets/javascripts/modal/GalleryModal/view.html",
                             controller: "GalleryModalCtrl",
-                            windowClass:'modal-gallery-content',
+                            windowClass: 'modal-gallery-content',
                             size: "lg",
                             resolve: resolve
                         });

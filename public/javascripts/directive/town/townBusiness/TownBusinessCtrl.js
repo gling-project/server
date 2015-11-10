@@ -66,7 +66,6 @@ myApp.directive("townBusinessCtrl", function (townService, $location) {
                         };
 
                         scope.$watch('search', function (n, o) {
-                            console.log(n);
                             if (n != o) {
                                 if (n != null && n != "") {
                                     for (var key in scope.businesses) {
