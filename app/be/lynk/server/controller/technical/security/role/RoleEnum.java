@@ -11,7 +11,8 @@ public enum RoleEnum {
     USER,
     CUSTOMER(USER),
     BUSINESS(CUSTOMER),
-    SUPERADMIN(BUSINESS);
+    SUPERADMIN_READER(BUSINESS),
+    SUPERADMIN(SUPERADMIN_READER);
 
 
     private List<RoleEnum> children;

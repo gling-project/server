@@ -1,4 +1,4 @@
-myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, geolocationService, directiveService, $window) {
+myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, geolocationService, directiveService, $timeout) {
 
     return {
         restrict: "E",
@@ -19,7 +19,7 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
                             scope.getInfo().centerMap();
                         };
 
-                        scope.getInfo().setAddress = function(address){
+                        scope.getInfo().setAddress = function (address) {
                             scope.getInfo().address = address;
                             scope.getInfo().centerMap();
                         };
@@ -29,13 +29,28 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
 
                             //test
                             scope.getInfo().centerMap = function () {
-                                scope.map = {
+                                scope.mapData = {
                                     center: {
                                         latitude: scope.getInfo().address.posx,
                                         longitude: scope.getInfo().address.posy
-                                    }
+                                    },
+                                    zoom: 14
                                 };
+                                google.maps.event.trigger(scope.map, 'resize');
                             };
+
+                            //create google map marker
+                            scope.GenerateMapMarkers = function () {
+                                if (scope.map != null) {
+                                    var marker = new google.maps.Marker({});
+                                    marker.setPosition(new google.maps.LatLng(scope.getInfo().address.posx, scope.getInfo().address.posy));
+                                    marker.setMap(scope.map)
+                                }
+                            };
+
+                            scope.$watch('map', function (n) {
+                                scope.GenerateMapMarkers();
+                            });
 
                             scope.toGoogleMap = function () {//function navigate(lat, lng) {
                                 // If it's an iPhone..
@@ -47,6 +62,7 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
                                             return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
                                         }
                                     }
+
                                     var ver = iOSversion() || [0];
 
                                     var protocol = "";
@@ -67,13 +83,13 @@ myApp.directive('googleMapWidgetCtrl', function ($rootScope, businessService, ge
                                 }
                             };
 
-                            scope.complete = function(url){
+                            scope.complete = function (url) {
                                 //var address = scope.getInfo().address;
                                 //url += '?q='+address.posx + ",+" + address.posy;
                                 //return url;
 
-                                var add = scope.getInfo().address.street+","+scope.getInfo().address.zip+","+scope.getInfo().address.city+","+scope.getInfo().address.country;
-                                return url+=add.replace(/ /g,'+');
+                                var add = scope.getInfo().address.street + "," + scope.getInfo().address.zip + "," + scope.getInfo().address.city + "," + scope.getInfo().address.country;
+                                return url += add.replace(/ /g, '+');
                             };
                         }
                     });

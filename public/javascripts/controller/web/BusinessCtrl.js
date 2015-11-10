@@ -18,7 +18,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     $scope.edit = false;
     $scope.myBusiness = false;
     $scope.businessId = $routeParams.businessId;
-    $scope.descriptionLimitBase = 200.
+    $scope.descriptionLimitBase = 200;
     $scope.descriptionLimit = $scope.descriptionLimitBase;
 
     //publication timing
@@ -28,7 +28,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
     ];
 
     //address
-    $scope.googleMapParams = {};
+    $scope.googleMapParams = {staticMap: true};
 
     $scope.displayEditMode = function () {
         return $scope.myBusiness === true || (accountService.getMyself() != null && accountService.getMyself().role === 'SUPERADMIN');
@@ -39,7 +39,7 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
         scrollTo: $scope.publicationIdToGo,
         displayRemoveIcon: $scope.edit,
         type: 'BASIC',
-        businessId:$routeParams.businessId
+        businessId: $routeParams.businessId
     };
     $scope.$watch('edit', function () {
         $scope.publicationListParam.displayRemoveIcon = $scope.edit;

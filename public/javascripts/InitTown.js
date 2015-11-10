@@ -1,6 +1,7 @@
 var myApp = angular.module('app', [
         //'ngAnimate',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ngMap'
         //'ui.bootstrap.datetimepicker',
         //"angucomplete",
         //'angularFileUpload',

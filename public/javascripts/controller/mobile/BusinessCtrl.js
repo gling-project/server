@@ -16,7 +16,9 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, $routeParams, bus
     $scope.descriptionLimit = $scope.descriptionLimitBase;
 
     //address
-    $scope.googleMapParams = {};
+    $scope.googleMapParams = {
+        staticMap:true
+    };
 
 
     $scope.followed = function () {

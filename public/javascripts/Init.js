@@ -8,8 +8,8 @@ var myApp = angular.module('app', [
         'ngTable',
         'geolocation',
         'timer',
-        'uiGmapgoogle-maps',
-        'djds4rce.angular-socialshare'
+        'djds4rce.angular-socialshare',
+        'ngMap'
         //,'ezfb'
     ]
 );

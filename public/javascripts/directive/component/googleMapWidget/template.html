@@ -1,17 +1,10 @@
-<div ng-click="toGoogleMap()">
-    <ui-gmap-google-map
-            center='map.center'
-            dragging='false'
-            options="{disableDefaultUI:true,
-                            draggable:false,
-                            scrollwheel: false}"
-            zoom='15'>
+<div ng-click="toGoogleMap()" class="google-map-container">
 
-        <ui-gmap-marker
-                idKey='1'
-                coords='{latitude:getInfo().address.posx,longitude:getInfo().address.posy}'
-                >
-        </ui-gmap-marker>
+    <div class="google-disabled-panel"
+         ng-show="getInfo().staticMap"></div>
 
-    </ui-gmap-google-map>
+    <map center="{{mapData.center.latitude}}, {{mapData.center.longitude}}"
+         zoom="{{mapData.zoom}}"
+         disable-default-u-i="getInfo().staticMap">
+    </map>
 </div>

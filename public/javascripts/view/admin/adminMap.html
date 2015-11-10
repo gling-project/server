@@ -2,15 +2,4 @@
 
 <h1>Cartes</h1>
 
-    <ui-gmap-google-map
-            center='map.center'
-            dragging='true'
-            zoom='11'>
-
-        <ui-gmap-marker
-                ng-repeat="position in positions"
-                idKey='1'
-                coords='{latitude:position.x,longitude:position.y}'
-                >
-        </ui-gmap-marker>
-    </ui-gmap-google-map>
+<map center="{{mapData.center.latitude}}, {{mapData.center.longitude}}" zoom="{{mapData.zoom}}"></map>

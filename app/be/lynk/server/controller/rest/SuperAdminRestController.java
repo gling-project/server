@@ -198,7 +198,7 @@ public class SuperAdminRestController extends AbstractRestController {
     }
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
     public Result getCustomerPositions() {
         List<PositionDTO> customerPosition = mongoSearchService.getCustomerPosition(LocalDateTime.of(2015, 10, 1, 00, 00));
 
@@ -206,7 +206,7 @@ public class SuperAdminRestController extends AbstractRestController {
     }
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
     public Result getInterestStats() {
 
         InterestStatDTO interestStatDTO = new InterestStatDTO();
@@ -225,7 +225,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
     public Result getStats() {
 
         AdminStatDTO adminStatDTO = new AdminStatDTO();
@@ -282,7 +282,7 @@ public class SuperAdminRestController extends AbstractRestController {
     }
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
     public Result getCategoriesAndInterests() {
 
         List<BusinessCategoryWithInterestDTO> result = new ArrayList<>();
@@ -308,7 +308,7 @@ public class SuperAdminRestController extends AbstractRestController {
     }
 
     @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
     public Result getUserDetails() {
 
 
@@ -321,6 +321,31 @@ public class SuperAdminRestController extends AbstractRestController {
         userDetailsDTO.setAll(getUserDetails(null));
 
         return ok(userDetailsDTO);
+    }
+
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
+    public Result getAll() {
+        List<Business> all = businessService.findAll();
+
+        List<BusinessDTO> map = new ArrayList<>();
+
+        for (Business business : all) {
+
+            BusinessForAdminDTO businessDTO = dozerService.map(business, BusinessForAdminDTO.class);
+            map.add(businessDTO);
+
+            businessDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+
+            //add publication nb
+            businessDTO.setNbPublication(publicationService.countByBusiness(business));
+            businessDTO.setNbPublicationActive(publicationService.countActiveByBusiness(business));
+
+        }
+
+
+        return ok(new ListDTO<>(map));
     }
 
     private UserDetailsBoxDTO getUserDetails(LocalDateTime from) {
@@ -432,30 +457,6 @@ public class SuperAdminRestController extends AbstractRestController {
         emailService.sendEmail(emailMessage, lang());
 
         return ok();
-    }
-
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result getAll() {
-        List<Business> all = businessService.findAll();
-
-        List<BusinessDTO> map = new ArrayList<>();
-
-        for (Business business : all) {
-
-            BusinessForAdminDTO businessDTO = dozerService.map(business, BusinessForAdminDTO.class);
-            map.add(businessDTO);
-
-            businessDTO.setTotalFollowers(followLinkService.countByBusiness(business));
-
-            //add publication nb
-            businessDTO.setNbPublication(publicationService.countByBusiness(business));
-            businessDTO.setNbPublicationActive(publicationService.countActiveByBusiness(business));
-
-        }
-
-
-        return ok(new ListDTO<>(map));
     }
 
 

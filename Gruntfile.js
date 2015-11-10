@@ -210,8 +210,7 @@ module.exports = function (grunt) {
                     ]
                     , 'public/dist/web.js': [
                         'public/components/lodash/lodash.min.js',
-                        'public/components/angular-google-maps/dist/angular-google-maps.min.js',
-                        'public/components/angular-google-maps/dist/angular-google-maps_dev_mapped.min.js',
+                        'public/components/ngmap/build/scripts/ng-map.min.js',
 
                         <!-- routes -->
                         'public/javascripts/routes/web-routes.js',
@@ -259,8 +258,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/FlashService.js'],
                     'public/dist/mobile.js': [
                         'public/components/lodash/lodash.min.js',
-                        'public/components/angular-google-maps/dist/angular-google-maps.min.js',
-                        'public/components/angular-google-maps/dist/angular-google-maps_dev_mapped.min.js',
+                        'public/components/ngmap/build/scripts/ng-map.min.js',
                         'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.min.js',
                         'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.core.min.js',
                         'public/components/mobile-angular-ui/dist/js/mobile-angular-ui.components.min.js',

@@ -2537,8 +2537,8 @@ ul.messenger .messenger-spinner {
   width: 41px;
   height: 22px;
 }
-.angular-google-map-container {
-  height: 200px;
+.business-page .google-map-container {
+  height: 300px;
   margin: -15px -15px 0px -15px;
   cursor: pointer;
 }
@@ -3015,6 +3015,23 @@ ul.messenger .messenger-spinner {
   left: 0;
   right: 0;
   bottom: 0;
+}
+.google-map-container {
+  position: relative;
+  overflow: hidden;
+}
+.google-map-container .google-disabled-panel {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  cursor: pointer;
+}
+.google-map-container map {
+  height: calc(100% + 20px) !important;
+  width: 100% !important;
 }
 h1 {
   margin: 0;
