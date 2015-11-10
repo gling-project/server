@@ -519,9 +519,8 @@ var myApp = angular.module('app', [
 );
 myApp.service("townService", ['$flash', '$http', function ($flash, $http) {
 
-    //???
-    this.ROOT_URL = "http://localhost:9000";
-    //this.ROOT_URL = "";
+    //this.ROOT_URL = "http://localhost:9000";
+    this.ROOT_URL = "https://www.gling.be";
 
     this.getBusinessByZip = function (zip,callbackSuccess, callbackError) {
         $http({
