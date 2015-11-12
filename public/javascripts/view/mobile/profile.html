@@ -11,16 +11,16 @@
 
                 <div ui-state="activeTab" default="1">
                     <ul class="nav nav-tabs">
-                        <li ng-click="setActiveTab('personal')"
+                        <li ng-click="activeTab = 'personal'"
                             ng-class="{'active':activeTab == 'personal'}">
                             <a ui-set="{'activeTab': 1}">{{'--.customer.profile.personalInformation' |
                                 translateText}}</a>
                         </li>
-                        <li ng-click="setActiveTab('address')"
+                        <li ng-click="activeTab = 'address'"
                             ng-class="{'active':activeTab == 'address'}">
                             <a ui-set="{'activeTab': 2}">{{'--.customer.profile.myAddresses' | translateText}}</a>
                         </li>
-                        <li ng-click="setActiveTab('interest')"
+                        <li ng-click="activeTab = 'interest'"
                             ng-class="{'active':activeTab == 'interest'}">
                             <a ui-set="{'activeTab': 3}">{{'--.customer.profile.interest' | translateText}}</a>
                         </li>
@@ -36,27 +36,31 @@
 
                             <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
+                            <!-- edit mode -->
                             <button class="btn gling-button-dark glyphicon glyphicon-edit"
                                     ng-show="accountParam.disabled"
-                                    ng-click="personalEdit()">
+                                    ng-click="accountParam.disabled = false">
                                 {{'--.generic.edit' |translateText}}
                             </button>
+
+                            <!-- save -->
                             <button class="btn gling-button-dark"
                                     ng-hide="accountParam.disabled"
-                                    ng-click="personalSave()">
+                                    ng-click="accountSave()">
                                 {{'--.generic.save' | translateText}}
                             </button>
+
+                            <!-- cancel -->
                             <button class="btn gling-button-dark"
                                     ng-hide="accountParam.disabled"
-                                    ng-click="personalCancel()">
+                                    ng-click="accountCancel()">
                                 {{'--.generic.cancel' | translateText}}
                             </button>
 
-                            <div class="col-md-3"
-                                 ng-show="account.loginAccount==true"></div>
-
+                            <!-- change facebook -->
                             <button
                                     ng-show="account.facebookAccount!==true"
+                                    ng-click="editPassword()"
                                     type="button"
                                     class="btn gling-button-dark">
                                 {{'--.changePasswordModal.title' | translateText}}
@@ -106,25 +110,30 @@
                             {{interest.translationName |translateText}}
                         </div>
 
+                        <!-- customer interest form -->
                         <customer-interest-form-ctrl
                                 ng-hide="interestParam.disabled"
                                 ng-info="interestParam">
                         </customer-interest-form-ctrl>
 
-
+                        <!-- edit mode -->
                         <button class="btn gling-button-dark glyphicon glyphicon-edit"
                                 ng-show="interestParam.disabled"
-                                ng-click="interestEdit()">
+                                ng-click="interestParam.disabled = false">
                             {{'--.generic.edit' |translateText}}
                         </button>
+
+                        <!-- save -->
                         <button class="btn gling-button-dark"
                                 ng-hide="interestParam.disabled"
                                 ng-click="interestSave()">
                             {{'--.generic.save' | translateText}}
                         </button>
+
+                        <!-- cancel -->
                         <button class="btn gling-button-dark"
                                 ng-hide="interestParam.disabled"
-                                ng-click="interestCancel()">
+                                ng-click="interestParam.disabled = true">
                             {{'--.generic.cancel' | translateText}}
                         </button>
 

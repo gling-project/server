@@ -4,9 +4,6 @@
 <div class='app-body'>
     <div class='app-content'>
 
-        <div class="body-mask"
-             ng-show="displayMask"></div>
-
         <div class="scrollable">
             <div class="scrollable-content scrollable-content-body">
 
@@ -58,13 +55,13 @@
                 <div>
                     <button class="gling-button gling-icon gling-icon-location button-with-label home-interest"
                             ng-class="{'selected':followedMode !== true}"
-                            ng-click="setFollowedMode(false)">
+                            ng-click="setFollowingMode(false)">
                         <p>{{'--.home.localisation.help' | translateText}}</p>
                     </button>
                 </div>
                 <!-- switch element -->
                 <div>
-                    <div class="onoffswitch" ng-click="setFollowedMode()">
+                    <div class="onoffswitch" ng-click="setFollowingMode()">
                         <label class="onoffswitch-label"
                                ng-class="{'followedMode':followedMode}">
                             <span class="onoffswitch-inner"></span>
@@ -75,7 +72,7 @@
                 <div>
                     <button class="gling-button gling-icon gling-icon-bell button-with-label home-interest"
                             ng-class="{'selected':followedMode === true}"
-                            ng-click="setFollowedMode(true)">
+                            ng-click="setFollowingMode(true)">
                         <p>{{'--.home.followning.help' | translateText}}</p>
                     </button>
                 </div>

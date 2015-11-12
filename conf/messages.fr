@@ -172,7 +172,7 @@
 --.error.search.wrongCriteria=Un des critères de sélection ne correspond pas.
 --.error.address.nameNotExists=Le nom est manquant.
 --.error.address.wrongOldPassword=L''ancien mot de passe ne correspond pas.
---.error.address.nameAlreadyUsed=Ce nom a déjà été utilisé par un autre utilisateur. Merci d''en choisir un nouveau!
+--.error.address.nameAlreadyUsed=Une autre de vos adresses porte déjà ce nom. Veuillez en choisir une autre
 --.error.address.TechnicalName=Ce nom de position n''est pas valide.
 
 ##  view/business_registration.html
@@ -609,3 +609,5 @@ day_abrv_sunday=Di
 --.field.imageMultipleResize.resizeModal.title=Recadrer l''image
 --.field.imageMultipleResize.minimalHeight=La hauteur minimal de l''image doit être de {0} (actuellement {1})
 --.field.imageMultipleResize.minimalWidth=La largeur minimal de l''image doit être de {0} (actuellement {1})
+
+--.generic.favoriteLanguage=Langue

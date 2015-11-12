@@ -244,24 +244,24 @@ public class
 
         Account currentUser = securityController.getCurrentUser();
 
-        Address addressToDelete = null;
+        Address addressToDelete = addressService.findById(id);
 
+        //control address
         for (Address address : currentUser.getAddresses()) {
+            boolean founded=false;
             if (address.getId().equals(id)) {
-                addressToDelete = address;
+                founded=true;
                 break;
+            }
+            if (!founded) {
+                throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
             }
         }
 
-        if (addressToDelete == null) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
-        }
-
-        currentUser.getAddresses().remove(addressToDelete);
-
 
         //delete
-        accountService.saveOrUpdate(currentUser);
+        addressToDelete.setAccount(null);
+        addressToDelete.setSelectedByAccount(null);
         addressService.remove(addressToDelete);
 
         return ok(new ResultDTO());
@@ -295,14 +295,19 @@ public class
         AddressDTO addressDTO = null;
 
 
-        if (newAddressDTO.getAddressName().equals("currentPosition")) {
-            currentUser.setSelectedAddress(null);
+        if (newAddressDTO.getAddressName().equals("currentPosition") ||
+                newAddressDTO.getAddressName().equals("default")) {
+            if(currentUser.getSelectedAddress()!=null) {
+                currentUser.getSelectedAddress().setSelectedByAccount(null);
+                addressService.saveOrUpdate(currentUser.getSelectedAddress());
+            }
         } else {
             Address address = addressService.findByNameAndAccount(newAddressDTO.getAddressName(), currentUser);
             if (address == null) {
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME);
             }
             currentUser.setSelectedAddress(address);
+            address.setSelectedByAccount(currentUser);
             addressDTO = dozerService.map(address, AddressDTO.class);
         }
 

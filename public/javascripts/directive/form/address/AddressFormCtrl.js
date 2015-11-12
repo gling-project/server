@@ -50,7 +50,21 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                                 return scope.getInfo().addName == true;
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'name'
+                            fieldName: 'listName'
+                        },
+                        customName:{
+                            fieldTitle: '--.address.customName.fieldTitle',
+                            name:'customName',
+                            validationRegex: "^.{2,255}$",
+                            validationMessage: ['--.generic.validation.size', '2', '255'],
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            active: function () {
+                                return scope.getInfo().addName == true && scope.getInfo().dto['listName'] == translationService.get('--.address.type.other');
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'customName'
                         },
                         street: {
                             fieldType: "text",
@@ -93,15 +107,6 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                         }
                     };
 
-                    scope.$watch('getInfo().dto', function () {
-                        if (scope.getInfo().dto.name == translationService.get('--.address.type.other')) {
-                            modalService.openOneFieldModal({name:'--.address.customName.fieldTitle'},function(data){
-                                names.push({key:data,value:data});
-                                scope.getInfo().dto.name = data;
-                            });
-                        }
-                    }, true);
-
                     //
                     // validation : watching on field
                     //
@@ -117,6 +122,14 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                                 }
                             }
                         }
+
+                        if(scope.fields.customName.active()){
+                            scope.getInfo().dto['name'] = scope.getInfo().dto['customName'];
+                        }
+                        else{
+                            scope.getInfo().dto['name'] = scope.getInfo().dto['listName'];
+                        }
+
                         scope.getInfo().isValid = validation;
                     }, true);
 

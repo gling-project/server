@@ -1,4 +1,4 @@
-myApp.service("geolocationService", function ($rootScope, geolocation, $http, accountService, $timeout, $rootScope, $window) {
+myApp.service("geolocationService", function ($rootScope, geolocation, $http, accountService, $timeout, $window) {
 
 
         this.position = null;

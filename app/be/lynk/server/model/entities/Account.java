@@ -51,7 +51,7 @@ public class Account extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     protected AccountTypeEnum type;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private Set<Address> addresses = new HashSet<>();
 
     @ManyToMany
@@ -60,7 +60,7 @@ public class Account extends AbstractEntity {
     @Basic(optional = false)
     private Boolean sendNotificationByDefault = true;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "selectedByAccount")
     private Address selectedAddress;
 
 

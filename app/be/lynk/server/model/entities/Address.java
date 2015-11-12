@@ -2,10 +2,7 @@ package be.lynk.server.model.entities;
 
 import be.lynk.server.model.entities.technical.AbstractEntity;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by florian on 17/05/15.
@@ -35,6 +32,9 @@ public class Address extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Account selectedByAccount;
+
     public Address() {
     }
 
@@ -43,6 +43,14 @@ public class Address extends AbstractEntity {
         this.zip = zip;
         this.city = city;
         this.country = country;
+    }
+
+    public Account getSelectedByAccount() {
+        return selectedByAccount;
+    }
+
+    public void setSelectedByAccount(Account selectedByAccount) {
+        this.selectedByAccount = selectedByAccount;
     }
 
     public Account getAccount() {

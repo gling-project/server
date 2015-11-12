@@ -87,18 +87,18 @@
                         <div class="business-tab-set">
                             <div class="business-tab"
                                  style="display:inline-block"
-                                 ng-class="{'selected':interfaceToDisplay === action.name}"
-                                 ng-repeat="action in actions"
-                                 ng-show="action.display()"
-                                 ng-click="action.action()">
-                                <i class="gling-icon {{action.icon}}"></i>
-                                {{action.translatableName | translateText}}
+                                 ng-class="{'selected':tabToDisplay === tab.name}"
+                                 ng-repeat="tab in tab"
+                                 ng-show="tab.display()"
+                                 ng-click="tab.action()">
+                                <i class="gling-icon {{tab.icon}}"></i>
+                                {{tab.translatableName | translateText}}
                             </div>
                         </div>
                     </div>
 
                     <!-- home-->
-                    <div ng-show="interfaceToDisplay=='home'">
+                    <div ng-show="tabToDisplay=='home'">
 
                         <div ng-show="myBusiness===true">
                             <button id="business-btn-promotion-add"
@@ -121,7 +121,7 @@
                     </div>
 
                     <!-- info-->
-                    <div class="section" ng-show="interfaceToDisplay=='info'">
+                    <div class="section" ng-show="tabToDisplay=='info'">
 
                         <!-- description -->
                         <table class="business-info-line"
@@ -294,7 +294,7 @@
                     </div>
 
                     <!-- gallery-->
-                    <div class="section gallery-mobile" ng-show="interfaceToDisplay=='gallery'">
+                    <div class="section gallery-mobile" ng-show="tabToDisplay=='gallery'">
                         <h4>{{'--.generic.gallery' | translateText}}</h4>
                         <img ng-repeat="image in business.galleryPictures"
                              style="margin-top: 5px"

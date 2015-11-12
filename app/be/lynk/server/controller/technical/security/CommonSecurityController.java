@@ -31,6 +31,8 @@ public class CommonSecurityController extends Security.Authenticator {
     public static final String SESSION_IDENTIFIER_STORE                 = "email";
     //name of the cookie for the automatic reconnection
     public static final String COOKIE_KEEP_SESSION_OPEN                 = "session_key";
+    //store the userId
+    public static final String COOKIE_USER_ID                           = "user_id";
     //not first visit cookie
     public static final String COOKIE_ALREADY_VISITED                   = "ALREADY_VISITED";
     //recover the session key into the http request
@@ -188,6 +190,7 @@ public class CommonSecurityController extends Security.Authenticator {
 
             USER_SERVICE.saveOrUpdate(currentAccount);
             ctx.response().discardCookie(COOKIE_KEEP_SESSION_OPEN);
+            ctx.response().discardCookie(COOKIE_USER_ID);
         }
         ctx.session().clear();
     }
@@ -199,6 +202,9 @@ public class CommonSecurityController extends Security.Authenticator {
         Http.Context.current().session().put(SESSION_IDENTIFIER_STORE, account.getEmail());
 
         context.changeLang(account.getLang().code());
+
+        //store the id ccookie for mobile application
+        context.response().setCookie(COOKIE_USER_ID, account.getId() + "");
 
         if (account.getLoginCredential() != null &&
                 account.getLoginCredential().isKeepSessionOpen()) {

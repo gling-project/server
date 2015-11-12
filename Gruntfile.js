@@ -277,17 +277,17 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/ResizeImageMobileModal/ResizeImageMobileModal.js',
 
                         <!-- controller -->
-                        'public/javascripts/controller/mobile/WelcomeCtrl.js',
-                        'public/javascripts/controller/mobile/HomeCtrl.js',
-                        'public/javascripts/controller/mobile/ForgotPasswordCtrl.js',
-                        'public/javascripts/controller/mobile/CustomerRegistrationCtrl.js',
-                        'public/javascripts/controller/mobile/MenuCtrl.js',
-                        'public/javascripts/controller/mobile/ProfileCtrl.js',
-                        'public/javascripts/controller/mobile/BusinessCtrl.js',
-                        'public/javascripts/controller/mobile/SearchPageCtrl.js',
-                        'public/javascripts/controller/mobile/FollowedBusinessPageCtrl.js',
-                        'public/javascripts/controller/mobile/PromotionCtrl.js',
-                        'public/javascripts/controller/mobile/BusinessNotificationCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/WelcomeCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/HomeCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/ForgotPasswordCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/CustomerRegistrationCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/MenuCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/ProfileCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/BusinessCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/SearchPageCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/FollowedBusinessPageCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/PromotionCtrl.min.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/BusinessNotificationCtrl.min.js',
 
                         <!-- component -->
                         'public/javascripts/directive/component/businessListMobile/BusinessListMobileCtrl.js',
