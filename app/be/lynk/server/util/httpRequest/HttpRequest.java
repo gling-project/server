@@ -81,6 +81,15 @@ public class HttpRequest {
             connection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
 
+
+
+            connection.setRequestProperty("Content-Language", "en-US");
+
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            
             if (requestMethod.equals(RequestMethod.POST)) {
                 connection.setRequestProperty("Content-Length", "" +
                         Integer.toString(paramString.getBytes().length));
@@ -98,13 +107,6 @@ public class HttpRequest {
                 }
 
             }
-
-
-            connection.setRequestProperty("Content-Language", "en-US");
-
-            connection.setUseCaches(false);
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
 
             //add header
             if(header!=null) {
