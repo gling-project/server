@@ -1,10 +1,6 @@
 <div class="publication-list">
 
-    <div ng-show="loading===true" class="loading">
-        <img src="/assets/images/big_loading.gif"/>
-    </div>
-
-
+    <!-- empty result message -->
     <div ng-show="loading!=true && publications.length == 0">
         {{'--.list.nothing' | translateText}}
     </div>
@@ -141,8 +137,16 @@
         </div>
 
         <!-- archived label -->
-        <img src="/assets/images/publication/archived.png"/>
+        <img class="archived-icon"
+             ng-show="isArchived(publication)"
+             src="/assets/images/publication/archived.png"/>
 
     </div>
+
+    <!-- loading icon -->
+    <div ng-show="loading===true" class="loading">
+        <img src="/assets/images/big_loading.gif"/>
+    </div>
+
 
 </div>

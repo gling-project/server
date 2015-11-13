@@ -46,7 +46,7 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
             $scope.allLoaded = true
             #if there is no result and this is the first page and there is a callbackFunction,
             #try something else
-            if $scope.currentPage == 0 and callbackEmptyResultFunction != null
+            if $scope.currentPage == 0 and callbackEmptyResultFunction?
                 callbackEmptyResultFunction()
                 if data.length != 0
                     $scope.emptyMessage = 'moreBusiness'
@@ -105,7 +105,7 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
             $scope.publicationListCtrl.data = []
         #load by criteria
         if $scope.followingMode
-            if interestSelected != null
+            if interestSelected?
                 searchService.byFollowedAndInterest $scope.currentPage, interestSelected.id, (data) ->
                     loadingPublicationSuccess data, ->
                         $scope.emptyMessage = 'followedWithInterest'
@@ -120,7 +120,7 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
                         searchService.nearBusiness (data) ->
                             loadingBusinessSuccess data
         else
-            if interestSelected != null
+            if interestSelected?
                 searchService.byInterest $scope.currentPage, interestSelected.id, (data) ->
                     loadingPublicationSuccess data, ->
                         $scope.emptyMessage = 'newsFeedWithInterest'

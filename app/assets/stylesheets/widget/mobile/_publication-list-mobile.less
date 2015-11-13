@@ -1,14 +1,28 @@
 .publication-box-mobile {
 
-
     background-color: #ffffff;
-    padding: 4px;
     margin: 5px;
     -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
     position: relative;
 
+    & > div:first-child{
+        padding: 4px;
+    }
+
+    .archived{
+        background-color: #ddd;
+        &>div{
+            opacity: 0.7;
+        }
+    }
+
+    .archived-icon{
+        position: absolute;
+        bottom: 5px;
+        left: -2px;
+    }
 
     .publication-box-previsualization {
         width: 100%;
@@ -219,12 +233,5 @@
             padding-right: 15px;
         }
 
-    }
-
-    .archived{
-        background-color: #ddd;
-        &>div{
-            opacity: 0.7;
-        }
     }
 }

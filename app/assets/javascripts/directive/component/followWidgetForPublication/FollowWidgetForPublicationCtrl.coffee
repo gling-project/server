@@ -10,7 +10,7 @@ myApp.directive 'followWidgetForPublicationCtrl', (accountService, modalService,
 
             #follow or dis-follow
             scope.follow = ->
-                if accountService.getMyself() != null
+                if accountService.getMyself()?
                     scope.followed()
                 else
                     modalService.openLoginModal scope.followed, null, '--.loginModal.help.follow'

@@ -115,7 +115,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessServ
                     $scope.tabToDisplay = 'gallery'
                     return
                 display: ->
-                    $scope.business.galleryPictures != null and $scope.business.galleryPictures.length > 0
+                    $scope.business.galleryPictures? and $scope.business.galleryPictures.length > 0
 
             }
         ]
@@ -141,7 +141,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessServ
             $scope.publicationListParam.refresh()
 
         #initialization
-        if geolocationService.currentPosition != null
+        if geolocationService.currentPosition?
             $scope.$broadcast 'RELOAD_PUBLICATION'
         $scope.computeDistance()
 

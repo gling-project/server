@@ -25,10 +25,12 @@ myApp.directive 'publicationListForBusinessCtrl', ($rootScope, directiveService,
                 scope.loadSemaphore = false
                 for d in data
                     scope.publications.push d
+
                 for publication in scope.publications
                     publication.descriptionLimit = scope.descriptionLimitBase
                     publication.interval = (publication.endDate - (new Date)) / 1000
-                if scope.getInfo().scrollTo != null
+
+                if scope.getInfo().scrollTo?
                     #if the user looking for a publication, scroll to it
                     $timeout (->
                         target = '#publication' + scope.getInfo().scrollTo
@@ -61,13 +63,12 @@ myApp.directive 'publicationListForBusinessCtrl', ($rootScope, directiveService,
                     scope.search()
 
             scope.search = ->
-                console.log 'scope.search !! : ' + scope.type + '/' + scope.currentPage
                 if scope.allLoaded == true
                     return
                 scope.loading = true
-                if scope.type != null and scope.type != undefined and scope.type == 'ARCHIVE'
+                if scope.type? and scope.type != undefined and scope.type == 'ARCHIVE'
                     searchService.byBusinessArchived scope.currentPage, scope.getInfo().businessId, scope.success
-                else if scope.type != null and scope.type != undefined and scope.type == 'PREVISUALIZATION'
+                else if scope.type? and scope.type != undefined and scope.type == 'PREVISUALIZATION'
                     searchService.byBusinessPrevisualization scope.currentPage, scope.getInfo().businessId, scope.success
                 else
                     searchService.byBusiness scope.currentPage, scope.getInfo().businessId, scope.success
@@ -98,12 +99,12 @@ myApp.directive 'publicationListForBusinessCtrl', ($rootScope, directiveService,
                         $rootScope.$broadcast 'RELOAD_PUBLICATION'
 
             scope.getInterestClass = (publication) ->
-                if publication.interest != null
+                if publication.interest?
                     return 'gling-icon-' + publication.interest.name
                 return null
 
             isEmpty = (val) ->
-                val == undefined or val == null or val == ''
+                !val? or val == ''
 
             scope.descriptionIsEmpty = (publication) ->
                 publication.type != 'PROMOTION' and isEmpty(publication.description)

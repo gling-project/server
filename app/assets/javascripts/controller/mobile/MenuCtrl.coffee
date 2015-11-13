@@ -92,7 +92,7 @@ myApp.controller 'MenuCtrl', ($rootScope, $scope, facebookService, accountServic
         else
             if $scope.currentPosition == 'default'
                 $scope.currentPosition = 'currentPosition'
-        if accountService.getMyself() != null
+        if accountService.getMyself()?
             for address in accountService.getMyself().addresses
                 $scope.positions.splice $scope.positions.length - 1, 0,
                     key: address.name

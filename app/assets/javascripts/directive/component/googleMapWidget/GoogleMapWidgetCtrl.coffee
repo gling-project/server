@@ -16,7 +16,7 @@ myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocation
                     scope.getInfo().address = address
                     scope.getInfo().centerMap()
 
-                if scope.getInfo().address != null
+                if scope.getInfo().address?
                     #test
 
                     scope.getInfo().centerMap = ->
@@ -28,7 +28,7 @@ myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocation
                         google.maps.event.trigger scope.map, 'resize'
 
                     scope.GenerateMapMarkers = ->
-                        if scope.map != null
+                        if scope.map? && scope.getInfo().address?
                             marker = new (google.maps.Marker)({})
                             marker.setPosition new (google.maps.LatLng)(scope.getInfo().address.posx, scope.getInfo().address.posy)
                             marker.setMap scope.map

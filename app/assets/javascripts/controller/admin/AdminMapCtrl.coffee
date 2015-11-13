@@ -16,7 +16,7 @@ myApp.controller 'AdminMapCtrl', ($scope, superAdminService) ->
 
     #generate positions
     $scope.GenerateMapMarkers = ->
-        if $scope.map != null and $scope.positions != null
+        if $scope.map? and $scope.positions?
             #called when the ngMap is initialized AND the positions are loaded
             for position in $scope.positions
                 marker = new (google.maps.Marker)({})

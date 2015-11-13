@@ -155,15 +155,14 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js',
                         'public/javascripts/directive/form/contact/ContactFormCtrl.js',
                         <!-- component -->
-                        'public/javascripts/directive/component/schedule/ScheduleCtrl.js',
-                        'public/javascripts/directive/component/gallery/GalleryCtrl.js',
-                        'public/javascripts/directive/component/googleMapWidget/GoogleMapWidgetCtrl.js',
-                        'public/javascripts/directive/component/searchResult/SearchResultCtrl.js',
-                        'public/javascripts/directive/component/searchBar/SearchBarCtrl.js',
-                        'public/javascripts/directive/component/followWidget/FollowWidgetCtrl.js',
-                        'public/javascripts/directive/component/followWidgetForPublication/FollowWidgetForPublicationCtrl.js',
-                        'public/javascripts/directive/component/facebookSharePublication/FacebookSharePublicationCtrl.js',
-                        'public/javascripts/directive/component/helpPopup/HelpPopupCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/schedule/ScheduleCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/gallery/GalleryCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/googleMapWidget/GoogleMapWidgetCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/searchResult/SearchResultCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/searchBar/SearchBarCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/followWidget/FollowWidgetCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/followWidgetForPublication/FollowWidgetForPublicationCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/facebookSharePublication/FacebookSharePublicationCtrl.js',
 
                         <!-- filters -->
                         'public/javascripts/filter/TranslateTextFilter.js',
@@ -225,7 +224,6 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/ForgotPasswordModal/ForgotPasswordModal.js',
                         'public/javascripts/modal/HelpModal/HelpModalCtrl.js',
                         'public/javascripts/modal/DownloadFieldModal/DownloadFieldModal.js',
-                        'public/javascripts/modal/AccountFusionFacebookModal/AccountFusionFacebookModal.js',
                         'public/javascripts/modal/CustomerRegistrationModal/CustomerRegistrationModal.js',
                         'public/javascripts/modal/BusinessRegistrationModal/BusinessRegistrationModal.js',
                         'public/javascripts/modal/AddressModal/AddressModal.js',
@@ -246,14 +244,14 @@ module.exports = function (grunt) {
                         'public/javascripts/controller/web/FollowedBusinessPageCtrl.js',
 
                         <!-- component -->
-                        'public/javascripts/directive/component/publicationList/PublicationListCtrl.js',
-                        'public/javascripts/directive/component/publicationWidget/PublicationWidgetCtrl.js',
-                        'public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
-                        'public/javascripts/directive/component/businessList/BusinessListCtrl.js',
-                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationList/PublicationListCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationWidget/PublicationWidgetCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/businessList/BusinessListCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
                         'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js',
                         'public/javascripts/directive/web/footerBar/FooterBarCtrl.js',
-                        'public/javascripts/directive/component/toTop/ToTopCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/toTop/ToTopCtrl.js',
 
                         <!-- service -->
                         'public/javascripts/service/FlashService.js'],
@@ -290,13 +288,13 @@ module.exports = function (grunt) {
                         'target/scala-2.10/resource_managed/main/public/javascripts/controller/mobile/BusinessNotificationCtrl.min.js',
 
                         <!-- component -->
-                        'public/javascripts/directive/component/businessListMobile/BusinessListMobileCtrl.js',
-                        'public/javascripts/directive/component/publicationListMobile/PublicationListMobileCtrl.js',
-                        'public/javascripts/directive/component/publicationListMobileForBusiness/PublicationListMobileForBusinessCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/businessListMobile/BusinessListMobileCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationListMobile/PublicationListMobileCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationListMobileForBusiness/PublicationListMobileForBusinessCtrl.js',
                         'public/javascripts/directive/mobile/headerSearch/HeaderSearchCtrl.js',
                         'public/javascripts/directive/mobile/title/MobileTitleCtrl.js',
-                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
-                        'public/javascripts/directive/component/publicationWidgetForMobile/PublicationWidgetCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationWidgetForMobile/PublicationWidgetCtrl.js',
 
                         <!-- service -->
                         'public/javascripts/service/mobile/FlashService.js',
@@ -324,7 +322,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/town/townBusiness/TownBusinessCtrl.js',
                         'public/javascripts/directive/town/newsFeedForTown/NewsFeedForTownCtrl.js',
                         'public/javascripts/directive/town/publicationListForTown/PublicationListForTownCtrl.js',
-                        'public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
                         'public/javascripts/dist/templateCacheWeb-town.js'
                     ]
                 }

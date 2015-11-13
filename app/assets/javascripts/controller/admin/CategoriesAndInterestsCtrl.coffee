@@ -22,7 +22,7 @@ myApp.controller 'CategoriesAndInterestsCtrl', ($scope, superAdminService) ->
         $scope.$watch 'search', ->
             search = $scope.search
             for category in $scope.categories
-                if search != null and search != '' and category.name.indexOf(search) == -1
+                if search? and search != '' and category.name.indexOf(search) == -1
                     category.hide = true
                 else
                     category.hide = false

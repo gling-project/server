@@ -70,7 +70,7 @@ myApp.controller 'CustomerRegistrationCtrl', ($rootScope, $scope, $flash, accoun
     if location.href.indexOf('access_token') != -1
         access_token = $scope.getUrlParam('access_token', location.href)
         #window.location.hash = '#';
-        if access_token != null
+        if access_token?
             $scope.facebookSuccess access_token
 
     $scope.loading = (b) ->
