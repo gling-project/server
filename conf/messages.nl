@@ -610,7 +610,7 @@ day_abrv_sunday=Zon
 --.field.imageMultipleResize.minimalHeight=De minimale hoogte van het beeld moet {0} (momenteel {1})
 --.field.imageMultipleResize.minimalWidth=De minimale breedte van de afbeelding moet {0} (momenteel {1})
 
---.generic.favoriteLanguage=Langue
---.registration.accept.condition=En vous inscrivant sur Gling vous reconnaissez avoir lu et accepté les <a href="https://www.gling.be/legal/" target="_blank">conditions générales d''utilisation</a> du site Gling
---.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profile Facebook
+--.generic.favoriteLanguage=Taal
+--.registration.accept.condition= Door zich te registreren op Gling erkent U te hebben gelezen en aangevaard de <a href="https://www.gling.be/legal/" target="_blank">algemene voorwaarden van gebruik</a> van de website Gling
+--.error.facebook.neededInformationEmpty=Sommige gevraagde informaties zijn in uw Facebook-profiel niet beschikbaar 
 
