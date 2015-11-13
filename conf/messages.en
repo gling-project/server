@@ -1,611 +1,611 @@
---.account.fusion.description=Il y a déjà un compte associé à cette adresse email {0}. Si vous en êtes bien le propriétaire, vous pouvez associer votre compte Facebook à votre compte Gling. Sinon, vous ne pouvez pas utiliser cette adresse email.
+--.account.fusion.description=There is already an account associated with the email address {0}. If you are the owner of this account, you can link your Facebook account to your Gling account. Otherwise, you can not use this email address.
 
 ##  be/flo/project/dto/ChangePasswordDTO.java
---.validation.dto.password=Entre 6 et 18 lettres, chiffres ou _-%
+--.validation.dto.password=Between 6 and 18 letters, numbers or _- %
 
 ##  generic
---.generic.firstname=Prénom
---.generic.save=Sauver
---.generic.submit=Soumettre
---.generic.password=Mot de passe
---.generic.lastname=Nom
---.generic.or=ou
---.generic.male=Homme
---.generic.validation.repeatPassword=Les deux mots de passe ne pas peuvent être identiques.
---.generic.validation.email=Merci d''entrer une adresse email valide.
---.generic.gender=Sexe
---.generic.female=Femme
---.generic.validation.size=Entre {0} et {1} caractères
---.generic.oldPassword=Ancien mot de passe
---.generic.yourPassword=Votre mot de passe
---.generic.logout=Déconnexion
---.generic.close=Fermer
---.generic.validation.password=Entre 6 et 18 lettres, chiffres ou _-%
---.generic.repeatPassword=Répétez le mot de passe.
+--.generic.firstname=First name
+--.generic.save=Save
+--.generic.submit=Submit
+--.generic.password=Password
+--.generic.lastname=Last name
+--.generic.or=or
+--.generic.male=Male
+--.generic.validation.repeatPassword=Both passwords can not be the same.
+--.generic.validation.email=Thank you to enter a valid email address.
+--.generic.gender=Gender
+--.generic.female=Female
+--.generic.validation.size=Between {0} and {1} characters
+--.generic.oldPassword=Old password
+--.generic.yourPassword=Your password
+--.generic.logout=Logout
+--.generic.close=Close
+--.generic.validation.password=Between 6 and 18 letters, numbers or _- %
+--.generic.repeatPassword=Repeat your Password.
 --.generic.email=Email
---.generic.previous=Précédent
---.generic.phone=Téléphone
---.generic.next=Suivant
+--.generic.previous=Previous
+--.generic.phone=Phone
+--.generic.next=Next
 --.generic.desc=Description
---.generic.name=Nom
---.generic.stepNotValid=Merci de complèter cette étape avant de passer à l''étape suivante.
---.generic.home=Accueil
---.generic.numberOnly=Uniquement un chiffre
---.generic.stepNotValidOrSkip=Merci de complèter cette étape avant de passer à la suivante.
---.generic.validation.wrongRepeatPassword=Le mot de passe répété ne correspond pas à celui repris ci-dessus.
---.generic.street=Rue
---.generic.zip=Code postale
---.generic.city=Ville
---.generic.country=Pays
---.generic.address=Adresse
---.generic.business=Commerce
---.generic.edit=Editer
---.generic.cancel=Annuler
---.generic.remove=Supprimer
---.generic.login.btn=Connexion
---.generic.validation.max=Maximum {0} caractères
---.generic.validation.numberExpected=Uniquement un nombre
+--.generic.name=Name
+--.generic.stepNotValid=Thank you for completing this step before proceeding to the next step.
+--.generic.home=Home
+--.generic.numberOnly=Only one number
+--.generic.stepNotValidOrSkip=Thank you for completing this step before proceeding to the next step.
+--.generic.validation.wrongRepeatPassword=The password repeated does not match with the one above.
+--.generic.street=Street
+--.generic.zip=Zip Code
+--.generic.city=City
+--.generic.country=Country
+--.generic.address=Adress
+--.generic.business=Store
+--.generic.edit=Edit
+--.generic.cancel=Cancel
+--.generic.remove=Remove
+--.generic.login.btn=Login
+--.generic.validation.max=Maximum {0} characters
+--.generic.validation.numberExpected=Only a number
 --.generic.contact=Contact
---.generic.valid=Valider
+--.generic.valid=Validation
 --.generic.action=Action
---.generic.status=Statut
+--.generic.status=Status
 --.generic.publication=Publication
 --.generic.facebook=Facebook
---.generic.category=Catégorie
+--.generic.category=Category
 --.generic.twitter=Twitter
---.generic.validation.facebook=L''adresse indiquée n''est pas une adresse Facebook valide! (elle doit commencer par https://facebook.com/)
---.generic.validation.twitter=L''adresse indiquée n''est pas une adresse Twitter valide! (elle doit commencer par https://twitter.com/)
---.generic.title=Titre
---.generic.socialNetwork=Lien(s) utile(s)
---.generic.comment=Commentaires
---.generic.validation.instagram=L''adresse reprise n''est pas une adresse Instagram valide! (elle doit commencer par https://instagram.com/)
---.generic.gallery=Galerie
+--.generic.validation.facebook=The address indicated is not a valid Facebook address! (it must begin with https://facebook.com/)
+--.generic.validation.twitter=The address indicated is not a valid Twitter address! (it must begin with https://twitter.com/)
+--.generic.title=Title
+--.generic.socialNetwork=Social Network
+--.generic.comment=Comments
+--.generic.validation.instagram=The address indicated is not a valid Instagram address! (it must begin with https://instagram.com/)
+--.generic.gallery=Gallery
 --.generic.instagram=Instagram
---.generic.top=Haut
---.generic.search=Recherche
+--.generic.top=Top
+--.generic.search=Search
 
 
 ##  modal/RegistrationModal/RegistrationModal.js
---.registration.form.keepSessionOpen=Garder ma session ouverte.
---.registration.form.repeatPassword=Répétez le mot de passe.
---.registration.form.password=Choisissez un mot de passe.
---.registration.form.password.help=Entre 6 et 18 lettres, chiffres ou -_%
+--.registration.form.keepSessionOpen=Keep my session open.
+--.registration.form.repeatPassword=Repeat the password.
+--.registration.form.password=Choose a password.
+--.registration.form.password.help=Between 6 and 18 letters, numbers or -_ %
 
 ##  modal/ForgotPassword/ForgotPasswordModal.js
---.changeEmailModal.email=Entrez votre nouvelle adresse email.
---.forgotPassword.success=Un email vous a été envoyé avec un nouveau mot de passe.
+--.changeEmailModal.email=Enter your new email adress.
+--.forgotPassword.success=An email was sent to you with a new password.
 
 ##  modal/LoginModal/LoginModal.js (//logout facebook in case)
---.login.flash.success=Vous êtes maintenant connecté(e)!
---.registration.form.yourEmail=Votre adresse email
+--.login.flash.success=You are now connected
+--.registration.form.yourEmail=Your email adress
 
 ##  modal/RegistrationModal/view.html
---.loginModal.title=Connexion
+--.loginModal.title=Login
 
 ##  modal/DownloadFieldModal/view.html
---.downloadModal.title=Téléchargez un fichier.
+--.downloadModal.title=Download a file.
 
 ##  modal/HelpModal/view.html
---.helpModal.title=Aide
+--.helpModal.title=Help
 
 ##  modal/ChangePassword/ChangePasswordModal.js
---.changePasswordModal.newPassword=Nouveau mot de passe
+--.changePasswordModal.newPassword=New password
 
 ##  be/flo/project/dto/AccountDTO.java
---.validation.dto.size=Entre {0} et {1} caractères
+--.validation.dto.size=Between {0} and {1} characters
 
---.validation.dto.email=Cette adresse email n''est pas valide.
+--.validation.dto.email=This email address is invalid.
 
 ##  modal/ForgotPassword/view.html
---.forgotPassword.title=Mot de passe perdu?
+--.forgotPassword.title=Password lost?
 
-##  be/flo/project/views/template.scala.html (load data )
---.welcome.myProfile=Mon profil
---.welcome.signIn=Enregistrement
---.welcome.login=Connexion
+##  be/flo/project/views/template.scala.html (load data)
+--.welcome.myProfile=My profile
+--.welcome.signIn=Sign in
+--.welcome.login=Login
 
 ##  directive/dirFieldDocument/template.html
---.field.document.download=Téléchargement
---.field.document.success=Le fichier a été correctement téléchargé.
---.field.document.inTreatment=En cours de traitement...
+--.field.document.download=Download
+--.field.document.success=The file has been successfully downloaded.
+--.field.document.inTreatment=Processing...
 
 ##  modal/ChangePassword/view.html
---.changePasswordModal.title=Changez votre mot de passe.
+--.changePasswordModal.title=Change your password
 
 ##  be/flo/project/util/message/ErrorMessageEnum.java
---.error.fatal_error=Une erreur fatale est survenue : {0}.
---.error.validation.email=Adresse email valide
+--.error.fatal_error=A fatal error occurred: {0}.
+--.error.validation.email=Email adress valid
 --.error.validation.password=Entre 6 et 18 lettres, chiffres ou -_%
---.error.validation.pattern=Le champ {0} attend le pattern {1}.
+--.error.validation.pattern=Between 6 and 18 letters, numbers or -_ %
 --.error.json_conversion_error=Json conversion error
---.error.email_already_used=Cette adresse email est déjà utilisée par un autre utilisateur!
---.error.wrong_authorization=Vous n''avez pas l''autorisation pour effectuer cette action.
---.error.validation.not_null=Le champs {0} ne peut pas être laissé vide.
---.error.validation.size=Le champs {0} doit comprendre entre {1} et {2} caractères.
---.error.wrong_old_password=Ce n''est pas votre ancien mot de passe.
---.error.facebook.authentication_fail=L''authentification Facebook a échouée.
---.error.not_connected=Vous n''êtes pas connecté(e).
---.error.wrong_password_or_login=Email ou mot de passe erroné.
---.error.business.mustBePublished=Votre profil de commerce doit être validé avant de pouvoir diffuser de nouvelles publications
---.error.picture.wrongSize=La taille de votre photo doit faire au minimum {0} pixels de large et {1} pixels de haut
---.error.picture.wrongSizeX=La taille de votre photo doit faire au minimum {0} pixels de large
---.error.picture.wrongSizeY=La taille de votre photo doit faire au minimum {0} pixels de haut
+--.error.email_already_used=This email address is already used by another user. 
+--.error.wrong_authorization=You do not have permission to perform this action.
+--.error.validation.not_null=Field {0} can not be left blank.
+--.error.validation.size=Field {0} must be between {1} and {2} characters.
+--.error.wrong_old_password=This is not your old password.
+--.error.facebook.authentication_fail=The Facebook authentication has failed. 
+--.error.not_connected=You are not connected.
+--.error.wrong_password_or_login=Email or password incorrect.
+--.error.business.mustBePublished=Your store profile must be validated before it can disseminate new publications.
+--.error.picture.wrongSize=The size of your picture must be at least {0} pixels wide and {1} pixels tall.
+--.error.picture.wrongSizeX=The size of your picture must be at least {0} pixels wide.
+--.error.picture.wrongSizeY=The size of your picture must be at least {0} pixels tall.
 
 
 ##  modal/AccountFusionFacebookModal/view.html
---.account.fusion.modal.title=Fusion de compte
+--.account.fusion.modal.title=Merging Account
 
 
 
 
 ##  modal/CustomerRegistrationModal/view.html
---.customer.registrationModal.interest.title=Intérêts
---.customer.registrationModal.interest.desc=Sélectionnez vos centres d''intérêts. Ils nous permettront de mieux vous proposer des nouveautés et promotions qui vous correspondent! Vous pouvez également cliquer sur ''passer'' et sélectionner vos intérêts plus tard.
---.loginModal.facebook.btn=Connexion avec Facebook
---.customer.registrationModal.address.desc=Encodez une adresse (domicile, lieu de travail, sport). Vous pourrez utiliser cette adresse pour localiser des magasins aux alentours. Vous pouvez également cliquer sur ''passer'' et encoder votre adresse plus tard.
---.customer.registrationModal.title=Créez un nouveau compte
---.customer.registrationModal.personal.desc=Créez un compte
---.customer.registrationModal.personal.address=Adresse
---.customer.registrationModal.personal.title=Personnelle
---.registrationModal.facebook.btn=Enregistrez-vous avec Facebook.
---.registrationModal.toBusinessRegistration=Vous êtes commerçant? Cliquez ici!
+--.customer.registrationModal.interest.title=Interests
+--.customer.registrationModal.interest.desc=Select your interests. It will allow us to better provide you with new products and promotions that suits you ! You can also click on "next " and select your interests later.
+--.loginModal.facebook.btn=Login with Facebook
+--.customer.registrationModal.address.desc=Fill in an address (home, workplace, sport). You can use this adress to locate stores nearby. You can also click on "later" and encode your address later.
+--.customer.registrationModal.title=Create a new account
+--.customer.registrationModal.personal.desc=Create an account
+--.customer.registrationModal.personal.address=Adress
+--.customer.registrationModal.personal.title=Personal
+--.registrationModal.facebook.btn=Register with Facebook.
+--.registrationModal.toBusinessRegistration=You are a Storekeeper ? Click here!
 
 ##  view/home.html
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
---.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté!
---.registration.facebook.someDataEmpty=Certaines données sont manquantes. Merci de les compléter avant de passer à l''étape suivante.
+--.customer.registrationModal.alredyRegistred.success=This Facebook account is already registered. You are now connected!
+--.registration.facebook.someDataEmpty=Some information are missing.Thank you to complete them before proceeding to the next step.
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
 
 ##  be/lynk/server/dto/BusinessDTO.java
---.validation.dto.phone=Numéro de téléphone valide
---.validation.dto.url=Url valide (commencez avec http://)
+--.validation.dto.phone=Phone number valid
+--.validation.dto.url=Url valid (Begin with http://)
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=-
---.error.facebook.notAccountFound=Ce compte Facebook n''est pas enregistré. Pour vous enregistrer, suivez un des deux liens ci-dessous.
---.error.account.withoutLoginCredential=Ce compte utilise le système de connexion de Facebook et n''utilise aucun mot de passe.
---.error.account.emailUnknown=Cette adresse email est inconnue.
---.error.googleMap=Google Map a rencontré une erreur.
---.error.wrongAddress=Cette adresse est inconnue de Google Map. Merci d''en renseigner une autre.
---.error.search.wrongCriteria=Un des critères de sélection ne correspond pas.
---.error.address.nameNotExists=Le nom est manquant.
---.error.address.wrongOldPassword=L''ancien mot de passe ne correspond pas.
---.error.address.nameAlreadyUsed=Ce nom a déjà été utilisé par un autre utilisateur. Merci d''en choisir un nouveau!
---.error.address.TechnicalName=Ce nom de position n''est pas valide.
+--.error.facebook.notAccountFound=This Facebook account is not recorded. To register, follow one of the two links below.
+--.error.account.withoutLoginCredential=This account uses the connection system of Facebook and need no password.
+--.error.account.emailUnknown=This email address is unknown.
+--.error.googleMap=Google Map encountered an error.
+--.error.wrongAddress=This address is unknown on Google Map. Thank you to fill in another one in order to proceed.
+--.error.search.wrongCriteria=One of the selection criteria does not match.
+--.error.address.nameNotExists=The name is missing.
+--.error.address.wrongOldPassword=The old password does not match.
+--.error.address.nameAlreadyUsed=This name has already been used by another user. Thank you to choose a new one !
+--.error.address.TechnicalName=This position name is invalid.
 
 ##  view/business_registration.html
 
 ##  directive/form/business/BusinessFormCtrl.js
---.business.website=Site web (en option)
---.business.contactEmail=Email de contact
---.validation.dto.notNull=Ce champs ne peut pas être laissé vide.
+--.business.website=Web site (in option)
+--.business.contactEmail=Contact email
+--.validation.dto.notNull=This field can not be left blank.
 
 ##  view/business_welcome.html
-###--.business.profile.businessCategory=Type de commerce
+###--.business.profile.businessCategory=Type of store
 
 ##  modal/BusinessRegistrationModal/view.html
---.business.registrationModal.category.title=Catégorie de commerce
---.business.registrationModal.business.desc=Indiquez ici les informations relatives à votre commerce
---.business.registrationModal.title=Créez votre commerce.
---.business.registrationModal.business.title=Information du commerce.
---.business.registrationModal.category.desc=Indiquez ici la catégorie qui correspond le mieux à votre commerce. Si vous ne retrouvez aucune catégorie correspondant à votre commerce, signalez le nous via l''adresse hello@gling.be.
---.business.registrationModal.address.subtitle=Encodez l''adresse de votre commerce.
+--.business.registrationModal.category.title=Category of store
+--.business.registrationModal.business.desc=Enter here the information related to your store.
+--.business.registrationModal.title=Create your Store.
+--.business.registrationModal.business.title=Information of your Store.
+--.business.registrationModal.category.desc=Enter here the category that best fits to your store. If you can not find any category for your store, inform us by sendind us an email to hello@gling.be.
+--.business.registrationModal.address.subtitle=Fill in your store adress.
 
 ##  directive/form/address/AddressFormCtrl.js
---.form.address.field.name=Type
---.form.address.field.street=Rue / Numéro
---.form.address.field.zip=Code postal
---.form.address.field.city=Ville
---.address.type.home=Mon domicile
---.address.type.other=Autre...
---.address.type.work=Mon travail
+--.form.address.field.name=Name
+--.form.address.field.street=Street / Number
+--.form.address.field.zip=Zip Code 
+--.form.address.field.city=City
+--.address.type.home=My home
+--.address.type.other=Other...
+--.address.type.work=My work
 --.address.customName.fieldTitle=Nom
 
 ##  directive/form/businessCategory/template.html
---.businessCategory.column.subcategory=Groupe
+--.businessCategory.column.subcategory=Group
 --.businessCategory.column.category=Section
---.businessCategory.column.subsubcategory=Catégorie
+--.businessCategory.column.subsubcategory=Category
 
 
 ##  modal/LoginModal/view.html
---.loginModal.toBusinessRegistration=Je suis un commerçant.
---.loginModal.toCustomerRegistration=S''enregistrer!
---.loginModal.notRegisterYet=Pas encore enregistré(e)?
+--.loginModal.toBusinessRegistration=I'm a storekeeper.
+--.loginModal.toCustomerRegistration=Register in!
+--.loginModal.notRegisterYet=Not yet registered ?
 
 
 ##  be/lynk/server/views/template.scala.html (javascript library )
---.welcome.myBusiness=Mon commerce
---.welcome.search=Que cherchez-vous?
+--.welcome.myBusiness=My Store
+--.welcome.search=What are you looking for ?
 --.site.name=Gling
---.welcome.serach.advanced.criteria=Critères
+--.welcome.serach.advanced.criteria=Criteria
 
 ##  view/profile.html
---.customer.profile.myAddresses=Adresses
---.customer.profile.personalInformation=Moi
---.customer.profile.interest=Intérêts
---.customer.profile.create=Créer
+--.customer.profile.myAddresses=Adress
+--.customer.profile.personalInformation=Me
+--.customer.profile.interest=Interestets
+--.customer.profile.create=Create
 
 ##  modal/EditCustomerInterestModal/view.html
---.customer.editInterestModal.title=Modifier mes intérêts
+--.customer.editInterestModal.title=Change my interests
 
 
 ##  directive/form/login/template.html
---.login.form.button.forgotPassword=Mot de passe oublié?
+--.login.form.button.forgotPassword=Password forgotten?
 
 
---.email.forgotPassword.subject=Votre nouveau mot de passe
---.email.forgotPassword.body=Bonjour {0}<br/><br/>Voici votre nouveau mot de passe : {1}
+--.email.forgotPassword.subject=Your new password
+--.email.forgotPassword.body=Hello {0} <br/> Here is your new password : {1}
 
 
 ##  directive/form/promotion/PromotionFormCtrl.js
---.promotion.minimalQuantity=Quantité minimum
---.promotion.endDate=Date de fin
---.promotion.quantity=Quantité
---.promotion.unit=Unité (en option)
---.promotion.startDate=Date de début
---.promotion.offPrice=Prix réduit
---.promotion.validation.offPrice=Le prix réduit doit être inférieur au prix initial.
---.promotion.offPercent=Pourcentage de réduction
---.promotion.validation.minimalQuantityMustBeLowerThanQuantity=La quantité minimale doit être inférieure à la quantité totale proposée.
---.promotion.illustration=Photo (en option)
---.promotion.originalUnitPrice=Prix initial
---.promotion.validation.offPercent=La réduction doit être comprise entre 1 et 99%.
---.promotion.completePromotion=Créer une promotion en affichant un prix.
---.promotion.simplePromotion=Créer une promotion sans afficher de prix.
+--.promotion.minimalQuantity=Minimum Quantity
+--.promotion.endDate=End date
+--.promotion.quantity=Quantity
+--.promotion.unit=Unit (in option)
+--.promotion.startDate=Start date
+--.promotion.offPrice=Reduced price
+--.promotion.validation.offPrice=The reduced price must be lower than the initial price.
+--.promotion.offPercent=Pourcent of reduction
+--.promotion.validation.minimalQuantityMustBeLowerThanQuantity=The minimum quantity should be less than the total amount quantity proposed.
+--.promotion.illustration=Picture (in option)
+--.promotion.originalUnitPrice=Initial Price
+--.promotion.validation.offPercent=The reduction must be between 1 and 99%.
+--.promotion.completePromotion=Create a promotion by displaying a price.
+--.promotion.simplePromotion=Create a promotion without displaying price.
 
 
 ##  view/mobile/business_registration.html
---.page.business_registration.title=Inscription
+--.page.business_registration.title=Registration
 
 ##  view/web/business_welcome.html
 
 ##  modal/PromotionModal/view.html
---.promotion.modal.title.create=Créer une nouvelle promotion
---.promotion.modal.title.update=Editer une promotion
+--.promotion.modal.title.create=Create a new promotion
+--.promotion.modal.title.update=Edit a promotion
 
 ##  view/mobile/customer_registration.html
---.page.customer_registration.title=Inscription
+--.page.customer_registration.title=Registration
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Bienvenue sur Gling {0}!<br/><br/>...
---.email.registration.business.subject=Bienvenu sur Gling !
---.email.registration.customer.body=Bienvenue !<br/><br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces favoris selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be<br/><br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
---.email.registration.customer.subject=Bienvenue sur Gling !
+--.email.registration.business.body= Welcome on Gling {0} ! <br/> ...
+--.email.registration.business.subject=Welcome on Gling !
+--.email.registration.customer.body=Welcome! <br/> We are delighted to welcome you on Gling. You are now a single Glinger and have the ability to follow your favorite stores according to your desires and needs! <br/> We are at your disposal for any questions or comments you should have on hello@gling.be <br / > <br/> forward to seeing you on Gling ! <br/> Gling team
+--.email.registration.customer.subject=Welcome on Gling
 
 ##  view/mobile/welcome.html
---.mobile.welcome.toCustomerRegistration.btn=Inscrivez-vous maintenant!
---.page.welcome.title=Bienvenue!
---.mobile.welcome.login.btn=Connexion
+--.mobile.welcome.toCustomerRegistration.btn=Register now!
+--.page.welcome.title=Welcome!
+--.mobile.welcome.login.btn=Login
 
 
 ##  directive/field/dirFieldDocument/template.html
---.download.button.new=Télécharger un fichier
---.download.button.update=Modifier le fichier
+--.download.button.new=Download a file
+--.download.button.update=Change a file
 
 ##  modal/AddressModal/view.html
---.account.address.modal.title.create=Créer une nouvelle adresse
---.account.address.modal.title.update=Editer une adresse
+--.account.address.modal.title.create=Create a new adress
+--.account.address.modal.title.update=Edit an adress
 
 ##  controller/web/BusinessWelcomeCtrl.js (//)
---.error.validation.image=Sélectionner une image
+--.error.validation.image=Select a picture
 
 ##  modal/BusinessNotificationModal/view.html
---.businessNotification.modal.title.update=Editer une annonce
---.businessNotification.modal.title.create=Créer une annonce
+--.businessNotification.modal.title.update=Edit an announcement
+--.businessNotification.modal.title.create=Create an announcement
 
 ##  directive/form/businessNotification/BusinessNotificationFormCtrl.js
---.promotion.validation.endDateBeforeStartDate=La date de fin doit être postérieure la date de début.
---.promotion.interest=Intérêt
---.promotion.interest.help=Si votre publication correspond à un intérêt de vos clients, sélectionnez le ci-dessus. (en option).
+--.promotion.validation.endDateBeforeStartDate=The end date must be after the start date.
+--.promotion.interest=Interest
+--.promotion.interest.help=If your publication matches a customer''s interest, select it in the above list. (optional).
 
 ## day
-day_abrv_monday=Lu
-day_abrv_tuesday=Ma
-day_abrv_wednesday=Me
-day_abrv_thusday=Je
-day_abrv_friday=Ve
+day_abrv_monday=Mo
+day_abrv_tuesday=Tu
+day_abrv_wednesday=We
+day_abrv_thusday=Th
+day_abrv_friday=Fr
 day_abrv_saturday=Sa
-day_abrv_sunday=Di
+day_abrv_sunday=Su
 
 
 
 ##  view/web/business.html (landscape )
---.business.page.edit.illustration=Editer le logo
---.business.page.edit.business=Editer les informations
---.business.page.edit.landscape=Editer la photo de couverture
---.business.profile.businessSchedule=Horaires
---.business.page.edit.editSwitchEdit=Vision édition
---.business.page.edit.editSwitchDisplay=Vision client
---.business.page.publication=Publier ma page!
---.business.page.edit.description=Bienvenue sur votre page de commerce ! Changez ici les informations concernant votre commerce, publiez de nouvelles promotions, actualités, etc.
---.business.page.edit.descriptionPublished=Votre page est actuellement publique. Vous pouvez la rendre privée si vous désirez changer des informations déterminantes telles que l''adresse ou le nom.
---.business.page.edit.description.waitConfirmation=Votre page est en attente de confirmation par notre équipe.
---.business.page.edit.description.notPublished=Votre page est actuellement inaccessible au public et personne ne peut consulter votre page ou vos publications. Avant de publier votre page, assurez-vous d''avoir complété votre page de commerce (voir l''état de ''Progression de ma page'' à gauche). Si vous êtes prêts à rendre votre page publique, cliquez simplement sur le bouton ''Rendre ma page publique'' ci-dessous. Votre page sera en attente de confirmation par notre équipe.
---.business.page.stopPublication.window.flash=Votre commerce est maintenant en mode édition. N''oubliez pas de le publier à nouveau à l''aide du bouton ''publier'' une fois vos modifications finalisées.
---.business.page.stopPublication.window.message=En passant en mode édition, votre commerce et ses annonces ne seront plus visible tant que vous n''aurez pas validé vos modifications. Êtes-vous certain(e) de vouloir continuer ?
---.business.page.askPublication.window.flash=Votre commerce est maintenant en attente de validation par notre équipe.
---.business.page.askPublication.window.message=Une fois votre demande de publication envoyée, vous ne pourrez plus modifier le nom, l''adresse et le numéro de TVA. Votre commerce sera visible dès qu''il sera validé par notre équipe. Il vous sera alors possible de publier des actualités et des promotions. Êtes-vous certain(e) de vouloir continuer ?
---.business.page.stopPublication=Republier mon commerce
---.business.publication.btn.notification=Publier une actualité
---.business.publication.btn.promotion=Publier une promotion
---.business.gallery=Galerie
---.business.page.cancelPublishRequest=Annuler la demande de publication
+--.business.page.edit.illustration=Edit a logo
+--.business.page.edit.business=Edit informations
+--.business.page.edit.landscape=Edit your cover picture
+--.business.profile.businessSchedule=Timetable
+--.business.page.edit.editSwitchEdit= Edition vision
+--.business.page.edit.editSwitchDisplay= Client vision
+--.business.page.publication=Post my page!
+--.business.page.edit.description=Welcome to your Store page ! Change here the information about your Store, publish new promotions, news, etc.
+--.business.page.edit.descriptionPublished=Your page is currently public. You can make it private if you want to change critical information such as address or name.
+--.business.page.edit.description.waitConfirmation=Your page is awaiting a confirmation by our team.
+--.business.page.edit.description.notPublished=Your page is now inaccessible to the public and no one can see your page or your publications. Before you publish your page, make sure you have fully completed your store page (see the status of "Progress of my page" on left). If you are ready to make your page public, just click on the button "Turn my page public" below. Your page will be confirmed by our team.
+--.business.page.stopPublication.window.flash=Your Store page is now in edit mode. Don''t forget to publish it again by using the button "publish" once you have finalized the changes.
+--.business.page.stopPublication.window.message=Switching to the edit mode has for consequences that your store and its announcements will not be visible until you will not validate your changes. Are you sure you want to continue?
+--.business.page.askPublication.window.flash=Your Store is now awaiting validation from our team.
+--.business.page.askPublication.window.message=Once you submit your request for publication, you can not change the name, address and VAT number of your store. Your store will be visible from the public after being validated by our team. You will then be able to publish news and promotions. Are you sure you want to continue?
+--.business.page.stopPublication=Republish my store
+--.business.publication.btn.notification=Post a news
+--.business.publication.btn.promotion=Post a promotion
+--.business.gallery=Gallery
+--.business.page.cancelPublishRequest=Cancel the request to published
 
 
 
 
 ##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)
---.registration.business.flash.success=Votre commerce est maintenant enregistré! Vous pouvez complèter votre page commerce avant de la rendre publique et visible auprès des utilisateurs de Gling !
+--.registration.business.flash.success=Your store is now registered ! You can complete your trade page before making it public and visible to users of Gling !
 
 ##  controller/admin/AdminBusinessCtrl.js (// show first page)
---.admin.business.confirmPublication.modal.message=Confirmer la publication de ce commerce?
+--.admin.business.confirmPublication.modal.message=Confirm the publication of this store?
 --.admin.business.confirmPublication.modal.title=Confirmation
 
 ##  view/admin/adminBusiness.html
---.admin.business.confirmPublication=Confirmer la publication
---.admin.business.toBusiness=Voir la page
+--.admin.business.confirmPublication=Confirm the publication
+--.admin.business.toBusiness=See the page
 
 ##  controller/web/BusinessCtrl.js (//loading)
---.business.edit.category.modal.title=Modifier la catégorie
---.business.edit.schedule.modal.title=Modifier l''horaire
---.business.edit.landscape.modal.title=Modifier la photo d''arrière-plan
---.business.edit.illustration.modal.title=Modifier le logo
---.business.edit.address.modal.title=Modifier l''adresse
---.business.page.stopPublication.window.title=Passer en mode édition
---.business.edit.data.modal.title=Modifier les données du commerce
---.business.page.askPublication.window.title=Publier votre commerce
---.business.page.cancelPublishRequest.window.flash=Votre requête a bien été annulée.
---.business.page.cancelPublishRequest.window.message=Êtes-vous certain de vouloir annuler votre requête de publication?
---.business.modal.gallery.title=Galerie
---.business.page.cancelPublishRequest.window.title=Annuler la requête de publication
---.business.publication.archive=Publications archivées
---.business.publication.previsualization=Publications en attente
---.business.publication.basic=Publications actives
+--.business.edit.category.modal.title=Edit the category
+--.business.edit.schedule.modal.title=Edit the schedule
+--.business.edit.landscape.modal.title=Edit the backround picture
+--.business.edit.illustration.modal.title=Edit the logo
+--.business.edit.address.modal.title=Edit the adress
+--.business.page.stopPublication.window.title=Switch to edition mode
+--.business.edit.data.modal.title=Edit Store informations and data
+--.business.page.askPublication.window.title=Publish your store
+--.business.page.cancelPublishRequest.window.flash=Your request has been canceled.
+--.business.page.cancelPublishRequest.window.message=Are you sure you want to cancel your publication request?
+--.business.modal.gallery.title=Gallery
+--.business.page.cancelPublishRequest.window.title=Cancel your publication request
+--.business.publication.archive=Archived publications
+--.business.publication.previsualization=Publications on hold
+--.business.publication.basic=Active publications 
 
 
 
 
 
 ##  directive/component/searchResult/template.html
---.search.category=Catégories
+--.search.category=Category
 --.search.publication=Publications
---.search.business.seeMore=Voir plus de commerces...
---.search.seeMore=Voir plus de résultats...
---.search.business=Commerces
---.search.nothing=Aucun résultat
---.search.publication.seeMore=Voir plus de publications...
---.search.category.seeMore=Voir plus de catégories…
+--.search.business.seeMore=See more stores...
+--.search.seeMore=See more results...
+--.search.business=Stores
+--.search.nothing=No result
+--.search.publication.seeMore=See more publications ...
+--.search.category.seeMore=See more categories…
 
 ##  be/lynk/server/model/SearchCriteriaEnum.java
---.search.criteria.business=Commerces
+--.search.criteria.business=Stores
 --.search.criteria.publication=Publications
---.search.criteria.category=Catégories
+--.search.criteria.category=Categories
 
 
 ##  directive/form/businessSocialNetwork/template.html
---.business.socialNetwork.form.description=Ajoutez ici les liens vers les autres plateformes sur lesquelles votre établissement est également présent.
+--.business.socialNetwork.form.description=Add here the links to other platforms on which your store is also present.
 
-##  view/web/search_page.html (business )
---.list.nothing=Aucun résultat trouvé.
+##  view/web/search_page.html (business)
+--.list.nothing=No results found.
 
 ##  directive/field/dirFieldImageMutiple/template.html
 
 ##  directive/component/publicationListForBusiness/template.html (start date )
---.publication.promotionData=Détails de la promotion
+--.publication.promotionData=Promotion details
 --.publication.promotionTo=Promo
---.publication.publishTo=Publié le
---.publication.previsualization=Aperçu
+--.publication.publishTo=Published on 
+--.publication.previsualization=Overview
 
 
 
 
 ##  dist/templateCacheWeb.js
---.business.socialNetwork.other=Autre
---.gallery.modal.next=Suivant
---.gallery.modal.previous=Précédent
---.welcome.myBusinesses=Mes commerces favoris
+--.business.socialNetwork.other=Other
+--.gallery.modal.next=Next
+--.gallery.modal.previous=Previous
+--.welcome.myBusinesses=My favorite stores
 
 ##  controller/web/WelcomeCtrl.js (//use the model)
---.position.current=Ma position
+--.position.current=My position
 
 ##  directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js (//www.facebook.com/.*$)",)
---.business.socialNetwork.opinion=Commentaires & Avis
---.business.socialNetwork.delivery=Livraison
---.business.socialNetwork.ecommerce=Vente en ligne
---.business.socialNetwork.reservation=Réservation
+--.business.socialNetwork.opinion=Comments & Reviews
+--.business.socialNetwork.delivery=Delivry
+--.business.socialNetwork.ecommerce=Online sales
+--.business.socialNetwork.reservation=Booking
 
 ##  view/mobile/forgotPassword.html
---.mobile.forgotPassword.btn=Mot de passe oublié?
---.forgotPassword.desc=Indiquez votre adresse email et un email vous sera envoyé avec un nouveau mot de passe.
---.page.forgot_password.title=Mot de passe oublié?
+--.mobile.forgotPassword.btn=Forgotten password?
+--.forgotPassword.desc=Enter your email address and you will receive an email with a new password.
+--.page.forgot_password.title=Forgotten password?
 
 ##  view/mobile/profile.html (body )
---.page.profile.title=Mon profil
---.customer.profile.address.create=Créer une nouvelle adresse.
+--.page.profile.title=My profile
+--.customer.profile.address.create=Create a new address.
 
 
 
 ##  controller/mobile/HomeCtrl.js (//search function)
---.position.newAddress=Créer une nouvelle adresse…
+--.position.newAddress=Create a new address.
 
 
 
 ##  directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js (//scrolling)
---.business.publication.remove.confirmationModal.title=Supprimer un publication
---.business.publication.remove.confirmationModal.body=Êtes-vous sûr de vouloir supprimer cette publication?
+--.business.publication.remove.confirmationModal.title=Delete a publication
+--.business.publication.remove.confirmationModal.body=Are you sure you want to delete this publication ?
 
 ##  view/web/followed_business_page.html
---.followedBusiness.table.business=Commerce
---.followedBusiness.table.followingFrom=Suivi depuis
---.followedBusiness.table.notification=Recevoir les notifications
---.followedBusiness.table.categories=Catégories
+--.followedBusiness.table.business=Store
+--.followedBusiness.table.followingFrom=Followed since
+--.followedBusiness.table.notification=Receive notifications
+--.followedBusiness.table.categories=Categories
 
 #--.gallery.title=Galerie
---.publication.description=Description (en option)
---.followed-business.checkAll=Tout sélectionner
---.followed-business.uncheckAll=Déselectionner
+--.publication.description=Description (in option)
+--.followed-business.checkAll=Select all
+--.followed-business.uncheckAll=Deselect
 
 
---.home.interest-switch.help=Triez selon votre position ou vos commerces favoris.
---.home.interest.help=Triez selon vos envies.
---.home.localisation.help=Triez selon votre position.
---.home.followning.help=Triez selon vos commerces favoris.
---.home.emptyResult.followed=Aucun de vos commerces favoris ne semble avoir publié de nouveautés ou de promotions. Les commerces ci-dessous pourront peut-être vous satisfaire!
---.home.emptyResult.followedWithInterest=Aucune publication de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
---.home.emptyResult.newsFeed=Aucun commerce ne semble avoir publié de nouveautés ou de promotions.. Les commerces ci-dessous pourront peut-être vous satisfaire!
---.home.emptyResult.newsFeedWithInterest=Aucune publication ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.interest-switch.help=Sort according to your position or your favorite stores.
+--.home.interest.help=Sort according to your desires.
+--.home.localisation.help=Sort according to your position.
+--.home.followning.help=Sort according to your favorite stores.
+--.home.emptyResult.followed=None of your favorite stores appears to have published a news or a promotions. Don''t worry, the stores below may be able to satisfy you! have a look!
+--.home.emptyResult.followedWithInterest=None of the posts of your favorite store currently seems to respond to your envy. Don''t worry, the stores below may be able to satisfy you! have a look
+--.home.emptyResult.newsFeed=None of the stores appears to have issued news or promotions... Don''t worry, the stores below may be able to satisfy you ! have a look
+--.home.emptyResult.newsFeedWithInterest=None of the current publication  seems to respond only to your envy. Don''t worry, the shops below may be able to satisfy you! have a look
 
 
 
---.legal.title=Je suis les mentions légales
---.help.title=Je suis une aide
---.business.registrationModal.personal.desc=Indiquez ici vos informations personnelles
+--.legal.title=I am the legal notice
+--.help.title=I am an assistance
+--.business.registrationModal.personal.desc=Type here your personal information
 
 --.headerBar.logo.label=Home
---.home.interest.arrow.label=D''autres envies?
---.business.schedule.edit.modal.description=Indiquez ici vos heures d''ouvertures et d''affluence connues.
---.business.logo.edit.modal.description=Insérez votre logo en choisissant de préférence une version de forme carrée afin de correspondre au mieux au design de la page. La photo doit faire au minimum 200 pixels par 200 pixels
---.business.landscape.edit.modal.description=Insérez votre photo de fond. La photo doit faire au minimum 1000 pixels de large et 300 pixels de haut
+--.home.interest.arrow.label=Any other desire?
+--.business.schedule.edit.modal.description=Enter here your openings hours and known affluence.
+--.business.logo.edit.modal.description=Insert your logo preferably choosing a square version to correspond best to the page design. The picture must be at least 200 pixels by 200 pixels.
+--.business.landscape.edit.modal.description=Insert your background picture. The picture must be at least 1000 pixels wide and 300 pixels high.
 --.business.social.edit.modal.delivery.desc=Ex. Take Eat Easy, Pizza.be,…
 --.business.social.edit.modal.opinion.desc=Ex. Yelp, Cityplug,…
---.business.edit.socialNetwork.modal.title=Lien(s) utile(s)
+--.business.edit.socialNetwork.modal.title=Useful link(s)
 
---.business.page.management.title=Mon commerce
---.business.management.progression=Progression de ma page
---.business.management.progression.desc=Comment puis-je améliorer ma page de commerce ?
+--.business.page.management.title=My store
+--.business.management.progression=Progression of my page
+--.business.management.progression.desc=How can I improve my store page?
 --.business.status.NOT_PUBLISHED=Non public
 --.business.status.PUBLISHED=Public
---.business.status.WAITING_CONFIRMATION=En attente de confirmation
+--.business.status.WAITING_CONFIRMATION=Awaiting confirmation
 
 
---.town.newsfeed.news=Nouveauté
+--.town.newsfeed.news=Novelty
 --.town.newsfeed.promotion=Promotion
---.home.geolocation.notAccepted=Pour bénéficier de la meilleure expérience possible, veuillez accepter de partager votre position. Autrement, les distances indiquées seront imprécises.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">En savoir plus sur notre politique de confidentialité</a><br/><br/>Si vous ne voulez pas partager votre position, vous pouvez aussi <span class="link" ng-click="createNewAddress()">indiquer votre adresse en cliquant ici</span>
+--.home.geolocation.notAccepted=To get the best possible experience on Gling, please agree to share your location. Otherwise, the distances will be imprecise. Href="/legal/confidentiality?lang={{currentLang}}#location" <br/> <a target="_blank"> Learn more about our privacy policy </a> <br/> If you do not want to share your location, you can <span class = "link" ng- click = " createNewAddress ()"> indicate your address by clicking here </ span>
 
---.footer.legal=Mentions légales
+--.footer.legal=Legal Notice
 --.footer.contact=Contact
---.footer.help=Signaler un problème
+--.footer.help=Report a problem
 
---.business.manager.progress.add.description=Ajouter une description
---.business.manager.progress.add.illustration=Ajouter un logo
---.business.manager.progress.add.landscape=Ajouter une image de fond
---.business.manager.progress.add.gallery=Ajouter une galerie de photos représentative de votre commerce, vos produits phares.
---.business.manager.progress.add.schedule=Ajouter vos heures d''ouverture et d''affluence
---.business.manager.progress.add.socialNetwork=Ajouter des liens vers les réseaux sociaux sur lesquels votre commerce est présent
---.business.manager.progress.help=Suiver le guide
---.business.manager.progress.createPublicationTitle=Créer une publication
---.business.manager.createPublication.disabled.desc=Vous ne pouvez pas encore créer de publication pour l''instant car votre page n''est pas encore publique. Pour rendre votre page publique, cliquez sur le bouton ''Publier ma page!'' et attendez qu''un membre de notre équipe valide votre demande.
---.followWidget.message.remove=Ce commerce a bien été supprimer de vos favoris.
---.followWidget.message.add=Ce commerce a bien été ajouté à vos favoris!
---.followWidget.stopFollow=Retirer de mes favoris
---.followWidget.follow=Ajouter à mes favoris
---.business.page.management.status=Statut de votre page :
+--.business.manager.progress.add.description=Add a description
+--.business.manager.progress.add.illustration=Add a logo
+--.business.manager.progress.add.landscape=Add a backround picture
+--.business.manager.progress.add.gallery=Add a representative picture gallery of your store, your best products, etc...
+--.business.manager.progress.add.schedule=Add your opening hours and affluence.
+--.business.manager.progress.add.socialNetwork=Add links to the social networks on which your store is present.
+--.business.manager.progress.help=Follow the guide!
+--.business.manager.progress.createPublicationTitle=Create a publication
+--.business.manager.createPublication.disabled.desc=You can not create a publication for the moment because your page is not public yet. To make your public page, click on the"Publish my page!" button and wait untill a member of our team validates your request.
+--.followWidget.message.remove=This store has been deleted from your favorites.
+--.followWidget.message.add=This store has been added to your favorites!
+--.followWidget.stopFollow=Remove from my favorites
+--.followWidget.follow=Add to my favorites
+--.business.page.management.status=Status of your page :
 
---.schedule.closed=Fermé
---.schedule.light=Ouvert
---.schedule.moderate=Ouvert (Affluence moyenne)
---.schedule.heavy=Ouvert (Affluence forte)
---.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous enregister.
---.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
---.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
---.business.page.management.help.title=Un petit coup de pouce ?
---.business.page.management.contact.btn=Contactez-nous!
---.error.promotion.duration.tooLong=La durée maximum d''une promotion est de {0} jours
---.error.notification.duration.tooLong=La durée maximum d''une actualité est de {0} jours
---.error.promotion.TooMuchToday=Vous avez déjà publié {0} publications pour cette semaine. Attendez demain pour publier à nouveau
---.error.publication.startDateBeforeNow=La publication doit commencer au plus tard maintenant
+--.schedule.closed=Closed
+--.schedule.light=Open
+--.schedule.moderate=Open (middle Affluence)
+--.schedule.heavy=Ouvert (high Affluence)
+--.loginModal.help.followMode=To select your favorite stores and check their updates, you must be registered or login.
+--.loginModal.help.follow=To follow a store, you have to be registered or logged in.
+--.loginModal.help.address=To add an address, you have to be registered or logged in.
+--.business.page.management.help.title=Need a little help ?
+--.business.page.management.contact.btn=Contact us!
+--.error.promotion.duration.tooLong=The maximum duration of a promotion is {0} days
+--.error.notification.duration.tooLong=The maximum duration of a news is {0} days
+--.error.promotion.TooMuchToday=You have already issued {0} publications for this week. Wait until tomorrow to be able to publish again
+--.error.publication.startDateBeforeNow=Publication shall begin at the latest from now
 
 ##  directive/form/account/AccountFormCtrl.js (//)
---.registration.form.acceptSla=J''accepte les termes et conditions.
---.sla.modal.title=Termes et conditions
---.registration.form.acceptSla.error=Vous devez accepter les termes et conditions pour vous inscrire
---.accountForm.seeSLA=Voir les Termes et Conditions
+--.registration.form.acceptSla=I agree to the Terms and Conditions.
+--.sla.modal.title=Terms and Conditions.
+--.registration.form.acceptSla.error=You must accept the terms and conditions in order to be able to register
+--.accountForm.seeSLA=See the Terms and Conditions.
 
 ##  directive/form/contact/ContactFormCtrl.js (//)
 --.contactForm.message=Message
---.contactForm.subject=Sujet
+--.contactForm.subject=Subject
 
 ##  be/lynk/server/controller/technical/businessStatus/BusinessStatus.java
 --.business.status.published=Public
 --.business.status.not_public=Non public
---.business.status.waiting_confirmation=En attente de validation
+--.business.status.waiting_confirmation=Waiting for validation
 --.generic.description=Description
---.mobile.welcome.registration.desc=Vous n''avez pas encore de compte ?
---.mobile.welcome.login.desc=Avez-vous  déjà un compte Gling ?
---.business.page.edit.gallery=Galerie
---.footer.aboutGling=A propos de Gling
---.business.page.management.changeStatus=Changer de statut
---.publication.modal.publicAndShare=Sauver et partager sur Facebook
+--.mobile.welcome.registration.desc=You do not have an account yet ?
+--.mobile.welcome.login.desc=Do you have already a Gling an account ?
+--.business.page.edit.gallery=Gallery
+--.footer.aboutGling=About Gling
+--.business.page.management.changeStatus=Change status
+--.publication.modal.publicAndShare=Save and share on Facebook
 
---.business.gallery.download.help=Insérez vos photos pour créer une galerie représentative de votre établissement. La taille de vos photos doit faire 600 pixels de large minimum.
---.business.manager.createPublication.enabled.desc=Attention, votre compte vous permet d''actuellement publier un maximum de 2 messages par jour (promotion ou actualité). Notez également qu''il n''est pas possible de modifier une publication lorsque vous l''avez validée.
---.business.vta=Numéro de TVA
---.validation.dto.vta=Numéro de TVA invalide
---.error.business.hiddenAndNotMine=Ce commerce n''est actuellement pas visible. Si ce commerce est le vôtre, veuillez vous connecter pour poursuivre votre navigation
---.customer.registrationModal.help.business=Vous êtes commerçant? Utilisez notre site web www.gling.be pour enregistrer votre commerce (indisponible sur smartphone ou tablette)
---.registration.facebook.validSLAMessage=Veuillez accepter les termes et conditions pour terminer votre inscription
---.generic.loading=Veuillez patienter
---.generic.registration=S''enregistrer
---.page.legal.title=Mentions légales
---.error.business.notYours=Vous n''avez pas les droits pour éditer ce commerce.
+--.business.gallery.download.help=Insert your pictures to create a gallery representative of your store. The size of your pictures must be 600 pixels wide minimum.
+--.business.manager.createPublication.enabled.desc=Becarefull, your account allows you to publish up to 2 posts per day (promotion or news). Also note that it is not possible to change a publication when you have enabled it.
+--.business.vta=VAT number
+--.validation.dto.vta=Invalid VAT number
+--.error.business.hiddenAndNotMine=This store is currently not visible. If this store is yours, please log in to continue navigating
+--.customer.registrationModal.help.business=You are a storekeeper ? Use our website www.gling.be to register your store (not available on smartphone or tablet )
+--.registration.facebook.validSLAMessage=Please accept the terms and conditions to complete your registration
+--.generic.loading=Please wait
+--.generic.registration=Register in
+--.page.legal.title=Legal Notice
+--.error.business.notYours=You do not have rights to edit this store.
 
---.business.follow.stopFollowing=Arrêter de suivre
---.followed-business.page.title=Mes commerces suivis
+--.business.follow.stopFollowing=Stop following
+--.followed-business.page.title=My followed stores
 
 
 --.welcome.start=Entrer!
---.welcome.customer.title=Vous aimez vos commerces ?
---.welcome.customer.subTitle1=VOTRE RESEAU
---.welcome.customer.content1=Restaurants, boutiques de vêtements, théâtres, magasins de décoration,… Gling rassemble tous les types d’établissements.
---.welcome.customer.subTitle2=PRES DE CHEZ VOUS
---.welcome.customer.content2=Localisez-vous à la maison, au travail ou ailleurs et découvrez ce qu’il se passe dans vos commerces de proximité.
---.welcome.customer.subTitle3=VOS ENVIES
---.welcome.customer.content3=Vous avez envie de manger, voyager, décorer, prendre soin de vous? Triez les publications selon vos envies.
---.welcome.business.subTitle1=FIDELISATION
---.welcome.business.content1=Renforcez le lien de fidélité avec vos clients en gardant un contact régulier.
---.welcome.business.subTitle2=NOUVEAUX CLIENTS
---.welcome.business.content2=Faites découvrir votre commerce grâce à la géolocalisation ou au réseau de vos clients.
---.welcome.business.subTitle3=OUTIL QUOTIDIEN
---.welcome.business.content3=Organisez et communiquez plus facilement vos actions spéciales.
---.welcome.registration=Enregistrez-vous
---.welcome.business.title=Vous êtes un commerce ?
+--.welcome.customer.title=Vous like your stores ?
+--.welcome.customer.subTitle1=YOUR NETWORK
+--.welcome.customer.content1=Restaurants, boutiques, theaters,decoration stores ... Gling brings together all types of stores.
+--.welcome.customer.subTitle2=NEXT TO YOU
+--.welcome.customer.content2=Locate yourself at home, at work or elsewhere and find out what''s happening in your local stores.
+--.welcome.customer.subTitle3=YOUR DESIRES
+--.welcome.customer.content3=You feel like wanting to eat, travel, decorate or take care of yourself ? Sort the publications according to your desires.
+--.welcome.business.subTitle1=LOYALTY
+--.welcome.business.content1=Reinforce the loyalty relationship with your customers by keeping them in regular contact.
+--.welcome.business.subTitle2=NEW CLIENTS
+--.welcome.business.content2=Lett you store be known thanks to geolocation or to your customers network.
+--.welcome.business.subTitle3=DAILY TOOL 
+--.welcome.business.content3=Organize and easily communicate your special actions.
+--.welcome.registration=REgister in
+--.welcome.business.title=Are you a storekeeper?
 --.generic.site=Site
---.interest.selection.window.nothing=Aucun
---.profile.connectedByFacebook=Connecté via Facebook
---.home.mobile.selectInterest=Une envie ?
+--.interest.selection.window.nothing=Nothing
+--.profile.connectedByFacebook=Connected with Facebook
+--.home.mobile.selectInterest=A desire ?
 --.business.action.info=Info
---.business.action.gallery=Galerie
---.business.action.home=Accueil
+--.business.action.gallery=Gallery
+--.business.action.home=Home
 --.generic.notification=Notifications
---.home.emptyResult.moreBusiness=Découvrez également les commerces suivants.
---.position.brussel=Bruxelles
---.message.modal.notLocalised.title=Impossible de vous localiser
---.message.modal.notLocalised.content=Vous devez accepter de partager votre position avant de pouvoir être localisé.
+--.home.emptyResult.moreBusiness=Discover also the following stores.
+--.position.brussel=Brussels
+--.message.modal.notLocalised.title=Unable to locate you.
+--.message.modal.notLocalised.content=You must agree to share your position before they can be located.
 
 
 
---.error.businessApplication.notBusinessAccount=Ce compte n''est pas un compte commerçant. Seuls les comptes commerçants peuvent se connecter via cette application.
---.promotion.dayMax.details=La durée d''une promotion ne peut excéder 14 jours
---.businessNotification.dayMax.details=La durée d''une actualité ne peut excéder 28 jours
---.field.dateSimple.to=Le
---.field.dateSimple.at=à
---.generic.legend=Légende
---.schedule.appointment=Uniquement sur rendez-vous
---.error.customerToBusiness.alreadyBusiness=Vous avez déjà un commerce
---.textReuction.seeMore=Afficher Tout
---.textReuction.seeLess=Masquer
---.imageTool.minimalSize=La taille minimum de l''image doit être de {0} de large et {1} de haut.
---.generic.success=L''opération est un succés
---.publication.success.shareOnFacebook=Partager sur Facebook
---.publication.success.message=Votre publication a bien été créée!
---.publication.editionJustification=Raison de la modification
+--.error.businessApplication.notBusinessAccount=This account is not a storekeeper account. Only the storekeeper accounts can connect with this application.
+--.promotion.dayMax.details=The duration of a promotion may not exceed 14 days.
+--.businessNotification.dayMax.details=The duration of a current not exceeding 28 days
+--.field.dateSimple.to=the
+--.field.dateSimple.at=at
+--.generic.legend=Legend
+--.schedule.appointment=Only by appointment
+--.error.customerToBusiness.alreadyBusiness=You have already a store?
+--.textReuction.seeMore=Display all
+--.textReuction.seeLess=Hide
+--.imageTool.minimalSize=The minimum size of the image must be {0} wide and {1} high.
+--.generic.success=The operation is a success
+--.publication.success.shareOnFacebook=Share on Facebook
+--.publication.success.message=Your publication has been created !
+--.publication.editionJustification=Reason for modification
 
 
---.publication.editByAdmin.email.subject=Modification d''une publication
---.publication.editByAdmin.email.body=Bonjour,<br/><br/>l''une de vos publications ( {0} ) a été modifié par un administrateur de Gling, et ceci parce que votre publication ne respectait pas la charte de publication de Gling. <br/><br/>La raison invoquée par l''administrateur : {1}. <br/><br/>Pensez à consulter nos conseils de publication : <a href="https://www.gling.be/assets/document/business_help.pdf">Télécharger notre guide</a><br/><br/>L''équipe Gling
---.field.imageMultipleResize.resizeModal.title=Recadrer l''image
---.field.imageMultipleResize.minimalHeight=La hauteur minimal de l''image doit être de {0} (actuellement {1})
---.field.imageMultipleResize.minimalWidth=La largeur minimal de l''image doit être de {0} (actuellement {1})
+--.publication.editByAdmin.email.subject=Modifying a publication
+--.publication.editByAdmin.email.body=Hello, <br/> one of your publications ({0}) was amended by Gling, and this because your publication did not respect the publication charter of Gling. <br/> The reason given by the administrator : {1} . <br/> sure to check our publishing advice : <a href="https://www.gling.be/assets/document/business_help.pdf"> Download our </a> < br / guide > <br/> ' Gling team
+--.field.imageMultipleResize.resizeModal.title=Crop the picture
+--.field.imageMultipleResize.minimalHeight=The minimum height of the image must be {0} (currently {1})
+--.field.imageMultipleResize.minimalWidth=The minimum width of the image must be {0} (currently {1})
