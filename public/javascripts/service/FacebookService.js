@@ -188,7 +188,7 @@ myApp.service("facebookService", function ($http, accountService, $locale, langu
 
         $http({
             'method': "GET",
-            'url': "/rest/login/facebook/"+accessToken,
+            'url': "/rest/login/facebook/"+accessToken+"/null",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data) {
             if(data !=null && data != undefined && data != ""){

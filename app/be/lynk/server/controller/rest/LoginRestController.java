@@ -140,12 +140,12 @@ public class LoginRestController extends AbstractRestController {
         //extract DTO
         FacebookAuthenticationDTO dto = initialization(FacebookAuthenticationDTO.class, false, false);
 
-        return loginFacebookSimple(dto.getToken());
+        return loginFacebookSimple(dto.getToken(),dto.getUserId());
 
     }
 
     @Transactional
-    public Result loginFacebookSimple(String facebookToken) {
+    public Result loginFacebookSimple(String facebookToken, String userId) {
 
         initialization();
 

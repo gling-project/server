@@ -3441,25 +3441,31 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
             counter = -1;
             scope.indexSelected = null;
             scope.$watch('getInfo().result', function() {
-              var business, category, publication;
-              if (scope.getInfo().result !== null) {
+              var business, category, publication, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+              if (scope.getInfo().result != null) {
                 counter = -1;
-                for (business in scope.getInfo().result.businesses) {
+                _ref = scope.getInfo().result.businesses;
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                  business = _ref[_i];
                   business.index = ++counter;
                 }
-                if (scope.getInfo().result.businesses !== null && scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile !== true) {
+                if ((scope.getInfo().result.businesses != null) && scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile !== true) {
                   scope.seeMoreBusinessIndex = ++counter;
                 }
-                for (publication in scope.getInfo().result.publications) {
+                _ref1 = scope.getInfo().result.publications;
+                for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                  publication = _ref1[_j];
                   publication.index = ++counter;
                 }
-                if (scope.getInfo().result.publications !== null && scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile !== true) {
+                if ((scope.getInfo().result.publications != null) && scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile !== true) {
                   scope.seeMorePublicationIndex = ++counter;
                 }
-                for (category in scope.getInfo().result.categories) {
+                _ref2 = scope.getInfo().result.categories;
+                for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                  category = _ref2[_k];
                   category.index = ++counter;
                 }
-                if (scope.getInfo().result.categories !== null && scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile !== true) {
+                if ((scope.getInfo().result.categories != null) && scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile !== true) {
                   scope.seeMoreCategoryIndex = ++counter;
                 }
                 scope.seeMoreIndex = ++counter;
@@ -3543,9 +3549,9 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
             scope.goToCategory = function(category) {
               var target;
               target = null;
-              if (category.subSubCategory !== null) {
+              if (category.subSubCategory != null) {
                 target = category.subSubCategory.translationName;
-              } else if (category.subCategory !== null) {
+              } else if (category.subCategory != null) {
                 target = category.subCategory.translationName;
               } else {
                 target = category.category.translationName;
@@ -4269,7 +4275,7 @@ myApp.service("facebookService", ['$http', 'accountService', '$locale', 'languag
 
         $http({
             'method': "GET",
-            'url': "/rest/login/facebook/"+accessToken,
+            'url': "/rest/login/facebook/"+accessToken+"/null",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data) {
             if(data !=null && data != undefined && data != ""){

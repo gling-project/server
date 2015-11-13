@@ -14,25 +14,25 @@ myApp.directive 'searchResultCtrl', (directiveService, $location, searchBarServi
             scope.indexSelected = null
 
             scope.$watch 'getInfo().result', ->
-                if scope.getInfo().result != null
+                if scope.getInfo().result?
                     counter = -1
 
-                    for business of scope.getInfo().result.businesses
+                    for business in scope.getInfo().result.businesses
                         business.index = ++counter
 
-                    if scope.getInfo().result.businesses != null and scope.getInfo().result.businesses.length > 0 and scope.getInfo().mobile != true
+                    if scope.getInfo().result.businesses? and scope.getInfo().result.businesses.length > 0 and scope.getInfo().mobile != true
                         scope.seeMoreBusinessIndex = ++counter
 
-                    for publication of scope.getInfo().result.publications
+                    for publication in scope.getInfo().result.publications
                         publication.index = ++counter
 
-                    if scope.getInfo().result.publications != null and scope.getInfo().result.publications.length > 0 and scope.getInfo().mobile != true
+                    if scope.getInfo().result.publications? and scope.getInfo().result.publications.length > 0 and scope.getInfo().mobile != true
                         scope.seeMorePublicationIndex = ++counter
 
-                    for category of scope.getInfo().result.categories
+                    for category in scope.getInfo().result.categories
                         category.index = ++counter
 
-                    if scope.getInfo().result.categories != null and scope.getInfo().result.categories.length > 0 and scope.getInfo().mobile != true
+                    if scope.getInfo().result.categories? and scope.getInfo().result.categories.length > 0 and scope.getInfo().mobile != true
                         scope.seeMoreCategoryIndex = ++counter
 
                     scope.seeMoreIndex = ++counter
@@ -114,9 +114,9 @@ myApp.directive 'searchResultCtrl', (directiveService, $location, searchBarServi
 
             scope.goToCategory = (category) ->
                 target = null
-                if category.subSubCategory != null
+                if category.subSubCategory?
                     target = category.subSubCategory.translationName
-                else if category.subCategory != null
+                else if category.subCategory?
                     target = category.subCategory.translationName
                 else
                     target = category.category.translationName
