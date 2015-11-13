@@ -210,7 +210,7 @@
 
 
 ##  modal/LoginModal/view.html
---.loginModal.toBusinessRegistration=I'm a storekeeper.
+--.loginModal.toBusinessRegistration=I''m a storekeeper.
 --.loginModal.toCustomerRegistration=Register in!
 --.loginModal.notRegisterYet=Not yet registered ?
 
@@ -236,7 +236,7 @@
 
 
 --.email.forgotPassword.subject=Your new password
---.email.forgotPassword.body=Hello {0} <br/> Here is your new password : {1}
+--.email.forgotPassword.body=Hello {0}}<br/><br/>Here is your new password : {1}
 
 
 ##  directive/form/promotion/PromotionFormCtrl.js
@@ -270,9 +270,9 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body= Welcome on Gling {0} ! <br/> ...
+--.email.registration.business.body=Bienvenue sur Gling {0}!<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
 --.email.registration.business.subject=Welcome on Gling !
---.email.registration.customer.body=Welcome! <br/> We are delighted to welcome you on Gling. You are now a single Glinger and have the ability to follow your favorite stores according to your desires and needs! <br/> We are at your disposal for any questions or comments you should have on hello@gling.be <br / > <br/> forward to seeing you on Gling ! <br/> Gling team
+--.email.registration.customer.body=Welcome!<br/><br/>We are delighted to welcome you on Gling. You are now a single Glinger and have the ability to follow your favorite stores according to your desires and needs!<br/><br/>We are at your disposal for any questions or comments you should have on hello@gling.be<br/><br/>forward to seeing you on Gling !<br/><br/>Gling team
 --.email.registration.customer.subject=Welcome on Gling
 
 ##  view/mobile/welcome.html
@@ -483,7 +483,7 @@ day_abrv_sunday=Su
 
 --.town.newsfeed.news=Novelty
 --.town.newsfeed.promotion=Promotion
---.home.geolocation.notAccepted=To get the best possible experience on Gling, please agree to share your location. Otherwise, the distances will be imprecise. Href="/legal/confidentiality?lang={{currentLang}}#location" <br/> <a target="_blank"> Learn more about our privacy policy </a> <br/> If you do not want to share your location, you can <span class = "link" ng- click = " createNewAddress ()"> indicate your address by clicking here </ span>
+--.home.geolocation.notAccepted=To get the best possible experience on Gling, please agree to share your location. Otherwise, the distances will be imprecise.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">Learn more about our privacy policy </a><br/>If you do not want to share your location, you can <span class="link" ng-click="createNewAddress()">indicate your address by clicking here </span>
 
 --.footer.legal=Legal Notice
 --.footer.contact=Contact
@@ -605,7 +605,12 @@ day_abrv_sunday=Su
 
 
 --.publication.editByAdmin.email.subject=Modifying a publication
---.publication.editByAdmin.email.body=Hello, <br/> one of your publications ({0}) was amended by Gling, and this because your publication did not respect the publication charter of Gling. <br/> The reason given by the administrator : {1} . <br/> sure to check our publishing advice : <a href="https://www.gling.be/assets/document/business_help.pdf"> Download our </a> < br / guide > <br/> ' Gling team
+--.publication.editByAdmin.email.body=Hello,<br/><br/>one of your publications ( {0} ) was amended by Gling, and this because your publication did not respect the publication charter of Gling. <br/> The reason given by the administrator : {1}.<br/><br/>sure to check our publishing advice : <a href="https://www.gling.be/assets/document/business_help.pdf"> Download our guide</a><br/><br/>Gling team
 --.field.imageMultipleResize.resizeModal.title=Crop the picture
 --.field.imageMultipleResize.minimalHeight=The minimum height of the image must be {0} (currently {1})
 --.field.imageMultipleResize.minimalWidth=The minimum width of the image must be {0} (currently {1})
+
+
+--.generic.favoriteLanguage=Langue
+--.registration.accept.condition=En vous inscrivant sur Gling vous reconnaissez avoir lu et accepté les <a href="https://www.gling.be/legal/" target="_blank">conditions générales d''utilisation</a> du site Gling
+--.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profile Facebook

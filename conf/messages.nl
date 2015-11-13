@@ -483,7 +483,7 @@ day_abrv_sunday=Zon
 
 --.town.newsfeed.news=Nieuwigheid
 --.town.newsfeed.promotion=Korting
---.home.geolocation.notAccepted=Om uw ervaring nog beter te vebeteren, kunt u uw locatie aan ons meedelen. Anders zullen de afstanden onnauwkeurig zijn. Href = " / wettelijke / vertrouwelijkheid ? Lang = { { currentLang } } # locatie " <br/> <a target="_blank"> Meer informatie over ons privacy -beleid </a> <br/> Als u uw locatie niet wenst te meedelen, kunt u < span class = " link" ng - klik = " createNewAddress () "> geven aan uw adres door hier te klikken < / span >
+--.home.geolocation.notAccepted=Om uw ervaring nog beter te vebeteren, kunt u uw locatie aan ons meedelen. Anders zullen de afstanden onnauwkeurig zijn.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">Meer informatie over ons privacy -beleid</a><br/><br/>Als u uw locatie niet wenst te meedelen, kunt u <span class="link" ng-click="createNewAddress()"> geven aan uw adres door hier te klikken </span>
 
 --.footer.legal=Juridische kennisgeving
 --.footer.contact=Gegevens
@@ -605,7 +605,12 @@ day_abrv_sunday=Zon
 
 
 --.publication.editByAdmin.email.subject=Wijzigen van een publicatie
---.publication.editByAdmin.email.body=Hallo, <br/> één van uw publicaties ({0}) werd door Gling gewijzigd , en dit omdat uw publicatie niet het publicatie charter van Gling eerbied. <br/> De reden gegeven door Gling : {1} . <br/> ervoor dat onze uitgeverij advies controleren: <a href="https://www.gling.be/assets/document/business_help.pdf"> Download onze </a> < br / gids > <br/> ' gling team
+--.publication.editByAdmin.email.body=Hallo, <br/> één van uw publicaties ({0}) werd door Gling gewijzigd , en dit omdat uw publicatie niet het publicatie charter van Gling eerbied. <br/> De reden gegeven door Gling : {1} . <br/> ervoor dat onze uitgeverij advies controleren: <a href="https://www.gling.be/assets/document/business_help.pdf"> Download onze </a> <br/><br/>Gling team
 --.field.imageMultipleResize.resizeModal.title=De afbeelding bijsnijden
 --.field.imageMultipleResize.minimalHeight=De minimale hoogte van het beeld moet {0} (momenteel {1})
 --.field.imageMultipleResize.minimalWidth=De minimale breedte van de afbeelding moet {0} (momenteel {1})
+
+--.generic.favoriteLanguage=Langue
+--.registration.accept.condition=En vous inscrivant sur Gling vous reconnaissez avoir lu et accepté les <a href="https://www.gling.be/legal/" target="_blank">conditions générales d''utilisation</a> du site Gling
+--.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profile Facebook
+
