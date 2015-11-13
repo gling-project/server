@@ -270,7 +270,7 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Welkom op Gling {0}!<br/><br/>...
+--.email.registration.business.body=Welkom op Gling {0} ! <br/> We zijn verheugd u te mogen verwelkomen op Gling. Uw winkel is nu een onderdeel van de Glinger community! <br/> U kunt al uw nieuws en aanbiedingen aan uw klanten overmaken zodat ze geen enkel van uw acties zullen missen. <br/> Wij blijven tot uw beschikking voor alle vragen of opmerkingen over Gling via onze hello@gling.be adres. <br/> Graag tot ziens op Gling ! <br/> Gling team
 --.email.registration.business.subject=Welkom op Gling !
 --.email.registration.customer.body=Welkom!<br/><br/> We zijn verheugd u te mogen verwelkomen op Gling. U bent nu een uniek Glinger en heeft de mogelijkheid om uw favoriete winkels te kunnen volgen op basis van uw wensen en interessen ! <br/>Wij staan ??tot uw beschikking via ons adres hello@gling.be om uw eventuele vragen of opmerkingen over gling te kunnen antwoorden. <br/><br/>Wij hopen U op Gling te kunnen zien. <br/>Gling Team
 --.email.registration.customer.subject=Welkom op Gling !
@@ -587,25 +587,25 @@ day_abrv_sunday=Zon
 --.message.modal.notLocalised.content=U moet uw positie aan ons meedelen om te lokaliseren worden.
 
 
---.error.businessApplication.notBusinessAccount=Ce compte n''est pas un compte commerçant. Seuls les comptes commerçants peuvent se connecter via cette application.
---.promotion.dayMax.details=La durée d''une promotion ne peut excéder 14 jours
---.businessNotification.dayMax.details=La durée d''une actualité ne peut excéder 28 jours
---.field.dateSimple.to=Le
---.field.dateSimple.at=à
---.generic.legend=Légende
---.schedule.appointment=Uniquement sur réservation
---.error.customerToBusiness.alreadyBusiness=Vous avez déjà un commerce
---.textReuction.seeMore=Voir plus
---.textReuction.seeLess=Masquer
---.imageTool.minimalSize=La taille minimum de l''image doit être de {0} de large et {1} de haut.
---.generic.success=L''opération est un succés
---.publication.success.shareOnFacebook=Partager sur Facebook
---.publication.success.message=Votre publication a bien été créée!
---.publication.editionJustification=Raison de la modification
+--.error.businessApplication.notBusinessAccount=Dit account is niet een handelaar account. Alleen de handelaar accounts kan aansluiten via deze toepassing.
+--.promotion.dayMax.details=De duur van een promotie mag niet meer dan 14 dagen dragen
+--.businessNotification.dayMax.details=De duur van een nieuws mag niet meer dan 28 dagen dragen
+--.field.dateSimple.to=vanaf
+--.field.dateSimple.at=tot
+--.generic.legend=Legende
+--.schedule.appointment=Alleen op Reservering
+--.error.customerToBusiness.alreadyBusiness=Heeft u al een winkel?
+--.textReuction.seeMore=Meer zien
+--.textReuction.seeLess=Verbergen
+--.imageTool.minimalSize=De minimale grootte van het beeld moet {0} breed en {1} hoog zijn.
+--.generic.success=De operatie is een succes
+--.publication.success.shareOnFacebook=Delen op Facebook
+--.publication.success.message=Uw publicatie is gemaakt !
+--.publication.editionJustification=Reden voor de wijzigingen?
 
 
---.publication.editByAdmin.email.subject=Modification d''une publication
---.publication.editByAdmin.email.body=Bonjour,<br/><br/>l''une de vos publications ( {0} ) a été modifié par un administrateur de Gling, et ceci parce que votre publication ne respectait pas la charte de publication de Gling. <br/><br/>La raison invoquée par l''administrateur : {1}. <br/><br/>Pensez à consulter nos conseils de publication : <a href="https://www.gling.be/assets/document/business_help.pdf">Télécharger notre guide</a><br/><br/>L''équipe Gling
---.field.imageMultipleResize.resizeModal.title=Recadrer l''image
---.field.imageMultipleResize.minimalHeight=La hauteur minimal de l''image doit être de {0} (actuellement {1})
---.field.imageMultipleResize.minimalWidth=La largeur minimal de l''image doit être de {0} (actuellement {1})
+--.publication.editByAdmin.email.subject=Wijzigen van een publicatie
+--.publication.editByAdmin.email.body=Hallo, <br/> één van uw publicaties ({0}) werd door Gling gewijzigd , en dit omdat uw publicatie niet het publicatie charter van Gling eerbied. <br/> De reden gegeven door Gling : {1} . <br/> ervoor dat onze uitgeverij advies controleren: <a href="https://www.gling.be/assets/document/business_help.pdf"> Download onze </a> < br / gids > <br/> ' gling team
+--.field.imageMultipleResize.resizeModal.title=De afbeelding bijsnijden
+--.field.imageMultipleResize.minimalHeight=De minimale hoogte van het beeld moet {0} (momenteel {1})
+--.field.imageMultipleResize.minimalWidth=De minimale breedte van de afbeelding moet {0} (momenteel {1})
