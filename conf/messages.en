@@ -270,7 +270,7 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Bienvenue sur Gling {0}!<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.business.body=Welcome on Gling {0}!<br/>We are delighted to welcome you to Gling. Your Store is now part of the Glinger community!<br/>From now on, you can publish all your news and promotions so that your consumers will not miss any of your actions. <br/> We are at your disposal for any questions or comments you should have on hello@gling.be.<br/>forward to seeing you on Gling !<br/>Team Gling
 --.email.registration.business.subject=Welcome on Gling !
 --.email.registration.customer.body=Welcome!<br/><br/>We are delighted to welcome you on Gling. You are now a single Glinger and have the ability to follow your favorite stores according to your desires and needs!<br/><br/>We are at your disposal for any questions or comments you should have on hello@gling.be<br/><br/>forward to seeing you on Gling !<br/><br/>Gling team
 --.email.registration.customer.subject=Welcome on Gling
