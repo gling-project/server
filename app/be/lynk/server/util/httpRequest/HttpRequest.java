@@ -71,25 +71,27 @@ public class HttpRequest {
             }
 
             if (requestMethod.equals(RequestMethod.GET)) {
-                urlString = urlString+ "?" + buildOption(params);
+                urlString = urlString + "?" + buildOption(params);
             }
 
             URL url = new URL(urlString);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            //add header
+            if (header != null) {
+                for (Map.Entry<String, String> entry : header.entrySet()) {
+                    connection.setRequestProperty(entry.getKey(), entry.getValue());
+                }
+            }
             connection.setRequestMethod(requestMethod.toString());
-            connection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
-
-
-
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setRequestProperty("Content-Language", "en-US");
-
             connection.setUseCaches(false);
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
-            
+
             if (requestMethod.equals(RequestMethod.POST)) {
                 connection.setRequestProperty("Content-Length", "" +
                         Integer.toString(paramString.getBytes().length));
@@ -108,12 +110,6 @@ public class HttpRequest {
 
             }
 
-            //add header
-            if(header!=null) {
-                for (Map.Entry<String, String> entry : header.entrySet()) {
-                    connection.getHeaderFields().put(entry.getKey(), Arrays.asList(entry.getValue()));
-                }
-            }
 
             //Send request
             if (requestMethod.equals(RequestMethod.POST)) {

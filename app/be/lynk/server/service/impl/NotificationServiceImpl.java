@@ -7,6 +7,7 @@ import be.lynk.server.util.httpRequest.HttpRequest;
 import be.lynk.server.util.httpRequest.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import play.libs.F;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,26 +24,29 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void sendNotification(String title, String content, List<Account> accounts) {
 
+        F.Promise.promise(() -> {
 
-        Map<String,String> headers = new HashMap<>();
-        headers.put("X-Parse-Application-Id","qUEDet4Q24JkiXhWTELqJFHeZ6bbvEcLw6WfXy5p");
-        headers.put("X-Parse-REST-API-Key","rsqv85DLrSbfpsBcWVv5605FPRMniQKDnzWx68Kp");
+            Map<String, String> headers = new HashMap<>();
+            headers.put("X-Parse-Application-Id", "qUEDet4Q24JkiXhWTELqJFHeZ6bbvEcLw6WfXy5p");
+            headers.put("X-Parse-REST-API-Key", "rsqv85DLrSbfpsBcWVv5605FPRMniQKDnzWx68Kp");
 
-        ParseNotificationDTO parseNotificationDTO = new ParseNotificationDTO();
-        parseNotificationDTO.getData().setAlert(content);
-        parseNotificationDTO.getData().setTitle(title);
+            ParseNotificationDTO parseNotificationDTO = new ParseNotificationDTO();
+            parseNotificationDTO.getData().setAlert(content);
+            parseNotificationDTO.getData().setTitle(title);
 
-        for (Account account : accounts) {
-            parseNotificationDTO.getChannels().add("user"+account.getId());
-        }
+            for (Account account : accounts) {
+                parseNotificationDTO.getChannels().add("user" + account.getId());
+            }
 
-        HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.POST,PARSE_PUSH_PATH);
-        httpRequest.setDto(parseNotificationDTO);
-        httpRequest.setHeader(headers);
-        try {
-            httpRequest.sendRequest();
-        } catch (HttpRequestException e) {
-            e.printStackTrace();
-        }
+            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.POST, PARSE_PUSH_PATH);
+            httpRequest.setDto(parseNotificationDTO);
+            httpRequest.setHeader(headers);
+            try {
+                httpRequest.sendRequest();
+            } catch (HttpRequestException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 }
