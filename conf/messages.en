@@ -483,7 +483,7 @@ day_abrv_sunday=Su
 
 --.town.newsfeed.news=Novelty
 --.town.newsfeed.promotion=Promotion
---.home.geolocation.notAccepted=To get the best possible experience on Gling, please agree to share your location. Otherwise, the distances will be imprecise. Href="/legal/confidentiality?lang={{currentLang}}#location" <br/> <a target="_blank"> Learn more about our privacy policy </a> <br/> If you do not want to share your location, you can <span class = "link" ng- click = " createNewAddress ()"> indicate your address by clicking here </ span>
+--.home.geolocation.notAccepted=To get the best possible experience on Gling, please agree to share your location. Otherwise, the distances will be imprecise.<br/><a href="/legal/confidentiality?lang={{currentLang}}#location" target="_blank">Learn more about our privacy policy </a> <br/> If you do not want to share your location, you can <span class = "link" ng- click = " createNewAddress ()"> indicate your address by clicking here </ span>
 
 --.footer.legal=Legal Notice
 --.footer.contact=Contact
