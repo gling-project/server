@@ -6,6 +6,7 @@ import be.lynk.server.service.NotificationService;
 import be.lynk.server.util.httpRequest.HttpRequest;
 import be.lynk.server.util.httpRequest.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * Created by florian on 13/11/15.
  */
+@Service
 public class NotificationServiceImpl implements NotificationService {
 
     private static final String PARSE_PUSH_PATH = "https://api.parse.com/1/push";
