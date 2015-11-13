@@ -43,6 +43,8 @@ public class BusinessNotificationRestController extends AbstractRestController {
     private EmailService            emailService;
     @Autowired
     private FileService             fileService;
+    @Autowired
+    private NotificationService     notificationService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -88,10 +90,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
         for (StoredFileDTO storedFileDTO : dto.getPictures()) {
 
             StoredFile storedFile;
-            if(storedFileDTO.getImage64()!=null) {
+            if (storedFileDTO.getImage64() != null) {
                 storedFile = fileService.updateBase64(storedFileDTO.getImage64(), storedFileDTO.getOriginalName(), securityController.getCurrentUser());
-            }
-            else{
+            } else {
                 storedFile = storedFileService.findByStoredName(storedFileDTO.getStoredName());
             }
 
@@ -109,6 +110,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
         publicationDTO.setBusinessName(businessNotification.getBusiness().getName());
         publicationDTO.setBusinessIllustration(dozerService.map(businessNotification.getBusiness().getIllustration(), StoredFileDTO.class));
         publicationDTO.setBusinessId(businessNotification.getBusiness().getId());
+
+        //send a notification
+        notificationService.sendNotification(businessNotification.getBusiness().getName()+" a publié dans Gling",publicationDTO.getTitle(),followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
 
 
         return ok(publicationDTO);

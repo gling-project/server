@@ -22,8 +22,6 @@ public class FacebookRequest {
     private String facebookAppId     = Configuration.root().getString("facebook.app.id");
     private String facebookAppSecret = Configuration.root().getString("facebook.app.secret");
 
-    @Autowired
-    private HttpRequest httpRequest;
 
     public FacebookTokenAccessControlDTO meRequest(String accessKey) {
 
@@ -31,7 +29,11 @@ public class FacebookRequest {
         map.put("access_token", accessKey);
 
         try {
-            return httpRequest.sendRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/me", map, FacebookTokenAccessControlDTO.class);
+
+            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/me");
+            httpRequest.setReturnExcepted(FacebookTokenAccessControlDTO.class);
+            httpRequest.setParams(map);
+            return (FacebookTokenAccessControlDTO) httpRequest.sendRequest();
         } catch (HttpRequestException e) {
             e.printStackTrace();
             throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
@@ -54,11 +56,11 @@ public class FacebookRequest {
             map.put("fields", "description,phone,cover,link,name,location,category,emails,hours,payment_options,website,photos,albums,about");
             map.put("access_token", accessToken);
 
+            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, url);
+            httpRequest.setParams(map);
+            httpRequest.setReturnExcepted(FacebookPageDataDTO.class);
 
-            FacebookPageDataDTO pageContent = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, url, map, FacebookPageDataDTO.class);
-
-            return pageContent;
-
+            return (FacebookPageDataDTO)httpRequest.sendRequest();
         } catch (Exception e) {
             e.printStackTrace();
             throw new MyRuntimeException(e.getMessage());
@@ -76,9 +78,11 @@ public class FacebookRequest {
             map.put("fields", "photos");
             map.put("access_token", accessToken);
 
-            FacebookPhotoDTO pageContent = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, url, map, FacebookPhotoDTO.class);
+            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, url);
+            httpRequest.setParams(map);
+            httpRequest.setReturnExcepted(FacebookPhotoDTO.class);
 
-            return pageContent;
+            return (FacebookPhotoDTO)httpRequest.sendRequest();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,9 +101,11 @@ public class FacebookRequest {
             map.put("fields", "images");
             map.put("access_token", accessToken);
 
-            FacebookImageDTO pageContent = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, url, map, FacebookImageDTO.class);
+            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, url);
+            httpRequest.setParams(map);
+            httpRequest.setReturnExcepted(FacebookImageDTO.class);
 
-            return pageContent;
+            return (FacebookImageDTO)httpRequest.sendRequest();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,7 +122,13 @@ public class FacebookRequest {
 
 
         try {
-            String response = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/oauth/access_token", map);
+
+
+
+            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/oauth/access_token");
+            httpRequest.setParams(map);
+            String response = (String)httpRequest.sendRequest();
+
             String token = response.split("\\|")[1].replace(" ", "");
             return token;
         } catch (HttpRequestException e) {
@@ -132,7 +144,10 @@ public class FacebookRequest {
         params.put("grant_type", "client_credentials");
 
         //recover the access token of the app
-        String accessTokenS = httpRequest.sendRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/oauth/access_token", params);
+        HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/oauth/access_token");
+        httpRequest.setParams(params);
+        String accessTokenS = (String)httpRequest.sendRequest();
+
         String a = accessTokenS.split("=")[1].replace("\r", "");
         return a;
 

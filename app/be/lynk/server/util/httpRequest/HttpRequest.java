@@ -6,44 +6,57 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.http.entity.StringEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by florian on 30/08/14.
  */
-@Component
 public class HttpRequest {
 
+    private final RequestMethod requestMethod;
+    private       String        urlString;
+    private Map<String, String> params = null;
+    private Map<String, String> header = null;
+    private DTO dto;
+    private Class returnExcepted = null;
+
+    public HttpRequest(RequestMethod requestMethod, String urlString) {
+        this.requestMethod = requestMethod;
+        this.urlString = urlString;
+    }
+
+    public void setParams(Map<String, String> params) {
+        this.params = params;
+    }
+
+    public void setHeader(Map<String, String> header) {
+        this.header = header;
+    }
+
+    public void setDto(DTO dto) {
+        this.dto = dto;
+    }
+
+    public void setReturnExcepted(Class returnExcepted) {
+        this.returnExcepted = returnExcepted;
+    }
 
     public enum RequestMethod {
         GET, POST
     }
 
-    public <T extends DTO> T sendRequest(RequestMethod requestMethod, String site, Map<String, String> params, Class<T> returnExcepted) throws HttpRequestException {
-
-        try {
-            String response = sendRequest(requestMethod, site, params);
-
-            ObjectMapper mapper = new ObjectMapper();
-            JsonFactory factory = mapper.getFactory();
-            JsonParser jp = factory.createParser(response);
-            JsonNode actualObj = mapper.readTree(jp);
-
-            return DTO.getDTO(actualObj, returnExcepted);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
-        }
-    }
-
-    public String sendRequest(RequestMethod requestMethod, String site, Map<String, String> params) throws HttpRequestException {
+    public Object sendRequest() throws HttpRequestException {
 
         if (params == null) {
             params = new HashMap<>();
@@ -53,15 +66,15 @@ public class HttpRequest {
 
         try {
 
-            if (!site.contains("http")) {
-                site = "http://" + site;
+            if (!urlString.contains("http")) {
+                urlString = "http://" + urlString;
             }
 
             if (requestMethod.equals(RequestMethod.GET)) {
-                site = site + "?" + buildOption(params);
+                urlString = urlString+ "?" + buildOption(params);
             }
 
-            URL url = new URL(site);
+            URL url = new URL(urlString);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(requestMethod.toString());
@@ -71,12 +84,34 @@ public class HttpRequest {
             if (requestMethod.equals(RequestMethod.POST)) {
                 connection.setRequestProperty("Content-Length", "" +
                         Integer.toString(paramString.getBytes().length));
+
+                //add Dto
+                if (dto != null) {
+                    connection.setRequestProperty("Content-Type", "application/json");
+
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    String json = gson.toJson(dto);
+                    OutputStream os = connection.getOutputStream();
+                    os.write(json.getBytes("UTF-8"));
+                    os.close();
+                }
+
             }
+
+
             connection.setRequestProperty("Content-Language", "en-US");
 
             connection.setUseCaches(false);
             connection.setDoInput(true);
             connection.setDoOutput(true);
+
+            //add header
+            if(header!=null) {
+                for (Map.Entry<String, String> entry : header.entrySet()) {
+                    connection.getHeaderFields().put(entry.getKey(), Arrays.asList(entry.getValue()));
+                }
+            }
 
             //Send request
             if (requestMethod.equals(RequestMethod.POST)) {
@@ -98,6 +133,14 @@ public class HttpRequest {
             }
             rd.close();
 
+            if (returnExcepted != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonFactory factory = mapper.getFactory();
+                JsonParser jp = factory.createParser(response.toString());
+                JsonNode actualObj = mapper.readTree(jp);
+
+                return DTO.getDTO(actualObj, returnExcepted);
+            }
             return response.toString();
 
 

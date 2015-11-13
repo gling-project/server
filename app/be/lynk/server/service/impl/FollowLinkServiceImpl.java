@@ -102,4 +102,21 @@ public class FollowLinkServiceImpl extends CrudServiceImpl<FollowLink> implement
         return JPA.em().createQuery(cq).getSingleResult();
 
     }
+
+    @Override
+    public List<Account> findAccountByBusiness(Business business) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<FollowLink> cq = cb.createQuery(FollowLink.class);
+        Root<FollowLink> from = cq.from(FollowLink.class);
+        cq.select(from);
+        cq.where(cb.equal(from.get("business"), business));
+        List<FollowLink> followLinks = JPA.em().createQuery(cq).getResultList();
+
+        List<Account> accounts = new ArrayList<>();
+        for (FollowLink followLink : followLinks) {
+            accounts.add(followLink.getAccount());
+        }
+        return accounts;
+    }
 }
