@@ -486,10 +486,10 @@ public class SuperAdminRestController extends AbstractRestController {
 
         //add category
         //TODO temp
-        business.setBusinessCategories(Arrays.asList(businessCategoryService.findByName("eat")));
+        business.setBusinessCategories(convertFacebookCategoryToBusinessCategory(pageData.getCategory()));
         //add status
         //TODO create new status ?
-        business.setBusinessStatus(BusinessStatusEnum.PUBLISHED);
+        business.setBusinessStatus(BusinessStatusEnum.WAITING_CONFIRMATION);
 
         //add address
         Address address = new Address(pageData.getLocation().getStreet(), pageData.getLocation().getZip(), pageData.getLocation().getCity(), pageData.getLocation().getCountry());
@@ -719,5 +719,32 @@ public class SuperAdminRestController extends AbstractRestController {
                 }
             }
         }
+    }
+
+    private static Map<String, String> CATEGORY_EQUIVALENCE = new HashMap<String, String>() {{
+        put("Book Store", "magasin_loisirs_livres");
+        put("Library", "magasin_loisirs_livres");
+        put("Camera/Photo", "magasin_loisirs_multimedia");
+        put("Computers", "magasin_loisirs_multimedia");
+        put("Home Decor", "magasin_loisirs_maison");
+        put("Wine/Spirits", "magasin_alimentation_bieres");
+        put("Jewelry/Watches", "magasin_mode_bijoux");
+        put("Pet Supplies", "magasin_loisirs_animaux");
+        put("Outdoor Gear/Sporting Goods", "magasin_loisirs_sport");
+        put("Bank/Financial Institution", "servicesprox_findroit_banque");
+        put("Legal/Law", "servicesprox_findroit_avocat");
+        put("Travel/Leisure", "magasin_loisirs_voyages");
+        put("Games/Toys", "magasin_loisirs_jeux");
+        put("Hotel", "horeca_hotel_hotel");
+        put("Food/Grocery", "magasin_alimentation_supermarche");
+        put("Health/Medical/Pharmacy", "sante_autres_pharmacie");
+        put("Pet Services", "magasin_loisirs_animaux");
+    }};
+
+    private List<BusinessCategory> convertFacebookCategoryToBusinessCategory(String fbCat) {
+        if (CATEGORY_EQUIVALENCE.containsKey(fbCat)) {
+            return Arrays.asList(businessCategoryService.findByName(CATEGORY_EQUIVALENCE.get(fbCat)));
+        }
+        return null;
     }
 }

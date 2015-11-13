@@ -22,8 +22,6 @@ public class LoginDTO extends DTO  {
     @Pattern(regexp = ValidationRegex.PASSWORD,message = "validation.dto.password")
     private String password;
 
-    private Boolean keepSessionOpen=false;
-
     public LoginDTO() {
     }
 
@@ -48,20 +46,11 @@ public class LoginDTO extends DTO  {
         this.password = password;
     }
 
-    public Boolean getKeepSessionOpen() {
-        return keepSessionOpen;
-    }
-
-    public void setKeepSessionOpen(Boolean keepSessionOpen) {
-        this.keepSessionOpen = keepSessionOpen;
-    }
-
     @Override
     public String toString() {
         return "LoginDTO{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", keepSessionOpen=" + keepSessionOpen +
                 '}';
     }
 }

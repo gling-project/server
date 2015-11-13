@@ -14,9 +14,6 @@ public class LoginCredential  extends AbstractEntity {
     @OneToOne(optional = false,cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
     private Account account;
 
-    @Basic
-    private boolean keepSessionOpen;
-
     @Basic(optional =  false)
     private String password;
 
@@ -32,9 +29,8 @@ public class LoginCredential  extends AbstractEntity {
     public LoginCredential() {
     }
 
-    public LoginCredential(Account account, Boolean keepSessionOpen, String password) {
+    public LoginCredential(Account account, String password) {
         this.account = account;
-        this.keepSessionOpen = (keepSessionOpen!=null)?keepSessionOpen:false;
         this.password = password;
     }
 
@@ -44,14 +40,6 @@ public class LoginCredential  extends AbstractEntity {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public boolean isKeepSessionOpen() {
-        return keepSessionOpen;
-    }
-
-    public void setKeepSessionOpen(boolean keepSessionOpen) {
-        this.keepSessionOpen = keepSessionOpen;
     }
 
     public String getPassword() {
@@ -65,7 +53,6 @@ public class LoginCredential  extends AbstractEntity {
     @Override
     public String toString() {
         return "LoginCredential{" +
-                ", keepSessionOpen=" + keepSessionOpen +
                 ", password='" + password + '\'' +
                 '}';
     }

@@ -70,9 +70,6 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
         }
     };
 
-    //
-    // facebook connection
-    //
     $scope.fb_login = function () {
         $scope.accountParam.disabled = true;
         $scope.loading = true;
@@ -88,6 +85,9 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                     accountType: 'BUSINESS'
                 };
 
+
+
+
                 accountService.testFacebook(dto, function (data2) {
 
                     $scope.loading = false;
@@ -96,9 +96,6 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                         $flash.success('--.customer.registrationModal.alredyRegistred.success');
                         accountService.setMyself(data2.myself);
                         $scope.close();
-                    }
-                    else if (data2.status == 'ACCOUNT_WITH_SAME_EMAIL') {
-                        $scope.fusion(data2.accountFusion);
                     }
                     else if (data2.status == 'OK') {
                         $scope.accountParam.dto.firstname = data2.firstname;
@@ -126,11 +123,6 @@ myApp.controller('BusinessRegistrationModalCtrl', function ($scope, $flash, $mod
                 $scope.loading = false;
                 $scope.accountParam.disabled = false;
             });
-    };
-
-    $scope.fusion = function (accountFusion) {
-
-        modalService.openFacebookFusionModal(accountFusion,$scope.close);
     };
 
     $scope.previous = function () {

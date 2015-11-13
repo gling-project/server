@@ -26,7 +26,6 @@ public class TestFacebookDTO extends DTO  {
 
     private MyselfDTO myself;
 
-    private AccountFusionDTO accountFusion;
     private FacebookTokenAccessControlDTO facebookTokenAccessControl;
 
     public TestFacebookDTO() {
@@ -86,14 +85,6 @@ public class TestFacebookDTO extends DTO  {
 
     public void setMyself(MyselfDTO myself) {
         this.myself = myself;
-    }
-
-    public void setAccountFusion(AccountFusionDTO accountFusion) {
-        this.accountFusion = accountFusion;
-    }
-
-    public AccountFusionDTO getAccountFusion() {
-        return accountFusion;
     }
 
     public void setFacebookTokenAccessControl(FacebookTokenAccessControlDTO facebookTokenAccessControl) {

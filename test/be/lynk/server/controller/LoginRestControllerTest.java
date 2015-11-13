@@ -107,7 +107,6 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(EMAIL);
         registrationDTO.setPassword(PASSWORD);
-        registrationDTO.setKeepSessionOpen(true);
 
         //address
 //        AddressDTO addressDTO = new AddressDTO();
@@ -251,7 +250,6 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(BI_EMAIL);
         registrationDTO.setPassword(BI_PASSWORD);
-        registrationDTO.setKeepSessionOpen(true);
 
         //business
         BusinessDTO business = new BusinessDTO();
@@ -341,7 +339,6 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         registrationDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
         registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
-        registrationDTO.setKeepSessionOpen(true);
         dto.setFacebookAuthentication(facebookAuthenticationDTO);
 
         //save
@@ -406,7 +403,6 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         registrationDTO.setGender(GenderEnum.FEMALE);
         registrationDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
         registrationDTO.setPassword(PASSWORD);
-        registrationDTO.setKeepSessionOpen(true);
 
         Result result = request(POST, "/registration/customer", dto);
         connected = true;
@@ -438,28 +434,28 @@ public class LoginRestControllerTest extends AbstractControllerTest {
         // ****
         // *** TEST /account/fusion
         // ***
-        AccountFusionDTO accountFusionDTO = new AccountFusionDTO();
-        accountFusionDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
-        accountFusionDTO.setFacebookToken(facebookAccount.accessToken());
-        accountFusionDTO.setFacebookUserId(facebookAccount.id());
-        accountFusionDTO.setPassword(PASSWORD);
+//        AccountFusionDTO accountFusionDTO = new AccountFusionDTO();
+//        accountFusionDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
+//        accountFusionDTO.setFacebookToken(facebookAccount.accessToken());
+//        accountFusionDTO.setFacebookUserId(facebookAccount.id());
+//        accountFusionDTO.setPassword(PASSWORD);
 
-        result = request(POST, "/account/fusion", accountFusionDTO);
+//        result = request(POST, "/account/fusion", accountFusionDTO);
 
-        assertEquals(printError(result), 200, status(result));
-
-        // get LoginResultDTO
-        MyselfDTO myselfDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
-
-        //control
-        assertTrue(myselfDTO.getFacebookAccount());
-        assertTrue(myselfDTO.getLoginAccount());
-
-        // ****
-        // *** TEST is connected ?
-        // ***
-        result = request(GET, "/myself");
-        assertEquals(printError(result), 200, status(result));
+//        assertEquals(printError(result), 200, status(result));
+//
+//        // get LoginResultDTO
+//        MyselfDTO myselfDTO = Json.fromJson(Json.parse(new String(contentAsBytes(result))), MyselfDTO.class);
+//
+//        //control
+//        assertTrue(myselfDTO.getFacebookAccount());
+//        assertTrue(myselfDTO.getLoginAccount());
+//
+//        // ****
+//        // *** TEST is connected ?
+//        // ***
+//        result = request(GET, "/myself");
+//        assertEquals(printError(result), 200, status(result));
     }
 
     @Test

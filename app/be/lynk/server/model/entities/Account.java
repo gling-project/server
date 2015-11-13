@@ -19,7 +19,6 @@ import java.util.Set;
 @Entity
 public class Account extends AbstractEntity {
 
-    @Basic(optional = false)
     @Enumerated(value = EnumType.STRING)
     protected GenderEnum gender;
 

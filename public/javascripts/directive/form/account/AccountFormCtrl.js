@@ -122,34 +122,6 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'repeatPAssword'
-                        },
-                        keepSessionOpen: {
-                            fieldTitle: "--.registration.form.keepSessionOpen",
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return !scope.getInfo().updateMode && !scope.getInfo().mobileVersion
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'keepSessionOpen'
-                        },
-                        sla: {
-                            name: 'sla',
-                            fieldTitle: "--.registration.form.acceptSla",
-                            validationMessage: "--.registration.form.acceptSla.error",
-                            valid: function () {
-                                var v = scope.fields.sla.field[scope.fields.sla.fieldName];
-                                return v === true;
-                            },
-                            disabled: function () {
-                                return false;//scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return !scope.getInfo().updateMode
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'sla'
                         }
                     };
 

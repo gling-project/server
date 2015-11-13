@@ -31,8 +31,6 @@ public class CommonSecurityController extends Security.Authenticator {
     public static final String SESSION_IDENTIFIER_STORE                 = "email";
     //name of the cookie for the automatic reconnection
     public static final String COOKIE_KEEP_SESSION_OPEN                 = "session_key";
-    //store the userId
-    public static final String COOKIE_USER_ID                           = "user_id";
     //not first visit cookie
     public static final String COOKIE_ALREADY_VISITED                   = "ALREADY_VISITED";
     //recover the session key into the http request
@@ -183,14 +181,10 @@ public class CommonSecurityController extends Security.Authenticator {
 
     public void logout(Http.Context ctx) {
 
-        if (isAuthenticated(ctx) && getCurrentUser() != null && getCurrentUser().getLoginCredential() != null && getCurrentUser().getLoginCredential().isKeepSessionOpen()) {
+        if (isAuthenticated(ctx) && getCurrentUser() != null && getCurrentUser().getLoginCredential() != null) {
 
             Account currentAccount = getCurrentUser();
-            currentAccount.getLoginCredential().setKeepSessionOpen(false);
-
-            USER_SERVICE.saveOrUpdate(currentAccount);
             ctx.response().discardCookie(COOKIE_KEEP_SESSION_OPEN);
-            ctx.response().discardCookie(COOKIE_USER_ID);
         }
         ctx.session().clear();
     }
@@ -204,14 +198,7 @@ public class CommonSecurityController extends Security.Authenticator {
         context.changeLang(account.getLang().code());
 
         //store the id ccookie for mobile application
-        context.response().setCookie(COOKIE_USER_ID, account.getId() + "");
-
-        if (account.getLoginCredential() != null &&
-                account.getLoginCredential().isKeepSessionOpen()) {
-            context.response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
-        } else {
-            context.response().discardCookie(COOKIE_KEEP_SESSION_OPEN);
-        }
+        context.response().setCookie(COOKIE_KEEP_SESSION_OPEN, generateCookieKey(), 2592000);
     }
 
     public String generateCookieKey() {

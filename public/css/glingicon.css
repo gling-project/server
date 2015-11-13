@@ -40,7 +40,7 @@
 .gling-icon-logoapp:before {
     content: "\e629";
 }
-.gling-icon-pixel:before {
+.gling-icon-technology:before {
     content: "\e803";
 }
 .gling-icon-nouveau-client:before {
@@ -111,9 +111,6 @@
 }
 .gling-icon-play:before {
     content: "\e613";
-}
-.gling-icon-technology:before {
-    content: "\e614";
 }
 .gling-icon-music:before {
     content: "\e615";

@@ -28,7 +28,7 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
                     page: 1
                     count: 50
                     sorting:
-                        createDate: 'desc'
+                        creationDate: 'desc'
                 },
                 total: $scope.businesses.length
 

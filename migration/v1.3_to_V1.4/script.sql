@@ -1,0 +1,1 @@
+alter table account alter column gender DROP NOT NULL;

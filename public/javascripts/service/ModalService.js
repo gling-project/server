@@ -169,24 +169,6 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.openFacebookFusionModal = function (accountFusion, closeRegistrationModal) {
-        var resolve = {
-            accountFusion: function () {
-                return accountFusion;
-            },
-            closeRegistrationModal: function () {
-                return closeRegistrationModal;
-            }
-        };
-
-        $modal.open({
-            templateUrl: "/assets/javascripts/modal/AccountFusionFacebookModal/view.html",
-            controller: "AccountFusionFacebookModalCtrl",
-            size: "l",
-            resolve: resolve
-        });
-    };
-
     this.openEditPasswordModal = function () {
         $modal.open({
             templateUrl: "/assets/javascripts/modal/ChangePassword/view.html",

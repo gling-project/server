@@ -5,7 +5,6 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessServ
 
     #params
     #loading
-    $scope.temp = 6
     $scope.loading = true
     #business params
     $scope.publicationListParam =

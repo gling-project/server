@@ -611,3 +611,5 @@ day_abrv_sunday=Di
 --.field.imageMultipleResize.minimalWidth=La largeur minimal de l''image doit être de {0} (actuellement {1})
 
 --.generic.favoriteLanguage=Langue
+--.registration.accept.condition=En vous inscrivant sur Gling vous reconnaissez avoir lu et accepté les <a href="https://www.gling.be/legal/" target="_blank">conditions générales d'utilisation</a> du site Gling
+--.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profile Facebook

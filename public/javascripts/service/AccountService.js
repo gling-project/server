@@ -84,27 +84,6 @@ myApp.service("accountService", function ($flash, $http,translationService) {
             });
     };
 
-    this.accountFusion = function (accountFusion, callbackSuccess, callbackError) {
-        $http({
-            'method': "POST",
-            'url': "/rest/account/fusion",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': accountFusion
-        }).success(function (data, status) {
-            $flash.success(translationService.get("--.login.flash.success"));
-            self.setMyself(data);
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
     this.changePassword = function (oldPassword, newPassword, callbackSuccess, callbackError) {
         var dto = {
             oldPassword: oldPassword,

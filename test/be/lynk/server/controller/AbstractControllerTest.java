@@ -111,7 +111,6 @@ public abstract class AbstractControllerTest implements ApplicationContextAware 
                 registrationDTO.setGender(GenderEnum.FEMALE);
                 registrationDTO.setEmail(EMAIL);
                 registrationDTO.setPassword(PASSWORD);
-                registrationDTO.setKeepSessionOpen(true);
 
                 Result result = request(POST, "/registration/customer", dto);
 

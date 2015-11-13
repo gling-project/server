@@ -127,7 +127,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                 account.setLastname(bName);
                 account.setGender(GenderEnum.MALE);
                 account.setEmail(getString(sheet, COL_BUSINESS_EMAIL, rowCounter));
-                account.setLoginCredential(new LoginCredential(account, false, "password"));
+                account.setLoginCredential(new LoginCredential(account, "password"));
                 account.setBusiness(business);
                 account.setRole(RoleEnum.BUSINESS);
                 account.setType(AccountTypeEnum.BUSINESS);
@@ -330,7 +330,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
             account.setLastname("bus" + i + "LastName");
             account.setGender(GenderEnum.MALE);
             account.setEmail("bus" + i + "@aze.com");
-            account.setLoginCredential(new LoginCredential(account, false, "password"));
+            account.setLoginCredential(new LoginCredential(account, "password"));
             account.setBusiness(business);
             account.setRole(RoleEnum.BUSINESS);
             account.setType(AccountTypeEnum.BUSINESS);

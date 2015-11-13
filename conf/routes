@@ -15,7 +15,6 @@ POST          /rest/login                                                       
 POST          /rest/login/facebook                                                                                   @be.lynk.server.controller.rest.LoginRestController.loginFacebook()
 GET           /rest/business_data                                                                                    @be.lynk.server.controller.rest.LoginRestController.getBusinessData()
 GET           /rest/login/facebook/:access_token                                                                     @be.lynk.server.controller.rest.LoginRestController.loginFacebookSimple(access_token:String)
-POST          /rest/account/fusion                                                                                   @be.lynk.server.controller.rest.LoginRestController.fusion()
 POST          /rest/registration/customer                                                                            @be.lynk.server.controller.rest.LoginRestController.customerRegistration()
 POST          /rest/registration/business                                                                            @be.lynk.server.controller.rest.LoginRestController.businessRegistration()
 GET           /rest/logout                                                                                           @be.lynk.server.controller.rest.LoginRestController.logout()

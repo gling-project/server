@@ -65,18 +65,6 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'password'
-                        },
-                        keepSessionOpen: {
-                            fieldTitle: "--.registration.form.keepSessionOpen",
-                            field: false,
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            active: function () {
-                                return !scope.getInfo().mobileVersion
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'keepSessionOpen'
                         }
                     };
 
@@ -131,7 +119,6 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                             scope.facebookSuccess(data);
                         },
                         function(data){
-                            console.log('je suis un merde !! ;');
                             $flash.error(data.message);
                         });
                     };
