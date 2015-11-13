@@ -19,4 +19,4 @@ myApp.directive 'businessListMobileCtrl', ($rootScope, businessService, geolocat
 
             #watch data
             scope.$watch 'getInfo().data', ->
-                scope.businesses = scope.getInfo().dat
+                scope.businesses = scope.getInfo().data

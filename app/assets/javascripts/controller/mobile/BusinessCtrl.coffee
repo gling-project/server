@@ -79,7 +79,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessServ
         #return true if socialnetwork line can be displayed
         $scope.displaySocialNetwork = ->
             s = $scope.business.socialNetwork
-            if s?
+            if !s?
                 return false
             return s.facebookLink? or s.twitterLink? or s.instagramLink? or s.deliveryLink? or s.opinionLink? or s.reservationLink?
 
