@@ -32,7 +32,7 @@
                         <follow-widget-for-publication-ctrl ng-info="{displayText:true,publication:getInfo().publication}"></follow-widget-for-publication-ctrl>
                     </div>
 
-                    <span class="publication-main-title"
+                    <span class="publication-main-title clickable"
                           ng-click="navigateTo('/business/'+getInfo().publication.businessId)">
                         <i ng-show="getInfo().publication.following === true"
                            class="gling-icon gling-icon gling-icon-bell">

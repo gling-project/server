@@ -1816,13 +1816,15 @@ ul.messenger .messenger-spinner {
   float: right;
 }
 .publication-box .publication-main-title {
-  cursor: pointer;
   margin-top: 12px;
   display: inline-block;
   font-size: 24px;
   position: relative;
   font-weight: bold;
   color: #2c265c;
+}
+.publication-box .publication-main-title.clickable {
+  cursor: pointer;
 }
 .publication-box .publication-main-title i {
   color: #1ad2aa;

@@ -3362,7 +3362,7 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
                 scope.getInfo().address = address;
                 return scope.getInfo().centerMap();
               };
-              if (scope.getInfo().address !== null) {
+              if (scope.getInfo().address != null) {
                 scope.getInfo().centerMap = function() {
                   scope.mapData = {
                     center: {
@@ -3423,6 +3423,221 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
 
 (function() {
 
+  myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBarService', function(directiveService, $location, searchBarService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/searchResult/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          pre: function(scope) {},
+          post: function(scope) {
+            var counter, removeCriteria;
+            directiveService.autoScopeImpl(scope);
+            counter = -1;
+            scope.indexSelected = null;
+            scope.$watch('getInfo().result', function() {
+              var business, category, publication;
+              if (scope.getInfo().result !== null) {
+                counter = -1;
+                for (business in scope.getInfo().result.businesses) {
+                  business.index = ++counter;
+                }
+                if (scope.getInfo().result.businesses !== null && scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile !== true) {
+                  scope.seeMoreBusinessIndex = ++counter;
+                }
+                for (publication in scope.getInfo().result.publications) {
+                  publication.index = ++counter;
+                }
+                if (scope.getInfo().result.publications !== null && scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile !== true) {
+                  scope.seeMorePublicationIndex = ++counter;
+                }
+                for (category in scope.getInfo().result.categories) {
+                  category.index = ++counter;
+                }
+                if (scope.getInfo().result.categories !== null && scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile !== true) {
+                  scope.seeMoreCategoryIndex = ++counter;
+                }
+                scope.seeMoreIndex = ++counter;
+              } else {
+                scope.getInfo().display = false;
+              }
+              return scope.indexSelected = null;
+            });
+            $(document).keydown(function(e) {
+              var business, category, publication;
+              if (e.keyCode === 40) {
+                if (scope.indexSelected === null || scope.indexSelected === counter) {
+                  scope.indexSelected = 0;
+                } else {
+                  scope.indexSelected++;
+                }
+                return scope.$apply();
+              } else if (e.keyCode === 38) {
+                if (scope.indexSelected === null || scope.indexSelected === 0) {
+                  scope.indexSelected = counter;
+                } else {
+                  scope.indexSelected--;
+                }
+                return scope.$apply();
+              } else if (e.keyCode === 13) {
+                if (scope.getInfo().result !== void 0) {
+                  for (business in scope.getInfo().result.businesses) {
+                    if (scope.indexSelected === business.index) {
+                      scope.goToBusiness(business);
+                      break;
+                    }
+                  }
+                  for (category in scope.getInfo().result.categories) {
+                    if (scope.indexSelected === category.index) {
+                      scope.goToCategory(category);
+                      break;
+                    }
+                  }
+                  for (publication in scope.getInfo().result.publications) {
+                    if (scope.indexSelected === publication.index) {
+                      scope.goToPublication(publication);
+                      break;
+                    }
+                  }
+                  return scope.$apply();
+                }
+              } else if (e.keyCode === 27) {
+                scope.getInfo().display = false;
+                scope.indexSelected = null;
+                return scope.$apply();
+              }
+            });
+            $(document).click(function() {
+              if (!$('#searchContainer').is(':hover')) {
+                scope.getInfo().display = false;
+                scope.indexSelected = null;
+                return scope.$apply();
+              }
+            });
+            scope.select = function(index) {
+              return scope.indexSelected = index;
+            };
+            scope.seeAll = function() {
+              return scope.navigateTo('search/' + searchBarService.currentSearch);
+            };
+            scope.goToPublication = function(publication) {
+              return scope.navigateTo('business/' + publication.businessId + '/publication/' + publication.id);
+            };
+            scope.goToBusiness = function(business) {
+              return scope.navigateTo('business/' + business.id);
+            };
+            scope.seeAllPublication = function() {
+              return scope.navigateTo('search/publication:' + removeCriteria(searchBarService.currentSearch));
+            };
+            scope.seeAllBusiness = function() {
+              return scope.navigateTo('search/business:' + removeCriteria(searchBarService.currentSearch));
+            };
+            scope.seeAllCategory = function() {
+              return scope.navigateTo('search/category:' + removeCriteria(searchBarService.currentSearch));
+            };
+            scope.goToCategory = function(category) {
+              var target;
+              target = null;
+              if (category.subSubCategory !== null) {
+                target = category.subSubCategory.translationName;
+              } else if (category.subCategory !== null) {
+                target = category.subCategory.translationName;
+              } else {
+                target = category.category.translationName;
+              }
+              return scope.navigateTo('search/category:' + removeCriteria(target));
+            };
+            removeCriteria = function(s) {
+              if (s.indexOf(':') !== -1) {
+                return s.split(':')[1];
+              } else {
+                return s;
+              }
+            };
+            scope.navigateTo = function(target) {
+              $location.path(target);
+              return scope.$broadcast('SEARCH_CLEAN');
+            };
+            return scope.$on('SEARCH_CLEAN', function() {
+              scope.getInfo().display = false;
+              return scope.getInfo().cleanSearch();
+            });
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', 'searchBarService', '$timeout', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, searchBarService, $timeout, $location, modalService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/searchBar/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            scope.advancedSearch = false;
+            scope.searchBarService = searchBarService;
+            scope.searchResultParam = {
+              mobile: scope.getInfo().mobile,
+              display: false,
+              cleanSearch: function() {
+                return searchBarService.currentSearch = '';
+              }
+            };
+            scope.$watch('searchBarService.currentSearch', function(o, n) {
+              var searchS;
+              if (searchBarService.displaySearchResult && o !== n && searchBarService.currentSearch !== '' && searchBarService.currentSearch.length >= 2) {
+                searchS = angular.copy(searchBarService.currentSearch);
+                scope.searchResultParam.waitingBeforeStartSearch = true;
+                return $timeout((function() {
+                  if (scope.searchResultParam.waitingBeforeStartSearch && searchS === searchBarService.currentSearch) {
+                    if (searchBarService.currentSearch.indexOf(':') !== -1 && searchBarService.currentSearch.split(':')[1].length > 0 || searchBarService.currentSearch.indexOf(':') === -1 && searchBarService.currentSearch.length > 0) {
+                      return scope.searchResultParam.promise = searchService.searchByStringLittle(searchBarService.currentSearch, function(result) {
+                        scope.searchResultParam.result = result;
+                        return scope.searchResultParam.display = true;
+                      });
+                    }
+                  }
+                }), 500);
+              }
+            });
+            scope.search = function() {
+              scope.searchResultParam.waitingBeforeStartSearch = false;
+              return scope.navigateTo('search/' + searchBarService.currentSearch);
+            };
+            return scope.navigateTo = function(target) {
+              $rootScope.$broadcast('PROGRESS_BAR_START');
+              modalService.openLoadingModal();
+              $rootScope.$broadcast('SEARCH_CLEAN');
+              return $timeout((function() {
+                return $location.path(target);
+              }), 1);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
   myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followService', 'directiveService', '$filter', '$flash', function(accountService, modalService, followService, directiveService, $filter, $flash) {
     return {
       restrict: 'E',
@@ -3437,7 +3652,7 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
           post: function(scope) {
             directiveService.autoScopeImpl(scope);
             scope.follow = function() {
-              if (accountService.getMyself() !== null) {
+              if (accountService.getMyself() != null) {
                 return scope.followed();
               } else {
                 return modalService.openLoginModal(scope.followed, null, '--.loginModal.help.follow');
@@ -3479,7 +3694,7 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
           post: function(scope) {
             directiveService.autoScopeImpl(scope);
             scope.follow = function() {
-              if (accountService.getMyself() !== null) {
+              if (accountService.getMyself() != null) {
                 return scope.followed();
               } else {
                 return modalService.openLoginModal(scope.followed, null, '--.loginModal.help.follow');
@@ -6066,7 +6281,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/publicationListMobileForBusiness/template.html",
     "<div class=publication-list-mobile><div ng-show=\"loading!=true && publications.length == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"publication in publications\" class=\"publication-box-mobile publication-publication\" ng-click=click()><div ng-class=\"{'archived': isArchived(publication)}\"><div><div class=publication-header><i ng-show=\"getInterestClass(publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(publication)}}\"></i><div class=title-box><div class=title-data>{{'--.publication.publishTo' | translateText}} {{publication.startDate | date:'dd MMM yyyy'}}</div></div></div><div class=publication-title>{{publication.title}}</div><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(publication) === true\"><table ng-show=\"publication.type === 'PROMOTION'\" class=publication-data-promotion><tr><td>- {{publication.offPercent * 100 | number:0}}%</td><td class=publication-box-price ng-show=\"publication.originalPrice!=null\"><span>{{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €</span> <span>{{publication.originalPrice | number:2}} €</span></td><td>&gt; {{publication.endDate | date:'dd MMM HH:mm'}}</td></tr></table><div class=publication-data-body ng-show=\"publication.description !=null && publication.description.length > 0\"><span ng-bind-html=\"publication.description | text : publication.descriptionLimit\"></span> <span ng-show=\"publication.description.length > descriptionLimitBase && publication.descriptionLimit==descriptionLimitBase\" ng-click=\"publication.descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"publication.description.length > descriptionLimitBase && publication.descriptionLimit!=descriptionLimitBase\" ng-click=\"publication.descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(publication) !== true,'publication-body-two-right':descriptionIsEmpty(publication) !== true}\" ng-show=\"publication.pictures.length > 0 \" ng-click=openGallery(publication.pictures[0],publication)><div class=publication-gallery-image-box><img ng-src=\"{{publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"publication.pictures.length > 1\" class=publication-illustration-plus-icon><span>+{{publication.pictures.length - 1}}</span></div></div></div></div><div class=publication-footer><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:publication.businessId,publicationId:publication.id}></facebook-share-publication-ctrl></div></div></div></div><img class=archived-icon ng-show=isArchived(publication) src=\"/assets/images/publication/archived.png\"></div><div ng-show=\"loading===true\" class=loading><img src=\"/assets/images/big_loading.gif\"></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationWidget/template.html",
-    "<div class=publication-box ng-class=\"{'publication-followed':getInfo().publication.following === true}\" ng-click=click()><div ng-show=\"getInfo().previsualization === true\" class=publication-box-previsualization></div><div class=publication-badge ng-show=\"getInfo().publication.type === 'PROMOTION'\">- {{getInfo().publication.offPercent * 100 | number:0}}%</div><table class=publication-header><tr><td rowspan=2><div class=publication-business-illustration><img ng-click=\"navigateTo('/business/'+getInfo().publication.businessId)\" ng-src=\"{{getInfo().publication.businessIllustration | image}}\"></div></td><td class=publication-header-business><div class=publication-bordered-bottom><div class=publication-following-widget><follow-widget-for-publication-ctrl ng-info={displayText:true,publication:getInfo().publication}></follow-widget-for-publication-ctrl></div><span class=publication-main-title ng-click=\"navigateTo('/business/'+getInfo().publication.businessId)\"><i ng-show=\"getInfo().publication.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{getInfo().publication.businessName}}</span></div></td></tr><tr><td class=publication-header-title><div class=publication-header-title-top><i ng-show=\"getInterestClass(getInfo().publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(getInfo().publication)}} publication-color-background\"></i> {{getInfo().publication.title}}</div><div class=\"publication-bubble publication-bordered\"><i class=\"glyphicon gling-icon gling-icon gling-icon-earth\"></i> {{getInfo().publication.distance / 1000 | number:2}} km</div><div class=\"publication-bubble publication-box-price publication-bordered\" ng-show=\"getInfo().publication.type=='PROMOTION' && getInfo().publication.originalPrice!=null\"><span>{{(getInfo().publication.originalPrice * (1.0 - getInfo().publication.offPercent)) | number:2}} €</span> <span>{{getInfo().publication.originalPrice | number:2}} €</span></div></td></tr></table><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':getInfo().publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(getInfo().publication) === true\"><div ng-show=\"getInfo().publication.type === 'PROMOTION'\" ng-class=\"{'publication-bordered-bottom' : getInfo().publication.description !=null && getInfo().publication.description.length > 0}\" class=publication-data-header><div class=\"glyphicon gling-icon gling-icon gling-icon-calendar\"></div><span><div>{{'--.publication.promotionTo' | translateText}}</div><div>&lt; {{getInfo().publication.endDate | date:'dd MMM HH:mm'}}</div></span></div><div class=publication-data-body ng-show=\"getInfo().publication.description !=null && getInfo().publication.description.length > 0\"><span ng-bind-html=\"getInfo().publication.description | text : descriptionLimit\"></span> <span ng-show=\"getInfo().publication.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase\" ng-click=\"descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"getInfo().publication.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase\" ng-click=\"descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></div></div><div class=\"publication-gallery publication-body-two publication-body-two-right\" ng-show=\"getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) === true\" ng-click=openGallery(getInfo().publication.pictures[1],getInfo().publication)><img ng-src=\"{{getInfo().publication.pictures[1] | image}}\" class={{getIllustrationClass(getInfo().publication.pictures[1])}}><div class=publication-illustration-plus-icon><span>+{{getInfo().publication.pictures.length - 2}}</span></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}\" ng-show=\"getInfo().publication.pictures.length > 0 \" ng-click=openGallery(getInfo().publication.pictures[0],getInfo().publication)><img ng-src=\"{{getInfo().publication.pictures[0] | image}}\" class={{getIllustrationClass(getInfo().publication.pictures[0])}}><div ng-show=\"getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) !== true\" class=publication-illustration-plus-icon><span>+{{getInfo().publication.pictures.length - 1}}</span></div></div></div><div class=publication-footer><div class=\"publication-footer-date publication-bordered-bottom\">{{'--.publication.publishTo' | translateText}} {{getInfo().publication.startDate | date:'dd MMM yyyy'}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:getInfo().publication.businessId,publicationId:getInfo().publication.id}></facebook-share-publication-ctrl></div></div></div>");
+    "<div class=publication-box ng-class=\"{'publication-followed':getInfo().publication.following === true}\" ng-click=click()><div ng-show=\"getInfo().previsualization === true\" class=publication-box-previsualization></div><div class=publication-badge ng-show=\"getInfo().publication.type === 'PROMOTION'\">- {{getInfo().publication.offPercent * 100 | number:0}}%</div><table class=publication-header><tr><td rowspan=2><div class=publication-business-illustration><img ng-click=\"navigateTo('/business/'+getInfo().publication.businessId)\" ng-src=\"{{getInfo().publication.businessIllustration | image}}\"></div></td><td class=publication-header-business><div class=publication-bordered-bottom><div class=publication-following-widget><follow-widget-for-publication-ctrl ng-info={displayText:true,publication:getInfo().publication}></follow-widget-for-publication-ctrl></div><span class=\"publication-main-title clickable\" ng-click=\"navigateTo('/business/'+getInfo().publication.businessId)\"><i ng-show=\"getInfo().publication.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{getInfo().publication.businessName}}</span></div></td></tr><tr><td class=publication-header-title><div class=publication-header-title-top><i ng-show=\"getInterestClass(getInfo().publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(getInfo().publication)}} publication-color-background\"></i> {{getInfo().publication.title}}</div><div class=\"publication-bubble publication-bordered\"><i class=\"glyphicon gling-icon gling-icon gling-icon-earth\"></i> {{getInfo().publication.distance / 1000 | number:2}} km</div><div class=\"publication-bubble publication-box-price publication-bordered\" ng-show=\"getInfo().publication.type=='PROMOTION' && getInfo().publication.originalPrice!=null\"><span>{{(getInfo().publication.originalPrice * (1.0 - getInfo().publication.offPercent)) | number:2}} €</span> <span>{{getInfo().publication.originalPrice | number:2}} €</span></div></td></tr></table><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':getInfo().publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(getInfo().publication) === true\"><div ng-show=\"getInfo().publication.type === 'PROMOTION'\" ng-class=\"{'publication-bordered-bottom' : getInfo().publication.description !=null && getInfo().publication.description.length > 0}\" class=publication-data-header><div class=\"glyphicon gling-icon gling-icon gling-icon-calendar\"></div><span><div>{{'--.publication.promotionTo' | translateText}}</div><div>&lt; {{getInfo().publication.endDate | date:'dd MMM HH:mm'}}</div></span></div><div class=publication-data-body ng-show=\"getInfo().publication.description !=null && getInfo().publication.description.length > 0\"><span ng-bind-html=\"getInfo().publication.description | text : descriptionLimit\"></span> <span ng-show=\"getInfo().publication.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase\" ng-click=\"descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"getInfo().publication.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase\" ng-click=\"descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></div></div><div class=\"publication-gallery publication-body-two publication-body-two-right\" ng-show=\"getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) === true\" ng-click=openGallery(getInfo().publication.pictures[1],getInfo().publication)><img ng-src=\"{{getInfo().publication.pictures[1] | image}}\" class={{getIllustrationClass(getInfo().publication.pictures[1])}}><div class=publication-illustration-plus-icon><span>+{{getInfo().publication.pictures.length - 2}}</span></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}\" ng-show=\"getInfo().publication.pictures.length > 0 \" ng-click=openGallery(getInfo().publication.pictures[0],getInfo().publication)><img ng-src=\"{{getInfo().publication.pictures[0] | image}}\" class={{getIllustrationClass(getInfo().publication.pictures[0])}}><div ng-show=\"getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) !== true\" class=publication-illustration-plus-icon><span>+{{getInfo().publication.pictures.length - 1}}</span></div></div></div><div class=publication-footer><div class=\"publication-footer-date publication-bordered-bottom\">{{'--.publication.publishTo' | translateText}} {{getInfo().publication.startDate | date:'dd MMM yyyy'}}</div><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:getInfo().publication.businessId,publicationId:getInfo().publication.id}></facebook-share-publication-ctrl></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationWidgetForMobile/template.html",
     "<div class=\"publication-box-mobile publication-publication\"><div ng-show=\"getInfo().previsualization === true\" class=publication-box-previsualization></div><table class=publication-header><tr><td ng-click=\"navigateTo('/business/'+getInfo().publication.businessId)\"><img class=illustration ng-src=\"{{getInfo().publication.businessIllustration | image}}\"></td><td><div class=title-box><div class=title ng-click=\"navigateTo('/business/'+getInfo().publication.businessId)\"><i ng-show=\"getInfo().publication.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> {{getInfo().publication.businessName}}</div><div class=publication-following-widget><follow-widget-for-publication-ctrl ng-info={displayText:true,publication:getInfo().publication}></follow-widget-for-publication-ctrl></div><div class=title-data>{{'--.publication.publishTo' | translateText}} {{getInfo().publication.startDate | date:'dd MMM yyyy'}} - {{getInfo().publication.distance / 1000 | number:2}} km</div></div></td><td><i ng-show=\"getInterestClass(getInfo().publication)!=null\" class=\"publication-interest gling-icon {{getInterestClass(getInfo().publication)}}\"></i></td></tr></table><div class=publication-title>{{getInfo().publication.title}}</div><div class=publication-body><div class=publication-data ng-class=\"{'publication-body-two':getInfo().publication.pictures.length>0}\" ng-hide=\"descriptionIsEmpty(getInfo().publication) === true\"><table ng-show=\"getInfo().publication.type === 'PROMOTION'\" class=publication-data-promotion><tr><td>- {{getInfo().publication.offPercent * 100 | number:0}}%</td><td class=publication-box-price ng-show=\"getInfo().publication.originalPrice!=null\"><span>{{(getInfo().publication.originalPrice * (1.0 - getInfo().publication.offPercent)) | number:2}} €</span> <span>{{getInfo().publication.originalPrice | number:2}} €</span></td><td>&gt; {{getInfo().publication.endDate | date:'dd MMM HH:mm'}}</td></tr></table><div class=publication-data-body ng-show=\"getInfo().publication.description !=null && getInfo().publication.description.length > 0\"><span ng-bind-html=\"getInfo().publication.description | text : getInfo().publication.descriptionLimit\"></span> <span ng-show=\"getInfo().publication.description.length > descriptionLimitBase && getInfo().publication.descriptionLimit==descriptionLimitBase\" ng-click=\"getInfo().publication.descriptionLimit = 10000\" class=link>{{'--.textReuction.seeMore' | translateText}}</span> <span ng-show=\"getInfo().publication.description.length > descriptionLimitBase && getInfo().publication.descriptionLimit!=descriptionLimitBase\" ng-click=\"getInfo().publication.descriptionLimit = descriptionLimitBase\" class=link>{{'--.textReuction.seeLess' | translateText}}</span></div></div><div class=publication-gallery ng-class=\"{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}\" ng-show=\"getInfo().publication.pictures.length > 0 \" ng-click=openGallery(getInfo().publication.pictures[0],getInfo().publication)><div class=publication-gallery-image-box><img ng-src=\"{{getInfo().publication.pictures[0] | image}}\" class=publication-illustration><div ng-show=\"getInfo().publication.pictures.length > 1\" class=publication-illustration-plus-icon><span>+{{getInfo().publication.pictures.length - 1}}</span></div></div></div></div><div class=publication-footer><div class=publication-footer-facebook><facebook-share-publication-ctrl ng-info={businessId:getInfo().publication.businessId,publicationId:getInfo().publication.id}></facebook-share-publication-ctrl></div></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/schedule/template.html",

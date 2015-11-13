@@ -2345,7 +2345,7 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
               return $location.path(target);
             };
             scope.getInterestClass = function(publication) {
-              if (publication.interest !== null) {
+              if (publication.interest != null) {
                 return 'gling-icon-' + publication.interest.name;
               }
               return null;
@@ -2453,14 +2453,13 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
               }
             };
             scope.search = function() {
-              console.log('scope.search !! : ' + scope.type + '/' + scope.currentPage);
               if (scope.allLoaded === true) {
                 return;
               }
               scope.loading = true;
-              if (scope.type !== null && scope.type !== void 0 && scope.type === 'ARCHIVE') {
+              if ((scope.type != null) && scope.type !== void 0 && scope.type === 'ARCHIVE') {
                 return searchService.byBusinessArchived(scope.currentPage, scope.getInfo().businessId, scope.success);
-              } else if (scope.type !== null && scope.type !== void 0 && scope.type === 'PREVISUALIZATION') {
+              } else if ((scope.type != null) && scope.type !== void 0 && scope.type === 'PREVISUALIZATION') {
                 return searchService.byBusinessPrevisualization(scope.currentPage, scope.getInfo().businessId, scope.success);
               } else {
                 return searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
@@ -2494,13 +2493,13 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
               }
             };
             scope.getInterestClass = function(publication) {
-              if (publication.interest !== null) {
+              if (publication.interest != null) {
                 return 'gling-icon-' + publication.interest.name;
               }
               return null;
             };
             isEmpty = function(val) {
-              return val === void 0 || val === null || val === '';
+              return !(val != null) || val === '';
             };
             scope.descriptionIsEmpty = function(publication) {
               return publication.type !== 'PROMOTION' && isEmpty(publication.description);
@@ -2799,6 +2798,34 @@ myApp.directive("footerBarCtrl", ['modalService', 'contactService', '$flash', '$
         }
     }
 }]);
+
+(function() {
+
+  myApp.directive('toTopCtrl', ['$window', function($window) {
+    return {
+      restrict: 'E',
+      scope: {},
+      templateUrl: '/assets/javascripts/directive/component/toTop/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            scope.toTop = function() {
+              return $(window).scrollTop(0);
+            };
+            scope.displayToTopButton = $(window).scrollTop() > 100;
+            return angular.element($window).bind('scroll', function() {
+              scope.displayToTopButton = $(window).scrollTop() > 100;
+              return scope.$apply();
+            });
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
 
 myApp.service("$flash", ['$filter', function($filter) {
 
