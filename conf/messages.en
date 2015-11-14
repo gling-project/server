@@ -557,7 +557,7 @@ day_abrv_sunday=Su
 
 
 --.welcome.start=Entrer!
---.welcome.customer.title=Vous like your stores ?
+--.welcome.customer.title=You'd like to follow your stores ?
 --.welcome.customer.subTitle1=YOUR NETWORK
 --.welcome.customer.content1=Restaurants, boutiques, theaters,decoration stores ... Gling brings together all types of stores.
 --.welcome.customer.subTitle2=NEXT TO YOU
@@ -567,10 +567,10 @@ day_abrv_sunday=Su
 --.welcome.business.subTitle1=LOYALTY
 --.welcome.business.content1=Reinforce the loyalty relationship with your customers by keeping them in regular contact.
 --.welcome.business.subTitle2=NEW CLIENTS
---.welcome.business.content2=Lett you store be known thanks to geolocation or to your customers network.
+--.welcome.business.content2=Let your store be known thanks to geolocation or to your customers network.
 --.welcome.business.subTitle3=DAILY TOOL 
 --.welcome.business.content3=Organize and easily communicate your special actions.
---.welcome.registration=REgister in
+--.welcome.registration=Register in
 --.welcome.business.title=Are you a storekeeper?
 --.generic.site=Site
 --.interest.selection.window.nothing=Nothing
@@ -612,5 +612,5 @@ day_abrv_sunday=Su
 
 
 --.generic.favoriteLanguage=Language
---.registration.accept.condition=Bij register yourself on Gling you recognize to have read and accept the <a href="https://www.gling.be/legal/" target="_blank">terms and conditions</a> of the website Gling
+--.registration.accept.condition=By register yourself on Gling you recognize to have read and accept the <a href="https://www.gling.be/legal/" target="_blank">terms and conditions</a> of the website Gling
 --.error.facebook.neededInformationEmpty=Some information requested is not available in your Facebook profile
