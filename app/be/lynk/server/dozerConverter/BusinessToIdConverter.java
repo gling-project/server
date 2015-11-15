@@ -12,7 +12,7 @@ public class BusinessToIdConverter implements CustomConverter {
     public Object convert(Object destination, Object source,
                           Class destClass, Class sourceClass) {
 
-        if (source instanceof Business) {
+        if (source !=null && source instanceof Business) {
             return ((Business) source).getId();
         } else {
             //TODO ?

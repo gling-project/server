@@ -85,64 +85,52 @@ public class LoginRestController extends AbstractRestController {
         return ok(new BooleanDTO(accountService.findByEmail(email) != null));
     }
 
-    @Transactional
-    public Result testFacebookAccount() {
-
-        FacebookAuthenticationDTO facebookAuthenticationDTO = initialization(FacebookAuthenticationDTO.class);
-
-        TestFacebookDTO testFacebookDTO = new TestFacebookDTO();
-
-        //1) load the data from facebook
-        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookAuthenticationDTO.getToken());
-        testFacebookDTO.setUserId(facebookTokenAccessControlDTO.getId());
-        testFacebookDTO.setFacebookTokenAccessControl(facebookTokenAccessControlDTO);
-        testFacebookDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
-        testFacebookDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
-        testFacebookDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
-        testFacebookDTO.setGender(GenderEnum.getByText(facebookTokenAccessControlDTO.getGender()));
-
-        //2) test if there is an account with this facebook credential
-        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
-
-        if (facebookCredential != null) {
-            //founded ! the user is already registered
-            Account account = facebookCredential.getAccount();
-            testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED);
-            testFacebookDTO.setMyself((MyselfDTO) finalizeConnection(account));
-
-        } else if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
-
-            Account account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
-
-            facebookCredential = new FacebookCredential();
-            facebookCredential.setUserId(facebookTokenAccessControlDTO.getId());
-            facebookCredential.setAccount(account);
-            account.setFacebookCredential(facebookCredential);
-
-            accountService.saveOrUpdate(account);
-
-            return ok(finalizeConnection(account));
-
-
-        } else {
-            testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.OK);
-        }
-
-
-        return ok(testFacebookDTO);
-    }
-
-
-    @Transactional
-    public Result loginFacebook() {
-
-
-        //extract DTO
-        FacebookAuthenticationDTO dto = initialization(FacebookAuthenticationDTO.class, false, false);
-
-        return loginFacebookSimple(dto.getToken(),dto.getUserId());
-
-    }
+//    @Transactional
+//    public Result testFacebookAccount() {
+//
+//        FacebookAuthenticationDTO facebookAuthenticationDTO = initialization(FacebookAuthenticationDTO.class);
+//
+//        TestFacebookDTO testFacebookDTO = new TestFacebookDTO();
+//
+//        //1) load the data from facebook
+//        FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookAuthenticationDTO.getToken());
+//        testFacebookDTO.setUserId(facebookTokenAccessControlDTO.getId());
+//        testFacebookDTO.setFacebookTokenAccessControl(facebookTokenAccessControlDTO);
+//        testFacebookDTO.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
+//        testFacebookDTO.setLastname(facebookTokenAccessControlDTO.getLast_name());
+//        testFacebookDTO.setEmail(facebookTokenAccessControlDTO.getEmail());
+//        testFacebookDTO.setGender(GenderEnum.getByText(facebookTokenAccessControlDTO.getGender()));
+//
+//        //2) test if there is an account with this facebook credential
+//        FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
+//
+//        if (facebookCredential != null) {
+//            //founded ! the user is already registered
+//            Account account = facebookCredential.getAccount();
+//            testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.ALREADY_REGISTRERED);
+//            testFacebookDTO.setMyself((MyselfDTO) finalizeConnection(account));
+//
+//        } else if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
+//
+//            Account account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
+//
+//            facebookCredential = new FacebookCredential();
+//            facebookCredential.setUserId(facebookTokenAccessControlDTO.getId());
+//            facebookCredential.setAccount(account);
+//            account.setFacebookCredential(facebookCredential);
+//
+//            accountService.saveOrUpdate(account);
+//
+//            return ok(finalizeConnection(account));
+//
+//
+//        } else {
+//            testFacebookDTO.setStatus(TestFacebookDTO.TestFacebookStatusEnum.OK);
+//        }
+//
+//
+//        return ok(testFacebookDTO);
+//    }
 
     @Transactional
     public Result loginFacebookSimple(String facebookToken, String userId) {
@@ -265,7 +253,7 @@ public class LoginRestController extends AbstractRestController {
     public Result businessRegistration() {
         BusinessRegistrationDTO dto = initialization(BusinessRegistrationDTO.class);
 
-        BusinessAccount account = (BusinessAccount) createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), false);
+        Account account =createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), false);
         account.setRole(RoleEnum.BUSINESS);
 
         //business
@@ -425,12 +413,16 @@ public class LoginRestController extends AbstractRestController {
         }
 
         //account
-        Account account;
-        if (isCustomer) {
-            account = dozerService.map(accountRegistrationDTO, Account.class);
-        } else {
-            account = dozerService.map(accountRegistrationDTO, BusinessAccount.class);
+        Account account= dozerService.map(accountRegistrationDTO, Account.class);
+        if(isCustomer){
+            account.setRole(RoleEnum.CUSTOMER);
+            account.setType(AccountTypeEnum.CUSTOMER);
         }
+        else{
+            account.setRole(RoleEnum.BUSINESS);
+            account.setType(AccountTypeEnum.BUSINESS);
+        }
+
 
         //define a language
         if (account.getLang() == null) {

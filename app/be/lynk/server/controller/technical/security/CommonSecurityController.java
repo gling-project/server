@@ -4,7 +4,6 @@ import be.lynk.server.controller.technical.security.source.SourceEnum;
 import be.lynk.server.dto.technical.ExceptionDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.service.AccountService;
 import be.lynk.server.service.impl.AccountServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
@@ -151,32 +150,6 @@ public class CommonSecurityController extends Security.Authenticator {
         } catch (MyRuntimeException e) {
             return false;
         }
-
-//        if (ctx.session().get(SESSION_IDENTIFIER_STORE) != null) {
-//            return true;
-//        }
-//
-//        if (ctx.request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN) != null) {
-//
-//            String key = ctx.request().cookie(CommonSecurityController.COOKIE_KEEP_SESSION_OPEN).value();
-//
-//            String keyElements[] = key.split(":");
-//
-//            try {
-//                Account account = USER_SERVICE.findById(Long.parseLong(keyElements[0]));
-//
-//                if (account != null && USER_SERVICE.controlAuthenticationKey(keyElements[1], account)) {
-//                    //connection
-//                    storeAccount(ctx, account);
-//                    return true;
-//                }
-//            }
-//            catch(NumberFormatException e){
-//
-//            }
-//        }
-//
-//        return false;
     }
 
     public void logout(Http.Context ctx) {
@@ -210,7 +183,7 @@ public class CommonSecurityController extends Security.Authenticator {
 
     public Business getBusiness() {
         Account currentUser = getCurrentUser();
-        return ((BusinessAccount) currentUser).getBusiness();
+        return currentUser.getBusiness();
     }
 
 }

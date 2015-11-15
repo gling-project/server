@@ -62,8 +62,23 @@ public class Account extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "selectedByAccount")
     private Address selectedAddress;
 
+    @OneToOne(cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            optional = false,
+            mappedBy = "account",
+            fetch = FetchType.LAZY)
+    private Business business;
+
 
     public Account() {
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
     public Address getSelectedAddress() {

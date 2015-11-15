@@ -1,18 +1,15 @@
 package be.lynk.server.controller.rest;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.BusinessNotificationDTO;
 import be.lynk.server.dto.PromotionDTO;
 import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
-import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
 import be.lynk.server.util.constants.Constant;
@@ -55,7 +52,7 @@ public class PromotionRestController extends AbstractRestController {
 
         Promotion promotion = dozerService.map(dto, Promotion.class);
 
-        BusinessAccount account = (BusinessAccount) securityController.getCurrentUser();
+        Account account = securityController.getCurrentUser();
         Business business = account.getBusiness();
 
         //control start date
@@ -131,7 +128,7 @@ public class PromotionRestController extends AbstractRestController {
         Business business = promotionToEdit.getBusiness();
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount) securityController.getCurrentUser()).getBusiness().equals(business)) {
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 

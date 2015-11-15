@@ -44,9 +44,6 @@ myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageS
 
                     //log out
                     scope.logout = function () {
-                        if (facebookService.isConnected()) {
-                            facebookService.logout();
-                        }
                         $rootScope.$broadcast('LOGOUT');
                         accountService.logout(function () {
                             $location.path('/');

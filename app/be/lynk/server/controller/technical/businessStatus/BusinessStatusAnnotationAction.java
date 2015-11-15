@@ -4,7 +4,6 @@ package be.lynk.server.controller.technical.businessStatus;
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.BusinessAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import play.libs.F;
@@ -31,7 +30,7 @@ public class BusinessStatusAnnotationAction extends Action<BusinessStatusAnnotat
 
             if (role.equals(RoleEnum.BUSINESS) || role.getChildren().contains(RoleEnum.BUSINESS)) {
 
-                Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+                Business business = securityController.getCurrentUser().getBusiness();
                 for (BusinessStatusEnum businessStatus : configuration.status()) {
                     if (business.getBusinessStatus().equals(businessStatus)) {
                         return delegate.call(context);

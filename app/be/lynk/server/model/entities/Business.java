@@ -84,6 +84,13 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     public Business() {
     }
 
+    public Business(Account account, String name) {
+        this.account = account;
+        this.name = name;
+        this.searchableName = normalize(name);
+        businessStatus=BusinessStatusEnum.NOT_PUBLISHED;
+    }
+
     public String getVta() {
         return vta;
     }

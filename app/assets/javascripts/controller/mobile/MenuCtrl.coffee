@@ -54,9 +54,6 @@ myApp.controller 'MenuCtrl', ($rootScope, $scope, facebookService, accountServic
 
     #logout the user
     $scope.logout = ->
-        #logout facebook
-        if facebookService.isConnected()
-            facebookService.logout()
         #broadcast logout
         $scope.$broadcast 'LOGOUT'
         #call service

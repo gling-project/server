@@ -42,6 +42,8 @@ public class BusinessRestController extends AbstractController {
     private LocalizationService     localizationService;
     @Autowired
     private CustomerInterestService customerInterestService;
+    @Autowired
+    private AccountService          accountService;
 
 
 
@@ -70,17 +72,17 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     public Result getPublicData(long id) {
 
-        Account currentUser=null;
-        if(securityController.isAuthenticated(ctx())) {
+        Account currentUser = null;
+        if (securityController.isAuthenticated(ctx())) {
             currentUser = securityController.getCurrentUser();
         }
 
         Business business = businessService.findById(id);
 
         if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED) &&
-          (securityController.isAuthenticated(ctx()) == false ||
-          (!currentUser.getRole().equals(RoleEnum.SUPERADMIN) &&
-          (!currentUser.getRole().equals(RoleEnum.BUSINESS) || !business.equals(securityController.getBusiness()))))) {
+                (securityController.isAuthenticated(ctx()) == false ||
+                        (!currentUser.getRole().equals(RoleEnum.SUPERADMIN) &&
+                                (!currentUser.getRole().equals(RoleEnum.BUSINESS) || !business.equals(securityController.getBusiness()))))) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_HIDDEN_AND_NOT_MINE);
         }
 
@@ -89,7 +91,6 @@ public class BusinessRestController extends AbstractController {
 
         return ok(businessToDisplayDTO);
     }
-
 
 
     @Transactional
@@ -137,6 +138,29 @@ public class BusinessRestController extends AbstractController {
     }
 
     /* ////////////////////////////////////////////////////
+     * CREATE FUNCTION
+     /////////////////////////////////////////////////// */
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result createBusiness() {
+
+        CreateBusinessDTO createBusinessDTO  = initialization(CreateBusinessDTO.class);
+
+        //load account
+        Account account = accountService.findById(createBusinessDTO.getAccountId());
+
+        account.setRole(RoleEnum.BUSINESS);
+        account.setType(AccountTypeEnum.BUSINESS);
+        account.setBusiness(new Business(account, createBusinessDTO.getBusinessName()));
+
+        accountService.saveOrUpdate(account);
+
+        return ok();
+    }
+
+
+    /* ////////////////////////////////////////////////////
      * EDIT FUNCTION
      /////////////////////////////////////////////////// */
 
@@ -149,8 +173,8 @@ public class BusinessRestController extends AbstractController {
         //control business
         Business business = businessService.findById(businessId);
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -197,8 +221,8 @@ public class BusinessRestController extends AbstractController {
         //control business
         Business business = businessService.findById(businessId);
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -230,7 +254,6 @@ public class BusinessRestController extends AbstractController {
     }
 
 
-
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result editIllustration(long businessId) {
@@ -238,8 +261,8 @@ public class BusinessRestController extends AbstractController {
         //control business
         Business business = businessService.findById(businessId);
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -249,10 +272,9 @@ public class BusinessRestController extends AbstractController {
         StoredFile storedFile = storedFileService.findById(dto.getId());
 
         if (!storedFile.getAccount().equals(securityController.getCurrentUser())) {
-            if(securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)){
+            if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
                 storedFile.setAccount(securityController.getBusiness().getAccount());
-            }
-            else {
+            } else {
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
             }
         }
@@ -271,10 +293,9 @@ public class BusinessRestController extends AbstractController {
         StoredFile storedFile = storedFileService.findById(dto.getId());
 
         if (!storedFile.getAccount().equals(securityController.getCurrentUser())) {
-            if(securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)){
+            if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
                 storedFile.setAccount(securityController.getBusiness().getAccount());
-            }
-            else {
+            } else {
                 throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
             }
         }
@@ -282,8 +303,8 @@ public class BusinessRestController extends AbstractController {
         //control business
         Business business = businessService.findById(businessId);
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -300,8 +321,8 @@ public class BusinessRestController extends AbstractController {
         //control business
         Business business = businessService.findById(businessId);
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -328,8 +349,8 @@ public class BusinessRestController extends AbstractController {
         //control business
         Business business = businessService.findById(businessId);
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -350,8 +371,8 @@ public class BusinessRestController extends AbstractController {
         //control business
         Business business = businessService.findById(businessId);
 
-        if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+        if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -424,7 +445,7 @@ public class BusinessRestController extends AbstractController {
 
         initialization();
 
-        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+        Business business = securityController.getCurrentUser().getBusiness();
 
         business.setBusinessStatus(BusinessStatusEnum.WAITING_CONFIRMATION);
         business.setAskPublicationDate(LocalDateTime.now());
@@ -441,7 +462,7 @@ public class BusinessRestController extends AbstractController {
 
         initialization();
 
-        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+        Business business = securityController.getCurrentUser().getBusiness();
 
         business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
         business.setAskPublicationDate(LocalDateTime.now());
@@ -458,7 +479,7 @@ public class BusinessRestController extends AbstractController {
 
         initialization();
 
-        Business business = ((BusinessAccount) securityController.getCurrentUser()).getBusiness();
+        Business business = securityController.getCurrentUser().getBusiness();
 
         business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
         business.setAskPublicationDate(LocalDateTime.now());
@@ -469,11 +490,10 @@ public class BusinessRestController extends AbstractController {
     }
 
 
-
     private ListDTO<BusinessToDisplayDTO> convertBusiness(List<Business> businesses) {
         return new ListDTO<>(businesses.stream()
-                                       .map(b -> convertBusiness(b))
-                                       .collect(Collectors.toList()));
+                .map(b -> convertBusiness(b))
+                .collect(Collectors.toList()));
     }
 
 }

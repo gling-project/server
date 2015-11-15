@@ -8,7 +8,6 @@ import be.lynk.server.dto.BusinessNotificationDTO;
 import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.service.*;
@@ -52,11 +51,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
     public Result create() {
         BusinessNotificationDTO dto = initialization(BusinessNotificationDTO.class);
 
-
         BusinessNotification businessNotification = dozerService.map(dto, BusinessNotification.class);
-//        businessNotification.setEndDate(businessNotification.getStartDate().plusMonths(1));
 
-        businessNotification.setBusiness(((BusinessAccount) securityController.getCurrentUser()).getBusiness());
+        businessNotification.setBusiness(securityController.getCurrentUser().getBusiness());
         if (businessNotification.getInterest() != null) {
             businessNotification.setInterest(customerInterestService.findById(businessNotification.getInterest().getId()));
         }
@@ -80,8 +77,6 @@ public class BusinessNotificationRestController extends AbstractRestController {
         if (publicationService.countPublicationForWeek(businessNotification.getStartDate(), securityController.getBusiness()) >= Constant.PUBLICATION_MAX_BY_WEEK) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_WEEK);
         }
-
-        //TODO control file
 
         publicationService.saveOrUpdate(businessNotification);
 
@@ -112,7 +107,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         publicationDTO.setBusinessId(businessNotification.getBusiness().getId());
 
         //send a notification
-        notificationService.sendNotification(businessNotification.getBusiness().getName()+" a publié dans Gling",publicationDTO.getTitle(),followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
+        notificationService.sendNotification(businessNotification.getBusiness().getName() + " a publié dans Gling", publicationDTO.getTitle(), followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
 
 
         return ok(publicationDTO);
@@ -134,7 +129,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         Business business = businessNotificationToEdit.getBusiness();
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount) securityController.getCurrentUser()).getBusiness().equals(business)) {
+                !securityController.getCurrentUser().getBusiness().equals(business)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
@@ -143,9 +138,6 @@ public class BusinessNotificationRestController extends AbstractRestController {
         businessNotificationToEdit.setInterest(customerInterestService.findByName(businessNotification.getInterest().getName()));
         businessNotificationToEdit.setTitle(businessNotification.getTitle());
         businessNotificationToEdit.setDescription(businessNotification.getDescription());
-//        businessNotificationToEdit.setEndDate(businessNotification.getStartDate().plusMonths(1));
-//        businessNotificationToEdit.setStartDate(businessNotification.getStartDate());
-
 
         publicationService.saveOrUpdate(businessNotificationToEdit);
 

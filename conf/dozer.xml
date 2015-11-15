@@ -81,7 +81,7 @@
 
     <!-- business -> businessId -->
     <mapping>
-        <class-a>be.lynk.server.model.entities.BusinessAccount</class-a>
+        <class-a>be.lynk.server.model.entities.Account</class-a>
         <class-b>be.lynk.server.dto.MyselfDTO</class-b>
         <field custom-converter=
                        "be.lynk.server.dozerConverter.BusinessToIdConverter">

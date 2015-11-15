@@ -77,9 +77,11 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
 
             //distance
             $scope.computeDistance = function () {
-                addressService.distance($scope.business.address.id, function (data) {
-                    $scope.business.distance = data.distance;
-                });
+                if($scope.business.address!=undefined && $scope.business.address !=null) {
+                    addressService.distance($scope.business.address.id, function (data) {
+                        $scope.business.distance = data.distance;
+                    });
+                }
             };
 
             //initlaization

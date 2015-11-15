@@ -122,7 +122,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
                         getString(sheet, COL_BUSINESS_COUNTRY, rowCounter)
                 ));
                 business.setEmail(getString(sheet, COL_BUSINESS_EMAIL, rowCounter));
-                BusinessAccount account = new BusinessAccount();
+                Account account = new Account();
                 account.setFirstname(bName);
                 account.setLastname(bName);
                 account.setGender(GenderEnum.MALE);
@@ -316,7 +316,7 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
             //account
             Business business = new Business();
             business.setName("business " + i);
-            ;
+
             business.setDescription("business " + i + " - escription");
             business.setPhone("00000000");
             business.setBusinessStatus(BusinessStatusEnum.PUBLISHED);
@@ -325,7 +325,8 @@ public class DemoImporterImpl extends AbstractImporter implements DemoImporter {
             business.getAddress().setPosy(4.4397416);
             business.getBusinessCategories().add(businessCategoryService.findByName("servicespubliques_communal_urbanisme"));
             business.setEmail("bus" + i + "@aze.com");
-            BusinessAccount account = new BusinessAccount();
+
+            Account account = new Account();
             account.setFirstname("bus" + i + "firstName");
             account.setLastname("bus" + i + "LastName");
             account.setGender(GenderEnum.MALE);

@@ -1,4 +1,4 @@
-myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, $rootScope,$window) {
+myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, $rootScope, $window,businessService) {
 
     //back to the top of the page
     $(window).scrollTop(0);
@@ -13,11 +13,11 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
         disabled: true
     };
 
-    $scope.editPassword = function(){
+    $scope.editPassword = function () {
         modalService.openEditPasswordModal();
     };
 
-    $scope.interestEdit = function(){
+    $scope.interestEdit = function () {
         modalService.openEditCustomerInterest();
     };
 
@@ -28,35 +28,39 @@ myApp.controller('ProfileCtrl', function ($scope, modalService, accountService, 
 
     $scope.personalSave = function () {
         $scope.accountParam.disabled = true;
-        accountService.editAccount($scope.accountParam.dto,function(){
+        accountService.editAccount($scope.accountParam.dto, function () {
 
-            if($scope.oldLang != $scope.accountParam.dto.lang){
+            if ($scope.oldLang != $scope.accountParam.dto.lang) {
                 $window.location.reload();
             }
         });
     };
 
     $scope.personalCancel = function () {
-        $scope.accountParam.dto.firstname=accountService.getMyself().firstname;
-        $scope.accountParam.dto.lastname=accountService.getMyself().lastname;
-        $scope.accountParam.dto.email=accountService.getMyself().email;
-        $scope.accountParam.dto.gender=accountService.getMyself().gender;
+        $scope.accountParam.dto.firstname = accountService.getMyself().firstname;
+        $scope.accountParam.dto.lastname = accountService.getMyself().lastname;
+        $scope.accountParam.dto.email = accountService.getMyself().email;
+        $scope.accountParam.dto.gender = accountService.getMyself().gender;
         $scope.accountParam.disabled = true;
     };
 
 
-
-
     $scope.addAddress = function () {
-        modalService.addressModal(true, null,false);
+        modalService.addressModal(true, null, false);
     };
 
     $scope.editAddress = function (address) {
-        modalService.addressModal(true, address,false);
+        modalService.addressModal(true, address, false);
     };
 
     $scope.deleteAddress = function (address) {
         accountService.deleteAddress(address);
     };
+
+    $scope.createBusiness = function () {
+        businessService.createBusiness(accountService.getMyself().id, $scope.businessName, function () {
+
+        });
+    }
 
 });

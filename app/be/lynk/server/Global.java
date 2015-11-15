@@ -105,6 +105,7 @@ public class Global extends GlobalSettings {
                 message = exception.getMessage();
             }
             exceptionsDTO = new ExceptionDTO(message);
+            return F.Promise.<SimpleResult>pure(Results.badRequest(exceptionsDTO));
         } else {
             exceptionsDTO = new ExceptionDTO(t.getCause().getMessage());
         }

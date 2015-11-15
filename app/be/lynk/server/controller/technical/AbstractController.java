@@ -139,7 +139,7 @@ public abstract class AbstractController extends Controller {
             String s = urlEls[i];
             if (s.contains("$") || s.contains(":")) {
                 //it's a param !!
-                params.put("param" + i, pathEls[i]);
+                params.put("param" + i, s);
             }
         }
 

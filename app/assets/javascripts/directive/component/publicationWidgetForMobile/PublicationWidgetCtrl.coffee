@@ -34,3 +34,10 @@ myApp.directive 'publicationWidgetCtrl', ($rootScope, businessService, geolocati
 
             #initialization
             scope.getInfo().loading = true
+
+            #get the illustration class. Depend of the size of the picture
+            scope.getIllustrationClass = (picture) ->
+                if picture != undefined and picture.height > picture.width
+                    'publication-illustration-high'
+                else
+                    'publication-illustration'

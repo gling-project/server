@@ -4,7 +4,6 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.PublicationService;
@@ -40,7 +39,7 @@ public class PublicationRestController extends AbstractRestController {
         Business business = publication.getBusiness();
 
         if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+                !securityController.getCurrentUser().getBusiness().equals(business)){
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 

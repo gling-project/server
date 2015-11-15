@@ -5,7 +5,6 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessScheduleContainerDTO;
 import be.lynk.server.dto.BusinessSchedulePartDTO;
 import be.lynk.server.model.entities.Business;
-import be.lynk.server.model.entities.BusinessAccount;
 import be.lynk.server.model.entities.BusinessSchedule;
 import be.lynk.server.model.entities.BusinessSchedulePart;
 import be.lynk.server.service.BusinessScheduleService;
@@ -40,7 +39,7 @@ public class BusinessScheduleRestController extends AbstractRestController {
         Business business = businessService.findById(businessId);
 
         if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
-                !((BusinessAccount)securityController.getCurrentUser()).getBusiness().equals(business)){
+                !securityController.getCurrentUser().getBusiness().equals(business)){
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 

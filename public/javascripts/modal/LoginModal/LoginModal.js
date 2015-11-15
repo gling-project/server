@@ -1,6 +1,5 @@
 myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams,helpMessage) {
 
-    $scope.loading = false;
     $scope.fctToExecute=fctToExecute;
     $scope.helpMessage=helpMessage;
 
@@ -10,7 +9,8 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
                 fctToExecute(fctToExecuteParams);
             }
             $scope.close();
-        }
+        },
+        loading:false
     };
 
     $scope.close = function () {
@@ -21,7 +21,7 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
 
         if ($scope.loginFormParam.isValid) {
 
-            $scope.loading = true;
+            $scope.loginFormParam.loading = true;
 
             accountService.login($scope.loginFormParam.dto,
                 function () {
@@ -29,8 +29,6 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
                     $flash.success(translationService.get("--.login.flash.success"));
                     $scope.loading = false;
                     $scope.close();
-                    //logout facebook in case
-                    facebookService.logout();
                     if (accountService.getMyself().type == 'BUSINESS') {
                         $location.path('/business/'+accountService.getMyself().businessId);
                     }
@@ -39,7 +37,7 @@ myApp.controller('LoginModalCtrl', function ($scope, $flash, facebookService, tr
                     }
                 },
                 function () {
-                    $scope.loading = false;
+                    $scope.loginFormParam.loading = false;
                 });
         }
         else {
