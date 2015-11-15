@@ -270,7 +270,7 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Bienvenue sur Gling {0}!<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.business.body=Welcome on Gling {0}!<br/>We are delighted to welcome you to Gling. Your Store is now part of the Glinger community!<br/>From now on, you can publish all your news and promotions so that your consumers will not miss any of your actions. <br/> We are at your disposal for any questions or comments you should have on hello@gling.be.<br/>forward to seeing you on Gling !<br/>Team Gling
 --.email.registration.business.subject=Welcome on Gling !
 --.email.registration.customer.body=Welcome!<br/><br/>We are delighted to welcome you on Gling. You are now a single Glinger and have the ability to follow your favorite stores according to your desires and needs!<br/><br/>We are at your disposal for any questions or comments you should have on hello@gling.be<br/><br/>forward to seeing you on Gling !<br/><br/>Gling team
 --.email.registration.customer.subject=Welcome on Gling
@@ -557,7 +557,7 @@ day_abrv_sunday=Su
 
 
 --.welcome.start=Entrer!
---.welcome.customer.title=Vous like your stores ?
+--.welcome.customer.title=You'd like to follow your stores ?
 --.welcome.customer.subTitle1=YOUR NETWORK
 --.welcome.customer.content1=Restaurants, boutiques, theaters,decoration stores ... Gling brings together all types of stores.
 --.welcome.customer.subTitle2=NEXT TO YOU
@@ -567,10 +567,10 @@ day_abrv_sunday=Su
 --.welcome.business.subTitle1=LOYALTY
 --.welcome.business.content1=Reinforce the loyalty relationship with your customers by keeping them in regular contact.
 --.welcome.business.subTitle2=NEW CLIENTS
---.welcome.business.content2=Lett you store be known thanks to geolocation or to your customers network.
+--.welcome.business.content2=Let your store be known thanks to geolocation or to your customers network.
 --.welcome.business.subTitle3=DAILY TOOL 
 --.welcome.business.content3=Organize and easily communicate your special actions.
---.welcome.registration=REgister in
+--.welcome.registration=Register in
 --.welcome.business.title=Are you a storekeeper?
 --.generic.site=Site
 --.interest.selection.window.nothing=Nothing
@@ -611,6 +611,6 @@ day_abrv_sunday=Su
 --.field.imageMultipleResize.minimalWidth=The minimum width of the image must be {0} (currently {1})
 
 
---.generic.favoriteLanguage=Langue
---.registration.accept.condition=En vous inscrivant sur Gling vous reconnaissez avoir lu et accepté les <a href="https://www.gling.be/legal/" target="_blank">conditions générales d''utilisation</a> du site Gling
---.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profile Facebook
+--.generic.favoriteLanguage=Language
+--.registration.accept.condition=By register yourself on Gling you recognize to have read and accept the <a href="https://www.gling.be/legal/" target="_blank">terms and conditions</a> of the website Gling
+--.error.facebook.neededInformationEmpty=Some information requested is not available in your Facebook profile
