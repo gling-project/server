@@ -1,23 +1,17 @@
 var test = function (accountService) {
     var myself = accountService.getMyself();
     if (myself == null) {
+        console.log('ROUTES NOT_CONNECTED');
         return 'NOT_CONNECTED';
     }
     else {
+        console.log('ROUTES CONNECTED');
         return myself.type;
     }
 };
 
 
 var initializeCommonRoutes = function () {
-    //angular.module('app').run(function($rootScope, $location) {
-    //    $rootScope.onFormPath = function(period, scope) {
-    //        return $location.path($rootScope.getFormPath() + '/' + period + '/' + scope);
-    //    };
-    //    return $rootScope.getDefaultRoute = function() {
-    //        return '/driver';
-    //    };
-    //});
     myApp
         .config(function ($routeProvider) {
             $routeProvider
@@ -29,6 +23,7 @@ var initializeCommonRoutes = function () {
                             //$rootScope.$broadcast('PROGRESS_BAR_START');
                             //modalService.openLoadingModal();
                             if (test(accountService) != 'NOT_CONNECTED') {
+                                console.log('FROM ROUTES WELCOME');
                                 $location.path('/home');
                             }
                         }
@@ -42,6 +37,7 @@ var initializeCommonRoutes = function () {
                             //$rootScope.$broadcast('PROGRESS_BAR_START');
                             //modalService.openLoadingModal();
                             if (test(accountService) == 'NOT_CONNECTED') {
+                                console.log('FROM ROUTES HOME');
                                 $location.path('/');
                             }
                         }
@@ -53,6 +49,7 @@ var initializeCommonRoutes = function () {
                     resolve: {
                         a: function (accountService, $location) {
                             if (test(accountService) != 'NOT_CONNECTED') {
+                                console.log('FROM ROUTES CUST');
                                 $location.path('/');
                             }
                         }
@@ -63,9 +60,8 @@ var initializeCommonRoutes = function () {
                     controller: 'PromotionCtrl',
                     resolve: {
                         a: function (accountService, $location,$rootScope,modalService) {
-                            console.log("!!!!");
-                            console.log(accountService.getMyself().businessId);
                             if (test(accountService) == 'NOT_CONNECTED' || accountService.getMyself().businessId == null) {
+                                console.log('FROM ROUTES PROM');
                                 $location.path('/');
                             }
                         }
@@ -76,9 +72,8 @@ var initializeCommonRoutes = function () {
                     controller: 'BusinessNotificationCtrl',
                     resolve: {
                         a: function (accountService, $location) {
-                            console.log("!!!!");
-                            console.log(accountService.getMyself().businessId);
                             if (test(accountService) == 'NOT_CONNECTED' || accountService.getMyself().businessId == null) {
+                                console.log('FROM ROUTES NOT');
                                 $location.path('/');
                             }
                         }
@@ -92,6 +87,7 @@ var initializeCommonRoutes = function () {
                             //$rootScope.$broadcast('PROGRESS_BAR_START');
                             //modalService.openLoadingModal();
                             if (test(accountService) == 'NOT_CONNECTED') {
+                                console.log('FROM ROUTES PROFILE');
                                 $location.path('/');
                             }
                         }
@@ -128,6 +124,7 @@ var initializeCommonRoutes = function () {
                             //$rootScope.$broadcast('PROGRESS_BAR_START');
                             //modalService.openLoadingModal();
                             if (test(accountService) == 'NOT_CONNECTED') {
+                                console.log('FROM ROUTES BUSINES');
                                 $location.path('/');
                             }
                         }
@@ -140,6 +137,7 @@ var initializeCommonRoutes = function () {
                             //$rootScope.$broadcast('PROGRESS_BAR_START');
                             //modalService.openLoadingModal();
                             if (test(accountService) == 'NOT_CONNECTED') {
+                                console.log('FROM ROUTES FOLLOW');
                                 $location.path('/');
                             }
                         }
@@ -152,6 +150,7 @@ var initializeCommonRoutes = function () {
                             //$rootScope.$broadcast('PROGRESS_BAR_START');
                             //modalService.openLoadingModal();
                             if (test(accountService) != 'NOT_CONNECTED') {
+                                console.log('FROM ROUTES FORGOT');
                                 $location.path('/');
                             }
                         }

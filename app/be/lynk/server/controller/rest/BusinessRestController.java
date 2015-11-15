@@ -141,23 +141,7 @@ public class BusinessRestController extends AbstractController {
      * CREATE FUNCTION
      /////////////////////////////////////////////////// */
 
-    @Transactional
-    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
-    public Result createBusiness() {
 
-        CreateBusinessDTO createBusinessDTO  = initialization(CreateBusinessDTO.class);
-
-        //load account
-        Account account = accountService.findById(createBusinessDTO.getAccountId());
-
-        account.setRole(RoleEnum.BUSINESS);
-        account.setType(AccountTypeEnum.BUSINESS);
-        account.setBusiness(new Business(account, createBusinessDTO.getBusinessName()));
-
-        accountService.saveOrUpdate(account);
-
-        return ok();
-    }
 
 
     /* ////////////////////////////////////////////////////

@@ -13,11 +13,17 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
         modalService.openBusinessRegistrationModal();
     };
 
+    //loading
+    $scope.setLoading = function(b) {
+        $scope.loading = b;
+        $scope.accountParam.disabled = b;
+    }
+
     //
     // facebook connection
     //
     $scope.fb_login = function () {
-        $scope.loading = true;
+        $scope.setLoading(true);
         facebookService.login(function (data) {
                 accountService.setMyself(data);
 
@@ -25,7 +31,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                     $location.path('/business/'+accountService.getMyself().businessId);
                 }
 
-                $scope.loading = false;
+                $scope.setLoading(false);
                 $scope.close();
             },
             function(data){
@@ -44,9 +50,9 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                 facebookAuthentication: facebookAuthentication
             };
 
-            $scope.loading = true;
+            $scope.setLoading(true);
             accountService.registration(dto, function () {
-                    $scope.loading = false;
+                    $scope.setLoading(false);
                     $flash.success(translationService.get("--.login.flash.success"));
                     if (fctToExecute != null) {
                         fctToExecute(fctToExecuteParams);
@@ -54,7 +60,7 @@ myApp.controller('CustomerRegistrationModalCtrl', function ($scope, $flash, $mod
                     $scope.close();
                 },
                 function () {
-                    $scope.loading = false;
+                    $scope.setLoading(false);
                 });
         }
     }

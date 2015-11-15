@@ -25,14 +25,7 @@ myApp.controller('HomeCtrl', function ($scope, modalService, customerInterestSer
 
         //navigate
         $location.path(path, false);
-
-        var lastRoute = $route.current;
-        var un = $rootScope.$on('$locationChangeSuccess', function () {
-            $route.current = lastRoute;
-            un();
-        });
         $rootScope.$broadcast('PROGRESS_BAR_STOP');
-        return original.apply($location, [path]);
     };
 
 

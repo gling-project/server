@@ -42,7 +42,9 @@ public enum ErrorMessageEnum {
     ERROR_PICTURE_WRONG_SIZE_X("--.error.picture.wrongSizeX"),
     ERROR_NOT_BUSINESS_ACCOUNT("--.error.businessApplication.notBusinessAccount"),
     ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS("--.error.customerToBusiness.alreadyBusiness"),
-    FACEBOOK_NO_EMAIL("--.error.facebook.neededInformationEmpty");
+    FACEBOOK_NO_EMAIL("--.error.facebook.neededInformationEmpty"),
+    ERROR_LOGIN_FACEBOOK_LINK_ALREADY_USED("--.error.login.facebookLink.alreadyUsed"),
+    ERROR_LOGIN_FACEBOOK_LINK_ALREADY_LINKED("--.error.login.facebookLink.alreadyLinked");
 
     private final String key;
 

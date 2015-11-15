@@ -117,7 +117,6 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
 
                     //
                     // facebook connection
-                    //not mobile version
                     //
                     scope.fb_login = function () {
 
@@ -135,7 +134,7 @@ myApp.directive('loginFormCtrl', function ($flash, facebookService, translationS
                         scope.setLoading(true);
                         if (scope.getInfo().mobileVersion) {
                             if (facebookService.isConnected()) {
-                                facebookService.loginServer(success,failed);
+                                facebookService.loginToServer(success,failed);
                             }
                             else{
                                 var url = "https://www.facebook.com/dialog/oauth/?client_id="+scope.facebookAppId+"&redirect_uri="+scope.basic_url+"/&state=BELGIUM&scope="+scope.facebookAuthorization+"&response_type=token";

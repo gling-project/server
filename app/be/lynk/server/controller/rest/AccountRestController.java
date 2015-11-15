@@ -3,7 +3,6 @@ package be.lynk.server.controller.rest;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
-import be.lynk.server.dto.post.CustomerRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Account;
@@ -105,7 +104,7 @@ public class
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result editCustomerInterest(long id) {
 
-        CustomerRegistrationDTO dto = initialization(CustomerRegistrationDTO.class);
+        List<CustomerInterestDTO> customerInterestDTOs = initializationList(CustomerInterestDTO.class);
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {
@@ -116,10 +115,8 @@ public class
 
         account.setCustomerInterests(new HashSet<CustomerInterest>());
 
-        if (dto.getCustomerInterests() != null) {
-            for (CustomerInterestDTO customerInterestDTO : dto.getCustomerInterests()) {
-                account.getCustomerInterests().add(customerInterestService.findByName(customerInterestDTO.getName()));
-            }
+        for (CustomerInterestDTO customerInterestDTO : customerInterestDTOs) {
+            account.getCustomerInterests().add(customerInterestService.findByName(customerInterestDTO.getName()));
         }
 
         accountService.saveOrUpdate(account);
@@ -248,9 +245,9 @@ public class
 
         //control address
         for (Address address : currentUser.getAddresses()) {
-            boolean founded=false;
+            boolean founded = false;
             if (address.getId().equals(id)) {
-                founded=true;
+                founded = true;
                 break;
             }
             if (!founded) {
@@ -297,7 +294,7 @@ public class
 
         if (newAddressDTO.getAddressName().equals("currentPosition") ||
                 newAddressDTO.getAddressName().equals("default")) {
-            if(currentUser.getSelectedAddress()!=null) {
+            if (currentUser.getSelectedAddress() != null) {
                 currentUser.getSelectedAddress().setSelectedByAccount(null);
                 addressService.saveOrUpdate(currentUser.getSelectedAddress());
             }

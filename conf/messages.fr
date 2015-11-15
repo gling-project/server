@@ -615,3 +615,9 @@ day_abrv_sunday=Di
 --.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profile Facebook
 
 --.schedule.isOpenNow=Actuellement ouvert
+--.profile.facebook.btn=Lier mon compte à Facebook
+--.businessRegistration.createAccount=Créer mon compte
+--.businessRegistration.alreadyBusiness=Un commerce esr déjà lié à ce compte et vous ne pouvez avoir qu''un seul commerce par compte
+--.error.login.facebookLink.alreadyUsed=Ce compte Facebook est déjà lié à un autre compte Gling
+--.error.login.facebookLink.alreadyLinked=Un autre compte Facebook est déjà lié à ce compte Gling
+--.profile.linkFacebook.success=Votre compte Facebook est désormais lié à votre compte Gling. Découvrez les commerces favoris de vos amis!

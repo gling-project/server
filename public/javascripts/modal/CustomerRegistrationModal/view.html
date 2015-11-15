@@ -11,7 +11,9 @@
 
 
     <div class="facebook-login-btn-container">
-        <button ng-click="fb_login();" class="facebook-login-btn btn gling-button-dark">
+        <button ng-click="fb_login();"
+                class="facebook-login-btn btn gling-button-dark"
+                ng-disabled="loading">
             <img src="/assets/images/facebook/login_icon.png"/>
             <span>{{'--.registrationModal.facebook.btn' |translateText}}</span>
         </button>

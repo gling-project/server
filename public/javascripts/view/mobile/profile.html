@@ -57,13 +57,20 @@
                                 {{'--.generic.cancel' | translateText}}
                             </button>
 
-                            <!-- change facebook -->
+                            <!-- change password -->
                             <button
                                     ng-show="account.facebookAccount!==true"
                                     ng-click="editPassword()"
                                     type="button"
                                     class="btn gling-button-dark">
                                 {{'--.changePasswordModal.title' | translateText}}
+                            </button>
+
+                            <!-- connect facebook -->
+                            <button ng-click="fb_login();"
+                                    class="facebook-login-btn btn gling-button-dark">
+                                <img src="/assets/images/facebook/login_icon.png"/>
+                                <span>{{'--.profile.facebook.btn' |translateText}}</span>
                             </button>
                         </div>
 

@@ -121,7 +121,7 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
                                 return !scope.getInfo().updateMode && scope.passwordActive
                             },
                             field: scope.getInfo().dto,
-                            fieldName: 'repeatPAssword'
+                            fieldName: 'repeatPassword'
                         }
                     };
 

@@ -190,7 +190,9 @@ myApp.controller('BusinessCtrl', function ($rootScope, $scope, modalService, bus
             //address
             $scope.googleMapParams.address = $scope.business.address;
             $timeout(function () {
-                $scope.googleMapParams.refreshNow();
+                if($scope.business.address!=null && $scope.business.address!=undefined) {
+                    $scope.googleMapParams.refreshNow();
+                }
             }, 1);
 
             //edit address

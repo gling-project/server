@@ -12,7 +12,7 @@ myApp.controller('EditCustomerInterestModalCtrl', function ($scope, $flash, $mod
     $scope.save = function () {
         $scope.loading=true;
         accountService.editCustomerInterest(
-            {customerInterests:$scope.customerInterestParam.result},
+            $scope.customerInterestParam.result,
             function () {
                 $scope.loading = false;
                 $scope.close();

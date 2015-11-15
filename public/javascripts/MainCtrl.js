@@ -54,12 +54,6 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     //facebook initialization
     //
     facebookService.ini();
-    //if (accountService.getMyself() == null) {
-    //    facebookService.testToReconnectServer();
-    //}
-    //else {
-    //    facebookService.recover();
-    //}
 
 
     //

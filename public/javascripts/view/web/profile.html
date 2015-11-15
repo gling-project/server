@@ -31,12 +31,21 @@
 
                 <div class="col-md-3"
                      ng-show="model.myself.loginAccount==true"></div>
+
                 <button type="button"
                         id="profile-personal-btn-edit-password"
                         class="btn gling-button-dark"
                         ng-click="editPassword()">
                     {{'--.changePasswordModal.title' | translateText}}
                 </button>
+
+                <!-- connect facebook -->
+                <button ng-click="fb_login();"
+                        class="facebook-login-btn btn gling-button-dark">
+                    <img src="/assets/images/facebook/login_icon.png"/>
+                    <span>{{'--.profile.facebook.btn' |translateText}}</span>
+                </button>
+
             </div>
         </div>
     </div>

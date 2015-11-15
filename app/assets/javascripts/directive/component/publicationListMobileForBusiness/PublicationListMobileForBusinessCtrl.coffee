@@ -38,7 +38,7 @@ myApp.directive 'publicationListMobileForBusinessCtrl', ($rootScope, businessSer
 
             #return the interest class. can be null if the interest is null
             scope.getInterestClass = (publication) ->
-                if publication.interest != null
+                if publication.interest?
                     return 'gling-icon-' + publication.interest.name
                 return null
 
@@ -62,7 +62,7 @@ myApp.directive 'publicationListMobileForBusinessCtrl', ($rootScope, businessSer
                     publication.descriptionLimit = scope.descriptionLimitBase
                     publication.interval = (publication.endDate - (new Date)) / 1000
                 $timeout (->
-                    if scope.getInfo().scrollTo != null
+                    if scope.getInfo().scrollTo?
                         $('.main-body').scrollTop $('#publication' + scope.getInfo().scrollTo).offset().top
                         scope.$apply()
                 ), 1
