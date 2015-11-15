@@ -141,7 +141,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/field/dirFieldImageMultipleResizable/directive.js',
                         'public/javascripts/directive/technical/compile.js',
                         <!-- form -->
-                        'target/scala-2.10/resource_managed/main/public/javascripts/public/javascripts/directive/form/login/LoginFormCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/form/login/LoginFormCtrl.js',
                         'public/javascripts/directive/form/address/AddressFormCtrl.js',
                         'public/javascripts/directive/form/customerInterest/CustomerInterestFormCtrl.js',
                         'public/javascripts/directive/form/account/AccountFormCtrl.js',
@@ -180,7 +180,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/GenerateIdService.js',
                         'public/javascripts/service/TranslationService.js',
                         'public/javascripts/service/ModelService.js',
-                        'target/scala-2.10/resource_managed/main/public/javascripts/public/javascripts/service/FacebookService.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/service/FacebookService.js',
                         'public/javascripts/service/LanguageService.js',
                         'public/javascripts/service/CustomerInterestService.js',
                         'public/javascripts/service/AccountService.js',
@@ -224,8 +224,8 @@ module.exports = function (grunt) {
                         'public/javascripts/modal/ForgotPasswordModal/ForgotPasswordModal.js',
                         'public/javascripts/modal/HelpModal/HelpModalCtrl.js',
                         'public/javascripts/modal/DownloadFieldModal/DownloadFieldModal.js',
-                        'target/scala-2.10/resource_managed/main/public/javascripts/public/javascripts/modal/CustomerRegistrationModal/CustomerRegistrationModal.js',
-                        'target/scala-2.10/resource_managed/main/public/javascripts/public/javascripts/modal/BusinessRegistrationModal/BusinessRegistrationModal.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/modal/CustomerRegistrationModal/CustomerRegistrationModal.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/modal/BusinessRegistrationModal/BusinessRegistrationModal.js',
                         'public/javascripts/modal/AddressModal/AddressModal.js',
                         'public/javascripts/modal/EditCustomerInterestModal/EditCustomerInterestModal.js',
                         'public/javascripts/modal/PromotionModal/PromotionModal.js',
@@ -238,7 +238,7 @@ module.exports = function (grunt) {
 
                         <!-- controllers -->
                         'public/javascripts/controller/web/HomeCtrl.js',
-                        'target/scala-2.10/resource_managed/main/public/javascripts/public/javascripts/controller/web/ProfileCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/web/ProfileCtrl.js',
                         'public/javascripts/controller/web/BusinessCtrl.js',
                         'public/javascripts/controller/web/SearchPageCtrl.js',
                         'public/javascripts/controller/web/FollowedBusinessPageCtrl.js',

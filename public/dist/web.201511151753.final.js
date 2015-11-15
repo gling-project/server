@@ -542,6 +542,126 @@ myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance'
 
 
 }]);
+(function() {
+
+  myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', 'fctToExecute', 'fctToExecuteParams', function($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, fctToExecute, fctToExecuteParams) {
+    $scope.accountParam = {};
+    $scope.close = function() {
+      return $modalInstance.close();
+    };
+    $scope.toBusinessRegistration = function() {
+      $scope.close();
+      return modalService.openBusinessRegistrationModal();
+    };
+    $scope.setLoading = function(b) {
+      $scope.loading = b;
+      return $scope.accountParam.disabled = b;
+    };
+    $scope.fb_login = function() {
+      $scope.setLoading(true);
+      return facebookService.login((function(data) {
+        accountService.setMyself(data);
+        if (data.type === 'BUSINESS') {
+          $location.path('/business/' + accountService.getMyself().businessId);
+        }
+        $scope.setLoading(false);
+        return $scope.close();
+      }), function(data) {
+        return $flash.error(data.message);
+      });
+    };
+    return $scope.save = function() {
+      if (!$scope.accountParam.isValid) {
+        return $scope.accountParam.displayErrorMessage = true;
+      } else {
+        $scope.setLoading(true);
+        return accountService.registration($scope.accountParam.dto, (function() {
+          $scope.setLoading(false);
+          $flash.success(translationService.get('--.login.flash.success'));
+          if (fctToExecute != null) {
+            fctToExecute(fctToExecuteParams);
+          }
+          return $scope.close();
+        }), function() {
+          return $scope.setLoading(false);
+        });
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'businessService', '$location', function($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, $location) {
+    $scope.badgeSelected = 1;
+    $scope.accountParam = {};
+    $scope.account = null;
+    $scope.business = {};
+    $scope.businessNameField = {
+      name: 'name',
+      fieldTitle: "--.generic.name",
+      validationRegex: "^.{2,50}$",
+      validationMessage: ['--.generic.validation.size', '2', '250'],
+      field: $scope.business,
+      disabled: function() {
+        return $scope.loading;
+      },
+      fieldName: 'name'
+    };
+    $scope.setLoading = function(b) {
+      $scope.loading = b;
+      return $scope.accountParam.disabled = b;
+    };
+    $scope.close = function() {
+      $modalInstance.close();
+    };
+    $scope.toBusinessStep = function() {
+      if (accountService.getMyself().type === 'BUSINESS') {
+        $flash.success(translationService.get('--.businessRegistration.alreadyBusiness'));
+        return $scope.close();
+      } else {
+        return $scope.badgeSelected = 2;
+      }
+    };
+    $scope.save = function() {
+      $scope.setLoading(true);
+      return businessService.createBusiness(accountService.getMyself().id, $scope.business.name, (function(data) {
+        accountService.setMyself(data);
+        $location.path('/business/' + accountService.getMyself().businessId);
+        $scope.close();
+        return $scope.setLoading(false);
+      }), function() {
+        return $scope.loading = false;
+      });
+    };
+    $scope.fb_login = function() {
+      $scope.setLoading(true);
+      return facebookService.login((function(data) {
+        accountService.setMyself(data);
+        $scope.setLoading(false);
+        return $scope.toBusinessStep();
+      }), function(data) {
+        return $flash.error(data.message);
+      });
+    };
+    return $scope.createAccount = function() {
+      if (!$scope.accountParam.isValid) {
+        return $scope.accountParam.displayErrorMessage = true;
+      } else {
+        $scope.setLoading(true);
+        return accountService.registration($scope.accountParam.dto, (function() {
+          $scope.setLoading(false);
+          return $scope.toBusinessStep();
+        }), function() {
+          return $scope.setLoading(false);
+        });
+      }
+    };
+  }]);
+
+}).call(this);
+
 myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', 'callback', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, addName, dto, isBusiness, callback) {
 
     $scope.loading = false;
@@ -1219,6 +1339,75 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.search();
 
 }]);
+(function() {
+
+  myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$rootScope', '$window', 'businessService', 'facebookService', 'translationService', '$flash', function($scope, modalService, accountService, $rootScope, $window, businessService, facebookService, translationService, $flash) {
+    $scope.model = accountService.model;
+    $scope.accountParam = {
+      updateMode: true,
+      dto: angular.copy(accountService.getMyself()),
+      disabled: true
+    };
+    $scope.editPassword = function() {
+      return modalService.openEditPasswordModal();
+    };
+    $scope.interestEdit = function() {
+      return modalService.openEditCustomerInterest();
+    };
+    $scope.personalEdit = function() {
+      $scope.oldLang = angular.copy($scope.accountParam.dto.lang);
+      return $scope.accountParam.disabled = false;
+    };
+    $scope.personalSave = function() {
+      $scope.accountParam.disabled = true;
+      return accountService.editAccount($scope.accountParam.dto, function() {
+        if ($scope.oldLang !== $scope.accountParam.dto.lang) {
+          return $window.location.reload();
+        }
+      });
+    };
+    $scope.personalCancel = function() {
+      $scope.accountParam.dto.firstname = accountService.getMyself().firstname;
+      $scope.accountParam.dto.lastname = accountService.getMyself().lastname;
+      $scope.accountParam.dto.email = accountService.getMyself().email;
+      $scope.accountParam.dto.gender = accountService.getMyself().gender;
+      return $scope.accountParam.disabled = true;
+    };
+    $scope.addAddress = function() {
+      return modalService.addressModal(true, null, false);
+    };
+    $scope.editAddress = function(address) {
+      return modalService.addressModal(true, address, false);
+    };
+    $scope.deleteAddress = function(address) {
+      return accountService.deleteAddress(address);
+    };
+    $scope.createBusiness = function() {
+      return businessService.createBusiness(accountService.getMyself().id, $scope.businessName, function(data) {
+        return accountService.setMyself(data);
+      });
+    };
+    $scope.facebookSuccess = function(data) {
+      accountService.setMyself(data);
+      return $flash.success(translationService.get('--.profile.linkFacebook.success'));
+    };
+    $scope.fb_login = function() {
+      $scope.loading = true;
+      return facebookService.login(function(data) {
+        $scope.facebookSuccess(data);
+        return $scope.loading = false;
+      }, function(data) {
+        return failed(data);
+      });
+    };
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+    modalService.closeLoadingModal();
+    $(window).scrollTop(0);
+    return $rootScope.$broadcast('PROGRESS_BAR_STOP');
+  }]);
+
+}).call(this);
+
 myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', '$location', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, $location) {
 
     //back to the top of the page
