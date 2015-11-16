@@ -131,15 +131,17 @@ public class HttpRequest {
             }
             rd.close();
 
+            String responseS = response.toString();
+
             if (returnExcepted != null) {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonFactory factory = mapper.getFactory();
-                JsonParser jp = factory.createParser(response.toString());
+                JsonParser jp = factory.createParser(responseS);
                 JsonNode actualObj = mapper.readTree(jp);
 
                 return DTO.getDTO(actualObj, returnExcepted);
             }
-            return response.toString();
+            return responseS;
 
 
         } catch (MalformedURLException e) {
