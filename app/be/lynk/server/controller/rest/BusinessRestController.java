@@ -217,10 +217,17 @@ public class BusinessRestController extends AbstractController {
         AddressDTO dto = initialization(AddressDTO.class);
 
         Address address = business.getAddress();
+        if(address==null) {
+            address = new Address();
+            business.setAddress(address);
+            //TODO temp
+            address.setCountry("BELGIUM");
+        }
         address.setCity(dto.getCity());
         address.setStreet(dto.getStreet());
         address.setName(dto.getName());
         address.setZip(dto.getZip());
+
 
 
         //control address

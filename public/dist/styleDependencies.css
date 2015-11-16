@@ -1714,7 +1714,7 @@ ul.messenger .messenger-spinner {
 .address-container {
   width: 300px;
 }
-.address-box span {
+.address-box div span:first-child {
   display: inline-block;
   width: 100px;
 }

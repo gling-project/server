@@ -56,7 +56,8 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
     #import business data from a facebook page
     $scope.importBusinessStart = ->
         $scope.importBusinessLoading = true
-        superAdminService.importBusiness $scope.importBusinessInput, (->
+        urlEncoded=encodeURIComponent $scope.importBusinessInput
+        superAdminService.importBusiness urlEncoded, (->
             #callback success
             $scope.importBusinessLoading = false
             $flash.success 'le commerce a bien été importé'

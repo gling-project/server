@@ -23,6 +23,24 @@ myApp.service("businessService", function ($flash, $http, accountService) {
             });
     };
 
+    this.importBusinessFormFacebook = function(urlFacebook,callbackSuccess, callbackError) {
+        $http({
+            'method': "GET",
+            'url': "/rest/createBusinessFromFacebook/" + urlFacebook,
+            'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
 
     this.getBusiness = function (id, callbackSuccess, callbackError) {
         $http({
@@ -50,26 +68,6 @@ myApp.service("businessService", function ($flash, $http, accountService) {
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.registration = function (dto, callbackSuccess, callbackError) {
-        $http({
-            'method': "POST",
-            'url': "/rest/registration/business",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            accountService.setMyself(data);
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
             }
         })
             .error(function (data, status) {

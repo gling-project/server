@@ -48,23 +48,47 @@
             <h4>{{'--.business.management.progression' | translateText}}</h4>
 
             <div class="business-management-progress-bar">
-                <div ng-style="{'width':(300 * (computeProgression()/6))+'px'}">
+                <div ng-style="{'width':(300 * (computeProgression()/8))+'px'}">
                 </div>
-                <span>{{computeProgression()}} / 6</span>
+                <span>{{computeProgression()}} / 8</span>
             </div>
 
             <span>{{'--.business.management.progression.desc' | translateText}}</span><br/><br/>
+
+            <!-- address -->
+            <div class="business-management-progress-el">
+                <input type="checkbox"
+                       ng-checked="business.address!=null"/>
+
+                <span ng-class="{'completed':business.address!=null}"
+                      ng-click="editAddress()"
+                      class="link">
+                    {{'--.business.manager.progress.add.address' | translateText}}
+                </span>
+            </div>
+
+            <!-- category -->
+            <div class="business-management-progress-el">
+                <input type="checkbox"
+                       ng-checked="numberCategories()>0"/>
+
+                <span ng-class="{'completed':numberCategories()>0}"
+                      ng-click="editCategory()"
+                      class="link">
+                    {{'--.business.manager.progress.add.category' | translateText}}
+                </span>
+            </div>
 
             <!-- description -->
             <div class="business-management-progress-el">
                 <input type="checkbox"
                        ng-checked="business.description!=null"/>
 
-            <span ng-class="{'completed':business.description!=null}"
-                  ng-click="editbusiness()"
-                  class="link">
-                {{'--.business.manager.progress.add.description' | translateText}}
-            </span>
+                <span ng-class="{'completed':business.description!=null}"
+                      ng-click="editbusiness()"
+                      class="link">
+                    {{'--.business.manager.progress.add.description' | translateText}}
+                </span>
             </div>
 
             <!-- illustration -->

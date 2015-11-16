@@ -2,7 +2,7 @@
     <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
     <h4 class="modal-title">{{'--.business.registrationModal.title' | translateText}}</h4>
 </div>
-<div class="modal-body modal-login business-registration" >
+<div class="modal-body modal-login business-registration">
 
     <div class="wizard">
         <div ng-class="{'current':badgeSelected==1}"><span class="badge"
@@ -50,6 +50,37 @@
     <div ng-show="badgeSelected==2">
 
         <div class="modal-description">{{'--.business.registrationModal.business.desc' | translateText}}</div>
+
+        <br/>
+        <div class="modal-description">{{'--.business.registration.importFromFacebook.desc' | translateText}}</div>
+
+        <dir-field-text ng-info="importFromFacebookParam"></dir-field-text>
+
+
+        <button ng-show="badgeSelected==2"
+                ng-disabled="loading"
+                style="float: right;"
+                type="button"
+                class="btn gling-button-dark"
+                ng-click="importBusinessFromFacebook()">
+            {{'--.business.registration.importFromFacebook' | translateText}}
+        </button>
+        <img src="/assets/images/modal-loading.gif" ng-show="loading"/>
+
+        <table class="horizontal-split">
+            <tr>
+                <td>
+                    <div></div>
+                </td>
+                <td>{{'--.generic.or' | translateText}}</td>
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="modal-description">{{'--.business.registration.data.desc' | translateText}}</div>
+
         <dir-field-text ng-info="businessNameField"></dir-field-text>
     </div>
 

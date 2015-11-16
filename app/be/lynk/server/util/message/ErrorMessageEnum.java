@@ -44,7 +44,8 @@ public enum ErrorMessageEnum {
     ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS("--.error.customerToBusiness.alreadyBusiness"),
     FACEBOOK_NO_EMAIL("--.error.facebook.neededInformationEmpty"),
     ERROR_LOGIN_FACEBOOK_LINK_ALREADY_USED("--.error.login.facebookLink.alreadyUsed"),
-    ERROR_LOGIN_FACEBOOK_LINK_ALREADY_LINKED("--.error.login.facebookLink.alreadyLinked");
+    ERROR_LOGIN_FACEBOOK_LINK_ALREADY_LINKED("--.error.login.facebookLink.alreadyLinked"),
+    ERROR_FACEBOOK_IMPORT_NOT_OFFICIAL_PAGE("--.error.facebook.import.notOfficialPage"), ERROR_FACEBOOK_IMPORT_WRONG_URL("--.error.facebook.import.wrongUrl");
 
     private final String key;
 

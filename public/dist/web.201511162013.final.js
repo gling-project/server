@@ -609,6 +609,17 @@ myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance'
       },
       fieldName: 'name'
     };
+    $scope.importFromFacebookParam = {
+      name: 'facebookUrl',
+      validationRegex: "^($|https://www.facebook\.com/.*$)",
+      validationMessage: '--.generic.validation.facebook',
+      fieldTitle: "Facebook",
+      field: $scope.business,
+      disabled: function() {
+        return $scope.loading;
+      },
+      fieldName: 'facebookUrl'
+    };
     $scope.setLoading = function(b) {
       $scope.loading = b;
       return $scope.accountParam.disabled = b;
@@ -624,16 +635,23 @@ myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance'
         return $scope.badgeSelected = 2;
       }
     };
+    $scope.saveSuccess = function(data) {
+      accountService.setMyself(data);
+      $location.path('/business/' + accountService.getMyself().businessId);
+      $scope.close();
+      return $scope.setLoading(false);
+    };
     $scope.save = function() {
-      $scope.setLoading(true);
-      return businessService.createBusiness(accountService.getMyself().id, $scope.business.name, (function(data) {
-        accountService.setMyself(data);
-        $location.path('/business/' + accountService.getMyself().businessId);
-        $scope.close();
-        return $scope.setLoading(false);
-      }), function() {
-        return $scope.loading = false;
-      });
+      if (!$scope.businessNameField.isValid) {
+        return $scope.businessNameField.displayErrorMessage = true;
+      } else {
+        $scope.setLoading(true);
+        return businessService.createBusiness(accountService.getMyself().id, $scope.business.name, function(data) {
+          return $scope.saveSuccess(data);
+        }, function() {
+          return $scope.loading = false;
+        });
+      }
     };
     $scope.fb_login = function() {
       $scope.setLoading(true);
@@ -645,7 +663,7 @@ myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance'
         return $flash.error(data.message);
       });
     };
-    return $scope.createAccount = function() {
+    $scope.createAccount = function() {
       if (!$scope.accountParam.isValid) {
         return $scope.accountParam.displayErrorMessage = true;
       } else {
@@ -654,6 +672,21 @@ myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance'
           $scope.setLoading(false);
           return $scope.toBusinessStep();
         }), function() {
+          return $scope.setLoading(false);
+        });
+      }
+    };
+    return $scope.importBusinessFromFacebook = function() {
+      var urlEncoded;
+      console.log($scope.importFromFacebookParam);
+      if (!$scope.importFromFacebookParam.isValid) {
+        return $scope.importFromFacebookParam.displayErrorMessage = true;
+      } else {
+        $scope.setLoading(true);
+        urlEncoded = encodeURIComponent($scope.business.facebookUrl);
+        return businessService.importBusinessFormFacebook(urlEncoded, function(data) {
+          return $scope.saveSuccess(data);
+        }, function() {
           return $scope.setLoading(false);
         });
       }
@@ -1408,433 +1441,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
 
 }).call(this);
 
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', '$location', function ($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, $location) {
-
-    //back to the top of the page
-    //console.log($location.url());
-    $(window).scrollTop(0);
-
-
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
-
-    if ($routeParams.publicationId != null) {
-        $scope.publicationIdToGo = $routeParams.publicationId;
-    }
-
-
-    $scope.displayError = false;
-    $scope.loading = true;
-    $scope.business = null;
-    $scope.edit = false;
-    $scope.myBusiness = false;
-    $scope.businessId = $routeParams.businessId;
-    $scope.descriptionLimitBase = 200;
-    $scope.descriptionLimit = $scope.descriptionLimitBase;
-
-    //publication timing
-    $scope.publicationOptions = [
-        {key: 'BASIC', value: '--.business.publication.basic'},
-        {key: 'ARCHIVE', value: '--.business.publication.archive'}
-    ];
-
-    //address
-    $scope.googleMapParams = {staticMap: true};
-
-    $scope.displayEditMode = function () {
-        return $scope.myBusiness === true || (accountService.getMyself() != null && accountService.getMyself().role === 'SUPERADMIN');
-    };
-
-    //publication
-    $scope.publicationListParam = {
-        scrollTo: $scope.publicationIdToGo,
-        displayRemoveIcon: $scope.edit,
-        type: 'BASIC',
-        businessId: $routeParams.businessId
-    };
-    $scope.$watch('edit', function () {
-        $scope.publicationListParam.displayRemoveIcon = $scope.edit;
-    });
-
-    //loading
-    businessService.getBusiness($routeParams.businessId,
-        function (data) {
-            $scope.loading = false;
-            $scope.business = data;
-
-            //publication
-            $scope.publicationListParam.business = $scope.business;
-
-
-            //edit mode ?
-            $scope.$watch('business.businessStatus', function () {
-
-                    if (accountService.getMyself() != null && accountService.getMyself().businessId == $routeParams.businessId) {
-                        if ($scope.business.businessStatus != 'WAITING_CONFIRMATION') {
-                            $scope.edit = true;
-                        }
-                        $scope.myBusiness = true;
-                    }
-
-                    if ($scope.myBusiness) {
-
-                        $scope.publicationOptions.push({
-                            key: 'PREVISUALIZATION', value: '--.business.publication.previsualization'
-                        });
-
-                    }
-                }
-            );
-
-            //distance
-            $scope.computeDistance = function () {
-                if($scope.business.address!=undefined && $scope.business.address !=null) {
-                    addressService.distance($scope.business.address.id, function (data) {
-                        $scope.business.distance = data.distance;
-                    });
-                }
-            };
-
-            //initlaization
-            $scope.computeDistance();
-
-            $scope.$on('POSITION_CHANGED', function () {
-                $scope.computeDistance();
-            });
-
-            $scope.publish = function () {
-
-                modalService.messageModal("--.business.page.askPublication.window.title", "--.business.page.askPublication.window.message",
-                    function (close) {
-                        businessService.publishBusiness();
-                        close();
-                        $flash.info(translationService.get("--.business.page.askPublication.window.flash"));
-                        $scope.business.businessStatus = 'WAITING_CONFIRMATION';
-                    });
-            };
-
-            $scope.cancelPublishRequest = function () {
-
-                modalService.messageModal("--.business.page.cancelPublishRequest.window.title", "--.business.page.cancelPublishRequest.window.message",
-                    function (close) {
-                        businessService.cancelPublishRequest();
-                        close();
-                        $flash.info(translationService.get("--.business.page.cancelPublishRequest.window.flash"));
-                        $scope.business.businessStatus = 'NOT_PUBLISHED';
-                    });
-            };
-
-            $scope.stopPublish = function () {
-
-                modalService.messageModal("--.business.page.stopPublication.window.title", "--.business.page.stopPublication.window.message",
-                    function (close) {
-                        businessService.stopPublication();
-                        close();
-                        $flash.info(translationService.get("--.business.page.stopPublication.window.flash"));
-                        $scope.business.businessStatus = 'NOT_PUBLISHED';
-                    });
-            };
-
-
-            //edit name
-            $scope.editbusiness = function () {
-                var business = angular.copy($scope.business);
-                modalService.basicModal("--.business.edit.data.modal.title", "business-form-ctrl",
-                    {
-                        dto: business,
-                        status: business.businessStatus
-                    },
-                    function (close, setLoading) {
-                        businessService.edit(business, function (data) {
-                            $scope.business.name = data.name;
-                            $scope.business.description = data.description;
-                            $scope.business.phone = data.phone;
-                            $scope.business.website = data.website;
-                            $scope.business.email = data.email;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //edit illustration
-            $scope.editIllustration = function () {
-                var business = angular.copy($scope.business);
-                modalService.basicModal("--.business.edit.illustration.modal.title", "image-form-ctrl",
-                    {
-                        dto: business,
-                        target: 'business_illustration',
-                        fieldName: 'illustration',
-                        details: '--.business.logo.edit.modal.description'
-                    },
-                    function (close, setLoading) {
-                        businessService.editIllustration(business.id, business.illustration, function () {
-                            $scope.business.illustration = business.illustration;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //edit landscape
-            $scope.editLandscape = function () {
-                var business = angular.copy($scope.business);
-                modalService.basicModal("--.business.edit.landscape.modal.title", "image-form-ctrl",
-                    {
-                        dto: business,
-                        target: 'business_landscape',
-                        fieldName: 'landscape',
-                        details: '--.business.landscape.edit.modal.description'
-                    },
-                    function (close, setLoading) {
-                        businessService.editLandscape(business.id, business.landscape, function () {
-                            $scope.business.landscape = business.landscape;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //address
-            $scope.googleMapParams.address = $scope.business.address;
-            $timeout(function () {
-                if($scope.business.address!=null && $scope.business.address!=undefined) {
-                    $scope.googleMapParams.refreshNow();
-                }
-            }, 1);
-
-            //edit address
-            $scope.editAddress = function () {
-                var address = angular.copy($scope.business.address);
-                modalService.basicModal("--.business.edit.address.modal.title", "address-form-ctrl",
-                    {
-                        dto: address,
-                        addName: false
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editAddress($scope.business.id, address, function (data) {
-                            $scope.business.address = data;
-                            $scope.googleMapParams.setAddress(data);
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            $scope.categoryLineParams = {
-                categories: $scope.business.categories
-            };
-
-            //edit category
-            $scope.editCategory = function () {
-                var catList = [];
-                for (var key1 in $scope.business.categories) {
-                    var lev2 = $scope.business.categories[key1];
-                    for (var key2 in lev2) {
-                        var lev3 = lev2[key2];
-                        for (var key3 in lev3) {
-                            catList.push(lev3[key3]);
-                        }
-                    }
-                }
-
-                modalService.basicModal("--.business.edit.category.modal.title", "business-category-form-ctrl",
-                    {
-                        value: catList
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editBusinessCategory($scope.business.id, catList, function (data) {
-                            $scope.business.categories = data.categories;
-                            $scope.categoryLineParams.categories = $scope.business.categories;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-
-            };
-
-            //schedule
-            $scope.editSchedule = function () {
-                var schedules = angular.copy($scope.business.schedules);
-                modalService.basicModal("--.business.edit.schedule.modal.title", "schedule-form-ctrl",
-                    {
-                        dto: schedules,
-                        disabled: false
-                    },
-                    function (close, setLoading) {
-                        businessService.createSchedule($scope.business.id, {schedules: schedules}, function (data) {
-                            $scope.business.schedules = schedules;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-
-            };
-
-            $scope.editGallery = function () {
-                var business = angular.copy($scope.business);
-                modalService.basicModal("--.business.edit.address.modal.title", "dir-field-image-mutiple",
-                    {
-                        fieldTitle: "--.business.modal.gallery.title",
-                        validationMessage: '--.error.validation.image',
-                        help: '--.business.gallery.download.help',
-                        details: '--gallery.maximumImage',
-                        field: business,
-                        maxImage: 10,
-                        multiple: true,
-                        target: 'galley_picture',
-                        fieldName: 'galleryPictures'
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editGallery($scope.business.id, {list: business.galleryPictures}, function (data) {
-                            $scope.business.galleryPictures = data;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-
-            //edit social network
-            $scope.editSocialNetwork = function () {
-                var socialNetwork = angular.copy($scope.business.socialNetwork);
-                if (socialNetwork == undefined || socialNetwork == null) {
-                    socialNetwork = {};
-                }
-                modalService.basicModal("--.business.edit.socialNetwork.modal.title", "business-social-network-ctrl",
-                    {
-                        dto: socialNetwork
-                    },
-                    function (close, setLoading) {
-                        //scope.business
-                        businessService.editSocialNetwork($scope.business.id, socialNetwork, function (data) {
-                            $scope.business.socialNetwork = socialNetwork;
-                            close();
-                        }, function () {
-                            setLoading(false);
-                        });
-                    });
-            };
-
-            //create publication
-            $scope.createPromotion = function () {
-                modalService.openPromotionModal(null, $scope.business, function () {
-                    $scope.$broadcast('RELOAD_PUBLICATION');
-                });
-
-            };
-            $scope.createNotification = function () {
-                modalService.openBusinessNotificationModal(null, $scope.business, function () {
-                    $scope.$broadcast('RELOAD_PUBLICATION');
-                });
-            };
-            $scope.$on('POSITION_CHANGED', function () {
-                $scope.$broadcast('RELOAD_PUBLICATION');
-            });
-
-            $scope.$watch('publicationListParam.type', function (o, n) {
-                if (o != n) {
-                    $scope.$broadcast('RELOAD_PUBLICATION');
-                }
-            });
-
-            $scope.refreshPublications = function () {
-                $scope.$broadcast('RELOAD_PUBLICATION');
-            };
-
-            $scope.$on('RELOAD_PUBLICATION', function () {
-                $scope.publicationListParam.refresh($scope.publicationListParam.type);
-            });
-
-            //initialization
-            if (geolocationService.currentPosition != null) {
-                $scope.$broadcast('RELOAD_PUBLICATION');
-            }
-
-            $scope.displaySchedule = function () {
-                for (var i in $scope.business.schedules) {
-                    if ($scope.business.schedules[i].length > 0) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-
-            $scope.displaySocialNetwork = function () {
-                var s = $scope.business.socialNetwork;
-                if (s == null) {
-                    return false;
-                }
-                return s.facebookLink != null ||
-                    s.twitterLink != null ||
-                    s.instagramLink != null ||
-                    s.deliveryLink != null ||
-                    s.opinionLink != null ||
-                    s.reservationLink != null;
-            };
-
-            $scope.computeProgression = function () {
-                var total = 0;
-                if ($scope.business.description != null) {
-                    total++;
-                }
-                if ($scope.business.illustration != null) {
-                    total++;
-                }
-                if ($scope.business.landscape != null) {
-                    total++;
-                }
-                if ($scope.business.galleryPictures.length > 0) {
-                    total++;
-                }
-                if ($scope.displaySocialNetwork()) {
-                    total++;
-                }
-                if ($scope.displaySchedule()) {
-                    total++;
-                }
-                return total;
-            };
-
-            $scope.getProgressionStyle = function () {
-                var s = 'width:' + (300 * ($scope.computeProgression() / 5)) + 'px';
-                console.log(s);
-                return s;
-            };
-
-            $scope.openContact = function () {
-
-                var dto = {target: 'HELP'};
-
-                modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl',
-                    {dto: dto},
-                    function (close) {
-                        contactService.contact(dto, function () {
-                            $flash.success($filter('translateText')('--.contactForm.send.success'));
-                            close();
-                        });
-                    }
-                );
-            };
-
-
-        }, function () {
-            $scope.loading = false;
-            $scope.displayError = true;
-
-        });
-
-}])
-;
 myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function ($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
 
     //back to the top of the page

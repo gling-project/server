@@ -29,12 +29,15 @@ myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout,
                     else{
                         var founded=false;
                         for (var key in names) {
-                            if(key == scope.getInfo().dto.name){
+                            if(names[key].key== scope.getInfo().dto.name){
                                 founded=true;
+                                scope.getInfo().dto.listName =scope.getInfo().dto.name;
                             }
                         }
                         if(!founded){
-                            names.push({key:scope.getInfo().dto.name,value:scope.getInfo().dto.name});
+                            console.log('not found');
+                            scope.getInfo().dto.listName =names[names.length - 1].key;
+                            scope.getInfo().dto.customName =scope.getInfo().dto.name;
                         }
                     }
 

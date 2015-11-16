@@ -16,7 +16,6 @@ GET           /rest/business_data                                               
 GET           /rest/login/facebook/:access_token/:user_id                                                            @be.lynk.server.controller.rest.LoginRestController.loginFacebook(access_token:String,user_id:String)
 GET           /rest/facebook/link/:access_token/:user_id                                                             @be.lynk.server.controller.rest.LoginRestController.linkFacebook(access_token:String,user_id:String)
 POST          /rest/registration/customer                                                                            @be.lynk.server.controller.rest.LoginRestController.customerRegistration()
-POST          /rest/registration/business                                                                            @be.lynk.server.controller.rest.LoginRestController.businessRegistration()
 GET           /rest/logout                                                                                           @be.lynk.server.controller.rest.LoginRestController.logout()
 GET           /rest/email/test/:email                                                                                @be.lynk.server.controller.rest.LoginRestController.testEmail(email:String)
 POST          /rest/address/test                                                                                     @be.lynk.server.controller.rest.LoginRestController.testAddress()
@@ -42,6 +41,7 @@ PUT           /rest/customer/interest/$id<[0-9]+>                               
 
 ## business
 POST          /rest/createBusiness                                                                                   @be.lynk.server.controller.rest.LoginRestController.createBusiness()
+GET           /rest/createBusinessFromFacebook/:url                                                                  @be.lynk.server.controller.rest.LoginRestController.createBusinessFromFacebook(url:String)
 GET           /rest/business/$id<[0-9]+>                                                                             @be.lynk.server.controller.rest.BusinessRestController.getPublicData(id:Long)
 GET           /rest/business/interests                                                                               @be.lynk.server.controller.rest.BusinessRestController.getInterests()
 GET           /rest/business/followed                                                                                @be.lynk.server.controller.rest.BusinessRestController.getFollowed()

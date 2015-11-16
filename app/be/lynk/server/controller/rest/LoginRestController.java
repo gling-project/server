@@ -18,6 +18,7 @@ import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.KeyGenerator;
 import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,8 @@ public class LoginRestController extends AbstractRestController {
     private LocalizationService       localizationService;
     @Autowired
     private BusinessService           businessService;
-
-
+    @Autowired
+    private FacebookRequest           facebookRequest;
 
     /* ////////////////////////////////////////////////////
      * CREATE FUNCTION
@@ -171,6 +172,10 @@ public class LoginRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result createBusiness() {
 
+        if(securityController.getCurrentUser().getBusiness()!=null){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
+        }
+
         CreateBusinessDTO createBusinessDTO = initialization(CreateBusinessDTO.class);
 
         //load account
@@ -184,6 +189,27 @@ public class LoginRestController extends AbstractRestController {
 
         return ok(finalizeConnection(account));
     }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result createBusinessFromFacebook(String facebookUrl) {
+
+        if(securityController.getCurrentUser().getBusiness()!=null){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
+        }
+
+        Account account = securityController.getCurrentUser();
+
+        facebookRequest.createBusinessFromFacebook(account, facebookUrl,true);
+
+        account.setRole(RoleEnum.BUSINESS);
+        account.setType(AccountTypeEnum.BUSINESS);
+
+        accountService.saveOrUpdate(account);
+
+        return ok(finalizeConnection(securityController.getCurrentUser()));
+    }
+
 
     /* ////////////////////////////////////////////////////
      * UPDATE FUNCTION
@@ -351,45 +377,9 @@ public class LoginRestController extends AbstractRestController {
         return ok(new ResultDTO());
     }
 
-
-    @Transactional
-    public Result businessRegistration() {
-        BusinessRegistrationDTO dto = initialization(BusinessRegistrationDTO.class);
-
-        Account account = null;//createNewAccount(dto.getAccountRegistration(), dto.getFacebookAuthentication(), false);
-        account.setRole(RoleEnum.BUSINESS);
-
-        //business
-        Business business = dozerService.map(dto.getBusiness(), Business.class);
-        business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
-        //TODO temp
-        business.getAddress().setCountry("BELGIUM");
-
-        //control address
-        try {
-            localizationService.validAddress(business.getAddress());
-        } catch (Exception e) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
-        }
-
-        //add categories
-        business.setBusinessCategories(new ArrayList<>());
-        for (BusinessCategoryDTO businessCategoryDTO : dto.getBusiness().getBusinessCategories()) {
-            business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
-        }
-
-        account.setBusiness(business);
-        business.setAccount(account);
-
-        //send email
-        emailController.sendApplicationRegistrationBusinessEmail(account);
-
-        accountService.saveOrUpdate(account);
-
-        //return
-        return ok(finalizeConnection(account));
-    }
-
+    /* ////////////////////////////////////////////////////
+     * PRIVATE FUNCTION
+     /////////////////////////////////////////////////// */
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)

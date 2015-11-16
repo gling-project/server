@@ -14,6 +14,16 @@ myApp.controller 'BusinessRegistrationModalCtrl', ($scope, $flash, $modal, $moda
         disabled:->
             return $scope.loading
         fieldName: 'name'
+    $scope.importFromFacebookParam =
+        name: 'facebookUrl'
+        validationRegex: "^($|https://www.facebook\.com/.*$)"
+        validationMessage: '--.generic.validation.facebook'
+        fieldTitle: "Facebook"
+        field: $scope.business
+        disabled:->
+            return $scope.loading
+        fieldName: 'facebookUrl'
+
 
 
     #loading
@@ -34,16 +44,23 @@ myApp.controller 'BusinessRegistrationModalCtrl', ($scope, $flash, $modal, $moda
         else
             $scope.badgeSelected = 2
 
+    #after business creation
+    $scope.saveSuccess = (data)->
+        accountService.setMyself data
+        $location.path '/business/' + accountService.getMyself().businessId
+        $scope.close()
+        $scope.setLoading false
+
     #create business
     $scope.save = ->
-        $scope.setLoading true
-        businessService.createBusiness accountService.getMyself().id,$scope.business.name,((data)->
-            accountService.setMyself data
-            $location.path '/business/' + accountService.getMyself().businessId
-            $scope.close()
-            $scope.setLoading false
-        ), ->
-            $scope.loading = false
+        if !$scope.businessNameField.isValid
+            $scope.businessNameField.displayErrorMessage = true
+        else
+            $scope.setLoading true
+            businessService.createBusiness accountService.getMyself().id,$scope.business.name,(data)->
+                $scope.saveSuccess data
+            , ->
+                $scope.loading = false
 
     #create account by facebook
     $scope.fb_login = ->
@@ -65,4 +82,18 @@ myApp.controller 'BusinessRegistrationModalCtrl', ($scope, $flash, $modal, $moda
                 $scope.setLoading false
                 $scope.toBusinessStep()
             ), ->
+                $scope.setLoading false
+
+    #import business data from facebook page
+    $scope.importBusinessFromFacebook = ->
+        console.log $scope.importFromFacebookParam
+        if !$scope.importFromFacebookParam.isValid
+            $scope.importFromFacebookParam.displayErrorMessage = true
+        else
+            $scope.setLoading true
+            urlEncoded=encodeURIComponent $scope.business.facebookUrl
+            businessService.importBusinessFormFacebook urlEncoded, (data)->
+                $scope.saveSuccess data
+            , ->
+                #callback failed
                 $scope.setLoading false
