@@ -62,15 +62,15 @@ myApp.directive 'searchResultCtrl', (directiveService, $location, searchBarServi
                 #enter
                 else if e.keyCode == 13
                     if scope.getInfo().result != undefined
-                        for business of scope.getInfo().result.businesses
+                        for business in scope.getInfo().result.businesses
                             if scope.indexSelected == business.index
                                 scope.goToBusiness business
                                 break
-                        for category of scope.getInfo().result.categories
+                        for category in scope.getInfo().result.categories
                             if scope.indexSelected == category.index
                                 scope.goToCategory category
                                 break
-                        for publication of scope.getInfo().result.publications
+                        for publication in scope.getInfo().result.publications
                             if scope.indexSelected == publication.index
                                 scope.goToPublication publication
                                 break

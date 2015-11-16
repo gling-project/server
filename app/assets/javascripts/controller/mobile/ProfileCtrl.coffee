@@ -1,7 +1,7 @@
 # mobile controller
 # my profile
 # the user can consult and edit his own profile
-myApp.controller 'ProfileCtrl', ($rootScope, $scope, modalService, accountService, facebookService, $flash, translationService, $location, $route) ->
+myApp.controller 'ProfileCtrl', ($rootScope, $scope, modalService, accountService, facebookService, $flash, translationService, $location, constantService) ->
 
     #params
     $scope.model = accountService.model
@@ -51,7 +51,7 @@ myApp.controller 'ProfileCtrl', ($rootScope, $scope, modalService, accountServic
     #remove existing address
     $scope.deleteAddress = (address) ->
         accountService.deleteAddress address
-        if accountService.getMyself().selectedAddress?.id == address.id
+        if constantService.compareNumber accountService.getMyself().selectedAddress?.id,address.id
             accountService.getMyself().selectedAddress = null
 
     #change interest save

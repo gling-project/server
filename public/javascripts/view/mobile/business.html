@@ -40,11 +40,6 @@
 
                         <!-- landscape -->
                         <div class="edit-button-container landscape-edit">
-                            <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                                    ng-show="edit"
-                                    ng-click="editLandscape()">
-                                {{'--.business.page.edit.landscape' | translateText}}
-                            </button>
                         </div>
 
                         <!-- illustration -->
@@ -55,11 +50,6 @@
                                         <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
 
                                         <div class="edit-button-container">
-                                            <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm"
-                                                    ng-show="edit"
-                                                    ng-click="editIllustration()">
-                                                {{'--.business.page.edit.illustration' | translateText}}
-                                            </button>
                                         </div>
                                     </div>
                                 </td>
@@ -68,11 +58,6 @@
                                     <div class="business-page-name">
                                         {{business.name}}
                                         <div class="edit-button-container">
-                                            <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                                                    ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                                                    ng-click="editbusiness()">
-                                                {{'--.business.page.edit.business' | translateText}}
-                                            </button>
                                         </div>
                                     </div>
                                 </td>

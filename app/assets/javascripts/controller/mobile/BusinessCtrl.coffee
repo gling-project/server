@@ -1,7 +1,7 @@
 # mobile controller
 # display the business page
 # can call form to create new publication if this is the business of the logged user
-myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, accountService) ->
+myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessService, geolocationService, addressService, $timeout, $flash, followService, $filter, modalService, accountService,constantService) ->
 
     #params
     #loading
@@ -10,7 +10,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessServ
     $scope.publicationListParam =
         businessId: $routeParams.businessId
     #true if this is the business of the logged user
-    $scope.myBusiness = accountService.getMyself().businessId == $scope.publicationListParam.businessId
+    $scope.myBusiness = constantService.compareNumber accountService.getMyself().businessId,$scope.publicationListParam.businessId
     #description limitation size
     $scope.descriptionLimitBase = 200
     $scope.descriptionLimit = $scope.descriptionLimitBase

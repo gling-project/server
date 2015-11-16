@@ -741,6 +741,9 @@ myApp.service("translationService", ['$rootScope', '$filter', '$http', '$locale'
 
 myApp.service("constantService", function () {
 
+    this.compareNumber = function (a, b) {
+        return parseFloat(a) === parseFloat(b);
+    }
 
 });
 myApp.filter("image", ['constantService', function (constantService) {

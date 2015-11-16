@@ -51,17 +51,23 @@ object ApplicationBuild extends Build {
     "org.mongodb" % "mongodb-driver" % "3.0.4",
     "org.mongojack" % "mongojack" % "2.1.0",
     "org.jsoup" % "jsoup" % "1.8.3",
-
-    //    "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0",
-
     "net.coobird" % "thumbnailator" % "0.4.8",
-    "net.imagej" % "ij" % "1.50a"
+    "net.imagej" % "ij" % "1.50a",
+    "de.neuland" % "jade4j" % "0.2.15"
   )
 
+//  def customLessEntryPoints(base: File): PathFinder = (
+//    (base / "app" / "assets" / "stylesheets" / "*.less") +++
+//      (base / "app" / "assets" / "vue" / "*.jade") +++
+//      (base / "app" / "assets" / "vue" / "*.html") +++
+//      (base / "app" / "assets" ** "*.coffee") +++
+//    )
+
   val main = play.Project(name, version, appDependencies)
-  /*.settings(
-      lessEntryPoints <<= baseDirectory(_ / "app" / "assets" / "stylesheets" ** "*.less")
-    )*/
+//    .settings(
+//      resolvers += "jade4j-releases" at "https://github.com/neuland/jade4j/raw/master/releases"
+////      ,lessEntryPoints <<= baseDirectory(customLessEntryPoints)
+//    )
   javaOptions ++= Seq("-Xmx512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
 
 
