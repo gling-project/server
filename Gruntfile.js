@@ -239,7 +239,7 @@ module.exports = function (grunt) {
                         <!-- controllers -->
                         'public/javascripts/controller/web/HomeCtrl.js',
                         'target/scala-2.10/resource_managed/main/public/javascripts/controller/web/ProfileCtrl.js',
-                        'public/javascripts/controller/web/BusinessCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/web/BusinessCtrl.js',
                         'public/javascripts/controller/web/SearchPageCtrl.js',
                         'public/javascripts/controller/web/FollowedBusinessPageCtrl.js',
 
