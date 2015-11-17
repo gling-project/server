@@ -1225,6 +1225,167 @@ myApp.directive("compile", ['$compile', '$filter', function ($compile, $filter) 
         )
     };
 }]);
+(function() {
+
+  myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationService', 'directiveService', '$timeout', 'accountService', '$location', 'modalService', function($flash, facebookService, translationService, directiveService, $timeout, accountService, $location, modalService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/form/login/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            var access_token;
+            directiveService.autoScopeImpl(scope);
+            scope.facebookAppId = facebookService.facebookAppId;
+            scope.facebookAuthorization = facebookService.facebookAuthorization;
+            scope.basic_url = location.host;
+            if (scope.basic_url.indexOf('http') === -1) {
+              if (scope.basic_url.indexOf('localhost') !== -1) {
+                scope.basic_url = 'http://' + scope.basic_url;
+              } else {
+                scope.basic_url = 'https://' + scope.basic_url;
+              }
+            }
+            if (!(scope.getInfo().dto != null)) {
+              scope.getInfo().dto = {};
+            }
+            scope.fields = {
+              email: {
+                fieldType: 'email',
+                name: 'email',
+                fieldTitle: '--.registration.form.yourEmail',
+                validationRegex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                validationMessage: '--.generic.validation.email',
+                disabled: function() {
+                  return scope.getInfo().loading;
+                },
+                field: scope.getInfo().dto,
+                fieldName: 'email'
+              },
+              password: {
+                name: 'password',
+                fieldTitle: '--.generic.yourPassword',
+                validationRegex: '^[a-zA-Z0-9-_%]{6,18}$',
+                validationMessage: '--.generic.validation.password',
+                fieldType: 'password',
+                disabled: function() {
+                  return scope.getInfo().loading;
+                },
+                field: scope.getInfo().dto,
+                fieldName: 'password'
+              }
+            };
+            scope.setLoading = function(b) {
+              if (scope.getInfo().mobileVersion) {
+                if (b === true) {
+                  return modalService.openLoadingModal();
+                } else {
+                  return modalService.closeLoadingModal();
+                }
+              } else {
+                return scope.getInfo().loading = b;
+              }
+            };
+            scope.$watch('fields', (function() {
+              var obj, validation, _i, _len, _ref;
+              validation = true;
+              _ref = scope.fields;
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                obj = _ref[_i];
+                if (scope.fields.hasOwnProperty(key) && (obj.isValid === null || obj.isValid === false)) {
+                  obj.firstAttempt = !scope.getInfo().displayErrorMessage;
+                  validation = false;
+                }
+              }
+              return scope.getInfo().isValid = validation;
+            }), true);
+            scope.$watch('getInfo().displayErrorMessage', function() {
+              var obj, _i, _len, _ref, _results;
+              _ref = scope.fields;
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                obj = _ref[_i];
+                _results.push(obj.firstAttempt = !scope.getInfo().displayErrorMessage);
+              }
+              return _results;
+            });
+            scope.facebookSuccess = function(data) {
+              accountService.setMyself(data);
+              if (data.type === 'BUSINESS') {
+                $location.path('/business/' + accountService.getMyself().businessId);
+              } else if (scope.getInfo().mobileVersion) {
+                $location.path('/');
+              }
+              scope.getInfo().facebookSuccess(data);
+              return scope.setLoading(false);
+            };
+            scope.fb_login = function() {
+              var failed, success, url;
+              success = function(data) {
+                scope.facebookSuccess(data);
+                return scope.setLoading(false);
+              };
+              failed = function(data) {
+                $flash.error(data.message);
+                scope.setLoading(false);
+                return scope.$apply();
+              };
+              scope.setLoading(true);
+              if (scope.getInfo().mobileVersion) {
+                if (facebookService.isConnected()) {
+                  return facebookService.loginToServer(success, failed);
+                } else {
+                  url = 'https://www.facebook.com/dialog/oauth/?client_id=' + scope.facebookAppId + '&redirect_uri=' + scope.basic_url + '/&state=BELGIUM&scope=' + scope.facebookAuthorization + '&response_type=token';
+                  return window.open(url, '_self');
+                }
+              } else {
+                return facebookService.login((function(data) {
+                  return success(data);
+                }), function(data) {
+                  return failed(data);
+                });
+              }
+            };
+            scope.getUrlParam = function(name, url) {
+              var regex, regexS, results;
+              if (!url) {
+                url = location.href;
+              }
+              name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+              regexS = '[\\?&]' + name + '=([^&#]*)';
+              regex = new RegExp(regexS);
+              results = regex.exec(url);
+              if (results === null) {
+                return null;
+              } else {
+                return results[1];
+              }
+            };
+            if (location.href.indexOf('access_token') !== -1) {
+              access_token = scope.getUrlParam('access_token', location.href);
+              if (access_token != null) {
+                scope.setLoading(true);
+                return facebookService.loginToServerSimple(access_token, (function(data) {
+                  return scope.facebookSuccess(data);
+                }), function(data, status) {
+                  scope.setLoading(false);
+                  return $location.path('/customer_registration');
+                });
+              }
+            }
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
 myApp.directive('addressFormCtrl', ['$flash', 'directiveService', '$timeout', '$filter', 'translationService', 'modalService', function ($flash, directiveService, $timeout, $filter, translationService,modalService) {
     return {
         restrict: "E",
@@ -3019,6 +3180,590 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
 
 }])
 ;
+(function() {
+
+  myApp.directive('scheduleCtrl', ['directiveService', function(directiveService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/schedule/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          pre: function(scope) {},
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            scope.sections = [];
+            scope.days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+            scope.daysTranslation = {
+              'MONDAY': 'day_abrv_monday',
+              'TUESDAY': 'day_abrv_tuesday',
+              'WEDNESDAY': 'day_abrv_wednesday',
+              'THURSDAY': 'day_abrv_thusday',
+              'FRIDAY': 'day_abrv_friday',
+              'SATURDAY': 'day_abrv_saturday',
+              'SUNDAY': 'day_abrv_sunday'
+            };
+            scope.attendance_class = {
+              APPOINTMENT: 'attendance-appointment',
+              LIGHT: 'attendance-light',
+              MODERATE: 'attendance-moderate',
+              IMPORTANT: 'attendance-heavy'
+            };
+            scope.isEven = function(nb) {
+              return !(nb % 2);
+            };
+            return scope.$watch('getInfo().dto', (function() {
+              var day, displayWK, hour, i, maxMinute, minMinute, nowDay, nowMinutes, obj, obj2, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _results;
+              console.log(new Date().getDay());
+              nowDay = scope.days[new Date().getDay() - 1];
+              nowMinutes = (new Date().getHours() * 60) + new Date().getMinutes();
+              if ((scope.getInfo().dto != null) && Object.keys(scope.getInfo().dto).length > 0) {
+                minMinute = null;
+                maxMinute = null;
+                _ref = scope.days;
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                  day = _ref[_i];
+                  _ref1 = scope.getInfo().dto[day];
+                  for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                    obj = _ref1[_j];
+                    if (minMinute === null || minMinute > obj.from) {
+                      minMinute = obj.from;
+                    }
+                    if (maxMinute === null || maxMinute < obj.to) {
+                      maxMinute = obj.to;
+                    }
+                  }
+                }
+                if (minMinute % 60 === 30) {
+                  minMinute -= 30;
+                }
+                if (maxMinute % 60 === 30) {
+                  maxMinute += 30;
+                }
+                scope.hours = [];
+                i = minMinute / 30;
+                while (i <= maxMinute / 30) {
+                  hour = '';
+                  if (scope.isEven(i)) {
+                    hour = i / 2;
+                  }
+                  scope.hours.push({
+                    text: hour
+                  });
+                  i++;
+                }
+                displayWK = true;
+                if (scope.getInfo().dto['SATURDAY'].length === 0 && scope.getInfo().dto['SUNDAY'].length === 0) {
+                  displayWK = false;
+                }
+                _ref2 = scope.days;
+                for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                  day = _ref2[_k];
+                  if ((day === 'SUNDAY' || day === 'SATURDAY') && displayWK === false) {
+                    i++;
+                    continue;
+                  }
+                  scope.sections[day] = [];
+                  i = minMinute / 30;
+                  while (i < maxMinute / 30) {
+                    scope.sections[day].push({
+                      minutes: i * 30,
+                      attendance: 'CLOSE'
+                    });
+                    i++;
+                  }
+                }
+                _ref3 = scope.days;
+                _results = [];
+                for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+                  day = _ref3[_l];
+                  _results.push((function() {
+                    var _len4, _m, _ref4, _results1;
+                    _ref4 = scope.getInfo().dto[day];
+                    _results1 = [];
+                    for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
+                      obj = _ref4[_m];
+                      _results1.push((function() {
+                        var _len5, _n, _ref5, _results2;
+                        _ref5 = scope.sections[day];
+                        _results2 = [];
+                        for (_n = 0, _len5 = _ref5.length; _n < _len5; _n++) {
+                          obj2 = _ref5[_n];
+                          if (day === nowDay && obj2.minutes < nowMinutes && (obj2.minutes + 30) > nowMinutes) {
+                            scope.isOpenNow = true;
+                          }
+                          if (obj2.minutes >= obj.from && obj2.minutes + 30 <= obj.to) {
+                            _results2.push(obj2.attendance = obj.attendance);
+                          } else {
+                            _results2.push(void 0);
+                          }
+                        }
+                        return _results2;
+                      })());
+                    }
+                    return _results1;
+                  })());
+                }
+                return _results;
+              }
+            }), true);
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('galleryCtrl', ['$rootScope', 'directiveService', 'modalService', function($rootScope, directiveService, modalService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/gallery/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            return scope.openGallery = function(image) {
+              return modalService.galleryModal(image, scope.getInfo().images);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, $timeout) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/googleMapWidget/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            return scope.$watch('getInfo().address', function() {
+              scope.getInfo().refreshNow = function() {
+                return scope.getInfo().centerMap();
+              };
+              scope.getInfo().setAddress = function(address) {
+                if (address != null) {
+                  scope.getInfo().address = address;
+                  return scope.getInfo().centerMap();
+                }
+              };
+              scope.getInfo().centerMap = function() {
+                scope.mapData = {
+                  center: {
+                    latitude: scope.getInfo().address.posx,
+                    longitude: scope.getInfo().address.posy
+                  },
+                  zoom: 14
+                };
+                return google.maps.event.trigger(scope.map, 'resize');
+              };
+              scope.GenerateMapMarkers = function() {
+                var marker;
+                if ((scope.map != null) && (scope.getInfo().address != null)) {
+                  marker = new google.maps.Marker({});
+                  marker.setPosition(new google.maps.LatLng(scope.getInfo().address.posx, scope.getInfo().address.posy));
+                  return marker.setMap(scope.map);
+                }
+              };
+              scope.$watch('map', function(n) {
+                return scope.GenerateMapMarkers();
+              });
+              scope.toGoogleMap = function() {
+                var iOSversion, protocol, ver;
+                iOSversion = function() {
+                  var v;
+                  if (/iP(hone|od|ad)/.test(navigator.platform)) {
+                    v = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
+                    return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+                  }
+                };
+                if (navigator.platform.indexOf('iPhone') !== -1 || navigator.platform.indexOf('iPod') !== -1) {
+                  ver = iOSversion() || [0];
+                  protocol = '';
+                  if (ver[0] >= 6) {
+                    protocol = 'maps://';
+                  } else {
+                    protocol = 'http://';
+                  }
+                  return window.location = protocol + scope.complete('maps.apple.com/?address=');
+                } else {
+                  return window.open(scope.complete('https://www.google.be/maps/place/'));
+                }
+              };
+              return scope.complete = function(url) {
+                var add;
+                add = scope.getInfo().address.street + ',' + scope.getInfo().address.zip + ',' + scope.getInfo().address.city + ',' + scope.getInfo().address.country;
+                return url += add.replace(RegExp(' ', 'g'), '+');
+              };
+            });
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBarService', function(directiveService, $location, searchBarService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/searchResult/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          pre: function(scope) {},
+          post: function(scope) {
+            var counter, removeCriteria;
+            directiveService.autoScopeImpl(scope);
+            counter = -1;
+            scope.indexSelected = null;
+            scope.$watch('getInfo().result', function() {
+              var business, category, publication, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+              if (scope.getInfo().result != null) {
+                counter = -1;
+                _ref = scope.getInfo().result.businesses;
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                  business = _ref[_i];
+                  business.index = ++counter;
+                }
+                if ((scope.getInfo().result.businesses != null) && scope.getInfo().result.businesses.length > 0 && scope.getInfo().mobile !== true) {
+                  scope.seeMoreBusinessIndex = ++counter;
+                }
+                _ref1 = scope.getInfo().result.publications;
+                for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                  publication = _ref1[_j];
+                  publication.index = ++counter;
+                }
+                if ((scope.getInfo().result.publications != null) && scope.getInfo().result.publications.length > 0 && scope.getInfo().mobile !== true) {
+                  scope.seeMorePublicationIndex = ++counter;
+                }
+                _ref2 = scope.getInfo().result.categories;
+                for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                  category = _ref2[_k];
+                  category.index = ++counter;
+                }
+                if ((scope.getInfo().result.categories != null) && scope.getInfo().result.categories.length > 0 && scope.getInfo().mobile !== true) {
+                  scope.seeMoreCategoryIndex = ++counter;
+                }
+                scope.seeMoreIndex = ++counter;
+              } else {
+                scope.getInfo().display = false;
+              }
+              return scope.indexSelected = null;
+            });
+            $(document).keydown(function(e) {
+              var business, category, publication, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+              if (e.keyCode === 40) {
+                if (scope.indexSelected === null || scope.indexSelected === counter) {
+                  scope.indexSelected = 0;
+                } else {
+                  scope.indexSelected++;
+                }
+                return scope.$apply();
+              } else if (e.keyCode === 38) {
+                if (scope.indexSelected === null || scope.indexSelected === 0) {
+                  scope.indexSelected = counter;
+                } else {
+                  scope.indexSelected--;
+                }
+                return scope.$apply();
+              } else if (e.keyCode === 13) {
+                if (scope.getInfo().result !== void 0) {
+                  _ref = scope.getInfo().result.businesses;
+                  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    business = _ref[_i];
+                    if (scope.indexSelected === business.index) {
+                      scope.goToBusiness(business);
+                      break;
+                    }
+                  }
+                  _ref1 = scope.getInfo().result.categories;
+                  for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                    category = _ref1[_j];
+                    if (scope.indexSelected === category.index) {
+                      scope.goToCategory(category);
+                      break;
+                    }
+                  }
+                  _ref2 = scope.getInfo().result.publications;
+                  for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                    publication = _ref2[_k];
+                    if (scope.indexSelected === publication.index) {
+                      scope.goToPublication(publication);
+                      break;
+                    }
+                  }
+                  return scope.$apply();
+                }
+              } else if (e.keyCode === 27) {
+                scope.getInfo().display = false;
+                scope.indexSelected = null;
+                return scope.$apply();
+              }
+            });
+            $(document).click(function() {
+              if (!$('#searchContainer').is(':hover')) {
+                scope.getInfo().display = false;
+                scope.indexSelected = null;
+                return scope.$apply();
+              }
+            });
+            scope.select = function(index) {
+              return scope.indexSelected = index;
+            };
+            scope.seeAll = function() {
+              return scope.navigateTo('search/' + searchBarService.currentSearch);
+            };
+            scope.goToPublication = function(publication) {
+              return scope.navigateTo('business/' + publication.businessId + '/publication/' + publication.id);
+            };
+            scope.goToBusiness = function(business) {
+              return scope.navigateTo('business/' + business.id);
+            };
+            scope.seeAllPublication = function() {
+              return scope.navigateTo('search/publication:' + removeCriteria(searchBarService.currentSearch));
+            };
+            scope.seeAllBusiness = function() {
+              return scope.navigateTo('search/business:' + removeCriteria(searchBarService.currentSearch));
+            };
+            scope.seeAllCategory = function() {
+              return scope.navigateTo('search/category:' + removeCriteria(searchBarService.currentSearch));
+            };
+            scope.goToCategory = function(category) {
+              var target;
+              target = null;
+              if (category.subSubCategory != null) {
+                target = category.subSubCategory.translationName;
+              } else if (category.subCategory != null) {
+                target = category.subCategory.translationName;
+              } else {
+                target = category.category.translationName;
+              }
+              return scope.navigateTo('search/category:' + removeCriteria(target));
+            };
+            removeCriteria = function(s) {
+              if (s.indexOf(':') !== -1) {
+                return s.split(':')[1];
+              } else {
+                return s;
+              }
+            };
+            scope.navigateTo = function(target) {
+              $location.path(target);
+              return scope.$broadcast('SEARCH_CLEAN');
+            };
+            return scope.$on('SEARCH_CLEAN', function() {
+              scope.getInfo().display = false;
+              return scope.getInfo().cleanSearch();
+            });
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', 'searchBarService', '$timeout', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, searchBarService, $timeout, $location, modalService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/searchBar/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            scope.advancedSearch = false;
+            scope.searchBarService = searchBarService;
+            scope.searchResultParam = {
+              mobile: scope.getInfo().mobile,
+              display: false,
+              cleanSearch: function() {
+                return searchBarService.currentSearch = '';
+              }
+            };
+            scope.$watch('searchBarService.currentSearch', function(o, n) {
+              var searchS;
+              if (searchBarService.displaySearchResult && o !== n && searchBarService.currentSearch !== '' && searchBarService.currentSearch.length >= 2) {
+                searchS = angular.copy(searchBarService.currentSearch);
+                scope.searchResultParam.waitingBeforeStartSearch = true;
+                return $timeout((function() {
+                  if (scope.searchResultParam.waitingBeforeStartSearch && searchS === searchBarService.currentSearch) {
+                    if (searchBarService.currentSearch.indexOf(':') !== -1 && searchBarService.currentSearch.split(':')[1].length > 0 || searchBarService.currentSearch.indexOf(':') === -1 && searchBarService.currentSearch.length > 0) {
+                      return scope.searchResultParam.promise = searchService.searchByStringLittle(searchBarService.currentSearch, function(result) {
+                        scope.searchResultParam.result = result;
+                        return scope.searchResultParam.display = true;
+                      });
+                    }
+                  }
+                }), 500);
+              }
+            });
+            scope.search = function() {
+              scope.searchResultParam.waitingBeforeStartSearch = false;
+              return scope.navigateTo('search/' + searchBarService.currentSearch);
+            };
+            return scope.navigateTo = function(target) {
+              $rootScope.$broadcast('PROGRESS_BAR_START');
+              modalService.openLoadingModal();
+              $rootScope.$broadcast('SEARCH_CLEAN');
+              return $timeout((function() {
+                return $location.path(target);
+              }), 1);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followService', 'directiveService', '$filter', '$flash', function(accountService, modalService, followService, directiveService, $filter, $flash) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/followWidget/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            scope.follow = function() {
+              if (accountService.getMyself() != null) {
+                return scope.followed();
+              } else {
+                return modalService.openLoginModal(scope.followed, null, '--.loginModal.help.follow');
+              }
+            };
+            scope.getInfo().maskTotal = true;
+            return scope.followed = function() {
+              scope.getInfo().business.following = !scope.getInfo().business.following;
+              if (scope.getInfo().business.following === true) {
+                scope.getInfo().business.totalFollowers++;
+                $flash.success($filter('translateText')('--.followWidget.message.add'));
+              } else {
+                $flash.success($filter('translateText')('--.followWidget.message.remove'));
+                scope.getInfo().business.totalFollowers--;
+              }
+              return followService.addFollow(scope.getInfo().business.following, scope.getInfo().business.id);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('followWidgetForPublicationCtrl', ['accountService', 'modalService', 'followService', 'directiveService', '$filter', '$flash', function(accountService, modalService, followService, directiveService, $filter, $flash) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/followWidgetForPublication/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            scope.follow = function() {
+              if (accountService.getMyself() != null) {
+                return scope.followed();
+              } else {
+                return modalService.openLoginModal(scope.followed, null, '--.loginModal.help.follow');
+              }
+            };
+            scope.getInfo().maskTotal = true;
+            return scope.followed = function() {
+              scope.getInfo().publication.following = !scope.getInfo().publication.following;
+              if (scope.getInfo().publication.following === true) {
+                scope.getInfo().publication.totalFollowers++;
+                $flash.success($filter('translateText')('--.followWidget.message.add'));
+              } else {
+                $flash.success($filter('translateText')('--.followWidget.message.remove'));
+                scope.getInfo().publication.totalFollowers--;
+              }
+              return followService.addFollow(scope.getInfo().publication.following, scope.getInfo().publication.businessId);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'facebookService', function($rootScope, businessService, geolocationService, directiveService, facebookService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/facebookSharePublication/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            return scope.share = function() {
+              return facebookService.sharePublication(scope.getInfo().businessId, scope.getInfo().publicationId);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
 myApp.filter("translateText", ['$sce', 'translationService', function ($sce, translationService) {
     return function (input, params,toUpperCase) {
         var text;
@@ -3346,6 +4091,123 @@ myApp.service("modelService", ['$rootScope', function($rootScope) {
         delete this.model[key];
     };
 }]);
+(function() {
+
+  myApp.service('facebookService', ['$http', 'accountService', '$locale', 'languageService', 'constantService', '$flash', function($http, accountService, $locale, languageService, constantService, $flash) {
+    var authResponse, isConnected, _this;
+    this.facebookAppId;
+    this.facebookAuthorization = 'public_profile,email,publish_actions';
+    isConnected = false;
+    authResponse = null;
+    _this = this;
+    this.ini = function() {
+      FB.init({
+        appId: this.facebookAppId,
+        cookie: true,
+        xfbml: true,
+        version: 'v2.3'
+      });
+      return FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          isConnected = true;
+          return authResponse = response.authResponse;
+        }
+      });
+    };
+    this.sharePublication = function(businessId, publicationId) {
+      var obj, url;
+      url = constantService.urlBase + '/business/' + businessId + '/publication/' + publicationId;
+      obj = {
+        method: 'share',
+        href: url
+      };
+      return FB.ui(obj, callback);
+    };
+    this.loginToServer = function(callbackSuccess, callbackError) {
+      var access_token, user_id;
+      access_token = authResponse.accessToken;
+      user_id = authResponse.userID;
+      return $http({
+        'method': 'GET',
+        'url': '/rest/login/facebook/' + access_token + '/' + user_id,
+        'headers': 'Content-Type:application/json;charset=utf-8'
+      }).success(function(data) {
+        if ((data != null) !== '') {
+          if (callbackSuccess != null) {
+            return callbackSuccess(data);
+          }
+        }
+      }).error(function(data, status) {
+        $flash.error(data.message);
+        if (callbackError != null) {
+          return callbackError(data, status);
+        }
+      });
+    };
+    this.loginToServerSimple = function(accessToken, callbackSuccess, callbackError) {
+      return $http({
+        'method': 'GET',
+        'url': '/rest/login/facebook/' + accessToken + '/null',
+        'headers': 'Content-Type:application/json;charset=utf-8'
+      }).success(function(data) {
+        if ((data != null) !== '') {
+          if (callbackSuccess != null) {
+            return callbackSuccess(data);
+          }
+        }
+      }).error(function(data, status) {
+        $flash.error(data.message);
+        if (callbackError != null) {
+          return callbackError(data, status);
+        }
+      });
+    };
+    this.linkToAccount = function(accessToken, callbackSuccess, callbackError) {
+      if (!(accessToken != null)) {
+        accessToken = authResponse.accessToken;
+      }
+      return $http({
+        'method': 'GET',
+        'url': '/rest/facebook/link/' + accessToken + '/null',
+        'headers': 'Content-Type:application/json;charset=utf-8'
+      }).success(function(data) {
+        if ((data != null) !== '') {
+          if (callbackSuccess != null) {
+            return callbackSuccess(data);
+          }
+        }
+      }).error(function(data, status) {
+        $flash.error(data.message);
+        if (callbackError != null) {
+          return callbackError(data, status);
+        }
+      });
+    };
+    this.login = function(successCallback, callbackError) {
+      console.log('je suis DEJA contect ?' + isConnected);
+      if (isConnected) {
+        return this.loginToServer(successCallback, callbackError);
+      } else {
+        return FB.login((function(response) {
+          if (response.status === 'connected') {
+            authResponse = response.authResponse;
+            _this.loginToServer(successCallback, callbackError);
+            return isConnected = true;
+          } else {
+            if (callbackError != null) {
+              return callbackError();
+            }
+          }
+        }));
+      }
+    };
+    this.isConnected = function() {
+      return isConnected;
+    };
+  }]);
+
+}).call(this);
+
 myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', function ($flash, $window, $http, $rootScope) {
 
     this.languages;

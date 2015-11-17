@@ -1056,6 +1056,32 @@ myApp.directive('publicationListForTownCtrl', ['$rootScope', 'directiveService',
         }
     }
 }]);
+(function() {
+
+  myApp.directive('categoryLineCtrl', ['$rootScope', 'directiveService', '$location', function($rootScope, directiveService, $location) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/categoryLine/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            return scope.searchCat = function(categoryName) {
+              return $location.path('/search/category:' + categoryName);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
 angular.module('app').run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("/assets/javascripts/directive/town/publicationListForTown/template.html",
