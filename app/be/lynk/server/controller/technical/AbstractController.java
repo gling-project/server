@@ -161,7 +161,6 @@ public abstract class AbstractController extends Controller {
 
     private <T extends DTO> void validation(T dto) {
 
-
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<T>> validate = validator.validate(dto);

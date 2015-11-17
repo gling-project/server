@@ -199,7 +199,7 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED})
+    @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED,BusinessStatusEnum.WAITING_CONFIRMATION})
     public Result editAddress(long businessId) {
 
         //control business
@@ -317,7 +317,7 @@ public class BusinessRestController extends AbstractController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
-        if (business.getBusinessStatus().equals(BusinessStatusEnum.NOT_PUBLISHED)) {
+        if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)) {
             business.setName(dto.getName());
             business.setVta(dto.getVta());
         }

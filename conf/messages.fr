@@ -489,7 +489,7 @@ day_abrv_sunday=Di
 --.footer.contact=Contact
 --.footer.help=Signaler un problème
 
---.business.manager.progress.add.description=Ajouter une description
+--.business.manager.progress.add.description=Ajouter une description et autres informations
 --.business.manager.progress.add.illustration=Ajouter un logo
 --.business.manager.progress.add.landscape=Ajouter une image de fond
 --.business.manager.progress.add.gallery=Ajouter une galerie de photos représentative de votre commerce, vos produits phares.
@@ -626,3 +626,7 @@ day_abrv_sunday=Di
 --.business.registration.importFromFacebook.desc=Vous pouvez importer les informations depuis votre page de commerce d''un des réseaux sociales suivant. Copier l''url de votre page dans le champs ci-dessous et cliquez sur importer. Attention, cette opération peut prendre jusqu'à 30 secondes.
 --.business.registration.importFromFacebook=Importer
 --.business.registration.data.desc=Vous pouvez créer un nouveau profile de commerce. Pour commencer, introduisez le nom et cliquez sur sauver.
+--.business.error.editAddress.wrongStatus=Vous ne pouvez plus modifier l''adresse de votre magasin après l''avoir publié
+--.business.manager.progress.add.address=Introduire l''adresse
+--.business.manager.progress.add.category=Choisir une catégorie
+

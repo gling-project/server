@@ -32,7 +32,7 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                                 return true;
                             },
                             disabled: function () {
-                                return scope.getInfo().disabled || (scope.getInfo().status !=undefined && scope.getInfo().status !== 'NOT_PUBLISHED');
+                                return scope.getInfo().disabled || (scope.getInfo().status !=undefined && scope.getInfo().status === 'PUBLISHED');
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'name'
@@ -40,10 +40,10 @@ myApp.directive('businessFormCtrl', function ($flash, directiveService) {
                         vta: {
                             name: 'vta',
                             fieldTitle: "--.business.vta",
-                            validationRegex: /^[a-zA-Z0-9\.\- ]{6,20}$/,
+                            validationRegex: /^($|[a-zA-Z0-9\.\- ]{6,20}$)/,
                             validationMessage: '--.validation.dto.vta',
                             disabled: function () {
-                                return scope.getInfo().disabled || (scope.getInfo().status !=undefined && scope.getInfo().status !== 'NOT_PUBLISHED');
+                                return scope.getInfo().disabled || (scope.getInfo().status !=undefined && scope.getInfo().status === 'PUBLISHED');
                             },
                             field: scope.getInfo().dto,
                             fieldName: 'vta'

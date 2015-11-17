@@ -1595,24 +1595,28 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
       }), 1);
       $scope.editAddress = function() {
         var address;
-        address = angular.copy($scope.business.address);
-        if (!(address != null)) {
-          address = {};
-        }
-        return modalService.basicModal('--.business.edit.address.modal.title', 'address-form-ctrl', {
-          dto: address,
-          addName: false
-        }, function(close, setLoading) {
-          console.log('je suis une craaaacasse');
-          console.log(address);
-          return businessService.editAddress($scope.business.id, address, function(data) {
-            $scope.business.address = data;
-            $scope.googleMapParams.setAddress(data);
-            return close();
-          }, function() {
-            return setLoading(false);
+        if ($scope.business.businessStatus === 'PUBLISHED') {
+          return $flash.success($filter('translateText')('--.business.error.editAddress.wrongStatus'));
+        } else {
+          address = angular.copy($scope.business.address);
+          if (!(address != null)) {
+            address = {};
+          }
+          return modalService.basicModal('--.business.edit.address.modal.title', 'address-form-ctrl', {
+            dto: address,
+            addName: false
+          }, function(close, setLoading) {
+            console.log('je suis une craaaacasse');
+            console.log(address);
+            return businessService.editAddress($scope.business.id, address, function(data) {
+              $scope.business.address = data;
+              $scope.googleMapParams.setAddress(data);
+              return close();
+            }, function() {
+              return setLoading(false);
+            });
           });
-        });
+        }
       };
       $scope.categoryLineParams = {
         categories: $scope.business.categories
@@ -1732,11 +1736,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         $scope.$broadcast('RELOAD_PUBLICATION');
       }
       $scope.displaySchedule = function() {
-        var schedulesPart, _i, _len, _ref;
-        _ref = $scope.business.schedules;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          schedulesPart = _ref[_i];
-          if (schedulesPart.length > 0) {
+        var key;
+        for (key in $scope.business.schedules) {
+          if ($scope.business.schedules[key].length > 0) {
             return true;
           }
         }

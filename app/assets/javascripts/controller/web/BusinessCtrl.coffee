@@ -152,22 +152,25 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
 
         #edit address
         $scope.editAddress = ->
-            address = angular.copy($scope.business.address)
-            if !address?
-                address={}
-            modalService.basicModal '--.business.edit.address.modal.title', 'address-form-ctrl', {
-                dto: address
-                addName: false
-            }, (close, setLoading) ->
-                #scope.business
-                console.log 'je suis une craaaacasse'
-                console.log address
-                businessService.editAddress $scope.business.id, address, (data) ->
-                    $scope.business.address = data
-                    $scope.googleMapParams.setAddress data
-                    close()
-                , ->
-                    setLoading false
+            if $scope.business.businessStatus == 'PUBLISHED'
+                $flash.success $filter('translateText')('--.business.error.editAddress.wrongStatus')
+            else
+                address = angular.copy($scope.business.address)
+                if !address?
+                    address={}
+                modalService.basicModal '--.business.edit.address.modal.title', 'address-form-ctrl', {
+                    dto: address
+                    addName: false
+                }, (close, setLoading) ->
+                    #scope.business
+                    console.log 'je suis une craaaacasse'
+                    console.log address
+                    businessService.editAddress $scope.business.id, address, (data) ->
+                        $scope.business.address = data
+                        $scope.googleMapParams.setAddress data
+                        close()
+                    , ->
+                        setLoading false
 
         $scope.categoryLineParams = categories: $scope.business.categories
 
@@ -264,8 +267,8 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
             $scope.$broadcast 'RELOAD_PUBLICATION'
 
         $scope.displaySchedule = ->
-            for schedulesPart in $scope.business.schedules
-                if schedulesPart.length > 0
+            for key of $scope.business.schedules
+                if $scope.business.schedules[key].length > 0
                     return true
             return false
 

@@ -98,9 +98,10 @@ public class FacebookRequest {
             account.setBusiness(business);
         }
         business.setName(pageData.getName());
+        business.setWebsite(pageData.getWebsite());
         business.setDescription((pageData.getDescription() != null) ? pageData.getDescription() : pageData.getAbout());
         business.setPhone(pageData.getPhone());
-        if (pageData.getEmails().size() > 0) {
+        if (pageData.getEmails()!=null && pageData.getEmails().size() > 0) {
             business.setEmail(pageData.getEmails().get(0));
         }
         //social network
@@ -152,15 +153,15 @@ public class FacebookRequest {
         Logger.info("T5 : " + (new Date().getTime() - t));
 
         //gallery
-        F.Promise.promise(() -> {
+//        F.Promise.promise(() -> {
             createGallery(account, pageData.getAlbums(), business);
 
             Logger.info("T6 : " + (new Date().getTime() - t));
 
             businessService.saveOrUpdate(business);
 
-            return null;
-        });
+//            return null;
+//        });
 
         Logger.info("T7 : " + (new Date().getTime() - t));
 
