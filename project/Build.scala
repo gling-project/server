@@ -52,7 +52,9 @@ object ApplicationBuild extends Build {
     "org.mongojack" % "mongojack" % "2.1.0",
     "org.jsoup" % "jsoup" % "1.8.3",
     "net.coobird" % "thumbnailator" % "0.4.8",
-    "net.imagej" % "ij" % "1.50a"
+    "net.imagej" % "ij" % "1.50a",
+    "com.google.code.maven-play-plugin.com.github.yeungda.jcoffeescript" % "jcoffeescript" % "1.0",
+    "de.neuland-bfi" % "jade4j" % "0.4.0"
   )
 
 //  def customLessEntryPoints(base: File): PathFinder = (
