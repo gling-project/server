@@ -62,7 +62,6 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
             $scope.importBusinessLoading = false
             $flash.success 'le commerce a bien été importé'
             $scope.refresh()
-            return
         ), ->
             #callback failed
             $scope.importBusinessLoading = false
