@@ -48,7 +48,7 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
 
     @Override
     public boolean controlAuthenticationKey(String authenticationKey, Account account) {
-        return !(account.getAuthenticationKey().length() < 40) && account.getAuthenticationKey() != null && new StrongPasswordEncryptor().checkPassword(authenticationKey, account.getAuthenticationKey());
+        return account.getAuthenticationKey()!=null &&  !(account.getAuthenticationKey().length() < 40) && new StrongPasswordEncryptor().checkPassword(authenticationKey, account.getAuthenticationKey());
     }
 
     @Override
