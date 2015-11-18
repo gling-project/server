@@ -57,6 +57,7 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
     $scope.importBusinessStart = ->
         $scope.importBusinessLoading = true
         urlEncoded=encodeURIComponent $scope.importBusinessInput
+        console.log urlEncoded
         superAdminService.importBusiness urlEncoded, (->
             #callback success
             $scope.importBusinessLoading = false

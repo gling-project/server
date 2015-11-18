@@ -76,7 +76,7 @@ public class FacebookRequest {
         }
     }
 
-    public Business createBusinessFromFacebook(Account account, String facebookUrl,boolean linkToBusiness) {
+    public Business createBusinessFromFacebook(Account account, String facebookUrl, boolean linkToBusiness) {
 
         if (facebookUrl.contains("/pages/")) {
             //this is not an official page
@@ -93,7 +93,7 @@ public class FacebookRequest {
 
         //build business
         Business business = new Business();
-        if(linkToBusiness) {
+        if (linkToBusiness) {
             business.setAccount(account);
             account.setBusiness(business);
         }
@@ -101,7 +101,7 @@ public class FacebookRequest {
         business.setWebsite(pageData.getWebsite());
         business.setDescription((pageData.getDescription() != null) ? pageData.getDescription() : pageData.getAbout());
         business.setPhone(pageData.getPhone());
-        if (pageData.getEmails()!=null && pageData.getEmails().size() > 0) {
+        if (pageData.getEmails() != null && pageData.getEmails().size() > 0) {
             business.setEmail(pageData.getEmails().get(0));
         }
         //social network
@@ -114,23 +114,26 @@ public class FacebookRequest {
         business.setBusinessCategories(convertFacebookCategoryToBusinessCategory(pageData.getCategory()));
         //add status
         //TODO create new status ?
-        if(linkToBusiness){
+        if (linkToBusiness) {
             business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
-        }
-        else{
+        } else {
             business.setBusinessStatus(BusinessStatusEnum.WAITING_CONFIRMATION);
         }
 
         //add address
-        Address address = new Address(pageData.getLocation().getStreet(), pageData.getLocation().getZip(), pageData.getLocation().getCity(), pageData.getLocation().getCountry());
+        if(pageData.getLocation()!=null) {
+            Address address = new Address(pageData.getLocation().getStreet(), pageData.getLocation().getZip(), pageData.getLocation().getCity(), pageData.getLocation().getCountry());
 
-        try {
-            localizationService.validAddress(address);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
+            try {
+                localizationService.validAddress(address);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new MyRuntimeException(e.getMessage());
+            }
+            business.setAddress(address);
         }
-        business.setAddress(address);
+
+
 
         Logger.info("T2 : " + (new Date().getTime() - t));
 
@@ -154,11 +157,11 @@ public class FacebookRequest {
 
         //gallery
 //        F.Promise.promise(() -> {
-            createGallery(account, pageData.getAlbums(), business);
+        createGallery(account, pageData.getAlbums(), business);
 
-            Logger.info("T6 : " + (new Date().getTime() - t));
+        Logger.info("T6 : " + (new Date().getTime() - t));
 
-            businessService.saveOrUpdate(business);
+        businessService.saveOrUpdate(business);
 
 //            return null;
 //        });
@@ -289,55 +292,59 @@ public class FacebookRequest {
 
         Logger.info("---- T1 : " + (new Date().getTime() - t));
 
-        for (FacebookPageDataDTO.Photo.Data data : albums.getData()) {
+        if (albums.getData() != null) {
+            for (FacebookPageDataDTO.Photo.Data data : albums.getData()) {
 
-            Logger.info("---- ---- T2 : " + (new Date().getTime() - t));
-
-            //load picture
-            FacebookPhotoDTO facebookPhoto = getPhoto(data.getId());
-
-            Logger.info("---- ---- T2.1 : " + (new Date().getTime() - t));
-
-            for (FacebookPhotoDTO.Photo.Data data1 : facebookPhoto.getPhotos().getData()) {
-
-                Logger.info("---- ---- ---- T3 : " + (new Date().getTime() - t));
+                Logger.info("---- ---- T2 : " + (new Date().getTime() - t));
 
                 //load picture
-                FacebookImageDTO facebookImageDTO = getImage(data1.getId());
+                FacebookPhotoDTO facebookPhoto = getPhoto(data.getId());
 
-                Logger.info("---- ---- ---- T3.1 : " + (new Date().getTime() - t));
+                Logger.info("---- ---- T2.1 : " + (new Date().getTime() - t));
 
-                FacebookImageDTO.Image selectedImage = null;
+                if (facebookPhoto.getPhotos() != null) {
+                    for (FacebookPhotoDTO.Photo.Data data1 : facebookPhoto.getPhotos().getData()) {
 
-                //select best picture
-                for (FacebookImageDTO.Image image : facebookImageDTO.getImages()) {
-                    if (image.getWidth() > width) {
-                        if (selectedImage == null || (selectedImage.getWidth() > width && image.getWidth() < selectedImage.getWidth())) {
-                            selectedImage = image;
+                        Logger.info("---- ---- ---- T3 : " + (new Date().getTime() - t));
+
+                        //load picture
+                        FacebookImageDTO facebookImageDTO = getImage(data1.getId());
+
+                        Logger.info("---- ---- ---- T3.1 : " + (new Date().getTime() - t));
+
+                        FacebookImageDTO.Image selectedImage = null;
+
+                        //select best picture
+                        for (FacebookImageDTO.Image image : facebookImageDTO.getImages()) {
+                            if (image.getWidth() > width) {
+                                if (selectedImage == null || (selectedImage.getWidth() > width && image.getWidth() < selectedImage.getWidth())) {
+                                    selectedImage = image;
+                                }
+                            } else if (selectedImage == null) {
+                                selectedImage = image;
+                            } else if (image.getHeight() > selectedImage.getHeight()) {
+                                selectedImage = image;
+                            }
                         }
-                    } else if (selectedImage == null) {
-                        selectedImage = image;
-                    } else if (image.getHeight() > selectedImage.getHeight()) {
-                        selectedImage = image;
+
+                        String name = selectedImage.getSource().split("\\?")[0];
+
+                        Logger.info("---- ---- ---- T3.2 : " + (new Date().getTime() - t));
+                        File file = callImage(name, selectedImage.getSource());
+
+                        Logger.info("---- ---- ---- T3.3 : " + (new Date().getTime() - t));
+
+                        StoredFile storedFile = fileService.uploadWithSize(file, name, width, null, account, true);
+                        storedFile.setBusinessGalleryPicture(business);
+                        business.getGalleryPictures().add(storedFile);
+
+
+                        Logger.info("---- ---- ---- T3.4 : " + (new Date().getTime() - t));
+
+                        if (business.getGalleryPictures().size() >= MAX_GALLERY_IMAGE) {
+                            return;
+                        }
                     }
-                }
-
-                String name = selectedImage.getSource().split("\\?")[0];
-
-                Logger.info("---- ---- ---- T3.2 : " + (new Date().getTime() - t));
-                File file = callImage(name, selectedImage.getSource());
-
-                Logger.info("---- ---- ---- T3.3 : " + (new Date().getTime() - t));
-
-                StoredFile storedFile = fileService.uploadWithSize(file, name, width, null, account, true);
-                storedFile.setBusinessGalleryPicture(business);
-                business.getGalleryPictures().add(storedFile);
-
-
-                Logger.info("---- ---- ---- T3.4 : " + (new Date().getTime() - t));
-
-                if (business.getGalleryPictures().size() >= MAX_GALLERY_IMAGE) {
-                    return;
                 }
             }
         }
