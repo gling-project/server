@@ -91,56 +91,71 @@ public class LoginRestController extends AbstractRestController {
         if (facebookCredential != null) {
             account = facebookCredential.getAccount();
         } else {
+
             //if the account doesn't exist, create one
             facebookCredential = new FacebookCredential();
             facebookCredential.setUserId(facebookTokenAccessControlDTO.getId());
 
-            //test email : if the email is null, impossible to create an account
-            if (facebookTokenAccessControlDTO.getEmail() == null) {
-                throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NO_EMAIL);
-            }
-
-            //Control email
-            if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
+            //the user is logged ?
+            if (securityController.isAuthenticated(ctx())) {
                 //fusion !
-                account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
+                account = securityController.getCurrentUser();
                 account.setFacebookCredential(facebookCredential);
                 facebookCredential.setAccount(account);
 
-                facebookCredentialService.saveOrUpdate(facebookCredential);
+                //save
+                accountService.saveOrUpdate(account);
+
             } else {
-                //create new account
-                account = new Account();
-                account.setEmail(facebookTokenAccessControlDTO.getEmail());
-                account.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
-                account.setLastname(facebookTokenAccessControlDTO.getLast_name());
-                account.setFacebookCredential(facebookCredential);
-                account.setGender(GenderEnum.getByText(facebookTokenAccessControlDTO.getGender()));
-                account.setRole(RoleEnum.CUSTOMER);
-                facebookCredential.setAccount(account);
 
-                //define a language
-                if (facebookTokenAccessControlDTO.getLocale() != null) {
-                    for (Lang lang : Lang.availables()) {
-                        if (facebookTokenAccessControlDTO.getLocale().equals(lang.code())) {
-                            account.setLang(lang);
-                            break;
-                        }
-                    }
+
+                //test email : if the email is null, impossible to create an account
+                if (facebookTokenAccessControlDTO.getEmail() == null) {
+                    throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NO_EMAIL);
+                }
+
+                //Control email
+                if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
+                    //fusion !
+                    account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
+                    account.setFacebookCredential(facebookCredential);
+                    facebookCredential.setAccount(account);
+
+                    facebookCredentialService.saveOrUpdate(facebookCredential);
                 } else {
-                    account.setLang(Lang.forCode("fr"));
+                    //create new account
+                    account = new Account();
+                    account.setEmail(facebookTokenAccessControlDTO.getEmail());
+                    account.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
+                    account.setLastname(facebookTokenAccessControlDTO.getLast_name());
+                    account.setFacebookCredential(facebookCredential);
+                    account.setGender(GenderEnum.getByText(facebookTokenAccessControlDTO.getGender()));
+                    account.setRole(RoleEnum.CUSTOMER);
+                    facebookCredential.setAccount(account);
+
+                    //define a language
+                    if (facebookTokenAccessControlDTO.getLocale() != null) {
+                        for (Lang lang : Lang.availables()) {
+                            if (facebookTokenAccessControlDTO.getLocale().equals(lang.code())) {
+                                account.setLang(lang);
+                                break;
+                            }
+                        }
+                    } else {
+                        account.setLang(Lang.forCode("fr"));
+                    }
+
+                    //change lang interface
+                    if (account.getLang() != null) {
+                        account.setLang(lang());
+                    }
                 }
 
-                //change lang interface
-                if (account.getLang() != null) {
-                    account.setLang(lang());
-                }
+                //send email
+                emailController.sendApplicationRegistrationCustomerEmail(account);
+
+                accountService.saveOrUpdate(account);
             }
-
-            //send email
-            emailController.sendApplicationRegistrationCustomerEmail(account);
-
-            accountService.saveOrUpdate(account);
 
         }
 
@@ -172,7 +187,7 @@ public class LoginRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result createBusiness() {
 
-        if(securityController.getCurrentUser().getBusiness()!=null){
+        if (securityController.getCurrentUser().getBusiness() != null) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
         }
 
@@ -194,13 +209,13 @@ public class LoginRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result createBusinessFromFacebook(String facebookUrl) {
 
-        if(securityController.getCurrentUser().getBusiness()!=null){
+        if (securityController.getCurrentUser().getBusiness() != null) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
         }
 
         Account account = securityController.getCurrentUser();
 
-        facebookRequest.createBusinessFromFacebook(account, facebookUrl,true);
+        facebookRequest.createBusinessFromFacebook(account, facebookUrl, true);
 
         account.setRole(RoleEnum.BUSINESS);
         account.setType(AccountTypeEnum.BUSINESS);
@@ -332,7 +347,9 @@ public class LoginRestController extends AbstractRestController {
         }
 
         Account currentUser = securityController.getCurrentUser();
-        currentUser.setFacebookCredential(new FacebookCredential(currentUser, user_id));
+        facebookCredential = dozerService.map(facebookTokenAccessControlDTO, FacebookCredential.class);
+        facebookCredential.setAccount(currentUser);
+        currentUser.setFacebookCredential(facebookCredential);
 
         accountService.saveOrUpdate(currentUser);
 
@@ -394,14 +411,7 @@ public class LoginRestController extends AbstractRestController {
 
         sessionService.saveOrUpdate(new Session(account, securityController.getSource(ctx())));
 
-        //build success dto
-        MyselfDTO myselfDTO = dozerService.map(account, MyselfDTO.class);
-        myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
-        myselfDTO.setLoginAccount(account.getLoginCredential() != null);
-        myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
-        if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
-            myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
-        }
+        MyselfDTO myselfDTO = accountToMyself(account);
 
 
         //storage

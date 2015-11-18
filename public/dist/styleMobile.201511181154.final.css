@@ -2027,23 +2027,17 @@ ul.messenger .messenger-spinner {
 .facebook-login-btn-container .facebook-login-btn > span {
   margin-left: 4px;
 }
-.profile-page {
+.profile-page .profile-social-network-table {
+  margin: 15px 15px 5px;
+  width: 100%;
+}
+.profile-page .profile-social-network-table th {
   text-align: center;
+  padding-bottom: 5px;
 }
-.profile-page .panel {
-  text-align: left;
-  min-width: 600px;
-  margin: 10px auto;
-}
-.profile-page .panel-personal-information {
-  width: 60%;
-}
-.profile-page .main-panel {
-  display: inline-block;
-  vertical-align: top;
-}
-.profile-page .category-box {
-  margin: 5px;
+.profile-page .profile-social-network-table tr td:first-child {
+  text-align: center;
+  width: 100px;
 }
 .business-page-follow span {
   font-size: 14px;

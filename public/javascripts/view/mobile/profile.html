@@ -1,6 +1,6 @@
 <mobile-title-ctrl title="'--.page.profile.title'" display-menu="true"></mobile-title-ctrl>
 <!-- body -->
-<div class='app-body'>
+<div class='app-body profile-page'>
     <div class='app-content'>
 
         <div class="body-mask"
@@ -29,50 +29,61 @@
 
                     <!-- personal information -->
                     <div ng-show="activeTab == 'personal'">
-                        <div ng-show="model.myself.facebookAccount===true">
-                            {{'--.profile.connectedByFacebook' | translateText}}
-                        </div>
-                        <div ng-hide="model.myself.facebookAccount===true">
 
-                            <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+                        <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
-                            <!-- edit mode -->
-                            <button class="btn gling-button-dark glyphicon glyphicon-edit"
-                                    ng-show="accountParam.disabled"
-                                    ng-click="accountParam.disabled = false">
-                                {{'--.generic.edit' |translateText}}
-                            </button>
+                        <!-- edit mode -->
+                        <button class="btn gling-button-dark glyphicon glyphicon-edit"
+                                ng-show="accountParam.disabled"
+                                ng-click="accountParam.disabled = false">
+                            {{'--.generic.edit' |translateText}}
+                        </button>
 
-                            <!-- save -->
-                            <button class="btn gling-button-dark"
-                                    ng-hide="accountParam.disabled"
-                                    ng-click="accountSave()">
-                                {{'--.generic.save' | translateText}}
-                            </button>
+                        <!-- save -->
+                        <button class="btn gling-button-dark"
+                                ng-hide="accountParam.disabled"
+                                ng-click="accountSave()">
+                            {{'--.generic.save' | translateText}}
+                        </button>
 
-                            <!-- cancel -->
-                            <button class="btn gling-button-dark"
-                                    ng-hide="accountParam.disabled"
-                                    ng-click="accountCancel()">
-                                {{'--.generic.cancel' | translateText}}
-                            </button>
+                        <!-- cancel -->
+                        <button class="btn gling-button-dark"
+                                ng-hide="accountParam.disabled"
+                                ng-click="accountCancel()">
+                            {{'--.generic.cancel' | translateText}}
+                        </button>
 
-                            <!-- change password -->
-                            <button
-                                    ng-show="account.facebookAccount!==true"
-                                    ng-click="editPassword()"
-                                    type="button"
-                                    class="btn gling-button-dark">
-                                {{'--.changePasswordModal.title' | translateText}}
-                            </button>
+                        <!-- change password -->
+                        <button
+                                ng-show="model.myself.loginAccount===true"
+                                ng-click="editPassword()"
+                                type="button"
+                                class="btn gling-button-dark">
+                            {{'--.changePasswordModal.title' | translateText}}
+                        </button>
 
-                            <!-- connect facebook -->
-                            <button ng-click="fb_login();"
-                                    class="facebook-login-btn btn gling-button-dark">
-                                <img src="/assets/images/facebook/login_icon.png"/>
-                                <span>{{'--.profile.facebook.btn' |translateText}}</span>
-                            </button>
-                        </div>
+                        <!-- associate social network to account -->
+                        <table class="profile-social-network-table">
+                            <tr>
+                                <th colspan="2">Lien avec vos réseaux sociaux</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="assets/images/social_network/facebook.png"/>
+                                </td>
+                                <td>
+                                    <div class="link"
+                                         ng-click="fb_login();"
+                                         ng-hide="model.myself.facebookAccount===true">
+                                        {{'--.profile.facebook.btn' |translateText}}
+                                    </div>
+                                    <div ng-show="model.myself.facebookAccount===true">
+                                        Lié au compte facebook {{model.myself.facebookCredential.firstname}}
+                                        {{model.myself.facebookCredential.lastname}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
 
                     </div>
 
@@ -114,6 +125,7 @@
                         <div ng-repeat="interest in model.myself.customerInterests"
                              ng-show="interestParam.disabled"
                              class="category-box">
+                            <span class="{{'gling-icon gling-icon-' + interest.name}}"></span>
                             {{interest.translationName |translateText}}
                         </div>
 

@@ -1,7 +1,6 @@
 package be.lynk.server.dto;
 
 
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -10,11 +9,13 @@ import java.util.Set;
 /**
  * Created by florian on 11/11/14.
  */
-public class MyselfDTO extends AccountDTO  {
+public class MyselfDTO extends AccountDTO {
 
     private Boolean loginAccount;
 
     private Boolean facebookAccount;
+
+    private FacebookCredentialDTO facebookCredential;
 
     private String authenticationKey;
 
@@ -25,6 +26,14 @@ public class MyselfDTO extends AccountDTO  {
     private Set<CustomerInterestDTO> customerInterests = new HashSet<>();
 
     public MyselfDTO() {
+    }
+
+    public FacebookCredentialDTO getFacebookCredential() {
+        return facebookCredential;
+    }
+
+    public void setFacebookCredential(FacebookCredentialDTO facebookCredential) {
+        this.facebookCredential = facebookCredential;
     }
 
     public Set<CustomerInterestDTO> getCustomerInterests() {

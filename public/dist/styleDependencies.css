@@ -2771,6 +2771,18 @@ ul.messenger .messenger-spinner {
 .profile-page .category-box {
   margin: 5px;
 }
+.profile-page .profile-social-network-table {
+  margin: 15px 15px 5px;
+  width: 100%;
+}
+.profile-page .profile-social-network-table th {
+  text-align: center;
+  padding-bottom: 5px;
+}
+.profile-page .profile-social-network-table tr td:first-child {
+  text-align: center;
+  width: 100px;
+}
 .progressBar {
   height: 4px;
   position: fixed;

@@ -1,22 +1,18 @@
 package be.lynk.server.controller.technical;
 
 import be.lynk.server.controller.technical.security.CommonSecurityController;
-import be.lynk.server.dto.AbstractPublicationDTO;
-import be.lynk.server.dto.BusinessToDisplayDTO;
-import be.lynk.server.dto.ListDTO;
-import be.lynk.server.dto.StoredFileDTO;
+import be.lynk.server.dto.*;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.FollowLink;
+import be.lynk.server.model.entities.Session;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.module.mongo.MongoDBOperator;
-import be.lynk.server.service.DozerService;
-import be.lynk.server.service.FollowLinkService;
-import be.lynk.server.service.LocalizationService;
-import be.lynk.server.service.TranslationService;
+import be.lynk.server.service.*;
+import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -51,6 +47,8 @@ public abstract class AbstractController extends Controller {
     protected FollowLinkService        followLinkService;
     @Autowired
     private   LocalizationService      localizationService;
+    @Autowired
+    protected BusinessService          businessService;
 
     protected void initialization() {
         initialization(ResultDTO.class, false);
@@ -286,6 +284,21 @@ public abstract class AbstractController extends Controller {
         Collections.sort(l);
 
         return l;//
+    }
+
+    protected MyselfDTO accountToMyself(Account account) {
+
+        //build success dto
+        MyselfDTO myselfDTO = dozerService.map(account, MyselfDTO.class);
+        myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
+        myselfDTO.setLoginAccount(account.getLoginCredential() != null);
+        myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
+        if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
+            myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
+        }
+
+        return myselfDTO;
+
     }
 
 }

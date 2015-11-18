@@ -1394,7 +1394,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.personalSave = function() {
       $scope.accountParam.disabled = true;
       return accountService.editAccount($scope.accountParam.dto, function() {
-        if ($scope.oldLang !== $scope.accountParam.dto.lang) {
+        if ($scope.oldLang.code !== $scope.accountParam.dto.lang.code) {
           return $window.location.reload();
         }
       });
@@ -1426,10 +1426,11 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     };
     $scope.fb_login = function() {
       $scope.loading = true;
-      return facebookService.login(function(data) {
+      return facebookService.linkToAccount(null, function(data) {
         $scope.facebookSuccess(data);
         return $scope.loading = false;
       }, function(data) {
+        $scope.loading = false;
         return failed(data);
       });
     };

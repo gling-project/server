@@ -108,16 +108,16 @@ public class FileServiceImpl implements FileService {
                         sizeyPicture = originalImage.getHeight();
 
                 //1) sizeX and sizeY are the minimal size :
-                if ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey)) {
-                    if (!continueIfTooLittle) {
-                        if (sizey == null) {
-                            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
-                        } else if (sizex == null) {
-                            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
+                if (!continueIfTooLittle && ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey))) {
 
-                        } else {
-                            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
-                        }
+                    //reject because the picrture is too little
+                    if (sizey == null) {
+                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
+                    } else if (sizex == null) {
+                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
+
+                    } else {
+                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
                     }
                 } else if (sizex != null && sizey != null) {
 

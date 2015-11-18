@@ -224,7 +224,7 @@ myApp.service("accountService", function ($flash, $http,translationService) {
             'method': "PUT",
             'url': "/rest/customer/interest/" + self.getMyself().id,
             'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
+            'data': {list:dto}
         }).success(function (data, status) {
 
             self.getMyself().customerInterests = data.list;

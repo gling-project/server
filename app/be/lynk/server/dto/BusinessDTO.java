@@ -29,7 +29,7 @@ public class BusinessDTO extends DTO  {
     @Pattern(regexp = ValidationRegex.PHONE, message = "--.validation.dto.phone")
     private String phone;
 
-    @Pattern(regexp = ValidationRegex.EMAIL, message = "--.validation.dto.email")
+//    @Pattern(regexp = ValidationRegex.EMAIL, message = "--.validation.dto.email")
     private String email;
 
     @Pattern(regexp = ValidationRegex.URL_OR_NULL, message = "--.validation.dto.url")

@@ -10,12 +10,18 @@ import javax.persistence.*;
 @Entity
 public class FacebookCredential extends AbstractEntity {
 
-    @OneToOne(optional = false,cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
+    @OneToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Account account;
 
     @Basic(optional = false)
     @Column(unique = true)
     private String userId;
+
+    @Basic
+    private String firstname;
+
+    @Basic
+    private String lastname;
 
     public FacebookCredential() {
     }
@@ -23,6 +29,22 @@ public class FacebookCredential extends AbstractEntity {
     public FacebookCredential(Account account, String userId) {
         this.account = account;
         this.userId = userId;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Account getAccount() {

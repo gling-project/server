@@ -20,7 +20,7 @@ myApp.controller 'ProfileCtrl', ($scope, modalService, accountService, $rootScop
     $scope.personalSave = ->
         $scope.accountParam.disabled = true
         accountService.editAccount $scope.accountParam.dto, ->
-            if $scope.oldLang != $scope.accountParam.dto.lang
+            if $scope.oldLang.code != $scope.accountParam.dto.lang.code
                 $window.location.reload()
 
     $scope.personalCancel = ->
@@ -51,10 +51,11 @@ myApp.controller 'ProfileCtrl', ($scope, modalService, accountService, $rootScop
     #link to facebook
     $scope.fb_login = ->
         $scope.loading = true
-        facebookService.login (data) ->
+        facebookService.linkToAccount null,(data) ->
             $scope.facebookSuccess data
             $scope.loading = false
         , (data) ->
+            $scope.loading = false
             failed data
 
     #initialization

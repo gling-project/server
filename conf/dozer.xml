@@ -90,5 +90,23 @@
         </field>
     </mapping>
 
+    <!-- FacebookTokenAccessControlDTO -> FacebookCredential -->
+    <mapping>
+        <class-a>be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO</class-a>
+        <class-b>be.lynk.server.model.entities.FacebookCredential</class-b>
+        <field>
+            <a>id</a>
+            <b>userId</b>
+        </field>
+        <field>
+            <a>first_name</a>
+            <b>firstname</b>
+        </field>
+        <field>
+            <a>last_name</a>
+            <b>lastname</b>
+        </field>
+    </mapping>
+
 
 </mappings>

@@ -26,7 +26,7 @@ import static com.mongodb.client.model.Sorts.ascending;
 @Service
 public class MongoSearchServiceImpl implements MongoSearchService {
 
-    private final static Long[] ACCOUNT_ID_EXCLUDE_LIST = {1L, 2L, 3L, 51L, 90L,104L, 128L};
+    private final static Long[] ACCOUNT_ID_EXCLUDE_LIST = {1L, 2L, 3L, 51L, 90L,104L, 128L,229L};
 
 
     private final static String SEARCH_BY_DEFAULT  = "be.lynk.server.controller.rest.SearchRestController.getByDefault";

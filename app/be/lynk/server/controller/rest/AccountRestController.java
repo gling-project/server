@@ -58,9 +58,9 @@ public class
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result myself() {
 
-        MyselfDTO map = dozerService.map(securityController.getCurrentUser(), MyselfDTO.class);
+        MyselfDTO myselfDTO = accountToMyself(securityController.getCurrentUser());
 
-        return ok(map);
+        return ok(myselfDTO);
     }
 
 
@@ -97,7 +97,7 @@ public class
         //save
         accountService.saveOrUpdate(account);
 
-        return ok(dozerService.map(account, MyselfDTO.class));
+        return ok(accountToMyself(account));
     }
 
     @Transactional

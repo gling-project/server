@@ -1,55 +1,70 @@
 <div class="profile-page">
 
 
+    <!-- data panel -->
     <div class="panel panel-gling main-panel panel-personal-information">
         <div class="panel-heading">{{'--.customer.profile.personalInformation' | translateText}}</div>
         <div class="panel-body">
-            <div ng-show="model.myself.facebookAccount===true">
-                {{'--.profile.connectedByFacebook' | translateText}}
-            </div>
-            <div ng-hide="model.myself.facebookAccount===true">
 
-                <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+            <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
 
-                <button class="btn gling-button-dark "
-                        id="profile-personal-btn-edit"
-                        ng-show="accountParam.disabled"
-                        ng-click="personalEdit()">{{'--.generic.edit' |translateText}}
-                </button>
-                <button class="btn gling-button-dark"
-                        id="profile-personal-btn-save"
-                        ng-hide="accountParam.disabled"
-                        ng-click="personalSave()">
-                    {{'--.generic.save' | translateText}}
-                </button>
-                <button
-                        id="profile-personal-btn-cancel"
-                        class="btn gling-button-dark"
-                        ng-hide="accountParam.disabled" ng-click="personalCancel()">
-                    {{'--.generic.cancel' | translateText}}
-                </button>
+            <button class="btn gling-button-dark "
+                    id="profile-personal-btn-edit"
+                    ng-show="accountParam.disabled"
+                    ng-click="personalEdit()">{{'--.generic.edit' |translateText}}
+            </button>
+            <button class="btn gling-button-dark"
+                    id="profile-personal-btn-save"
+                    ng-hide="accountParam.disabled"
+                    ng-click="personalSave()">
+                {{'--.generic.save' | translateText}}
+            </button>
+            <button
+                    id="profile-personal-btn-cancel"
+                    class="btn gling-button-dark"
+                    ng-hide="accountParam.disabled" ng-click="personalCancel()">
+                {{'--.generic.cancel' | translateText}}
+            </button>
 
-                <div class="col-md-3"
-                     ng-show="model.myself.loginAccount==true"></div>
+            <div class="col-md-3"
+                 ng-show="model.myself.loginAccount==true"></div>
 
-                <button type="button"
-                        id="profile-personal-btn-edit-password"
-                        class="btn gling-button-dark"
-                        ng-click="editPassword()">
-                    {{'--.changePasswordModal.title' | translateText}}
-                </button>
+            <!-- edit password -->
+            <button type="button"
+                    ng-show="model.myself.loginAccount===true"
+                    id="profile-personal-btn-edit-password"
+                    class="btn gling-button-dark"
+                    ng-click="editPassword()">
+                {{'--.changePasswordModal.title' | translateText}}
+            </button>
 
-                <!-- connect facebook -->
-                <button ng-click="fb_login();"
-                        class="facebook-login-btn btn gling-button-dark">
-                    <img src="/assets/images/facebook/login_icon.png"/>
-                    <span>{{'--.profile.facebook.btn' |translateText}}</span>
-                </button>
+            <!-- associate social network to account -->
+            <table class="profile-social-network-table">
+                <tr>
+                    <th colspan="2">Lien avec vos réseaux sociaux</th>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="assets/images/social_network/facebook.png"/>
+                    </td>
+                    <td>
+                        <div class="link"
+                             ng-click="fb_login();"
+                             ng-hide="model.myself.facebookAccount===true">
+                            {{'--.profile.facebook.btn' |translateText}}
+                        </div>
+                        <div ng-show="model.myself.facebookAccount===true">
+                            Lié au compte facebook {{model.myself.facebookCredential.firstname}}
+                            {{model.myself.facebookCredential.lastname}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
-            </div>
         </div>
     </div>
 
+    <!-- address panel -->
     <div class="panel panel-gling main-panel">
         <div class="panel-heading">{{'--.customer.profile.myAddresses' | translateText}}</div>
         <div class="panel-body">
@@ -105,6 +120,7 @@
         </div>
     </div>
 
+    <!-- interest panel -->
     <div class="panel panel-gling main-panel">
         <div class="panel-heading">{{'--.customer.profile.interest' | translateText}}</div>
         <div class="panel-body category-list">

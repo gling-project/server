@@ -1,5 +1,4 @@
-myApp.service 'facebookService', ($http, accountService, $locale, languageService, constantService,$flash) ->
-
+myApp.service 'facebookService', ($http, accountService, $locale, languageService, constantService, $flash) ->
     @facebookAppId
     @facebookAuthorization = 'public_profile,email,publish_actions'
     isConnected = false
@@ -35,7 +34,6 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
 
     #try to log the server
     @loginToServer = (callbackSuccess, callbackError) ->
-
         access_token = authResponse.accessToken
         user_id = authResponse.userID
 
@@ -43,46 +41,66 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
             'method': 'GET'
             'url': '/rest/login/facebook/' + access_token + '/' + user_id
             'headers': 'Content-Type:application/json;charset=utf-8').success((data) ->
-                if data? != ''
-                    if callbackSuccess?
-                        callbackSuccess data
-            ).error (data, status) ->
-                $flash.error data.message
-                if callbackError?
-                    callbackError data, status
+            if data? != ''
+                if callbackSuccess?
+                    callbackSuccess data
+        ).error (data, status) ->
+            $flash.error data.message
+            if callbackError?
+                callbackError data, status
 
     @loginToServerSimple = (accessToken, callbackSuccess, callbackError) ->
         $http(
             'method': 'GET'
             'url': '/rest/login/facebook/' + accessToken + '/null'
             'headers': 'Content-Type:application/json;charset=utf-8').success((data) ->
-                if data? != ''
-                    if callbackSuccess?
-                        callbackSuccess data
-            ).error (data, status) ->
-                $flash.error data.message
-                if callbackError?
-                    callbackError data, status
-
-    @linkToAccount = (accessToken, callbackSuccess, callbackError) ->
-
-        if !accessToken?
-            accessToken = authResponse.accessToken
-
-        $http(
-            'method': 'GET'
-            'url': '/rest/facebook/link/' + accessToken + '/null'
-            'headers': 'Content-Type:application/json;charset=utf-8')
-        .success (data) ->
             if data? != ''
                 if callbackSuccess?
                     callbackSuccess data
-        .error (data, status) ->
+        ).error (data, status) ->
             $flash.error data.message
             if callbackError?
                 callbackError data, status
 
+    @linkToAccount = (accessToken, callbackSuccess, callbackError) ->
+        linkFct = (accessTokenToLink) ->
+            $http(
+                'method': 'GET'
+                'url': '/rest/facebook/link/' + accessTokenToLink + '/null'
+                'headers': 'Content-Type:application/json;charset=utf-8')
+            .success (data) ->
+                if data? != ''
+                    if callbackSuccess?
+                        callbackSuccess data
+            .error (data, status) ->
+                $flash.error data.message
+                if callbackError?
+                    callbackError data, status
 
+        if accessToken?
+            authResponse =
+                accessToken:accessToken
+            isConnected = true
+
+            #connection
+            linkFct authResponse.accessToken
+        else
+            #is facebook is connected, call the server with authResponse
+            if isConnected
+                linkFct authResponse.accessToken
+            else
+                # else, log to facebook
+                FB.login (response) ->
+                    if response.status == 'connected'
+
+                        #... and log to server
+                        authResponse = response.authResponse
+                        isConnected = true
+                        #... and log
+                        linkFct authResponse.accessToken
+                    else
+                        if callbackError?
+                            callbackError()
 
 
     #
@@ -92,22 +110,21 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
     @login = (successCallback, callbackError) ->
 
         #is facebook is connected, call the server with authResponse
-        console.log 'je suis DEJA contect ?'+isConnected
         if isConnected
             @loginToServer successCallback, callbackError
         else
             # else, log to facebook
-            FB.login ((response) ->
+            FB.login (response) ->
                 if response.status == 'connected'
 
                     #... and log to server
                     authResponse = response.authResponse
+                    #... and log
                     _this.loginToServer successCallback, callbackError
                     isConnected = true
                 else
                     if callbackError?
                         callbackError()
-            )
 
     #getter
     @isConnected = ->
