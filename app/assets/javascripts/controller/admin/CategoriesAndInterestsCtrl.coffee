@@ -1,10 +1,19 @@
 #admin controller
 #display businessCategory and customerInterest
 #can edit relation between  both
-myApp.controller 'CategoriesAndInterestsCtrl', ($scope, superAdminService) ->
+myApp.controller 'CategoriesAndInterestsCtrl', ($scope, superAdminService,$flash) ->
 
     #call data
     superAdminService.getCategoriesAndInterests (data) ->
+
+        #import translation
+        $scope.importTranslation = ->
+            $scope.translationLoading=true
+            superAdminService.importTranslation ->
+                $scope.translationLoading=false
+                $flash.success 'les traductions ont bien été importées'
+            , ->
+                $scope.translationLoading=false
 
         #params
         $scope.interests = data.interests
@@ -12,9 +21,9 @@ myApp.controller 'CategoriesAndInterestsCtrl', ($scope, superAdminService) ->
         $scope.disabled = true
 
         #get the proirity of the relation category / interest
-        $scope.getPriority = (category, interest) ->
+        $scope.getPriority = (category, interestToFind) ->
             for interest in category.interests
-                if interest.interest.name == interest.name
+                if interest.interest.name == interestToFind.name
                     return interest.priority
             null
 

@@ -5,6 +5,11 @@
     Recherche<input ng-model="search"/>
 <button ng-click="disabled = !disabled">Editer</button>
 
+    <button ng-click="importTranslation()"
+            ng-disabled="translationLoading === true">Réimporter les traductions
+    </button>
+    <img ng-show="translationLoading === true" src="/assets/images/modal-loading.gif" />
+
     <table>
         <tr>
             <td></td>

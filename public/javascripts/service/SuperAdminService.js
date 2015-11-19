@@ -1,4 +1,4 @@
-myApp.service("superAdminService", function ($http, $flash, $rootScope) {
+myApp.service("superAdminService", function ($http, $flash) {
 
 
     this.confirmPublication = function (businessId, callbackSuccess, callbackError) {
@@ -7,6 +7,26 @@ myApp.service("superAdminService", function ($http, $flash, $rootScope) {
             'method': "GET",
             'url': "/rest/business/confirmPublication/" + businessId,
             'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data);
+            }
+        })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
+    this.importTranslation = function (callbackSuccess, callbackError) {
+        $http({
+            'method': "POST",
+            'url': "/rest/import_category_translation",
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data:{}
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);

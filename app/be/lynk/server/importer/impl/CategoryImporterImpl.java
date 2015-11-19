@@ -39,6 +39,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
     protected static final Letter            COL_CATEGORY_INTEREST_END   = Letter.W;
     protected static final Map<Lang, Letter> COL_CATEGORY_TRANSLATION    = new HashMap<Lang, Letter>() {{
         put(Lang.forCode("fr"), Letter.Z);
+        put(Lang.forCode("en"), Letter.AA);
         put(Lang.forCode("nl"), Letter.AB);
     }};
     protected static final Map<Lang, Letter> COL_INTEREST_TRANSLATION    = new HashMap<Lang, Letter>() {{
