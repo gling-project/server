@@ -123,20 +123,7 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     public Result getInterests() {
 
-        //TODO test return all
         return ok(new ListDTO<>(dozerService.map(customerInterestService.findAll(), CustomerInterestDTO.class)));
-
-//        List<CustomerInterest> result = new ArrayList<>();
-//
-//        Business business = securityController.getBusiness();
-//
-//        for (BusinessCategory businessCategory : business.getBusinessCategories()) {
-//            for (CategoryInterestLink categoryInterestLink : businessCategory.getLinks()) {
-//                result.add(categoryInterestLink.getCustomerInterest());
-//            }
-//        }
-//
-//        return ok(new ListDTO<>(dozerService.map(result, CustomerInterestDTO.class)));
     }
 
     /* ////////////////////////////////////////////////////
@@ -351,7 +338,7 @@ public class BusinessRestController extends AbstractController {
         }
         business.setDescription(dto.getDescription());
         business.setPhone(dto.getPhone());
-        business.setEmail(dto.getEmail());
+        business.setEmail(dto.getEmail().toLowerCase());
         business.setWebsite(dto.getWebsite());
 
         businessService.saveOrUpdate(business);
@@ -406,50 +393,6 @@ public class BusinessRestController extends AbstractController {
         return ok(dozerService.map(business, BusinessCategoryLittleContainerDTO.class));
 
     }
-
-//    @Transactional
-//    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
-//    public Result convertCustomerToBusiness(){
-//
-//        Account currentUser = securityController.getCurrentUser();
-//
-//        if(!currentUser.getType().equals(AccountTypeEnum.CUSTOMER)){
-//            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
-//        }
-//
-//        currentUser.setType();
-//
-//
-//        BusinessRegistrationDTO dto = initialization(BusinessRegistrationDTO.class);
-//
-//        //business
-//        Business business = dozerService.map(dto.getBusiness(), Business.class);
-//        business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
-//        //TODO temp
-//        business.getAddress().setCountry("BELGIUM");
-//
-//        //control address
-//        try {
-//            localizationService.validAddress(business.getAddress());
-//        } catch (Exception e) {
-//            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
-//        }
-//
-//        //add categories
-//        business.setBusinessCategories(new ArrayList<>());
-//        for (BusinessCategoryDTO businessCategoryDTO : dto.getBusiness().getBusinessCategories()) {
-//            business.getBusinessCategories().add(businessCategoryService.findByName(businessCategoryDTO.getName()));
-//        }
-//
-//        account.setBusiness(business);
-//        business.setAccount(account);
-//
-//        //send email
-//        emailController.sendApplicationRegistrationBusinessEmail(account);
-//
-//        accountService.saveOrUpdate(account);
-//
-//    }
 
 
     /* ////////////////////////////////////////////////////

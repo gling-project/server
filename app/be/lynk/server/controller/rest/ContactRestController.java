@@ -29,7 +29,7 @@ public class ContactRestController extends AbstractRestController {
         } else if (contactFormDTO.getEmail() == null) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONTACT_NO_EMAIL);
         } else {
-            email = contactFormDTO.getEmail();
+            email = contactFormDTO.getEmail().toLowerCase();
         }
 
         emailController.sendContactEmail(contactFormDTO.getTarget(),

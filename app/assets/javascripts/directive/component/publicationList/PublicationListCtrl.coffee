@@ -8,7 +8,14 @@ myApp.directive 'publicationListCtrl', ($rootScope, businessService, geolocation
         post: (scope) ->
             directiveService.autoScopeImpl scope
             scope.getInfo().loading = true
+
+            scope.changeInterestCallback = (businessId, value)->
+                for publication in scope.publications
+                    if publication.businessId == businessId
+                        publication.following = value
+
+            #catch data
             scope.$watch 'getInfo().data', ->
                 scope.publications = scope.getInfo().data
-                for publication of scope.publications
+                for publication in scope.publications
                     publication.interval = publication.endDate - (new Date)

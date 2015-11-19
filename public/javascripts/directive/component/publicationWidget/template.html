@@ -27,10 +27,6 @@
                 <!-- business name -->
                 <div class="publication-bordered-bottom">
 
-                    <!-- following -->
-                    <div class="publication-following-widget">
-                        <follow-widget-for-publication-ctrl ng-info="{displayText:true,publication:getInfo().publication}"></follow-widget-for-publication-ctrl>
-                    </div>
 
                     <span class="publication-main-title clickable"
                           ng-click="navigateTo('/business/'+getInfo().publication.businessId)">
@@ -138,6 +134,7 @@
     </div>
     <div class="publication-footer">
 
+
         <!-- publication date -->
         <div class="publication-footer-date publication-bordered-bottom">
             {{'--.publication.publishTo' | translateText}}
@@ -149,6 +146,12 @@
             <facebook-share-publication-ctrl
                     ng-info="{businessId:getInfo().publication.businessId,publicationId:getInfo().publication.id}">
             </facebook-share-publication-ctrl>
+        </div>
+
+
+        <!-- following -->
+        <div class="publication-following-widget">
+            <follow-widget-for-publication-ctrl ng-info="{displayText:true,publication:getInfo().publication}"></follow-widget-for-publication-ctrl>
         </div>
 
     </div>

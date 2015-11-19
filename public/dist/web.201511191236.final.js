@@ -2199,11 +2199,27 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
           post: function(scope) {
             directiveService.autoScopeImpl(scope);
             scope.getInfo().loading = true;
-            return scope.$watch('getInfo().data', function() {
-              var publication, _results;
-              scope.publications = scope.getInfo().data;
+            scope.changeInterestCallback = function(businessId, value) {
+              var publication, _i, _len, _ref, _results;
+              _ref = scope.publications;
               _results = [];
-              for (publication in scope.publications) {
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                publication = _ref[_i];
+                if (publication.businessId === businessId) {
+                  _results.push(publication.following = value);
+                } else {
+                  _results.push(void 0);
+                }
+              }
+              return _results;
+            };
+            return scope.$watch('getInfo().data', function() {
+              var publication, _i, _len, _ref, _results;
+              scope.publications = scope.getInfo().data;
+              _ref = scope.publications;
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                publication = _ref[_i];
                 _results.push(publication.interval = publication.endDate - (new Date));
               }
               return _results;
@@ -2252,13 +2268,18 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
             scope.openGallery = function(image, publication) {
               return modalService.galleryModal(image, publication.pictures);
             };
-            return scope.getIllustrationClass = function(picture) {
+            scope.getIllustrationClass = function(picture) {
               if (picture !== void 0 && picture.height > picture.width) {
                 return 'publication-illustration-high';
               } else {
                 return 'publication-illustration';
               }
             };
+            return scope.$watch('getInfo().publication.following', function(n, o) {
+              if (n !== o && (scope.getInfo().changeInterestCallback != null)) {
+                return scope.getInfo().changeInterestCallback(scope.getInfo().publication.businessId, n);
+              }
+            });
           }
         };
       }

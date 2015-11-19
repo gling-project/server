@@ -8,6 +8,13 @@ myApp.directive 'publicationListMobileCtrl', ($rootScope, businessService, geolo
         post: (scope) ->
             directiveService.autoScopeImpl scope
             scope.getInfo().loading = true
+
+            scope.changeInterestCallback = (businessId, value)->
+                console.log 'callback !! '
+                for publication in scope.publications
+                    if publication.businessId == businessId
+                        publication.following = value
+
             scope.$watch 'getInfo().data', ->
                 scope.publications = scope.getInfo().data
                 for publication in scope.publications

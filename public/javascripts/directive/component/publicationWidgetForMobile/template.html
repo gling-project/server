@@ -23,11 +23,6 @@
                             {{getInfo().publication.businessName}}
                         </div>
 
-                        <!-- following -->
-                        <div class="publication-following-widget">
-                            <follow-widget-for-publication-ctrl
-                                    ng-info="{displayText:true,publication:getInfo().publication}"></follow-widget-for-publication-ctrl>
-                        </div>
 
                         <div class="title-data">
                             {{'--.publication.publishTo' | translateText}}
@@ -114,14 +109,17 @@
         </div>
         <div class="publication-footer">
 
-            <!-- publication date -->
-
-
             <!-- facebook -->
             <div class="publication-footer-facebook">
                 <facebook-share-publication-ctrl
                         ng-info="{businessId:getInfo().publication.businessId,publicationId:getInfo().publication.id}"></facebook-share-publication-ctrl>
             </div>
+
+
+            <!-- following -->
+            <follow-widget-for-publication-ctrl
+                    ng-info="{displayText:true,publication:getInfo().publication}">
+            </follow-widget-for-publication-ctrl>
 
         </div>
     </div>

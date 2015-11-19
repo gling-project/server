@@ -24,13 +24,20 @@ import java.util.List;
 public class AccountServiceImpl extends CrudServiceImpl<Account> implements AccountService {
 
     @Override
+    public void saveOrUpdate(Account entity) {
+        entity.setEmail(entity.getEmail().toLowerCase());
+        super.saveOrUpdate(entity);
+    }
+
+
+    @Override
     public Account findByEmail(String email) {
 
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<Account> cq = cb.createQuery(Account.class);
         Root<Account> from = cq.from(Account.class);
         cq.select(from);
-        cq.where(cb.equal(from.get("email"), email));
+        cq.where(cb.equal(from.get("email"), email.toLowerCase()));
         Account singleResultOrNull = getSingleResultOrNull(cq);
         return singleResultOrNull;
 

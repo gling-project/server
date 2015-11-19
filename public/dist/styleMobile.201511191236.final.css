@@ -1971,6 +1971,7 @@ ul.messenger .messenger-spinner {
 }
 .follow-widget {
   text-align: center;
+  display: inline-block;
 }
 .follow-widget .follow-widget-icon {
   cursor: pointer;

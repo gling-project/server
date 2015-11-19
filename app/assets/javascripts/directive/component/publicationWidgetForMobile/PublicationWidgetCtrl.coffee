@@ -41,3 +41,8 @@ myApp.directive 'publicationWidgetCtrl', ($rootScope, businessService, geolocati
                     'publication-illustration-high'
                 else
                     'publication-illustration'
+
+            #call callback if the following is changed
+            scope.$watch 'getInfo().publication.following',(n,o)->
+                if n!=o && scope.getInfo().changeInterestCallback?
+                    scope.getInfo().changeInterestCallback scope.getInfo().publication.businessId,n

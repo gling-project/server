@@ -639,4 +639,6 @@ day_abrv_sunday=Di
 --.business.page.claims=Réclamer ce commrece
 --.business.page.noOwner.alreadyClaimed=Vous avez déjà réclamé ce commerce
 --.business.page.noOwner.alreadyClaimedOther=Vous avez déjà réclamé un autre commerce
+--.followWidget.stopFollowBusiness=Retirer ce commerce de mes favoris
+--.followWidget.followBusiness=Ajouter ce commerce à mes favoris
 

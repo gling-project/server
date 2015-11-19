@@ -81,7 +81,7 @@ public class
         account.setFirstname(dto.getFirstname());
         account.setLastname(dto.getLastname());
         account.setGender(dto.getGender());
-        account.setEmail(dto.getEmail());
+        account.setEmail(dto.getEmail().toLowerCase());
 
         if (dto.getLang() != null) {
             Lang lang = Lang.forCode(dto.getLang().getCode());

@@ -1811,9 +1811,8 @@ ul.messenger .messenger-spinner {
   height: 100%;
 }
 .publication-box .publication-following-widget {
-  margin-top: 15px;
-  margin-right: 10px;
-  float: right;
+  margin-left: 20px;
+  display: inline-block;
 }
 .publication-box .publication-main-title {
   margin-top: 12px;
@@ -1877,10 +1876,14 @@ ul.messenger .messenger-spinner {
   color: white;
   position: relative;
 }
+.publication-box .follow-widget {
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
 .publication-box .publication-body {
   margin-left: 25px;
   margin-right: 25px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .publication-box .publication-body > * {
   vertical-align: top;
@@ -2663,6 +2666,7 @@ ul.messenger .messenger-spinner {
 }
 .follow-widget {
   text-align: center;
+  display: inline-block;
 }
 .follow-widget .follow-widget-icon {
   cursor: pointer;
@@ -2772,8 +2776,7 @@ ul.messenger .messenger-spinner {
   margin: 5px;
 }
 .profile-page .profile-social-network-table {
-  margin: 15px 15px 5px;
-  width: 100%;
+  margin-top: 15px;
 }
 .profile-page .profile-social-network-table th {
   text-align: center;

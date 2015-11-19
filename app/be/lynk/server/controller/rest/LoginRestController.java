@@ -115,9 +115,9 @@ public class LoginRestController extends AbstractRestController {
                 }
 
                 //Control email
-                if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail()) != null) {
+                if (accountService.findByEmail(facebookTokenAccessControlDTO.getEmail().toLowerCase()) != null) {
                     //fusion !
-                    account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail());
+                    account = accountService.findByEmail(facebookTokenAccessControlDTO.getEmail().toLowerCase());
                     account.setFacebookCredential(facebookCredential);
                     facebookCredential.setAccount(account);
 
@@ -125,7 +125,7 @@ public class LoginRestController extends AbstractRestController {
                 } else {
                     //create new account
                     account = new Account();
-                    account.setEmail(facebookTokenAccessControlDTO.getEmail());
+                    account.setEmail(facebookTokenAccessControlDTO.getEmail().toLowerCase());
                     account.setFirstname(facebookTokenAccessControlDTO.getFirst_name());
                     account.setLastname(facebookTokenAccessControlDTO.getLast_name());
                     account.setFacebookCredential(facebookCredential);
@@ -173,6 +173,7 @@ public class LoginRestController extends AbstractRestController {
 
         AccountRegistrationDTO accountDTO = initialization(AccountRegistrationDTO.class);
         Account account = createNewAccount(accountDTO);
+        account.setEmail(account.getEmail().toLowerCase());
         account.setRole(RoleEnum.CUSTOMER);
 
         //send email
@@ -242,7 +243,7 @@ public class LoginRestController extends AbstractRestController {
 
         ForgotPasswordDTO dto = initialization(ForgotPasswordDTO.class);
 
-        Account byEmail = accountService.findByEmail(dto.getEmail());
+        Account byEmail = accountService.findByEmail(dto.getEmail().toLowerCase());
 
         if (byEmail == null) {
             throw new MyRuntimeException(ErrorMessageEnum.EMAIL_UNKNOWN);
