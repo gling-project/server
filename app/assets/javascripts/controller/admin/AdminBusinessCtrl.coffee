@@ -2,7 +2,7 @@
 #display data about businesses
 #can create a business page from a facebook profile
 #can change the status of the business
-myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams, $filter, $window, modalService, $flash) ->
+myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams, $filter, $window, modalService, $flash,$timeout) ->
 
     #params
     $scope.displayMap = false
@@ -10,17 +10,20 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
     $scope.importBusinessInput = ''
     $scope.importBusinessLoading = false
     #map params
-    $scope.map =
-        center:
-            latitude: 50.8471417
-            longitude: 4.3528959
+    #used to get map params to ngMap
+    $scope.mapData =
+        center:{}
+        zoom: 11
+    $scope.displayMap = false
 
     #refresh business data
     $scope.refresh = ->
         $scope.businesses = []
+        $scope.businessListLoading = true
 
         #call service
         superAdminService.getAllBusinesses (data) ->
+            $scope.businessListLoading = false
             $scope.businesses = data.list
 
             #create table
@@ -32,12 +35,59 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
                 },
                 total: $scope.businesses.length
 
-                #this function is used to sorting
+            #this function is used to sorting
                 getData: ($defer, params) ->
                     # use build-in angular filter
                     orderedData = if params.sorting() then $filter('orderBy')($scope.businesses,params.orderBy()) else $scope.businesses
-                    $defer.resolve orderedData.slice((params.page() - 1) * params.count(),params.page() * params.count())
+                    $defer.resolve orderedData.slice((params.page() - 1) * params.count(),
+                        params.page() * params.count())
             )
+
+            $scope.generateMapMarkers()
+
+    #display map
+    $scope.displayMapFct = (value)->
+        $scope.displayMap = value
+        $scope.mapData.center.latitude = 50.8471417
+        $scope.mapData.center.longitude = 4.3528959
+        $timeout ->
+            google.maps.event.trigger $scope.map, 'resize'
+        ,1000
+
+    $scope.startAnimation = (business, inthere) ->
+        console.log business.id+'/'+inthere
+        if inthere
+            for marker in $scope.mks
+                if marker.id == business.id
+                        marker.setAnimation google.maps.Animation.BOUNCE
+        else
+            $timeout ->
+                for marker in $scope.mks
+                    if marker.id == business.id
+                        marker.setAnimation null
+            , 2000
+
+    $scope.mks = [];
+
+    #generate map marker
+    $scope.generateMapMarkers = ->
+        if $scope.map? and $scope.businesses?
+            #called when the ngMap is initialized AND the positions are loaded
+            for business in $scope.businesses
+                if business.address?
+                    marker = new (google.maps.Marker)({})
+                    marker.id = business.id
+                    marker.setPosition new (google.maps.LatLng)(business.address.posx, business.address.posy)
+                    marker.setTitle business.name
+                    if business.businessStatus == 'WAITING_CONFIRMATION'
+                        marker.setIcon '/assets/images/google-map-marker/marker_waiting.png'
+                    else if business.businessStatus == 'NOT_PUBLISHED'
+                        marker.setIcon '/assets/images/google-map-marker/marker_not_published.png'
+                    else if business.businessStatus == 'PUBLISHED'
+                        marker.setIcon '/assets/images/google-map-marker/marker_published.png'
+                    marker.setMap $scope.map
+                    $scope.mks.push marker
+
 
     # navigation : go to the business page
     $scope.toBusiness = (businessId) ->
@@ -56,7 +106,7 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
     #import business data from a facebook page
     $scope.importBusinessStart = ->
         $scope.importBusinessLoading = true
-        urlEncoded=encodeURIComponent $scope.importBusinessInput
+        urlEncoded = encodeURIComponent $scope.importBusinessInput
         console.log urlEncoded
         superAdminService.importBusiness urlEncoded, (->
             #callback success

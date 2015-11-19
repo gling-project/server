@@ -66,24 +66,11 @@ public class AccountServiceImpl extends CrudServiceImpl<Account> implements Acco
     @Override
     public Account findByFacebook(FacebookCredential facebookCredential) {
 
-
         String r = "SELECT a FROM Account a where a.facebookCredential=:facebookCredential";
-
-//        String s = "select c from BusinessCategory c where c.translationName = t and v.translation=t and v.lang=:lang and v.searchableContent like :criteria";
 
         return JPA.em().createQuery(r, Account.class)
                 .setParameter("facebookCredential", facebookCredential)
                 .getSingleResult();
-
-//        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
-//        CriteriaQuery<Account> cq = cb.createQuery(Account.class);
-//        Root<Account> from = cq.from(Account.class);
-//
-//        cq.select(from);
-//        cq.where(cb.equal(from.get("facebookCredential"), facebookCredential));
-
-//        Account singleResultOrNull = getSingleResultOrNull(facebookCredential1);
-//        return singleResultOrNull;
 
     }
 
