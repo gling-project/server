@@ -8,7 +8,6 @@ import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.FollowLink;
-import be.lynk.server.model.entities.Session;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.*;
@@ -49,6 +48,8 @@ public abstract class AbstractController extends Controller {
     private   LocalizationService      localizationService;
     @Autowired
     protected BusinessService          businessService;
+    @Autowired
+    private   ClaimBusinessService     claimBusinessService;
 
     protected void initialization() {
         initialization(ResultDTO.class, false);
@@ -230,6 +231,7 @@ public abstract class AbstractController extends Controller {
 
         }
         businessToDisplayDTO.setTotalFollowers(followLinkService.countByBusiness(business));
+        businessToDisplayDTO.setHasOwner(business.getAccount() != null);
 
         //order gallery
         Collections.sort(businessToDisplayDTO.getGalleryPictures());
@@ -293,6 +295,7 @@ public abstract class AbstractController extends Controller {
         myselfDTO.setFacebookAccount(account.getFacebookCredential() != null);
         myselfDTO.setLoginAccount(account.getLoginCredential() != null);
         myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
+        myselfDTO.setClaimedBusinessId(claimBusinessService.findBusinessIdByAccount(account));
         if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
             myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
         }

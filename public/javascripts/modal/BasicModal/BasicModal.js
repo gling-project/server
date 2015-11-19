@@ -19,6 +19,7 @@ myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, bus
     };
 
     $scope.setLoading = function(value){
+        param.disabled = value;
         $scope.loading = value;
     };
 
@@ -27,13 +28,13 @@ myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, bus
         if(param.callBackSave!=null){
             param.callBackSave();
         }
+        console.log(param.isValid);
         if (param.isValid != undefined) {
             isValid = param.isValid;
-
             param.displayErrorMessage = true;
         }
         if (isValid) {
-            $scope.loading = true;
+            $scope.setLoading(true);
             save($scope.close,$scope.setLoading);
         }
     }

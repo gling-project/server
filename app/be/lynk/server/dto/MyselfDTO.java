@@ -25,7 +25,17 @@ public class MyselfDTO extends AccountDTO {
 
     private Set<CustomerInterestDTO> customerInterests = new HashSet<>();
 
+    private Long claimedBusinessId;
+
     public MyselfDTO() {
+    }
+
+    public Long getClaimedBusinessId() {
+        return claimedBusinessId;
+    }
+
+    public void setClaimedBusinessId(Long claimedBusinessId) {
+        this.claimedBusinessId = claimedBusinessId;
     }
 
     public FacebookCredentialDTO getFacebookCredential() {

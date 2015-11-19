@@ -249,6 +249,19 @@
 
         <div class="business-page-bottom">
 
+            <div ng-show="business.hasOwner===false">
+                {{'--.business.page.noOwner' | translateText}}
+                <span class="business-claimed-status">
+                    <span ng-show="myself!=null && myself.claimedBusinessId == business.id">{{'--.business.page.noOwner.alreadyClaimed' | translateText}}</span>
+                    <span ng-show="myself!=null && myself.claimedBusinessId!=null && myself.claimedBusinessId != business.id">{{'--.business.page.noOwner.alreadyClaimedOther' | translateText}}</span>
+                </span>
+                <button ng-click="tryClaimBusiness()"
+                        ng-show="myself == null || myself.claimedBusinessId==null"
+                        class="btn gling-button-dark btn-xs">
+                    {{'--.business.page.claims' | translateText}}
+                </button>
+            </div>
+
             <div class="business-right-column">
                 <!-- description -->
                 <div class="business-page-description">

@@ -11,6 +11,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
     $scope.businessId = $routeParams.businessId
     $scope.descriptionLimitBase = 200
     $scope.descriptionLimit = $scope.descriptionLimitBase
+    $scope.myself = accountService.model.myself
 
     #publication timing
     $scope.publicationOptions = [
@@ -24,7 +25,8 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
         }
     ]
     #address
-    $scope.googleMapParams = staticMap: true
+    $scope.googleMapParams =
+        staticMap: true
 
     $scope.displayEditMode = ->
         $scope.myBusiness == true or accountService.getMyself() != null and accountService.getMyself().role == 'SUPERADMIN'
@@ -47,9 +49,8 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
 
         #edit mode ?
         $scope.$watch 'business.businessStatus', ->
-            console.log 'je suis une foutu merde'
-            console.log accountService.getMyself().businessId+'/'+$routeParams.businessId+'/'+constantService.compareNumber(accountService.getMyself().businessId, $routeParams.businessId)
-            if accountService.getMyself()? and constantService.compareNumber(accountService.getMyself().businessId, $routeParams.businessId)
+            if accountService.getMyself()? and constantService.compareNumber(accountService.getMyself().businessId,
+                $routeParams.businessId)
                 if $scope.business.businessStatus != 'WAITING_CONFIRMATION'
                     $scope.edit = true
                 $scope.myBusiness = true
@@ -157,7 +158,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
             else
                 address = angular.copy($scope.business.address)
                 if !address?
-                    address={}
+                    address = {}
                 modalService.basicModal '--.business.edit.address.modal.title', 'address-form-ctrl', {
                     dto: address
                     addName: false
@@ -172,7 +173,8 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                     , ->
                         setLoading false
 
-        $scope.categoryLineParams = categories: $scope.business.categories
+        $scope.categoryLineParams =
+            categories: $scope.business.categories
 
         #edit category
         $scope.editCategory = ->
@@ -182,7 +184,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                     for lev4 in lev3
                         catList.push lev4
 
-            modalService.basicModal '--.business.edit.category.modal.title', 'business-category-form-ctrl', { value: catList }, (close, setLoading) ->
+            modalService.basicModal '--.business.edit.category.modal.title', 'business-category-form-ctrl', {value: catList}, (close, setLoading) ->
                 #scope.business
                 businessService.editBusinessCategory $scope.business.id, catList, (data) ->
                     $scope.business.categories = data.categories
@@ -198,7 +200,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                 dto: schedules
                 disabled: false
             }, (close, setLoading) ->
-                businessService.createSchedule $scope.business.id, { schedules: schedules }, (data) ->
+                businessService.createSchedule $scope.business.id, {schedules: schedules}, (data) ->
                     $scope.business.schedules = schedules
                     close()
                 , ->
@@ -218,7 +220,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                 fieldName: 'galleryPictures'
             }, (close, setLoading) ->
                 #scope.business
-                businessService.editGallery $scope.business.id, { list: business.galleryPictures }, (data) ->
+                businessService.editGallery $scope.business.id, {list: business.galleryPictures}, (data) ->
                     $scope.business.galleryPictures = data
                     close()
                 , ->
@@ -229,7 +231,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
             socialNetwork = angular.copy($scope.business.socialNetwork)
             if socialNetwork == undefined or socialNetwork == null
                 socialNetwork = {}
-            modalService.basicModal '--.business.edit.socialNetwork.modal.title', 'business-social-network-ctrl', { dto: socialNetwork }, (close, setLoading) ->
+            modalService.basicModal '--.business.edit.socialNetwork.modal.title', 'business-social-network-ctrl', {dto: socialNetwork}, (close, setLoading) ->
                 #scope.business
                 businessService.editSocialNetwork $scope.business.id, socialNetwork, (data) ->
                     $scope.business.socialNetwork = socialNetwork
@@ -282,7 +284,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
             total = 0
             if $scope.business.address?
                 total++
-            if $scope.numberCategories()>0
+            if $scope.numberCategories() > 0
                 total++
             if $scope.business.description?
                 total++
@@ -301,12 +303,33 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
         $scope.getProgressionStyle = ->
             return 'width:' + 300 * $scope.computeProgression() / 5 + 'px'
 
+        $scope.tryClaimBusiness = ->
+            if accountService.getMyself()?
+                $scope.claimBusiness()
+            else
+                modalService.openLoginModal $scope.claimBusiness, null, '--.loginModal.help.claimBusiness'
+
+        $scope.claimBusiness = ->
+            dto = {}
+            modalService.basicModal '--.business.claim.modal.title', 'claim-business-ctrl', {dto: dto}, (close,setLoading) ->
+                businessService.claimBusiness $scope.business.id, dto.phone, dto.vta, ->
+                    $flash.success $filter('translateText')('--.business.claim.modal.success')
+                    close()
+                    accountService.model.myself.claimedBusinessId = $scope.business.id
+                    setLoading false
+                , ->
+                    setLoading false
+
         $scope.openContact = ->
-            dto = target: 'HELP'
-            modalService.basicModal '--.contactForm.modal.title', 'contact-form-ctrl', { dto: dto }, (close) ->
+            dto =
+                target: 'HELP'
+            modalService.basicModal '--.contactForm.modal.title', 'contact-form-ctrl', {dto: dto}, (close,setLoading) ->
                 contactService.contact dto, ->
                     $flash.success $filter('translateText')('--.contactForm.send.success')
                     close()
+                    setLoading false
+                , ->
+                    setLoading false
     ), ->
         $scope.loading = false
         $scope.displayError = true

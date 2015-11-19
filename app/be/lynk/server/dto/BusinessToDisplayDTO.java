@@ -58,7 +58,17 @@ public class BusinessToDisplayDTO extends DTO implements Comparable<BusinessToDi
 
     private Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories = new HashMap<>();
 
+    private Boolean hasOwner;
+
     public BusinessToDisplayDTO() {
+    }
+
+    public Boolean getHasOwner() {
+        return hasOwner;
+    }
+
+    public void setHasOwner(Boolean hasOwner) {
+        this.hasOwner = hasOwner;
     }
 
     public String getVta() {

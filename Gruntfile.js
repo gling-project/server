@@ -154,6 +154,7 @@ module.exports = function (grunt) {
                         'public/javascripts/directive/form/image/ImageFormCtrl.js',
                         'public/javascripts/directive/form/businessSocialNetwork/BusinessSocialNetworkCtrl.js',
                         'public/javascripts/directive/form/contact/ContactFormCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/form/claimBusiness/ClaimBusinessCtrl.js',
                         <!-- component -->
                         'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/schedule/ScheduleCtrl.js',
                         'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/gallery/GalleryCtrl.js',

@@ -44,6 +44,8 @@ public class BusinessRestController extends AbstractController {
     private CustomerInterestService customerInterestService;
     @Autowired
     private AccountService          accountService;
+    @Autowired
+    private ClaimBusinessService    claimBusinessService;
 
 
 
@@ -148,6 +150,33 @@ public class BusinessRestController extends AbstractController {
      * EDIT FUNCTION
      /////////////////////////////////////////////////// */
 
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+    public Result claimBusiness() {
+
+        ClaimBusinessDTO claimBusinessDTO = initialization(ClaimBusinessDTO.class);
+
+        if (securityController.getCurrentUser().getBusiness() != null) {
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_CLAIM_ALREADY_HAVE_BUSINESS);
+        }
+
+        ClaimBusiness claimBusiness = claimBusinessService.findByAccount(securityController.getCurrentUser());
+
+        if (claimBusiness != null) {
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_CLAIM_ALREADY_HAVE_CLAIMS, claimBusiness.getBusiness().getName());
+        }
+
+        //create claim request
+        claimBusiness = dozerService.map(claimBusinessDTO, ClaimBusiness.class);
+
+        claimBusiness.setBusiness(businessService.findById(claimBusinessDTO.getBusinessId()));
+        claimBusiness.setAccount(securityController.getCurrentUser());
+
+        claimBusinessService.saveOrUpdate(claimBusiness);
+
+        return ok();
+    }
+
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -199,7 +228,7 @@ public class BusinessRestController extends AbstractController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
-    @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED,BusinessStatusEnum.WAITING_CONFIRMATION})
+    @BusinessStatusAnnotation(status = {BusinessStatusEnum.NOT_PUBLISHED, BusinessStatusEnum.WAITING_CONFIRMATION})
     public Result editAddress(long businessId) {
 
         //control business
@@ -217,7 +246,7 @@ public class BusinessRestController extends AbstractController {
         AddressDTO dto = initialization(AddressDTO.class);
 
         Address address = business.getAddress();
-        if(address==null) {
+        if (address == null) {
             address = new Address();
             business.setAddress(address);
             //TODO temp
@@ -227,7 +256,6 @@ public class BusinessRestController extends AbstractController {
         address.setStreet(dto.getStreet());
         address.setName(dto.getName());
         address.setZip(dto.getZip());
-
 
 
         //control address

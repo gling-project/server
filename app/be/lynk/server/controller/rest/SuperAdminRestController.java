@@ -75,9 +75,8 @@ public class SuperAdminRestController extends AbstractRestController {
     private LocalizationService         localizationService;
     @Autowired
     private FileService                 fileService;
-
-
-
+    @Autowired
+    private ClaimBusinessService        claimBusinessService;
 
 
     @Transactional
@@ -188,6 +187,14 @@ public class SuperAdminRestController extends AbstractRestController {
         businessService.saveOrUpdate(business);
 
         return ok(new ResultDTO());
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
+    public Result getClaimBusiness() {
+        List<ClaimBusiness> all = claimBusinessService.findAll();
+
+        return ok(new ListDTO<>(dozerService.map(all, ClaimBusinessDTO.class)));
     }
 
     @Transactional
@@ -456,7 +463,7 @@ public class SuperAdminRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result importBusiness(String facebookUrl) {
 
-        facebookRequest.createBusinessFromFacebook(securityController.getCurrentUser(),facebookUrl,false);
+        facebookRequest.createBusinessFromFacebook(securityController.getCurrentUser(), facebookUrl, false);
 
         return ok();
     }

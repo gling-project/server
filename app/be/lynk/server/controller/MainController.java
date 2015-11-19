@@ -190,9 +190,7 @@ public class MainController extends AbstractController {
                 interfaceDataDTO.setLangId(currentUser.getLang().code());
             }
 
-            MyselfDTO accountDTO = dozerService.map(currentUser, MyselfDTO.class);
-            accountDTO.setFacebookAccount(currentUser.getFacebookCredential() != null);
-            accountDTO.setLoginAccount(currentUser.getLoginCredential() != null);
+            MyselfDTO accountDTO = accountToMyself(currentUser);
             interfaceDataDTO.setMySelf(accountDTO);
 
         }

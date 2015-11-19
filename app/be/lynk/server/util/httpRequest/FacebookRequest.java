@@ -76,7 +76,7 @@ public class FacebookRequest {
         }
     }
 
-    public Business createBusinessFromFacebook(Account account, String facebookUrl, boolean linkToBusiness) {
+    public Business createBusinessFromFacebook(Account account, String facebookUrl, boolean fromBusinessRegistration) {
 
         if (facebookUrl.contains("/pages/")) {
             //this is not an official page
@@ -93,9 +93,13 @@ public class FacebookRequest {
 
         //build business
         Business business = new Business();
-        if (linkToBusiness) {
+        if (fromBusinessRegistration) {
             business.setAccount(account);
             account.setBusiness(business);
+            business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
+        }
+        else{
+            business.setBusinessStatus(BusinessStatusEnum.WAITING_CONFIRMATION);
         }
         business.setName(pageData.getName());
         business.setWebsite(pageData.getWebsite());
@@ -114,11 +118,6 @@ public class FacebookRequest {
         business.setBusinessCategories(convertFacebookCategoryToBusinessCategory(pageData.getCategory()));
         //add status
         //TODO create new status ?
-        if (linkToBusiness) {
-            business.setBusinessStatus(BusinessStatusEnum.NOT_PUBLISHED);
-        } else {
-            business.setBusinessStatus(BusinessStatusEnum.WAITING_CONFIRMATION);
-        }
 
         //add address
         if(pageData.getLocation()!=null) {

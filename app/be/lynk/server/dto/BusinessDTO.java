@@ -58,8 +58,10 @@ public class BusinessDTO extends DTO  {
 
     protected Date creationDate;
 
+
     public BusinessDTO() {
     }
+
 
     public Date getCreationDate() {
         return creationDate;

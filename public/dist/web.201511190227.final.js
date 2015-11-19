@@ -970,6 +970,7 @@ myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'busin
     };
 
     $scope.setLoading = function(value){
+        param.disabled = value;
         $scope.loading = value;
     };
 
@@ -978,13 +979,13 @@ myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'busin
         if(param.callBackSave!=null){
             param.callBackSave();
         }
+        console.log(param.isValid);
         if (param.isValid != undefined) {
             isValid = param.isValid;
-
             param.displayErrorMessage = true;
         }
         if (isValid) {
-            $scope.loading = true;
+            $scope.setLoading(true);
             save($scope.close,$scope.setLoading);
         }
     }
@@ -1456,6 +1457,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.businessId = $routeParams.businessId;
     $scope.descriptionLimitBase = 200;
     $scope.descriptionLimit = $scope.descriptionLimitBase;
+    $scope.myself = accountService.model.myself;
     $scope.publicationOptions = [
       {
         key: 'BASIC',
@@ -1485,8 +1487,6 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
       $scope.business = data;
       $scope.publicationListParam.business = $scope.business;
       $scope.$watch('business.businessStatus', function() {
-        console.log('je suis une foutu merde');
-        console.log(accountService.getMyself().businessId + '/' + $routeParams.businessId + '/' + constantService.compareNumber(accountService.getMyself().businessId, $routeParams.businessId));
         if ((accountService.getMyself() != null) && constantService.compareNumber(accountService.getMyself().businessId, $routeParams.businessId)) {
           if ($scope.business.businessStatus !== 'WAITING_CONFIRMATION') {
             $scope.edit = true;
@@ -1785,6 +1785,29 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
       $scope.getProgressionStyle = function() {
         return 'width:' + 300 * $scope.computeProgression() / 5 + 'px';
       };
+      $scope.tryClaimBusiness = function() {
+        if (accountService.getMyself() != null) {
+          return $scope.claimBusiness();
+        } else {
+          return modalService.openLoginModal($scope.claimBusiness, null, '--.loginModal.help.claimBusiness');
+        }
+      };
+      $scope.claimBusiness = function() {
+        var dto;
+        dto = {};
+        return modalService.basicModal('--.business.claim.modal.title', 'claim-business-ctrl', {
+          dto: dto
+        }, function(close, setLoading) {
+          return businessService.claimBusiness($scope.business.id, dto.phone, dto.vta, function() {
+            $flash.success($filter('translateText')('--.business.claim.modal.success'));
+            close();
+            accountService.model.myself.claimedBusinessId = $scope.business.id;
+            return setLoading(false);
+          }, function() {
+            return setLoading(false);
+          });
+        });
+      };
       return $scope.openContact = function() {
         var dto;
         dto = {
@@ -1792,10 +1815,13 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         };
         return modalService.basicModal('--.contactForm.modal.title', 'contact-form-ctrl', {
           dto: dto
-        }, function(close) {
+        }, function(close, setLoading) {
           return contactService.contact(dto, function() {
             $flash.success($filter('translateText')('--.contactForm.send.success'));
-            return close();
+            close();
+            return setLoading(false);
+          }, function() {
+            return setLoading(false);
           });
         });
       };

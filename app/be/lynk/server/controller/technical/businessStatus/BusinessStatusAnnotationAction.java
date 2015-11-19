@@ -32,7 +32,7 @@ public class BusinessStatusAnnotationAction extends Action<BusinessStatusAnnotat
 
                 Business business = securityController.getCurrentUser().getBusiness();
                 for (BusinessStatusEnum businessStatus : configuration.status()) {
-                    if (business.getBusinessStatus().equals(businessStatus)) {
+                    if (checkParentEquals(business.getBusinessStatus(), businessStatus)) {
                         return delegate.call(context);
                     }
                 }
@@ -45,5 +45,12 @@ public class BusinessStatusAnnotationAction extends Action<BusinessStatusAnnotat
                 return securityController.onUnauthorized(context);
             }
         });
+    }
+
+    public boolean checkParentEquals(BusinessStatusEnum fromBusiness, BusinessStatusEnum toTest) {
+        if (fromBusiness.equals(toTest)) {
+            return true;
+        }
+        return false;
     }
 }
