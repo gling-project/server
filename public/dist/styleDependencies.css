@@ -3619,6 +3619,28 @@ iframe {
 .link:hover {
   color: #1a0dab;
 }
+.map-page .map-content {
+  position: relative;
+}
+.map-page .map-content .filter-panel {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #555555;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.business-for-map .title {
+  font-weight: bold;
+}
+.business-for-map .see-more {
+  margin-left: 5px;
+}
+.business-for-map .business-illustration {
+  height: 20px;
+  width: 20px;
+}
 body {
   min-width: 1000px;
   padding-bottom: 100px;

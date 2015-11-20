@@ -1,0 +1,31 @@
+<div class="content-block map-page">
+
+    <button ng-click="displayFilters=!displayFilters">Filtre</button>
+
+    <div class="map-content">
+        <map style="height: 700px !important;"
+             center="{{mapData.center.latitude}}, {{mapData.center.longitude}}"
+             zoom="{{mapData.zoom}}"></map>
+
+        <div class="filter-panel"
+             ng-show="displayFilters">
+
+            <!-- folloing  -->
+            <input type="checkbox" ng-model="filters.following">Uniquement les commerces suivi<br/>
+            <input type="checkbox" ng-model="filters.open">Uniquement les commerces actuellement ouverts
+
+            <h3>Intérêts</h3>
+            <span class="link" ng-click="selectAllInterest(true)">Tout sélectionner</span> / <span class="link"
+                                                                                                   ng-click="selectAllInterest(false)">Rien sélectionner</span>
+
+            <div ng-repeat="interest in interests">
+                <input type="checkbox" ng-model="interest.selected">
+                <span class="{{'gling-icon gling-icon-' + interest.name}}"></span>
+                {{interest.translationName}}
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

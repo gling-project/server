@@ -281,4 +281,15 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         }
         return total;
     }
+
+    @Override
+    public List<Business> findByStatus(BusinessStatusEnum businessStatus) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Business> cq = cb.createQuery(Business.class);
+        Root<Business> from = cq.from(Business.class);
+        cq.select(from);
+        cq.where(cb.equal(from.get("businessStatus"), businessStatus));
+        return JPA.em().createQuery(cq).getResultList();
+    }
 }

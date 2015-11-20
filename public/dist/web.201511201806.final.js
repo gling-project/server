@@ -146,6 +146,14 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }]
                 }
+            }).when('/map', {
+                templateUrl: '/assets/javascripts/view/web/map.html',
+                controller: 'MapCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
             }).when('/business/:businessId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
                 controller: 'BusinessCtrl',
@@ -2185,6 +2193,202 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 ;
 (function() {
 
+  myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInterestService', '$compile', '$timeout', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout) {
+    var addListener, getIcon, getMarker, testInterests;
+    $scope.mapDataBusinesses = null;
+    $scope.map = null;
+    $scope.interests = null;
+    $scope.markers = [];
+    $scope.mapData = {
+      center: {
+        latitude: 50.8471417,
+        longitude: 4.3528959
+      },
+      zoom: 12
+    };
+    $scope.infowindow = new google.maps.InfoWindow({
+      content: '<div class="info-window-inject"></div>'
+    });
+    $scope.windowParam = {};
+    $scope.filters = {
+      open: false,
+      following: false
+    };
+    $scope.$watch('map', function(o) {
+      return $scope.generateMapMarkers();
+    });
+    getMarker = function(business) {
+      var marker, _i, _len, _ref;
+      _ref = $scope.markers;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        marker = _ref[_i];
+        if (marker.id === business.id) {
+          return marker;
+        }
+      }
+      return null;
+    };
+    $scope.$watch('filters', function() {
+      var mapDataBusiness, marker, _i, _len, _ref, _results;
+      _ref = $scope.mapDataBusinesses;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        mapDataBusiness = _ref[_i];
+        marker = getMarker(mapDataBusiness);
+        if ($scope.filters.open && !(mapDataBusiness.attendance != null)) {
+          _results.push(marker.setMap(null));
+        } else if ($scope.filters.following && !mapDataBusiness.following) {
+          _results.push(marker.setMap(null));
+        } else if (!(marker.getMap() != null)) {
+          _results.push(marker.setMap($scope.map));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    }, 1);
+    testInterests = function(mapDataBusiness) {
+      var interest, interestToTest, marker, _i, _j, _len, _len1, _ref, _ref1;
+      marker = getMarker(mapDataBusiness);
+      _ref = $scope.interests;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        interest = _ref[_i];
+        if (interest.name === 'empty') {
+          if (!(mapDataBusiness.interests != null) || mapDataBusiness.interests.length === 0) {
+            if (interest.selected === true) {
+              if (!(marker.getMap() != null)) {
+                marker.setMap($scope.map);
+              }
+            } else {
+              marker.setMap(null);
+            }
+            return;
+          }
+        } else {
+          _ref1 = mapDataBusiness.interests;
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            interestToTest = _ref1[_j];
+            if (interest.name === interestToTest.name && interest.selected === true) {
+              if (!(marker.getMap() != null)) {
+                marker.setMap($scope.map);
+              }
+              return;
+            }
+          }
+        }
+      }
+      return marker.setMap(null);
+    };
+    $scope.$watch('interests', function() {
+      var mapDataBusiness, _i, _len, _ref, _results;
+      if ($scope.mapDataBusinesses != null) {
+        _ref = $scope.mapDataBusinesses;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          mapDataBusiness = _ref[_i];
+          _results.push(testInterests(mapDataBusiness));
+        }
+        return _results;
+      }
+    }, true);
+    $scope.selectAllInterest = function(all) {
+      var interest, _i, _len, _ref, _results;
+      _ref = $scope.interests;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        interest = _ref[_i];
+        _results.push(interest.selected = all);
+      }
+      return _results;
+    };
+    $scope.generateMapMarkers = function() {
+      var key, mapDataBusiness, marker, _results;
+      if (($scope.map != null) && ($scope.mapDataBusinesses != null)) {
+        _results = [];
+        for (key in $scope.mapDataBusinesses) {
+          mapDataBusiness = $scope.mapDataBusinesses[key];
+          if (mapDataBusiness.address != null) {
+            marker = new google.maps.Marker({});
+            marker.id = mapDataBusiness.id;
+            marker.setPosition(new google.maps.LatLng(mapDataBusiness.address.posx, mapDataBusiness.address.posy));
+            marker.setTitle(mapDataBusiness.name);
+            marker.setIcon(getIcon(mapDataBusiness));
+            marker.setMap($scope.map);
+            $scope.markers.push(marker);
+            _results.push(addListener(marker, mapDataBusiness));
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
+      }
+    };
+    getIcon = function(business) {
+      var name;
+      name = '/assets/images/google-map-marker/marker_';
+      if (business.following) {
+        name += 'bell_';
+      }
+      if (business.attendance === 'LIGHT') {
+        name += 'green_light.png';
+      } else if (business.attendance === 'MODERATE') {
+        name += 'orange.png';
+      } else if (business.attendance === 'IMPORTANT') {
+        name += 'red.png';
+      } else if (business.attendance === 'APPOINTMENT') {
+        name += 'blue_light.png';
+      } else {
+        name += 'black.png';
+      }
+      return name;
+    };
+    $scope.refreshMarkerIcon = function(business) {
+      var marker;
+      marker = getMarker(business);
+      return marker.setIcon(getIcon(business));
+    };
+    addListener = function(marker, mapDataBusiness) {
+      return marker.addListener('click', function() {
+        if ($scope.infowindow != null) {
+          $scope.infowindow.close();
+        }
+        $scope.windowParam = mapDataBusiness;
+        if (!($scope.directive != null)) {
+          $scope.directive = $compile("<business-for-map-ctrl ng-info=\"{business:windowParam,followingCallback:refreshMarkerIcon}\"/></business-for-map-ctrl>")($scope);
+          $timeout(function() {
+            return $('.info-window-inject').append($scope.directive);
+          }, 1);
+        }
+        return $scope.infowindow.open($scope.map, marker);
+      });
+    };
+    mapService.loadMapDataBusiness(function(data) {
+      $scope.mapDataBusinesses = data;
+      return $scope.generateMapMarkers();
+    });
+    customerInterestService.getAll(function(data) {
+      var interest, _i, _len, _ref, _results;
+      $scope.interests = angular.copy(data);
+      $scope.interests.push({
+        name: 'empty',
+        translationName: 'Sans intérêt particulier'
+      });
+      _ref = $scope.interests;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        interest = _ref[_i];
+        _results.push(interest.selected = true);
+      }
+      return _results;
+    });
+    $(window).scrollTop(0);
+    return $rootScope.$broadcast('PROGRESS_BAR_STOP');
+  }]);
+
+}).call(this);
+
+(function() {
+
   myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
     return {
       restrict: 'E',
@@ -2486,6 +2690,60 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
             return scope.searchCat = function(categoryName) {
               return $location.path('/search/category:' + categoryName);
             };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('businessForMapCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', function($rootScope, businessService, geolocationService, directiveService) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/map/businessForMap/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
+            scope.$watch('getInfo().business.following', function(n, o) {
+              if ((n != null) && (o != null) && n !== o) {
+                return scope.getInfo().followingCallback(scope.getInfo().business);
+              }
+            });
+            scope.goTo = function(target) {
+              return $location.path(target);
+            };
+          }
+        };
+      }
+    };
+  }]);
+
+}).call(this);
+
+(function() {
+
+  myApp.directive('publicationForMapCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, $timeout) {
+    return {
+      restrict: 'E',
+      scope: directiveService.autoScope({
+        ngInfo: '='
+      }),
+      templateUrl: '/assets/javascripts/directive/component/map/publicationForMap/template.html',
+      replace: true,
+      transclude: true,
+      compile: function() {
+        return {
+          post: function(scope) {
+            directiveService.autoScopeImpl(scope);
           }
         };
       }

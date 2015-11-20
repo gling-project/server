@@ -48,6 +48,14 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }
                 }
+            }).when('/map', {
+                templateUrl: '/assets/javascripts/view/web/map.html',
+                controller: 'MapCtrl',
+                resolve: {
+                    a: function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }
+                }
             }).when('/business/:businessId', {
                 templateUrl: '/assets/javascripts/view/web/business.html',
                 controller: 'BusinessCtrl',

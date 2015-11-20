@@ -42,7 +42,7 @@ PUT           /rest/customer/interest/$id<[0-9]+>                               
 ## business
 POST          /rest/createBusiness                                                                                   @be.lynk.server.controller.rest.LoginRestController.createBusiness()
 GET           /rest/createBusinessFromFacebook/:url                                                                  @be.lynk.server.controller.rest.LoginRestController.createBusinessFromFacebook(url:String)
-POST           /rest/business/claim                                                                                   @be.lynk.server.controller.rest.BusinessRestController.claimBusiness()
+POST          /rest/business/claim                                                                                   @be.lynk.server.controller.rest.BusinessRestController.claimBusiness()
 GET           /rest/business/$id<[0-9]+>                                                                             @be.lynk.server.controller.rest.BusinessRestController.getPublicData(id:Long)
 GET           /rest/business/interests                                                                               @be.lynk.server.controller.rest.BusinessRestController.getInterests()
 GET           /rest/business/followed                                                                                @be.lynk.server.controller.rest.BusinessRestController.getFollowed()
@@ -92,6 +92,9 @@ POST          /rest/search/text/little                                          
 POST          /rest/search/text                                                                                      @be.lynk.server.controller.rest.SearchRestController.getByString()
 POST          /rest/search/business/near                                                                             @be.lynk.server.controller.rest.SearchRestController.getNearBusiness()
 POST          /rest/search/business/near/interest/$interestId<[0-9]+>                                                @be.lynk.server.controller.rest.SearchRestController.getNearBusinessByInterest(interestId:Long)
+
+#map
+GET           /rest/map/business                                                                                     @be.lynk.server.controller.rest.MapRestController.getMapDataBusinesses()
 
 #file
 POST          /rest/file/:sizex/:sizey                                                                               @be.lynk.server.controller.rest.FilesController.uploadWithSize(sizex:Integer,sizey:Integer)

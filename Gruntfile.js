@@ -200,6 +200,7 @@ module.exports = function (grunt) {
                         'public/javascripts/service/ContactService.js',
                         'public/javascripts/service/FileService.js',
                         'public/javascripts/service/ImageService.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/service/MapService.js',
                         //TODO ??
                         'public/javascripts/dist/templateCacheWeb.js',
                         'public/javascripts/modal/BasicModal/BasicModal.js',
@@ -243,6 +244,7 @@ module.exports = function (grunt) {
                         'target/scala-2.10/resource_managed/main/public/javascripts/controller/web/BusinessCtrl.js',
                         'public/javascripts/controller/web/SearchPageCtrl.js',
                         'public/javascripts/controller/web/FollowedBusinessPageCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/controller/web/MapCtrl.js',
 
                         <!-- component -->
                         'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationList/PublicationListCtrl.js',
@@ -250,6 +252,8 @@ module.exports = function (grunt) {
                         'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/publicationListForBusiness/PublicationListForBusinessCtrl.js',
                         'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/businessList/BusinessListCtrl.js',
                         'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/categoryLine/CategoryLineCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/map/businessForMap/BusinessForMapCtrl.js',
+                        'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/map/publicationForMap/PublicationForMapCtrl.js',
                         'public/javascripts/directive/web/headerBar/HeaderBarCtrl.js',
                         'public/javascripts/directive/web/footerBar/FooterBarCtrl.js',
                         'target/scala-2.10/resource_managed/main/public/javascripts/directive/component/toTop/ToTopCtrl.js',

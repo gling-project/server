@@ -14,20 +14,20 @@ import java.util.Set;
 /**
  * Created by florian on 18/05/15.
  */
-public interface BusinessService extends CrudService<Business>{
+public interface BusinessService extends CrudService<Business> {
     List<Business> findByName(String businessName);
 
-    List<Business> search(String text,int page,int max);
+    List<Business> search(String text, int page, int max);
 
     List<Business> findByCategory(BusinessCategory businessCategory, int maxResult);
 
-    List<Business> findByCategory(BusinessCategory businessCategory, int page,int maxResult);
+    List<Business> findByCategory(BusinessCategory businessCategory, int page, int maxResult);
 
     List<Business> findByZipAndDeepSearch(String zip, String search, int page, int maxResult);
 
-    List<Business> findByZip(String zip, int page,int maxResult);
+    List<Business> findByZip(String zip, int page, int maxResult);
 
-    List<Business> findByDistance(Position position,int maxDistance);
+    List<Business> findByDistance(Position position, int maxDistance);
 
     Set<Business> findByDistanceAndCategories(Position position, List<BusinessCategory> categories, int maxDistance);
 
@@ -44,4 +44,6 @@ public interface BusinessService extends CrudService<Business>{
     long countAtLeastOnePublication();
 
     long countAtLeastOnePublicationFrom(LocalDateTime localDateTime);
+
+    List<Business> findByStatus(BusinessStatusEnum businessStatus);
 }
