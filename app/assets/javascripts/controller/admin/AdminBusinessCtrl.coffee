@@ -84,7 +84,10 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
                     else if business.businessStatus == 'NOT_PUBLISHED'
                         marker.setIcon '/assets/images/google-map-marker/marker_not_published.png'
                     else if business.businessStatus == 'PUBLISHED'
-                        marker.setIcon '/assets/images/google-map-marker/marker_published.png'
+                        if business.hasOwner
+                            marker.setIcon '/assets/images/google-map-marker/marker_published.png'
+                        else
+                            marker.setIcon '/assets/images/google-map-marker/marker_no_owner.png'
                     marker.setMap $scope.map
                     $scope.mks.push marker
 
