@@ -1,4 +1,4 @@
-myApp.directive 'businessForMapCtrl', ($rootScope, businessService, geolocationService, directiveService) ->
+myApp.directive 'businessForMapCtrl', ($rootScope, businessService, geolocationService, directiveService,$location) ->
     restrict: 'E'
     scope: directiveService.autoScope(ngInfo: '=')
     templateUrl: '/assets/javascripts/directive/component/map/businessForMap/template.html'

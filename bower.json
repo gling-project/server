@@ -36,8 +36,6 @@
     "angular-timer": "*",
     "humanize-duration": "*",
     "highcharts": "~4.0.3",
-    "angular-google-maps": "*",
-    "angularjs-google-maps": "*",
     "angular-socialshare":"*",
     "angular-easyfb":"*"
   },

@@ -1,107 +1,110 @@
-<div class="content-block">
+<div class="container-content">
+    <div class="content-block">
 
-    <to-top-ctrl></to-top-ctrl>
+        <to-top-ctrl></to-top-ctrl>
 
-    <div class="help-div-geolocalisation" ng-show="displaySharePositionAdvertissement() && openGeolocationPopup !== true">
-        <button class="help-popup-close glyphicon glyphicon-remove"
-                ng-click="openGeolocationPopup=true"></button>
-        <p compile="'--.home.geolocation.notAccepted'">
-        </p>
+        <div class="help-div-geolocalisation"
+             ng-show="displaySharePositionAdvertissement() && openGeolocationPopup !== true">
+            <button class="help-popup-close glyphicon glyphicon-remove"
+                    ng-click="openGeolocationPopup=true"></button>
+            <p compile="'--.home.geolocation.notAccepted'">
+            </p>
 
-    </div>
+        </div>
 
 
-    <div class="home-interest-box">
+        <div class="home-interest-box">
 
-        <!-- switch -->
-        <div>{{'--.home.interest-switch.help' | translateText}}</div>
+            <!-- switch -->
+            <div>{{'--.home.interest-switch.help' | translateText}}</div>
 
-        <div class="home-interest-switch home-interest-box-background">
-            <div>
-                <button class="gling-button gling-icon gling-icon-location button-with-label home-interest"
-                        ng-class="{'selected':followedMode !== true}"
-                        ng-click="setFollowedMode(false)">
-                    <p>{{'--.home.localisation.help' | translateText}}</p>
-                </button>
-            </div>
-            <div>
-                <div class="onoffswitch" ng-click="setFollowedMode()">
-                    <label class="onoffswitch-label"
-                           ng-class="{'followedMode':followedMode}">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
+            <div class="home-interest-switch home-interest-box-background">
+                <div>
+                    <button class="gling-button gling-icon gling-icon-location button-with-label home-interest"
+                            ng-class="{'selected':followedMode !== true}"
+                            ng-click="setFollowedMode(false)">
+                        <p>{{'--.home.localisation.help' | translateText}}</p>
+                    </button>
+                </div>
+                <div>
+                    <div class="onoffswitch" ng-click="setFollowedMode()">
+                        <label class="onoffswitch-label"
+                               ng-class="{'followedMode':followedMode}">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <button class="gling-button gling-icon gling-icon-bell button-with-label home-interest"
+                            ng-class="{'selected':followedMode === true}"
+                            ng-click="setFollowedMode(true)">
+                        <p>{{'--.home.followning.help' | translateText}}</p>
+                    </button>
                 </div>
             </div>
-            <div>
-                <button class="gling-button gling-icon gling-icon-bell button-with-label home-interest"
-                        ng-class="{'selected':followedMode === true}"
-                        ng-click="setFollowedMode(true)">
-                    <p>{{'--.home.followning.help' | translateText}}</p>
+        </div>
+
+        <!-- interest -->
+        <div class="home-interest-box">
+
+
+            <div>{{'--.home.interest.help' | translateText}}</div>
+
+
+            <div class="home-interest-box-background">
+
+                <!--<button ng-click="left()"-->
+                <!--class="gling-button home-interest home-interest-arrow gling-icon gling-icon-arrow_left button-with-label"-->
+                <!--ng-disabled="interestDisplayFirst <= 0">-->
+                <!--<p>{{'--.home.interest.arrow.label' | translateText}}</p>-->
+                <!--</button>-->
+
+                <button class="gling-button home-interest button-with-label-top {{'gling-icon gling-icon-' + interest.name}}"
+                        ng-repeat="interest in interestDisplayed"
+                        ng-show="interest.iconName!=null"
+                        ng-click="searchByInterest(interest)"
+                        ng-class="{'selected':interest.selected === true}">
+                    <p>{{interest.translationName}}</p>
                 </button>
+
+                <!--<button ng-click="right()"-->
+                <!--class="gling-button home-interest home-interest-arrow gling-icon gling-icon-arrow_right button-with-label"-->
+                <!--ng-disabled="interestDisplayFirst >= customerInterests.length - interestDisplayMax">-->
+                <!--<p>{{'--.home.interest.arrow.label' | translateText}}</p>-->
+                <!--</button>-->
             </div>
-        </div>
-    </div>
 
-    <!-- interest -->
-    <div class="home-interest-box">
+            <div class="home-interest-box-background home-interest-box-background-second">
+                <button class="gling-button home-interest button-with-label {{'gling-icon gling-icon-' + interest.name}}"
+                        ng-repeat="interest in interestDisplayed2"
+                        ng-show="interest.iconName!=null"
+                        ng-click="searchByInterest(interest)"
+                        ng-class="{'selected':interest.selected === true}">
+                    <p>{{interest.translationName}}</p>
+                </button>
 
+            </div>
 
-        <div>{{'--.home.interest.help' | translateText}}</div>
-
-
-        <div class="home-interest-box-background">
-
-            <!--<button ng-click="left()"-->
-            <!--class="gling-button home-interest home-interest-arrow gling-icon gling-icon-arrow_left button-with-label"-->
-            <!--ng-disabled="interestDisplayFirst <= 0">-->
-            <!--<p>{{'--.home.interest.arrow.label' | translateText}}</p>-->
-            <!--</button>-->
-
-            <button class="gling-button home-interest button-with-label-top {{'gling-icon gling-icon-' + interest.name}}"
-                    ng-repeat="interest in interestDisplayed"
-                    ng-show="interest.iconName!=null"
-                    ng-click="searchByInterest(interest)"
-                    ng-class="{'selected':interest.selected === true}">
-                <p>{{interest.translationName}}</p>
-            </button>
-
-            <!--<button ng-click="right()"-->
-            <!--class="gling-button home-interest home-interest-arrow gling-icon gling-icon-arrow_right button-with-label"-->
-            <!--ng-disabled="interestDisplayFirst >= customerInterests.length - interestDisplayMax">-->
-            <!--<p>{{'--.home.interest.arrow.label' | translateText}}</p>-->
-            <!--</button>-->
-        </div>
-
-        <div class="home-interest-box-background home-interest-box-background-second">
-            <button class="gling-button home-interest button-with-label {{'gling-icon gling-icon-' + interest.name}}"
-                    ng-repeat="interest in interestDisplayed2"
-                    ng-show="interest.iconName!=null"
-                    ng-click="searchByInterest(interest)"
-                    ng-class="{'selected':interest.selected === true}">
-                <p>{{interest.translationName}}</p>
-            </button>
 
         </div>
 
 
+        <!-- publication list -->
+        <publication-list-ctrl ng-info="publicationListCtrl">
+        </publication-list-ctrl>
+
+        <!-- empty result help -->
+        <div class="help-div" ng-show="emptyMessage!==null">
+            {{'--.home.emptyResult.'+emptyMessage | translateText}}
+        </div>
+
+        <!-- business list (in case of empty result -->
+        <business-list-ctrl
+                ng-info="businessListParam"
+                ng-show="emptyMessage!==null">
+        </business-list-ctrl>
+
+
     </div>
-
-
-    <!-- publication list -->
-    <publication-list-ctrl ng-info="publicationListCtrl">
-    </publication-list-ctrl>
-
-    <!-- empty result help -->
-    <div class="help-div" ng-show="emptyMessage!==null">
-        {{'--.home.emptyResult.'+emptyMessage | translateText}}
-    </div>
-
-    <!-- business list (in case of empty result -->
-    <business-list-ctrl
-            ng-info="businessListParam"
-            ng-show="emptyMessage!==null">
-    </business-list-ctrl>
-
-
 </div>

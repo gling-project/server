@@ -1,14 +1,22 @@
-<div class="content-block map-page">
+<div class="content-block map-page"
+     style="margin-top: 100px;height:{{height}}px">
 
-    <button ng-click="displayFilters=!displayFilters">Filtre</button>
 
     <div class="map-content">
-        <map style="height: 700px !important;"
-             center="{{mapData.center.latitude}}, {{mapData.center.longitude}}"
-             zoom="{{mapData.zoom}}"></map>
+
+        <div class="option-panel"
+             ng-class="{'option-panel-open-panel':displayFilters}">
+            <button ng-click="displayFilters=!displayFilters">Filtre</button>
+        </div>
+
+        <div style="height:{{height}}px !important" id="map">
+        </div>
 
         <div class="filter-panel"
              ng-show="displayFilters">
+
+            <span class="filter-panel-close glyphicon glyphicon-remove"
+                    ng-click="displayFilters=false"></span>
 
             <!-- folloing  -->
             <input type="checkbox" ng-model="filters.following">Uniquement les commerces suivi<br/>

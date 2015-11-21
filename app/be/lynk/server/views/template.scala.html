@@ -124,7 +124,7 @@
             <script src="@routes.Assets.at("javascripts/directive/web/footerBar/FooterBarCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/directive/component/toTop/ToTopCtrl.js")" type="text/javascript"></script>
             <script src="@routes.Assets.at("javascripts/directive/component/map/businessForMap/BusinessForMapCtrl.js")" type="text/javascript"></script>
-            @*<script src="@routes.Assets.at("javascripts/directive/component/map/publicationForMap/PublicationForMapCtrl.js")" type="text/javascript"></script>*@
+            <script src="@routes.Assets.at("javascripts/directive/component/map/publicationForMap/PublicationForMapCtrl.js")" type="text/javascript"></script>
 
             <!-- service -->
             <script src="@routes.Assets.at("javascripts/service/FlashService.js")" type="text/javascript"></script>
@@ -141,7 +141,7 @@
          @* @if(false){*@
          @if(Play.application().isProd()){
 
-             <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+             <script src='//maps.googleapis.com/maps/api/js?callback=initMap'></script>
 
              <script src="@routes.Assets.at("dist/dependencies."+data.getProjectLastVersion+".final.js")" type="text/javascript"></script>
 
@@ -172,9 +172,7 @@
         <header-bar-ctrl></header-bar-ctrl>
 
         <!-- content -->
-        <div class="container-content">
-            <div ng-view></div>
-        </div>
+        <div ng-view></div>
 
             <!-- footer bar -->
         <footer-bar-ctrl></footer-bar-ctrl>

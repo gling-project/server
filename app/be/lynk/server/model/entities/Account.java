@@ -59,7 +59,7 @@ public class Account extends AbstractEntity {
     @Basic(optional = false)
     private Boolean sendNotificationByDefault = true;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "selectedByAccount")
+    @OneToOne(fetch = FetchType.LAZY)
     private Address selectedAddress;
 
     @OneToOne(cascade = CascadeType.ALL,

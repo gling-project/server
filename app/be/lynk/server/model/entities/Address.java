@@ -32,7 +32,7 @@ public class Address extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "selectedAddress")
     private Account selectedByAccount;
 
     public Address() {

@@ -1,157 +1,158 @@
-<to-top-ctrl></to-top-ctrl>
+<div class="container-content">
+    <to-top-ctrl></to-top-ctrl>
 
 
-<!-- management part -->
-<div ng-show="myBusiness === true" class="panel panel-gling business-management">
+    <!-- management part -->
+    <div ng-show="myBusiness === true" class="panel panel-gling business-management">
 
-    <div class="management-block">
-        <h4>{{'--.business.page.management.title' | translateText}}
+        <div class="management-block">
+            <h4>{{'--.business.page.management.title' | translateText}}
 
         <span style="float: right">
             {{'--.business.page.management.status' | translateText}}
             <span ng-class="'business-status-'+business.businessStatus"></span>
             {{'--.business.status.'+business.businessStatus | translateText}}
         </span>
-        </h4>
+            </h4>
 
-        <div>{{'--.business.page.edit.description' | translateText}}</div>
-    </div>
-
-    <div class="management-block">
-
-        <h4>{{'--.business.manager.progress.createPublicationTitle' | translateText}}</h4>
-
-        <button id="business-btn-promotion-add"
-                class="btn gling-button-dark"
-                ng-click="createPromotion()"
-                ng-disabled="business.businessStatus !== 'PUBLISHED'">
-            {{'--.business.publication.btn.promotion' | translateText}}
-        </button>
-        <button class="btn gling-button-dark"
-                ng-click="createNotification()"
-                ng-disabled="business.businessStatus !== 'PUBLISHED'">
-            {{'--.business.publication.btn.notification' | translateText}}
-        </button>
-
-        <div ng-hide="business.businessStatus==='PUBLISHED'">
-            {{'--.business.manager.createPublication.disabled.desc' | translateText}}
+            <div>{{'--.business.page.edit.description' | translateText}}</div>
         </div>
-        <div ng-show="business.businessStatus==='PUBLISHED'">
-            {{'--.business.manager.createPublication.enabled.desc' | translateText}}
-        </div>
-    </div>
 
+        <div class="management-block">
 
-    <div>
-        <div style="width: 49%;display: inline-block;vertical-align: top" class="business-management-progress">
+            <h4>{{'--.business.manager.progress.createPublicationTitle' | translateText}}</h4>
 
-            <h4>{{'--.business.management.progression' | translateText}}</h4>
+            <button id="business-btn-promotion-add"
+                    class="btn gling-button-dark"
+                    ng-click="createPromotion()"
+                    ng-disabled="business.businessStatus !== 'PUBLISHED'">
+                {{'--.business.publication.btn.promotion' | translateText}}
+            </button>
+            <button class="btn gling-button-dark"
+                    ng-click="createNotification()"
+                    ng-disabled="business.businessStatus !== 'PUBLISHED'">
+                {{'--.business.publication.btn.notification' | translateText}}
+            </button>
 
-            <div class="business-management-progress-bar">
-                <div ng-style="{'width':(300 * (computeProgression()/8))+'px'}">
-                </div>
-                <span>{{computeProgression()}} / 8</span>
+            <div ng-hide="business.businessStatus==='PUBLISHED'">
+                {{'--.business.manager.createPublication.disabled.desc' | translateText}}
             </div>
+            <div ng-show="business.businessStatus==='PUBLISHED'">
+                {{'--.business.manager.createPublication.enabled.desc' | translateText}}
+            </div>
+        </div>
 
-            <span>{{'--.business.management.progression.desc' | translateText}}</span><br/><br/>
 
-            <!-- address -->
-            <div class="business-management-progress-el">
-                <input type="checkbox"
-                       ng-checked="business.address!=null"/>
+        <div>
+            <div style="width: 49%;display: inline-block;vertical-align: top" class="business-management-progress">
+
+                <h4>{{'--.business.management.progression' | translateText}}</h4>
+
+                <div class="business-management-progress-bar">
+                    <div ng-style="{'width':(300 * (computeProgression()/8))+'px'}">
+                    </div>
+                    <span>{{computeProgression()}} / 8</span>
+                </div>
+
+                <span>{{'--.business.management.progression.desc' | translateText}}</span><br/><br/>
+
+                <!-- address -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox"
+                           ng-checked="business.address!=null"/>
 
                 <span ng-class="{'completed':business.address!=null}"
                       ng-click="editAddress()"
                       class="link">
                     {{'--.business.manager.progress.add.address' | translateText}}
                 </span>
-            </div>
+                </div>
 
-            <!-- category -->
-            <div class="business-management-progress-el">
-                <input type="checkbox"
-                       ng-checked="numberCategories()>0"/>
+                <!-- category -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox"
+                           ng-checked="numberCategories()>0"/>
 
                 <span ng-class="{'completed':numberCategories()>0}"
                       ng-click="editCategory()"
                       class="link">
                     {{'--.business.manager.progress.add.category' | translateText}}
                 </span>
-            </div>
+                </div>
 
-            <!-- description -->
-            <div class="business-management-progress-el">
-                <input type="checkbox"
-                       ng-checked="business.description!=null"/>
+                <!-- description -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox"
+                           ng-checked="business.description!=null"/>
 
                 <span ng-class="{'completed':business.description!=null}"
                       ng-click="editbusiness()"
                       class="link">
                     {{'--.business.manager.progress.add.description' | translateText}}
                 </span>
-            </div>
+                </div>
 
-            <!-- illustration -->
-            <div class="business-management-progress-el">
-                <input type="checkbox" ng-checked="business.illustration!=null"/>
+                <!-- illustration -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox" ng-checked="business.illustration!=null"/>
             <span ng-class="{'completed':business.illustration!=null}"
                   ng-click="editIllustration()"
                   class="link">
                 {{'--.business.manager.progress.add.illustration' | translateText}}
             </span>
-            </div>
+                </div>
 
-            <!-- landscape -->
-            <div class="business-management-progress-el">
-                <input type="checkbox" ng-checked="business.landscape!=null"/>
+                <!-- landscape -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox" ng-checked="business.landscape!=null"/>
             <span ng-class="{'completed':business.landscape!=null}"
                   ng-click="editLandscape()"
                   class="link">
                 {{'--.business.manager.progress.add.landscape' | translateText}}
             </span>
-            </div>
+                </div>
 
-            <!-- gallery -->
-            <div class="business-management-progress-el">
-                <input type="checkbox" ng-checked="business.galleryPictures.length>0"/>
+                <!-- gallery -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox" ng-checked="business.galleryPictures.length>0"/>
             <span ng-class="{'completed':business.galleryPictures.length>0}"
                   ng-click="editGallery()"
                   class="link">
                 {{'--.business.manager.progress.add.gallery' | translateText}}
             </span>
-            </div>
+                </div>
 
-            <!-- social -->
-            <div class="business-management-progress-el">
-                <input type="checkbox"
-                       ng-checked="displaySocialNetwork()"/>
+                <!-- social -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox"
+                           ng-checked="displaySocialNetwork()"/>
             <span ng-class="{'completed':displaySocialNetwork()}"
                   ng-click="editSocialNetwork()"
                   class="link">
                 {{'--.business.manager.progress.add.socialNetwork' | translateText}}
 
             </span>
-            </div>
+                </div>
 
 
-            <!-- schedule -->
-            <div class="business-management-progress-el">
-                <input type="checkbox"
-                       ng-checked="displaySchedule()"/>
+                <!-- schedule -->
+                <div class="business-management-progress-el">
+                    <input type="checkbox"
+                           ng-checked="displaySchedule()"/>
             <span ng-class="{'completed':displaySchedule()}"
                   ng-click="editSchedule()"
                   class="link">
                 {{'--.business.manager.progress.add.schedule' | translateText}}
             </span>
+                </div>
+
             </div>
+            <div style="width: 49%;display: inline-block;vertical-align: top">
 
-        </div>
-        <div style="width: 49%;display: inline-block;vertical-align: top">
+                <h4>{{'--.business.page.management.changeStatus' | translateText}}</h4>
 
-            <h4>{{'--.business.page.management.changeStatus' | translateText}}</h4>
-
-            <div class="management-block">
-                <p>
+                <div class="management-block">
+                    <p>
                 <span ng-show="business.businessStatus === 'NOT_PUBLISHED'">
                     {{'--.business.page.edit.description.notPublished' |translateText}}
                 </span>
@@ -161,125 +162,125 @@
                 <span ng-show="business.businessStatus === 'PUBLISHED'">
                     {{'--.business.page.edit.descriptionPublished' |translateText}}
                 </span>
-                    <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
-                            ng-click="publish()"
-                            id="business-btn-publish"
-                            class="btn gling-button-dark">
-                        {{'--.business.page.publication' | translateText}}
-                    </button>
+                        <button ng-show="business.businessStatus === 'NOT_PUBLISHED'"
+                                ng-click="publish()"
+                                id="business-btn-publish"
+                                class="btn gling-button-dark">
+                            {{'--.business.page.publication' | translateText}}
+                        </button>
 
-                    <button ng-show="business.businessStatus === 'WAITING_CONFIRMATION'"
-                            ng-click="cancelPublishRequest()"
-                            class="btn gling-button-dark">
-                        {{'--.business.page.cancelPublishRequest' | translateText}}
-                    </button>
+                        <button ng-show="business.businessStatus === 'WAITING_CONFIRMATION'"
+                                ng-click="cancelPublishRequest()"
+                                class="btn gling-button-dark">
+                            {{'--.business.page.cancelPublishRequest' | translateText}}
+                        </button>
 
-                    <button ng-show="business.businessStatus === 'PUBLISHED'"
-                            ng-click="stopPublish()"
-                            class="btn gling-button-dark">
-                        {{'--.business.page.stopPublication' | translateText}}
-                    </button>
-                </p>
-            </div>
-            <h4>{{'--.business.page.management.help.title' | translateText}}</h4>
-            <a class="btn gling-button-dark" class="btn gling-button-dark" href="/assets/document/business_help.pdf"
-               target="_blank">
-                {{'--.business.manager.progress.help' | translateText}}
-            </a>
-            <button class="btn gling-button-dark" ng-click="openContact()">
-                {{'--.business.page.management.contact.btn' | translateText}}
-            </button>
-        </div>
-    </div>
-</div>
-
-
-<!-- show edit buttons or not -->
-<div class="onoffswitch-container" ng-show="displayEditMode()">
-    <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
-    <div class="onoffswitch">
-        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchFromBusiness"
-               checked
-               ng-model="edit">
-        <label class="onoffswitch-label" for="myonoffswitchFromBusiness">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
-    </div>
-    <div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div>
-</div>
-
-<div class="business-page" ng-show="business!=null">
-    <div class="business-page-header">
-        <div class="business-page-header-landscape editable-element"
-             ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
-
-            <!-- landscape -->
-            <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                    id="business-btn-landscape-edit"
-                    ng-show="edit"
-                    ng-click="editLandscape()">
-            </button>
-
-            <!-- illustration -->
-            <div class="business-page-illustration-container editable-element"
-                 ng-click="refreshPublications()">
-                <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
-                <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm"
-                        id="business-btn-illustration-edit"
-                        ng-show="edit"
-                        ng-click="editIllustration()">
+                        <button ng-show="business.businessStatus === 'PUBLISHED'"
+                                ng-click="stopPublish()"
+                                class="btn gling-button-dark">
+                            {{'--.business.page.stopPublication' | translateText}}
+                        </button>
+                    </p>
+                </div>
+                <h4>{{'--.business.page.management.help.title' | translateText}}</h4>
+                <a class="btn gling-button-dark" class="btn gling-button-dark" href="/assets/document/business_help.pdf"
+                   target="_blank">
+                    {{'--.business.manager.progress.help' | translateText}}
+                </a>
+                <button class="btn gling-button-dark" ng-click="openContact()">
+                    {{'--.business.page.management.contact.btn' | translateText}}
                 </button>
             </div>
+        </div>
+    </div>
 
-            <!-- name -->
-            <div class="business-page-name editable-element"
-                 ng-click="refreshPublications()">
+
+    <!-- show edit buttons or not -->
+    <div class="onoffswitch-container" ng-show="displayEditMode()">
+        <div>{{'--.business.page.edit.editSwitchDisplay' | translateText}}</div>
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchFromBusiness"
+                   checked
+                   ng-model="edit">
+            <label class="onoffswitch-label" for="myonoffswitchFromBusiness">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        <div>{{'--.business.page.edit.editSwitchEdit' | translateText}}</div>
+    </div>
+
+    <div class="business-page" ng-show="business!=null">
+        <div class="business-page-header">
+            <div class="business-page-header-landscape editable-element"
+                 ng-style="{'background-image':'url('+(business.landscape | image)+')' }">
+
+                <!-- landscape -->
+                <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                        id="business-btn-landscape-edit"
+                        ng-show="edit"
+                        ng-click="editLandscape()">
+                </button>
+
+                <!-- illustration -->
+                <div class="business-page-illustration-container editable-element"
+                     ng-click="refreshPublications()">
+                    <img class="business-illustration" ng-src="{{business.illustration | image}}"/>
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit btn-sm"
+                            id="business-btn-illustration-edit"
+                            ng-show="edit"
+                            ng-click="editIllustration()">
+                    </button>
+                </div>
+
+                <!-- name -->
+                <div class="business-page-name editable-element"
+                     ng-click="refreshPublications()">
                 <span>
                     {{business.name}}
                 </span>
 
-                <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                        id="business-btn-name-edit"
-                        ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                        ng-click="editbusiness()">
-                </button>
+                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                            id="business-btn-name-edit"
+                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                            ng-click="editbusiness()">
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div class="business-page-bottom">
+            <div class="business-page-bottom">
 
-            <div ng-show="business.hasOwner===false">
-                {{'--.business.page.noOwner' | translateText}}
+                <div ng-show="business.hasOwner===false">
+                    {{'--.business.page.noOwner' | translateText}}
                 <span class="business-claimed-status">
                     <span ng-show="myself!=null && myself.claimedBusinessId == business.id">{{'--.business.page.noOwner.alreadyClaimed' | translateText}}</span>
                     <span ng-show="myself!=null && myself.claimedBusinessId!=null && myself.claimedBusinessId != business.id">{{'--.business.page.noOwner.alreadyClaimedOther' | translateText}}</span>
                 </span>
-                <button ng-click="tryClaimBusiness()"
-                        ng-show="myself == null || myself.claimedBusinessId==null"
-                        class="btn gling-button-dark btn-xs">
-                    {{'--.business.page.claims' | translateText}}
-                </button>
-            </div>
+                    <button ng-click="tryClaimBusiness()"
+                            ng-show="myself == null || myself.claimedBusinessId==null"
+                            class="btn gling-button-dark btn-xs">
+                        {{'--.business.page.claims' | translateText}}
+                    </button>
+                </div>
 
-            <div class="business-right-column">
-                <!-- description -->
-                <div class="business-page-description">
-
-                    <!-- category -->
-                    <div>
-                        <div style="display: inline-block">
-                            <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
-                        </div>
-                        <button ng-show="edit"
-                                id="business-btn-category-edit"
-                                class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                                ng-click="editCategory()">
-                        </button>
-                    </div>
-
+                <div class="business-right-column">
                     <!-- description -->
-                    <span ng-bind-html="business.description | text : descriptionLimit"></span>
+                    <div class="business-page-description">
+
+                        <!-- category -->
+                        <div>
+                            <div style="display: inline-block">
+                                <category-line-ctrl ng-info="categoryLineParams"></category-line-ctrl>
+                            </div>
+                            <button ng-show="edit"
+                                    id="business-btn-category-edit"
+                                    class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                                    ng-click="editCategory()">
+                            </button>
+                        </div>
+
+                        <!-- description -->
+                        <span ng-bind-html="business.description | text : descriptionLimit"></span>
                     <span ng-show="business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase"
                           ng-click="descriptionLimit = 10000"
                           class="link">{{'--.textReuction.seeMore' | translateText}}</span>
@@ -287,204 +288,206 @@
                           ng-click="descriptionLimit = descriptionLimitBase"
                           class="link">{{'--.textReuction.seeLess' | translateText}}</span>
 
-                    <br/>
-                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit"
-                            ng-click="editbusiness()">
-                    </button>
+                        <br/>
+                        <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                                ng-show="edit"
+                                ng-click="editbusiness()">
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- follow  TODO TEMP-->
+                <follow-widget-ctrl ng-info="{business:business}"></follow-widget-ctrl>
+
+
+            </div>
+
+        </div>
+        <div class="business-page-body">
+
+            <div class="business-page-body-center">
+
+                <!-- publication -->
+                <div>
+                    <select ng-model="publicationListParam.type"
+                            ng-options="option.key as option.value | translateText for option in publicationOptions">
+                    </select>
+
+                    <publication-list-for-business-ctrl
+                            ng-info="publicationListParam">
+                    </publication-list-for-business-ctrl>
+
                 </div>
             </div>
 
 
-            <!-- follow  TODO TEMP-->
-            <follow-widget-ctrl ng-info="{business:business}"></follow-widget-ctrl>
+            <div class="business-page-body-right">
+
+                <!-- gallery -->
+                <div class="panel panel-gling"
+                     ng-show="edit === true || (business.galleryPictures !=null && business.galleryPictures.length > 0)">
+                    <div class="panel-heading">{{'--.business.gallery' | translateText}}</div>
+                    <div class="panel-body">
 
 
+                        <gallery-ctrl ng-info="{images:business.galleryPictures}"></gallery-ctrl>
+
+                        <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                                id="welcome-btn-gallery-edit"
+                                ng-show="edit"
+                                ng-click="editGallery()">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- address -->
+                <div class="panel panel-gling">
+                    <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
+                    <div class="panel-body">
+
+                        <google-map-widget-ctrl ng-info="googleMapParams">
+                        </google-map-widget-ctrl>
+
+                        <div class="business-address">
+                            <div>{{business.address.street}}<br/> {{business.address.zip}}, {{business.address.city}}
+                            </div>
+                            <div>{{business.distance / 1000 | number:2}} Km</div>
+                        </div>
+                        <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                                id="business-btn-address-edit"
+                                ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
+                                ng-click="editAddress()">
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- contact -->
+                <div class="panel panel-gling">
+                    <div class="panel-heading">
+                        {{'--.generic.contact' | translateText}}
+                    </div>
+                    <div class="panel-body">
+
+                        <div id="welcome-contact-data-phone">
+                            {{business.phone}}
+                        </div>
+                        <div>
+                            <a href="{{business.website}}" target="_blank"
+                               id="welcome-contact-data-website">
+                                {{business.website}}
+                            </a>
+                        </div>
+                        <div id="welcome-contact-data-email">
+                            {{business.email}}
+                        </div>
+
+                        <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                                id="business-btn-contact-edit"
+                                ng-show="edit"
+                                ng-click="editbusiness()">
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- social network -->
+                <div class="panel panel-gling business-social-panel"
+                     ng-show="edit === true || displaySocialNetwork()">
+                    <div class="panel-heading">{{'--.generic.socialNetwork' | translateText}}</div>
+                    <div class="panel-body">
+
+
+                        <div ng-show="!!business.socialNetwork.facebookLink" class="business-social-network-box">
+                            <a id="welcome-link-facebook"
+                               href="{{business.socialNetwork.facebookLink}}"
+                               title="Facebook"
+                               target="_blank">
+                                <img src="/assets/images/social_network/facebook.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.socialNetwork.twitterLink" class="business-social-network-box">
+                            <a id="welcome-link-twitter"
+                               href="{{business.socialNetwork.twitterLink}}"
+                               title="Twitter"
+                               target="_blank">
+                                <img src="/assets/images/social_network/twitter.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.socialNetwork.instagramLink" class="business-social-network-box">
+                            <a id="welcome-link-instagram"
+                               href="{{business.socialNetwork.instagramLink}}"
+                               title="Instagram"
+                               target="_blank">
+                                <img src="/assets/images/social_network/instagram.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.socialNetwork.deliveryLink" class="business-social-network-box">
+                            <a id="welcome-link-delivery"
+                               href="{{business.socialNetwork.deliveryLink}}"
+                               title="{{'--.business.socialNetwork.delivery' | translateText}}"
+                               target="_blank">
+                                <img src="/assets/images/social_network/delivery.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.socialNetwork.reservationLink" class="business-social-network-box">
+                            <a href="{{business.socialNetwork.reservationLink}}"
+                               title="{{'--.business.socialNetwork.reservation' | translateText}}"
+                               target="_blank">
+                                <img src="/assets/images/social_network/reservation.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.socialNetwork.opinionLink" class="business-social-network-box">
+                            <a href="{{business.socialNetwork.opinionLink}}"
+                               title="{{'--.business.socialNetwork.opinion' | translateText}}"
+                               target="_blank">
+                                <img src="/assets/images/social_network/opinion.png">
+                            </a>
+                        </div>
+
+                        <div ng-show="!!business.socialNetwork.ecommerceLink" class="business-social-network-box">
+                            <a href="{{business.socialNetwork.ecommerceLink}}"
+                               title="{{'--.business.socialNetwork.ecommerce' | translateText}}"
+                               target="_blank">
+                                <img src="/assets/images/social_network/e_commerce.png">
+                            </a>
+                        </div>
+
+                        <br/>
+
+                        <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                                ng-show="edit"
+                                id="business-btn-social-network-edit"
+                                ng-click="editSocialNetwork()">
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- schedule -->
+                <div class="panel panel-gling" ng-show="edit === true || displaySchedule()">
+                    <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
+                    <div class="panel-body">
+
+                        <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
+
+                        <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
+                                id="business-btn-schedule-edit"
+                                ng-show="edit"
+                                ng-click="editSchedule()">
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
 
     </div>
-    <div class="business-page-body">
-
-        <div class="business-page-body-center">
-
-            <!-- publication -->
-            <div>
-                <select ng-model="publicationListParam.type"
-                        ng-options="option.key as option.value | translateText for option in publicationOptions">
-                </select>
-
-                <publication-list-for-business-ctrl
-                        ng-info="publicationListParam">
-                </publication-list-for-business-ctrl>
-
-            </div>
-        </div>
-
-
-        <div class="business-page-body-right">
-
-            <!-- gallery -->
-            <div class="panel panel-gling"
-                 ng-show="edit === true || (business.galleryPictures !=null && business.galleryPictures.length > 0)">
-                <div class="panel-heading">{{'--.business.gallery' | translateText}}</div>
-                <div class="panel-body">
-
-
-                    <gallery-ctrl ng-info="{images:business.galleryPictures}"></gallery-ctrl>
-
-                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                            id="welcome-btn-gallery-edit"
-                            ng-show="edit"
-                            ng-click="editGallery()">
-                    </button>
-                </div>
-            </div>
-
-            <!-- address -->
-            <div class="panel panel-gling">
-                <div class="panel-heading">{{'--.generic.address' | translateText}}</div>
-                <div class="panel-body">
-
-                    <google-map-widget-ctrl ng-info="googleMapParams">
-                    </google-map-widget-ctrl>
-
-                    <div class="business-address">
-                        <div>{{business.address.street}}<br/> {{business.address.zip}}, {{business.address.city}}</div>
-                        <div>{{business.distance / 1000 | number:2}} Km</div>
-                    </div>
-                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                            id="business-btn-address-edit"
-                            ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'"
-                            ng-click="editAddress()">
-                    </button>
-                </div>
-            </div>
-
-
-            <!-- contact -->
-            <div class="panel panel-gling">
-                <div class="panel-heading">
-                    {{'--.generic.contact' | translateText}}
-                </div>
-                <div class="panel-body">
-
-                    <div id="welcome-contact-data-phone">
-                        {{business.phone}}
-                    </div>
-                    <div>
-                        <a href="{{business.website}}" target="_blank"
-                           id="welcome-contact-data-website">
-                            {{business.website}}
-                        </a>
-                    </div>
-                    <div id="welcome-contact-data-email">
-                        {{business.email}}
-                    </div>
-
-                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                            id="business-btn-contact-edit"
-                            ng-show="edit"
-                            ng-click="editbusiness()">
-                    </button>
-
-                </div>
-            </div>
-
-            <!-- social network -->
-            <div class="panel panel-gling business-social-panel"
-                 ng-show="edit === true || displaySocialNetwork()">
-                <div class="panel-heading">{{'--.generic.socialNetwork' | translateText}}</div>
-                <div class="panel-body">
-
-
-                    <div ng-show="!!business.socialNetwork.facebookLink" class="business-social-network-box">
-                        <a id="welcome-link-facebook"
-                           href="{{business.socialNetwork.facebookLink}}"
-                           title="Facebook"
-                           target="_blank">
-                            <img src="/assets/images/social_network/facebook.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.socialNetwork.twitterLink" class="business-social-network-box">
-                        <a id="welcome-link-twitter"
-                           href="{{business.socialNetwork.twitterLink}}"
-                           title="Twitter"
-                           target="_blank">
-                            <img src="/assets/images/social_network/twitter.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.socialNetwork.instagramLink" class="business-social-network-box">
-                        <a id="welcome-link-instagram"
-                           href="{{business.socialNetwork.instagramLink}}"
-                           title="Instagram"
-                           target="_blank">
-                            <img src="/assets/images/social_network/instagram.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.socialNetwork.deliveryLink" class="business-social-network-box">
-                        <a id="welcome-link-delivery"
-                           href="{{business.socialNetwork.deliveryLink}}"
-                           title="{{'--.business.socialNetwork.delivery' | translateText}}"
-                           target="_blank">
-                            <img src="/assets/images/social_network/delivery.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.socialNetwork.reservationLink" class="business-social-network-box">
-                        <a href="{{business.socialNetwork.reservationLink}}"
-                           title="{{'--.business.socialNetwork.reservation' | translateText}}"
-                           target="_blank">
-                            <img src="/assets/images/social_network/reservation.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.socialNetwork.opinionLink" class="business-social-network-box">
-                        <a href="{{business.socialNetwork.opinionLink}}"
-                           title="{{'--.business.socialNetwork.opinion' | translateText}}"
-                           target="_blank">
-                            <img src="/assets/images/social_network/opinion.png">
-                        </a>
-                    </div>
-
-                    <div ng-show="!!business.socialNetwork.ecommerceLink" class="business-social-network-box">
-                        <a href="{{business.socialNetwork.ecommerceLink}}"
-                           title="{{'--.business.socialNetwork.ecommerce' | translateText}}"
-                           target="_blank">
-                            <img src="/assets/images/social_network/e_commerce.png">
-                        </a>
-                    </div>
-
-                    <br/>
-
-                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                            ng-show="edit"
-                            id="business-btn-social-network-edit"
-                            ng-click="editSocialNetwork()">
-                    </button>
-
-                </div>
-            </div>
-
-            <!-- schedule -->
-            <div class="panel panel-gling" ng-show="edit === true || displaySchedule()">
-                <div class="panel-heading">{{'--.business.profile.businessSchedule' | translateText}}</div>
-                <div class="panel-body">
-
-                    <schedule-ctrl ng-info="{dto:business.schedules}"></schedule-ctrl>
-
-                    <button class="btn gling-button-dark btn-xs glyphicon glyphicon-edit"
-                            id="business-btn-schedule-edit"
-                            ng-show="edit"
-                            ng-click="editSchedule()">
-                    </button>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
 </div>

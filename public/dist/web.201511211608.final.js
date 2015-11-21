@@ -206,9 +206,7 @@ var myApp = angular.module('app', [
         'ngRoute',
         'ngTable',
         'geolocation',
-        'timer',
-        'ngMap'
-        //,'ezfb'
+        'timer'
     ]
 );
 
@@ -2193,19 +2191,35 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 ;
 (function() {
 
-  myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInterestService', '$compile', '$timeout', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout) {
-    var addListener, getIcon, getMarker, testInterests;
+  myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInterestService', '$compile', '$timeout', 'geolocationService', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService) {
+    var addListener, getIcon, getMarker, noPoi, testInterests;
     $scope.mapDataBusinesses = null;
     $scope.map = null;
     $scope.interests = null;
     $scope.markers = [];
-    $scope.mapData = {
-      center: {
-        latitude: 50.8471417,
-        longitude: 4.3528959
-      },
-      zoom: 12
-    };
+    $scope.currentMarker = null;
+    $scope.$watch(function() {
+      return geolocationService.position;
+    }, function(n) {
+      if (n != null) {
+        $scope.map.setCenter({
+          lat: geolocationService.position.x,
+          lng: geolocationService.position.y
+        });
+        $scope.map.setZoom(15);
+        google.maps.event.trigger($scope.map, 'resize');
+        if (!($scope.currentMarker != null)) {
+          $scope.currentMarker = new google.maps.Marker({});
+        }
+        $scope.currentMarker.setPosition(new google.maps.LatLng(geolocationService.position.x, geolocationService.position.y));
+        $scope.currentMarker.setTitle('Ma position');
+        return $scope.currentMarker.setMap($scope.map);
+      }
+    });
+    $scope.height = $(window).height() - 140;
+    window.addEventListener('resize', function() {
+      return $scope.height = $(window).height() - 140;
+    });
     $scope.infowindow = new google.maps.InfoWindow({
       content: '<div class="info-window-inject"></div>'
     });
@@ -2214,9 +2228,6 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
       open: false,
       following: false
     };
-    $scope.$watch('map', function(o) {
-      return $scope.generateMapMarkers();
-    });
     getMarker = function(business) {
       var marker, _i, _len, _ref;
       _ref = $scope.markers;
@@ -2230,22 +2241,24 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
     };
     $scope.$watch('filters', function() {
       var mapDataBusiness, marker, _i, _len, _ref, _results;
-      _ref = $scope.mapDataBusinesses;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        mapDataBusiness = _ref[_i];
-        marker = getMarker(mapDataBusiness);
-        if ($scope.filters.open && !(mapDataBusiness.attendance != null)) {
-          _results.push(marker.setMap(null));
-        } else if ($scope.filters.following && !mapDataBusiness.following) {
-          _results.push(marker.setMap(null));
-        } else if (!(marker.getMap() != null)) {
-          _results.push(marker.setMap($scope.map));
-        } else {
-          _results.push(void 0);
+      if ($scope.mapDataBusinesse != null) {
+        _ref = $scope.mapDataBusinesses;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          mapDataBusiness = _ref[_i];
+          marker = getMarker(mapDataBusiness);
+          if ($scope.filters.open && !(mapDataBusiness.attendance != null)) {
+            _results.push(marker.setMap(null));
+          } else if ($scope.filters.following && !mapDataBusiness.following) {
+            _results.push(marker.setMap(null));
+          } else if (!(marker.getMap() != null)) {
+            _results.push(marker.setMap($scope.map));
+          } else {
+            _results.push(void 0);
+          }
         }
+        return _results;
       }
-      return _results;
     }, 1);
     testInterests = function(mapDataBusiness) {
       var interest, interestToTest, marker, _i, _j, _len, _len1, _ref, _ref1;
@@ -2382,7 +2395,37 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
       return _results;
     });
     $(window).scrollTop(0);
-    return $rootScope.$broadcast('PROGRESS_BAR_STOP');
+    $rootScope.$broadcast('PROGRESS_BAR_STOP');
+    $scope.map = new google.maps.Map(document.getElementById('map'), {
+      center: {
+        lat: 50.8471417,
+        lng: 4.3528959
+      },
+      zoom: 12,
+      mapTypeControl: false,
+      streetViewControl: false
+    });
+    noPoi = [
+      {
+        featureType: "poi",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      }, {
+        featureType: "transit",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      }
+    ];
+    $scope.map.setOptions({
+      styles: noPoi
+    });
+    return $scope.generateMapMarkers();
   }]);
 
 }).call(this);
@@ -2700,7 +2743,7 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 
 (function() {
 
-  myApp.directive('businessForMapCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', function($rootScope, businessService, geolocationService, directiveService) {
+  myApp.directive('businessForMapCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function($rootScope, businessService, geolocationService, directiveService, $location) {
     return {
       restrict: 'E',
       scope: directiveService.autoScope({

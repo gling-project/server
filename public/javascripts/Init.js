@@ -7,9 +7,7 @@ var myApp = angular.module('app', [
         'ngRoute',
         'ngTable',
         'geolocation',
-        'timer',
-        'ngMap'
-        //,'ezfb'
+        'timer'
     ]
 );
 

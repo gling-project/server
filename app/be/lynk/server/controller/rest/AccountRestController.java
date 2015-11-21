@@ -295,8 +295,8 @@ public class
         if (newAddressDTO.getAddressName().equals("currentPosition") ||
                 newAddressDTO.getAddressName().equals("default")) {
             if (currentUser.getSelectedAddress() != null) {
-                currentUser.getSelectedAddress().setSelectedByAccount(null);
-                addressService.saveOrUpdate(currentUser.getSelectedAddress());
+                currentUser.setSelectedAddress(null);
+                accountService.saveOrUpdate(currentUser);
             }
         } else {
             Address address = addressService.findByNameAndAccount(newAddressDTO.getAddressName(), currentUser);

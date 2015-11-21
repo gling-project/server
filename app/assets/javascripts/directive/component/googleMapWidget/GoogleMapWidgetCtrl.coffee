@@ -1,4 +1,4 @@
-myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocationService, directiveService, $timeout) ->
+myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocationService, directiveService) ->
     restrict: 'E'
     scope: directiveService.autoScope(ngInfo: '=')
     templateUrl: '/assets/javascripts/directive/component/googleMapWidget/template.html'

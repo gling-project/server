@@ -2,7 +2,7 @@
 #display map
 #can create a business page from a facebook profile
 #can change the status of the business
-myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestService, $compile, $timeout) ->
+myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService) ->
 
 
     #params
@@ -10,23 +10,35 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
     $scope.map = null
     $scope.interests = null
     $scope.markers = []
-    #used to get map params to ngMap
-    $scope.mapData =
-        center:
-            latitude: 50.8471417
-            longitude: 4.3528959
-        zoom: 12
-    $scope.infowindow = new google.maps.InfoWindow({
+    $scope.currentMarker = null
+
+    #watch position
+    $scope.$watch ->
+        return geolocationService.position
+    , (n)->
+        if n?
+            $scope.map.setCenter {lat:geolocationService.position.x,lng:geolocationService.position.y}
+            $scope.map.setZoom 15
+            google.maps.event.trigger $scope.map, 'resize'
+            if !$scope.currentMarker?
+                $scope.currentMarker = new (google.maps.Marker)({})
+            $scope.currentMarker.setPosition new (google.maps.LatLng)(geolocationService.position.x,
+                geolocationService.position.y)
+            $scope.currentMarker.setTitle 'Ma position'
+            $scope.currentMarker.setMap $scope.map
+
+    #compute window height
+    $scope.height = $(window).height() - 140
+    window.addEventListener 'resize', ->
+        $scope.height = $(window).height() - 140
+
+    $scope.infowindow = new google.maps.InfoWindow
         content: '<div class="info-window-inject"></div>'
-    })
+
     $scope.windowParam = {}
     $scope.filters =
         open: false
         following: false
-
-    #map watcher
-    $scope.$watch 'map', (o) ->
-        $scope.generateMapMarkers()
 
     getMarker = (business) ->
         for marker in $scope.markers
@@ -36,15 +48,16 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
 
     #filters
     $scope.$watch 'filters', ->
-        for mapDataBusiness in $scope.mapDataBusinesses
-            marker = getMarker mapDataBusiness
-            if $scope.filters.open && !mapDataBusiness.attendance?
-                marker.setMap null
-            else if $scope.filters.following && !mapDataBusiness.following
-                marker.setMap null
-            else if !marker.getMap()?
-                marker.setMap $scope.map
-    ,1
+        if $scope.mapDataBusinesse?
+            for mapDataBusiness in $scope.mapDataBusinesses
+                marker = getMarker mapDataBusiness
+                if $scope.filters.open && !mapDataBusiness.attendance?
+                    marker.setMap null
+                else if $scope.filters.following && !mapDataBusiness.following
+                    marker.setMap null
+                else if !marker.getMap()?
+                    marker.setMap $scope.map
+    , 1
 
     #test if one of the business interest is selected
     testInterests = (mapDataBusiness) ->
@@ -110,7 +123,7 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         name = '/assets/images/google-map-marker/marker_'
         if business.following
             name += 'bell_'
-            
+
         if business.attendance == 'LIGHT'
             name += 'green_light.png'
         else if business.attendance == 'MODERATE'
@@ -162,6 +175,34 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
 
     $(window).scrollTop 0
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'
+
+    $scope.map = new google.maps.Map document.getElementById('map'), {
+        center:
+            lat: 50.8471417
+            lng: 4.3528959
+        zoom: 12
+        mapTypeControl: false
+        streetViewControl:false
+    }
+
+    noPoi = [
+        {
+            featureType: "poi"
+            stylers: [
+                visibility: "off"
+            ]
+        },
+        {
+            featureType: "transit"
+            stylers: [
+                visibility: "off"
+            ]
+        }
+    ]
+
+    $scope.map.setOptions({styles: noPoi});
+
+    $scope.generateMapMarkers()
 
 
 
