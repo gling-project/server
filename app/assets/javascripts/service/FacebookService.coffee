@@ -1,6 +1,6 @@
 myApp.service 'facebookService', ($http, accountService, $locale, languageService, constantService, $flash) ->
     @facebookAppId
-    @facebookAuthorization = 'public_profile,email,publish_actions'
+    @facebookAuthorization = 'public_profile,email'
     isConnected = false
     authResponse = null
     _this = this

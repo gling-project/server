@@ -14,12 +14,7 @@ public class FacebookTokenAccessControlDTO extends DTO {
     private String first_name;
     private String gender;
     private String last_name;
-    private String link;
     private String locale;
-    private String name;
-    private int timezone;
-    private Date updated_time;
-    private boolean verified;
 
     public String getId() {
         return id;
@@ -61,52 +56,12 @@ public class FacebookTokenAccessControlDTO extends DTO {
         this.last_name = last_name;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public String getLocale() {
         return locale;
     }
 
     public void setLocale(String locale) {
         this.locale = locale;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getTimezone() {
-        return timezone;
-    }
-
-    public void setTimezone(int timezone) {
-        this.timezone = timezone;
-    }
-
-    public Date getUpdated_time() {
-        return updated_time;
-    }
-
-    public void setUpdated_time(Date updated_time) {
-        this.updated_time = updated_time;
-    }
-
-    public boolean isVerified() {
-        return verified;
-    }
-
-    public void setVerified(boolean verified) {
-        this.verified = verified;
     }
 
     @Override
@@ -117,12 +72,7 @@ public class FacebookTokenAccessControlDTO extends DTO {
                 ", first_name='" + first_name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", link='" + link + '\'' +
                 ", locale='" + locale + '\'' +
-                ", name='" + name + '\'' +
-                ", timezone=" + timezone +
-                ", updated_time=" + updated_time +
-                ", verified=" + verified +
                 "} " + super.toString();
     }
 }

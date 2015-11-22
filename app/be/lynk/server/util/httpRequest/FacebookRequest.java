@@ -63,10 +63,11 @@ public class FacebookRequest {
 
         Map<String, String> map = new HashMap<>();
         map.put("access_token", accessKey);
+        map.put("fields", "id,email,first_name,last_name,gender,locale");
 
         try {
 
-            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/me");
+            HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.GET, "https://graph.facebook.com/v2.5/me");
             httpRequest.setReturnExcepted(FacebookTokenAccessControlDTO.class);
             httpRequest.setParams(map);
             return (FacebookTokenAccessControlDTO) httpRequest.sendRequest();

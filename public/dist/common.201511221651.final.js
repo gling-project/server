@@ -1340,7 +1340,8 @@ myApp.directive("compile", ['$compile', '$filter', function ($compile, $filter) 
                 if (facebookService.isConnected()) {
                   return facebookService.loginToServer(success, failed);
                 } else {
-                  url = 'https://www.facebook.com/dialog/oauth/?client_id=' + scope.facebookAppId + '&redirect_uri=' + scope.basic_url + '/&state=BELGIUM&scope=' + scope.facebookAuthorization + '&response_type=token';
+                  url = 'https://www.facebook.com/dialog/oauth/?scope=' + facebookService.facebookAuthorization + '&client_id=' + scope.facebookAppId + '&redirect_uri=' + scope.basic_url + '/&state=BELGIUM&scope=' + scope.facebookAuthorization + '&response_type=token';
+                  alert(url);
                   return window.open(url, '_self');
                 }
               } else {
@@ -4184,7 +4185,7 @@ myApp.service("modelService", ['$rootScope', function($rootScope) {
   myApp.service('facebookService', ['$http', 'accountService', '$locale', 'languageService', 'constantService', '$flash', function($http, accountService, $locale, languageService, constantService, $flash) {
     var authResponse, isConnected, _this;
     this.facebookAppId;
-    this.facebookAuthorization = 'public_profile,email,publish_actions';
+    this.facebookAuthorization = 'public_profile,email';
     isConnected = false;
     authResponse = null;
     _this = this;
