@@ -106,7 +106,7 @@ myApp.directive 'loginFormCtrl', ($flash, facebookService, translationService, d
                     if facebookService.isConnected()
                         facebookService.loginToServer success, failed
                     else
-                        url = 'https://www.facebook.com/dialog/oauth/?client_id=' + scope.facebookAppId + '&redirect_uri=' + scope.basic_url + '/&state=BELGIUM&scope=' + scope.facebookAuthorization + '&response_type=token'
+                        url = 'https://www.facebook.com/dialog/oauth/?scope='+facebookService.facebookAuthorization+'&client_id=' + scope.facebookAppId + '&redirect_uri=' + scope.basic_url + '/&state=BELGIUM&scope=' + scope.facebookAuthorization + '&response_type=token'
                         window.open url, '_self'
                 else
                     facebookService.login ((data) ->
