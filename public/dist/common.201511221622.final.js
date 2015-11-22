@@ -4290,6 +4290,8 @@ myApp.service("modelService", ['$rootScope', function($rootScope) {
                 return callbackError();
               }
             }
+          }, {
+            scope: this.facebookAuthorization
           });
         }
       }
@@ -4308,6 +4310,8 @@ myApp.service("modelService", ['$rootScope', function($rootScope) {
               return callbackError();
             }
           }
+        }, {
+          scope: this.facebookAuthorization
         });
       }
     };

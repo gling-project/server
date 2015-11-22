@@ -102,6 +102,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
                     else
                         if callbackError?
                             callbackError()
+                , {scope: @facebookAuthorization}
 
 
     #
@@ -126,6 +127,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
                 else
                     if callbackError?
                         callbackError()
+            , {scope: @facebookAuthorization}
 
     #getter
     @isConnected = ->
