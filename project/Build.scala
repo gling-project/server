@@ -55,18 +55,18 @@ object ApplicationBuild extends Build {
     "net.imagej" % "ij" % "1.50a"
   )
 
-//  def customLessEntryPoints(base: File): PathFinder = (
+  def customLessEntryPoints(base: File): PathFinder = (
 //    (base / "app" / "assets" / "stylesheets" / "*.less") +++
 //      (base / "app" / "assets" / "vue" / "*.jade") +++
 //      (base / "app" / "assets" / "vue" / "*.html") +++
-//      (base / "app" / "assets" ** "*.coffee") +++
-//    )
+      (base / "public" / "javascripts" ** "*.coffee")
+    )
 
   val main = play.Project(name, version, appDependencies)
-//    .settings(
+    .settings(
 //      resolvers += "jade4j-releases" at "https://github.com/neuland/jade4j/raw/master/releases"
-////      ,lessEntryPoints <<= baseDirectory(customLessEntryPoints)
-//    )
+      lessEntryPoints <<= baseDirectory(customLessEntryPoints)
+    )
   javaOptions ++= Seq("-Xmx512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
 
 
