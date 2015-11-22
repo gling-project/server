@@ -11,6 +11,8 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
     $scope.interests = null
     $scope.markers = []
     $scope.currentMarker = null
+    $scope.listDisplayedBusiness = []
+    $scope.displayList=true
 
     #watch position
     $scope.$watch ->
@@ -46,9 +48,15 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
                 return marker
         null
 
+    getBusiness = (id) ->
+        for mapDataBusiness in $scope.mapDataBusinesses
+            if mapDataBusiness.id == id
+                return mapDataBusiness
+        null
+
     #filters
     $scope.$watch 'filters', ->
-        if $scope.mapDataBusinesse?
+        if $scope.mapDataBusinesses?
             for mapDataBusiness in $scope.mapDataBusinesses
                 marker = getMarker mapDataBusiness
                 if $scope.filters.open && !mapDataBusiness.attendance?
@@ -160,6 +168,21 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
             #inject window into marker
             $scope.infowindow.open $scope.map, marker;
 
+    #start animation
+    $scope.startAnimation = (business, inthere) ->
+        if inthere
+            for marker in $scope.markers
+                if marker.id == business.id
+                    marker.setAnimation google.maps.Animation.BOUNCE
+        else
+            $timeout ->
+                for marker in $scope.markers
+                    if marker.id == business.id
+                        marker.setAnimation null
+            , 1000
+
+
+
     #intialization
     mapService.loadMapDataBusiness (data)->
         $scope.mapDataBusinesses = data
@@ -185,7 +208,16 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         streetViewControl:false
     }
 
-    noPoi = [
+    #create displayable marker
+    $scope.map.addListener 'center_changed', ->
+        $scope.listDisplayedBusiness=[]
+        for marker in $scope.markers
+            if $scope.map.getBounds().contains(marker.getPosition())
+                $scope.listDisplayedBusiness.push getBusiness marker.id
+
+
+
+    mapStyle = [
         {
             featureType: "poi"
             stylers: [
@@ -200,7 +232,7 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         }
     ]
 
-    $scope.map.setOptions({styles: noPoi});
+    $scope.map.setOptions({styles: mapStyle});
 
     $scope.generateMapMarkers()
 

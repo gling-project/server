@@ -3,8 +3,6 @@
     <div class="google-disabled-panel"
          ng-show="getInfo().staticMap"></div>
 
-    <map center="{{mapData.center.latitude}}, {{mapData.center.longitude}}"
-         zoom="{{mapData.zoom}}"
-         disable-default-u-i="getInfo().staticMap">
-    </map>
+    <div id="map" class="map"></div>
+
 </div>

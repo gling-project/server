@@ -2192,12 +2192,14 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
 (function() {
 
   myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInterestService', '$compile', '$timeout', 'geolocationService', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService) {
-    var addListener, getIcon, getMarker, noPoi, testInterests;
+    var addListener, getBusiness, getIcon, getMarker, mapStyle, testInterests;
     $scope.mapDataBusinesses = null;
     $scope.map = null;
     $scope.interests = null;
     $scope.markers = [];
     $scope.currentMarker = null;
+    $scope.listDisplayedBusiness = [];
+    $scope.displayList = true;
     $scope.$watch(function() {
       return geolocationService.position;
     }, function(n) {
@@ -2239,9 +2241,20 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
       }
       return null;
     };
+    getBusiness = function(id) {
+      var mapDataBusiness, _i, _len, _ref;
+      _ref = $scope.mapDataBusinesses;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        mapDataBusiness = _ref[_i];
+        if (mapDataBusiness.id === id) {
+          return mapDataBusiness;
+        }
+      }
+      return null;
+    };
     $scope.$watch('filters', function() {
       var mapDataBusiness, marker, _i, _len, _ref, _results;
-      if ($scope.mapDataBusinesse != null) {
+      if ($scope.mapDataBusinesses != null) {
         _ref = $scope.mapDataBusinesses;
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -2375,6 +2388,37 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
         return $scope.infowindow.open($scope.map, marker);
       });
     };
+    $scope.startAnimation = function(business, inthere) {
+      var marker, _i, _len, _ref, _results;
+      if (inthere) {
+        _ref = $scope.markers;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          marker = _ref[_i];
+          if (marker.id === business.id) {
+            _results.push(marker.setAnimation(google.maps.Animation.BOUNCE));
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
+      } else {
+        return $timeout(function() {
+          var _j, _len1, _ref1, _results1;
+          _ref1 = $scope.markers;
+          _results1 = [];
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            marker = _ref1[_j];
+            if (marker.id === business.id) {
+              _results1.push(marker.setAnimation(null));
+            } else {
+              _results1.push(void 0);
+            }
+          }
+          return _results1;
+        }, 1000);
+      }
+    };
     mapService.loadMapDataBusiness(function(data) {
       $scope.mapDataBusinesses = data;
       return $scope.generateMapMarkers();
@@ -2405,7 +2449,22 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
       mapTypeControl: false,
       streetViewControl: false
     });
-    noPoi = [
+    $scope.map.addListener('center_changed', function() {
+      var marker, _i, _len, _ref, _results;
+      $scope.listDisplayedBusiness = [];
+      _ref = $scope.markers;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        marker = _ref[_i];
+        if ($scope.map.getBounds().contains(marker.getPosition())) {
+          _results.push($scope.listDisplayedBusiness.push(getBusiness(marker.id)));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    });
+    mapStyle = [
       {
         featureType: "poi",
         stylers: [
@@ -2423,7 +2482,7 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
       }
     ];
     $scope.map.setOptions({
-      styles: noPoi
+      styles: mapStyle
     });
     return $scope.generateMapMarkers();
   }]);

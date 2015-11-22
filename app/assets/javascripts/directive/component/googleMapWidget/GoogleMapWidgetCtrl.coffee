@@ -9,30 +9,46 @@ myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocation
             directiveService.autoScopeImpl scope
             scope.$watch 'getInfo().address', ->
 
+                scope.map = new google.maps.Map document.getElementById('map'), {
+                    zoom: 14
+                    disableDefaultUI: true
+                }
+
                 scope.getInfo().refreshNow = ->
                     scope.getInfo().centerMap()
 
-                scope.getInfo().setAddress = (address) ->
+                scope.$watch 'getInfo().address', ->
                     if address?
                         scope.getInfo().address = address
                         scope.getInfo().centerMap()
+                ,true
 
                 scope.getInfo().centerMap = ->
-                    scope.mapData =
-                        center:
-                            latitude: scope.getInfo().address.posx
-                            longitude: scope.getInfo().address.posy
-                        zoom: 14
-                    google.maps.event.trigger scope.map, 'resize'
-
-                scope.GenerateMapMarkers = ->
-                    if scope.map? && scope.getInfo().address?
+                    if scope.getInfo().address?
+                        scope.map.setCenter
+                            lat: scope.getInfo().address.posx
+                            lng: scope.getInfo().address.posy
                         marker = new (google.maps.Marker)({})
                         marker.setPosition new (google.maps.LatLng)(scope.getInfo().address.posx, scope.getInfo().address.posy)
                         marker.setMap scope.map
 
-                scope.$watch 'map', (n) ->
-                    scope.GenerateMapMarkers()
+
+
+
+#                scope.getInfo().centerMap = ->
+#                    scope.mapData =
+#                        center:
+#                            latitude: scope.getInfo().address.posx
+#                            longitude: scope.getInfo().address.posy
+#                        zoom: 14
+#                    google.maps.event.trigger scope.map, 'resize'
+
+#                scope.GenerateMapMarkers = ->
+#                    if scope.map? && scope.getInfo().address?
+
+
+#                scope.$watch 'map', (n) ->
+#                scope.GenerateMapMarkers()
 
                 scope.toGoogleMap = ->
 

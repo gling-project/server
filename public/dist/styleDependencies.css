@@ -2865,7 +2865,7 @@ ul.messenger .messenger-spinner {
   border-bottom: 1px solid #2c265c;
   padding: 5px;
   width: 1000px;
-  margin: 13px auto auto;
+  margin: 10px auto auto;
 }
 .navigation-bar .navigation-bar-menu > * {
   margin: 0 15px;
@@ -3048,7 +3048,7 @@ ul.messenger .messenger-spinner {
   left: 0;
   cursor: pointer;
 }
-.google-map-container map {
+.google-map-container .map {
   height: 110% !important;
   width: 100% !important;
 }
@@ -3626,15 +3626,34 @@ iframe {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   border: 1px solid #bbb;
   top: 10px;
-  left: 10px;
   z-index: 1;
 }
-.map-page .option-panel.option-panel-open-panel {
-  left: 360px;
+.map-page .option-panel-right {
+  right: 10px;
+}
+.map-page .option-panel-left {
+  left: 10px;
 }
 .map-page .map-content {
   position: relative;
   height: 100%;
+}
+.map-page .map-content .displayed-business-panel {
+  width: 350px;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #555555;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.map-page .map-content .displayed-business-panel > .list-element {
+  padding: 5px;
+  border: 1px solid #aaa;
+}
+.map-page .map-content .displayed-business-panel > .list-element:hover {
+  background-color: #cccccc;
 }
 .map-page .map-content .filter-panel {
   width: 350px;
@@ -3646,14 +3665,14 @@ iframe {
   top: 0;
   bottom: 0;
 }
-.map-page .map-content .filter-panel > .filter-panel-close {
+.map-page .filter-panel-close {
   padding: 3px;
   cursor: pointer;
   float: right;
   border-radius: 20px;
   color: #555555;
 }
-.map-page .map-content .filter-panel > .filter-panel-close:hover {
+.map-page .filter-panel-close:hover {
   color: #f4f4f4;
   background-color: #555555;
 }

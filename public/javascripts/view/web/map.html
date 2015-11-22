@@ -4,14 +4,23 @@
 
     <div class="map-content">
 
-        <div class="option-panel"
-             ng-class="{'option-panel-open-panel':displayFilters}">
+        <!-- filtre open -->
+        <div class="option-panel option-panel-left"
+             ng-hide="displayFilters===true">
             <button ng-click="displayFilters=!displayFilters">Filtre</button>
         </div>
 
+        <!-- list open -->
+        <div class="option-panel option-panel-right"
+             ng-hide="displayList===true">
+            <button ng-click="displayList=!displayList">Liste des commerces</button>
+        </div>
+
+        <!-- map -->
         <div style="height:{{height}}px !important" id="map">
         </div>
 
+        <!-- filter panel -->
         <div class="filter-panel"
              ng-show="displayFilters">
 
@@ -33,7 +42,25 @@
             </div>
 
         </div>
+
+        <!-- displayed business panel -->
+        <div class="displayed-business-panel"
+                ng-show="displayList">
+
+            <span class="filter-panel-close glyphicon glyphicon-remove"
+                  ng-click="displayList=false"></span>
+
+            <h3>Commerces</h3>
+
+
+            <div ng-show="listDisplayedBusiness.length == 0">Pas de commerce dans cette zone</div>
+
+            <div ng-repeat="business in listDisplayedBusiness"
+                 class="list-element"
+                 ng-mouseover="startAnimation(business,true)"
+                 ng-mouseleave="startAnimation(business,false)">
+                {{business.name}}
+            </div>
+        </div>
     </div>
-
-
 </div>

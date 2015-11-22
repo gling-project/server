@@ -30,7 +30,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
         obj =
             method: 'share'
             href: url
-        FB.ui obj, callback
+        FB.ui obj
 
     #try to log the server
     @loginToServer = (callbackSuccess, callbackError) ->

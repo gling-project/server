@@ -7,5 +7,5 @@
     <br/>
     {{getInfo().business.address.street}}, {{getInfo().business.address.zip}} {{getInfo().business.address.city}}<br/>
     <follow-widget-ctrl ng-info="{displayText:true,business:getInfo().business}"></follow-widget-ctrl><br/>
-    <span class="link see-more" ng-click="goTo('/business/{{getInfo().business.id}}')">Voir plus...</span>
+    <span class="link see-more" ng-click="goTo('/business/'+getInfo().business.id)">Voir plus...</span>
 </div>

@@ -3440,36 +3440,31 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
           post: function(scope) {
             directiveService.autoScopeImpl(scope);
             return scope.$watch('getInfo().address', function() {
+              scope.map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                disableDefaultUI: true
+              });
               scope.getInfo().refreshNow = function() {
                 return scope.getInfo().centerMap();
               };
-              scope.getInfo().setAddress = function(address) {
-                if (address != null) {
+              scope.$watch('getInfo().address', function() {
+                if (typeof address !== "undefined" && address !== null) {
                   scope.getInfo().address = address;
                   return scope.getInfo().centerMap();
                 }
-              };
+              }, true);
               scope.getInfo().centerMap = function() {
-                scope.mapData = {
-                  center: {
-                    latitude: scope.getInfo().address.posx,
-                    longitude: scope.getInfo().address.posy
-                  },
-                  zoom: 14
-                };
-                return google.maps.event.trigger(scope.map, 'resize');
-              };
-              scope.GenerateMapMarkers = function() {
                 var marker;
-                if ((scope.map != null) && (scope.getInfo().address != null)) {
+                if (scope.getInfo().address != null) {
+                  scope.map.setCenter({
+                    lat: scope.getInfo().address.posx,
+                    lng: scope.getInfo().address.posy
+                  });
                   marker = new google.maps.Marker({});
                   marker.setPosition(new google.maps.LatLng(scope.getInfo().address.posx, scope.getInfo().address.posy));
                   return marker.setMap(scope.map);
                 }
               };
-              scope.$watch('map', function(n) {
-                return scope.GenerateMapMarkers();
-              });
               scope.toGoogleMap = function() {
                 var iOSversion, protocol, ver;
                 iOSversion = function() {
@@ -4200,7 +4195,7 @@ myApp.service("modelService", ['$rootScope', function($rootScope) {
         method: 'share',
         href: url
       };
-      return FB.ui(obj, callback);
+      return FB.ui(obj);
     };
     this.loginToServer = function(callbackSuccess, callbackError) {
       var access_token, user_id;
@@ -6364,9 +6359,9 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/directive/component/gallery/template.html",
     "<div class=gallery-component><div ng-repeat=\"image in getInfo().images\"><img ng-click=openGallery(image) class=gallery-picture ng-src=\"{{image | image}}\"></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/googleMapWidget/template.html",
-    "<div ng-click=toGoogleMap() class=google-map-container><div class=google-disabled-panel ng-show=getInfo().staticMap></div><map center=\"{{mapData.center.latitude}}, {{mapData.center.longitude}}\" zoom={{mapData.zoom}} disable-default-u-i=getInfo().staticMap></map></div>");
+    "<div ng-click=toGoogleMap() class=google-map-container><div class=google-disabled-panel ng-show=getInfo().staticMap></div><div id=map class=map></div></div>");
   $templateCache.put("/assets/javascripts/directive/component/map/businessForMap/template.html",
-    "<div class=business-for-map><img class=business-illustration ng-src=\"{{getInfo().business.illustration | image}}\"> <span class=title>{{getInfo().business.name}}</span> <i ng-show=\"getInfo().business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i><br>{{getInfo().business.address.street}}, {{getInfo().business.address.zip}} {{getInfo().business.address.city}}<br><follow-widget-ctrl ng-info={displayText:true,business:getInfo().business}></follow-widget-ctrl><br><span class=\"link see-more\" ng-click=\"goTo('/business/{{getInfo().business.id}}')\">Voir plus...</span></div>");
+    "<div class=business-for-map><img class=business-illustration ng-src=\"{{getInfo().business.illustration | image}}\"> <span class=title>{{getInfo().business.name}}</span> <i ng-show=\"getInfo().business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i><br>{{getInfo().business.address.street}}, {{getInfo().business.address.zip}} {{getInfo().business.address.city}}<br><follow-widget-ctrl ng-info={displayText:true,business:getInfo().business}></follow-widget-ctrl><br><span class=\"link see-more\" ng-click=\"goTo('/business/'+getInfo().business.id)\">Voir plus...</span></div>");
   $templateCache.put("/assets/javascripts/directive/component/map/publicationForMap/template.html",
     "<div></div>");
   $templateCache.put("/assets/javascripts/directive/component/publicationList/template.html",
@@ -6539,7 +6534,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("/assets/javascripts/view/web/home.html",
     "<div class=container-content><div class=content-block><to-top-ctrl></to-top-ctrl><div class=help-div-geolocalisation ng-show=\"displaySharePositionAdvertissement() && openGeolocationPopup !== true\"><button class=\"help-popup-close glyphicon glyphicon-remove\" ng-click=\"openGeolocationPopup=true\"></button><p compile=\"'--.home.geolocation.notAccepted'\"></p></div><div class=home-interest-box><div>{{'--.home.interest-switch.help' | translateText}}</div><div class=\"home-interest-switch home-interest-box-background\"><div><button class=\"gling-button gling-icon gling-icon-location button-with-label home-interest\" ng-class=\"{'selected':followedMode !== true}\" ng-click=setFollowedMode(false)><p>{{'--.home.localisation.help' | translateText}}</p></button></div><div><div class=onoffswitch ng-click=setFollowedMode()><label class=onoffswitch-label ng-class=\"{'followedMode':followedMode}\"><span class=onoffswitch-inner></span> <span class=onoffswitch-switch></span></label></div></div><div><button class=\"gling-button gling-icon gling-icon-bell button-with-label home-interest\" ng-class=\"{'selected':followedMode === true}\" ng-click=setFollowedMode(true)><p>{{'--.home.followning.help' | translateText}}</p></button></div></div></div><div class=home-interest-box><div>{{'--.home.interest.help' | translateText}}</div><div class=home-interest-box-background><button class=\"gling-button home-interest button-with-label-top {{'gling-icon gling-icon-' + interest.name}}\" ng-repeat=\"interest in interestDisplayed\" ng-show=\"interest.iconName!=null\" ng-click=searchByInterest(interest) ng-class=\"{'selected':interest.selected === true}\"><p>{{interest.translationName}}</p></button></div><div class=\"home-interest-box-background home-interest-box-background-second\"><button class=\"gling-button home-interest button-with-label {{'gling-icon gling-icon-' + interest.name}}\" ng-repeat=\"interest in interestDisplayed2\" ng-show=\"interest.iconName!=null\" ng-click=searchByInterest(interest) ng-class=\"{'selected':interest.selected === true}\"><p>{{interest.translationName}}</p></button></div></div><publication-list-ctrl ng-info=publicationListCtrl></publication-list-ctrl><div class=help-div ng-show=\"emptyMessage!==null\">{{'--.home.emptyResult.'+emptyMessage | translateText}}</div><business-list-ctrl ng-info=businessListParam ng-show=\"emptyMessage!==null\"></business-list-ctrl></div></div>");
   $templateCache.put("/assets/javascripts/view/web/map.html",
-    "<div class=\"content-block map-page\" style=\"margin-top: 100px;height:{{height}}px\"><div class=map-content><div class=option-panel ng-class=\"{'option-panel-open-panel':displayFilters}\"><button ng-click=\"displayFilters=!displayFilters\">Filtre</button></div><div style=\"height:{{height}}px !important\" id=map></div><div class=filter-panel ng-show=displayFilters><span class=\"filter-panel-close glyphicon glyphicon-remove\" ng-click=\"displayFilters=false\"></span> <input type=checkbox ng-model=filters.following>Uniquement les commerces suivi<br><input type=checkbox ng-model=filters.open>Uniquement les commerces actuellement ouverts<h3>Intérêts</h3><span class=link ng-click=selectAllInterest(true)>Tout sélectionner</span> / <span class=link ng-click=selectAllInterest(false)>Rien sélectionner</span><div ng-repeat=\"interest in interests\"><input type=checkbox ng-model=interest.selected> <span class=\"{{'gling-icon gling-icon-' + interest.name}}\"></span> {{interest.translationName}}</div></div></div></div>");
+    "<div class=\"content-block map-page\" style=\"margin-top: 100px;height:{{height}}px\"><div class=map-content><div class=\"option-panel option-panel-left\" ng-hide=\"displayFilters===true\"><button ng-click=\"displayFilters=!displayFilters\">Filtre</button></div><div class=\"option-panel option-panel-right\" ng-hide=\"displayList===true\"><button ng-click=\"displayList=!displayList\">Liste des commerces</button></div><div style=\"height:{{height}}px !important\" id=map></div><div class=filter-panel ng-show=displayFilters><span class=\"filter-panel-close glyphicon glyphicon-remove\" ng-click=\"displayFilters=false\"></span> <input type=checkbox ng-model=filters.following>Uniquement les commerces suivi<br><input type=checkbox ng-model=filters.open>Uniquement les commerces actuellement ouverts<h3>Intérêts</h3><span class=link ng-click=selectAllInterest(true)>Tout sélectionner</span> / <span class=link ng-click=selectAllInterest(false)>Rien sélectionner</span><div ng-repeat=\"interest in interests\"><input type=checkbox ng-model=interest.selected> <span class=\"{{'gling-icon gling-icon-' + interest.name}}\"></span> {{interest.translationName}}</div></div><div class=displayed-business-panel ng-show=displayList><span class=\"filter-panel-close glyphicon glyphicon-remove\" ng-click=\"displayList=false\"></span><h3>Commerces</h3><div ng-show=\"listDisplayedBusiness.length == 0\">Pas de commerce dans cette zone</div><div ng-repeat=\"business in listDisplayedBusiness\" class=list-element ng-mouseover=startAnimation(business,true) ng-mouseleave=startAnimation(business,false)>{{business.name}}</div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/web/profile.html",
     "<div class=container-content><div class=profile-page><div class=\"panel panel-gling main-panel panel-personal-information\"><div class=panel-heading>{{'--.customer.profile.personalInformation' | translateText}}</div><div class=panel-body><account-form-ctrl ng-info=accountParam></account-form-ctrl><button class=\"btn gling-button-dark\" id=profile-personal-btn-edit ng-show=accountParam.disabled ng-click=personalEdit()>{{'--.generic.edit' |translateText}}</button> <button class=\"btn gling-button-dark\" id=profile-personal-btn-save ng-hide=accountParam.disabled ng-click=personalSave()>{{'--.generic.save' | translateText}}</button> <button id=profile-personal-btn-cancel class=\"btn gling-button-dark\" ng-hide=accountParam.disabled ng-click=personalCancel()>{{'--.generic.cancel' | translateText}}</button><div class=col-md-3 ng-show=\"model.myself.loginAccount==true\"></div><button type=button ng-show=\"model.myself.loginAccount===true\" id=profile-personal-btn-edit-password class=\"btn gling-button-dark\" ng-click=editPassword()>{{'--.changePasswordModal.title' | translateText}}</button><table class=profile-social-network-table><tr><th colspan=2>Lien avec vos réseaux sociaux</th></tr><tr><td><img src=\"assets/images/social_network/facebook.png\"></td><td><div class=link ng-click=fb_login(); ng-hide=\"model.myself.facebookAccount===true\">{{'--.profile.facebook.btn' |translateText}}</div><div ng-show=\"model.myself.facebookAccount===true\">Lié au compte facebook {{model.myself.facebookCredential.firstname}} {{model.myself.facebookCredential.lastname}}</div></td></tr></table></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.myAddresses' | translateText}}</div><div class=panel-body><div><accordion><accordion-group class=address-container ng-repeat=\"address in model.myself.addresses\" is-open=address.isOpen><accordion-heading>{{address.name}} <i class=\"pull-right glyphicon\" ng-class=\"{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}\"></i></accordion-heading><div class=address-box><div><span>{{'--.generic.street' | translateText}}</span> <span>{{address.street}}</span></div><div><span>{{'--.generic.zip' | translateText}}</span> <span>{{address.zip}}</span></div><div><span>{{'--.generic.city' | translateText}}</span> <span>{{address.city}}</span></div><div><span>{{'--.generic.country' | translateText}}</span> <span>{{address.country}}</span></div></div><button class=\"btn gling-button-dark\" ng-click=editAddress(address)>{{'--.generic.edit' | translateText}}</button> <button class=\"btn gling-button-dark glyphicon glyphicon-remove\" ng-click=deleteAddress(address)>{{'--.generic.remove' |translateText}}</button></accordion-group></accordion><button id=profile-btn-address-add class=\"btn gling-button-dark\" ng-click=addAddress()>{{'--.customer.profile.create' | translateText}}</button></div></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.interest' | translateText}}</div><div class=\"panel-body category-list\"><div><div ng-repeat=\"interest in model.myself.customerInterests\" class=category-box><span class=\"{{'gling-icon gling-icon-' + interest.name}}\"></span> {{interest.translationName |translateText}}</div><button class=\"btn gling-button-dark\" id=profile-interest-btn-edit ng-click=interestEdit()>{{'--.generic.edit' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("/assets/javascripts/view/web/search_page.html",
