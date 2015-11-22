@@ -3306,14 +3306,16 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
                 _ref = scope.days;
                 for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                   day = _ref[_i];
-                  _ref1 = scope.getInfo().dto[day];
-                  for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-                    obj = _ref1[_j];
-                    if (minMinute === null || minMinute > obj.from) {
-                      minMinute = obj.from;
-                    }
-                    if (maxMinute === null || maxMinute < obj.to) {
-                      maxMinute = obj.to;
+                  if (scope.getInfo().dto[day] != null) {
+                    _ref1 = scope.getInfo().dto[day];
+                    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                      obj = _ref1[_j];
+                      if (minMinute === null || minMinute > obj.from) {
+                        minMinute = obj.from;
+                      }
+                      if (maxMinute === null || maxMinute < obj.to) {
+                        maxMinute = obj.to;
+                      }
                     }
                   }
                 }
@@ -3360,32 +3362,36 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
                 _results = [];
                 for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
                   day = _ref3[_l];
-                  _results.push((function() {
-                    var _len4, _m, _ref4, _results1;
-                    _ref4 = scope.getInfo().dto[day];
-                    _results1 = [];
-                    for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
-                      obj = _ref4[_m];
-                      _results1.push((function() {
-                        var _len5, _n, _ref5, _results2;
-                        _ref5 = scope.sections[day];
-                        _results2 = [];
-                        for (_n = 0, _len5 = _ref5.length; _n < _len5; _n++) {
-                          obj2 = _ref5[_n];
-                          if (day === nowDay && obj2.minutes < nowMinutes && (obj2.minutes + 30) > nowMinutes) {
-                            scope.isOpenNow = true;
+                  if (scope.getInfo().dto[day] != null) {
+                    _results.push((function() {
+                      var _len4, _m, _ref4, _results1;
+                      _ref4 = scope.getInfo().dto[day];
+                      _results1 = [];
+                      for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
+                        obj = _ref4[_m];
+                        _results1.push((function() {
+                          var _len5, _n, _ref5, _results2;
+                          _ref5 = scope.sections[day];
+                          _results2 = [];
+                          for (_n = 0, _len5 = _ref5.length; _n < _len5; _n++) {
+                            obj2 = _ref5[_n];
+                            if (day === nowDay && obj2.minutes < nowMinutes && (obj2.minutes + 30) > nowMinutes) {
+                              scope.isOpenNow = true;
+                            }
+                            if (obj2.minutes >= obj.from && obj2.minutes + 30 <= obj.to) {
+                              _results2.push(obj2.attendance = obj.attendance);
+                            } else {
+                              _results2.push(void 0);
+                            }
                           }
-                          if (obj2.minutes >= obj.from && obj2.minutes + 30 <= obj.to) {
-                            _results2.push(obj2.attendance = obj.attendance);
-                          } else {
-                            _results2.push(void 0);
-                          }
-                        }
-                        return _results2;
-                      })());
-                    }
-                    return _results1;
-                  })());
+                          return _results2;
+                        })());
+                      }
+                      return _results1;
+                    })());
+                  } else {
+                    _results.push(void 0);
+                  }
                 }
                 return _results;
               }
@@ -3426,7 +3432,7 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
 
 (function() {
 
-  myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', function($rootScope, businessService, geolocationService, directiveService) {
+  myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, $timeout) {
     return {
       restrict: 'E',
       scope: directiveService.autoScope({
@@ -3440,29 +3446,37 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
           post: function(scope) {
             directiveService.autoScopeImpl(scope);
             return scope.$watch('getInfo().address', function() {
-              scope.map = new google.maps.Map(document.getElementById('map'), {
+              scope.map = new google.maps.Map(document.getElementsByClassName('map')[0], {
                 zoom: 14,
-                disableDefaultUI: true
+                disableDefaultUI: true,
+                center: {
+                  lat: 50,
+                  lng: 4
+                }
               });
               scope.getInfo().refreshNow = function() {
                 return scope.getInfo().centerMap();
               };
               scope.$watch('getInfo().address', function() {
-                if (typeof address !== "undefined" && address !== null) {
-                  scope.getInfo().address = address;
-                  return scope.getInfo().centerMap();
-                }
+                return scope.getInfo().centerMap();
               }, true);
+              scope.$watch('getInfo().map', function(n) {
+                return scope.getInfo().centerMap();
+              });
               scope.getInfo().centerMap = function() {
-                var marker;
-                if (scope.getInfo().address != null) {
-                  scope.map.setCenter({
-                    lat: scope.getInfo().address.posx,
-                    lng: scope.getInfo().address.posy
-                  });
-                  marker = new google.maps.Marker({});
-                  marker.setPosition(new google.maps.LatLng(scope.getInfo().address.posx, scope.getInfo().address.posy));
-                  return marker.setMap(scope.map);
+                console.log('map centre !! ');
+                if ((scope.getInfo().address != null) && (scope.map != null)) {
+                  console.log('map centre GOOOO ');
+                  return $timeout(function() {
+                    var marker;
+                    scope.map.setCenter({
+                      lat: scope.getInfo().address.posx,
+                      lng: scope.getInfo().address.posy
+                    });
+                    marker = new google.maps.Marker({});
+                    marker.setPosition(new google.maps.LatLng(scope.getInfo().address.posx, scope.getInfo().address.posy));
+                    return marker.setMap(scope.map);
+                  }, 2000);
                 }
               };
               scope.toGoogleMap = function() {

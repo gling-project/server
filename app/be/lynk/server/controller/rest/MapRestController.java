@@ -59,9 +59,6 @@ public class MapRestController extends AbstractRestController {
             //attendance
             mapDataBusiness.setAttendance(businessScheduleService.getCurrentAttendance(business.getSchedules()));
 
-            //is active ?
-            mapDataBusiness.setIsActive(publicationService.countActiveByBusiness(business) > 0);
-
             //interest
             mapDataBusiness.setInterests(dozerService.map(customerInterestService.findInterestsByBusiness(business), CustomerInterestDTO.class));
 

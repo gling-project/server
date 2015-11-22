@@ -22,6 +22,7 @@ import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
@@ -82,6 +83,8 @@ public class LoginRestController extends AbstractRestController {
 
         //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookToken);
+
+        Logger.info("--FacebookTokenAccessControlDTO:"+facebookTokenAccessControlDTO);
 
         //control
         FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());

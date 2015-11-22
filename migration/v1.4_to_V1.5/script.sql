@@ -9,3 +9,4 @@ alter table account add CONSTRAINT fk_o7e7jroiergvkwsksulendje7gvt FOREIGN KEY (
 update account set selectedAddress_id = (select selectedbyaccount_id from address where account_id = account.id);
 
 alter table address drop column selectedbyaccount_id;
+

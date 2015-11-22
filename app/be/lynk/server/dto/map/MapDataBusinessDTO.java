@@ -28,8 +28,6 @@ public class MapDataBusinessDTO extends DTO {
 
     private List<CustomerInterestDTO> interests;
 
-    private Boolean isActive;
-
     public MapDataBusinessDTO() {
     }
 
@@ -87,13 +85,5 @@ public class MapDataBusinessDTO extends DTO {
 
     public void setInterests(List<CustomerInterestDTO> interests) {
         this.interests = interests;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
     }
 }

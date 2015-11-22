@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.http.entity.StringEntity;
 import org.springframework.stereotype.Component;
+import play.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -75,6 +76,8 @@ public class HttpRequest {
             }
 
             URL url = new URL(urlString);
+
+            Logger.info("EXTERNAL REQUEST URL : "+urlString);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 

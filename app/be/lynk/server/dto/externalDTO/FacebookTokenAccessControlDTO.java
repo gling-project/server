@@ -123,6 +123,6 @@ public class FacebookTokenAccessControlDTO extends DTO {
                 ", timezone=" + timezone +
                 ", updated_time=" + updated_time +
                 ", verified=" + verified +
-                '}';
+                "} " + super.toString();
     }
 }

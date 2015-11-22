@@ -1,4 +1,4 @@
-myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocationService, directiveService) ->
+myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocationService, directiveService,$timeout) ->
     restrict: 'E'
     scope: directiveService.autoScope(ngInfo: '=')
     templateUrl: '/assets/javascripts/directive/component/googleMapWidget/template.html'
@@ -9,47 +9,44 @@ myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocation
             directiveService.autoScopeImpl scope
             scope.$watch 'getInfo().address', ->
 
-                scope.map = new google.maps.Map document.getElementById('map'), {
+                # create map
+                scope.map = new google.maps.Map document.getElementsByClassName('map')[0], {
                     zoom: 14
                     disableDefaultUI: true
+                    center:
+                        lat: 50
+                        lng: 4
                 }
 
+
+                # refresh map
                 scope.getInfo().refreshNow = ->
                     scope.getInfo().centerMap()
 
+                #watch address and create map
                 scope.$watch 'getInfo().address', ->
-                    if address?
-                        scope.getInfo().address = address
-                        scope.getInfo().centerMap()
+                    scope.getInfo().centerMap()
                 ,true
 
+                #watch on map
+                scope.$watch 'getInfo().map', (n) ->
+                    scope.getInfo().centerMap()
+
+                #center on the map and add a marker on the address
                 scope.getInfo().centerMap = ->
-                    if scope.getInfo().address?
-                        scope.map.setCenter
-                            lat: scope.getInfo().address.posx
-                            lng: scope.getInfo().address.posy
-                        marker = new (google.maps.Marker)({})
-                        marker.setPosition new (google.maps.LatLng)(scope.getInfo().address.posx, scope.getInfo().address.posy)
-                        marker.setMap scope.map
+                    console.log 'map centre !! '
+                    if scope.getInfo().address? && scope.map?
+                        console.log 'map centre GOOOO '
+                        $timeout ->
+                            scope.map.setCenter
+                                lat: scope.getInfo().address.posx
+                                lng: scope.getInfo().address.posy
+                            marker = new (google.maps.Marker)({})
+                            marker.setPosition new (google.maps.LatLng)(scope.getInfo().address.posx, scope.getInfo().address.posy)
+                            marker.setMap scope.map
+                        ,2000
 
-
-
-
-#                scope.getInfo().centerMap = ->
-#                    scope.mapData =
-#                        center:
-#                            latitude: scope.getInfo().address.posx
-#                            longitude: scope.getInfo().address.posy
-#                        zoom: 14
-#                    google.maps.event.trigger scope.map, 'resize'
-
-#                scope.GenerateMapMarkers = ->
-#                    if scope.map? && scope.getInfo().address?
-
-
-#                scope.$watch 'map', (n) ->
-#                scope.GenerateMapMarkers()
-
+                # go to google map
                 scope.toGoogleMap = ->
 
                     iOSversion = ->

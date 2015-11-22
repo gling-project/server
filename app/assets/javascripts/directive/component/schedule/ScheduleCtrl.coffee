@@ -50,11 +50,12 @@ myApp.directive 'scheduleCtrl', (directiveService) ->
                     maxMinute = null
                     #1. looking for the min and max values
                     for day in scope.days
-                        for obj in scope.getInfo().dto[day]
-                            if minMinute == null or minMinute > obj.from
-                                minMinute = obj.from
-                            if maxMinute == null or maxMinute < obj.to
-                                maxMinute = obj.to
+                        if scope.getInfo().dto[day]?
+                            for obj in scope.getInfo().dto[day]
+                                if minMinute == null or minMinute > obj.from
+                                    minMinute = obj.from
+                                if maxMinute == null or maxMinute < obj.to
+                                    maxMinute = obj.to
 
                     if minMinute % 60 == 30
                         minMinute -= 30
@@ -93,10 +94,11 @@ myApp.directive 'scheduleCtrl', (directiveService) ->
 
                     #fill section
                     for day in scope.days
-                        for obj in scope.getInfo().dto[day]
-                            for obj2 in scope.sections[day]
-                                if day == nowDay && obj2.minutes < nowMinutes && (obj2.minutes + 30) > nowMinutes
-                                    scope.isOpenNow = true
-                                if obj2.minutes >= obj.from and obj2.minutes + 30 <= obj.to
-                                    obj2.attendance = obj.attendance
+                        if scope.getInfo().dto[day]?
+                            for obj in scope.getInfo().dto[day]
+                                for obj2 in scope.sections[day]
+                                    if day == nowDay && obj2.minutes < nowMinutes && (obj2.minutes + 30) > nowMinutes
+                                        scope.isOpenNow = true
+                                    if obj2.minutes >= obj.from and obj2.minutes + 30 <= obj.to
+                                        obj2.attendance = obj.attendance
             ), true
