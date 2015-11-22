@@ -25,7 +25,7 @@
              ng-show="displayFilters">
 
             <span class="filter-panel-close glyphicon glyphicon-remove"
-                    ng-click="displayFilters=false"></span>
+                  ng-click="displayFilters=false"></span>
 
             <!-- folloing  -->
             <input type="checkbox" ng-model="filters.following">Uniquement les commerces suivi<br/>
@@ -45,21 +45,24 @@
 
         <!-- displayed business panel -->
         <div class="displayed-business-panel"
-                ng-show="displayList">
+             ng-show="displayList">
 
             <span class="filter-panel-close glyphicon glyphicon-remove"
                   ng-click="displayList=false"></span>
 
             <h3>Commerces</h3>
 
+            <div class="list-container">
+                <div class="list-container-scroll">
+                    <div ng-show="listDisplayedBusiness.length == 0">Pas de commerce dans cette zone</div>
 
-            <div ng-show="listDisplayedBusiness.length == 0">Pas de commerce dans cette zone</div>
-
-            <div ng-repeat="business in listDisplayedBusiness"
-                 class="list-element"
-                 ng-mouseover="startAnimation(business,true)"
-                 ng-mouseleave="startAnimation(business,false)">
-                {{business.name}}
+                    <div ng-repeat="business in listDisplayedBusiness"
+                         class="list-element"
+                         ng-mouseover="startAnimation(business,true)"
+                         ng-mouseleave="startAnimation(business,false)">
+                        <business-for-map-ctrl ng-info="{business:business}"></business-for-map-ctrl>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

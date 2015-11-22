@@ -78,7 +78,7 @@ myApp.controller 'ProfileCtrl', ($rootScope, $scope, modalService, accountServic
             , ->
                 $scope.loading = false
         else
-            url = 'https://www.facebook.com/dialog/oauth/?client_id=' + $scope.facebookAppId + '&redirect_uri=' + $scope.basic_url + '/&state=BELGIUM&scope=' + $scope.facebookAuthorization + '&response_type=token'
+            url = 'https://www.facebook.com/dialog/oauth/?scope='+facebookService.facebookAuthorization+'&client_id=' + $scope.facebookAppId + '&redirect_uri=' + $scope.basic_url + '/&state=BELGIUM&scope=' + $scope.facebookAuthorization + '&response_type=token'
             window.open url, '_self'
 
     #return a specific url param

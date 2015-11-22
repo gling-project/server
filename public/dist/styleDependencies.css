@@ -2823,6 +2823,9 @@ ul.messenger .messenger-spinner {
 }
 .navigation-bar > .container {
   vertical-align: middle;
+  height: 100%;
+  margin-top: 0;
+  padding-top: 10px;
 }
 .navigation-bar > .container > * {
   vertical-align: middle;
@@ -2865,7 +2868,7 @@ ul.messenger .messenger-spinner {
   border-bottom: 1px solid #2c265c;
   padding: 5px;
   width: 1000px;
-  margin: 10px auto auto;
+  margin: 1px auto auto;
 }
 .navigation-bar .navigation-bar-menu > * {
   margin: 0 15px;
@@ -3181,8 +3184,7 @@ body {
 .container-content {
   background-image: url('/assets/images/home-bg.png');
   width: 1000px;
-  margin: auto;
-  top: 100px;
+  margin: 100px auto auto;
   position: relative;
 }
 .header-with-advanced-search {
@@ -3641,19 +3643,22 @@ iframe {
 .map-page .map-content .displayed-business-panel {
   width: 350px;
   background-color: #f4f4f4;
-  padding: 10px;
   border: 1px solid #555555;
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
 }
-.map-page .map-content .displayed-business-panel > .list-element {
+.map-page .map-content .displayed-business-panel .list-container {
+  height: calc(100% - 46px);
+  overflow: auto;
+}
+.map-page .map-content .displayed-business-panel .list-container .list-container-scroll .list-element {
   padding: 5px;
   border: 1px solid #aaa;
 }
-.map-page .map-content .displayed-business-panel > .list-element:hover {
-  background-color: #cccccc;
+.map-page .map-content .displayed-business-panel .list-container .list-container-scroll .list-element:hover {
+  background-color: #eeeeee;
 }
 .map-page .map-content .filter-panel {
   width: 350px;
@@ -3688,7 +3693,6 @@ iframe {
 }
 body {
   min-width: 1000px;
-  padding-bottom: 100px;
 }
 .container {
   width: 1000px !important;

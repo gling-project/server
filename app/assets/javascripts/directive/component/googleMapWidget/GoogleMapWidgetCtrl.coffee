@@ -9,15 +9,6 @@ myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocation
             directiveService.autoScopeImpl scope
             scope.$watch 'getInfo().address', ->
 
-                # create map
-                scope.map = new google.maps.Map document.getElementsByClassName('map')[0], {
-                    zoom: 14
-                    disableDefaultUI: true
-                    center:
-                        lat: 50
-                        lng: 4
-                }
-
 
                 # refresh map
                 scope.getInfo().refreshNow = ->
@@ -35,20 +26,20 @@ myApp.directive 'googleMapWidgetCtrl', ($rootScope, businessService, geolocation
                 #center on the map and add a marker on the address
                 scope.getInfo().centerMap = ->
                     console.log 'map centre !! '
-                    if scope.getInfo().address? && scope.map?
-                        console.log 'map centre GOOOO '
-                        $timeout ->
-                            scope.map.setCenter
+                    if scope.getInfo().address?
+                        scope.map = new google.maps.Map document.getElementsByClassName('map')[0], {
+                            zoom: 14
+                            disableDefaultUI: true
+                            center:
                                 lat: scope.getInfo().address.posx
                                 lng: scope.getInfo().address.posy
-                            marker = new (google.maps.Marker)({})
-                            marker.setPosition new (google.maps.LatLng)(scope.getInfo().address.posx, scope.getInfo().address.posy)
-                            marker.setMap scope.map
-                        ,2000
+                        }
+                        marker = new (google.maps.Marker)({})
+                        marker.setPosition new (google.maps.LatLng)(scope.getInfo().address.posx, scope.getInfo().address.posy)
+                        marker.setMap scope.map
 
                 # go to google map
                 scope.toGoogleMap = ->
-
                     iOSversion = ->
                         if /iP(hone|od|ad)/.test(navigator.platform)
                             # supports iOS 2.0 and later: <http://bit.ly/TJjs1V>

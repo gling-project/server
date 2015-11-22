@@ -1,10 +1,10 @@
 <div class="business-for-map">
     <img class="business-illustration" ng-src="{{getInfo().business.illustration | image}}"/>
-    <span class="title">{{getInfo().business.name}}</span>
     <i ng-show="getInfo().business.following === true"
        class="gling-icon gling-icon gling-icon-bell">
     </i>
-    <br/>
+    <span class="title">{{getInfo().business.name}}</span>
+    <category-line-ctrl  ng-info="{categories:getInfo().business.categories}"></category-line-ctrl>
     {{getInfo().business.address.street}}, {{getInfo().business.address.zip}} {{getInfo().business.address.city}}<br/>
     <follow-widget-ctrl ng-info="{displayText:true,business:getInfo().business}"></follow-widget-ctrl><br/>
     <span class="link see-more" ng-click="goTo('/business/'+getInfo().business.id)">Voir plus...</span>

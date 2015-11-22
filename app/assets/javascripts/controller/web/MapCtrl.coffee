@@ -19,6 +19,10 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         return geolocationService.position
     , (n)->
         if n?
+            $scope.centerToPosition()
+
+    $scope.centerToPosition = ->
+        if geolocationService.position? && $scope.map?
             $scope.map.setCenter {lat:geolocationService.position.x,lng:geolocationService.position.y}
             $scope.map.setZoom 15
             google.maps.event.trigger $scope.map, 'resize'
@@ -42,12 +46,14 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         open: false
         following: false
 
+    #get a marker by business
     getMarker = (business) ->
         for marker in $scope.markers
             if marker.id == business.id
                 return marker
         null
 
+    #get a business by businessId
     getBusiness = (id) ->
         for mapDataBusiness in $scope.mapDataBusinesses
             if mapDataBusiness.id == id
@@ -56,16 +62,39 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
 
     #filters
     $scope.$watch 'filters', ->
+        $scope.computeFilters()
+    ,true
+
+    #watch interest
+    $scope.$watch 'interests', ->
+        $scope.computeFilters()
+    , true
+
+    $scope.computeFilters = ->
         if $scope.mapDataBusinesses?
             for mapDataBusiness in $scope.mapDataBusinesses
+                visible=true
                 marker = getMarker mapDataBusiness
+                #test attendance
                 if $scope.filters.open && !mapDataBusiness.attendance?
-                    marker.setMap null
+                    visible=false
+                #test following
                 else if $scope.filters.following && !mapDataBusiness.following
+                    visible=false
+                #test interest
+                else if !testInterests mapDataBusiness
+                    visible=false
+
+                #result
+                mapDataBusiness.visible=visible
+                if visible
+                    if !marker.getMap()?
+                        marker.setMap $scope.map
+                else if marker.getMap()?
                     marker.setMap null
-                else if !marker.getMap()?
-                    marker.setMap $scope.map
-    , 1
+
+            #compute list
+            $scope.computeList()
 
     #test if one of the business interest is selected
     testInterests = (mapDataBusiness) ->
@@ -78,27 +107,16 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
             if interest.name == 'empty'
                 if !mapDataBusiness.interests? || mapDataBusiness.interests.length == 0
                     if interest.selected == true
-                        if !marker.getMap()?
-                            marker.setMap $scope.map
+                        return true
                     else
-                        marker.setMap null
-                    return
+                        return false
             else
                 for interestToTest in mapDataBusiness.interests
                     if interest.name == interestToTest.name && interest.selected == true
-                        if !marker.getMap()?
-                            marker.setMap $scope.map
-                        return
+                        return true
+        return false
 
-        #not found ? remove
-        marker.setMap null
 
-    #watch interest
-    $scope.$watch 'interests', ->
-        if $scope.mapDataBusinesses?
-            for mapDataBusiness in $scope.mapDataBusinesses
-                testInterests mapDataBusiness
-    , true
 
 
     #interest list select / dis-select all
@@ -124,8 +142,10 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
 
                     marker.setMap $scope.map
                     $scope.markers.push marker
+                    mapDataBusiness.visible=true
 
                     addListener marker, mapDataBusiness
+        $scope.computeList()
 
     getIcon = (business) ->
         name = '/assets/images/google-map-marker/marker_'
@@ -199,42 +219,52 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
     $(window).scrollTop 0
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'
 
-    $scope.map = new google.maps.Map document.getElementById('map'), {
-        center:
-            lat: 50.8471417
-            lng: 4.3528959
-        zoom: 12
-        mapTypeControl: false
-        streetViewControl:false
-    }
-
-    #create displayable marker
-    $scope.map.addListener 'center_changed', ->
-        $scope.listDisplayedBusiness=[]
-        for marker in $scope.markers
-            if $scope.map.getBounds().contains(marker.getPosition())
-                $scope.listDisplayedBusiness.push getBusiness marker.id
-
-
-
-    mapStyle = [
-        {
-            featureType: "poi"
-            stylers: [
-                visibility: "off"
-            ]
-        },
-        {
-            featureType: "transit"
-            stylers: [
-                visibility: "off"
-            ]
+    $timeout ->
+        $scope.map = new google.maps.Map document.getElementById('map'), {
+            center:
+                lat: 50.8471417
+                lng: 4.3528959
+            zoom: 12
+            mapTypeControl: false
+            streetViewControl:false
         }
-    ]
 
-    $scope.map.setOptions({styles: mapStyle});
+        #create displayable marker
+        $scope.map.addListener 'center_changed', ->
+            $scope.lastMove = new Date().getTime()
+            if $scope.promise?
+                $timeout.cancel($scope.promise)
+            $scope.promise = $timeout ->
+                $scope.computeList()
+            , 500
+        $scope.computeList = ->
+            $scope.listDisplayedBusiness=[]
+            for marker in $scope.markers
+                if getBusiness(marker.id).visible && $scope.map.getBounds().contains(marker.getPosition())
+                    $scope.listDisplayedBusiness.push getBusiness marker.id
 
-    $scope.generateMapMarkers()
+
+
+        mapStyle = [
+            {
+                featureType: "poi"
+                stylers: [
+                    visibility: "off"
+                ]
+            },
+            {
+                featureType: "transit"
+                stylers: [
+                    visibility: "off"
+                ]
+            }
+        ]
+
+        $scope.map.setOptions({styles: mapStyle});
+
+        $scope.generateMapMarkers()
+        $scope.centerToPosition()
+    , 1
 
 
 

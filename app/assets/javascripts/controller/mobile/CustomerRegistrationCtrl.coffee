@@ -58,7 +58,7 @@ myApp.controller 'CustomerRegistrationCtrl', ($rootScope, $scope, $flash, accoun
             facebookService.loginToServer success, failed
         else
             #open an url to log the user to facebook
-            url = 'https://www.facebook.com/dialog/oauth/?client_id=' + $scope.facebookAppId + '&redirect_uri=' + $scope.basic_url + '/&state=BELGIUM&$scope=' + $scope.facebookAuthorization + '&response_type=token'
+            url = 'https://www.facebook.com/dialog/oauth/?scope='+facebookService.facebookAuthorization+'&client_id=' + $scope.facebookAppId + '&redirect_uri=' + $scope.basic_url + '/&state=BELGIUM&$scope=' + $scope.facebookAuthorization + '&response_type=token'
             window.open url, '_self'
 
     # try to catch facebook connection
