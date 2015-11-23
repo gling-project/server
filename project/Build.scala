@@ -57,10 +57,14 @@ object ApplicationBuild extends Build {
     "de.neuland-bfi" % "jade4j" % "0.4.0"
   )
 
+  lazy val angularCompileTask = TaskKey[Unit]("angular-compile", "Compile angular app")
+  val angularCompileSettings = angularCompileTask := {
+    new AngularCompileTask().execute()
+  }
+
   val main = play.Project(name, version, appDependencies)
   .settings(
-      resolvers += Resolver.url("bintray-tek-sbt-plugins",url("http://dl.bintray.com/tek/sbt-plugins"))(Resolver.ivyStylePatterns),
-      addSbtPlugin("tryp.sbt" % "sbt-jade" % "0.0.1")
+      angularCompileSettings, resources in Compile <<= (resources in Compile).dependsOn(angularCompileTask)
     )
   javaOptions ++= Seq("-Xmx512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
 
