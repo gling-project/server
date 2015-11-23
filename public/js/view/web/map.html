@@ -1,7 +1,6 @@
 <div class="content-block map-page"
      style="margin-top: 100px;height:{{height}}px">
 
-
     <div class="map-content">
 
         <!-- filtre open -->
@@ -25,20 +24,28 @@
              ng-show="displayFilters">
 
             <span class="filter-panel-close glyphicon glyphicon-remove"
-                  ng-click="displayFilters=false"></span>
+               ng-click="displayFilters=false"></span>
 
-            <!-- folloing  -->
-            <input type="checkbox" ng-model="filters.following">Uniquement les commerces suivi<br/>
-            <input type="checkbox" ng-model="filters.open">Uniquement les commerces actuellement ouverts
+            <h3>Filters</h3>
 
-            <h3>Intérêts</h3>
-            <span class="link" ng-click="selectAllInterest(true)">Tout sélectionner</span> / <span class="link"
-                                                                                                   ng-click="selectAllInterest(false)">Rien sélectionner</span>
+            <div class="list-container">
+                <div class="list-container-scroll">
 
-            <div ng-repeat="interest in interests">
-                <input type="checkbox" ng-model="interest.selected">
-                <span class="{{'gling-icon gling-icon-' + interest.name}}"></span>
-                {{interest.translationName}}
+
+                    <!-- folloing  -->
+                    <input type="checkbox" ng-model="filters.following">Uniquement les commerces suivi<br/>
+                    <input type="checkbox" ng-model="filters.open">Uniquement les commerces actuellement ouverts
+
+                    <h3>Intérêts</h3>
+                    <span class="link" ng-click="selectAllInterest(true)">Tout sélectionner</span> / <span class="link"
+                                                                                                           ng-click="selectAllInterest(false)">Rien sélectionner</span>
+
+                    <div ng-repeat="interest in interests">
+                        <input type="checkbox" ng-model="interest.selected">
+                        <span class="{{'gling-icon gling-icon-' + interest.name}}"></span>
+                        {{interest.translationName}}
+                    </div>
+                </div>
             </div>
 
         </div>

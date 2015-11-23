@@ -80,14 +80,14 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
                     marker.setPosition new (google.maps.LatLng)(business.address.posx, business.address.posy)
                     marker.setTitle business.name
                     if business.businessStatus == 'WAITING_CONFIRMATION'
-                        marker.setIcon '/assets/images/google-map-marker/marker_waiting.png'
+                        marker.setIcon '/assets/images/google-map-marker/marker_orange.png'
                     else if business.businessStatus == 'NOT_PUBLISHED'
-                        marker.setIcon '/assets/images/google-map-marker/marker_not_published.png'
+                        marker.setIcon '/assets/images/google-map-marker/marker_red.png'
                     else if business.businessStatus == 'PUBLISHED'
                         if business.hasOwner
-                            marker.setIcon '/assets/images/google-map-marker/marker_published.png'
+                            marker.setIcon '/assets/images/google-map-marker/marker_green_light.png'
                         else
-                            marker.setIcon '/assets/images/google-map-marker/marker_no_owner.png'
+                            marker.setIcon '/assets/images/google-map-marker/marker_black.png'
                     marker.setMap $scope.map
                     $scope.mks.push marker
 

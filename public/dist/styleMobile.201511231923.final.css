@@ -2122,6 +2122,7 @@ ul.messenger .messenger-spinner {
   font-weight: bold;
 }
 .progressBar {
+  top: 0;
   height: 4px;
   position: fixed;
   z-index: 100000;
@@ -3011,6 +3012,11 @@ ul.messenger .messenger-spinner {
 }
 .panel-gling {
   overflow: hidden;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.panel-gling .panel-heading {
+  font-weight: bold;
+  border-bottom: 1px solid #cccccc;
 }
 .help-big {
   font-weight: bold;

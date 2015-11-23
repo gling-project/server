@@ -62,6 +62,20 @@
             top: 0;
             bottom: 0;
 
+            .list-container {
+                height: ~'calc(100% - 46px)';
+                overflow: auto;
+                .list-container-scroll {
+                    .list-element {
+                        padding: 5px;
+                        border: 1px solid #aaa;
+
+                        &:hover {
+                            background-color: #eeeeee;
+                        }
+                    }
+                }
+            }
         }
     }
 

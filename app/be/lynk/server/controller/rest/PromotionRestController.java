@@ -134,7 +134,9 @@ public class PromotionRestController extends AbstractRestController {
 
         String oldName = promotionToEdit.getTitle();
 
-        promotionToEdit.setInterest(customerInterestService.findByName(promotion.getInterest().getName()));
+        if(promotion.getInterest()!=null) {
+            promotionToEdit.setInterest(customerInterestService.findByName(promotion.getInterest().getName()));
+        }
         promotionToEdit.setTitle(promotion.getTitle());
         promotionToEdit.setDescription(promotion.getDescription());
 //        promotionToEdit.setEndDate(promotion.getEndDate());
