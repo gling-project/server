@@ -40,7 +40,8 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
         $http(
             'method': 'GET'
             'url': '/rest/login/facebook/' + access_token + '/' + user_id
-            'headers': 'Content-Type:application/json;charset=utf-8').success((data) ->
+            'headers': 'Content-Type:application/json;charset=utf-8'
+        ).success((data) ->
             if data? != ''
                 if callbackSuccess?
                     callbackSuccess data

@@ -17,8 +17,9 @@ class AngularCompiler {
         val folder = Path.fromString("target/scala-2.10/resource_managed/main/public")
 
         val jades: PathSet[Path] = (angular / "js" ** "*.jade")
+        val coffees: PathSet[Path] = (angular / "js" ** "*.coffee")
 
-        List(jades).foreach { v =>
+        List(jades,coffees).foreach { v =>
             compileFiles(v, folder)
         }
     }
@@ -28,9 +29,6 @@ class AngularCompiler {
         files.toList.foreach { v =>
             executor.execute(new Runnable {
                 def run() {
-
-                    println("compilation du fichier " + v.path)
-
                     compileFile(v, folder)
                 }
             })
@@ -60,14 +58,12 @@ class AngularCompiler {
 
         val targetPath = folder.path + f.path.replace("app/assets", "").split("\\.")(0) + "." + targetExtension
 
-        println("compilation du fichier " + f.path + " vers " + targetPath)
-
-        val tempFile = new java.io.File((folder / f).path.replaceAll("\\." + sourceExtension + "$", "." + targetExtension))
+        val tempFile = new java.io.File(targetPath)
 
         synchronized {
             tempFile.getParentFile.mkdirs()
         }
-
+        println(" ?? " + tempFile.exists())
         if (tempFile.exists() && tempFile.lastModified >= f.lastModified) {
         } else {
             var result = ""

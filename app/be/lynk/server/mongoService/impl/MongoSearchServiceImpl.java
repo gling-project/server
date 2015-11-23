@@ -84,14 +84,24 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
             DBObject requestParams = (DBObject) next.get("requestParams");
 
-            Long param5 = Long.parseLong((String) requestParams.get("param5"));
 
-            if (param5 != null) {
-                if (interests.containsKey(param5)) {
-                    interests.put(param5, interests.get(param5) + 1);
-                } else {
-                    interests.put(param5, 1);
+
+            try{
+                Object param5 = requestParams.get("param5");
+                Long interestId = Long.parseLong((String) param5);
+
+
+                if (interestId != null) {
+                    if (interests.containsKey(interestId)) {
+                        interests.put(interestId, interests.get(interestId) + 1);
+                    } else {
+                        interests.put(interestId, 1);
+                    }
                 }
+            }
+            catch (NumberFormatException e){
+                e.printStackTrace();
+                int i=5;
             }
         }
 
@@ -137,10 +147,10 @@ public class MongoSearchServiceImpl implements MongoSearchService {
             while (cursor.hasNext()) {
                 DBObject next = cursor.next();
                 if (next.get("currentAccountId") != null) {
-                    Account currentAccountId = accountService.findById((Long) next.get("currentAccountId"));
+                    Account account = accountService.findById((Long) next.get("currentAccountId"));
 
-                    if (currentAccountId.getRole().equals(RoleEnum.CUSTOMER) && !accounts.contains(currentAccountId)) {
-                        accounts.add(currentAccountId);
+                    if (account!=null && (account.getRole()!=null ||account.getRole().equals(RoleEnum.CUSTOMER)) && !accounts.contains(account)) {
+                        accounts.add(account);
                     }
                 }
             }

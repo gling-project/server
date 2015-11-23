@@ -134,11 +134,12 @@ public abstract class AbstractController extends Controller {
         Map<String, String> params = new HashMap<>();
         String[] urlEls = url.split("/");
         String[] pathEls = ctx().request().path().split("/");
-        for (int i = 0; i < urlEls.length; i++) {
-            String s = urlEls[i];
-            if (s.contains("$") || s.contains(":")) {
+        for (int i = 0; i < pathEls.length; i++) {
+            String param = urlEls[i];
+            String value = pathEls[i];
+            if (param.contains("$") || param.contains(":")) {
                 //it's a param !!
-                params.put("param" + i, s);
+                params.put("param" + i, value);
             }
         }
 

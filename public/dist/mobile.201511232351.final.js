@@ -712,187 +712,168 @@ $scope.save=function(share){if(!$scope.publicationFormParam.isValid)return $scop
 $scope.business.id);return modalService.successAndShare($scope.publicationFormParam.business.id,data.id)},function(){return modalService.closeLoadingModal()})}};modalService.closeLoadingModal();return $scope.business=business})}])}).call(this);
 (function(){myApp.controller("BusinessNotificationCtrl",['$rootScope', '$scope', 'accountService', '$flash', 'translationService', 'facebookService', 'modalService', 'businessNotificationService', 'businessService', '$compile', function($rootScope,$scope,accountService,$flash,translationService,facebookService,modalService,businessNotificationService,businessService,$compile){return businessService.getBusiness(accountService.getMyself().businessId,function(business){var directive;$scope.business=business;$scope.businessNotificationFormParam={dto:null,business:$scope.business};modalService.closeLoadingModal();directive=$compile("\x3cbusiness-notification-form-ctrl ng-info\x3d'businessNotificationFormParam'\x3e\x3c/business-notification-form-ctrl\x3e")($scope);
 $(".inject-box").append(directive);return $scope.save=function(share){if(!$scope.businessNotificationFormParam.isValid)return $scope.businessNotificationFormParam.displayErrorMessage=true;else{modalService.openLoadingModal();return businessNotificationService.add($scope.businessNotificationFormParam.dto,function(data){modalService.closeLoadingModal();$scope.navigateTo("/business/"+$scope.business.id);return modalService.successAndShare($scope.businessNotificationFormParam.business.id,data.id)},function(){return modalService.closeLoadingModal()})}}})}])}).call(this);
-(function() {
-
-  myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
-    return {
-      restrict: 'E',
-      scope: directiveService.autoScope({
-        ngInfo: '='
-      }),
-      templateUrl: '/assets/js/directive/component/businessListMobile/template.html',
-      replace: true,
-      transclude: true,
-      compile: function() {
-        return {
-          post: function(scope) {
-            directiveService.autoScopeImpl(scope);
-            scope.descriptionLimitBase = 200;
-            scope.descriptionLimit = scope.descriptionLimitBase;
-            scope.getInfo().loading = true;
-            scope.navigateTo = function(target) {
-              return $location.path(target);
-            };
-            return scope.$watch('getInfo().data', function() {
-              return scope.businesses = scope.getInfo().data;
-            });
-          }
-        };
-      }
-    };
-  }]);
-
-}).call(this);
-
-(function() {
-
-  myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService, $timeout) {
-    return {
-      restrict: 'E',
-      scope: directiveService.autoScope({
-        ngInfo: '='
-      }),
-      templateUrl: '/assets/js/directive/component/publicationListMobile/template.html',
-      replace: true,
-      transclude: true,
-      compile: function() {
-        return {
-          post: function(scope) {
-            directiveService.autoScopeImpl(scope);
-            scope.getInfo().loading = true;
-            scope.changeInterestCallback = function(businessId, value) {
-              var publication, _i, _len, _ref, _results;
-              console.log('callback !! ');
-              _ref = scope.publications;
-              _results = [];
-              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                publication = _ref[_i];
-                if (publication.businessId === businessId) {
-                  _results.push(publication.following = value);
-                } else {
-                  _results.push(void 0);
-                }
+myApp.directive('businessListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+  return {
+    restrict: 'E',
+    scope: directiveService.autoScope({
+      ngInfo: '='
+    }),
+    templateUrl: '/assets/js/directive/component/businessListMobile/template.html',
+    replace: true,
+    transclude: true,
+    compile: function() {
+      return {
+        post: function(scope) {
+          directiveService.autoScopeImpl(scope);
+          scope.descriptionLimitBase = 200;
+          scope.descriptionLimit = scope.descriptionLimitBase;
+          scope.getInfo().loading = true;
+          scope.navigateTo = function(target) {
+            return $location.path(target);
+          };
+          return scope.$watch('getInfo().data', function() {
+            return scope.businesses = scope.getInfo().data;
+          });
+        }
+      };
+    }
+  };
+}]);
+myApp.directive('publicationListMobileCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService, $timeout) {
+  return {
+    restrict: 'E',
+    scope: directiveService.autoScope({
+      ngInfo: '='
+    }),
+    templateUrl: '/assets/js/directive/component/publicationListMobile/template.html',
+    replace: true,
+    transclude: true,
+    compile: function() {
+      return {
+        post: function(scope) {
+          directiveService.autoScopeImpl(scope);
+          scope.getInfo().loading = true;
+          scope.changeInterestCallback = function(businessId, value) {
+            var publication, _i, _len, _ref, _results;
+            console.log('callback !! ');
+            _ref = scope.publications;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              publication = _ref[_i];
+              _results.push(publication.businessId === businessId ? publication.following = value : void 0);
+            }
+            return _results;
+          };
+          return scope.$watch('getInfo().data', function() {
+            var publication, _i, _len, _ref, _results;
+            scope.publications = scope.getInfo().data;
+            _ref = scope.publications;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              publication = _ref[_i];
+              publication.descriptionLimit = scope.descriptionLimitBase;
+              _results.push(publication.interval = publication.endDate - (new Date));
+            }
+            return _results;
+          });
+        }
+      };
+    }
+  };
+}]);
+myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, searchService, $timeout) {
+  return {
+    restrict: 'E',
+    scope: directiveService.autoScope({
+      ngInfo: '='
+    }),
+    templateUrl: '/assets/js/directive/component/publicationListMobileForBusiness/template.html',
+    replace: true,
+    transclude: true,
+    compile: function() {
+      return {
+        post: function(scope) {
+          directiveService.autoScopeImpl(scope);
+          scope.descriptionLimitBase = 250;
+          scope.currentPage = 0;
+          scope.allLoaded = false;
+          scope.loadSemaphore = false;
+          scope.publications = [];
+          scope.loading = false;
+          scope.isArchived = function(publication) {
+            return publication.endDate < (new Date).getTime();
+          };
+          $('.scrollable-content-body').on('scroll', function() {
+            var scrollBottom;
+            scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();
+            if ($('.scrollable-content-inner').height() - scrollBottom < 200) {
+              if (scope.loadSemaphore === false) {
+                console.log('-- SERACH FROM SCROOL');
+                scope.loadSemaphore = true;
+                scope.currentPage = scope.currentPage + 1;
+                return scope.search();
               }
-              return _results;
-            };
-            return scope.$watch('getInfo().data', function() {
-              var publication, _i, _len, _ref, _results;
-              scope.publications = scope.getInfo().data;
-              _ref = scope.publications;
-              _results = [];
-              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                publication = _ref[_i];
-                publication.descriptionLimit = scope.descriptionLimitBase;
-                _results.push(publication.interval = publication.endDate - (new Date));
-              }
-              return _results;
+            }
+          });
+          scope.openGallery = function(image, publication) {
+            return $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {
+              list: publication.pictures,
+              first: image
             });
-          }
-        };
-      }
-    };
-  }]);
-
-}).call(this);
-
-(function() {
-
-  myApp.directive('publicationListMobileForBusinessCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, searchService, $timeout) {
-    return {
-      restrict: 'E',
-      scope: directiveService.autoScope({
-        ngInfo: '='
-      }),
-      templateUrl: '/assets/js/directive/component/publicationListMobileForBusiness/template.html',
-      replace: true,
-      transclude: true,
-      compile: function() {
-        return {
-          post: function(scope) {
-            directiveService.autoScopeImpl(scope);
-            scope.descriptionLimitBase = 250;
+          };
+          scope.getInterestClass = function(publication) {
+            if (publication.interest != null) {
+              return 'gling-icon-' + publication.interest.name;
+            }
+            return null;
+          };
+          scope.getInfo().refresh = function(type) {
             scope.currentPage = 0;
-            scope.allLoaded = false;
-            scope.loadSemaphore = false;
             scope.publications = [];
-            scope.loading = false;
-            scope.isArchived = function(publication) {
-              return publication.endDate < (new Date).getTime();
-            };
-            $('.scrollable-content-body').on('scroll', function() {
-              var scrollBottom;
-              scrollBottom = $('.scrollable-content-body').scrollTop() + $('.scrollable-content-body').height();
-              if ($('.scrollable-content-inner').height() - scrollBottom < 200) {
-                if (scope.loadSemaphore === false) {
-                  console.log('-- SERACH FROM SCROOL');
-                  scope.loadSemaphore = true;
-                  scope.currentPage = scope.currentPage + 1;
-                  return scope.search();
-                }
-              }
-            });
-            scope.openGallery = function(image, publication) {
-              return $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {
-                list: publication.pictures,
-                first: image
-              });
-            };
-            scope.getInterestClass = function(publication) {
-              if (publication.interest != null) {
-                return 'gling-icon-' + publication.interest.name;
-              }
-              return null;
-            };
-            scope.getInfo().refresh = function(type) {
-              scope.currentPage = 0;
-              scope.publications = [];
-              scope.type = type;
-              return scope.search();
-            };
-            scope.success = function(data) {
-              var d, publication, _i, _j, _len, _len1, _ref;
-              if (scope.currentPage === 0) {
-                scope.publications = [];
-              }
-              if (data.length === 0) {
-                scope.allLoaded = true;
-              }
-              scope.loadSemaphore = false;
-              for (_i = 0, _len = data.length; _i < _len; _i++) {
-                d = data[_i];
-                scope.publications.push(d);
-              }
-              _ref = scope.publications;
-              for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-                publication = _ref[_j];
-                publication.descriptionLimit = scope.descriptionLimitBase;
-                publication.interval = (publication.endDate - (new Date)) / 1000;
-              }
-              $timeout((function() {
-                if (scope.getInfo().scrollTo != null) {
-                  $('.main-body').scrollTop($('#publication' + scope.getInfo().scrollTo).offset().top);
-                  return scope.$apply();
-                }
-              }), 1);
-              return scope.loading = false;
-            };
-            scope.search = function() {
-              if (scope.allLoaded === true) {
-                return;
-              }
-              scope.loading = true;
-              return searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
-            };
-            console.log('-- SERACH FROM initialization');
+            scope.type = type;
             return scope.search();
-          }
-        };
-      }
-    };
-  }]);
-
-}).call(this);
-
+          };
+          scope.success = function(data) {
+            var d, publication, _i, _j, _len, _len2, _ref;
+            if (scope.currentPage === 0) {
+              scope.publications = [];
+            }
+            if (data.length === 0) {
+              scope.allLoaded = true;
+            }
+            scope.loadSemaphore = false;
+            for (_i = 0, _len = data.length; _i < _len; _i++) {
+              d = data[_i];
+              scope.publications.push(d);
+            }
+            _ref = scope.publications;
+            for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
+              publication = _ref[_j];
+              publication.descriptionLimit = scope.descriptionLimitBase;
+              publication.interval = (publication.endDate - (new Date)) / 1000;
+            }
+            $timeout((function() {
+              if (scope.getInfo().scrollTo != null) {
+                $('.main-body').scrollTop($('#publication' + scope.getInfo().scrollTo).offset().top);
+                return scope.$apply();
+              }
+            }), 1);
+            return scope.loading = false;
+          };
+          scope.search = function() {
+            if (scope.allLoaded === true) {
+              return;
+            }
+            scope.loading = true;
+            return searchService.byBusiness(scope.currentPage, scope.getInfo().businessId, scope.success);
+          };
+          console.log('-- SERACH FROM initialization');
+          return scope.search();
+        }
+      };
+    }
+  };
+}]);
 myApp.directive("headerSearchCtrl", ['$rootScope', '$location', '$timeout', 'modalService', function ($rootScope,$location,$timeout,modalService) {
     return {
         restrict: "E",
@@ -972,89 +953,79 @@ myApp.directive("mobileTitleCtrl", ['$rootScope', '$location', '$timeout', 'moda
     }
 }]);
 
-(function() {
-
-  myApp.directive('categoryLineCtrl', ['$rootScope', 'directiveService', '$location', function($rootScope, directiveService, $location) {
-    return {
-      restrict: 'E',
-      scope: directiveService.autoScope({
-        ngInfo: '='
-      }),
-      templateUrl: '/assets/js/directive/component/categoryLine/template.html',
-      replace: true,
-      transclude: true,
-      compile: function() {
-        return {
-          post: function(scope) {
-            directiveService.autoScopeImpl(scope);
-            return scope.searchCat = function(categoryName) {
-              return $location.path('/search/category:' + categoryName);
-            };
-          }
-        };
-      }
-    };
-  }]);
-
-}).call(this);
-
-(function() {
-
-  myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService, $timeout) {
-    return {
-      restrict: 'E',
-      scope: directiveService.autoScope({
-        ngInfo: '='
-      }),
-      templateUrl: '/assets/js/directive/component/publicationWidgetForMobile/template.html',
-      replace: true,
-      transclude: true,
-      compile: function() {
-        return {
-          post: function(scope) {
-            directiveService.autoScopeImpl(scope);
-            scope.descriptionLimitBase = 250;
-            scope.descriptionLimit = scope.descriptionLimitBase;
-            scope.getInterestClass = function(publication) {
-              if (publication.interest != null) {
-                return 'gling-icon-' + publication.interest.name;
-              }
-              return null;
-            };
-            scope.navigateTo = function(target) {
-              $rootScope.$broadcast('PROGRESS_BAR_START');
-              modalService.openLoadingModal();
-              return $timeout((function() {
-                return $location.path(target);
-              }), 1);
-            };
-            scope.openGallery = function(image, publication) {
-              return $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {
-                list: publication.pictures,
-                first: image
-              });
-            };
-            scope.getInfo().loading = true;
-            scope.getIllustrationClass = function(picture) {
-              if (picture !== void 0 && picture.height > picture.width) {
-                return 'publication-illustration-high';
-              } else {
-                return 'publication-illustration';
-              }
-            };
-            return scope.$watch('getInfo().publication.following', function(n, o) {
-              if (n !== o && (scope.getInfo().changeInterestCallback != null)) {
-                return scope.getInfo().changeInterestCallback(scope.getInfo().publication.businessId, n);
-              }
+myApp.directive('categoryLineCtrl', ['$rootScope', 'directiveService', '$location', function($rootScope, directiveService, $location) {
+  return {
+    restrict: 'E',
+    scope: directiveService.autoScope({
+      ngInfo: '='
+    }),
+    templateUrl: '/assets/js/directive/component/categoryLine/template.html',
+    replace: true,
+    transclude: true,
+    compile: function() {
+      return {
+        post: function(scope) {
+          directiveService.autoScopeImpl(scope);
+          return scope.searchCat = function(categoryName) {
+            return $location.path('/search/category:' + categoryName);
+          };
+        }
+      };
+    }
+  };
+}]);
+myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService, $timeout) {
+  return {
+    restrict: 'E',
+    scope: directiveService.autoScope({
+      ngInfo: '='
+    }),
+    templateUrl: '/assets/js/directive/component/publicationWidgetForMobile/template.html',
+    replace: true,
+    transclude: true,
+    compile: function() {
+      return {
+        post: function(scope) {
+          directiveService.autoScopeImpl(scope);
+          scope.descriptionLimitBase = 250;
+          scope.descriptionLimit = scope.descriptionLimitBase;
+          scope.getInterestClass = function(publication) {
+            if (publication.interest != null) {
+              return 'gling-icon-' + publication.interest.name;
+            }
+            return null;
+          };
+          scope.navigateTo = function(target) {
+            $rootScope.$broadcast('PROGRESS_BAR_START');
+            modalService.openLoadingModal();
+            return $timeout((function() {
+              return $location.path(target);
+            }), 1);
+          };
+          scope.openGallery = function(image, publication) {
+            return $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {
+              list: publication.pictures,
+              first: image
             });
-          }
-        };
-      }
-    };
-  }]);
-
-}).call(this);
-
+          };
+          scope.getInfo().loading = true;
+          scope.getIllustrationClass = function(picture) {
+            if (picture !== void 0 && picture.height > picture.width) {
+              return 'publication-illustration-high';
+            } else {
+              return 'publication-illustration';
+            }
+          };
+          return scope.$watch('getInfo().publication.following', function(n, o) {
+            if (n !== o && (scope.getInfo().changeInterestCallback != null)) {
+              return scope.getInfo().changeInterestCallback(scope.getInfo().publication.businessId, n);
+            }
+          });
+        }
+      };
+    }
+  };
+}]);
 myApp.service("$flash", ['$filter', 'modalService', function($filter,modalService) {
 
     Messenger.options = {

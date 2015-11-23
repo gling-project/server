@@ -41,7 +41,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
         $scope.publicationListParam.displayRemoveIcon = $scope.edit
 
     #loading
-    businessService.getBusiness $routeParams.businessId, ((data) ->
+    businessService.getBusiness $routeParams.businessId, (data) ->
         $scope.loading = false
         $scope.business = data
         #publication
@@ -49,8 +49,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
 
         #edit mode ?
         $scope.$watch 'business.businessStatus', ->
-            if accountService.getMyself()? and constantService.compareNumber(accountService.getMyself().businessId,
-                $routeParams.businessId)
+            if accountService.getMyself()? and constantService.compareNumber(accountService.getMyself().businessId,$routeParams.businessId)
                 if $scope.business.businessStatus != 'WAITING_CONFIRMATION'
                     $scope.edit = true
                 $scope.myBusiness = true
@@ -330,7 +329,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                     setLoading false
                 , ->
                     setLoading false
-    ), ->
+    , ->
         $scope.loading = false
         $scope.displayError = true
 
