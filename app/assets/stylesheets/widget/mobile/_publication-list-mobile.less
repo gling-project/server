@@ -7,18 +7,18 @@
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
     position: relative;
 
-    & > div:first-child{
+    & > div:first-child {
         padding: 4px;
     }
 
-    .archived{
+    .archived {
         background-color: #ddd;
-        &>div{
+        & > div {
             opacity: 0.7;
         }
     }
 
-    .archived-icon{
+    .archived-icon {
         position: absolute;
         bottom: 5px;
         left: -2px;
@@ -40,7 +40,7 @@
         height: 60px;
     }
 
-    .publication-badge{
+    .publication-badge {
         background: url('/assets/images/publication_badge.png') no-repeat;
         padding: 10px 10px;
         /* border-radius: 10px; */
@@ -53,16 +53,16 @@
         background-size: 80px 40px;
     }
 
-    .publication-title{
+    .publication-title {
         font-weight: bold;
         padding-bottom: 5px;
     }
 
-    .publication-data-body{
+    .publication-data-body {
         border-top: 1px solid @color-blue-dark;
         padding: 3px 0px;
         margin: 5px 0px;
-//        color: rgb(120, 120, 120);
+        //        color: rgb(120, 120, 120);
     }
 
     .publication-illustration-plus-icon {
@@ -74,7 +74,7 @@
         height: 60px;
         width: 60px;
         vertical-align: top;
-        background-color: rgba(0,0,0, 0.5);
+        background-color: rgba(0, 0, 0, 0.5);
         span {
             color: @color-grey;
             font-size: 30px;
@@ -86,141 +86,144 @@
         }
     }
 
+    .publication-gallery {
+        position: relative;
+        text-align: center;
 
-        .publication-gallery{
-            position: relative;
-            text-align: center;
+    }
 
+    .publication-gallery-image-box {
+        position: relative;
+        background: #eeeeee url('/assets/images/publication/camera_little.png') no-repeat center;
+        border: 1px solid @color-grey;
+        border-radius: 10px;
+        min-width: 70%;
+        height: 175px;
+        display: inline-block;
+        overflow: hidden;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    .publication-interest {
+        background-color: @color-blue-dark;
+        font-size: 1.2em;
+        float: right;
+        padding: 8px;
+        border-radius: 30px;
+        color: @color-white;
+    }
+
+    .publication-header {
+        width: 100%;
+        padding-bottom: 5px;
+
+        .illustration {
+            cursor: pointer;
         }
 
-        .publication-gallery-image-box{
-            position: relative;
-            background: #eeeeee url('/assets/images/publication/camera_little.png') no-repeat center;
-            border: 1px solid @color-grey;
-            border-radius: 10px;
-            min-width: 70%;
-            height: 175px;
-            display: inline-block;
-            overflow: hidden;
-
-            img {
-                height: 100%;
-            }
-        }
-
-        .publication-interest {
-            background-color: @color-blue-dark;
-            font-size: 1.2em;
-            float: right;
-            padding: 8px;
-            border-radius: 30px;
-            color: @color-white;
-        }
-
-        .publication-header {
-            width: 100%;
-            padding-bottom: 5px;
-
-            .illustration{
-                cursor: pointer;
-            }
-
-            .title-box {
-                margin-left: 10px;
-                .title{
-                    font-size: 18px;
-                    color: @color-blue-dark;
-                    font-weight: bold;
-                    display: inline-block;
-//                    cursor: pointer;
-                }
-                .title-data{
-                    font-size: 14px;
-                    color: @color-grey-dark;
-                }
-            }
-
-            & td{
-                vertical-align: top;
-            }
-
-            & td:first-child{
-                width: 60px;
-            }
-
-            .publication-following-widget{
-                font-size: 14px;
-                font-weight: normal;
-                display: inline-block;
-                float: right;
-            }
-
-//            & > *:nth-child(n+2) {
-//                margin-top: 10px;
-//
-//            }
-//
-//            & > * {
-////                display: inline-block;
-//                vertical-align: top;
-//            }
-//            & > *:last-child {
-//                float: right;
-//                border: 1px solid @color-blue-dark;
-//                padding: 2px 5px;
-//                font-size: 14px;
-//                margin-right: 10px;
-//                color: @color-blue-dark;
-//                border-radius: 10px;
-//            }
-        }
-
-        .publication-data {
-            .publication-data-promotion {
-                width: 100%;
-                border-top: 1px solid @color-blue-dark;
-                padding: 5px;
-                margin: 5px;
-                font-size: 16px;
-                font-weight: bold;
+        .title-box {
+            margin-left: 10px;
+            .title {
+                font-size: 18px;
                 color: @color-blue-dark;
+                font-weight: bold;
+                display: inline-block;
 
-                td{
-                    width: 1em;
-                    text-align: center;
+                .gling-icon {
+                    margin-right: 5px;
+                    color: @color-green-light;
                 }
-
-                .publication-box-price{
-                    & > span:nth-child(2){
-                        text-decoration: line-through;
-                        font-size: 14px;
-                        font-weight: normal;
-                    }
-                }
-
-//                & > *:first-child {
-////                    background-color: @color-green-light;
-////                    color: #ffffff;
-////                    border-radius: 5px;
-//                    padding: 5px;
-//                }
-//                & > *:nth-child(n+2) {
-//                    font-size: 16px;
-//                    font-weight: bold;
-//                    color: @color-blue-dark;
-//                }
-//                & > * {
-//                    display: inline-block;
-//                    &:first-child {
-//                        margin-right: 2px;
-//                    }
-//                }
+            }
+            .title-data {
+                font-size: 14px;
+                color: @color-grey-dark;
             }
         }
 
-        .publication-list-business-data {
-            display: inline-block;
+        & td {
+            vertical-align: top;
         }
+
+        & td:first-child {
+            width: 60px;
+        }
+
+        .publication-following-widget {
+            font-size: 14px;
+            font-weight: normal;
+            display: inline-block;
+            float: right;
+        }
+
+        //            & > *:nth-child(n+2) {
+        //                margin-top: 10px;
+        //
+        //            }
+        //
+        //            & > * {
+        ////                display: inline-block;
+        //                vertical-align: top;
+        //            }
+        //            & > *:last-child {
+        //                float: right;
+        //                border: 1px solid @color-blue-dark;
+        //                padding: 2px 5px;
+        //                font-size: 14px;
+        //                margin-right: 10px;
+        //                color: @color-blue-dark;
+        //                border-radius: 10px;
+        //            }
+    }
+
+    .publication-data {
+        .publication-data-promotion {
+            width: 100%;
+            border-top: 1px solid @color-blue-dark;
+            padding: 5px;
+            margin: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            color: @color-blue-dark;
+
+            td {
+                width: 1em;
+                text-align: center;
+            }
+
+            .publication-box-price {
+                & > span:nth-child(2) {
+                    text-decoration: line-through;
+                    font-size: 14px;
+                    font-weight: normal;
+                }
+            }
+
+            //                & > *:first-child {
+            ////                    background-color: @color-green-light;
+            ////                    color: #ffffff;
+            ////                    border-radius: 5px;
+            //                    padding: 5px;
+            //                }
+            //                & > *:nth-child(n+2) {
+            //                    font-size: 16px;
+            //                    font-weight: bold;
+            //                    color: @color-blue-dark;
+            //                }
+            //                & > * {
+            //                    display: inline-block;
+            //                    &:first-child {
+            //                        margin-right: 2px;
+            //                    }
+            //                }
+        }
+    }
+
+    .publication-list-business-data {
+        display: inline-block;
+    }
 
     .publication-footer {
         height: 20px;

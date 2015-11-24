@@ -1075,13 +1075,13 @@ myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'titl
 
 }]);
 myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', '$location', '$route', '$routeParams', function($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route, $routeParams) {
-  var createNewAddress, original, path, successLoadingBusiness, successLoadingPublications, _ref;
+  var createNewAddress, original, path, successLoadingBusiness, successLoadingPublications;
   $scope.param = $routeParams.param;
   original = $location.path;
   $scope.interestDisplayMax = 12;
   $scope.interestDisplayed = [];
   $scope.interestDisplayed2 = [];
-  $scope.followedMode = ((_ref = $scope.param) != null ? _ref.indexOf('following') : void 0) !== -1;
+  $scope.followingMode = ($scope.param != null) && $scope.param.indexOf('following') !== -1;
   $scope.businessInfoParam = {};
   $scope.businessListParam = {
     data: []
@@ -1093,9 +1093,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
   $scope.loadSemaphore = false;
   $scope.emptyMessage = null;
   path = function() {
-    var path;    var i, path;
+    var i, path;
     path = '/home';
-    if ($scope.followedMode) {
+    if ($scope.followingMode) {
       path += '/following';
     }
     for (i in $scope.customerInterests) {
@@ -1115,8 +1115,9 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     return $scope.sharePosition = n;
   });
   $scope.setFollowedMode = function(n) {
+    console.log('setFollowedMode:' + n);
     if (!(n != null)) {
-      n = !$scope.followedMode;
+      n = !$scope.followingMode;
     }
     if (!(accountService.getMyself() != null)) {
       return modalService.openLoginModal($scope.switchFollowedMode, n, '--.loginModal.help.followMode');
@@ -1125,11 +1126,8 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     }
   };
   $scope.switchFollowedMode = function(n) {
-    if (n != null) {
-      $scope.followedMode = n;
-    } else {
-      $scope.followedMode = !$scope.followedMode;
-    }
+    console.log('switchFollowedMode:' + n);
+    $scope.followingMode = n;
     return path();
   };
   $scope.customerRegistration = function() {
@@ -1155,7 +1153,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     $scope.allLoaded = false;
     return $scope.search();
   });
-  $scope.$watch('followedMode', function(o, n) {
+  $scope.$watch('followingMode', function(n, o) {
     if (o !== n) {
       $scope.currentPage = 0;
       $scope.allLoaded = false;
@@ -1163,8 +1161,8 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     }
   });
   $scope.$on('LOGOUT', function() {
-    if ($scope.followedMode) {
-      return $scope.followedMode = false;
+    if ($scope.followingMode) {
+      return $scope.followingMode = false;
     }
   });
   $(window).on('scroll', function() {
@@ -1220,7 +1218,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
         $scope.publicationListCtrl.data = [];
         $scope.businessListParam.data = [];
       }
-      if ($scope.followedMode) {
+      if ($scope.followingMode) {
         if (interestSelected != null) {
           return searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function(data) {
             return successLoadingPublications(data, function() {
@@ -1395,8 +1393,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
     staticMap: true
   };
   $scope.displayEditMode = function() {
-    var _ref;
-    return $scope.myBusiness === true || ((_ref = accountService.getMyself()) != null ? _ref.role : void 0) === 'SUPERADMIN';
+    return $scope.myBusiness === true || ((accountService.getMyself() != null) && accountService.getMyself().role === 'SUPERADMIN');
   };
   $scope.publicationListParam = {
     scrollTo: $scope.publicationIdToGo,

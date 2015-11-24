@@ -47,7 +47,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessServ
 
     #return true if there is a schedule, false is not
     $scope.displaySchedule = ->
-        if $scope.business?.schedules?
+        if $scope.business? and $scope.business.schedules?
             for schedule in $scope.business.schedules
                 if schedule.length > 0
                     return true
@@ -88,7 +88,6 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, $routeParams, businessServ
             {
                 name: 'home'
                 translatableName: '--.business.action.home'
-                icon: 'gling-icon-home'
                 action: ->
                     $scope.tabToDisplay = 'home'
                     return

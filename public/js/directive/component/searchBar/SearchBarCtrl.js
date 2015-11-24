@@ -39,11 +39,10 @@ myApp.directive('searchBarCtrl', function($rootScope, businessService, geolocati
           });
           scope.search = function() {
             if (!(scope.searchResultParam.indexSelected != null)) {
-              return scope.navigateTo('search/' + searchBarService.currentSearch);
+              return $location.path('search/' + searchBarService.currentSearch);
             }
           };
           return scope.navigateTo = function(target) {
-            $rootScope.$broadcast('PROGRESS_BAR_START');
             $rootScope.$broadcast('SEARCH_CLEAN');
             return $timeout((function() {
               return $location.path(target);

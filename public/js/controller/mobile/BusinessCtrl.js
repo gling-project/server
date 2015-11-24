@@ -31,11 +31,11 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, $routeParams, busi
     });
   };
   $scope.displaySchedule = function() {
-    var schedule, _i, _len, _ref, _ref2;
-    if (((_ref = $scope.business) != null ? _ref.schedules : void 0) != null) {
-      _ref2 = $scope.business.schedules;
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        schedule = _ref2[_i];
+    var schedule, _i, _len, _ref;
+    if (($scope.business != null) && ($scope.business.schedules != null)) {
+      _ref = $scope.business.schedules;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        schedule = _ref[_i];
         if (schedule.length > 0) {
           return true;
         }
@@ -74,7 +74,6 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, $routeParams, busi
       {
         name: 'home',
         translatableName: '--.business.action.home',
-        icon: 'gling-icon-home',
         action: function() {
           $scope.tabToDisplay = 'home';
           return;

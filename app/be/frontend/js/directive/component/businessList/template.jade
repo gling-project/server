@@ -24,7 +24,8 @@
                     //- name + follow icon
                     .publication-bordered-bottom-hover.publication-bordered-bottom(ng-click="navigateTo('/business/'+business.id)")
                         span.publication-main-title
-                            i.gling-icon.gling-icon.gling-icon-bell(ng-show="business.following === true") {{business.name}}
+                            i.gling-icon.gling-icon.gling-icon-bell(ng-show="business.following === true")
+                            |   {{business.name}}
             tr
                 td.publication-header-title
 

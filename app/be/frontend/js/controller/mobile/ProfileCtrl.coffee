@@ -51,7 +51,7 @@ myApp.controller 'ProfileCtrl', ($rootScope, $scope, modalService, accountServic
     #remove existing address
     $scope.deleteAddress = (address) ->
         accountService.deleteAddress address
-        if constantService.compareNumber accountService.getMyself().selectedAddress?.id,address.id
+        if constantService.compareNumber accountService.getMyself().selectedAddress? and accountService.getMyself().selectedAddress.id,address.id
             accountService.getMyself().selectedAddress = null
 
     #change interest save

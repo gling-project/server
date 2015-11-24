@@ -1016,7 +1016,7 @@ myApp.controller('CustomerRegistrationCtrl', ['$rootScope', '$scope', '$flash', 
   return modalService.closeLoadingModal();
 }]);
 myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accountService', '$location', '$timeout', 'geolocationService', 'modalService', 'addressService', function($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService) {
-  var completePositions, _ref;
+  var completePositions;
   $scope.showmenu = false;
   $scope.myBusiness = null;
   $scope.currentPosition = null;
@@ -1030,15 +1030,13 @@ myApp.controller('MenuCtrl', ['$rootScope', '$scope', 'facebookService', 'accoun
       translation: '--.position.newAddress'
     }
   ];
-  if (((_ref = accountService.getMyself()) != null ? _ref.businessId : void 0) != null) {
+  if ((accountService.getMyself() != null) && (accountService.getMyself().businessId != null)) {
     $scope.myBusiness = accountService.getMyself().businessId;
   }
   $scope.$watch((function() {
-    var _ref;
-    return (_ref = accountService.getMyself()) != null ? _ref.businessId : void 0;
+    return (accountService.getMyself() != null) && accountService.getMyself().businessId;
   }), (function() {
-    var _ref;
-    return $scope.myBusiness = (_ref = accountService.getMyself()) != null ? _ref.businessId : void 0;
+    return $scope.myBusiness = (accountService.getMyself() != null) && accountService.getMyself().businessId;
   }));
   $scope.$on('toggleMenu', function() {
     return $scope.showmenu = $scope.showmenu ? false : true;
@@ -1203,9 +1201,8 @@ myApp.controller('ProfileCtrl', ['$rootScope', '$scope', 'modalService', 'accoun
     return modalService.addressModal(true, address, false);
   };
   $scope.deleteAddress = function(address) {
-    var _ref;
     accountService.deleteAddress(address);
-    if (constantService.compareNumber((_ref = accountService.getMyself().selectedAddress) != null ? _ref.id : void 0, address.id)) {
+    if (constantService.compareNumber((accountService.getMyself().selectedAddress != null) && accountService.getMyself().selectedAddress.id, address.id)) {
       return accountService.getMyself().selectedAddress = null;
     }
   };
@@ -1301,11 +1298,11 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
     });
   };
   $scope.displaySchedule = function() {
-    var schedule, _i, _len, _ref, _ref2;
-    if (((_ref = $scope.business) != null ? _ref.schedules : void 0) != null) {
-      _ref2 = $scope.business.schedules;
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        schedule = _ref2[_i];
+    var schedule, _i, _len, _ref;
+    if (($scope.business != null) && ($scope.business.schedules != null)) {
+      _ref = $scope.business.schedules;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        schedule = _ref[_i];
         if (schedule.length > 0) {
           return true;
         }
@@ -1344,7 +1341,6 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', '$routeParams', 'busin
       {
         name: 'home',
         translatableName: '--.business.action.home',
-        icon: 'gling-icon-home',
         action: function() {
           $scope.tabToDisplay = 'home';
           return;

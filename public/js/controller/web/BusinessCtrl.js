@@ -24,8 +24,7 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
     staticMap: true
   };
   $scope.displayEditMode = function() {
-    var _ref;
-    return $scope.myBusiness === true || ((_ref = accountService.getMyself()) != null ? _ref.role : void 0) === 'SUPERADMIN';
+    return $scope.myBusiness === true || ((accountService.getMyself() != null) && accountService.getMyself().role === 'SUPERADMIN');
   };
   $scope.publicationListParam = {
     scrollTo: $scope.publicationIdToGo,

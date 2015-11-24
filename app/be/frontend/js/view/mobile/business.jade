@@ -36,14 +36,17 @@
                                         | {{business.name}}
                                         .edit-button-container
                     category-line-ctrl(ng-info='categoryLineParams')
+
                     // option
                     div(style='overflow: auto')
                         .business-tab-set
                             .business-tab(style='display:inline-block', ng-class="{'selected':tabToDisplay === tab.name}", ng-repeat='tab in tab', ng-show='tab.display()', ng-click='tab.action()')
                                 i.gling-icon(class='{{tab.icon}}')
-                                |                                 {{tab.translatableName | translateText}}
+                                | {{tab.translatableName | translateText}}
                     // home
-                    div(ng-show="tabToDisplay=='home'")
+                    .business-page-content(ng-show="tabToDisplay=='home'")
+
+                        //- button to create publication
                         div(ng-show='myBusiness===true')
                             button#business-btn-promotion-add.btn.gling-button-dark(ng-click='createPromotion()', ng-disabled="business.businessStatus !== 'PUBLISHED'")
                                 | {{'--.business.publication.btn.promotion' | translateText}}
@@ -51,7 +54,7 @@
                                 | {{'--.business.publication.btn.notification' | translateText}}
                         publication-list-mobile-for-business-ctrl(ng-info='publicationListParam')
                     // info
-                    .section(ng-show="tabToDisplay=='info'")
+                    .business-page-content.section(ng-show="tabToDisplay=='info'")
                         // description
                         table.business-info-line(ng-show='business.description !=null && business.description.length > 0')
                             tr

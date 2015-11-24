@@ -7,8 +7,7 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
     $scope.interestDisplayMax = 12
     $scope.interestDisplayed = []
     $scope.interestDisplayed2 = []
-
-    $scope.followedMode = $scope.param?.indexOf('following') != -1
+    $scope.followingMode = $scope.param? and $scope.param.indexOf('following') != -1
     $scope.businessInfoParam = {}
     $scope.businessListParam =
         data: []
@@ -21,10 +20,9 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
 
     #write path by interests and follow
     path = ->
-        `var path`
         #build path
         path = '/home'
-        if $scope.followedMode
+        if $scope.followingMode
             path += '/following'
         for i of $scope.customerInterests
             if $scope.customerInterests[i].selected == true
@@ -45,8 +43,9 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
 
     #set following mode
     $scope.setFollowedMode = (n) ->
+        console.log 'setFollowedMode:'+n
         if !n?
-            n = !$scope.followedMode
+            n = !$scope.followingMode
         if !accountService.getMyself()?
             modalService.openLoginModal $scope.switchFollowedMode, n, '--.loginModal.help.followMode'
         else
@@ -54,10 +53,8 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
 
     # switch followed mode
     $scope.switchFollowedMode = (n) ->
-        if n?
-            $scope.followedMode = n
-        else
-            $scope.followedMode = !$scope.followedMode
+        console.log 'switchFollowedMode:'+n
+        $scope.followingMode = n
         path()
 
     #open registration modal
@@ -86,7 +83,7 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
         $scope.search()
 
     #watch in follow mode
-    $scope.$watch 'followedMode', (o, n) ->
+    $scope.$watch 'followingMode', (n,o) ->
         if o != n
             $scope.currentPage = 0
             $scope.allLoaded = false
@@ -94,8 +91,8 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
 
     #logout user
     $scope.$on 'LOGOUT', ->
-        if $scope.followedMode
-            $scope.followedMode = false
+        if $scope.followingMode
+            $scope.followingMode = false
 
     #scrolling
     $(window).on 'scroll', ->
@@ -141,7 +138,7 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
                 $scope.emptyMessage = null
                 $scope.publicationListCtrl.data = []
                 $scope.businessListParam.data = []
-            if $scope.followedMode
+            if $scope.followingMode
                 if interestSelected?
                     searchService.byFollowedAndInterest $scope.currentPage, interestSelected.id, (data) ->
                         successLoadingPublications data, ->

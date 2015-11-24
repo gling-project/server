@@ -2051,24 +2051,32 @@ ul.messenger .messenger-spinner {
   display: inline-block;
   margin: 5px;
 }
+.business-mobile-page .business-page-content {
+  margin-top: 0px;
+}
 .business-mobile-page .business-tab-set {
   margin-left: 10px;
+  margin-right: 10px;
   margin-top: 5px;
+  border-bottom: 1px solid #cccccc;
 }
 .business-mobile-page .business-tab-set .business-tab {
   display: inline-block;
   background-color: #e1e1e1;
   padding: 5px 10px;
   border: 1px solid #cccccc;
+  border-bottom: 0;
   border-radius: 10px 10px 0px 1px;
   margin-left: -5px;
   z-index: 0;
   position: relative;
+  bottom: -7px;
+  cursor: pointer;
 }
 .business-mobile-page .business-tab-set .business-tab.selected {
   z-index: 1;
-  background-color: #f4f4f4;
-  border-bottom: 0px;
+  background-color: #fff;
+  bottom: -2px;
 }
 .business-mobile-page .business-page-menu {
   padding: 5px;
@@ -2083,6 +2091,9 @@ ul.messenger .messenger-spinner {
   margin-right: 10px;
   vertical-align: middle;
 }
+.business-mobile-page .category-line-tree {
+  margin: 0 5px;
+}
 .business-mobile-page .business-page-header {
   background-size: 150% auto;
   background-position-x: 50%;
@@ -2092,6 +2103,7 @@ ul.messenger .messenger-spinner {
   border-bottom: 1px solid #cccccc;
   margin: auto;
   position: relative;
+  margin-bottom: 5px;
 }
 .business-mobile-page .business-page-header .landscape-edit {
   position: absolute;
@@ -2355,16 +2367,19 @@ ul.messenger .messenger-spinner {
 .navbar-brand-center {
   overflow: visible !important;
 }
-.home-footer {
+.navbar-footer {
+  margin-bottom: 0;
+}
+.navbar-footer .home-footer {
   text-align: center;
   width: 100%;
   font-size: 20px;
   padding-top: 5px;
 }
-.home-footer button {
+.navbar-footer .home-footer button {
   font-size: 20px;
 }
-.home-footer .home-footer-position-details {
+.navbar-footer .home-footer .home-footer-position-details {
   padding: 10px;
   padding-bottom: 15px;
   background-color: #ffffff;
@@ -2382,7 +2397,7 @@ ul.messenger .messenger-spinner {
   left: 10px;
   right: 10px;
 }
-.home-footer > div {
+.navbar-footer .home-footer > div {
   vertical-align: middle;
   display: inline-block;
   position: relative;
@@ -2527,6 +2542,10 @@ ul.messenger .messenger-spinner {
   font-weight: bold;
   display: inline-block;
 }
+.publication-box-mobile .publication-header .title-box .title .gling-icon {
+  margin-right: 5px;
+  color: #1ad2aa;
+}
 .publication-box-mobile .publication-header .title-box .title-data {
   font-size: 14px;
   color: #999999;
@@ -2577,47 +2596,8 @@ ul.messenger .messenger-spinner {
   float: right;
   padding-right: 15px;
 }
-.business-list-mobile .illustration {
-  border: 1px solid #cccccc;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-}
-.business-list-mobile .business-ticket {
-  background-color: #ffffff;
-  padding: 4px;
-  margin: 5px;
-  -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
-}
-.business-list-mobile .business-ticket .publication-bubble {
-  border: 1px solid #2c265c;
-  padding: 2px 5px;
-  font-size: 14px;
-  color: #2c265c;
-  border-radius: 10px;
-}
-.business-list-mobile .business-ticket .business-header {
-  padding-bottom: 5px;
-}
-.business-list-mobile .business-ticket .business-header .title {
-  font-size: 18px;
-  color: #2c265c;
-  font-weight: bold;
-}
-.business-list-mobile .business-ticket .business-header > * {
-  display: inline-block;
-  vertical-align: top;
-}
-.business-list-mobile .business-ticket .business-header > *:nth-child(3) {
-  float: right;
-}
-.business-list-mobile .business-ticket .business-list-business-data {
-  vertical-align: top;
-  border-bottom: 1px solid #2c265c;
-  border-top: 1px solid #2c265c;
+.business-list-mobile > div:first-child {
+  padding: 5px;
 }
 .followed-business .followed-business-line {
   padding: 5px 0px;
@@ -3262,6 +3242,9 @@ button > span.fa {
   vertical-align: top;
   margin-left: 3px;
   margin-right: 3px;
+}
+.nav > li > a {
+  padding: 5px 8px;
 }
 .modal-dialog {
   margin: 0px !important;

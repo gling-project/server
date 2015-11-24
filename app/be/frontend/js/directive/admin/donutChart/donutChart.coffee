@@ -15,7 +15,7 @@ myApp.directive 'donutChartCtrl', (directiveService, $timeout, generateId) ->
             scope.$watch 'getInfo().data', ->
                 dataToDisplay = undefined
 
-                if scope.getInfo()?.data?
+                if scope.getInfo()? and scope.getInfo().data?
                     #compute data
                     scope.data = []
                     for key of scope.getInfo().data

@@ -21,14 +21,14 @@ myApp.controller 'MenuCtrl', ($rootScope, $scope, facebookService, accountServic
     ]
 
     #if there user have a business, add access to my business
-    if accountService.getMyself()?.businessId?
+    if accountService.getMyself()? and accountService.getMyself().businessId?
         $scope.myBusiness = accountService.getMyself().businessId
 
     #watch the businessId
     $scope.$watch (->
-        return accountService.getMyself()?.businessId
+        return accountService.getMyself()? and accountService.getMyself().businessId
     ), (->
-        $scope.myBusiness = accountService.getMyself()?.businessId
+        $scope.myBusiness = accountService.getMyself()? and accountService.getMyself().businessId
     )
 
     #this is the toggle function

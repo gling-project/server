@@ -10,16 +10,16 @@
                 | {{'--.home.interest-switch.help' | translateText}}
             .home-interest-switch.home-interest-box-background
                 div
-                    button.gling-button.gling-icon.gling-icon-location.button-with-label.home-interest(ng-class="{'selected':followedMode !== true}", ng-click='setFollowedMode(false)')
+                    button.gling-button.gling-icon.gling-icon-location.button-with-label.home-interest(ng-class="{'selected':followingMode !== true}", ng-click='setFollowedMode(false)')
                         p
                             | {{'--.home.localisation.help' | translateText}}
                 div
                     .onoffswitch(ng-click='setFollowedMode()')
-                        label.onoffswitch-label(ng-class="{'followedMode':followedMode}")
+                        label.onoffswitch-label(ng-class="{'followedMode':followingMode}")
                             span.onoffswitch-inner
                             span.onoffswitch-switch
                 div
-                    button.gling-button.gling-icon.gling-icon-bell.button-with-label.home-interest(ng-class="{'selected':followedMode === true}", ng-click='setFollowedMode(true)')
+                    button.gling-button.gling-icon.gling-icon-bell.button-with-label.home-interest(ng-class="{'selected':followingMode === true}", ng-click='setFollowedMode(true)')
                         p {{'--.home.followning.help' | translateText}}
         // interest
         .home-interest-box

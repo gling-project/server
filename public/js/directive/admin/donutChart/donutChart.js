@@ -15,9 +15,9 @@ myApp.directive('donutChartCtrl', function(directiveService, $timeout, generateI
         post: function(scope, element) {
           directiveService.autoScopeImpl(scope);
           return scope.$watch('getInfo().data', function() {
-            var dataToDisplay, key, _ref;
+            var dataToDisplay, key;
             dataToDisplay = void 0;
-            if (((_ref = scope.getInfo()) != null ? _ref.data : void 0) != null) {
+            if ((scope.getInfo() != null) && (scope.getInfo().data != null)) {
               scope.data = [];
               for (key in scope.getInfo().data) {
                 scope.data.push({

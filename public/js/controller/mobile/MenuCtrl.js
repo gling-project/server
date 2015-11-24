@@ -1,5 +1,5 @@
 myApp.controller('MenuCtrl', function($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService) {
-  var completePositions, _ref;
+  var completePositions;
   $scope.showmenu = false;
   $scope.myBusiness = null;
   $scope.currentPosition = null;
@@ -13,15 +13,13 @@ myApp.controller('MenuCtrl', function($rootScope, $scope, facebookService, accou
       translation: '--.position.newAddress'
     }
   ];
-  if (((_ref = accountService.getMyself()) != null ? _ref.businessId : void 0) != null) {
+  if ((accountService.getMyself() != null) && (accountService.getMyself().businessId != null)) {
     $scope.myBusiness = accountService.getMyself().businessId;
   }
   $scope.$watch((function() {
-    var _ref;
-    return (_ref = accountService.getMyself()) != null ? _ref.businessId : void 0;
+    return (accountService.getMyself() != null) && accountService.getMyself().businessId;
   }), (function() {
-    var _ref;
-    return $scope.myBusiness = (_ref = accountService.getMyself()) != null ? _ref.businessId : void 0;
+    return $scope.myBusiness = (accountService.getMyself() != null) && accountService.getMyself().businessId;
   }));
   $scope.$on('toggleMenu', function() {
     return $scope.showmenu = $scope.showmenu ? false : true;

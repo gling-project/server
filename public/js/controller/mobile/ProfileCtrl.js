@@ -39,9 +39,8 @@ myApp.controller('ProfileCtrl', function($rootScope, $scope, modalService, accou
     return modalService.addressModal(true, address, false);
   };
   $scope.deleteAddress = function(address) {
-    var _ref;
     accountService.deleteAddress(address);
-    if (constantService.compareNumber((_ref = accountService.getMyself().selectedAddress) != null ? _ref.id : void 0, address.id)) {
+    if (constantService.compareNumber((accountService.getMyself().selectedAddress != null) && accountService.getMyself().selectedAddress.id, address.id)) {
       return accountService.getMyself().selectedAddress = null;
     }
   };

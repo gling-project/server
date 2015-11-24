@@ -29,7 +29,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
         staticMap: true
 
     $scope.displayEditMode = ->
-        return $scope.myBusiness == true or accountService.getMyself()?.role == 'SUPERADMIN'
+        return $scope.myBusiness == true or (accountService.getMyself()? and accountService.getMyself().role == 'SUPERADMIN')
 
     #publication
     $scope.publicationListParam =

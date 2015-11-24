@@ -19,20 +19,20 @@ header-search-ctrl
                     // business list (in case of empty result
                     business-list-mobile-ctrl(ng-info='businessListParam', ng-show='emptyMessage!==null')
 // footer
-.navbar.navbar-app.navbar-absolute-bottom
+.navbar.navbar-app.navbar-absolute-bottom.navbar-footer
     .btn-group.navbar-brand-center
         .home-footer
             // switch
             .home-interest-switch.home-interest-box-background
                 div
-                    button.gling-button.gling-icon.gling-icon-location.button-with-label.home-interest(ng-class="{'selected':followedMode !== true}", ng-click='setFollowingMode(false)')
+                    button.gling-button.gling-icon.gling-icon-location.button-with-label.home-interest(ng-class="{'selected':followingMode !== true}", ng-click='setFollowingMode(false)')
                         p {{'--.home.localisation.help' | translateText}}
                 // switch element
                 div
                     .onoffswitch(ng-click='setFollowingMode()')
-                        label.onoffswitch-label(ng-class="{'followedMode':followedMode}")
+                        label.onoffswitch-label(ng-class="{'followedMode':followingMode}")
                             span.onoffswitch-inner
                             span.onoffswitch-switch
                 div
-                    button.gling-button.gling-icon.gling-icon-bell.button-with-label.home-interest(ng-class="{'selected':followedMode === true}", ng-click='setFollowingMode(true)')
+                    button.gling-button.gling-icon.gling-icon-bell.button-with-label.home-interest(ng-class="{'selected':followingMode === true}", ng-click='setFollowingMode(true)')
                         p {{'--.home.followning.help' | translateText}}

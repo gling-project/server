@@ -34,12 +34,10 @@ myApp.directive 'searchBarCtrl', ($rootScope, businessService, geolocationServic
             #go to search
             scope.search = ->
                 if !scope.searchResultParam.indexSelected?
-                    scope.navigateTo 'search/' + searchBarService.currentSearch
+                    $location.path 'search/' + searchBarService.currentSearch
 
             #navigate to target
             scope.navigateTo = (target) ->
-                $rootScope.$broadcast 'PROGRESS_BAR_START'
-#                modalService.openLoadingModal()
                 $rootScope.$broadcast 'SEARCH_CLEAN'
                 $timeout (->
                     $location.path target
