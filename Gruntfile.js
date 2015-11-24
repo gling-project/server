@@ -280,17 +280,17 @@ module.exports = function (grunt) {
                         'public/js/modal/ResizeImageMobileModal/ResizeImageMobileModal.js',
 
                         <!-- controller -->
-                        'public/js/controller/mobile/WelcomeCtrl.min.js',
-                        'public/js/controller/mobile/HomeCtrl.min.js',
-                        'public/js/controller/mobile/ForgotPasswordCtrl.min.js',
-                        'public/js/controller/mobile/CustomerRegistrationCtrl.min.js',
-                        'public/js/controller/mobile/MenuCtrl.min.js',
-                        'public/js/controller/mobile/ProfileCtrl.min.js',
-                        'public/js/controller/mobile/BusinessCtrl.min.js',
-                        'public/js/controller/mobile/SearchPageCtrl.min.js',
-                        'public/js/controller/mobile/FollowedBusinessPageCtrl.min.js',
-                        'public/js/controller/mobile/PromotionCtrl.min.js',
-                        'public/js/controller/mobile/BusinessNotificationCtrl.min.js',
+                        'public/js/controller/mobile/WelcomeCtrl.js',
+                        'public/js/controller/mobile/HomeCtrl.js',
+                        'public/js/controller/mobile/ForgotPasswordCtrl.js',
+                        'public/js/controller/mobile/CustomerRegistrationCtrl.js',
+                        'public/js/controller/mobile/MenuCtrl.js',
+                        'public/js/controller/mobile/ProfileCtrl.js',
+                        'public/js/controller/mobile/BusinessCtrl.js',
+                        'public/js/controller/mobile/SearchPageCtrl.js',
+                        'public/js/controller/mobile/FollowedBusinessPageCtrl.js',
+                        'public/js/controller/mobile/PromotionCtrl.js',
+                        'public/js/controller/mobile/BusinessNotificationCtrl.js',
 
                         <!-- component -->
                         'public/js/directive/component/businessListMobile/BusinessListMobileCtrl.js',
