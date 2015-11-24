@@ -75,7 +75,7 @@ module.exports = function (grunt) {
 
                             'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
-                            'public/stylesheets/mobile.css'
+                            'target/scala-2.10/resource_managed/main/public/stylesheets/mobile.css'
                         ]
                     },
                     {
@@ -92,8 +92,8 @@ module.exports = function (grunt) {
                             'public/components/ng-table/ng-table.min.css',
                             'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
-                            'public/stylesheets/main.css',
-                            'public/stylesheets/web.css']
+                            'target/scala-2.10/resource_managed/main/public/stylesheets/main.css',
+                            'target/scala-2.10/resource_managed/main/public/stylesheets/web.css']
                     },
                     {
                         dest: 'public/dist/styleTown.css',
@@ -103,7 +103,7 @@ module.exports = function (grunt) {
                             'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
                             'public/components/messenger/build/css/messenger.css',
                             'public/components/font-awesome/css/font-awesome.min.css',
-                            'public/stylesheets/town.css']
+                            'target/scala-2.10/resource_managed/main/public/stylesheets/town.css']
                     }
                 ]
             }
