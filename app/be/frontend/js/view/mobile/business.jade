@@ -1,0 +1,134 @@
+//header
+.navbar.navbar-app.navbar-absolute-top(ng-class="{'header-with-advanced-search':advancedSearch}")
+    .btn-group.pull-left
+        .btn.btn-navbar(ng-click='back()')
+            .nav-button
+                i.glyphicon.glyphicon-chevron-left
+    .btn-group.pull-right
+        .btn.btn-navbar(ng-click='followed()')
+            .nav-button.business-page-follow
+                span.selected(ng-show='business.following')
+                    | {{'--.followWidget.stopFollow' | translateText}}
+                    i.gling-icon.gling-icon-bell
+                span(ng-hide='business.following')
+                    | {{'--.followWidget.follow' | translateText}}
+                    i.gling-icon.gling-icon-bell2
+// body
+.app-body
+    .app-content
+        .body-mask(ng-show='displayMask')
+        .scrollable
+            .scrollable-content.business-mobile-page.scrollable-content-body
+                .scrollable-content-inner
+                    .business-page-header(ng-style="{'background-image':'url('+(business.landscape | image)+')' }")
+                        // landscape
+                        .edit-button-container.landscape-edit
+                        // illustration
+                        table(ng-click='refreshPublications()')
+                            tr
+                                td
+                                    .business-page-illustration-container
+                                        img.business-illustration(ng-src='{{business.illustration | image}}')
+                                        .edit-button-container
+                                td
+                                    // name
+                                    .business-page-name
+                                        | {{business.name}}
+                                        .edit-button-container
+                    category-line-ctrl(ng-info='categoryLineParams')
+                    // option
+                    div(style='overflow: auto')
+                        .business-tab-set
+                            .business-tab(style='display:inline-block', ng-class="{'selected':tabToDisplay === tab.name}", ng-repeat='tab in tab', ng-show='tab.display()', ng-click='tab.action()')
+                                i.gling-icon(class='{{tab.icon}}')
+                                |                                 {{tab.translatableName | translateText}}
+                    // home
+                    div(ng-show="tabToDisplay=='home'")
+                        div(ng-show='myBusiness===true')
+                            button#business-btn-promotion-add.btn.gling-button-dark(ng-click='createPromotion()', ng-disabled="business.businessStatus !== 'PUBLISHED'")
+                                | {{'--.business.publication.btn.promotion' | translateText}}
+                            button.btn.gling-button-dark(ng-click='createNotification()', ng-disabled="business.businessStatus !== 'PUBLISHED'")
+                                | {{'--.business.publication.btn.notification' | translateText}}
+                        publication-list-mobile-for-business-ctrl(ng-info='publicationListParam')
+                    // info
+                    .section(ng-show="tabToDisplay=='info'")
+                        // description
+                        table.business-info-line(ng-show='business.description !=null && business.description.length > 0')
+                            tr
+                                td(colspan='2')
+                                    span(ng-bind-html='business.description | text : descriptionLimit')
+                                    span.link(ng-show='business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase', ng-click='descriptionLimit = 10000') {{'--.textReuction.seeMore' | translateText}}
+                                    span.link(ng-show='business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase', ng-click='descriptionLimit = descriptionLimitBase') {{'--.textReuction.seeLess' | translateText}}
+                        // address + google map
+                        table.business-info-line
+                            tr
+                                td(colspan='2')
+                                    // map
+                                    .business-info-line-action
+                                        google-map-widget-ctrl(ng-info='googleMapParams')
+                            tr
+                                td
+                                    // address / distance
+                                    .business-address
+                                        | {{business.address.street}}
+                                        br
+                                        |                                         {{business.address.zip}},{{business.address.city}}
+                                td.td-action
+                                    | {{business.distance / 1000 | number:2}} Km
+                        // contact
+                        // phone
+                        table.business-info-line(ng-show='business.phone!=null')
+                            tr
+                                td
+                                    | {{business.phone}}
+                                td.td-action
+                                    a.business-info-line-action.glyphicon.glyphicon-earphone(href='tel:{{business.phone}}')
+                        // website
+                        table.business-info-line(ng-show='business.website!=null')
+                            tr
+                                td
+                                    | {{'--.generic.site' | translateText}}
+                                td.td-action
+                                    a(href='{{business.website}}', target='_blank') {{business.website}}
+                        // email
+                        table.business-info-line(ng-show='business.email!=null')
+                            tr
+                                td
+                                    | {{business.email}}
+                                td.td-action
+                                    a.business-info-line-action.glyphicon.glyphicon-envelope(href='mailto:{{business.email}}')
+                        // social network
+                        table.business-info-line(ng-show='displaySocialNetwork() === true')
+                            tr
+                                td
+                                    .business-social-network-box(ng-show='!!business.socialNetwork.facebookLink')
+                                        a#welcome-link-facebook(href='{{business.socialNetwork.facebookLink}}', title='Facebook', target='_blank')
+                                            img(src='/assets/images/social_network/facebook.png')
+                                    .business-social-network-box(ng-show='!!business.socialNetwork.twitterLink')
+                                        a#welcome-link-twitter(href='{{business.socialNetwork.twitterLink}}', title='Twitter', target='_blank')
+                                            img(src='/assets/images/social_network/twitter.png')
+                                    .business-social-network-box(ng-show='!!business.socialNetwork.instagramLink')
+                                        a#welcome-link-instagram(href='{{business.socialNetwork.instagramLink}}', title='Instagram', target='_blank')
+                                            img(src='/assets/images/social_network/instagram.png')
+                                    .business-social-network-box(ng-show='!!business.socialNetwork.deliveryLink')
+                                        a#welcome-link-delivery(href='{{business.socialNetwork.deliveryLink}}', title="{{'--.business.socialNetwork.delivery' | translateText}}", target='_blank')
+                                            img(src='/assets/images/social_network/delivery.png')
+                                    .business-social-network-box(ng-show='!!business.socialNetwork.reservationLink')
+                                        a(href='{{business.socialNetwork.reservationLink}}', title="{{'--.business.socialNetwork.reservation' | translateText}}", target='_blank')
+                                            img(src='/assets/images/social_network/reservation.png')
+                                    .business-social-network-box(ng-show='!!business.socialNetwork.opinionLink')
+                                        a(href='{{business.socialNetwork.opinionLink}}', title="{{'--.business.socialNetwork.opinion' | translateText}}", target='_blank')
+                                            img(src='/assets/images/social_network/opinion.png')
+                                    .business-social-network-box(ng-show='!!business.socialNetwork.ecommerceLink')
+                                        a(href='{{business.socialNetwork.ecommerceLink}}', title="{{'--.business.socialNetwork.ecommerce' | translateText}}", target='_blank')
+                                            img(src='/assets/images/social_network/e_commerce.png')
+                        // schedule
+                        table.business-info-line(ng-show='displaySchedule() === true')
+                            tr
+                                td
+                                    schedule-ctrl(ng-info='{dto:business.schedules}')
+                    // gallery
+                    .section.gallery-mobile(ng-show="tabToDisplay=='gallery'")
+                        h4 {{'--.generic.gallery' | translateText}}
+                        img(ng-repeat='image in business.galleryPictures', style='margin-top: 5px', ng-click='openGallery(image)', ng-src='{{image | image}}')
+

@@ -220,6 +220,7 @@ myApp.service("accountService", function ($flash, $http,translationService) {
     };
 
     this.editCustomerInterest = function (dto, callbackSuccess, callbackError) {
+        console.log(dto);
         $http({
             'method': "PUT",
             'url': "/rest/customer/interest/" + self.getMyself().id,

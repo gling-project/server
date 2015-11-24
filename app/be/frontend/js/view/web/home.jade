@@ -1,0 +1,40 @@
+.container-content
+    .content-block
+        to-top-ctrl
+        .help-div-geolocalisation(ng-show='displaySharePositionWarning() && openGeolocationPopup !== true')
+            button.help-popup-close.glyphicon.glyphicon-remove(ng-click='openGeolocationPopup=true')
+            p(compile="'--.home.geolocation.notAccepted'")
+        .home-interest-box
+            // switch
+            div
+                | {{'--.home.interest-switch.help' | translateText}}
+            .home-interest-switch.home-interest-box-background
+                div
+                    button.gling-button.gling-icon.gling-icon-location.button-with-label.home-interest(ng-class="{'selected':followedMode !== true}", ng-click='setFollowedMode(false)')
+                        p
+                            | {{'--.home.localisation.help' | translateText}}
+                div
+                    .onoffswitch(ng-click='setFollowedMode()')
+                        label.onoffswitch-label(ng-class="{'followedMode':followedMode}")
+                            span.onoffswitch-inner
+                            span.onoffswitch-switch
+                div
+                    button.gling-button.gling-icon.gling-icon-bell.button-with-label.home-interest(ng-class="{'selected':followedMode === true}", ng-click='setFollowedMode(true)')
+                        p {{'--.home.followning.help' | translateText}}
+        // interest
+        .home-interest-box
+            div
+                | {{'--.home.interest.help' | translateText}}
+            .home-interest-box-background
+                button.gling-button.home-interest.button-with-label-top(class="{{'gling-icon gling-icon-' + interest.name}}", ng-repeat='interest in interestDisplayed', ng-show='interest.iconName!=null', ng-click='searchByInterest(interest)', ng-class="{'selected':interest.selected === true}")
+                    p {{interest.translationName}}
+            .home-interest-box-background.home-interest-box-background-second
+                button.gling-button.home-interest.button-with-label(class="{{'gling-icon gling-icon-' + interest.name}}", ng-repeat='interest in interestDisplayed2', ng-show='interest.iconName!=null', ng-click='searchByInterest(interest)', ng-class="{'selected':interest.selected === true}")
+                    p {{interest.translationName}}
+        // publication list
+        publication-list-ctrl(ng-info='publicationListCtrl')
+        // empty result help
+        .help-div(ng-show='emptyMessage!==null')
+            | {{'--.home.emptyResult.'+emptyMessage | translateText}}
+        // business list (in case of empty result
+        business-list-ctrl(ng-info='businessListParam', ng-show='emptyMessage!==null')

@@ -1,0 +1,23 @@
+mobile-title-ctrl(title="'--.page.customer_registration.title'", display-menu='false')
+.app-body
+    .app-content.modal-login
+        .scrollable
+            .section.customer-registration.scrollable-content
+                .modal-description
+                    | {{'--.customer.registrationModal.help.business' |translateText}}
+                    br
+                .facebook-login-btn-container
+                    button.facebook-login-btn.btn.gling-button-dark(ng-click='fb_login();')
+                        img(src='/assets/images/facebook/login_icon.png')
+                        span {{'--.loginModal.facebook.btn' |translateText}}
+                table.horizontal-split
+                    tr
+                        td
+                            div
+                        td {{'--.generic.or' | translateText}}
+                        td
+                            div
+                account-form-ctrl(ng-info='accountParam')
+                .generic-center
+                    button.btn.gling-button-dark(ng-click='save()')
+                        | {{'--.generic.registration' | translateText}}

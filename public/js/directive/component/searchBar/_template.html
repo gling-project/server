@@ -1,0 +1,21 @@
+<div class="search-container">
+
+    <input
+            dir-bottom-arrow="down()"
+            dir-top-arrow="top()"
+            type="text"
+            dir-enter="search()"
+            ng-model="searchBarService.currentSearch"
+            class="gling-button-light search-bar"
+            placeholder="{{'--.welcome.search' | translateText}}"/>
+    <span
+            ng-click="search()"
+            class="glyphicon glyphicon-search search-icon">
+    </span>
+
+    <search-result-ctrl
+            ng-info="searchResultParam">
+
+    </search-result-ctrl>
+
+</div>

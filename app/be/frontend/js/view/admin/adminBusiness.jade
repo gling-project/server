@@ -1,0 +1,51 @@
+//- admin menu
+super-admin-menu-ctrl
+
+//- page content
+.admin-business-page
+
+    //- titles
+    h1 Commerces
+    h2 Nouveaux commerces
+
+    //import from external source table
+    table.import-table
+        tr
+            td Importer un nouveau commerce depuis une page facebook
+            td
+                input(ng-disabled='importBusinessLoading === true', type='text', ng-model='importBusinessInput', placeholder='Url de la page à importer')
+            td
+                button(ng-disabled='importBusinessLoading === true', ng-click='importBusinessStart()') Importer !
+                img(src='/assets/images/modal-loading.gif', ng-show='importBusinessLoading === true')
+
+    //businesses list
+    h2 Listes des commerces Total : {{businesses.length}})
+    img(src='/assets/images/modal-loading.gif', ng-show='businessListLoading === true')
+    button(ng-click='displayMapFct(!displayMap)') Afficher la carte
+
+    //- table of businesses
+    table.table.business-list-param(ng-table='tableParams', ng-show='businessListLoading===false')
+        tr(ng-repeat='business in $data', ng-mouseover='startAnimation(business,true)', ng-mouseleave='startAnimation(business,false)')
+            td(data-title="'--.generic.name' | translateText", sortable="'name'")
+                | {{business.name}}
+            td(data-title="'--.generic.status' | translateText", sortable="'businessStatus'")
+                | {{business.businessStatus}}
+            td(data-title="'Création'", sortable="'creationDate'")
+                | {{business.creationDate | date}}
+            td(data-title="'Followers'", sortable="'totalFollowers'")
+                | {{business.totalFollowers}}
+            td(data-title="'Email'", sortable="'email'")
+                | {{business.email}}
+            td(data-title="'Publication active/total'", sortable="'nbPublicationActive'")
+                | {{business.nbPublicationActive}} / {{business.nbPublication}}
+            td(data-title="'--.generic.action' | translateText", sortable="'businessStatus'")
+                button(ng-click='toBusiness(business.id)')
+                    | {{'--.admin.business.toBusiness' | translateText}}
+                button(name='admin-business-btn-confirm-publication', ng-click='confirmPublication(business)', ng-show="business.businessStatus == 'WAITING_CONFIRMATION' ")
+                    | {{'--.admin.business.confirmPublication' | translateText}}
+
+    //map panel
+    .map-panel(ng-show='displayMap === true')
+        button(ng-click='displayMap = !displayMap') Masquer la carte
+        div
+            map(center='{{mapData.center.latitude}}, {{mapData.center.longitude}}', zoom='{{mapData.zoom}}')

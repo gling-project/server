@@ -1,0 +1,75 @@
+<super-admin-menu-ctrl></super-admin-menu-ctrl>
+
+
+<div class="my-tabs">
+    <div ng-click="setTab('main')" ng-class="{'selected':tab == 'main'}">Statistiques</div>
+    <div ng-click="setTab('users')"  ng-class="{'selected':tab == 'users'}">Détails utilisateurs</div>
+    <div ng-click="setTab('interest')"  ng-class="{'selected':tab == 'interest'}">Intérêts</div>
+</div>
+
+<div ng-show="tab == 'main'">
+    <h1>Stats</h1>
+    <table class="admin_stat">
+        <tr ng-repeat="(title, val) in stats">
+            <td>{{title}}</td>
+            <td>{{val.value1}}</td>
+            <td>{{val.value2 * 100 | number:2}} %</td>
+        </tr>
+    </table>
+    <button ng-click="refreshStat()">Refrech</button>
+
+</div>
+
+<div ng-show="tab == 'users'">
+
+    <h1>User Details</h1>
+
+    <table>
+        <tr ng-repeat="detail in details">
+            <td>{{detail.title}} ({{detail.total}})</td>
+            <td style="vertical-align: top">
+
+                <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
+                                  ng-info="detail.nbSessionChartParam"></donut-chart-ctrl>
+            </td>
+            <td>
+
+                <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
+                                  ng-info="detail.nbFollowChartParam"></donut-chart-ctrl>
+            </td>
+            <td>
+
+                <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
+                                  ng-info="detail.nbAddressChartParam"></donut-chart-ctrl>
+            </td>
+            <td>
+
+                <donut-chart-ctrl style="width: 300px;height: 300px;display: inline-block;"
+                                  ng-info="detail.sharePositionChartParam"></donut-chart-ctrl>
+            </td>
+        </tr>
+        <tr collapse="2">
+            <button ng-click="refreshDetails()">Refrech</button>
+        </tr>
+    </table>
+</div>
+
+<div ng-show="tab == 'interest'">
+
+    <h1>Intérêts</h1>
+
+    <donut-chart-ctrl style="width: 600px;height: 600px;display: inline-block;"
+                      ng-info="interestGraph1"></donut-chart-ctrl>
+    <donut-chart-ctrl style="width: 600px;height: 600px;display: inline-block;"
+                      ng-info="interestGraph7"></donut-chart-ctrl>
+    <donut-chart-ctrl style="width: 600px;height: 600px;display: inline-block;"
+                      ng-info="interestGraph14"></donut-chart-ctrl>
+    <donut-chart-ctrl style="width: 600px;height: 600px;display: inline-block;"
+                      ng-info="interestGraph28"></donut-chart-ctrl>
+
+
+    <button ng-click="refreshInterest()">Refrech</button>
+
+</div>
+
+

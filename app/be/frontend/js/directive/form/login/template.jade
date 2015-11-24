@@ -1,0 +1,23 @@
+.form.login-form
+
+    //- login facebook button
+    .facebook-login-btn-container
+        button.facebook-login-btn.btn.gling-button-dark(ng-click='fb_login();')
+            img(src='/assets/images/facebook/login_icon.png')
+            span {{'--.loginModal.facebook.btn' |translateText}}
+
+    // 'or'
+    table.horizontal-split
+        tr
+            td
+                div
+            td {{'--.generic.or' | translateText}}
+            td
+                div
+
+    //- login form
+    dir-field-text(ng-info='fields.email')
+    dir-field-text(ng-info='fields.password')
+
+    //- accept condition sentence
+    div(ng-bind-html="'--.registration.accept.condition' | translateText | text")

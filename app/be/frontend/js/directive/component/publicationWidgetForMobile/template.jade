@@ -1,0 +1,55 @@
+html
+    body
+        .publication-box-mobile.publication-publication
+            div
+                .publication-box-previsualization(ng-show='getInfo().previsualization === true')
+                table.publication-header
+                    tr
+                        td(ng-click="navigateTo('/business/'+getInfo().publication.businessId)")
+                            img.illustration(ng-src='{{getInfo().publication.businessIllustration | image}}')
+                        td
+                            .title-box
+                                .title(ng-click="navigateTo('/business/'+getInfo().publication.businessId)")
+                                    i.gling-icon.gling-icon.gling-icon-bell(ng-show='getInfo().publication.following === true')
+                                    | {{getInfo().publication.businessName}}
+                                .title-data
+                                    | {{'--.publication.publishTo' | translateText}}
+                                    | {{getInfo().publication.startDate | date:'dd MMM yyyy'}} -
+                                    | {{getInfo().publication.distance / 1000 | number:2}} km
+                        td
+                            // interest
+                            i.publication-interest.gling-icon(ng-show='getInterestClass(getInfo().publication)!=null', class='{{getInterestClass(getInfo().publication)}}')
+                // publication title
+                .publication-title
+                    | {{getInfo().publication.title}}
+                .publication-body
+                    .publication-data(ng-class="{'publication-body-two':getInfo().publication.pictures.length>0}", ng-hide='descriptionIsEmpty(getInfo().publication) === true')
+                        // promotion data
+                        table.publication-data-promotion(ng-show="getInfo().publication.type === 'PROMOTION'")
+                            tr
+                                td
+                                    | - {{getInfo().publication.offPercent * 100 | number:0}}%
+                                td.publication-box-price(ng-show='getInfo().publication.originalPrice!=null')
+                                    span
+                                        | {{(getInfo().publication.originalPrice * (1.0 - getInfo().publication.offPercent)) | number:2}} €
+                                    span {{getInfo().publication.originalPrice | number:2}} €
+                                td
+                                    | > {{getInfo().publication.endDate | date:'dd MMM HH:mm'}}
+                        // description
+                        .publication-data-body(ng-show='getInfo().publication.description !=null && getInfo().publication.description.length > 0')
+                            span(ng-bind-html='getInfo().publication.description | text : getInfo().publication.descriptionLimit')
+                            span.link(ng-show='getInfo().publication.description.length > descriptionLimitBase && getInfo().publication.descriptionLimit==descriptionLimitBase', ng-click='getInfo().publication.descriptionLimit = 10000') {{'--.textReuction.seeMore' | translateText}}
+                            span.link(ng-show='getInfo().publication.description.length > descriptionLimitBase && getInfo().publication.descriptionLimit!=descriptionLimitBase', ng-click='getInfo().publication.descriptionLimit = descriptionLimitBase') {{'--.textReuction.seeLess' | translateText}}
+                    // gallery
+                    // picture 1
+                    .publication-gallery(ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}", ng-show='getInfo().publication.pictures.length > 0 ', ng-click='openGallery(getInfo().publication.pictures[0],getInfo().publication)')
+                        .publication-gallery-image-box
+                            img.publication-illustration(ng-src='{{getInfo().publication.pictures[0] | image}}')
+                            .publication-illustration-plus-icon(ng-show='getInfo().publication.pictures.length > 1')
+                                span +{{getInfo().publication.pictures.length - 1}}
+                .publication-footer
+                    // facebook
+                    .publication-footer-facebook
+                        facebook-share-publication-ctrl(ng-info='{businessId:getInfo().publication.businessId,publicationId:getInfo().publication.id}')
+                    // following
+                    follow-widget-for-publication-ctrl(ng-info='{displayText:true,publication:getInfo().publication}')

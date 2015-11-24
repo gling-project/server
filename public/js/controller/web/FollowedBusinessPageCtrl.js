@@ -1,78 +1,58 @@
-myApp.controller('FollowedBusinessPageCtrl', function ($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
-
-    //back to the top of the page
-    $(window).scrollTop(0);
-
-    $rootScope.$broadcast('PROGRESS_BAR_STOP');
-
-    $scope.businessListParams = {
-        loading: true
+myApp.controller('FollowedBusinessPageCtrl', function($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
+  $scope.businessListParams = {
+    loading: true
+  };
+  businessService.getFollowedBusinesses(function(data) {
+    $scope.businesses = data;
+    $scope.$watch('filter.$', function(o, n) {
+      if (n !== o) {
+        return $scope.tableParams.reload();
+      }
+    });
+    $scope.tableParams = new ngTableParams({
+      page: 1,
+      count: 10,
+      sorting: {
+        name: 'asc'
+      }
+    }, {
+      counts: [],
+      total: $scope.businesses.length,
+      getData: function($defer, params) {
+        var filteredData, orderedData;
+        filteredData = $filter('filter')($scope.businesses, $scope.filter);
+        orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+        return $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+      }
+    });
+    $scope.checkAll = function(check) {
+      var business, _i, _len, _ref, _results;
+      _ref = $scope.businesses;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        business = _ref[_i];
+        _results.push(business.followingNotification !== check ? (business.followingNotification = check, $scope.setNotification(business)) : void 0);
+      }
+      return _results;
     };
-
-    //loading
-    businessService.getFollowedBusinesses(
-        function (data) {
-
-            $scope.businesses = data;
-
-            $scope.$watch("filter.$", function (o, n) {
-                if (n != o) {
-                    $scope.tableParams.reload();
-                }
-            });
-
-            $scope.tableParams = new ngTableParams({
-                page: 1,            // show first page
-                count: 10,          // count per page
-                sorting: {
-                    name: 'asc'     // initial sorting
-                }
-            }, {
-                counts: [], // hides page sizes
-                total: $scope.businesses.length, // length of data
-                getData: function ($defer, params) {
-
-                    var filteredData = $filter('filter')($scope.businesses, $scope.filter);
-                    var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-
-                    //var filteredData = $filter('filter')(data, $scope.filter);
-                    //// use build-in angular filter
-                    //var orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
-
-                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            });
-
-            $scope.checkAll = function (check) {
-                for (var key  in $scope.businesses) {
-                    if ($scope.businesses[key].followingNotification != check) {
-                        $scope.businesses[key].followingNotification = check;
-                        $scope.setNotification($scope.businesses[key]);
-                    }
-                }
-            };
-
-            $scope.setNotification = function (business) {
-                followService.setNotification(business.id, business.followingNotification);
-            };
-
-            $scope.stopFollow = function (business) {
-                followService.addFollow(false, business.id, function () {
-                    for (var key  in $scope.businesses) {
-                        if ($scope.businesses[key] == business) {
-                            $scope.businesses.splice(key, 1);
-                        }
-                    }
-                    $scope.tableParams.reload();
-                });
-            };
-
-
-        }, function () {
-            $scope.loading = false;
-            $scope.displayError = true;
-
-        });
-
-})
-;
+    $scope.setNotification = function(business) {
+      return followService.setNotification(business.id, business.followingNotification);
+    };
+    return $scope.stopFollow = function(business) {
+      return followService.addFollow(false, business.id, function() {
+        var key;
+        for (key in $scope.businesses) {
+          if ($scope.businesses[key] === business) {
+            $scope.businesses.splice(key, 1);
+          }
+        }
+        return $scope.tableParams.reload();
+      });
+    };
+  }, function() {
+    $scope.loading = false;
+    return $scope.displayError = true;
+  });
+  $(window).scrollTop(0);
+  return $rootScope.$broadcast('PROGRESS_BAR_STOP');
+});

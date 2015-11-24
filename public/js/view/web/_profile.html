@@ -1,0 +1,152 @@
+<div class="container-content">
+    <div class="profile-page">
+
+
+        <!-- data panel -->
+        <div class="panel panel-gling main-panel panel-personal-information">
+            <div class="panel-heading">{{'--.customer.profile.personalInformation' | translateText}}</div>
+            <div class="panel-body">
+
+                <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+
+                <button class="btn gling-button-dark "
+                        id="profile-personal-btn-edit"
+                        ng-show="accountParam.disabled"
+                        ng-click="personalEdit()">{{'--.generic.edit' |translateText}}
+                </button>
+                <button class="btn gling-button-dark"
+                        id="profile-personal-btn-save"
+                        ng-hide="accountParam.disabled"
+                        ng-click="personalSave()">
+                    {{'--.generic.save' | translateText}}
+                </button>
+                <button
+                        id="profile-personal-btn-cancel"
+                        class="btn gling-button-dark"
+                        ng-hide="accountParam.disabled" ng-click="personalCancel()">
+                    {{'--.generic.cancel' | translateText}}
+                </button>
+
+                <div class="col-md-3"
+                     ng-show="model.myself.loginAccount==true"></div>
+
+                <!-- edit password -->
+                <button type="button"
+                        ng-show="model.myself.loginAccount===true"
+                        id="profile-personal-btn-edit-password"
+                        class="btn gling-button-dark"
+                        ng-click="editPassword()">
+                    {{'--.changePasswordModal.title' | translateText}}
+                </button>
+
+                <!-- associate social network to account -->
+                <table class="profile-social-network-table">
+                    <tr>
+                        <th colspan="2">Lien avec vos réseaux sociaux</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="assets/images/social_network/facebook.png"/>
+                        </td>
+                        <td>
+                            <div class="link"
+                                 ng-click="fb_login();"
+                                 ng-hide="model.myself.facebookAccount===true">
+                                {{'--.profile.facebook.btn' |translateText}}
+                            </div>
+                            <div ng-show="model.myself.facebookAccount===true">
+                                Lié au compte facebook {{model.myself.facebookCredential.firstname}}
+                                {{model.myself.facebookCredential.lastname}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+        <!-- address panel -->
+        <div class="panel panel-gling main-panel">
+            <div class="panel-heading">{{'--.customer.profile.myAddresses' | translateText}}</div>
+            <div class="panel-body">
+
+
+                <div>
+                    <accordion>
+                        <accordion-group
+                                class="address-container"
+                                ng-repeat="address in model.myself.addresses"
+                                is-open="address.isOpen">
+                            <accordion-heading>
+                                {{address.name}} <i class="pull-right glyphicon"
+                                                    ng-class="{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}"></i>
+                            </accordion-heading>
+                            <div class="address-box">
+                                <div>
+                                    <span>{{'--.generic.street' | translateText}}</span>
+                                    <span>{{address.street}}</span>
+                                </div>
+                                <div>
+                                    <span>{{'--.generic.zip' | translateText}}</span>
+                                    <span>{{address.zip}}</span>
+                                </div>
+                                <div>
+                                    <span>{{'--.generic.city' | translateText}}</span>
+                                    <span>{{address.city}}</span>
+                                </div>
+                                <div>
+                                    <span>{{'--.generic.country' | translateText}}</span>
+                                    <span>{{address.country}}</span>
+                                </div>
+                            </div>
+                            <button
+                                    class="btn gling-button-dark "
+                                    ng-click="editAddress(address)">
+                                {{'--.generic.edit' | translateText}}
+                            </button>
+                            <button class="btn gling-button-dark glyphicon glyphicon-remove"
+                                    ng-click="deleteAddress(address)">
+                                {{'--.generic.remove' |translateText}}
+                            </button>
+
+
+                        </accordion-group>
+                    </accordion>
+                    <button id="profile-btn-address-add"
+                            class="btn gling-button-dark"
+                            ng-click="addAddress()">
+                        {{'--.customer.profile.create' | translateText}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- interest panel -->
+        <div class="panel panel-gling main-panel">
+            <div class="panel-heading">{{'--.customer.profile.interest' | translateText}}</div>
+            <div class="panel-body category-list">
+
+                <div>
+                    <div ng-repeat="interest in model.myself.customerInterests"
+                         class="category-box">
+                        <span class="{{'gling-icon gling-icon-' + interest.name}}"></span>
+                        {{interest.translationName |translateText}}
+                    </div>
+
+                    <button class="btn gling-button-dark "
+                            id="profile-interest-btn-edit"
+                            ng-click="interestEdit()">
+                        {{'--.generic.edit' | translateText}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Je suis un business !!!-->
+        <!--<input ng-model="businessName"/>-->
+        <!--<button ng-click="createBusiness()">Créer</button>-->
+
+
+    </div>
+</div>

@@ -1,0 +1,86 @@
+mobile-title-ctrl(title="'--.page.profile.title'", display-menu='true')
+// body
+.app-body.profile-page
+    .app-content
+        .body-mask(ng-show='displayMask')
+        .scrollable
+            .section.scrollable-content
+                div(ui-state='activeTab', default='1')
+                    ul.nav.nav-tabs
+                        li(ng-click="activeTab = 'personal'", ng-class="{'active':activeTab == 'personal'}")
+                            a(ui-set="{'activeTab': 1}")
+                                | {{'--.customer.profile.personalInformation' |
+                                | translateText}}
+                        li(ng-click="activeTab = 'address'", ng-class="{'active':activeTab == 'address'}")
+                            a(ui-set="{'activeTab': 2}") {{'--.customer.profile.myAddresses' | translateText}}
+                        li(ng-click="activeTab = 'interest'", ng-class="{'active':activeTab == 'interest'}")
+                            a(ui-set="{'activeTab': 3}") {{'--.customer.profile.interest' | translateText}}
+                    // personal information
+                    div(ng-show="activeTab == 'personal'")
+                        account-form-ctrl(ng-info='accountParam')
+                        // edit mode
+                        button.btn.gling-button-dark.glyphicon.glyphicon-edit(ng-show='accountParam.disabled', ng-click='accountParam.disabled = false')
+                            | {{'--.generic.edit' |translateText}}
+                        // save
+                        button.btn.gling-button-dark(ng-hide='accountParam.disabled', ng-click='accountSave()')
+                            | {{'--.generic.save' | translateText}}
+                        // cancel
+                        button.btn.gling-button-dark(ng-hide='accountParam.disabled', ng-click='accountCancel()')
+                            | {{'--.generic.cancel' | translateText}}
+                        // change password
+                        button.btn.gling-button-dark(ng-show='model.myself.loginAccount===true', ng-click='editPassword()', type='button')
+                            | {{'--.changePasswordModal.title' | translateText}}
+                        // associate social network to account
+                        table.profile-social-network-table
+                            tr
+                                th(colspan='2') Lien avec vos réseaux sociaux
+                            tr
+                                td
+                                    img(src='assets/images/social_network/facebook.png')
+                                td
+                                    .link(ng-click='fb_login();', ng-hide='model.myself.facebookAccount===true')
+                                        | {{'--.profile.facebook.btn' |translateText}}
+                                    div(ng-show='model.myself.facebookAccount===true')
+                                        | Lié au compte facebook {{model.myself.facebookCredential.firstname}}
+                                        | {{model.myself.facebookCredential.lastname}}
+                    // address
+                    div(ng-show="activeTab == 'address'")
+                        button.btn.gling-button-dark(ng-click='addAddress()')
+                            | {{'--.customer.profile.address.create' | translateText}}
+                        .panel.panel-gling(ng-repeat='address in model.myself.addresses')
+                            .panel-heading {{address.name}}
+                            .panel-body
+                                .address-box
+                                    div
+                                        span {{'--.generic.street' | translateText}}
+                                        | {{address.street}}
+                                    div
+                                        span {{'--.generic.zip' | translateText}}
+                                        | {{address.zip}}
+                                    div
+                                        span {{'--.generic.city' | translateText}}
+                                        | {{address.city}}
+                                    div
+                                        span {{'--.generic.country' | translateText}}
+                                        | {{address.country}}
+                                button.btn.gling-button-dark.glyphicon.glyphicon-edit(ng-click='editAddress(address)')
+                                    | {{'--.generic.edit' |
+                                    | translateText}}
+                                button.btn.gling-button-dark.glyphicon.glyphicon-remove(ng-click='deleteAddress(address)')
+                                    | {{'--.generic.remove' |translateText}}
+                    // interest
+                    div(ng-show="activeTab == 'interest'")
+                        .category-box(ng-repeat='interest in model.myself.customerInterests', ng-show='interestParam.disabled')
+                            span(ng-class="'gling-icon gling-icon-' + interest.name")
+                            |                             {{interest.translationName |translateText}}
+                        // customer interest form
+                        customer-interest-form-ctrl(ng-hide='interestParam.disabled', ng-info='interestParam')
+                        // edit mode
+                        button.btn.gling-button-dark.glyphicon.glyphicon-edit(ng-show='interestParam.disabled', ng-click='interestParam.disabled = false')
+                            | {{'--.generic.edit' |translateText}}
+                        // save
+                        button.btn.gling-button-dark(ng-hide='interestParam.disabled', ng-click='interestSave()')
+                            | {{'--.generic.save' | translateText}}
+                        // cancel
+                        button.btn.gling-button-dark(ng-hide='interestParam.disabled', ng-click='interestParam.disabled = true')
+                            | {{'--.generic.cancel' | translateText}}

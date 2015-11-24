@@ -1,0 +1,31 @@
+.container-content
+    .followed-business
+        .generic-inline-block
+            | {{'--.generic.search'| translateText}}
+        .generic-inline-block
+            input.form-control(type='text', ng-model='filter.$')
+        div(style='float: right')
+            a(href='#', ng-click='checkAll(true)') {{'--.followed-business.checkAll' | translateText}}
+            |  /
+            a(href='#', ng-click='checkAll(false)')
+                | {{'--.followed-business.uncheckAll'
+                | | translateText}}
+        table.table(ng-table='tableParams')
+            tr(ng-repeat='business in $data')
+                td.first-cell(data-title="'--.followedBusiness.table.business' | translateText", sortable="'name'")
+                    img.illustration(ng-click="navigateTo('/business/'+business.id)", ng-src='{{business.illustration | image}}')
+                    div
+                        span.link(ng-click="navigateTo('/business/'+business.id)") {{business.name}}
+                        br
+                        button.btn.btn-xs.gling-button-dark(ng-click='stopFollow(business)')
+                            | {{'--.business.follow.stopFollowing' | translateText}}
+                td(data-title="'--.followedBusiness.table.categories' | translateText")
+                    span(ng-repeat='(catLev1Key,lev2) in business.categories')
+                        span(ng-repeat='(catLev2Key, lev3) in lev2')
+                            span(ng-repeat='catLev3 in lev3')
+                                | {{catLev3.translationName |translateText}} /
+                td(data-title="'--.followedBusiness.table.followingFrom' | translateText", sortable="'followingFrom'", style='text-align: center')
+                    | {{business.followingFrom | date}}
+                td(data-title="'--.followedBusiness.table.notification' | translateText", sortable="'followingNotification'", style='text-align: center')
+                    div
+                        input(ng-click='setNotification(business)', type='checkbox', ng-model='business.followingNotification')

@@ -1,0 +1,19 @@
+div
+    table.category-line-tree
+        tr(ng-repeat="(catLev1Key,lev2) in getInfo().categories")
+            td(style="white-space: nowrap;")
+                a(ng-click="searchCat(catLev1Key)")
+                    | {{catLev1Key | translateText}}
+                span.transition >>
+            td
+                table
+                    tr(ng-repeat="(catLev2Key, lev3) in lev2")
+                        td(style="white-space: nowrap;")
+                            a(ng-click="searchCat(catLev2Key)")
+                                | {{catLev2Key | translateText}}
+                            span.transition >>
+                        td
+                            span(ng-repeat="catLev3 in lev3")
+                                span.transition(ng-show="$index>0") /
+                                a(ng-click="searchCat(catLev3.translationName)")
+                                    | {{catLev3.translationName | translateText}}

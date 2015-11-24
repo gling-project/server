@@ -1,0 +1,29 @@
+<mobile-title-ctrl display-menu="false" title="'--.promotion.modal.title.create'"></mobile-title-ctrl>
+
+<!-- body -->
+<div class='app-body'>
+    <div class='app-content'>
+
+        <div class="body-mask"
+             ng-show="displayMask"></div>
+
+        <div class="scrollable">
+            <div class="section  scrollable-content scrollable-content-body">
+
+                <div class="scrollable-content-inner">
+
+                    <div class="inject-box"></div>
+
+                    <button id="promotion-modal-btn-save"
+                            type="button"
+                            class="btn gling-button-dark"
+                            ng-click="save(false)">
+                        {{'--.generic.save' | translateText}}
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

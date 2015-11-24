@@ -1,0 +1,225 @@
+.container-content
+    to-top-ctrl
+
+    // management part
+    .panel.panel-gling.business-management(ng-show='myBusiness === true')
+        .management-block
+            h4
+                | {{'--.business.page.management.title' | translateText}}
+                span(style='float: right')
+                    | {{'--.business.page.management.status' | translateText}}
+                    span(ng-class="'business-status-'+business.businessStatus")
+                    |             {{'--.business.status.'+business.businessStatus | translateText}}
+            div
+                | {{'--.business.page.edit.description' | translateText}}
+
+        .management-block
+            h4
+                | {{'--.business.manager.progress.createPublicationTitle' | translateText}}
+            button#business-btn-promotion-add.btn.gling-button-dark(ng-click='createPromotion()', ng-disabled="business.businessStatus !== 'PUBLISHED'")
+                | {{'--.business.publication.btn.promotion' | translateText}}
+            button.btn.gling-button-dark(ng-click='createNotification()', ng-disabled="business.businessStatus !== 'PUBLISHED'")
+                | {{'--.business.publication.btn.notification' | translateText}}
+            div(ng-hide="business.businessStatus==='PUBLISHED'")
+                | {{'--.business.manager.createPublication.disabled.desc' | translateText}}
+            div(ng-show="business.businessStatus==='PUBLISHED'")
+                | {{'--.business.manager.createPublication.enabled.desc' | translateText}}
+        div
+            .business-management-progress(style='width: 49%;display: inline-block;vertical-align: top')
+                h4
+                    | {{'--.business.management.progression' | translateText}}
+                .business-management-progress-bar
+                    div(ng-style="{'width':(300 * (computeProgression()/8))+'px'}")
+                    span {{computeProgression()}} / 8
+                span
+                    | {{'--.business.management.progression.desc' | translateText}}
+                br
+                br
+                // address
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='business.address!=null')
+                    span.link(ng-class="{'completed':business.address!=null}", ng-click='editAddress()')
+                        | {{'--.business.manager.progress.add.address' | translateText}}
+                // category
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='numberCategories()>0')
+                    span.link(ng-class="{'completed':numberCategories()>0}", ng-click='editCategory()')
+                        | {{'--.business.manager.progress.add.category' | translateText}}
+                // description
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='business.description!=null')
+                    span.link(ng-class="{'completed':business.description!=null}", ng-click='editbusiness()')
+                        | {{'--.business.manager.progress.add.description' | translateText}}
+                // illustration
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='business.illustration!=null')
+                    span.link(ng-class="{'completed':business.illustration!=null}", ng-click='editIllustration()')
+                        | {{'--.business.manager.progress.add.illustration' | translateText}}
+                // landscape
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='business.landscape!=null')
+                    span.link(ng-class="{'completed':business.landscape!=null}", ng-click='editLandscape()')
+                        | {{'--.business.manager.progress.add.landscape' | translateText}}
+                // gallery
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='business.galleryPictures.length>0')
+                    span.link(ng-class="{'completed':business.galleryPictures.length>0}", ng-click='editGallery()')
+                        | {{'--.business.manager.progress.add.gallery' | translateText}}
+                // social
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='displaySocialNetwork()')
+                    span.link(ng-class="{'completed':displaySocialNetwork()}", ng-click='editSocialNetwork()')
+                        | {{'--.business.manager.progress.add.socialNetwork' | translateText}}
+                // schedule
+                .business-management-progress-el
+                    input(type='checkbox', ng-checked='displaySchedule()')
+                    span.link(ng-class="{'completed':displaySchedule()}", ng-click='editSchedule()')
+                        | {{'--.business.manager.progress.add.schedule' | translateText}}
+
+            //- status
+            div(style='width: 49%;display: inline-block;vertical-align: top')
+                h4 {{'--.business.page.management.changeStatus' | translateText}}
+                .management-block
+                    p
+                        span(ng-show="business.businessStatus === 'NOT_PUBLISHED'")
+                            | {{'--.business.page.edit.description.notPublished' |translateText}}
+                        span(ng-show="business.businessStatus === 'WAITING_CONFIRMATION'")
+                            | {{'--.business.page.edit.description.waitConfirmation' | translateText}}
+                        span(ng-show="business.businessStatus === 'PUBLISHED'")
+                            | {{'--.business.page.edit.descriptionPublished' |translateText}}
+                        button#business-btn-publish.btn.gling-button-dark(ng-show="business.businessStatus === 'NOT_PUBLISHED'", ng-click='publish()')
+                            | {{'--.business.page.publication' | translateText}}
+                        button.btn.gling-button-dark(ng-show="business.businessStatus === 'WAITING_CONFIRMATION'", ng-click='cancelPublishRequest()')
+                            | {{'--.business.page.cancelPublishRequest' | translateText}}
+                        button.btn.gling-button-dark(ng-show="business.businessStatus === 'PUBLISHED'", ng-click='stopPublish()')
+                            | {{'--.business.page.stopPublication' | translateText}}
+                h4
+                    | {{'--.business.page.management.help.title' | translateText}}
+                a.btn.gling-button-dark(href='/assets/document/business_help.pdf', target='_blank')
+                    | {{'--.business.manager.progress.help' | translateText}}
+                button.btn.gling-button-dark(ng-click='openContact()')
+                    | {{'--.business.page.management.contact.btn' | translateText}}
+
+    // show edit buttons or not
+    .onoffswitch-container(ng-show='displayEditMode()')
+        div
+            | {{'--.business.page.edit.editSwitchDisplay' | translateText}}
+        .onoffswitch
+            input#myonoffswitchFromBusiness.onoffswitch-checkbox(type='checkbox', name='onoffswitch', checked='', ng-model='edit')
+            label.onoffswitch-label(for='myonoffswitchFromBusiness')
+                span.onoffswitch-inner
+                span.onoffswitch-switch
+        div
+            | {{'--.business.page.edit.editSwitchEdit' | translateText}}
+
+    .business-page(ng-show='business!=null')
+        .business-page-header
+            .business-page-header-landscape.editable-element(ng-style="{'background-image':'url('+(business.landscape | image)+')' }")
+                // landscape
+                button#business-btn-landscape-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show='edit', ng-click='editLandscape()')
+                // illustration
+                .business-page-illustration-container.editable-element(ng-click='refreshPublications()')
+                    img.business-illustration(ng-src='{{business.illustration | image}}')
+                    button#business-btn-illustration-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit.btn-sm(ng-show='edit', ng-click='editIllustration()')
+                // name
+                .business-page-name.editable-element(ng-click='refreshPublications()')
+                    span
+                        | {{business.name}}
+                    button#business-btn-name-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'", ng-click='editbusiness()')
+            .business-page-bottom
+                div(ng-show='business.hasOwner===false')
+                    | {{'--.business.page.noOwner' | translateText}}
+                    span.business-claimed-status
+                        span(ng-show='myself!=null && myself.claimedBusinessId == business.id') {{'--.business.page.noOwner.alreadyClaimed' | translateText}}
+                        span(ng-show='myself!=null && myself.claimedBusinessId!=null && myself.claimedBusinessId != business.id') {{'--.business.page.noOwner.alreadyClaimedOther' | translateText}}
+                    button.btn.gling-button-dark.btn-xs(ng-click='tryClaimBusiness()', ng-show='myself == null || myself.claimedBusinessId==null')
+                        | {{'--.business.page.claims' | translateText}}
+                .business-right-column
+                    // description
+                    .business-page-description
+                        // category
+                        div
+                            div(style='display: inline-block')
+                                category-line-ctrl(ng-info='categoryLineParams')
+                            button#business-btn-category-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show='edit', ng-click='editCategory()')
+                        // description
+                        span(ng-bind-html='business.description | text : descriptionLimit')
+                        span.link(ng-show='business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase', ng-click='descriptionLimit = 10000') {{'--.textReuction.seeMore' | translateText}}
+                        span.link(ng-show='business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase', ng-click='descriptionLimit = descriptionLimitBase') {{'--.textReuction.seeLess' | translateText}}
+                        br
+                        button.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show='edit', ng-click='editbusiness()')
+                // follow  TODO TEMP
+                follow-widget-ctrl(ng-info='{business:business}')
+        .business-page-body
+            .business-page-body-center
+                // publication
+                div
+                    select(ng-model='publicationListParam.type', ng-options='option.key as option.value | translateText for option in publicationOptions')
+                    publication-list-for-business-ctrl(ng-info='publicationListParam')
+            .business-page-body-right
+                // gallery
+                .panel.panel-gling(ng-show='edit === true || (business.galleryPictures !=null && business.galleryPictures.length > 0)')
+                    .panel-heading
+                        | {{'--.business.gallery' | translateText}}
+                    .panel-body
+                        gallery-ctrl(ng-info='{images:business.galleryPictures}')
+                        button#welcome-btn-gallery-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show='edit', ng-click='editGallery()')
+                // address
+                .panel.panel-gling
+                    .panel-heading
+                        | {{'--.generic.address' | translateText}}
+                    .panel-body
+                        google-map-widget-ctrl(ng-info='googleMapParams')
+                        .business-address
+                            div
+                                | {{business.address.street}}
+                                br
+                                |  {{business.address.zip}}, {{business.address.city}}
+                            div {{business.distance / 1000 | number:2}} Km
+                        button#business-btn-address-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'", ng-click='editAddress()')
+                // contact
+                .panel.panel-gling
+                    .panel-heading
+                        | {{'--.generic.contact' | translateText}}
+                    .panel-body
+                        #welcome-contact-data-phone
+                            | {{business.phone}}
+                        div
+                            a#welcome-contact-data-website(href='{{business.website}}', target='_blank')
+                                | {{business.website}}
+                        #welcome-contact-data-email
+                            | {{business.email}}
+                        button#business-btn-contact-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show='edit', ng-click='editbusiness()')
+                // social network
+                .panel.panel-gling.business-social-panel(ng-show='edit === true || displaySocialNetwork()')
+                    .panel-heading {{'--.generic.socialNetwork' | translateText}}
+                    .panel-body
+                        .business-social-network-box(ng-show='!!business.socialNetwork.facebookLink')
+                            a#welcome-link-facebook(href='{{business.socialNetwork.facebookLink}}', title='Facebook', target='_blank')
+                                img(src='/assets/images/social_network/facebook.png')
+                        .business-social-network-box(ng-show='!!business.socialNetwork.twitterLink')
+                            a#welcome-link-twitter(href='{{business.socialNetwork.twitterLink}}', title='Twitter', target='_blank')
+                                img(src='/assets/images/social_network/twitter.png')
+                        .business-social-network-box(ng-show='!!business.socialNetwork.instagramLink')
+                            a#welcome-link-instagram(href='{{business.socialNetwork.instagramLink}}', title='Instagram', target='_blank')
+                                img(src='/assets/images/social_network/instagram.png')
+                        .business-social-network-box(ng-show='!!business.socialNetwork.deliveryLink')
+                            a#welcome-link-delivery(href='{{business.socialNetwork.deliveryLink}}', title="{{'--.business.socialNetwork.delivery' | translateText}}", target='_blank')
+                                img(src='/assets/images/social_network/delivery.png')
+                        .business-social-network-box(ng-show='!!business.socialNetwork.reservationLink')
+                            a(href='{{business.socialNetwork.reservationLink}}', title="{{'--.business.socialNetwork.reservation' | translateText}}", target='_blank')
+                                img(src='/assets/images/social_network/reservation.png')
+                        .business-social-network-box(ng-show='!!business.socialNetwork.opinionLink')
+                            a(href='{{business.socialNetwork.opinionLink}}', title="{{'--.business.socialNetwork.opinion' | translateText}}", target='_blank')
+                                img(src='/assets/images/social_network/opinion.png')
+                        .business-social-network-box(ng-show='!!business.socialNetwork.ecommerceLink')
+                            a(href='{{business.socialNetwork.ecommerceLink}}', title="{{'--.business.socialNetwork.ecommerce' | translateText}}", target='_blank')
+                                img(src='/assets/images/social_network/e_commerce.png')
+                        br
+                        button#business-btn-social-network-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show='edit', ng-click='editSocialNetwork()')
+                // schedule
+                .panel.panel-gling(ng-show='edit === true || displaySchedule()')
+                    .panel-heading {{'--.business.profile.businessSchedule' | translateText}}
+                    .panel-body
+                        schedule-ctrl(ng-info='{dto:business.schedules}')
+                        button#business-btn-schedule-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show='edit', ng-click='editSchedule()')

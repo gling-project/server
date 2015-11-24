@@ -1,0 +1,36 @@
+// header
+header-search-ctrl(display-menu='false')
+// body
+.app-body
+  .app-content
+    .body-mask(ng-show='displayMask')
+    .scrollable
+      .scrollable-content.scrollable-content-body
+        .loading(ng-show='results == null')
+          img(src='/assets/images/big_loading.gif')
+        div(ng-hide='results==null')
+          tabset
+            // business
+            tab(ng-show='businessTab.display', active='businessTab.active')
+              tab-heading
+                | {{'--.generic.business' | translateText}} ({{businessTab.totalToDisplay}})
+              business-list-mobile-ctrl(ng-info='{data:businessTab.data}')
+            // publication
+            tab(ng-show='publicationTab.display', active='publicationTab.active')
+              tab-heading
+                | {{'--.generic.publication' | translateText}} ({{publicationTab.totalToDisplay}})
+              publication-list-mobile-ctrl(ng-info='{data:publicationTab.data}')
+            // category
+            tab(ng-show='categoryTab.display', active='categoryTab.active')
+              tab-heading
+                | {{'--.generic.category' | translateText}} ({{categoryTab.totalToDisplay}})
+              div(ng-show='categoryTab == 0')
+                | {{'--.list.nothing' | translateText}}
+              div(ng-repeat='(cat,value) in categoryTab.data')
+                span.search-category.link.search-category-lev1(ng-click="navigateTo('/search/category:'+cat)")
+                span(ng-repeat='(sCat,value2) in value')
+                  span.search-category.link.search-category-lev2(ng-click="navigateTo('/search/category:'+sCat)")
+                  span(ng-repeat='(ssCat,value3) in value2')
+                    span.search-category.link.search-category-lev3(ng-click="navigateTo('/search/category:'+ssCat)")
+                      | {{cat | translateText}}    >> {{sCat | translateText}} >>  {{ssCat | translateText}}
+                    business-list-mobile-ctrl(ng-info='{data:value3,loading:false}')

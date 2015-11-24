@@ -1,0 +1,30 @@
+.schedule-form
+
+    //- is currently open ?
+    .schedule-open(ng-show='isOpenNow === true')
+        | {{'--.schedule.isOpenNow' | translateText}}
+
+
+    //- schedule
+    table
+        tr
+            td
+            td(ng-repeat='hour in hours')
+                .hour-block-info
+                    div {{hour.text}}
+        tr(ng-repeat='day in days', ng-show='sections[day].length >0')
+            td {{daysTranslation[day] | translateText}}
+            td(ng-repeat='section in sections[day]')
+                .hour-block(ng-class='attendance_class[section.attendance]', ng-mousedown='select(day,section)', ng-mouseover='progress($event,day,section)')
+
+    //- legend
+    .schedule-legend
+        | {{'--.generic.legend' | translateText}}
+        .attendance-light
+            | {{'--.schedule.light' | translateText}}
+        .attendance-moderate
+            | {{'--.schedule.moderate' | translateText}}
+        .attendance-heavy
+            | {{'--.schedule.heavy' | translateText}}
+        .attendance-appointment
+            | {{'--.schedule.appointment' | translateText}}

@@ -13,13 +13,13 @@ class AngularCompiler {
 
     def compile() {
 
-        val angular = Path.fromString("app/assets")
-        val folder = Path.fromString("target/scala-2.10/resource_managed/main/public")
+        val angular = Path.fromString("app/be/frontend")
+        val folder = Path.fromString("public")
 
         val jades: PathSet[Path] = (angular / "js" ** "*.jade")
         val coffees: PathSet[Path] = (angular / "js" ** "*.coffee")
 
-        List(jades,coffees).foreach { v =>
+        List(jades, coffees).foreach { v =>
             compileFiles(v, folder)
         }
     }
@@ -38,6 +38,7 @@ class AngularCompiler {
 
 
     }
+
     private def compileFile(f: Path, folder: Path) {
 
         var targetExtension = ""
@@ -56,14 +57,21 @@ class AngularCompiler {
             targetExtension = "html"
         }
 
-        val targetPath = folder.path + f.path.replace("app/assets", "").split("\\.")(0) + "." + targetExtension
+        val targetPath = folder.path + f.path.replace("app/be/frontend", "").split("\\.")(0) + "." + targetExtension
 
         val tempFile = new java.io.File(targetPath)
 
         synchronized {
             tempFile.getParentFile.mkdirs()
         }
-        println(" ?? " + tempFile.exists())
+
+
+        if (tempFile.exists()) {
+            println(" ====>> " + tempFile.exists() + " / " + tempFile.lastModified + "/" + f.lastModified)
+        }
+        else {
+            println(" ====>> " + tempFile.exists())
+        }
         if (tempFile.exists() && tempFile.lastModified >= f.lastModified) {
         } else {
             var result = ""
@@ -100,104 +108,6 @@ class AngularCompiler {
             }
         }
     }
-
-    //
-    //    private def assembleTemplates(files: Iterable[Path], folder: Path, angular: Path) {
-    //        val tempFile = new java.io.File((folder / "templates.js").path)
-    //        tempFile.getParentFile.mkdirs()
-    //
-    //        var mustRemake = false
-    //        for (f <- files) {
-    //            if (!tempFile.exists || tempFile.lastModified < f.lastModified) {
-    //                mustRemake = true
-    //            }
-    //        }
-    //
-    //        if (mustRemake) {
-    //            println("[ASSEMBLING] " + (folder / "templates.js").path)
-    //
-    //            var result = "angular.module('app.directives').run(function($templateCache) {"
-    //            for (f <- files) {
-    //                // now, escape string so that it can be embedded as a variable
-    //                val mapper: ObjectMapper = new ObjectMapper()
-    //
-    //                var url = ""
-    //
-    //                if (f.path.startsWith((Path.fromString(".tmp") / "sources" / angular / "directives").path)) {
-    //                    // compute a decent url for the template
-    //                    var usefulPath = f.path.substring((Path.fromString(".tmp") / "sources" / angular / "directives").path.length)
-    //
-    //                    // to dashed
-    //                    val regex = "([a-z])([A-Z])"
-    //                    val replacement = "$1-$2"
-    //                    usefulPath = usefulPath.replaceAll(regex, replacement).toLowerCase
-    //
-    //                    // now split and format it correctly
-    //                    var usefulPathParts = usefulPath.split("[/\\\\]")
-    //                    usefulPathParts = usefulPathParts.slice(0, usefulPathParts.length - 1)
-    //                    usefulPath = usefulPathParts.slice(usefulPathParts.length - 1, usefulPathParts.length).mkString
-    //
-    //                    url = "$/angular/templates/" + usefulPath + ".html"
-    //                }
-    //
-    //                if (f.path.startsWith((Path.fromString(".tmp") / "sources" / angular / "views").path)) {
-    //                    val usefulPath = f.path.substring((Path.fromString(".tmp") / "sources" / angular / "views").path.length)
-    //                    url = "$/angular/views" + usefulPath
-    //                }
-    //
-    //                val content = mapper.writeValueAsString(scala.io.Source.fromFile(f.path, "utf-8").getLines().mkString("\n"))
-    //                result += "$templateCache.put('" + url + "', " + content + ");"
-    //            }
-    //            result += "});"
-    //
-    //            setContentIfDifferent(tempFile.getPath, result)
-    //
-    //        } else {
-    //            println("[UP-TO-DATE] " + (folder / "templates.js").path)
-    //        }
-    //    }
-    //
-    //    private def concatenate(files: Iterable[Path], folder: Path) {
-    //        val tempFile = new java.io.File((folder / "concatenated.js").path)
-    //        tempFile.getParentFile.mkdirs()
-    //
-    //        var mustRemake = false
-    //        for (f <- files) {
-    //            if (!tempFile.exists || tempFile.lastModified < f.lastModified) {
-    //                mustRemake = true
-    //            }
-    //        }
-    //
-    //        if (mustRemake) {
-    //            println("[CONCATENATING] " + (folder / "concatenated.js").path)
-    //            var result = ""
-    //            for (f <- files) {
-    //                result += scala.io.Source.fromFile(f.path, "utf-8").getLines().mkString("\n")
-    //            }
-    //            setContentIfDifferent(tempFile.getPath, result)
-    //        } else {
-    //            println("[UP-TO-DATE] " + (folder / "concatenated.js").path)
-    //        }
-    //    }
-    //
-    //    def setContentIfDifferent(path: String, content: String) {
-    //
-    //        var same = false
-    //        try {
-    //            val existingContent = scala.io.Source.fromFile(path).getLines().mkString("\n")
-    //            same = (existingContent == content)
-    //        } catch {
-    //            case e: Exception =>
-    //        }
-    //
-    //        if (!same) {
-    //            val fw = new FileWriter(path)
-    //            fw.write(content)
-    //            fw.close()
-    //        }
-    //    }
-
-
 }
 
 

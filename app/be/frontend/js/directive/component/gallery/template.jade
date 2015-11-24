@@ -1,0 +1,3 @@
+.gallery-component
+    div(ng-repeat="image in getInfo().images")
+        img.gallery-picture(ng-click="openGallery(image)",ng-src="{{image | image}}")

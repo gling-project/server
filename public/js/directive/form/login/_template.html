@@ -1,0 +1,28 @@
+<div class="form login-form">
+
+    <div class="facebook-login-btn-container">
+
+        <button ng-click="fb_login();"
+                class="facebook-login-btn btn gling-button-dark">
+            <img src="/assets/images/facebook/login_icon.png"/>
+            <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
+        </button>
+
+    </div>
+    <table class="horizontal-split">
+        <tr>
+            <td><div></div></td>
+            <td>{{'--.generic.or' | translateText}}</td>
+            <td><div></div></td>
+        </tr>
+    </table>
+
+    <dir-field-text ng-info="fields.email"></dir-field-text>
+
+    <dir-field-text ng-info="fields.password"></dir-field-text>
+
+    <div ng-bind-html="'--.registration.accept.condition' | translateText | text"></div>
+
+
+
+</div>

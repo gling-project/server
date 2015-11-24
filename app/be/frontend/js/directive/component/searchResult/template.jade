@@ -1,0 +1,52 @@
+.search-result-box(id="searchContainer",ng-show="getInfo().display",dir-bottom-arrow="down()",dir-top-arrow="top()")
+    .search-result-nothing(ng-show="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0")
+        | {{'--.search.nothing' | translateText}}
+    .scrollable-content(ng-hide="getInfo().result.businesses.length ==0 && getInfo().result.publications.length == 0 && getInfo().result.categories.length == 0")
+
+        //- business
+        div(ng-show="getInfo().result.businesses.length > 0")
+            .search-result-sub-title(ng-hide="getInfo().mobile === true")
+                | {{'--.search.business' | translateText}}
+            .search-result-business.search-result-content(ng-mouseenter="select(business.index)",ng-click="goToBusiness(business)",ng-class="{'search-result-selected':getInfo().indexSelected==business.index}",ng-repeat="business in getInfo().result.businesses")
+                img(ng-src="{{business.illustration | image}}")
+                span {{business.name}}
+            .search-result-content(ng-hide="getInfo().mobile === true",ng-click="seeAllBusiness()",ng-mouseenter="select(seeMoreBusinessIndex)",ng-class="{'search-result-selected':getInfo().indexSelected==seeMoreBusinessIndex}")
+                button.search-result-show-more.link
+                    | {{'--.search.business.seeMore' | translateText}}
+
+        //- publication
+        div(ng-show="getInfo().result.publications.length >0")
+            .search-result-sub-title(ng-hide="getInfo().mobile === true")
+                | {{'--.search.publication' | translateText}}
+            table
+                tr.search-result-publication.search-result-content(ng-mouseenter="select(publication.index)",ng-click="goToPublication(publication)",ng-class="{'search-result-selected':getInfo().indexSelected==publication.index}",ng-repeat="publication in getInfo().result.publications")
+                    td
+                        img(ng-src="{{publication.pictures[0] | image}}")
+                        span {{publication.title}}
+                    td
+                        .search-result-publication-business
+                            img(ng-src="{{publication.businessIllustration | image}}")
+                            span {{publication.businessName}}
+            .search-result-content(ng-hide="getInfo().mobile === true",ng-click="seeAllPublication()",ng-mouseenter="select(seeMorePublicationIndex)",ng-class="{'search-result-selected':getInfo().indexSelected==seeMorePublicationIndex}")
+                .search-result-show-more.link
+                    | {{'--.search.publication.seeMore' | translateText}}
+
+
+        //- category
+        div(ng-show="getInfo().result.categories.length > 0")
+            .search-result-sub-title(ng-hide="getInfo().mobile === true")
+                |  {{'--.search.category' | translateText}}
+            .search-result-category.search-result-content(ng-mouseenter="select(category.index)",ng-click="goToCategory(category)",ng-class="{'search-result-selected':getInfo().indexSelected==category.index}",ng-repeat="category in getInfo().result.categories")
+                | {{category.category.translationName}}
+                span.transition(ng-show="category.subCategory!=null") >>
+                | {{category.subCategory.translationName}}
+                span.transition(ng-show="category.subSubCategory!=null")>>
+                | {{category.subSubCategory.translationName}}
+            .search-result-content(ng-click="seeAllCategory()",ng-hide="getInfo().mobile === true",ng-mouseenter="select(seeMoreCategoryIndex)",ng-class="{'search-result-selected':getInfo().indexSelected==seeMoreCategoryIndex}")
+                .search-result-show-more.link
+                    | {{'--.search.category.seeMore' | translateText}}
+
+        //- see more
+        .search-result-content(ng-click="seeAll()",ng-mouseenter="select(seeMoreIndex)",ng-class="{'search-result-selected':getInfo().indexSelected==seeMoreIndex}")
+            .search-result-show-more.link
+                | {{'--.search.seeMore' | translateText}}

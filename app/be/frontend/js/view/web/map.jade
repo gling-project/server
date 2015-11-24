@@ -1,0 +1,39 @@
+.content-block.map-page(style='margin-top: 100px;height:{{height}}px')
+    .map-content
+        // filtre open
+        .option-panel.option-panel-left(ng-hide='displayFilters===true')
+            button(ng-click='displayFilters=!displayFilters') Filtre
+        // list open
+        .option-panel.option-panel-right(ng-hide='displayList===true')
+            button(ng-click='displayList=!displayList') Liste des commerces
+        // map
+        #map(style='height:{{height}}px !important')
+        // filter panel
+        .filter-panel(ng-show='displayFilters')
+            span.filter-panel-close.glyphicon.glyphicon-remove(ng-click='displayFilters=false')
+            h3 Filters
+            .list-container
+                .list-container-scroll
+                    // folloing
+                    input(type='checkbox', ng-model='filters.following')
+                    | Uniquement les commerces suivi
+                    br
+                    input(type='checkbox', ng-model='filters.open')
+                    | Uniquement les commerces actuellement ouverts
+                    h3 Intérêts
+                    span.link(ng-click='selectAllInterest(true)') Tout sélectionner
+                    |  /
+                    span.link(ng-click='selectAllInterest(false)') Rien sélectionner
+                    div(ng-repeat='interest in interests')
+                        input(type='checkbox', ng-model='interest.selected')
+                        span(ng-class="'gling-icon gling-icon-' + interest.name")
+                        |   {{interest.translationName}}
+        // displayed business panel
+        .displayed-business-panel(ng-show='displayList')
+            span.filter-panel-close.glyphicon.glyphicon-remove(ng-click='displayList=false')
+            h3 Commerces
+            .list-container
+                .list-container-scroll
+                    div(ng-show='listDisplayedBusiness.length == 0') Pas de commerce dans cette zone
+                    .list-element(ng-repeat='business in listDisplayedBusiness', ng-mouseover='startAnimation(business,true)', ng-mouseleave='startAnimation(business,false)')
+                        business-for-map-ctrl(ng-info='{business:business}')

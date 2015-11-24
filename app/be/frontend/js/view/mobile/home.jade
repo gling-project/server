@@ -1,0 +1,38 @@
+header-search-ctrl
+// body
+.app-body
+    .app-content
+        .scrollable
+            .scrollable-content.scrollable-content-body
+                .scrollable-content-inner
+                    // interest
+                    .home-page-interest-box
+                        div(ng-click='selectInterest()')
+                            span.gling-button
+                                | {{'--.home.mobile.selectInterest' | translateText}}
+                            i.home-interest.gling-icon.selected(ng-show='getSelectedInterest()!=null', class="{{'gling-icon-' + getSelectedInterest().name}}")
+                    // publication list
+                    publication-list-mobile-ctrl(ng-info='publicationListCtrl')
+                    // empty result help
+                    .help-div(ng-show='emptyMessage!==null')
+                        | {{'--.home.emptyResult.'+emptyMessage | translateText}}
+                    // business list (in case of empty result
+                    business-list-mobile-ctrl(ng-info='businessListParam', ng-show='emptyMessage!==null')
+// footer
+.navbar.navbar-app.navbar-absolute-bottom
+    .btn-group.navbar-brand-center
+        .home-footer
+            // switch
+            .home-interest-switch.home-interest-box-background
+                div
+                    button.gling-button.gling-icon.gling-icon-location.button-with-label.home-interest(ng-class="{'selected':followedMode !== true}", ng-click='setFollowingMode(false)')
+                        p {{'--.home.localisation.help' | translateText}}
+                // switch element
+                div
+                    .onoffswitch(ng-click='setFollowingMode()')
+                        label.onoffswitch-label(ng-class="{'followedMode':followedMode}")
+                            span.onoffswitch-inner
+                            span.onoffswitch-switch
+                div
+                    button.gling-button.gling-icon.gling-icon-bell.button-with-label.home-interest(ng-class="{'selected':followedMode === true}", ng-click='setFollowingMode(true)')
+                        p {{'--.home.followning.help' | translateText}}

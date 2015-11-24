@@ -1,0 +1,44 @@
+<mobile-title-ctrl title="'--.page.customer_registration.title'" display-menu="false"></mobile-title-ctrl>
+<div class='app-body'>
+    <div class='app-content modal-login'>
+
+        <div class="scrollable">
+            <div class="section customer-registration scrollable-content">
+
+                <div class="modal-description">
+                    {{'--.customer.registrationModal.help.business' |translateText}}<br/>
+                </div>
+
+                <div class="facebook-login-btn-container">
+
+                    <button ng-click="fb_login();"
+                            class="facebook-login-btn btn gling-button-dark">
+                        <img src="/assets/images/facebook/login_icon.png"/>
+                        <span>{{'--.loginModal.facebook.btn' |translateText}}</span>
+                    </button>
+
+                </div>
+
+                <table class="horizontal-split">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td>{{'--.generic.or' | translateText}}</td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+
+                <account-form-ctrl ng-info="accountParam"></account-form-ctrl>
+
+                <div class="generic-center">
+                    <button class="btn gling-button-dark" ng-click="save()">
+                        {{'--.generic.registration' | translateText}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -69,7 +69,8 @@ public abstract class AbstractController extends Controller {
         JsonNode list = parse.get("list");
         Iterator<JsonNode> elements = list.elements();
         while (elements.hasNext()) {
-            T item = Json.fromJson(elements.next(), classExpected);
+            JsonNode next = elements.next();
+            T item = Json.fromJson(next, classExpected);
             validation(item);
             resultList.add(item);
         }

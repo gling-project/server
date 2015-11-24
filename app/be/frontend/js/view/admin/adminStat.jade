@@ -1,0 +1,44 @@
+//- menu
+super-admin-menu-ctrl
+
+//navigation tabs
+.my-tabs
+    div(ng-click="setTab('main')", ng-class="{'selected':tab == 'main'}") Statistiques
+    div(ng-click="setTab('users')", ng-class="{'selected':tab == 'users'}") Détails utilisateurs
+    div(ng-click="setTab('interest')", ng-class="{'selected':tab == 'interest'}") Intérêts
+
+//first panel : stats
+div(ng-show="tab == 'main'")
+    h1 Stats
+    table.admin_stat
+        tr(ng-repeat='(title, val) in stats')
+            td {{title}}
+            td {{val.value1}}
+            td {{val.value2 * 100 | number:2}} %
+    button(ng-click='refreshStat()') Refrech
+
+//- second panel : users stats
+div(ng-show="tab == 'users'")
+    h1 User Details
+    table
+        tr(ng-repeat='detail in details')
+            td {{detail.title}} ({{detail.total}})
+            td(style='vertical-align: top')
+                donut-chart-ctrl(style='width: 300px;height: 300px;display: inline-block;', ng-info='detail.nbSessionChartParam')
+            td
+                donut-chart-ctrl(style='width: 300px;height: 300px;display: inline-block;', ng-info='detail.nbFollowChartParam')
+            td
+                donut-chart-ctrl(style='width: 300px;height: 300px;display: inline-block;', ng-info='detail.nbAddressChartParam')
+            td
+                donut-chart-ctrl(style='width: 300px;height: 300px;display: inline-block;', ng-info='detail.sharePositionChartParam')
+        tr(collapse='2')
+            button(ng-click='refreshDetails()') Refrech
+
+//- third panel :interests stats
+div(ng-show="tab == 'interest'")
+    h1 Intérêts
+    donut-chart-ctrl(style='width: 600px;height: 600px;display: inline-block;', ng-info='interestGraph1')
+    donut-chart-ctrl(style='width: 600px;height: 600px;display: inline-block;', ng-info='interestGraph7')
+    donut-chart-ctrl(style='width: 600px;height: 600px;display: inline-block;', ng-info='interestGraph14')
+    donut-chart-ctrl(style='width: 600px;height: 600px;display: inline-block;', ng-info='interestGraph28')
+    button(ng-click='refreshInterest()') Refrech

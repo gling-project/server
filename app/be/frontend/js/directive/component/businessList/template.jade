@@ -1,0 +1,59 @@
+.publication-list
+
+    //- loading icon
+    .loading(ng-show="getInfo().loading===true")
+        img(src="/assets/images/big_loading.gif")
+
+    //- empty list text
+    div(ng-show="getInfo().loading!=true && businesses.length == 0") {{'--.list.nothing' | translateText}}
+
+    //- publication box
+    .publication-box(ng-repeat="business in businesses",ng-class="{'publication-followed':business.following === true}",ng-click="click()")
+
+        //- header
+        table.publication-header
+            tr
+
+                //- illustration
+                td(rowspan="2")
+
+                    .publication-business-illustration
+                        img(ng-click="navigateTo('/business/'+business.id)",ng-src="{{business.illustration | image}}")
+                td.publication-header-business
+
+                    //- name + follow icon
+                    .publication-bordered-bottom-hover.publication-bordered-bottom(ng-click="navigateTo('/business/'+business.id)")
+                        span.publication-main-title
+                            i.gling-icon.gling-icon.gling-icon-bell(ng-show="business.following === true") {{business.name}}
+            tr
+                td.publication-header-title
+
+                    //- distance
+                    .publication-bubble.publication-bordered
+                        i.gling-icon.gling-icon-earth
+                        span {{business.distance / 1000 | number:2}} km
+
+                    //- address
+                    .publication-bubble.publication-bordered
+                        span
+                            | {{business.address.street}} <br/>
+                            | {{business.address.zip}},
+                            | {{business.address.city}}
+
+        //- body
+        .publication-body
+            .publication-data(ng-hide="business.description == null")
+                .publication-data-body
+
+                    //- category
+                    category-line-ctrl(ng-info="{categories:business.categories}")
+
+                    //- description
+                    span(ng-bind-html="business.description | text : descriptionLimit")
+                    span.link(ng-show="business.description.length > descriptionLimitBase && descriptionLimit==descriptionLimitBase",ng-click="descriptionLimit = 10000")
+                        | {{'--.textReuction.seeMore' | translateText}}
+                    span.link(ng-show="business.description.length > descriptionLimitBase && descriptionLimit!=descriptionLimitBase",ng-click="descriptionLimit = descriptionLimitBase")
+                        | {{'--.textReuction.seeLess' | translateText}}
+
+        //- follow widget
+        follow-widget-ctrl(ng-info="{displayText:true,business:business}")

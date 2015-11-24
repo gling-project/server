@@ -1,0 +1,36 @@
+<mobile-title-ctrl display-menu="false" title="'--.followed-business.page.title'"></mobile-title-ctrl>
+<div class='app-body'>
+    <div class='app-content modal-login'>
+
+        <div class="scrollable">
+            <div class="section customer-registration scrollable-content followed-business">
+
+
+                <div ng-repeat="business in businesses" class="followed-business-line">
+                    <div ng-click="navigateTo('/business/'+business.id)">
+                        <img class="illustration"
+                             ng-src="{{business.illustration | image}}"/>
+                        {{business.name}}
+                        {{business.followingFrom | date}}
+                    </div>
+                    <div>
+
+                        <!-- stop follow -->
+                        <button class="btn btn-xs gling-button-dark"
+                                ng-click="stopFollow(business)">
+                            {{'--.business.follow.stopFollowing' | translateText}}
+                        </button>
+
+                        <!-- notification -->
+                        <button class="btn btn-xs gling-button-dark"
+                                ng-click="setNotification(business)">
+                            <i class="glyphicon glyphicon-ok" ng-show="business.followingNotification"></i>
+                            <i class="glyphicon glyphicon-remove" ng-hide="business.followingNotification"></i>
+                            {{'--.generic.notification' | translateText}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

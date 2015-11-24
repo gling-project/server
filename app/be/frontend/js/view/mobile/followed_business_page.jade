@@ -1,0 +1,19 @@
+mobile-title-ctrl(display-menu='false', title="'--.followed-business.page.title'")
+.app-body
+    .app-content.modal-login
+        .scrollable
+            .section.customer-registration.scrollable-content.followed-business
+                .followed-business-line(ng-repeat='business in businesses')
+                    div(ng-click="navigateTo('/business/'+business.id)")
+                        img.illustration(ng-src='{{business.illustration | image}}')
+                        |                         {{business.name}}
+                        |                         {{business.followingFrom | date}}
+                    div
+                        // stop follow
+                        button.btn.btn-xs.gling-button-dark(ng-click='stopFollow(business)')
+                            | {{'--.business.follow.stopFollowing' | translateText}}
+                        // notification
+                        button.btn.btn-xs.gling-button-dark(ng-click='setNotification(business)')
+                            i.glyphicon.glyphicon-ok(ng-show='business.followingNotification')
+                            i.glyphicon.glyphicon-remove(ng-hide='business.followingNotification')
+                            |   {{'--.generic.notification' | translateText}}

@@ -1,0 +1,12 @@
+mobile-title-ctrl(display-menu='false', title="'--.businessNotification.modal.title.create'")
+// body
+.app-body
+    .app-content
+        .body-mask(ng-show='displayMask')
+        .scrollable
+            .section.scrollable-content.scrollable-content-body
+                .scrollable-content-inner
+                    .inject-box
+                    button#promotion-modal-btn-save.btn.gling-button-dark(type='button', ng-click='save(false)')
+                        | {{'--.generic.save' | translateText}}
+

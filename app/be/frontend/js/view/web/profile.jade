@@ -1,0 +1,69 @@
+.container-content
+    .profile-page
+        // data panel
+        .panel.panel-gling.main-panel.panel-personal-information
+            .panel-heading {{'--.customer.profile.personalInformation' | translateText}}
+            .panel-body
+                account-form-ctrl(ng-info='accountParam')
+                button#profile-personal-btn-edit.btn.gling-button-dark(ng-show='accountParam.disabled', ng-click='personalEdit()')
+                    | {{'--.generic.edit' |translateText}}
+                button#profile-personal-btn-save.btn.gling-button-dark(ng-hide='accountParam.disabled', ng-click='personalSave()')
+                    | {{'--.generic.save' | translateText}}
+                button#profile-personal-btn-cancel.btn.gling-button-dark(ng-hide='accountParam.disabled', ng-click='personalCancel()')
+                    | {{'--.generic.cancel' | translateText}}
+                .col-md-3(ng-show='model.myself.loginAccount==true')
+                // edit password
+                button#profile-personal-btn-edit-password.btn.gling-button-dark(type='button', ng-show='model.myself.loginAccount===true', ng-click='editPassword()')
+                    | {{'--.changePasswordModal.title' | translateText}}
+                // associate social network to account
+                table.profile-social-network-table
+                    tr
+                        th(colspan='2') Lien avec vos réseaux sociaux
+                    tr
+                        td
+                            img(src='assets/images/social_network/facebook.png')
+                        td
+                            .link(ng-click='fb_login();', ng-hide='model.myself.facebookAccount===true')
+                                | {{'--.profile.facebook.btn' |translateText}}
+                            div(ng-show='model.myself.facebookAccount===true')
+                                | Lié au compte facebook {{model.myself.facebookCredential.firstname}}
+                                | {{model.myself.facebookCredential.lastname}}
+        // address panel
+        .panel.panel-gling.main-panel
+            .panel-heading {{'--.customer.profile.myAddresses' | translateText}}
+            .panel-body
+                div
+                    accordion
+                        accordion-group.address-container(ng-repeat='address in model.myself.addresses', is-open='address.isOpen')
+                            accordion-heading
+                                | {{address.name}}
+                                i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}")
+                            .address-box
+                                div
+                                    span {{'--.generic.street' | translateText}}
+                                    span {{address.street}}
+                                div
+                                    span {{'--.generic.zip' | translateText}}
+                                    span {{address.zip}}
+                                div
+                                    span {{'--.generic.city' | translateText}}
+                                    span {{address.city}}
+                                div
+                                    span {{'--.generic.country' | translateText}}
+                                    span {{address.country}}
+                            button.btn.gling-button-dark(ng-click='editAddress(address)')
+                                | {{'--.generic.edit' | translateText}}
+                            button.btn.gling-button-dark.glyphicon.glyphicon-remove(ng-click='deleteAddress(address)')
+                                | {{'--.generic.remove' |translateText}}
+                    button#profile-btn-address-add.btn.gling-button-dark(ng-click='addAddress()')
+                        | {{'--.customer.profile.create' | translateText}}
+        // interest panel
+        .panel.panel-gling.main-panel
+            .panel-heading {{'--.customer.profile.interest' | translateText}}
+            .panel-body.category-list
+                div
+                    .category-box(ng-repeat='interest in model.myself.customerInterests')
+                        span(ng-class="'gling-icon gling-icon-' + interest.name")
+                        |                         {{interest.translationName |translateText}}
+                    button#profile-interest-btn-edit.btn.gling-button-dark(ng-click='interestEdit()')
+                        | {{'--.generic.edit' | translateText}}
