@@ -643,4 +643,9 @@ day_abrv_sunday=Di
 --.followWidget.followBusiness=Ajouter ce commerce à mes favoris
 --.generic.error.complete.fields=Veuillez remplir tous les champs requis
 --.login.form.button.forgotPassword.action=Récupérez un nouveau mot de passe
+--.error.registration.import.facebook=Cette page Facebook n''a pas pu être importé. Seuls les pages Facebook authentifiées peuvent être importées, pas les groupes ni les profiles.
+--.business.category.description=Vous devez choisir une seule section et groupe, mais plusieurs catégories
+--.welcome.map=Carte
+--.welcome.newsfeed=Actualités
+--.welcome.about=A propos de Gling
 

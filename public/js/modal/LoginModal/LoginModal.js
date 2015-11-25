@@ -3,7 +3,7 @@ myApp.controller('LoginModalCtrl', function($scope, $flash, $filter, facebookSer
   $scope.helpMessage = helpMessage;
   $scope.loginFormParam = {
     facebookSuccess: function(data) {
-      if (fctToExecute !== null) {
+      if (fctToExecute != null) {
         fctToExecute(fctToExecuteParams);
       }
       return $scope.close();
@@ -26,7 +26,7 @@ myApp.controller('LoginModalCtrl', function($scope, $flash, $filter, facebookSer
         if (accountService.getMyself().type === 'BUSINESS') {
           $location.path('/business/' + accountService.getMyself().businessId);
         }
-        if (fctToExecute !== null) {
+        if (fctToExecute != null) {
           return fctToExecute(fctToExecuteParams);
         }
       }, function() {

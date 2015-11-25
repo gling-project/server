@@ -1222,7 +1222,7 @@ ul.messenger .messenger-spinner {
 }
 .facebookShare .facebookButton {
   width: auto;
-  font-size: 14px;
+  font-size: 12px;
 }
 .facebookShare .facebookButton .pluginButton {
   padding: 3px 3px;
@@ -1687,9 +1687,10 @@ ul.messenger .messenger-spinner {
   width: 100%;
 }
 .wizard > div {
-  padding: 12px 12px 10px 12px;
+  height: 40px;
+  padding: 10px;
   margin-right: 5px;
-  background: #efefef;
+  background: #cccccc;
   position: relative;
   display: inline-block;
 }
@@ -1721,7 +1722,7 @@ ul.messenger .messenger-spinner {
   -webkit-border-radius: 4px 0 0 4px;
   border-radius: 4px 0 0 4px;
 }
-.wizard > div:first-child .badge {
+.wizard > div:first-child .wizard-badge {
   margin-left: 0;
 }
 .wizard > div:first-child a:before {
@@ -1735,17 +1736,18 @@ ul.messenger .messenger-spinner {
 .wizard > div:last-child:after {
   border: none;
 }
-.wizard .badge {
+.wizard .wizard-badge {
   margin: 0 5px 0 18px;
   position: relative;
   top: -1px;
 }
 .wizard .current {
-  background: #007ACC;
+  background: #2c265c;
   color: #f4f4f4;
+  font-weight: bold;
 }
 .wizard .current:after {
-  border-left-color: #007ACC;
+  border-left-color: #2c265c;
 }
 .business-category {
   margin: auto;
@@ -1772,9 +1774,11 @@ ul.messenger .messenger-spinner {
   text-align: -webkit-center;
   vertical-align: middle;
   line-height: 40px;
+  cursor: pointer;
+  font-weight: bold;
 }
 .business-category .panel .panel-body .category-box:hover:enabled {
-  background-color: #1a0def;
+  background-color: #413c9a;
 }
 .business-category .panel .panel-body .category-selected,
 .business-category .panel .panel-body .subcategory-selected,
@@ -1821,7 +1825,6 @@ ul.messenger .messenger-spinner {
 }
 .business-registration .wizard {
   width: 100%;
-  height: 40px;
 }
 .business-registration .wizard > div {
   width: calc(33% - 10px);
@@ -2967,6 +2970,18 @@ ul.messenger .messenger-spinner {
 }
 .navigation-bar .navigation-bar-menu > * {
   margin: 0 15px;
+}
+.navigation-bar .navigation-bar-menu .navigation-bar-menu-el {
+  position: relative;
+}
+.navigation-bar .navigation-bar-menu .navigation-bar-menu-el div {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border: 1px solid #cccccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 .home-to-top {
   position: fixed;

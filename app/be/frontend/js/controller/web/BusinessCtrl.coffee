@@ -167,7 +167,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                     console.log address
                     businessService.editAddress $scope.business.id, address, (data) ->
                         $scope.business.address = data
-                        $scope.googleMapParams.setAddress data
+                        $scope.googleMapParams.address =  data
                         close()
                     , ->
                         setLoading false
@@ -178,11 +178,10 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
         #edit category
         $scope.editCategory = ->
             catList = []
-            for lev2 in $scope.business.categories
-                for lev3 in lev2
-                    for lev4 in lev3
+            for k,lev2 of $scope.business.categories
+                for k2,lev3 of lev2
+                    for k3,lev4 of lev3
                         catList.push lev4
-
             modalService.basicModal '--.business.edit.category.modal.title', 'business-category-form-ctrl', {value: catList}, (close, setLoading) ->
                 #scope.business
                 businessService.editBusinessCategory $scope.business.id, catList, (data) ->

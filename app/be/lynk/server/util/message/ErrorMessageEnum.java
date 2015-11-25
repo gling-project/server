@@ -48,7 +48,8 @@ public enum ErrorMessageEnum {
     ERROR_FACEBOOK_IMPORT_NOT_OFFICIAL_PAGE("--.error.facebook.import.notOfficialPage"),
     ERROR_FACEBOOK_IMPORT_WRONG_URL("--.error.facebook.import.wrongUrl"),
     ERROR_BUSINESS_CLAIM_ALREADY_HAVE_BUSINESS("--.error.business.claim.alreadyHaveBusiness"),
-    ERROR_BUSINESS_CLAIM_ALREADY_HAVE_CLAIMS("--.error.business.claim.alreadyHaveClaims");
+    ERROR_BUSINESS_CLAIM_ALREADY_HAVE_CLAIMS("--.error.business.claim.alreadyHaveClaims"),
+    ERROR_REGISTRATION_IMPORT_FACEBOOK("--.error.registration.import.facebook");
 
     private final String key;
 

@@ -9,10 +9,10 @@
     //- navigation bar
     .wizard
         div(ng-class="{'current':badgeSelected==1}")
-            span.badge(ng-class="{'badge-inverse':badgeSelected==1}") 1
+            span.wizard-badge(ng-class="{'badge-inverse':badgeSelected==1}") 1
             |             {{'--.customer.registrationModal.personal.title' | translateText}}
         div(ng-class="{'current':badgeSelected==2}")
-            span.badge(ng-class="{'badge-inverse':badgeSelected==2}") 2
+            span.wizard-badge(ng-class="{'badge-inverse':badgeSelected==2}") 2
             |             {{'--.business.registrationModal.business.title' | translateText}}
 
     //- panel  personal  data
@@ -56,7 +56,7 @@
         dir-field-text(ng-info='importFromFacebookParam')
         button.btn.gling-button-dark(ng-show='badgeSelected==2', ng-disabled='loading', style='float: right;', type='button', ng-click='importBusinessFromFacebook()')
             | {{'--.business.registration.importFromFacebook' | translateText}}
-        img(src='/assets/images/modal-loading.gif', ng-show='loading')
+        img(src='/assets/images/modal-loading.gif', ng-show='loading',style="float:right")
 
         //- 'or'
         table.horizontal-split

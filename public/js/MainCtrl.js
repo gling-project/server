@@ -14,15 +14,6 @@ initializeCommonRoutes();
 myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout, constantService, customerInterestService) {
 
 
-    //catch url
-    if ($location.url().indexOf("customerRegistration") != -1) {
-        modalService.openCustomerRegistrationModal();
-    }
-    else if ($location.url().indexOf("businessRegistration") != -1) {
-        modalService.openBusinessRegistrationModal();
-    }
-
-
     $scope.navigateTo = function (target) {
         $location.path(target);
     };
@@ -54,6 +45,14 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     //facebook initialization
     //
     facebookService.ini();
+
+    //catch url
+    if ($location.url().indexOf("customerRegistration") != -1 && accountService.getMyself()==null) {
+        modalService.openCustomerRegistrationModal();
+    }
+    else if ($location.url().indexOf("businessRegistration") != -1 && accountService.getMyself()==null) {
+        modalService.openBusinessRegistrationModal();
+    }
 
 
     //

@@ -5,7 +5,7 @@ myApp.controller 'LoginModalCtrl', ($scope, $flash, $filter,facebookService, tra
     $scope.helpMessage = helpMessage
     $scope.loginFormParam =
         facebookSuccess: (data) ->
-            if fctToExecute != null
+            if fctToExecute?
                 fctToExecute fctToExecuteParams
             $scope.close()
         loading: false
@@ -27,7 +27,7 @@ myApp.controller 'LoginModalCtrl', ($scope, $flash, $filter,facebookService, tra
                 $scope.close()
                 if accountService.getMyself().type == 'BUSINESS'
                     $location.path '/business/' + accountService.getMyself().businessId
-                if fctToExecute != null
+                if fctToExecute?
                     fctToExecute fctToExecuteParams
             , ->
                 $scope.loginFormParam.loading = false

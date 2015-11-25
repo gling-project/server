@@ -2,43 +2,50 @@
 
     <div class="business-category" ng-class="{'disabled' : isDisabled()}">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">{{'--.businessCategory.column.category' | translateText}}</div>
-            <div class="panel-body">
-                <button name="{{category.name}}"
-                        ng-disabled="isDisabled()"
-                        ng-repeat="category in categories"
-                     class="category-box"
-                     ng-class="{'category-selected':category.selected === true}"
-                     ng-click="select(category)">
-                    {{category.translationName | translateText}}
-                </button>
+        <img src='/assets/images/modal-loading.gif' ng-show='loading'/>
+
+        <div ng-hide='loading'>
+
+            <div>{{'--.business.category.description' | translateText}}</div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">{{'--.businessCategory.column.category' | translateText}}</div>
+                <div class="panel-body">
+                    <div name="{{category.name}}"
+                         ng-disabled="isDisabled()"
+                         ng-repeat="category in categories"
+                         class="category-box"
+                         ng-class="{'category-selected':category.selected === true}"
+                         ng-click="select(category)">
+                        {{category.translationName | translateText}}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">{{'--.businessCategory.column.subcategory' | translateText}}</div>
-            <div class="panel-body">
-                <button name="{{subcategory.name}}"
-                        ng-repeat="subcategory in subcategories"
-                        ng-disabled="isDisabled()"
-                        class="category-box"
-                        ng-class="{'subcategory-selected':subcategory.selected === true}"
-                        ng-click="selectSubcategory(subcategory)">
-                    {{subcategory.translationName | translateText}}
-                </button>
+            <div class="panel panel-default">
+                <div class="panel-heading">{{'--.businessCategory.column.subcategory' | translateText}}</div>
+                <div class="panel-body">
+                    <div name="{{subcategory.name}}"
+                         ng-repeat="subcategory in subcategories"
+                         ng-disabled="isDisabled()"
+                         class="category-box"
+                         ng-class="{'subcategory-selected':subcategory.selected === true}"
+                         ng-click="selectSubcategory(subcategory)">
+                        {{subcategory.translationName | translateText}}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">{{'--.businessCategory.column.subsubcategory' | translateText}}</div>
-            <div class="panel-body">
-                <button name="{{subsubcategory.name}}"
-                        ng-repeat="subsubcategory in subsubcategories"
-                        ng-disabled="isDisabled()"
-                        class="category-box"
-                        ng-class="{'subsubcategory-selected':subsubcategory.selected === true}"
-                        ng-click="selectSubSubcategory(subsubcategory)">
-                    {{subsubcategory.translationName | translateText}}
-                </button>
+            <div class="panel panel-default">
+                <div class="panel-heading">{{'--.businessCategory.column.subsubcategory' | translateText}}</div>
+                <div class="panel-body">
+                    <div name="{{subsubcategory.name}}"
+                         ng-repeat="subsubcategory in subsubcategories"
+                         ng-disabled="isDisabled()"
+                         class="category-box"
+                         ng-class="{'subsubcategory-selected':subsubcategory.selected === true}"
+                         ng-click="selectSubSubcategory(subsubcategory)">
+                        {{subsubcategory.translationName | translateText}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

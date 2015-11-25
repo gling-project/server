@@ -38,6 +38,7 @@ myApp.directive('searchBarCtrl', function($rootScope, businessService, geolocati
             }
           });
           scope.search = function() {
+            scope.searchResultParam.display = false;
             if (!(scope.searchResultParam.indexSelected != null)) {
               return $location.path('search/' + searchBarService.currentSearch);
             }

@@ -1,9 +1,10 @@
 .wizard {
     width: 100%;
     & > div {
-        padding: 12px 12px 10px 12px;
+        height: 40px;
+        padding: 10px;
         margin-right: 5px;
-        background: #efefef;
+        background: @color-grey;
         position: relative;
         display: inline-block;
         &:nth-child(n + 2):before {
@@ -33,7 +34,7 @@
             -moz-border-radius: 4px 0 0 4px;
             -webkit-border-radius: 4px 0 0 4px;
             border-radius: 4px 0 0 4px;
-            .badge {
+            .wizard-badge {
                 margin-left: 0;
             }
             a:before {
@@ -50,16 +51,17 @@
         }
 
     }
-    .badge {
+    .wizard-badge {
         margin: 0 5px 0 18px;
         position: relative;
         top: -1px;
     }
     .current {
-        background: #007ACC;
+        background: @color-blue-dark;
         color: @color-white;
+        font-weight: bold;
         &:after {
-            border-left-color: #007ACC;
+            border-left-color: @color-blue-dark;
         }
     }
 }

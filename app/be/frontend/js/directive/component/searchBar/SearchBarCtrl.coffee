@@ -33,6 +33,7 @@ myApp.directive 'searchBarCtrl', ($rootScope, businessService, geolocationServic
 
             #go to search
             scope.search = ->
+                scope.searchResultParam.display=false
                 if !scope.searchResultParam.indexSelected?
                     $location.path 'search/' + searchBarService.currentSearch
 

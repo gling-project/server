@@ -219,7 +219,11 @@ public class LoginRestController extends AbstractRestController {
 
         Account account = securityController.getCurrentUser();
 
-        facebookRequest.createBusinessFromFacebook(account, facebookUrl, true);
+        try {
+            facebookRequest.createBusinessFromFacebook(account, facebookUrl, true);
+        }catch (Exception e){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_REGISTRATION_IMPORT_FACEBOOK);
+        }
 
         account.setRole(RoleEnum.BUSINESS);
         account.setType(AccountTypeEnum.BUSINESS);

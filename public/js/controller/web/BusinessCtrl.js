@@ -167,7 +167,7 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
           console.log(address);
           return businessService.editAddress($scope.business.id, address, function(data) {
             $scope.business.address = data;
-            $scope.googleMapParams.setAddress(data);
+            $scope.googleMapParams.address = data;
             return close();
           }, function() {
             return setLoading(false);
@@ -179,15 +179,15 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
       categories: $scope.business.categories
     };
     $scope.editCategory = function() {
-      var catList, lev2, lev3, lev4, _i, _j, _k, _len, _len2, _len3, _ref;
+      var catList, k, k2, k3, lev2, lev3, lev4, _ref;
       catList = [];
       _ref = $scope.business.categories;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        lev2 = _ref[_i];
-        for (_j = 0, _len2 = lev2.length; _j < _len2; _j++) {
-          lev3 = lev2[_j];
-          for (_k = 0, _len3 = lev3.length; _k < _len3; _k++) {
-            lev4 = lev3[_k];
+      for (k in _ref) {
+        lev2 = _ref[k];
+        for (k2 in lev2) {
+          lev3 = lev2[k2];
+          for (k3 in lev3) {
+            lev4 = lev3[k3];
             catList.push(lev4);
           }
         }
