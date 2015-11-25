@@ -232,68 +232,55 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
             return original.apply($location, [path]);
     };
 }]);
-myApp.controller('LoginModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams,helpMessage) {
-
-    $scope.fctToExecute=fctToExecute;
-    $scope.helpMessage=helpMessage;
-
-    $scope.loginFormParam = {
-        facebookSuccess: function (data) {
-            if (fctToExecute != null) {
-                fctToExecute(fctToExecuteParams);
-            }
-            $scope.close();
-        },
-        loading:false
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
-    $scope.save = function () {
-
-        if ($scope.loginFormParam.isValid) {
-
-            $scope.loginFormParam.loading = true;
-
-            accountService.login($scope.loginFormParam.dto,
-                function () {
-
-                    $flash.success(translationService.get("--.login.flash.success"));
-                    $scope.loading = false;
-                    $scope.close();
-                    if (accountService.getMyself().type == 'BUSINESS') {
-                        $location.path('/business/'+accountService.getMyself().businessId);
-                    }
-                    if (fctToExecute != null) {
-                        fctToExecute(fctToExecuteParams);
-                    }
-                },
-                function () {
-                    $scope.loginFormParam.loading = false;
-                });
+myApp.controller('LoginModalCtrl', ['$scope', '$flash', '$filter', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function($scope, $flash, $filter, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams, helpMessage) {
+  $scope.fctToExecute = fctToExecute;
+  $scope.helpMessage = helpMessage;
+  $scope.loginFormParam = {
+    facebookSuccess: function(data) {
+      if (fctToExecute !== null) {
+        fctToExecute(fctToExecuteParams);
+      }
+      return $scope.close();
+    },
+    loading: false
+  };
+  $scope.close = function() {
+    return $modalInstance.close();
+  };
+  $scope.save = function() {
+    if (!$scope.loginFormParam.isValid) {
+      $scope.loginFormParam.displayErrorMessage = true;
+      return $flash.error(translationService.get('--.generic.error.complete.fields'));
+    } else {
+      $scope.loginFormParam.loading = true;
+      return accountService.login($scope.loginFormParam.dto, function() {
+        $flash.success(translationService.get('--.login.flash.success'));
+        $scope.loading = false;
+        $scope.close();
+        if (accountService.getMyself().type === 'BUSINESS') {
+          $location.path('/business/' + accountService.getMyself().businessId);
         }
-        else {
-            $scope.loginFormParam.displayErrorMessage = true;
+        if (fctToExecute !== null) {
+          return fctToExecute(fctToExecuteParams);
         }
-    };
-
-    $scope.toForgotPassword = function () {
-        modalService.openForgotPasswordModal($scope.loginFormParam.dto.email);
-        $scope.close();
-    };
-
-    $scope.toBusinessRegistration = function () {
-        $scope.close();
-        modalService.openBusinessRegistrationModal();
-    };
-
-    $scope.toCustomerRegistration = function () {
-        $scope.close();
-        modalService.openCustomerRegistrationModal(fctToExecute, fctToExecuteParams);
-    };
-
+      }, function() {
+        return $scope.loginFormParam.loading = false;
+      });
+    }
+  };
+  $scope.toForgotPassword = function() {
+    modalService.openForgotPasswordModal($scope.loginFormParam.dto.email);
+    $scope.close();
+    return;
+  };
+  $scope.toBusinessRegistration = function() {
+    $scope.close();
+    return modalService.openBusinessRegistrationModal();
+  };
+  return $scope.toCustomerRegistration = function() {
+    $scope.close();
+    return modalService.openCustomerRegistrationModal(fctToExecute, fctToExecuteParams);
+  };
 }]);
 myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountService', '$timeout', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
@@ -576,7 +563,8 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
   };
   return $scope.save = function() {
     if (!$scope.accountParam.isValid) {
-      return $scope.accountParam.displayErrorMessage = true;
+      $scope.accountParam.displayErrorMessage = true;
+      return $flash.error(translationService.get('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       return accountService.registration($scope.accountParam.dto, (function() {
@@ -643,7 +631,8 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
   };
   $scope.save = function() {
     if (!$scope.businessNameField.isValid) {
-      return $scope.businessNameField.displayErrorMessage = true;
+      $scope.businessNameField.displayErrorMessage = true;
+      return $flash.error(translationService.get('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       return businessService.createBusiness(accountService.getMyself().id, $scope.business.name, function(data) {
@@ -665,7 +654,8 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
   };
   $scope.createAccount = function() {
     if (!$scope.accountParam.isValid) {
-      return $scope.accountParam.displayErrorMessage = true;
+      $scope.accountParam.displayErrorMessage = true;
+      return $flash.error($filter('translateText')('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       return accountService.registration($scope.accountParam.dto, (function() {
@@ -678,9 +668,9 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
   };
   return $scope.importBusinessFromFacebook = function() {
     var urlEncoded;
-    console.log($scope.importFromFacebookParam);
     if (!$scope.importFromFacebookParam.isValid) {
-      return $scope.importFromFacebookParam.displayErrorMessage = true;
+      $scope.importFromFacebookParam.displayErrorMessage = true;
+      return $flash.error($filter('translateText')('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       urlEncoded = encodeURIComponent($scope.business.facebookUrl);

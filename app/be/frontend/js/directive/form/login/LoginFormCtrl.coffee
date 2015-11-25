@@ -61,8 +61,9 @@ myApp.directive 'loginFormCtrl', ($flash, facebookService, translationService, d
             #
             scope.$watch 'fields', (->
                 validation = true
-                for obj in  scope.fields
-                    if scope.fields.hasOwnProperty(key) and (obj.isValid == null or obj.isValid == false)
+                for key of scope.fields
+                    obj = scope.fields[key]
+                    if !obj.isValid? or obj.isValid == false
                         obj.firstAttempt = !scope.getInfo().displayErrorMessage
                         validation = false
                 scope.getInfo().isValid = validation
@@ -72,7 +73,8 @@ myApp.directive 'loginFormCtrl', ($flash, facebookService, translationService, d
             # display error watching
             #
             scope.$watch 'getInfo().displayErrorMessage', ->
-                for obj in scope.fields
+                for key of scope.fields
+                    obj = scope.fields[key]
                     obj.firstAttempt = !scope.getInfo().displayErrorMessage
 
             #

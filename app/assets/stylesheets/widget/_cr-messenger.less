@@ -3,8 +3,16 @@
     top: 5px;
 }
 
+@keyframes anim-from-right {
+    from {right: -400px;}
+    to {right: inherit}
+}
+
+
 .messenger-message-slot {
     position: relative;
+    animation-name: anim-from-right;
+    animation-duration: 0.5s;
 
     .messenger-message {
         box-shadow: 0 5px 15px rgba(0, 0, 0, .5);

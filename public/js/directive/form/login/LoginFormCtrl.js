@@ -63,12 +63,11 @@ myApp.directive('loginFormCtrl', function($flash, facebookService, translationSe
             }
           };
           scope.$watch('fields', (function() {
-            var obj, validation, _i, _len, _ref;
+            var key, obj, validation;
             validation = true;
-            _ref = scope.fields;
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              obj = _ref[_i];
-              if (scope.fields.hasOwnProperty(key) && (obj.isValid === null || obj.isValid === false)) {
+            for (key in scope.fields) {
+              obj = scope.fields[key];
+              if (!(obj.isValid != null) || obj.isValid === false) {
                 obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                 validation = false;
               }
@@ -76,11 +75,10 @@ myApp.directive('loginFormCtrl', function($flash, facebookService, translationSe
             return scope.getInfo().isValid = validation;
           }), true);
           scope.$watch('getInfo().displayErrorMessage', function() {
-            var obj, _i, _len, _ref, _results;
-            _ref = scope.fields;
+            var key, obj, _results;
             _results = [];
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              obj = _ref[_i];
+            for (key in scope.fields) {
+              obj = scope.fields[key];
               _results.push(obj.firstAttempt = !scope.getInfo().displayErrorMessage);
             }
             return _results;

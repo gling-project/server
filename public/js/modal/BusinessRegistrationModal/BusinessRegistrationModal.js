@@ -49,7 +49,8 @@ myApp.controller('BusinessRegistrationModalCtrl', function($scope, $flash, $moda
   };
   $scope.save = function() {
     if (!$scope.businessNameField.isValid) {
-      return $scope.businessNameField.displayErrorMessage = true;
+      $scope.businessNameField.displayErrorMessage = true;
+      return $flash.error(translationService.get('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       return businessService.createBusiness(accountService.getMyself().id, $scope.business.name, function(data) {
@@ -71,7 +72,8 @@ myApp.controller('BusinessRegistrationModalCtrl', function($scope, $flash, $moda
   };
   $scope.createAccount = function() {
     if (!$scope.accountParam.isValid) {
-      return $scope.accountParam.displayErrorMessage = true;
+      $scope.accountParam.displayErrorMessage = true;
+      return $flash.error($filter('translateText')('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       return accountService.registration($scope.accountParam.dto, (function() {
@@ -84,9 +86,9 @@ myApp.controller('BusinessRegistrationModalCtrl', function($scope, $flash, $moda
   };
   return $scope.importBusinessFromFacebook = function() {
     var urlEncoded;
-    console.log($scope.importFromFacebookParam);
     if (!$scope.importFromFacebookParam.isValid) {
-      return $scope.importFromFacebookParam.displayErrorMessage = true;
+      $scope.importFromFacebookParam.displayErrorMessage = true;
+      return $flash.error($filter('translateText')('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       urlEncoded = encodeURIComponent($scope.business.facebookUrl);

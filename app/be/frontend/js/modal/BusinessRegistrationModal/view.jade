@@ -23,9 +23,14 @@
 
         //- facebook login button
         .facebook-login-btn-container
-            button.facebook-login-btn.btn.gling-button-dark(ng-click='fb_login();', ng-disabled='loading')
-                img(src='/assets/images/facebook/login_icon.png')
-                span {{'--.registrationModal.facebook.btn' |translateText}}
+            a.facebookShare.ng-isolate-scope(ng-click="fb_login()")
+                .facebookButton
+                    .pluginButton
+                        .pluginButtonContainer
+                            .pluginButtonImage
+                                button(type="button")
+                                    i.pluginButtonIcon.img.sp_plugin-button-2x.sx_plugin-button-2x_favblue
+                            span.pluginButtonLabel {{'--.registrationModal.facebook.btn' |translateText}}
 
         //- 'or'
         table.horizontal-split

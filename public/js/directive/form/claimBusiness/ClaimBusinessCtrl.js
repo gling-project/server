@@ -51,7 +51,6 @@ myApp.directive('claimBusinessCtrl', function($flash, facebookService, translati
             for (key in scope.fields) {
               obj = scope.fields[key];
               if (scope.fields.hasOwnProperty(key) && (!(obj.isValid != null) || obj.isValid === false)) {
-                console.log('iiiii');
                 obj.firstAttempt = !scope.getInfo().displayErrorMessage;
                 validation = false;
               }

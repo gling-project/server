@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button class="btn glyphicon glyphicon-remove" style="float:right" ng-click="close()"></button>
+    <h4 class="modal-title">{{'--.loginModal.title' | translateText}}</h4>
+</div>
+<div class="modal-body modal-login" >
+
+
+    <div class="help-div" ng-show="helpMessage!=null">{{helpMessage | translateText}}</div>
+
+    <login-form-ctrl ng-info="loginFormParam"></login-form-ctrl>
+
+    <div class="link" ng-click="toForgotPassword()">{{'--.login.form.button.forgotPassword' | translateText}}</div>
+
+    <div class="modal-login-link-box modal-description">
+        <div>{{'--.loginModal.notRegisterYet' | translateText}}</div>
+        <span class="modal-login-link link" ng-click="toCustomerRegistration()">{{'--.loginModal.toCustomerRegistration' | translateText}}</span>
+        <span class="modal-login-link link" ng-click="toBusinessRegistration()">{{'--.loginModal.toBusinessRegistration' | translateText}}</span>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button ng-disabled="loginFormParam.loading" type="button" class="btn btn-default" ng-click="close()">
+        {{'--.generic.close' | translateText}}
+    </button>
+    <button ng-disabled="loginFormParam.loading"
+            id="login-modal-btn-save"
+            type="button" class="btn gling-button-dark" ng-click="save()">
+        {{'--.generic.login.btn' | translateText}}
+    </button>
+    <img src="/assets/images/modal-loading.gif" ng-show="loginFormParam.loading"/>
+</div>

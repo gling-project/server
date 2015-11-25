@@ -2,9 +2,14 @@
 
     //- login facebook button
     .facebook-login-btn-container
-        button.facebook-login-btn.btn.gling-button-dark(ng-click='fb_login();')
-            img(src='/assets/images/facebook/login_icon.png')
-            span {{'--.loginModal.facebook.btn' |translateText}}
+        a.facebookShare.ng-isolate-scope(ng-click="fb_login()")
+            .facebookButton
+                .pluginButton
+                    .pluginButtonContainer
+                        .pluginButtonImage
+                            button(type="button")
+                                i.pluginButtonIcon.img.sp_plugin-button-2x.sx_plugin-button-2x_favblue
+                        span.pluginButtonLabel {{'--.loginModal.facebook.btn' |translateText}}
 
     // 'or'
     table.horizontal-split
@@ -20,4 +25,4 @@
     dir-field-text(ng-info='fields.password')
 
     //- accept condition sentence
-    div(ng-bind-html="'--.registration.accept.condition' | translateText | text")
+    div.condition(ng-bind-html="'--.registration.accept.condition' | translateText | text")

@@ -5,6 +5,7 @@
 @color-green-dark: #00B49B;
 @color-green-light: #1AD2AA;
 @color-blue-dark: #2c265c;
+@color-blue-middle: #413c9a;
 @color-blue-light: #aad4f2;
 @color-red: #cc0033;
 @color-yellow: #ff9900;
@@ -122,24 +123,40 @@
     }
 }
 
+
+
 .gling-button-dark {
+
+    background: @color-blue-dark; /* Old browsers */
+    background: -moz-linear-gradient(top, @color-blue-middle 0%, @color-blue-dark 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, @color-blue-middle 0%, @color-blue-dark 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, @color-blue-middle 0%, @color-blue-dark 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@color-blue-middle', endColorstr='@color-blue-dark',GradientType=0 ); /* IE6-9 */
+
+//    border: 1px solid @color-blue-light;
     border: 0; //1px solid white;
     outline: none;
-    background-color: @color-blue-dark;
     color: @color-white;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 4px 10px;
     margin: 2px;
     font-size: 16px;
-    &:hover:enabled,
     &:active:enabled{
-        background-color: @color-green-dark;
+        background: @color-green-dark !important;
+    }
+    &:hover:enabled{
+        
+        background: @color-blue-dark; /* Old browsers */
+        background: -moz-linear-gradient(top, #4742BE 0%, @color-blue-middle 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #4742BE 0%, @color-blue-middle 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #4742BE 0%, @color-blue-middle 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4742BE', endColorstr='@color-blue-middle',GradientType=0 ); /* IE6-9 */
+        
         color: @color-white;
         text-decoration: none;
         outline: none;
     }
-    &:focus:enabled,
-    &:visited:enabled{
+    &:focus:enabled{
         background-color: @color-blue-dark;
         color: @color-white;
         text-decoration: none;
@@ -156,6 +173,31 @@
             background-color: @color-blue-dark;
         }
     }
+}
+
+.facebookShare{
+    height: auto;
+    .facebookButton{
+        width: auto;
+        font-size: 14px;
+        .pluginButton {
+            padding: 3px 3px;
+            height: auto;
+        }
+    }
+}
+
+.facebook-button{
+    background: #4c69ba;
+    background: -moz-linear-gradient(top, #4c69ba 0%, #3b55a0 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c69ba), color-stop(100%, #3b55a0));
+    background: -webkit-linear-gradient(top, #4c69ba 0%, #3b55a0 100%);
+    background: -o-linear-gradient(top, #4c69ba 0%, #3b55a0 100%);
+    background: -ms-linear-gradient(top, #4c69ba 0%, #3b55a0 100%);
+    background: linear-gradient(to bottom, #4c69ba 0%, #3b55a0 100%);
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .btn,
@@ -241,12 +283,16 @@
 }
 
 .help-div {
-    background-color: @color-green-light;
-    color: @color-blue-dark;
-    font-size: 16px;
-    padding: 10px;
-    border: 1px solid @color-black;
+
+    font-size: 18px;
+    background-color: #1ad2aa;
+    color: @color-white;
+    padding: 10px 20px;
+    border-radius: 10px;
     margin: 5px;
+    i{
+        font-size: 30px;
+    }
 
     .help-popup-close {
         border: none;
@@ -264,6 +310,7 @@
         }
     }
 }
+
 
 .help-div-geolocalisation {
     background-color: @color-help;

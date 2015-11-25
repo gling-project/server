@@ -26,7 +26,8 @@ myApp.controller('CustomerRegistrationModalCtrl', function($scope, $flash, $moda
   };
   return $scope.save = function() {
     if (!$scope.accountParam.isValid) {
-      return $scope.accountParam.displayErrorMessage = true;
+      $scope.accountParam.displayErrorMessage = true;
+      return $flash.error(translationService.get('--.generic.error.complete.fields'));
     } else {
       $scope.setLoading(true);
       return accountService.registration($scope.accountParam.dto, (function() {

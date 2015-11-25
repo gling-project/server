@@ -211,8 +211,8 @@
 
 ##  modal/LoginModal/view.html
 --.loginModal.toBusinessRegistration=Je suis un commerçant.
---.loginModal.toCustomerRegistration=S''enregistrer!
---.loginModal.notRegisterYet=Pas encore enregistré(e)?
+--.loginModal.toCustomerRegistration=Créez-vous un compte en quelques cliques!
+--.loginModal.notRegisterYet=Pas encore de compte?
 
 
 ##  be/lynk/server/views/template.scala.html (javascript library )
@@ -232,7 +232,7 @@
 
 
 ##  directive/form/login/template.html
---.login.form.button.forgotPassword=Mot de passe oublié?
+--.login.form.button.forgotPassword=J''ai perdu mon mot de passe
 
 
 --.email.forgotPassword.subject=Votre nouveau mot de passe
@@ -641,4 +641,6 @@ day_abrv_sunday=Di
 --.business.page.noOwner.alreadyClaimedOther=Vous avez déjà revendiqué un autre commerce
 --.followWidget.stopFollowBusiness=Retirer ce commerce de mes favoris
 --.followWidget.followBusiness=Ajouter ce commerce à mes favoris
+--.generic.error.complete.fields=Veuillez remplir tous les champs requis
+--.login.form.button.forgotPassword.action=Récupérez un nouveau mot de passe
 

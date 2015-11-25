@@ -47,7 +47,6 @@ myApp.directive 'claimBusinessCtrl', ($flash, facebookService, translationServic
                 for key of scope.fields
                     obj = scope.fields[key]
                     if scope.fields.hasOwnProperty(key) and (!obj.isValid? or obj.isValid == false)
-                        console.log 'iiiii'
                         obj.firstAttempt = !scope.getInfo().displayErrorMessage
                         validation = false
                 scope.getInfo().isValid = validation

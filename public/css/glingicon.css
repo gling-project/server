@@ -19,6 +19,9 @@
     transform: translate(0, 0);
 }
 
+.gling-icon-info:before {
+    content: "\e900";
+}
 .gling-icon-location:before {
     content: "\e801";
 }
@@ -162,6 +165,9 @@
 }
 .gling-icon-eat:before {
     content: "\e626";
+}
+.gling-icon-photo:before {
+    content: "\e901";
 }
 .gling-icon-exit:before {
     content: "\e800";

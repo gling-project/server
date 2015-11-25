@@ -55,6 +55,7 @@ myApp.controller 'BusinessRegistrationModalCtrl', ($scope, $flash, $modal, $moda
     $scope.save = ->
         if !$scope.businessNameField.isValid
             $scope.businessNameField.displayErrorMessage = true
+            $flash.error translationService.get('--.generic.error.complete.fields')
         else
             $scope.setLoading true
             businessService.createBusiness accountService.getMyself().id,$scope.business.name,(data)->
@@ -76,6 +77,7 @@ myApp.controller 'BusinessRegistrationModalCtrl', ($scope, $flash, $modal, $moda
     $scope.createAccount = ->
         if !$scope.accountParam.isValid
             $scope.accountParam.displayErrorMessage = true
+            $flash.error $filter('translateText')('--.generic.error.complete.fields')
         else
             $scope.setLoading true
             accountService.registration $scope.accountParam.dto, (->
@@ -86,9 +88,9 @@ myApp.controller 'BusinessRegistrationModalCtrl', ($scope, $flash, $modal, $moda
 
     #import business data from facebook page
     $scope.importBusinessFromFacebook = ->
-        console.log $scope.importFromFacebookParam
         if !$scope.importFromFacebookParam.isValid
             $scope.importFromFacebookParam.displayErrorMessage = true
+            $flash.error $filter('translateText')('--.generic.error.complete.fields')
         else
             $scope.setLoading true
             urlEncoded=encodeURIComponent $scope.business.facebookUrl

@@ -32,6 +32,7 @@ myApp.controller 'CustomerRegistrationModalCtrl', ($scope, $flash, $modal, $moda
     $scope.save = ->
         if !$scope.accountParam.isValid
             $scope.accountParam.displayErrorMessage = true
+            $flash.error translationService.get('--.generic.error.complete.fields')
         else
             $scope.setLoading true
             accountService.registration $scope.accountParam.dto, (->

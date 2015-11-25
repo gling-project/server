@@ -14,12 +14,12 @@ import java.util.Date;
  */
 public class LoginDTO extends DTO  {
 
-    @NotNull(message = "validation.dto.notNull")
-    @Pattern(regexp = ValidationRegex.EMAIL,message = "validation.dto.email")
+    @NotNull(message = "--.validation.dto.notNull")
+    @Pattern(regexp = ValidationRegex.EMAIL,message = "--.validation.dto.email")
     private String email;
 
-    @NotNull(message = "validation.dto.notNull")
-    @Pattern(regexp = ValidationRegex.PASSWORD,message = "validation.dto.password")
+    @NotNull(message = "--.validation.dto.notNull")
+    @Pattern(regexp = ValidationRegex.PASSWORD,message = "--.validation.dto.password")
     private String password;
 
     public LoginDTO() {
