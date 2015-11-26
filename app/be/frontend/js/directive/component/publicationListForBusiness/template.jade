@@ -5,7 +5,7 @@
         | {{'--.list.nothing' | translateText}}
 
     //-publication
-    .publication-box(ng-repeat="publication in publications",
+    .publication-box.publication-box-without-business-data(ng-repeat="publication in publications",
                      id="publication{{publication.id}}",
                      ng-click="click()")
 
@@ -25,7 +25,7 @@
                     .publication-bubble.publication-box-price.publication-bordered(ng-show="publication.type=='PROMOTION' && publication.originalPrice!=null")
                         span {{(publication.originalPrice * (1.0 - publication.offPercent)) | number:2}} €
                         span {{publication.originalPrice | number:2}} €
-                    span.publication-main-title(style="margin-right: 80px;")
+                    span.publication-main-title
                         |   {{publication.title}}
 
                 .publication-body

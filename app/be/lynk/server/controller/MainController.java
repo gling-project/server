@@ -34,13 +34,14 @@ public class MainController extends AbstractController {
     private static final String APP_PACKAGE_NAME = "be.gling.android";
 
     //    private String AWSBuckect     =
-    private String fileBucketUrl  = Configuration.root().getString("aws.accesFile.url");
+    private String fileBucketUrl       = Configuration.root().getString("aws.accesFile.url");
     //"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
     //"https://s3.amazonaws.com/" + AWSBuckect; (gling-prod)
-    private String urlBase        = Configuration.root().getString("site.url.base");
-    private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
-    private String lastVersion    = Configuration.root().getString("project.lastVersion");
-    private String appStatus      = Configuration.root().getString("app.status");
+    private String urlBase             = Configuration.root().getString("site.url.base");
+    private String mobileDisabled      = Configuration.root().getString("site.mobile.disabled");
+    private String lastVersion         = Configuration.root().getString("project.lastVersion");
+    private String appStatus           = Configuration.root().getString("app.status");
+    private String eventPublicationIds = Configuration.root().getString("event.publicationIds");
 
 
     @Autowired
@@ -97,7 +98,7 @@ public class MainController extends AbstractController {
             return redirect("market://details?id=" + APP_PACKAGE_NAME);
         }
 
-        boolean isMobile =(isMobileDevice() || forceMobile) && mobileDisabled == null;
+        boolean isMobile = (isMobileDevice() || forceMobile) && mobileDisabled == null;
 
         if (!isMobileDevice() && !forceMobile && ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
             addAlreadyVisitedCookie();
@@ -182,6 +183,7 @@ public class MainController extends AbstractController {
         //constant
         interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_HEIGHT", Constant.PUBLICATION_PICTURE_HEIGHT + "");
         interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_WIDTH", Constant.PUBLICATION_PICTURE_WIDTH + "");
+        interfaceDataDTO.getConstants().put("eventPublicationIds", eventPublicationIds);
 
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();

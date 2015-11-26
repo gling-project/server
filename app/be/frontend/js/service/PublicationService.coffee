@@ -13,15 +13,10 @@ myApp.service 'publicationService', ($http, $flash,geolocationService) ->
                 callbackError data, status
 
     @loadByIds = (listId, callbackSuccess, callbackError) ->
-        ids = ''
-        for id in listId
-            ids += id + '|'
-
-        console.log 'load : '+ids
 
         $http
             'method': 'POST'
-            'url': '/rest/publication/ids/' + ids
+            'url': '/rest/publication/ids/' + listId
             'headers': 'Content-Type:application/json;charset=utf-8'
             'data': geolocationService.getPositionWithoutNull()
         .success (data, status) ->

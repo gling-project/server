@@ -1830,9 +1830,9 @@ ul.messenger .messenger-spinner {
   width: calc(33% - 10px);
 }
 .publication-box {
-  width: 600px;
+  width: 550px;
   position: relative;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   margin: 15px auto;
   -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
@@ -1986,12 +1986,12 @@ ul.messenger .messenger-spinner {
   vertical-align: top;
   border-bottom: 1px solid #2c265c;
   border-top: 1px solid #2c265c;
-  min-width: 265px;
+  min-width: 240px;
 }
 .publication-box .publication-body .publication-body-two {
   display: inline-block;
   min-height: 234px;
-  width: 265px;
+  width: 240px;
 }
 .publication-box .publication-body .publication-body-two-right {
   float: right;
@@ -2021,7 +2021,7 @@ ul.messenger .messenger-spinner {
   overflow: hidden;
   text-align: center;
   height: 220px;
-  width: 265px;
+  width: 240px;
   background: #eeeeee url('/assets/images/publication/camera.png') no-repeat center;
   cursor: pointer;
   position: relative;
@@ -2067,7 +2067,7 @@ ul.messenger .messenger-spinner {
   padding: 8px 12px;
   font-size: 14px;
   margin-bottom: 5px;
-  margin-right: 60px;
+  margin-right: 20px;
   color: #2c265c;
   top: 20px;
   position: relative;
@@ -2101,6 +2101,9 @@ ul.messenger .messenger-spinner {
   float: right;
   padding-right: 25px;
   color: #2c265c;
+}
+.publication-box-without-business-data .publication-bubble {
+  margin-right: 60px;
 }
 .business-list {
   margin-left: 60px;
@@ -3347,9 +3350,55 @@ ul.messenger .messenger-spinner {
   color: #f4f4f4;
   background-color: #555555;
 }
+.welcome-page .welcome-header {
+  border: 1px solid #cccccc;
+  height: 280px;
+  background: url('/assets/images/welcome_page/bg.jpg') no-repeat;
+  text-align: center;
+  margin-bottom: 20px;
+  background-position-y: -70px;
+}
+.welcome-page .welcome-header .logo {
+  padding-top: 20px;
+  font-size: 150px;
+  color: #1ad2aa;
+}
+.welcome-page .welcome-header p {
+  font-size: 60px;
+  font-weight: bold;
+  margin-top: 15px;
+  text-shadow: 2px 2px black;
+  color: white;
+}
+.welcome-page .left-column {
+  display: inline-block;
+  vertical-align: top;
+  width: 600px;
+}
+.welcome-page .left-column .publication-block {
+  margin-top: 10px;
+  background-color: #f4f4f4;
+  padding: 5px;
+}
+.welcome-page .right-column {
+  display: inline-block;
+  vertical-align: top;
+  width: 390px;
+}
+.welcome-page .facebook-block {
+  background-color: #f4f4f4;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.welcome-page .block-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
 .welcome-page .event-block {
-  height: 340px;
-  padding: 20px;
+  padding: 15px;
   position: relative;
   color: #555555;
 }
@@ -3368,23 +3417,24 @@ ul.messenger .messenger-spinner {
   font-weight: bold;
   font-size: 30px;
 }
-.welcome-page .event-block .welcome-publication-list {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-}
 .welcome-page .event-block .welcome-publication-list .welcome-publication-box {
   background-position: 50% 50%;
-  background-size: 100% auto;
-  margin-right: 10px;
+  margin: 0 4px;
   display: inline-block;
   padding: 10px;
   background-color: #f4f4f4;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   vertical-align: bottom;
   position: relative;
   cursor: pointer;
+  border: 1px solid #cccccc;
+}
+.welcome-page .event-block .welcome-publication-list .welcome-publication-box.picture-vertical {
+  background-size: 100% auto;
+}
+.welcome-page .event-block .welcome-publication-list .welcome-publication-box.picture-horizontal {
+  background-size: auto 100%;
 }
 .welcome-page .event-block .welcome-publication-list .welcome-publication-box:hover .title {
   display: block;
@@ -3431,7 +3481,7 @@ ul.messenger .messenger-spinner {
   vertical-align: top;
   width: 380px;
   padding: 10px;
-  margin: 10px 0px 0px 10px;
+  margin: 0px 0px 0px 10px;
   background-color: #f4f4f4;
   float: right;
 }
@@ -3463,6 +3513,26 @@ ul.messenger .messenger-spinner {
 .welcome-page .last-business-block .welcome-business-list .welcome-business-list-el table tr:first-child td:first-child {
   width: 65px;
 }
+.welcome-page .publication-interest-list {
+  text-align: left;
+  height: 72px;
+}
+.welcome-page .publication-interest-list .interest-box {
+  float: right;
+  display: inline-block;
+}
+.welcome-page .publication-interest-list .interest-box .home-interest {
+  display: inline-block;
+}
+.welcome-page .publication-interest-list .interest-box .welcome-progress-bar {
+  width: 100%;
+  height: 8px;
+  border: 1px solid #cccccc;
+}
+.welcome-page .publication-interest-list .interest-box .welcome-progress-bar .welcome-progress-bar-content {
+  height: 100%;
+  background-color: #1ad2aa;
+}
 h1 {
   margin: 0;
 }
@@ -3480,7 +3550,7 @@ body {
 .container-content {
   background-image: url('/assets/images/home-bg.png');
   width: 1000px;
-  margin: 100px auto auto;
+  margin: 94px auto auto;
   position: relative;
 }
 .header-with-advanced-search {

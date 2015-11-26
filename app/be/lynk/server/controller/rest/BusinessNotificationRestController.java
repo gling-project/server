@@ -135,7 +135,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         String oldName = businessNotificationToEdit.getTitle();
 
-        businessNotificationToEdit.setInterest(customerInterestService.findByName(businessNotification.getInterest().getName()));
+        if(businessNotificationToEdit.getInterest()!=null) {
+            businessNotificationToEdit.setInterest(customerInterestService.findByName(businessNotification.getInterest().getName()));
+        }
         businessNotificationToEdit.setTitle(businessNotification.getTitle());
         businessNotificationToEdit.setDescription(businessNotification.getDescription());
 

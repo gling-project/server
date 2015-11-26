@@ -16,16 +16,9 @@ myApp.service('publicationService', function($http, $flash, geolocationService) 
     });
   };
   this.loadByIds = function(listId, callbackSuccess, callbackError) {
-    var id, ids, _i, _len;
-    ids = '';
-    for (_i = 0, _len = listId.length; _i < _len; _i++) {
-      id = listId[_i];
-      ids += id + '|';
-    }
-    console.log('load : ' + ids);
     return $http({
       'method': 'POST',
-      'url': '/rest/publication/ids/' + ids,
+      'url': '/rest/publication/ids/' + listId,
       'headers': 'Content-Type:application/json;charset=utf-8',
       'data': geolocationService.getPositionWithoutNull()
     }).success(function(data, status) {

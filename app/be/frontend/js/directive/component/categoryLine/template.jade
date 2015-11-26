@@ -1,7 +1,7 @@
 div
     table.category-line-tree
         tr(ng-repeat="(catLev1Key,lev2) in getInfo().categories")
-            td(style="white-space: nowrap;")
+            td(style="white-space: nowrap;",ng-show="getInfo().level1!==false")
                 a(ng-click="searchCat(catLev1Key)")
                     | {{catLev1Key | translateText}}
                 span.transition >>
