@@ -72,6 +72,10 @@ public class Business extends AbstractEntity implements Comparable<Business> {
 
     @Column(columnDefinition = "timestamp")
     @Convert(converter = LocalDateTimePersistenceConverter.class)
+    private LocalDateTime lastStatusChange;
+
+    @Column(columnDefinition = "timestamp")
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
     protected LocalDateTime askPublicationDate;
 
     @Embedded
@@ -89,6 +93,14 @@ public class Business extends AbstractEntity implements Comparable<Business> {
         this.name = name;
         this.searchableName = normalize(name);
         businessStatus=BusinessStatusEnum.NOT_PUBLISHED;
+    }
+
+    public LocalDateTime getLastStatusChange() {
+        return lastStatusChange;
+    }
+
+    public void setLastStatusChange(LocalDateTime lastStatusChange) {
+        this.lastStatusChange = lastStatusChange;
     }
 
     public String getVta() {
@@ -130,6 +142,7 @@ public class Business extends AbstractEntity implements Comparable<Business> {
 
     public void setBusinessStatus(BusinessStatusEnum businessStatus) {
         this.businessStatus = businessStatus;
+        this.lastStatusChange = LocalDateTime.now();
     }
 
     public List<BusinessSchedule> getSchedules() {

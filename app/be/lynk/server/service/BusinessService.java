@@ -46,4 +46,6 @@ public interface BusinessService extends CrudService<Business> {
     long countAtLeastOnePublicationFrom(LocalDateTime localDateTime);
 
     List<Business> findByStatus(BusinessStatusEnum businessStatus);
+
+    List<Business> findLastPublished(int nb);
 }

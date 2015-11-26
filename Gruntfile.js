@@ -245,6 +245,7 @@ module.exports = function (grunt) {
                         'public/js/controller/web/SearchPageCtrl.js',
                         'public/js/controller/web/FollowedBusinessPageCtrl.js',
                         'public/js/controller/web/MapCtrl.js',
+                        'public/js/controller/web/WelcomeCtrl.js',
 
                         <!-- component -->
                         'public/js/directive/component/publicationList/PublicationListCtrl.js',

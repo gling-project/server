@@ -56,6 +56,7 @@ POST          /rest/business/$id<[0-9]+>/edit/gallery                           
 POST          /rest/business/ask_publication                                                                         @be.lynk.server.controller.rest.BusinessRestController.askPublication()
 POST          /rest/business/stop_publish                                                                            @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
 POST          /rest/business/cancel_publication_request                                                              @be.lynk.server.controller.rest.BusinessRestController.cancelPublicationRequest()
+GET           /rest/business/last/$nb<[0-9]+>                                                                        @be.lynk.server.controller.rest.BusinessRestController.lastBusinesses(nb:Int)
 
 
 ## business schedule
@@ -71,6 +72,7 @@ PUT           /rest/businessNotification/$id<[0-9]+>                            
 
 ## publication
 DELETE        /rest/publication/$id<[0-9]+>                                                                          @be.lynk.server.controller.rest.PublicationRestController.delete(id:Long)
+POST          /rest/publication/ids/:ids                                                                             @be.lynk.server.controller.rest.PublicationRestController.getByIds(ids:String)
 
 ## follow
 POST          /rest/follow                                                                                           @be.lynk.server.controller.rest.FollowController.followBusiness()

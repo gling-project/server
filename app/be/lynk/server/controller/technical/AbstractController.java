@@ -241,7 +241,7 @@ public abstract class AbstractController extends Controller {
         return businessToDisplayDTO;
     }
 
-    protected List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications, long t) {
+    protected List<AbstractPublicationDTO> convertPublicationToDTO(Position position, List<AbstractPublication> publications) {
 
         //compute distance
         List<Business> addresses = new ArrayList<>();

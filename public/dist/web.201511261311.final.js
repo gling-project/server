@@ -170,6 +170,14 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }]
                 }
+            }).when('/test', {
+                templateUrl: '/assets/js/view/web/welcome.html',
+                controller: 'WelcomeCtrl',
+                resolve: {
+                    a: ['$rootScope', function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }]
+                }
             }).when('/welcome/', {
                 resolve: {
                     a: ['$rootScope', function ($rootScope) {
@@ -2310,6 +2318,32 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
     $scope.generateMapMarkers();
     return $scope.centerToPosition();
   }, 1);
+}]);
+myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '$location', 'businessService', function($rootScope, $scope, publicationService, $location, businessService) {
+  $scope.LAST_BUSINESS_NB = 5;
+  $scope.descriptionLimitBase = 120;
+  $scope.navigateTo = function(publication) {
+    return $location('/business/' + publication.businessId + '/publication/' + publication.id);
+  };
+  $scope.goTo = function(url) {
+    return $location(url);
+  };
+  $(window).scrollTop(0);
+  $rootScope.$broadcast('PROGRESS_BAR_STOP');
+  publicationService.loadByIds([1, 5, 16], function(list) {
+    return $scope.publications = list;
+  });
+  return businessService.loadLastBusiness($scope.LAST_BUSINESS_NB, function(data) {
+    var b, _i, _len, _ref, _results;
+    $scope.businesses = data;
+    _ref = $scope.businesses;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      b = _ref[_i];
+      _results.push(b.descriptionLimit = $scope.descriptionLimitBase);
+    }
+    return _results;
+  });
 }]);
 myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
   return {

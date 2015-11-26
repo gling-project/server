@@ -47,13 +47,17 @@ public class BusinessRestController extends AbstractController {
     @Autowired
     private ClaimBusinessService    claimBusinessService;
 
-
-
-
     /* ////////////////////////////////////////////////////
      * READ FUNCTION
      /////////////////////////////////////////////////// */
 
+    @Transactional
+    public Result lastBusinesses(int nb) {
+
+        List<Business> businesses = businessService.findLastPublished(nb);
+
+        return ok(convertBusiness(businesses));
+    }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)

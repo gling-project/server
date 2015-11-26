@@ -366,7 +366,7 @@ public class SearchRestController extends AbstractRestController {
     }
 
     private List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications) {
-        return finalize(position, publications, new Date().getTime());
+        return convertPublicationToDTO(position, publications);
     }
 
 
@@ -592,7 +592,7 @@ public class SearchRestController extends AbstractRestController {
         s += "================== LOAD : " + (new Date().getTime() - t) + "\n";
 
 
-        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(finalize(position, publications, t));
+        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(convertPublicationToDTO(position, publications));
 
         s += "================== Finalize : " + (new Date().getTime() - t) + "\n";
 

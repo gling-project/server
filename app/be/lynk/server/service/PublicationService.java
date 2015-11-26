@@ -36,6 +36,8 @@ public interface PublicationService extends CrudService<AbstractPublication> {
 
     List<SearchResult> findActivePublicationByBusinessesAndInterest(Position position, Double maxDistance, List<Business> businesses, CustomerInterest interest);
 
+    List<AbstractPublication> findActiveByIds(List<Long> ids);
+
     List<AbstractPublication> findBySearchResults(List<SearchResult> searchResults);
 
     List<AbstractPublication> findByBusinessForTown(Business business, Integer page,Integer maxResult);
@@ -59,4 +61,6 @@ public interface PublicationService extends CrudService<AbstractPublication> {
     Long countByBusiness(Business business);
 
     Long countActiveByBusiness(Business business);
+
+
 }

@@ -1,23 +1,46 @@
-myApp.service("publicationService", function ($http, $flash, $rootScope) {
-
-    this.delete = function (dto, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "DELETE",
-            'url': "/rest/publication/"+dto.id,
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
+myApp.service('publicationService', function($http, $flash, geolocationService) {
+  this["delete"] = function(dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'DELETE',
+      'url': '/rest/publication/' + dto.id,
+      'headers': 'Content-Type:application/json;charset=utf-8'
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.loadByIds = function(listId, callbackSuccess, callbackError) {
+    var id, ids, _i, _len;
+    ids = '';
+    for (_i = 0, _len = listId.length; _i < _len; _i++) {
+      id = listId[_i];
+      ids += id + '|';
+    }
+    console.log('load : ' + ids);
+    return $http({
+      'method': 'POST',
+      'url': '/rest/publication/ids/' + ids,
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': geolocationService.getPositionWithoutNull()
+    }).success(function(data, status) {
+      console.log('SUCCESS');
+      console.log(data);
+      if (callbackSuccess != null) {
+        return callbackSuccess(data.list);
+      }
+    }).error(function(data, status) {
+      console.log('ERROR');
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  return;
 });

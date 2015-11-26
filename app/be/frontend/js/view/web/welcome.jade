@@ -1,0 +1,46 @@
+.container-content
+    .content-block
+        .welcome-page
+            .event-block
+                h2 Bientôt Noël !
+                p En manque d'inspiration pour vos achats de Noël? Gling vous aide à trouver les meilleures oportinutés proposées par vos commerçants locaux!
+
+                .welcome-publication-list
+                    .welcome-publication-box(ng-repeat="publication in publications",
+                    style="background-image:url('{{publication.pictures[0] | image}}')",
+                    ng-click="navigateTo(publication)")
+                        .title {{publication.title}}
+                            br
+                            span {{publication.businessName}}
+                        .promotion(ng-show="publication.type == 'PROMOTION'") - {{publication.offPercent * 100 | number:0}} %
+
+            .presentation-block
+                h2 Toujours plus près de chez vous!
+                p Gling c'est X commerce sur X commune!
+                    | Retrouvez vos commerces favoris dans les zones d'Auderghem et d'Etterbeek.
+                    | Mais nous ne nous arrêtons pas là! Découvrez les nouveaux qurtiers convert par Gling et donnez-nous vos bonnes adresses pour
+                    | que nous puissions les inclure dans Gling sur notre page Facebook
+                a(href="https://www.facebook.com/gling.be") https://www.facebook.com/gling.be
+
+            .last-business-block
+                h2 Découvrez nos derniers commerces
+                .welcome-business-list
+                    .welcome-business-list-el(ng-repeat="business in businesses")
+                        table
+                            tr
+                                td(rowspan=2,ng-click="goTo('/business/'+business.id)")
+                                    img.illustration(ng-src="{{business.illustration | image}}")
+                                td(ng-click="goTo('/business/'+business.id)")
+                                    .title {{business.name}}
+                            tr
+                                td
+                                    .address {{business.address.street}}, {{business.address.zip}} {{business.address.city}}<br/>
+                        category-line-ctrl(ng-info="{categories:business.categories}")
+                        //- description
+                        span(ng-bind-html="business.description | text : business.descriptionLimit")
+                        span.link(ng-show="business.description.length > descriptionLimitBase && business.descriptionLimit==descriptionLimitBase",ng-click="business.descriptionLimit = 10000")
+                            | {{'--.textReuction.seeMore' | translateText}}
+                        span.link(ng-show="business.description.length > descriptionLimitBase && business.descriptionLimit!=descriptionLimitBase",ng-click="business.descriptionLimit = descriptionLimitBase")
+                            | {{'--.textReuction.seeLess' | translateText}}
+                        br
+                        follow-widget-ctrl(ng-info="{displayText:true,business:business}")

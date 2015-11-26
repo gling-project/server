@@ -292,4 +292,17 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         cq.where(cb.equal(from.get("businessStatus"), businessStatus));
         return JPA.em().createQuery(cq).getResultList();
     }
+
+    @Override
+    public List<Business> findLastPublished(int nb) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Business> cq = cb.createQuery(Business.class);
+        Root<Business> from = cq.from(Business.class);
+        cq.select(from);
+        cq.where(cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+        cq.orderBy(cb.asc(from.get("lastStatusChange")),cb.asc(from.get("creationDate")));
+        return JPA.em().createQuery(cq)
+                .setMaxResults(nb)
+                .getResultList();
+    }
 }

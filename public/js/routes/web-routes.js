@@ -72,6 +72,14 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }
                 }
+            }).when('/test', {
+                templateUrl: '/assets/js/view/web/welcome.html',
+                controller: 'WelcomeCtrl',
+                resolve: {
+                    a: function ($rootScope) {
+                        $rootScope.$broadcast('PROGRESS_BAR_START');
+                    }
+                }
             }).when('/welcome/', {
                 resolve: {
                     a: function ($rootScope) {

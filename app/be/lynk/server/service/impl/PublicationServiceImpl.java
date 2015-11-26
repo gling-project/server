@@ -86,6 +86,7 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         return search(null, null, PublicationTiming.NOW, businesses, interest);
     }
 
+
     private List<SearchResult> search(Position position,
                                       Double maxDistance,
                                       PublicationTiming publicationTiming,
@@ -144,16 +145,16 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         request += " ORDER BY p.startDate DESC ";
 
         TypedQuery<SearchResult> query = JPA.em().createQuery(request, SearchResult.class)
-                                            .setParameter("businessStatus", BusinessStatusEnum.PUBLISHED);
+                .setParameter("businessStatus", BusinessStatusEnum.PUBLISHED);
 
         if (position != null && maxDistance != null) {
 
             double[] maxCoordinate = computeMaxCoordinate(position, maxDistance);
 
             query.setParameter("latmin", maxCoordinate[0])
-                 .setParameter("latmax", maxCoordinate[1])
-                 .setParameter("lonmin", maxCoordinate[2])
-                 .setParameter("lonmax", maxCoordinate[3]);
+                    .setParameter("latmax", maxCoordinate[1])
+                    .setParameter("lonmin", maxCoordinate[2])
+                    .setParameter("lonmax", maxCoordinate[3]);
         }
         if (businesses != null) {
             query.setParameter("businesses", businesses);
@@ -165,6 +166,29 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         resultList = query.getResultList();
 
         return resultList;
+
+    }
+
+
+    @Override
+    public List<AbstractPublication> findActiveByIds(List<Long> ids) {
+
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        Path<Business> business = from.get("business");
+        cq.select(from);
+        cq.where(cb.in(from.get("id")).value(ids)
+                , cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
+                , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
+        );
+        cq.orderBy(cb.desc(from.get("startDate")));
+
+
+        return JPA.em().createQuery(cq)
+                .getResultList();
 
     }
 
@@ -184,14 +208,14 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
                 , cb.equal(from.get("wasRemoved"), false)
                 , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED)
-                );
+        );
         cq.orderBy(cb.desc(from.get("startDate")));
 
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
 
@@ -205,8 +229,8 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         String request = "SELECT p FROM AbstractPublication p where p.id in :idList";
 
         return JPA.em().createQuery(request, AbstractPublication.class)
-                  .setParameter("idList", ids)
-                  .getResultList();
+                .setParameter("idList", ids)
+                .getResultList();
     }
 
     /**
@@ -231,9 +255,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
     @Override
@@ -254,9 +278,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
     @Override
@@ -277,9 +301,9 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         cq.orderBy(cb.desc(from.get("startDate")));
 
         return JPA.em().createQuery(cq)
-                  .setFirstResult(page * maxResult)
-                  .setMaxResults(maxResult)
-                  .getResultList();
+                .setFirstResult(page * maxResult)
+                .setMaxResults(maxResult)
+                .getResultList();
     }
 
     @Override
@@ -288,11 +312,11 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business and p.wasRemoved=:wasRemoved";
 
         Long c = JPA.em().createQuery(r, Long.class)
-                    .setParameter("start", day.withHour(0).withMinute(0).withSecond(0))
-                    .setParameter("end", day.withHour(23).withMinute(59).withSecond(59))
-                    .setParameter("wasRemoved", false)
-                    .setParameter("business", business)
-                    .getSingleResult();
+                .setParameter("start", day.withHour(0).withMinute(0).withSecond(0))
+                .setParameter("end", day.withHour(23).withMinute(59).withSecond(59))
+                .setParameter("wasRemoved", false)
+                .setParameter("business", business)
+                .getSingleResult();
 
         return c.intValue();
 
@@ -388,11 +412,11 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
         String r = "select count(p) from AbstractPublication p where startDate > :start  and startDate < :end and p.business=:business and p.wasRemoved=:wasRemoved";
 
         Long c = JPA.em().createQuery(r, Long.class)
-                    .setParameter("start", startday)
-                    .setParameter("end", endday)
-                    .setParameter("wasRemoved", false)
-                    .setParameter("business", business)
-                    .getSingleResult();
+                .setParameter("start", startday)
+                .setParameter("end", endday)
+                .setParameter("wasRemoved", false)
+                .setParameter("business", business)
+                .getSingleResult();
 
         return c.intValue();
 

@@ -4659,358 +4659,319 @@ myApp.service("businessCategoryService", ['$sce', '$http', '$flash', function ($
     }
 
 }]);
-myApp.service("businessService", ['$flash', '$http', 'accountService', function ($flash, $http, accountService) {
-
-
-    this.createBusiness = function (accountId, businessName, callbackSuccess, callbackError) {
-        $http({
-            'method': "POST",
-            'url': "/rest/createBusiness",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            data: {
-                accountId: accountId,
-                businessName: businessName
-            }
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.importBusinessFormFacebook = function (urlFacebook, callbackSuccess, callbackError) {
-        $http({
-            'method': "GET",
-            'url': "/rest/createBusinessFromFacebook/" + urlFacebook,
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-
-    this.getBusiness = function (id, callbackSuccess, callbackError) {
-        $http({
-            'method': "GET",
-            'url': "/rest/business/" + id,
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.getFollowedBusinesses = function (callbackSuccess, callbackError) {
-        $http({
-            'method': "GET",
-            'url': "/rest/business/followed",
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.edit = function (dto, callbackSuccess, callbackError) {
-        $http({
-            'method': "PUT",
-            'url': "/rest/business/" + dto.id,
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            accountService.getMyself().business = data;
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.editSocialNetwork = function (businessId, dto, callbackSuccess, callbackError) {
-        $http({
-            'method': "PUT",
-            'url': "/rest/business/" + businessId + "/social_network",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.editBusinessCategory = function (businessId, dto, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "PUT",
-            'url': "/rest/business/" + businessId + "/category",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': {list: dto}
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
-    this.publishBusiness = function (callbackSuccess, callbackError) {
-
-        $http({
-            'method': "POST",
-            'url': "/rest/business/ask_publication",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': {}
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
-    this.cancelPublishRequest = function (callbackSuccess, callbackError) {
-
-        $http({
-            'method': "POST",
-            'url': "/rest/business/cancel_publication_request",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': {}
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
-    this.stopPublication = function (callbackSuccess, callbackError) {
-
-        $http({
-            'method': "POST",
-            'url': "/rest/business/stop_publish",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': {}
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
-
-    this.editIllustration = function (businessId, dto, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "PUT",
-            'url': "/rest/business/" + businessId + "/illustration",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            //accountService.getMyself().business.illustration = dto;
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
-    this.editLandscape = function (businessId, dto, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "PUT",
-            'url': "/rest/business/" + businessId + "/landscape",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            //accountService.getMyself().business.illustration = dto;
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
-    this.editAddress = function (businessId, dto, callbackSuccess, callbackError) {
-        $http({
-            'method': "PUT",
-            'url': "/rest/business/" + businessId + "/address",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-
-    this.createSchedule = function (businessId, dto, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "POST",
-            'url': "/rest/business/" + businessId + "/schedule",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.editGallery = function (businessId, dto, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "POST",
-            'url': "/rest/business/" + businessId + "/edit/gallery",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': dto
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-
-    this.getInterests = function (callbackSuccess, callbackError) {
-
-        $http({
-            'method': "GET",
-            'url': "/rest/business/interests",
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.claimBusiness = function (businessId, phone, vta, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "POST",
-            'url': "/rest/business/claim",
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': {
-                phone: phone,
-                vta: vta,
-                businessId: businessId
-            }
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
+myApp.service('businessService', ['$flash', '$http', 'accountService', function($flash, $http, accountService) {
+  this.loadLastBusiness = function(businessNb, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'GET',
+      'url': '/rest/business/last/' + businessNb,
+      'headers': 'Content-Type:application/json;charset=utf-8'
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data.list);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.createBusiness = function(accountId, businessName, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'POST',
+      'url': '/rest/createBusiness',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      data: {
+        accountId: accountId,
+        businessName: businessName
+      }
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.importBusinessFormFacebook = function(urlFacebook, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'GET',
+      'url': '/rest/createBusinessFromFacebook/' + urlFacebook,
+      'headers': 'Content-Type:application/json;charset=utf-8'
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.getBusiness = function(id, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'GET',
+      'url': '/rest/business/' + id,
+      'headers': 'Content-Type:application/json;charset=utf-8'
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.getFollowedBusinesses = function(callbackSuccess, callbackError) {
+    return $http({
+      'method': 'GET',
+      'url': '/rest/business/followed',
+      'headers': 'Content-Type:application/json;charset=utf-8'
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data.list);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.edit = function(dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'PUT',
+      'url': '/rest/business/' + dto.id,
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': dto
+    }).success(function(data, status) {
+      accountService.getMyself().business = data;
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.editSocialNetwork = function(businessId, dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'PUT',
+      'url': '/rest/business/' + businessId + '/social_network',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': dto
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.editBusinessCategory = function(businessId, dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'PUT',
+      'url': '/rest/business/' + businessId + '/category',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': {
+        list: dto
+      }
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.publishBusiness = function(callbackSuccess, callbackError) {
+    return $http({
+      'method': 'POST',
+      'url': '/rest/business/ask_publication',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': {}
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.cancelPublishRequest = function(callbackSuccess, callbackError) {
+    return $http({
+      'method': 'POST',
+      'url': '/rest/business/cancel_publication_request',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': {}
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.stopPublication = function(callbackSuccess, callbackError) {
+    return $http({
+      'method': 'POST',
+      'url': '/rest/business/stop_publish',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': {}
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.editIllustration = function(businessId, dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'PUT',
+      'url': '/rest/business/' + businessId + '/illustration',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': dto
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.editLandscape = function(businessId, dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'PUT',
+      'url': '/rest/business/' + businessId + '/landscape',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': dto
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.editAddress = function(businessId, dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'PUT',
+      'url': '/rest/business/' + businessId + '/address',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': dto
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.createSchedule = function(businessId, dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'POST',
+      'url': '/rest/business/' + businessId + '/schedule',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': dto
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data.list);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.editGallery = function(businessId, dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'POST',
+      'url': '/rest/business/' + businessId + '/edit/gallery',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': dto
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data.list);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.getInterests = function(callbackSuccess, callbackError) {
+    return $http({
+      'method': 'GET',
+      'url': '/rest/business/interests',
+      'headers': 'Content-Type:application/json;charset=utf-8'
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data.list);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.claimBusiness = function(businessId, phone, vta, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'POST',
+      'url': '/rest/business/claim',
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': {
+        phone: phone,
+        vta: vta,
+        businessId: businessId
+      }
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  return;
 }]);
 myApp.service("modalService", ['$modal', function ($modal) {
 
@@ -6155,28 +6116,51 @@ myApp.service("searchBarService", ['$timeout', '$rootScope', function ($timeout,
     });
 
 }]);
-myApp.service("publicationService", ['$http', '$flash', '$rootScope', function ($http, $flash, $rootScope) {
-
-    this.delete = function (dto, callbackSuccess, callbackError) {
-
-        $http({
-            'method': "DELETE",
-            'url': "/rest/publication/"+dto.id,
-            'headers': "Content-Type:application/json;charset=utf-8"
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                $flash.error(data.message);
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
+myApp.service('publicationService', ['$http', '$flash', 'geolocationService', function($http, $flash, geolocationService) {
+  this["delete"] = function(dto, callbackSuccess, callbackError) {
+    return $http({
+      'method': 'DELETE',
+      'url': '/rest/publication/' + dto.id,
+      'headers': 'Content-Type:application/json;charset=utf-8'
+    }).success(function(data, status) {
+      if (callbackSuccess != null) {
+        return callbackSuccess(data);
+      }
+    }).error(function(data, status) {
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  this.loadByIds = function(listId, callbackSuccess, callbackError) {
+    var id, ids, _i, _len;
+    ids = '';
+    for (_i = 0, _len = listId.length; _i < _len; _i++) {
+      id = listId[_i];
+      ids += id + '|';
+    }
+    console.log('load : ' + ids);
+    return $http({
+      'method': 'POST',
+      'url': '/rest/publication/ids/' + ids,
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': geolocationService.getPositionWithoutNull()
+    }).success(function(data, status) {
+      console.log('SUCCESS');
+      console.log(data);
+      if (callbackSuccess != null) {
+        return callbackSuccess(data.list);
+      }
+    }).error(function(data, status) {
+      console.log('ERROR');
+      $flash.error(data.message);
+      if (callbackError != null) {
+        return callbackError(data, status);
+      }
+    });
+  };
+  return;
 }]);
 myApp.service("constantService", function () {
 
@@ -6328,7 +6312,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("js/directive/component/map/businessForMap/_template.html",
     "<div class=business-for-map><img class=business-illustration ng-src=\"{{getInfo().business.illustration | image}}\"> <i ng-show=\"getInfo().business.following === true\" class=\"gling-icon gling-icon gling-icon-bell\"></i> <span class=title>{{getInfo().business.name}}</span><category-line-ctrl ng-info={categories:getInfo().business.categories}></category-line-ctrl>{{getInfo().business.address.street}}, {{getInfo().business.address.zip}} {{getInfo().business.address.city}}<br><follow-widget-ctrl ng-info={displayText:true,business:getInfo().business}></follow-widget-ctrl><br><span class=\"link see-more\" ng-click=\"goTo('/business/'+getInfo().business.id)\">Voir plus...</span></div>");
   $templateCache.put("js/directive/component/map/businessForMap/template.html",
-    "<div class=business-for-map><img class=business-illustration ng-src=\"{{getInfo().business.illustration | image}}\"><i class=\"gling-icon gling-icon-bell\" ng-show=\"getInfo().business.following === true\"></i><span class=title>{{getInfo().business.name}}</span><category-line-ctrl ng-info={categories:getInfo().business.categories}>{{getInfo().business.address.street}},{{getInfo().business.address.zip}}{{getInfo().business.address.city}}<br></category-line-ctrl><follow-widget-ctrl ng-info={displayText:true,business:getInfo().business}><br></follow-widget-ctrl><span class=\"link see-more\">Voir plus...</span></div>");
+    "<div class=business-for-map><img class=business-illustration ng-src=\"{{getInfo().business.illustration | image}}\"><i class=\"gling-icon gling-icon-bell\" ng-show=\"getInfo().business.following === true\"></i><span class=title>{{getInfo().business.name}}</span><category-line-ctrl ng-info={categories:getInfo().business.categories}>{{getInfo().business.address.street}},{{getInfo().business.address.zip}}{{getInfo().business.address.city}}<br></category-line-ctrl><follow-widget-ctrl ng-info={displayText:true,business:getInfo().business}><br></follow-widget-ctrl><span class=\"link see-more\" ng-click=\"goTo('/business/'+getInfo().business.id)\">Voir plus...</span></div>");
   $templateCache.put("js/directive/component/map/publicationForMap/_template.html",
     "<div></div>");
   $templateCache.put("js/directive/component/map/publicationForMap/template.html",
@@ -6580,6 +6564,8 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "<div class=container-content><div class=profile-page><div class=\"panel panel-gling main-panel panel-personal-information\"><div class=panel-heading>{{'--.customer.profile.personalInformation' | translateText}}</div><div class=panel-body><account-form-ctrl ng-info=accountParam></account-form-ctrl><button id=profile-personal-btn-edit class=\"btn gling-button-dark\" ng-show=accountParam.disabled ng-click=personalEdit()>{{'--.generic.edit' |translateText}}</button><button id=profile-personal-btn-save class=\"btn gling-button-dark\" ng-click=personalSave() ng-hide=accountParam.disabled>{{'--.generic.save' | translateText}}</button><button id=profile-personal-btn-cancel class=\"btn gling-button-dark\" ng-click=personalCancel() ng-hide=accountParam.disabled>{{'--.generic.cancel' | translateText}}</button><div class=col-md-3 ng-show=\"model.myself.loginAccount==true\"></div><button id=profile-personal-btn-edit-password class=\"btn gling-button-dark\" ng-show=\"model.myself.loginAccount===true\" ng-click=editPassword() type=button>{{'--.changePasswordModal.title' | translateText}}</button><table class=profile-social-network-table><tr><th colspan=2>Lien avec vos réseaux sociaux</th></tr><tr><td><img src=assets/images/social_network/facebook.png></td><td><div class=link ng-click=fb_login(); ng-hide=\"model.myself.facebookAccount===true\">{{'--.profile.facebook.btn' |translateText}}</div><div ng-show=\"model.myself.facebookAccount===true\">Lié au compte facebook {{model.myself.facebookCredential.firstname}}{{model.myself.facebookCredential.lastname}}</div></td></tr></table></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.myAddresses' | translateText}}</div><div class=panel-body><div><accordion><accordion-group class=address-container is-open=address.isOpen ng-repeat=\"address in model.myself.addresses\"><accordion-heading>{{address.name}}<i class=\"pull-right glyphicon\" ng-class=\"{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}\"></i></accordion-heading><div class=address-box><div><span>{{'--.generic.street' | translateText}}</span><span>{{address.street}}</span></div><div><span>{{'--.generic.zip' | translateText}}</span><span>{{address.zip}}</span></div><div><span>{{'--.generic.city' | translateText}}</span><span>{{address.city}}</span></div><div><span>{{'--.generic.country' | translateText}}</span><span>{{address.country}}</span></div></div><button class=\"btn gling-button-dark\" ng-click=editAddress(address)>{{'--.generic.edit' | translateText}}</button><button class=\"btn gling-button-dark glyphicon glyphicon-remove\" ng-click=deleteAddress(address)>{{'--.generic.remove' |translateText}}</button></accordion-group></accordion><button id=profile-btn-address-add class=\"btn gling-button-dark\" ng-click=addAddress()>{{'--.customer.profile.create' | translateText}}</button></div></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.interest' | translateText}}</div><div class=\"panel-body category-list\"><div><div class=category-box ng-repeat=\"interest in model.myself.customerInterests\"><span ng-class=\"'gling-icon gling-icon-' + interest.name\"></span> {{interest.translationName |translateText}}</div><button id=profile-interest-btn-edit class=\"btn gling-button-dark\" ng-click=interestEdit()>{{'--.generic.edit' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("js/view/web/search_page.html",
     "<div class=container-content><to-top-ctrl></to-top-ctrl><div class=search-page><div class=loading ng-show=\"results == null\"><img src=/assets/images/big_loading.gif></div><div ng-hide=\"results==null\"><tabset><tab ng-show=businessTab.display active=businessTab.active><tab-heading>{{'--.generic.business' | translateText}} ({{businessTab.totalToDisplay}})</tab-heading><business-list-ctrl ng-info={data:businessTab.data}></business-list-ctrl></tab><tab ng-show=publicationTab.display active=publicationTab.active><tab-heading>{{'--.generic.publication' | translateText}} ({{publicationTab.totalToDisplay}})</tab-heading><publication-list-ctrl ng-info={data:publicationTab.data}></publication-list-ctrl></tab><tab ng-show=categoryTab.display active=categoryTab.active><tab-heading>{{'--.generic.category' | translateText}} ({{categoryTab.totalToDisplay}})</tab-heading><div ng-show=\"categoryTab == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"(cat,value) in categoryTab.data\"><div class=\"search-category link search-category-lev1\" ng-click=\"navigateTo('/search/category:'+cat)\">{{cat | translateText}}</div><div ng-repeat=\"(sCat,value2) in value\"><div class=\"search-category link search-category-lev2\" ng-click=\"navigateTo('/search/category:'+sCat)\">{{sCat | translateText}}</div><div ng-repeat=\"(ssCat,value3) in value2\"><div class=\"search-category link search-category-lev3\" ng-click=\"navigateTo('/search/category:'+ssCat)\">{{ssCat | translateText}}</div><business-list-ctrl ng-info={data:value3,loading:false}></business-list-ctrl></div></div></div></tab></tabset></div></div></div>");
+  $templateCache.put("js/view/web/welcome.html",
+    "<div class=container-content><div class=content-block><div class=welcome-page><div class=event-block><h2>Bientôt Noël !</h2><p>En manque d'inspiration pour vos achats de Noël? Gling vous aide à trouver les meilleures oportinutés proposées par vos commerçants locaux!</p><div class=welcome-publication-list><div class=welcome-publication-box ng-click=navigateTo(publication) ng-repeat=\"publication in publications\" style=\"background-image:url('{{publication.pictures[0] | image}}')\"><div class=title>{{publication.title}}<br><span>{{publication.businessName}}</span></div><div class=promotion ng-show=\"publication.type == 'PROMOTION'\">- {{publication.offPercent * 100 | number:0}} %</div></div></div></div><div class=presentation-block><h2>Toujours plus près de chez vous!</h2><p>Gling c'est X commerce sur X commune!Retrouvez vos commerces favoris dans les zones d'Auderghem et d'Etterbeek.Mais nous ne nous arrêtons pas là! Découvrez les nouveaux qurtiers convert par Gling et donnez-nous vos bonnes adresses pourque nous puissions les inclure dans Gling sur notre page Facebook</p><a href=https://www.facebook.com/gling.be>https://www.facebook.com/gling.be</a></div><div class=last-business-block><h2>Découvrez nos derniers commerces</h2><div class=welcome-business-list><div class=welcome-business-list-el ng-repeat=\"business in businesses\"><table><tr><td ng-click=\"goTo('/business/'+business.id)\" rowspan=2><img class=illustration ng-src=\"{{business.illustration | image}}\"></td><td ng-click=\"goTo('/business/'+business.id)\"><div class=title>{{business.name}}</div></td></tr><tr><td><div class=address>{{business.address.street}}, {{business.address.zip}} {{business.address.city}}<br></div></td></tr></table><category-line-ctrl ng-info={categories:business.categories}></category-line-ctrl><span ng-bind-html=\"business.description | text : business.descriptionLimit\"></span><span class=link ng-show=\"business.description.length &gt; descriptionLimitBase &amp;&amp; business.descriptionLimit==descriptionLimitBase\" ng-click=\"business.descriptionLimit = 10000\">{{'--.textReuction.seeMore' | translateText}}</span><span class=link ng-show=\"business.description.length &gt; descriptionLimitBase &amp;&amp; business.descriptionLimit!=descriptionLimitBase\" ng-click=\"business.descriptionLimit = descriptionLimitBase\">{{'--.textReuction.seeLess' | translateText}}</span><br><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div></div></div></div></div>");
 }]);
 
 myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'param', '$compile', 'directiveName', 'save', '$timeout', 'title', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
