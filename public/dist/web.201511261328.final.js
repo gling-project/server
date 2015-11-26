@@ -2330,7 +2330,7 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
   };
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
-  publicationService.loadByIds([1, 5, 16], function(list) {
+  publicationService.loadByIds([176, 175, 174, 172], function(list) {
     return $scope.publications = list;
   });
   return businessService.loadLastBusiness($scope.LAST_BUSINESS_NB, function(data) {
