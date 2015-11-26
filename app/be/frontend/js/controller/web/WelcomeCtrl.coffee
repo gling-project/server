@@ -16,7 +16,7 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope,publicationService,$location
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'
 
     #load publications
-    publicationService.loadByIds [1,5,16], (list) ->
+    publicationService.loadByIds [176,175,174,172], (list) ->
         $scope.publications  = list
 
     #load businesses
