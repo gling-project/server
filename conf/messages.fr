@@ -605,14 +605,14 @@ day_abrv_sunday=Di
 
 
 --.publication.editByAdmin.email.subject=Modification d''une publication
---.publication.editByAdmin.email.body=Bonjour,<br/><br/>l''une de vos publications ( {0} ) a été modifié par un administrateur de Gling, et ceci parce que votre publication ne respectait pas la charte de publication de Gling. <br/><br/>La raison invoquée par l''administrateur : {1}. <br/><br/>Pensez à consulter nos conseils de publication : <a href="https://www.gling.be/assets/document/business_help.pdf">Télécharger notre guide</a><br/><br/>L''équipe Gling
+--.publication.editByAdmin.email.body=Bonjour,<br/><br/>l''une de vos publications ( {0} ) a été modifié par un administrateur de Gling, et ceci sans doute parce que votre publication ne respectait pas la charte de publication de Gling. <br/><br/>La raison invoquée par l''administrateur : {1}. <br/><br/>Pensez à consulter nos conseils de publication : <a href="https://www.gling.be/assets/document/business_help.pdf">Télécharger notre guide</a><br/><br/>L''équipe Gling
 --.field.imageMultipleResize.resizeModal.title=Recadrer l''image
 --.field.imageMultipleResize.minimalHeight=La hauteur minimal de l''image doit être de {0} (actuellement {1})
 --.field.imageMultipleResize.minimalWidth=La largeur minimal de l''image doit être de {0} (actuellement {1})
 
 --.generic.favoriteLanguage=Langue
 --.registration.accept.condition=En vous inscrivant sur Gling vous reconnaissez avoir lu et accepté les <a href="https://www.gling.be/legal/" target="_blank">conditions générales d''utilisation</a> du site Gling
---.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profile Facebook
+--.error.facebook.neededInformationEmpty=Certaines informations requises ne sont pas disponible dans votre profil Facebook
 
 --.schedule.isOpenNow=Actuellement ouvert
 --.profile.facebook.btn=Lier mon compte à Facebook
@@ -621,15 +621,15 @@ day_abrv_sunday=Di
 --.error.login.facebookLink.alreadyUsed=Ce compte Facebook est déjà lié à un autre compte Gling
 --.error.login.facebookLink.alreadyLinked=Un autre compte Facebook est déjà lié à ce compte Gling
 --.profile.linkFacebook.success=Votre compte Facebook est désormais lié à votre compte Gling. Découvrez les commerces favoris de vos amis!
---.error.facebook.import.notOfficialPage=Ceci n''est pas une page officielle et ne peut être importée
---.error.facebook.import.wrongUrl=Cette url ne correspond pas à une page Facebook
---.business.registration.importFromFacebook.desc=Vous pouvez importer les informations depuis votre page de commerce d''un des réseaux sociales suivant. Copier l''url de votre page dans le champs ci-dessous et cliquez sur importer. Attention, cette opération peut prendre jusqu'à 30 secondes.
+--.error.facebook.import.notOfficialPage=Ceci n''est pas une page officielle et ne peut être importée.
+--.error.facebook.import.wrongUrl=Cette adresse (url) ne correspond pas à une page Facebook.
+--.business.registration.importFromFacebook.desc=Vous pouvez importer les informations depuis votre page de commerce. d''un des réseaux sociales suivant. Copier l''adresse (url) de votre page Facebook dans le champs ci-dessous et cliquez sur importer. Attention, cette opération peut prendre jusqu'à 30 secondes.
 --.business.registration.importFromFacebook=Importer
---.business.registration.data.desc=Vous pouvez créer un nouveau profile de commerce. Pour commencer, introduisez le nom et cliquez sur sauver.
---.business.error.editAddress.wrongStatus=Vous ne pouvez plus modifier l''adresse de votre magasin après l''avoir publié
+--.business.registration.data.desc=Vous pouvez créer un nouveau profil de commerce. Pour commencer, introduisez le nom et cliquez sur sauver.
+--.business.error.editAddress.wrongStatus=Vous ne pouvez plus modifier l''adresse de votre magasin après l''avoir publié.
 --.business.manager.progress.add.address=Introduire l''adresse
 --.business.manager.progress.add.category=Choisir une catégorie
---.error.business.claim.alreadyHaveBusiness=Ce compte est déjà lié à un commerce. Un seul commerce peut être lié à un compte
+--.error.business.claim.alreadyHaveBusiness=Ce compte est déjà lié à un commerce. Un seul commerce peut être lié à un compte.
 --.error.business.claim.alreadyHaveClaims=Vous avez déjà revendiqué la parent du commerce {0}. Vous ne pouvez revendiquer qu''un seul commerce pour ce compte.
 --.business.claim.form.desc=Veuillez communiquer votre numéro de téléphone, ainsi que le numéro de TVA de votre commerce. Un membre de l''équipe GLing vous contactera dans les meilleurs délais pour valider votre inscription.<br/>Vous pourrez alors prendre possession de votre compte de commerce et profiter de l''ensemble des fonctionnalités de Gling!<br/>En revanche, si vous désirez que votre commerce n'apparaisse plus sur Gling, il vous suffit de nous envoyer un e-mail à l'adresse hello@gling.be en mentionnant le nom et l'adresse de votre commerce.
 --.business.claim.modal.title=Revendiquer un commerce
