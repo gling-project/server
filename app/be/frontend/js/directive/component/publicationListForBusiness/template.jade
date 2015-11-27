@@ -55,7 +55,7 @@
 
                         img(ng-src="{{publication.pictures[1] | image}}",class="{{getIllustrationClass(publication.pictures[1])}}")
 
-                        .publication-illustration-plus-icon"
+                        .publication-illustration-plus-icon(ng-show="publication.pictures.length>2")
                             span +{{publication.pictures.length - 2}}
 
                     //- picture 1
