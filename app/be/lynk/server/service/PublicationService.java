@@ -63,4 +63,5 @@ public interface PublicationService extends CrudService<AbstractPublication> {
     Long countActiveByBusiness(Business business);
 
 
+    List<AbstractPublication> findLastActive(Integer nb);
 }

@@ -10,28 +10,32 @@
 
                 //- event block
                 .event-block
-                    .block-title Bientôt Noël !
-                    p En manque d'inspiration pour vos achats de Noël? Gling vous aide à trouver les meilleures oportinutés proposées par vos commerçants locaux!
+                    //
+                        .block-title Bientôt Noël !
+                        p En manque d'inspiration pour vos achats de Noël? Gling vous aide à trouver les meilleures oportinutés proposées par vos commerçants locaux!
 
-                    .welcome-publication-list
-                        .welcome-publication-box(ng-repeat="publication in publications",
-                            ng-class="getBackgroundClass(publication)"
-                        style="background-image:url('{{publication.pictures[0] | image}}')",
-                        ng-click="navigateTo(publication)")
-                            .title {{publication.title}}
-                                br
-                                span {{publication.businessName}}
-                            .promotion(ng-show="publication.type == 'PROMOTION'") - {{publication.offPercent * 100 | number:0}} %
+                        .welcome-publication-list
+                            .welcome-publication-box(ng-repeat="publication in publications",
+                                ng-class="getBackgroundClass(publication)"
+                            style="background-image:url('{{publication.pictures[0] | image}}')",
+                            ng-click="navigateTo(publication)")
+                                .title {{publication.title}}
+                                    br
+                                    span {{publication.businessName}}
+                                .promotion(ng-show="publication.type == 'PROMOTION'") - {{publication.offPercent * 100 | number:0}} %
+                    img(src="/assets/images/event/sn.jpg")
+                    div
+                        .block-title Saint Nicolas a aussi ses commerces de proximité favoris!
+                        p Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!
+                            br
+                            | Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling.
+                            br
+                            | Et… N’oubliez pas de rester sage!
 
                 //publication
                 .publication-block
-                    .publication-interest-list.home-interest-box
-                        .interest-box
-                            .home-interest-box-background
-                                .home-interest.gling-button.gling-icon(ng-repeat="interest in currentInterests",class="{{getInterestClass(interest)}}", ng-class="{'selected':interest.selected === true}")
-                            .welcome-progress-bar
-                                .welcome-progress-bar-content(style="width:{{progressPercentage}}%")
-                        .block-title C'est l'heure du lunch !
+                    .see-more.link(ng-click="goTo('/')") Voir plus...
+                    .block-title Les dernières actualités de vos commerces
                     publication-list-ctrl(ng-info='publicationListCtrl')
 
             .right-column
@@ -39,15 +43,14 @@
                 //- facebook campaign
                 .facebook-block
                     .block-title Participez sur notre page Facebook!
-                    #fb-root
-                    script.
-                        (function(d, s, id) {  var js, fjs = d.getElementsByTagName(s)[0];  if (d.getElementById(id)) return;  js = d.createElement(s); js.id = id;  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.3";  fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
-                    .fb-post(data-href="https://www.facebook.com/gling.be/posts/1695721087310165:0",data-width="370")
+                    .fb-post(data-href="https://www.facebook.com/gling.be/posts/1695721087310165",data-width="370")
+
+
 
 
                 //- last business
                 .last-business-block
-                    h2 Découvrez nos derniers commerces
+                    .block-title Connaissez-vous ?
                     .welcome-business-list
                         .welcome-business-list-el(ng-repeat="business in businesses")
                             table
@@ -58,13 +61,6 @@
                                         .title {{business.name}}
                                 tr
                                     td
-                                        .address {{business.address.street}}, {{business.address.zip}} {{business.address.city}}<br/>
+                                        .address {{business.address.street}}, {{business.address.zip}} {{business.address.city}} - {{business.distance / 1000 | number:2}} km<br/>
                             category-line-ctrl(ng-info="{categories:business.categories,level1:false}")
-                            //- description
-                            span(ng-bind-html="business.description | text : business.descriptionLimit")
-                            span.link(ng-show="business.description.length > descriptionLimitBase && business.descriptionLimit==descriptionLimitBase",ng-click="business.descriptionLimit = 10000")
-                                | {{'--.textReuction.seeMore' | translateText}}
-                            span.link(ng-show="business.description.length > descriptionLimitBase && business.descriptionLimit!=descriptionLimitBase",ng-click="business.descriptionLimit = descriptionLimitBase")
-                                | {{'--.textReuction.seeLess' | translateText}}
-                            br
                             follow-widget-ctrl(ng-info="{displayText:true,business:business}")

@@ -152,14 +152,8 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         if business.following
             name += 'bell_'
 
-        if business.attendance == 'LIGHT'
+        if business.attendance == 'LIGHT' or business.attendance == 'MODERATE' or business.attendance == 'IMPORTANT'
             name += 'green_light.png'
-        else if business.attendance == 'MODERATE'
-            name += 'orange.png'
-        else if business.attendance == 'IMPORTANT'
-            name += 'red.png'
-        else if business.attendance == 'APPOINTMENT'
-            name += 'blue_light.png'
         else
             name += 'black.png'
         return name;

@@ -3353,7 +3353,7 @@ ul.messenger .messenger-spinner {
 .welcome-page .welcome-header {
   border: 1px solid #cccccc;
   height: 280px;
-  background: url('/assets/images/welcome_page/bg.jpg') no-repeat;
+  background: url('/assets/images/welcome_page/bg.jpg') no-repeat scroll 0 -50px;
   text-align: center;
   margin-bottom: 20px;
   background-position-y: -70px;
@@ -3392,26 +3392,31 @@ ul.messenger .messenger-spinner {
   padding: 5px;
 }
 .welcome-page .block-title {
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 10px;
   margin-left: 10px;
+  color: #2c265c;
+  margin-top: 10px;
+}
+.welcome-page .see-more {
+  float: right;
+  margin-top: 15px;
+  margin-right: 10px;
 }
 .welcome-page .event-block {
   padding: 15px;
   position: relative;
   color: #555555;
+  background-color: #f4f4f4;
 }
-.welcome-page .event-block::after {
-  content: "";
-  background-image: url("/assets/images/welcome/chrismas.jpg");
-  opacity: 0.3;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
+.welcome-page .event-block img {
+  width: 150px;
+}
+.welcome-page .event-block > div {
+  display: inline-block;
+  vertical-align: top;
+  width: 400px;
+  margin-left: 20px;
 }
 .welcome-page .event-block h2 {
   font-weight: bold;

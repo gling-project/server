@@ -83,6 +83,7 @@ GET           /rest/follow                                                      
 GET           /rest/session                                                                                          @be.lynk.server.controller.rest.AccountRestController.mySession()
 
 #search
+POST          /rest/search/publication/lastOnes/$nb<[0-9]+>                                                          @be.lynk.server.controller.rest.SearchRestController.getLastOnes(nb:Integer)
 POST          /rest/search/publication/default/$page<[0-9]+>                                                         @be.lynk.server.controller.rest.SearchRestController.getByDefault(page:Integer)
 GET           /rest/search/publication/business/archive/$id<[0-9]+>/$page<[0-9]+>                                    @be.lynk.server.controller.rest.SearchRestController.getBusinessArchive(page:Integer,id:Long)
 GET           /rest/search/publication/business/previsualization/$id<[0-9]+>/$page<[0-9]+>                           @be.lynk.server.controller.rest.SearchRestController.getBusinessPrevisualization(page:Integer,id:Long)

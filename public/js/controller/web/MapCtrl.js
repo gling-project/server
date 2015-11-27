@@ -159,14 +159,8 @@ myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInt
     if (business.following) {
       name += 'bell_';
     }
-    if (business.attendance === 'LIGHT') {
+    if (business.attendance === 'LIGHT' || business.attendance === 'MODERATE' || business.attendance === 'IMPORTANT') {
       name += 'green_light.png';
-    } else if (business.attendance === 'MODERATE') {
-      name += 'orange.png';
-    } else if (business.attendance === 'IMPORTANT') {
-      name += 'red.png';
-    } else if (business.attendance === 'APPOINTMENT') {
-      name += 'blue_light.png';
     } else {
       name += 'black.png';
     }

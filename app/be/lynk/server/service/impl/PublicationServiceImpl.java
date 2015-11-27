@@ -306,6 +306,28 @@ public class PublicationServiceImpl extends CrudServiceImpl<AbstractPublication>
                 .getResultList();
     }
 
+
+
+    @Override
+    public List<AbstractPublication> findLastActive(Integer nb) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<AbstractPublication> cq = cb.createQuery(AbstractPublication.class);
+        Root<AbstractPublication> from = cq.from(AbstractPublication.class);
+        Path<Business> business = from.get("business");
+        Path<Object> address = business.get("address");
+        cq.select(from);
+        cq.where(cb.lessThan(from.get("startDate"), LocalDateTime.now())
+                , cb.greaterThan(from.get("endDate"), LocalDateTime.now())
+                , cb.equal(from.get("wasRemoved"), false)
+                , cb.equal(business.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
+        cq.orderBy(cb.desc(from.get("startDate")));
+
+        return JPA.em().createQuery(cq)
+                .setMaxResults(nb)
+                .getResultList();
+
+    }
+
     @Override
     public int countPublicationForToday(LocalDateTime day, Business business) {
 

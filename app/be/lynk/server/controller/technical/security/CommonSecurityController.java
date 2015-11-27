@@ -100,6 +100,9 @@ public class CommonSecurityController extends Security.Authenticator {
             String authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
             play.Logger.info("HAVE  authenticationKy : " + authentication);
             Account byAuthenticationKey = USER_SERVICE.findByAuthenticationKey(authentication);
+            if(byAuthenticationKey==null){
+                throw new MyRuntimeException(ErrorMessageEnum.NOT_CONNECTED);
+            }
             storeAccount(Http.Context.current(), byAuthenticationKey);
             return byAuthenticationKey;
         }

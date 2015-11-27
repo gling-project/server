@@ -11,7 +11,7 @@
 --.generic.lastname=Naam
 --.generic.or=Of
 --.generic.male=Man
---.generic.validation.repeatPassword=De twee wachwoorden moeten verschillend zijn.
+--.generic.validation.repeatPassword=De twee wachtwoorden moeten hetzelfde zijn.
 --.generic.validation.email=Gelieve een geldig e-mailadres in te voeren.
 --.generic.gender=Geslacht
 --.generic.female=Vrouw
@@ -21,7 +21,7 @@
 --.generic.logout=Afmelden
 --.generic.close=Sluiten
 --.generic.validation.password=Tussen 6 en 18 letters, cijfers of -%
---.generic.repeatPassword=Herhaal uw wachtwoord a.u.b.
+--.generic.repeatPassword=Herhaal uw wachtwoord
 --.generic.email=E-mail
 --.generic.previous=Vorig
 --.generic.phone=Telefoon
@@ -560,7 +560,7 @@ day_abrv_sunday=Zon
 --.welcome.customer.subTitle1=UW NETWERK
 --.welcome.customer.content1=Restaurants, kledingszaken, theaters, decoratiewinkels,... Gling omvat alle types handelszaken.
 --.welcome.customer.subTitle2=DICHT BIJ U
---.welcome.customer.content2=Lokaliseer U thuis, op het werk of elders en ontdek wat er leeft in uw buurtwinkels.
+--.welcome.customer.conten.toCustomerRegistration.btnt2=Lokaliseer U thuis, op het werk of elders en ontdek wat er leeft in uw buurtwinkels.
 --.welcome.customer.subTitle3=UW VERLANGENS
 --.welcome.customer.content3=Heef u zin om te eten, te reizen, te decoreren, uzelf te verwennen? Sorteer de publicaties volgens uw verlangens.
 --.welcome.business.subTitle1=GETROUWHEID

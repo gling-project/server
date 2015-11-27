@@ -11,7 +11,7 @@
 --.generic.lastname=Nom
 --.generic.or=ou
 --.generic.male=Homme
---.generic.validation.repeatPassword=Les deux mots de passe ne pas peuvent être identiques.
+--.generic.validation.repeatPassword=Les deux mots de passe ne sont pas identiques.
 --.generic.validation.email=Merci d''entrer une adresse email valide.
 --.generic.gender=Sexe
 --.generic.female=Femme
@@ -648,4 +648,4 @@ day_abrv_sunday=Di
 --.welcome.map=Carte
 --.welcome.newsfeed=Actualités
 --.welcome.about=A propos de Gling
-
+--.welcome.welcome=Accueil

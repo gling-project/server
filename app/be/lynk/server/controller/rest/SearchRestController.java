@@ -46,9 +46,21 @@ public class SearchRestController extends AbstractRestController {
     private BusinessCategoryService businessCategoryService;
 
     @Transactional
+    public Result getLastOnes(Integer nb) {
+
+        //already initialized by extractPosition
+        Position position = extractPosition();
+
+
+        List<AbstractPublication> publications = publicationService.findLastActive(nb);
+        return ok(new ListDTO<>(finalize(position, publications)));
+    }
+
+    @Transactional
     public Result getNearBusinessByInterest(Long interestID) {
 
         //already initialized by extractPosition
+
 
         //create category list
         CustomerInterest interest = customerInterestService.findById(interestID);
@@ -210,7 +222,7 @@ public class SearchRestController extends AbstractRestController {
         int max = 20;
 
         //already initialized by extractPosition
-        SearchDTO searchDTO = initialization(SearchDTO.class,false,false);
+        SearchDTO searchDTO = initialization(SearchDTO.class, false, false);
 
         Position position = extractPosition(searchDTO.getPosition());
 
@@ -262,7 +274,7 @@ public class SearchRestController extends AbstractRestController {
         int max = 4;
 
         //already initialized by extractPosition
-        SearchDTO searchDTO = initialization(SearchDTO.class,false,false);
+        SearchDTO searchDTO = initialization(SearchDTO.class, false, false);
 
         List<AbstractPublication> finalList = new ArrayList<>();
 

@@ -352,4 +352,27 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
 
     };
+
+    this.lastOnes = function (nb,callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/publication/lastOnes/"+nb,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': geolocationService.getPositionWithoutNull()
+        }).success(function (data, status) {
+            if (callbackSuccess != null) {
+                callbackSuccess(data.list);
+            }
+        })
+            .error(function (data, status) {
+                if(data!=null) {
+                    $flash.error(data.message);
+                }
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
 });
