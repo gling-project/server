@@ -1,9 +1,10 @@
-myApp.service('businessService', function($flash, $http, accountService) {
+myApp.service('businessService', function($flash, $http, accountService, geolocationService) {
   this.loadLastBusiness = function(businessNb, callbackSuccess, callbackError) {
     return $http({
-      'method': 'GET',
+      'method': 'POST',
       'url': '/rest/business/last/' + businessNb,
-      'headers': 'Content-Type:application/json;charset=utf-8'
+      'headers': 'Content-Type:application/json;charset=utf-8',
+      'data': geolocationService.getPositionWithoutNull()
     }).success(function(data, status) {
       if (callbackSuccess != null) {
         return callbackSuccess(data.list);

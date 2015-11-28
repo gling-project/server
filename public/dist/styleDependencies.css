@@ -3481,14 +3481,21 @@ ul.messenger .messenger-spinner {
   margin: 10px 10px;
   background-color: #f4f4f4;
 }
+.welcome-page .map-block {
+  display: inline-block;
+  vertical-align: top;
+  width: 380px;
+  padding: 10px;
+  margin: 0px 0px 10px 10px;
+  background-color: #f4f4f4;
+}
 .welcome-page .last-business-block {
   display: inline-block;
   vertical-align: top;
   width: 380px;
   padding: 10px;
-  margin: 0px 0px 0px 10px;
+  margin: 0px 0px 10px 10px;
   background-color: #f4f4f4;
-  float: right;
 }
 .welcome-page .last-business-block .welcome-business-list .welcome-business-list-el {
   padding: 5px;

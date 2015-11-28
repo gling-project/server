@@ -10,18 +10,18 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
     #
     @ini = ->
 
-#        #initialize facebook api
-#        FB.init
-#            appId: w@facebookAppId
-#            cookie: true
-#            xfbml: true
-#            version: 'v2.5'
-#
-#        #recover the status
-#        FB.getLoginStatus (response) ->
-#            if response.status == 'connected'
-#                isConnected = true
-#                authResponse = response.authResponse
+        #initialize facebook api
+        FB.init
+            appId: @facebookAppId
+            cookie: true
+            xfbml: true
+            version: 'v2.3'
+
+        #recover the status
+        FB.getLoginStatus (response) ->
+            if response.status == 'connected'
+                isConnected = true
+                authResponse = response.authResponse
 
     #share a publication
     #this function doesn't need a facebook loggin

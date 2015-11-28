@@ -37,6 +37,7 @@
                     .see-more.link(ng-click="goTo('/')") Voir plus...
                     .block-title Les dernières actualités de vos commerces
                     publication-list-ctrl(ng-info='publicationListCtrl')
+                    button.gling-button(ng-click="goTo('/')") Décrouvrez plus d'actualités
 
             .right-column
 
@@ -45,7 +46,12 @@
                     .block-title Participez sur notre page Facebook!
                     .fb-post(data-href="https://www.facebook.com/gling.be/posts/1695721087310165",data-width="370")
 
-
+                //map
+                .map-block
+                    .block-title Les quartiers actifs
+                    li
+                        ul Etterbeek
+                    img(src="/assets/images/map/1160.png")
 
 
                 //- last business

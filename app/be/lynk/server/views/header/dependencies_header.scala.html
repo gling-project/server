@@ -45,6 +45,8 @@
 <script src="@routes.Assets.at("components/humanize-duration/humanize-duration.js")" type="text/javascript"></script>
 <!-- 9 ko -->
 <script src="@routes.Assets.at("components/angular-socialshare/angular-socialshare.js")" type="text/javascript"></script>
+<!-- 168 ko -->
+<script src="@routes.Assets.at("js/externalDependence/facebook_sdk.js")" type="text/javascript"></script>
 <!-- 7 ko -->
 <script src="@routes.Assets.at("components/angular-easyfb/angular-easyfb.min.js")" type="text/javascript"></script>
 
@@ -70,21 +72,3 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/ng-table/ng-table.min.css")">
 <!-- 9 ko -->
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("components/angular-socialshare/angular-socialshare.css")">
-
-<script>
-window.fbAsyncInit = function() {
-FB.init({
-appId      : '1047308001965929',
-xfbml      : true,
-version    : 'v2.5'
-});
-};
-
-(function(d, s, id){
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) {return;}
-js = d.createElement(s); js.id = id;
-js.src = "//connect.facebook.net/en_US/sdk.js";
-fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>

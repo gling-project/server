@@ -27,10 +27,6 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
     $(window).scrollTop 0
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'
 
-    #load publications
-    publicationService.loadByIds constantService.eventPublicationIds, (list) ->
-        $scope.publications = list
-
     #load businesses
     businessService.loadLastBusiness $scope.LAST_BUSINESS_NB, (data)->
         $scope.businesses = data

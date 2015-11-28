@@ -23,9 +23,6 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService,
   };
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
-  publicationService.loadByIds(constantService.eventPublicationIds, function(list) {
-    return $scope.publications = list;
-  });
   businessService.loadLastBusiness($scope.LAST_BUSINESS_NB, function(data) {
     var b, _i, _len, _ref, _results;
     $scope.businesses = data;

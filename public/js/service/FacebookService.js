@@ -5,7 +5,20 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
   isConnected = false;
   authResponse = null;
   _this = this;
-  this.ini = function() {};
+  this.ini = function() {
+    FB.init({
+      appId: this.facebookAppId,
+      cookie: true,
+      xfbml: true,
+      version: 'v2.3'
+    });
+    return FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        isConnected = true;
+        return authResponse = response.authResponse;
+      }
+    });
+  };
   this.sharePublication = function(businessId, publicationId) {
     var obj, url;
     url = constantService.urlBase + '/business/' + businessId + '/publication/' + publicationId;

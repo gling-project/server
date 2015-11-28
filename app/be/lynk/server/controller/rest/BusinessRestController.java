@@ -8,6 +8,7 @@ import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.post.BusinessRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
+import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
@@ -54,9 +55,19 @@ public class BusinessRestController extends AbstractController {
     @Transactional
     public Result lastBusinesses(int nb) {
 
-        List<Business> businesses = businessService.findLastPublished(nb);
+        PositionDTO positionDTO = initialization(PositionDTO.class);
+        Position position = dozerService.map(positionDTO,Position.class);
 
-        return ok(convertBusiness(businesses));
+        List<Business> businesses = businessService.findLastPublished(nb);
+        List<BusinessToDisplayDTO> businessesDtos = new ArrayList<>();
+
+        for (Business business : businesses) {
+            BusinessToDisplayDTO map = dozerService.map(business, BusinessToDisplayDTO.class);
+            map.setDistance(localizationService.distanceBetweenAddress(position,business.getAddress()));
+            businessesDtos.add(map);
+        }
+
+        return ok(new ListDTO<>(businessesDtos));
     }
 
     @Transactional
