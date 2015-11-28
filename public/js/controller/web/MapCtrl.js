@@ -1,5 +1,5 @@
-myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService) {
-  var addListener, getBusiness, getIcon, getMarker, testInterests;
+myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService, $location) {
+  var addListener, getBusiness, getIcon, getMarker, testInterests, urlParam;
   $scope.mapDataBusinesses = null;
   $scope.map = null;
   $scope.interests = null;
@@ -7,15 +7,21 @@ myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInt
   $scope.currentMarker = null;
   $scope.listDisplayedBusiness = [];
   $scope.displayList = true;
+  $scope.initialPos = {
+    lat: 50.8471417,
+    lng: 4.3528959,
+    force: false,
+    zoom: 12
+  };
   $scope.$watch(function() {
     return geolocationService.position;
   }, function(n) {
-    if (n != null) {
+    if ((n != null) && $scope.initialPos.force === false) {
       return $scope.centerToPosition();
     }
   });
   $scope.centerToPosition = function() {
-    if ((geolocationService.position != null) && ($scope.map != null)) {
+    if ((geolocationService.position != null) && ($scope.map != null) && $scope.initialPos.force === false) {
       $scope.map.setCenter({
         lat: geolocationService.position.x,
         lng: geolocationService.position.y
@@ -230,14 +236,22 @@ myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInt
   });
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
+  urlParam = $location.search();
+  if ($location.search().hasOwnProperty('x') && $location.search().hasOwnProperty('y')) {
+    $scope.initialPos.lat = parseFloat(urlParam.x);
+    $scope.initialPos.lng = parseFloat(urlParam.y);
+    $scope.initialPos.force = true;
+    $scope.initialPos.zoom = 15;
+  }
   return $timeout(function() {
     var mapStyle;
+    console.log($scope.initialPos);
     $scope.map = new google.maps.Map(document.getElementById('map'), {
       center: {
-        lat: 50.8471417,
-        lng: 4.3528959
+        lat: $scope.initialPos.lat,
+        lng: $scope.initialPos.lng
       },
-      zoom: 12,
+      zoom: $scope.initialPos.zoom,
       mapTypeControl: false,
       streetViewControl: false
     });
@@ -257,7 +271,7 @@ myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInt
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         marker = _ref[_i];
-        _results.push(getBusiness(marker.id).visible && $scope.map.getBounds().contains(marker.getPosition()) ? $scope.listDisplayedBusiness.push(getBusiness(marker.id)) : void 0);
+        _results.push(getBusiness(marker.id).visible && ($scope.map.getBounds() != null) && $scope.map.getBounds().contains(marker.getPosition()) ? $scope.listDisplayedBusiness.push(getBusiness(marker.id)) : void 0);
       }
       return _results;
     };

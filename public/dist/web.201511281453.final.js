@@ -2026,8 +2026,8 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
   $(window).scrollTop(0);
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
 }]);
-myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInterestService', '$compile', '$timeout', 'geolocationService', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService) {
-  var addListener, getBusiness, getIcon, getMarker, testInterests;
+myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInterestService', '$compile', '$timeout', 'geolocationService', '$location', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService, $location) {
+  var addListener, getBusiness, getIcon, getMarker, testInterests, urlParam;
   $scope.mapDataBusinesses = null;
   $scope.map = null;
   $scope.interests = null;
@@ -2035,15 +2035,21 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
   $scope.currentMarker = null;
   $scope.listDisplayedBusiness = [];
   $scope.displayList = true;
+  $scope.initialPos = {
+    lat: 50.8471417,
+    lng: 4.3528959,
+    force: false,
+    zoom: 12
+  };
   $scope.$watch(function() {
     return geolocationService.position;
   }, function(n) {
-    if (n != null) {
+    if ((n != null) && $scope.initialPos.force === false) {
       return $scope.centerToPosition();
     }
   });
   $scope.centerToPosition = function() {
-    if ((geolocationService.position != null) && ($scope.map != null)) {
+    if ((geolocationService.position != null) && ($scope.map != null) && $scope.initialPos.force === false) {
       $scope.map.setCenter({
         lat: geolocationService.position.x,
         lng: geolocationService.position.y
@@ -2258,14 +2264,22 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
   });
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
+  urlParam = $location.search();
+  if ($location.search().hasOwnProperty('x') && $location.search().hasOwnProperty('y')) {
+    $scope.initialPos.lat = parseFloat(urlParam.x);
+    $scope.initialPos.lng = parseFloat(urlParam.y);
+    $scope.initialPos.force = true;
+    $scope.initialPos.zoom = 15;
+  }
   return $timeout(function() {
     var mapStyle;
+    console.log($scope.initialPos);
     $scope.map = new google.maps.Map(document.getElementById('map'), {
       center: {
-        lat: 50.8471417,
-        lng: 4.3528959
+        lat: $scope.initialPos.lat,
+        lng: $scope.initialPos.lng
       },
-      zoom: 12,
+      zoom: $scope.initialPos.zoom,
       mapTypeControl: false,
       streetViewControl: false
     });
@@ -2285,7 +2299,7 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         marker = _ref[_i];
-        _results.push(getBusiness(marker.id).visible && $scope.map.getBounds().contains(marker.getPosition()) ? $scope.listDisplayedBusiness.push(getBusiness(marker.id)) : void 0);
+        _results.push(getBusiness(marker.id).visible && ($scope.map.getBounds() != null) && $scope.map.getBounds().contains(marker.getPosition()) ? $scope.listDisplayedBusiness.push(getBusiness(marker.id)) : void 0);
       }
       return _results;
     };
@@ -2326,8 +2340,8 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
   $scope.navigateTo = function(publication) {
     return $location.path('/business/' + publication.businessId + '/publication/' + publication.id);
   };
-  $scope.goTo = function(url) {
-    return $location.path(url);
+  $scope.goTo = function(url, params) {
+    return $location.path(url).search(params);
   };
   $scope.getBackgroundClass = function(publication) {
     if ((publication.pictures[0] != null) && publication.pictures[0].width / publication.pictures[0].height > 1) {
@@ -2336,26 +2350,32 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
       return 'picture-vertical';
     }
   };
-  $(window).scrollTop(0);
-  $rootScope.$broadcast('PROGRESS_BAR_STOP');
-  businessService.loadLastBusiness($scope.LAST_BUSINESS_NB, function(data) {
-    var b, _i, _len, _ref, _results;
-    $scope.businesses = data;
-    _ref = $scope.businesses;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      b = _ref[_i];
-      _results.push(b.descriptionLimit = $scope.descriptionLimitBase);
-    }
-    return _results;
+  $scope.$on('POSITION_CHANGED', function() {
+    return $scope.loadBusiness();
   });
+  $scope.loadBusiness = function() {
+    return businessService.loadLastBusiness($scope.LAST_BUSINESS_NB, function(data) {
+      var b, _i, _len, _ref, _results;
+      $scope.businesses = data;
+      _ref = $scope.businesses;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        b = _ref[_i];
+        _results.push(b.descriptionLimit = $scope.descriptionLimitBase);
+      }
+      return _results;
+    });
+  };
   searchService.lastOnes(3, function(data) {
     $scope.publicationListCtrl.loading = false;
     return $scope.publicationListCtrl.data = data;
   });
-  return $timeout(function() {
+  $timeout(function() {
     return FB.XFBML.parse();
   }, 1);
+  $(window).scrollTop(0);
+  $rootScope.$broadcast('PROGRESS_BAR_STOP');
+  return $scope.loadBusiness();
 }]);
 myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
   return {

@@ -11,8 +11,8 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService,
   $scope.navigateTo = function(publication) {
     return $location.path('/business/' + publication.businessId + '/publication/' + publication.id);
   };
-  $scope.goTo = function(url) {
-    return $location.path(url);
+  $scope.goTo = function(url, params) {
+    return $location.path(url).search(params);
   };
   $scope.getBackgroundClass = function(publication) {
     if ((publication.pictures[0] != null) && publication.pictures[0].width / publication.pictures[0].height > 1) {
@@ -21,24 +21,30 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService,
       return 'picture-vertical';
     }
   };
-  $(window).scrollTop(0);
-  $rootScope.$broadcast('PROGRESS_BAR_STOP');
-  businessService.loadLastBusiness($scope.LAST_BUSINESS_NB, function(data) {
-    var b, _i, _len, _ref, _results;
-    $scope.businesses = data;
-    _ref = $scope.businesses;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      b = _ref[_i];
-      _results.push(b.descriptionLimit = $scope.descriptionLimitBase);
-    }
-    return _results;
+  $scope.$on('POSITION_CHANGED', function() {
+    return $scope.loadBusiness();
   });
+  $scope.loadBusiness = function() {
+    return businessService.loadLastBusiness($scope.LAST_BUSINESS_NB, function(data) {
+      var b, _i, _len, _ref, _results;
+      $scope.businesses = data;
+      _ref = $scope.businesses;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        b = _ref[_i];
+        _results.push(b.descriptionLimit = $scope.descriptionLimitBase);
+      }
+      return _results;
+    });
+  };
   searchService.lastOnes(3, function(data) {
     $scope.publicationListCtrl.loading = false;
     return $scope.publicationListCtrl.data = data;
   });
-  return $timeout(function() {
+  $timeout(function() {
     return FB.XFBML.parse();
   }, 1);
+  $(window).scrollTop(0);
+  $rootScope.$broadcast('PROGRESS_BAR_STOP');
+  return $scope.loadBusiness();
 });

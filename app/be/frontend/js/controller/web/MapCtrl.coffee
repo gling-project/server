@@ -2,7 +2,7 @@
 #display map
 #can create a business page from a facebook profile
 #can change the status of the business
-myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService) ->
+myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService, $location) ->
 
 
     #params
@@ -12,18 +12,23 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
     $scope.markers = []
     $scope.currentMarker = null
     $scope.listDisplayedBusiness = []
-    $scope.displayList=true
+    $scope.displayList = true
+    $scope.initialPos=
+        lat: 50.8471417
+        lng: 4.3528959
+        force:false
+        zoom:12
 
     #watch position
     $scope.$watch ->
         return geolocationService.position
     , (n)->
-        if n?
+        if n? && $scope.initialPos.force==false
             $scope.centerToPosition()
 
     $scope.centerToPosition = ->
-        if geolocationService.position? && $scope.map?
-            $scope.map.setCenter {lat:geolocationService.position.x,lng:geolocationService.position.y}
+        if geolocationService.position? && $scope.map? && $scope.initialPos.force==false
+            $scope.map.setCenter {lat: geolocationService.position.x, lng: geolocationService.position.y}
             $scope.map.setZoom 15
             google.maps.event.trigger $scope.map, 'resize'
             if !$scope.currentMarker?
@@ -63,7 +68,7 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
     #filters
     $scope.$watch 'filters', ->
         $scope.computeFilters()
-    ,true
+    , true
 
     #watch interest
     $scope.$watch 'interests', ->
@@ -73,20 +78,20 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
     $scope.computeFilters = ->
         if $scope.mapDataBusinesses?
             for mapDataBusiness in $scope.mapDataBusinesses
-                visible=true
+                visible = true
                 marker = getMarker mapDataBusiness
                 #test attendance
                 if $scope.filters.open && !mapDataBusiness.attendance?
-                    visible=false
-                #test following
+                    visible = false
+                    #test following
                 else if $scope.filters.following && !mapDataBusiness.following
-                    visible=false
-                #test interest
+                    visible = false
+                    #test interest
                 else if !testInterests mapDataBusiness
-                    visible=false
+                    visible = false
 
                 #result
-                mapDataBusiness.visible=visible
+                mapDataBusiness.visible = visible
                 if visible
                     if !marker.getMap()?
                         marker.setMap $scope.map
@@ -117,8 +122,6 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         return false
 
 
-
-
     #interest list select / dis-select all
     $scope.selectAllInterest = (all) ->
         for interest in $scope.interests
@@ -142,7 +145,7 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
 
                     marker.setMap $scope.map
                     $scope.markers.push marker
-                    mapDataBusiness.visible=true
+                    mapDataBusiness.visible = true
 
                     addListener marker, mapDataBusiness
         $scope.computeList()
@@ -196,7 +199,6 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
             , 1000
 
 
-
     #intialization
     mapService.loadMapDataBusiness (data)->
         $scope.mapDataBusinesses = data
@@ -213,14 +215,23 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
     $(window).scrollTop 0
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'
 
+    #compute position
+    urlParam = $location.search()
+    if $location.search().hasOwnProperty('x') && $location.search().hasOwnProperty('y')
+        $scope.initialPos.lat= parseFloat(urlParam.x)
+        $scope.initialPos.lng= parseFloat(urlParam.y)
+        $scope.initialPos.force=true
+        $scope.initialPos.zoom=16
+
     $timeout ->
+        console.log $scope.initialPos
         $scope.map = new google.maps.Map document.getElementById('map'), {
             center:
-                lat: 50.8471417
-                lng: 4.3528959
-            zoom: 12
+                lat: $scope.initialPos.lat
+                lng: $scope.initialPos.lng
+            zoom: $scope.initialPos.zoom
             mapTypeControl: false
-            streetViewControl:false
+            streetViewControl: false
         }
 
         #create displayable marker
@@ -232,11 +243,10 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
                 $scope.computeList()
             , 500
         $scope.computeList = ->
-            $scope.listDisplayedBusiness=[]
+            $scope.listDisplayedBusiness = []
             for marker in $scope.markers
-                if getBusiness(marker.id).visible && $scope.map.getBounds().contains(marker.getPosition())
+                if getBusiness(marker.id).visible && $scope.map.getBounds()? && $scope.map.getBounds().contains(marker.getPosition())
                     $scope.listDisplayedBusiness.push getBusiness marker.id
-
 
 
         mapStyle = [

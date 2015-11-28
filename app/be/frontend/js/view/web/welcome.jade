@@ -23,8 +23,10 @@
                                     br
                                     span {{publication.businessName}}
                                 .promotion(ng-show="publication.type == 'PROMOTION'") - {{publication.offPercent * 100 | number:0}} %
-                    img(src="/assets/images/event/sn.jpg")
-                    div
+                    .block-title Cette semaine près de chez vous !
+                    .event_el
+                        img(src="/assets/images/event/sn.jpg")
+                    .event_el
                         .block-title Saint Nicolas a aussi ses commerces de proximité favoris!
                         p Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!
                             br
@@ -37,7 +39,7 @@
                     .see-more.link(ng-click="goTo('/')") Voir plus...
                     .block-title Les dernières actualités de vos commerces
                     publication-list-ctrl(ng-info='publicationListCtrl')
-                    button.gling-button(ng-click="goTo('/')") Décrouvrez plus d'actualités
+                    .link.center(ng-click="goTo('/')") Découvrez plus d'actualités...
 
             .right-column
 
@@ -50,9 +52,7 @@
                 .map-block
                     .see-more.link(ng-click="goTo('/map/')") Voir plus...
                     .block-title Les quartiers actifs
-                    li
-                        ul Etterbeek
-                    img(src="/assets/images/map/1160.png")
+                    img(src="/assets/images/map/1160.png",ng-click="goTo('/map',{x:50.815060,y:4.425933})")
 
 
                 //- last business

@@ -3352,7 +3352,7 @@ ul.messenger .messenger-spinner {
 }
 .welcome-page .welcome-header {
   border: 1px solid #cccccc;
-  height: 280px;
+  height: 320px;
   background: url('/assets/images/welcome_page/bg.jpg') no-repeat scroll 0 -50px;
   text-align: center;
   margin-bottom: 20px;
@@ -3379,6 +3379,9 @@ ul.messenger .messenger-spinner {
   margin-top: 10px;
   background-color: #f4f4f4;
   padding: 5px;
+}
+.welcome-page .left-column .publication-block .center {
+  text-align: center;
 }
 .welcome-page .right-column {
   display: inline-block;
@@ -3412,11 +3415,13 @@ ul.messenger .messenger-spinner {
 .welcome-page .event-block img {
   width: 150px;
 }
-.welcome-page .event-block > div {
+.welcome-page .event-block > .event_el {
   display: inline-block;
   vertical-align: top;
-  width: 400px;
+}
+.welcome-page .event-block > .event_el:last-child {
   margin-left: 20px;
+  width: 400px;
 }
 .welcome-page .event-block h2 {
   font-weight: bold;
@@ -3488,6 +3493,9 @@ ul.messenger .messenger-spinner {
   padding: 10px;
   margin: 0px 0px 10px 10px;
   background-color: #f4f4f4;
+}
+.welcome-page .map-block img {
+  cursor: pointer;
 }
 .welcome-page .last-business-block {
   display: inline-block;
