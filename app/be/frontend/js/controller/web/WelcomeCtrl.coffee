@@ -2,6 +2,7 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
 
     #params
     $scope.LAST_BUSINESS_NB = 5
+    $scope.MAX_PUBLICATION=4
     $scope.descriptionLimitBase = 120
     $scope.publicationListCtrl =
         data:[]
@@ -34,7 +35,7 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
                 b.descriptionLimit = $scope.descriptionLimitBase
 
     # load publication
-    searchService.lastOnes 3, (data)->
+    searchService.lastOnes $scope.MAX_PUBLICATION, (data)->
         $scope.publicationListCtrl.loading = false
         $scope.publicationListCtrl.data = data
 

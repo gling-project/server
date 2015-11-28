@@ -1,73 +1,52 @@
-.container-content
-    .content-block
-        .welcome-page
+.welcome-page
+    .welcome-header
+        .gling-icon.gling-icon-logoapp.logo
+        p What's up in my shops
 
-            .welcome-header
-                .gling-icon.gling-icon-logoapp.logo
-                p What's up in my shops
+    .left-column
 
-            .left-column
+        //- event block
+        .block-title.block-title-left.block-title-first Cette semaine près de chez vous !
+        .event-block
+            img(src="/assets/images/event/sn.jpg")
+            span.event-title Saint Nicolas a aussi ses commerces de proximité favoris!
+            br
+            | Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!
+            br
+            | Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling.
+            br
+            | Et… N’oubliez pas de rester sage!
 
-                //- event block
-                .event-block
-                    //
-                        .block-title Bientôt Noël !
-                        p En manque d'inspiration pour vos achats de Noël? Gling vous aide à trouver les meilleures oportinutés proposées par vos commerçants locaux!
+        //publication
+        .block-title.block-title-left Les dernières actualités de vos commerces
+            .see-more.link(ng-click="goTo('/')") Voir plus...
+        publication-list-ctrl(ng-info='publicationListCtrl')
+        .link.center(ng-click="goTo('/')") Découvrez plus d'actualités...
 
-                        .welcome-publication-list
-                            .welcome-publication-box(ng-repeat="publication in publications",
-                                ng-class="getBackgroundClass(publication)"
-                            style="background-image:url('{{publication.pictures[0] | image}}')",
-                            ng-click="navigateTo(publication)")
-                                .title {{publication.title}}
-                                    br
-                                    span {{publication.businessName}}
-                                .promotion(ng-show="publication.type == 'PROMOTION'") - {{publication.offPercent * 100 | number:0}} %
-                    .block-title Cette semaine près de chez vous !
-                    .event_el
-                        img(src="/assets/images/event/sn.jpg")
-                    .event_el
-                        .block-title Saint Nicolas a aussi ses commerces de proximité favoris!
-                        p Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!
-                            br
-                            | Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling.
-                            br
-                            | Et… N’oubliez pas de rester sage!
+    .right-column
 
-                //publication
-                .publication-block
-                    .see-more.link(ng-click="goTo('/')") Voir plus...
-                    .block-title Les dernières actualités de vos commerces
-                    publication-list-ctrl(ng-info='publicationListCtrl')
-                    .link.center(ng-click="goTo('/')") Découvrez plus d'actualités...
+        //- facebook campaign
+        .block-title.block-title-first Participez sur Facebook!
+        .fb-post(data-href="https://www.facebook.com/gling.be/posts/1695721087310165",data-width="380")
 
-            .right-column
-
-                //- facebook campaign
-                .facebook-block
-                    .block-title Participez sur notre page Facebook!
-                    .fb-post(data-href="https://www.facebook.com/gling.be/posts/1695721087310165",data-width="370")
-
-                //map
-                .map-block
-                    .see-more.link(ng-click="goTo('/map/')") Voir plus...
-                    .block-title Les quartiers actifs
-                    img(src="/assets/images/map/1160.png",ng-click="goTo('/map',{x:50.815060,y:4.425933})")
+        //map
+        .block-title Les quartiers actifs
+            .see-more.link(ng-click="goTo('/map/')") Voir plus...
+        img.map-img(src="/assets/images/map/1160.png",ng-click="goTo('/map',{x:50.815060,y:4.425933})")
 
 
-                //- last business
-                .last-business-block
-                    .block-title Connaissez-vous ?
-                    .welcome-business-list
-                        .welcome-business-list-el(ng-repeat="business in businesses")
-                            table
-                                tr
-                                    td(rowspan=2,ng-click="goTo('/business/'+business.id)")
-                                        img.illustration(ng-src="{{business.illustration | image}}")
-                                    td(ng-click="goTo('/business/'+business.id)")
-                                        .title {{business.name}}
-                                tr
-                                    td
-                                        .address {{business.address.street}}, {{business.address.zip}} {{business.address.city}} - {{business.distance / 1000 | number:2}} km<br/>
-                            category-line-ctrl(ng-info="{categories:business.categories,level1:false}")
-                            follow-widget-ctrl(ng-info="{displayText:true,business:business}")
+        //- last business
+        .block-title Connaissez-vous ?
+        .welcome-business-list
+            .welcome-business-list-el(ng-repeat="business in businesses")
+                table
+                    tr
+                        td(rowspan=2,ng-click="goTo('/business/'+business.id)")
+                            img.illustration(ng-src="{{business.illustration | image}}")
+                        td(ng-click="goTo('/business/'+business.id)")
+                            .title {{business.name}}
+                    tr
+                        td
+                            .address {{business.address.street}}, {{business.address.zip}} {{business.address.city}} - {{business.distance / 1000 | number:2}} km<br/>
+                category-line-ctrl(ng-info="{categories:business.categories,level1:false}")
+                follow-widget-ctrl(ng-info="{displayText:true,business:business}")

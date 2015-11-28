@@ -2269,7 +2269,7 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
     $scope.initialPos.lat = parseFloat(urlParam.x);
     $scope.initialPos.lng = parseFloat(urlParam.y);
     $scope.initialPos.force = true;
-    $scope.initialPos.zoom = 15;
+    $scope.initialPos.zoom = 16;
   }
   return $timeout(function() {
     var mapStyle;
@@ -2329,6 +2329,7 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
 }]);
 myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '$location', 'businessService', 'constantService', 'customerInterestService', 'searchService', '$timeout', function($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout) {
   $scope.LAST_BUSINESS_NB = 5;
+  $scope.MAX_PUBLICATION = 4;
   $scope.descriptionLimitBase = 120;
   $scope.publicationListCtrl = {
     data: []
@@ -2366,7 +2367,7 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
       return _results;
     });
   };
-  searchService.lastOnes(3, function(data) {
+  searchService.lastOnes($scope.MAX_PUBLICATION, function(data) {
     $scope.publicationListCtrl.loading = false;
     return $scope.publicationListCtrl.data = data;
   });

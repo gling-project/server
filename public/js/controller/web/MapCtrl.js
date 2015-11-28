@@ -241,7 +241,7 @@ myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInt
     $scope.initialPos.lat = parseFloat(urlParam.x);
     $scope.initialPos.lng = parseFloat(urlParam.y);
     $scope.initialPos.force = true;
-    $scope.initialPos.zoom = 15;
+    $scope.initialPos.zoom = 16;
   }
   return $timeout(function() {
     var mapStyle;

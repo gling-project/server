@@ -3350,6 +3350,11 @@ ul.messenger .messenger-spinner {
   color: #f4f4f4;
   background-color: #555555;
 }
+.welcome-page {
+  width: 1000px;
+  margin: 94px auto 50px;
+  position: relative;
+}
 .welcome-page .welcome-header {
   border: 1px solid #cccccc;
   height: 320px;
@@ -3380,40 +3385,63 @@ ul.messenger .messenger-spinner {
   background-color: #f4f4f4;
   padding: 5px;
 }
-.welcome-page .left-column .publication-block .center {
+.welcome-page .center {
   text-align: center;
 }
 .welcome-page .right-column {
   display: inline-block;
   vertical-align: top;
-  width: 390px;
+  width: 380px;
+  margin-left: 15px;
 }
 .welcome-page .facebook-block {
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   margin-left: 10px;
   margin-bottom: 10px;
-  padding: 5px;
+  padding: 5px 0 0;
 }
 .welcome-page .block-title {
-  font-size: 22px;
+  font-size: 26px;
   margin-bottom: 10px;
-  margin-left: 10px;
   color: #2c265c;
-  margin-top: 10px;
+  margin-top: 40px;
+  border-bottom: 1px solid #aaa;
+}
+.welcome-page .block-title.block-title-left {
+  margin-left: 30px;
+  margin-right: 25px;
+}
+.welcome-page .block-title.block-title-first {
+  margin-top: 10px !important;
 }
 .welcome-page .see-more {
   float: right;
-  margin-top: 15px;
-  margin-right: 10px;
+  margin-top: 5px;
+  /* margin-right: 10px; */
+
+  font-size: 16px;
 }
 .welcome-page .event-block {
-  padding: 15px;
+  padding: 5px 15px 15px;
   position: relative;
+  background-color: #ffffff;
+  margin: 0 25px;
   color: #555555;
-  background-color: #f4f4f4;
+  -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.4);
+}
+.welcome-page .event-block .event-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #2c265c;
+  margin-top: 10px;
 }
 .welcome-page .event-block img {
   width: 150px;
+  border-radius: 20px;
+  border: 1px solid #cccccc;
+  margin-right: 10px;
 }
 .welcome-page .event-block > .event_el {
   display: inline-block;
@@ -3432,7 +3460,7 @@ ul.messenger .messenger-spinner {
   margin: 0 4px;
   display: inline-block;
   padding: 10px;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   width: 180px;
   height: 180px;
   vertical-align: bottom;
@@ -3484,17 +3512,9 @@ ul.messenger .messenger-spinner {
   width: 570px;
   padding: 20px 50px;
   margin: 10px 10px;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
 }
-.welcome-page .map-block {
-  display: inline-block;
-  vertical-align: top;
-  width: 380px;
-  padding: 10px;
-  margin: 0px 0px 10px 10px;
-  background-color: #f4f4f4;
-}
-.welcome-page .map-block img {
+.welcome-page .map-img {
   cursor: pointer;
 }
 .welcome-page .last-business-block {
@@ -3503,21 +3523,21 @@ ul.messenger .messenger-spinner {
   width: 380px;
   padding: 10px;
   margin: 0px 0px 10px 10px;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
 }
-.welcome-page .last-business-block .welcome-business-list .welcome-business-list-el {
+.welcome-page .welcome-business-list .welcome-business-list-el {
   padding: 5px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   background-color: #ffffff;
   margin: 6px 0px;
 }
-.welcome-page .last-business-block .welcome-business-list .welcome-business-list-el .illustration {
+.welcome-page .welcome-business-list .welcome-business-list-el .illustration {
   width: 60px;
   height: 60px;
   border: 1px solid #cccccc;
   cursor: pointer;
 }
-.welcome-page .last-business-block .welcome-business-list .welcome-business-list-el .title {
+.welcome-page .welcome-business-list .welcome-business-list-el .title {
   font-weight: bold;
   vertical-align: top;
   color: #2c265c;
@@ -3525,12 +3545,12 @@ ul.messenger .messenger-spinner {
   font-size: 18px;
   cursor: pointer;
 }
-.welcome-page .last-business-block .welcome-business-list .welcome-business-list-el .address {
+.welcome-page .welcome-business-list .welcome-business-list-el .address {
   display: inline-block;
   font-size: 14px;
   color: #cccccc;
 }
-.welcome-page .last-business-block .welcome-business-list .welcome-business-list-el table tr:first-child td:first-child {
+.welcome-page .welcome-business-list .welcome-business-list-el table tr:first-child td:first-child {
   width: 65px;
 }
 .welcome-page .publication-interest-list {
