@@ -66,7 +66,7 @@ object ApplicationBuild extends Build {
   .settings(
       angularCompileSettings, resources in Compile <<= (resources in Compile).dependsOn(angularCompileTask)
     )
-  javaOptions ++= Seq("-Xmx512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
+//  javaOptions ++= Seq("-Xmx512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
 
 
 }

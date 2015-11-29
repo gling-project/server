@@ -150,31 +150,6 @@ public class Global extends GlobalSettings {
             action= super.onRequest(request, actionMethod);
         }
 
-//        //save request into MongoDB
-//        String method = request.method();
-//        String username= request.username();
-//        String host= request.host();
-//        String path= request.path();
-//        String remoteAddress= request.remoteAddress();
-//        String uri= request.uri();
-//        String version= request.version();
-//        Map<String, String[]> headers = request.queryString();
-//
-//        Class<?> declaringClass = actionMethod.getDeclaringClass();
-//
-//        String name1 = declaringClass.getName();
-//
-//        String name = actionMethod.getName();
-//
-//        Parameter[] parameters = actionMethod.getParameters();
-
-//        request
-
-//        Parameter[] parameters1 = request.actionMethod.getParameters();
-//
-
-//        MongoDBOperator.write(name1+"."+name);
-
         return action;
     }
 

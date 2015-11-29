@@ -3401,6 +3401,7 @@ ul.messenger .messenger-spinner {
   padding: 5px 0 0;
 }
 .welcome-page .block-title {
+  padding-left: 10px;
   font-size: 26px;
   margin-bottom: 10px;
   color: #2c265c;
@@ -3416,7 +3417,7 @@ ul.messenger .messenger-spinner {
 }
 .welcome-page .see-more {
   float: right;
-  margin-top: 5px;
+  margin-top: 10px;
   /* margin-right: 10px; */
 
   font-size: 16px;
