@@ -376,10 +376,10 @@ myApp.service("modalService", function ($modal) {
         });
     };
 
-    this.ConfirmClaimModalCtrl = function(claimBusiness,callback){
+    this.openClaimBusiness = function(business,callback){
         var resolve = {
-            claimBusiness: function () {
-                return claimBusiness;
+            business: function () {
+                return business;
             },
             callback:function(){
                 return callback;

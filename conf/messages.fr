@@ -652,3 +652,4 @@ day_abrv_sunday=Di
 --.error.confirmClaim.notClaimed=Ce commerce n''a pas été revendiqué
 --.error.confirmClaim.businessNotPublished=Seuls les commerces publiés peuvent être confirmé
 --.admin.business.confirmClaim=Confimer la revendication
+--.business.page.noOwner.alreadyBusiness=Vous posédez déjà un commerce

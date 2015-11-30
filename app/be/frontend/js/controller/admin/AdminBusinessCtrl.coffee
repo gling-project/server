@@ -55,7 +55,6 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
         ,1000
 
     $scope.startAnimation = (business, inthere) ->
-        console.log business.id+'/'+inthere
         if inthere
             for marker in $scope.mks
                 if marker.id == business.id
@@ -107,7 +106,7 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
                 business.businessStatus = 'PUBLISHED'
 
     $scope.confirmClaim = (business)->
-        superAdminService.confirmClaim business.id, ->
+        modalService.openClaimBusiness business, ->
             $flash.success 'Le commerçant est maintenant propriétaire de son commerce'
             business.hasOwner = true
 

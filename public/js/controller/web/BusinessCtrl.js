@@ -10,7 +10,17 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
   $scope.businessId = $routeParams.businessId;
   $scope.descriptionLimitBase = 200;
   $scope.descriptionLimit = $scope.descriptionLimitBase;
-  $scope.myself = accountService.model.myself;
+  if (accountService.model.myself != null) {
+    $scope.myself = accountService.model.myself;
+  } else {
+    $scope.$watch(function() {
+      return accountService.model;
+    }, function(n) {
+      if ((n != null) && accountService.model.myself) {
+        return $scope.myself = accountService.model.myself;
+      }
+    }, true);
+  }
   $scope.publicationOptions = [
     {
       key: 'BASIC',
@@ -163,8 +173,6 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
           dto: address,
           addName: false
         }, function(close, setLoading) {
-          console.log('je suis une craaaacasse');
-          console.log(address);
           return businessService.editAddress($scope.business.id, address, function(data) {
             $scope.business.address = data;
             $scope.googleMapParams.address = data;
@@ -359,6 +367,7 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
           $flash.success($filter('translateText')('--.business.claim.modal.success'));
           close();
           accountService.model.myself.claimedBusinessId = $scope.business.id;
+          $scope.myself.claimedBusinessId = $scope.business.id;
           return setLoading(false);
         }, function() {
           return setLoading(false);

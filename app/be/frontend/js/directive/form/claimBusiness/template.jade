@@ -1,4 +1,4 @@
 .form
-    div {{'--.business.claim.form.desc' | translateText}}
+    div(ng-bind-html="'--.business.claim.form.desc' | translateText | text")
     dir-field-text(ng-info='fields.phone')
     dir-field-text(ng-info='fields.vta')

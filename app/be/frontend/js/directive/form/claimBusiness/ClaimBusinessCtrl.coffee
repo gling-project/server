@@ -26,7 +26,8 @@ myApp.directive 'claimBusinessCtrl', ($flash, facebookService, translationServic
                     validationMessage: '--.validation.dto.vta'
                     disabled: ->
                         return scope.getInfo().disabled || scope.getInfo().status? == 'PUBLISHED'
-                    field: scope.getInfo().dto
+                    field: scope.getInfo().dto,
+                    fieldName: 'vta'
 
             #display loading
             # different ways if mobile version or not

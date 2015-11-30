@@ -40,7 +40,6 @@ myApp.controller('AdminBusinessCtrl', function($scope, superAdminService, ngTabl
   };
   $scope.startAnimation = function(business, inthere) {
     var marker, _i, _len, _ref, _results;
-    console.log(business.id + '/' + inthere);
     if (inthere) {
       _ref = $scope.mks;
       _results = [];
@@ -87,7 +86,7 @@ myApp.controller('AdminBusinessCtrl', function($scope, superAdminService, ngTabl
     });
   };
   $scope.confirmClaim = function(business) {
-    return superAdminService.confirmClaim(business.id, function() {
+    return modalService.openClaimBusiness(business, function() {
       $flash.success('Le commerçant est maintenant propriétaire de son commerce');
       return business.hasOwner = true;
     });

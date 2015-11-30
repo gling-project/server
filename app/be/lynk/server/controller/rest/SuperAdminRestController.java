@@ -186,9 +186,16 @@ public class SuperAdminRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED);
         }
 
-        business.setAccount(claimBusiness.getAccount());
+        Account account = claimBusiness.getAccount();
 
-        businessService.saveOrUpdate(business);
+        business.setAccount(account);
+
+        account.setRole(RoleEnum.BUSINESS);
+        account.setType(AccountTypeEnum.BUSINESS);
+
+        accountService.saveOrUpdate(account);
+
+        claimBusinessService.remove(claimBusiness);
 
         return ok(new ResultDTO());
     }
@@ -348,6 +355,9 @@ public class SuperAdminRestController extends AbstractRestController {
 
             //add claim
             businessDTO.setClaimBusiness(dozerService.map(claimBusinessService.findByBusiness(business),ClaimBusinessDTO.class));
+
+            //have owner
+            businessDTO.setHasOwner(business.getAccount()!=null);
 
         }
 

@@ -1,17 +1,19 @@
-myApp.controller 'ConfirmClaimModalCtrl', ($scope, $flash, $modal, $modalInstance, claimBusiness,callback,superAdminService) ->
+myApp.controller 'ConfirmClaimModalCtrl', ($scope, $flash, $modal, $modalInstance, business,callback,superAdminService) ->
 
     #close modal
     $scope.close = ->
         $modalInstance.close()
 
     #initialize
-    $scope.claimBusiness=claimBusiness
+    $scope.business=business
 
-    $scope.save =->
+    $scope.confirm =->
         $scope.loading=true
         superAdminService.confirmClaim business.id, ->
             $flash.success 'Le commerçant est maintenant propriétaire de son commerce'
             $scope.loading=false
-            callback()
+            business.hasOwner=false
+            business.claimBusiness=null
+            $scope.close()
         , ->
             $scope.loading=false

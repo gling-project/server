@@ -38,14 +38,14 @@ super-admin-menu-ctrl
                 | {{business.email}}
             td(data-title="'Publication active/total'", sortable="'nbPublicationActive'")
                 | {{business.nbPublicationActive}} / {{business.nbPublication}}
-            td(data-title="'a un propriétaire ?'", sortable="'hasOwner'")
-                | {{business.hasOwner}}
+            td(data-title="'a un propriétaire'", sortable="'hasOwner'")
+                | {{business.hasOwner?'oui':'non'}}
             td(data-title="'--.generic.action' | translateText", sortable="'businessStatus'")
                 button(ng-click='toBusiness(business.id)')
                     | {{'--.admin.business.toBusiness' | translateText}}
                 button(name='admin-business-btn-confirm-publication', ng-click='confirmPublication(business)', ng-show="business.businessStatus == 'WAITING_CONFIRMATION' ")
                     | {{'--.admin.business.confirmPublication' | translateText}}
-                button(name='admin-business-btn-confirm-claim', ng-click='confirmClaim(business)', ng-show="business.businessStatus == 'PUBLISHED' && business.hasOwner !== true ")
+                button(name='admin-business-btn-confirm-claim', ng-click='confirmClaim(business)', ng-show="business.businessStatus == 'PUBLISHED' && business.claimBusiness != null")
                     | {{'--.admin.business.confirmClaim' | translateText}}
 
     //map panel

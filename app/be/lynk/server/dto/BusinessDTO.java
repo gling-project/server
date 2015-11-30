@@ -4,12 +4,10 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.util.constants.ValidationRegex;
 
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**

@@ -130,9 +130,10 @@
                 div(ng-show='business.hasOwner===false')
                     | {{'--.business.page.noOwner' | translateText}}
                     span.business-claimed-status
-                        span(ng-show='myself!=null && myself.claimedBusinessId == business.id') {{'--.business.page.noOwner.alreadyClaimed' | translateText}}
-                        span(ng-show='myself!=null && myself.claimedBusinessId!=null && myself.claimedBusinessId != business.id') {{'--.business.page.noOwner.alreadyClaimedOther' | translateText}}
-                    button.btn.gling-button-dark.btn-xs(ng-click='tryClaimBusiness()', ng-show='myself == null || myself.claimedBusinessId==null')
+                        span(ng-show='myself!=null && myself.businessId != null') {{'--.business.page.noOwner.alreadyBusiness' | translateText}}
+                        span(ng-show='myself!=null && myself.businessId == null && myself.claimedBusinessId == business.id') {{'--.business.page.noOwner.alreadyClaimed' | translateText}}
+                        span(ng-show='myself!=null && myself.businessId == null && myself.claimedBusinessId!=null && myself.claimedBusinessId != business.id') {{'--.business.page.noOwner.alreadyClaimedOther' | translateText}}
+                    button.btn.gling-button-dark.btn-xs(ng-click='tryClaimBusiness()', ng-show='myself == null || (myself.claimedBusinessId==null && myself.businessId == null  )')
                         | {{'--.business.page.claims' | translateText}}
                 .business-right-column
                     // description

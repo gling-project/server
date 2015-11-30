@@ -1,24 +1,25 @@
 //- header
 .modal-header
     button.btn.glyphicon.glyphicon-remove(style='float:right', ng-click='close()')
-    h4.modal-title {{'--.business.registrationModal.title' | translateText}}
+    h4.modal-title {{business.name}} réclamation
 
 //- body
 .modal-body.modal-login.business-registration
 
-    table
+    | information sur la personne réclamant le commerce
+    table.table-basic
         tr
             td nom
-            td claimBusiness.account.firstname  claimBusiness.account.lastname
+            td {{business.claimBusiness.account.firstname}} {{business.claimBusiness.account.lastname}}
         tr
             td email
-            td claimBusiness.account.email
+            td {{business.claimBusiness.account.email}}
         tr
             td téléphone
-            td claimBusiness.phone
+            td {{business.claimBusiness.phone}}
         tr
             td tva
-            td claimBusiness.tva
+            td {{business.claimBusiness.vta}}
 
 //footer
 .modal-footer

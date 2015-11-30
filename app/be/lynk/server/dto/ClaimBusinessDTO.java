@@ -16,7 +16,7 @@ public class ClaimBusinessDTO extends DTO {
 
     private BusinessDTO business;
 
-    private Account account;
+    private AccountDTO account;
 
     private Long businessId;
 
@@ -35,11 +35,11 @@ public class ClaimBusinessDTO extends DTO {
         this.business = business;
     }
 
-    public Account getAccount() {
+    public AccountDTO getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(AccountDTO account) {
         this.account = account;
     }
 

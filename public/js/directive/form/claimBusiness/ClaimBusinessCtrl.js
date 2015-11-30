@@ -31,7 +31,8 @@ myApp.directive('claimBusinessCtrl', function($flash, facebookService, translati
               disabled: function() {
                 return scope.getInfo().disabled || (scope.getInfo().status != null) === 'PUBLISHED';
               },
-              field: scope.getInfo().dto
+              field: scope.getInfo().dto,
+              fieldName: 'vta'
             }
           };
           scope.setLoading = function(b) {

@@ -11,7 +11,15 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
     $scope.businessId = $routeParams.businessId
     $scope.descriptionLimitBase = 200
     $scope.descriptionLimit = $scope.descriptionLimitBase
-    $scope.myself = accountService.model.myself
+    if accountService.model.myself?
+        $scope.myself = accountService.model.myself
+    else
+        $scope.$watch ->
+            return accountService.model
+        , (n)->
+            if n? && accountService.model.myself
+                $scope.myself = accountService.model.myself
+        ,true
 
     #publication timing
     $scope.publicationOptions = [
@@ -163,8 +171,6 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                     addName: false
                 }, (close, setLoading) ->
                     #scope.business
-                    console.log 'je suis une craaaacasse'
-                    console.log address
                     businessService.editAddress $scope.business.id, address, (data) ->
                         $scope.business.address = data
                         $scope.googleMapParams.address =  data
@@ -314,6 +320,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                     $flash.success $filter('translateText')('--.business.claim.modal.success')
                     close()
                     accountService.model.myself.claimedBusinessId = $scope.business.id
+                    $scope.myself.claimedBusinessId = $scope.business.id
                     setLoading false
                 , ->
                     setLoading false
@@ -333,6 +340,5 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
         $scope.displayError = true
 
     #back to the top of the page
-    #console.log($location.url());
     $(window).scrollTop 0
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'

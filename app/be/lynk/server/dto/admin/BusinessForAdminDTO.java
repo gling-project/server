@@ -1,15 +1,7 @@
 package be.lynk.server.dto.admin;
 
-import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
-import be.lynk.server.dto.*;
-import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.util.constants.ValidationRegex;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.time.DayOfWeek;
-import java.util.*;
+import be.lynk.server.dto.BusinessDTO;
+import be.lynk.server.dto.ClaimBusinessDTO;
 
 /**
  */
@@ -19,6 +11,19 @@ public class BusinessForAdminDTO extends BusinessDTO {
 
     private Long nbPublicationActive;
     private ClaimBusinessDTO claimBusiness;
+
+    private Boolean hasOwner;
+
+    public BusinessForAdminDTO() {
+    }
+
+    public Boolean getHasOwner() {
+        return hasOwner;
+    }
+
+    public void setHasOwner(Boolean hasOwner) {
+        this.hasOwner = hasOwner;
+    }
 
     public Long getNbPublication() {
         return nbPublication;
