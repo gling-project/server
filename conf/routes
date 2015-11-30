@@ -56,7 +56,7 @@ POST          /rest/business/$id<[0-9]+>/edit/gallery                           
 POST          /rest/business/ask_publication                                                                         @be.lynk.server.controller.rest.BusinessRestController.askPublication()
 POST          /rest/business/stop_publish                                                                            @be.lynk.server.controller.rest.BusinessRestController.stopPublication()
 POST          /rest/business/cancel_publication_request                                                              @be.lynk.server.controller.rest.BusinessRestController.cancelPublicationRequest()
-POST           /rest/business/last/$nb<[0-9]+>                                                                        @be.lynk.server.controller.rest.BusinessRestController.lastBusinesses(nb:Int)
+POST          /rest/business/last/$nb<[0-9]+>                                                                        @be.lynk.server.controller.rest.BusinessRestController.lastBusinesses(nb:Int)
 
 
 ## business schedule
@@ -113,7 +113,7 @@ POST          /rest/file64                                                      
 POST          /rest/contact                                                                                          @be.lynk.server.controller.rest.ContactRestController.contact()
 
 ## ADMIN
-GET           /rest/business/all                                                                                     @be.lynk.server.controller.rest.SuperAdminRestController.getAll()
+GET           /rest/business/all                                                                                     @be.lynk.server.controller.rest.SuperAdminRestController.getAllBusinesses()
 GET           /rest/business/confirmPublication/$id<[0-9]+>                                                          @be.lynk.server.controller.rest.SuperAdminRestController.confirmPublication(id:Long)
 GET           /rest/superadmin/categories_interests                                                                  @be.lynk.server.controller.rest.SuperAdminRestController.getCategoriesAndInterests()
 GET           /rest/superadmin/stats                                                                                 @be.lynk.server.controller.rest.SuperAdminRestController.getStats()
@@ -124,6 +124,7 @@ POST          /rest/superadmin/emailToBusinesses                                
 GET           /rest/superadmin/accountDetails                                                                        @be.lynk.server.controller.rest.SuperAdminRestController.getUserDetails()
 GET           /rest/superadmin/customerPosition                                                                      @be.lynk.server.controller.rest.SuperAdminRestController.getCustomerPositions()
 GET           /rest/superadmin/importBusiness/:name                                                                  @be.lynk.server.controller.rest.SuperAdminRestController.importBusiness(name:String)
+GET           /rest/superadmin/confirmClaim/$id<[0-9]+>                                                              @be.lynk.server.controller.rest.SuperAdminRestController.confirmClaim(id:Long)
 
 
 ## town

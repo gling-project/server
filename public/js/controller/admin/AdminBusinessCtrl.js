@@ -86,6 +86,12 @@ myApp.controller('AdminBusinessCtrl', function($scope, superAdminService, ngTabl
       });
     });
   };
+  $scope.confirmClaim = function(business) {
+    return superAdminService.confirmClaim(business.id, function() {
+      $flash.success('Le commerçant est maintenant propriétaire de son commerce');
+      return business.hasOwner = true;
+    });
+  };
   $scope.importBusinessStart = function() {
     var urlEncoded;
     $scope.importBusinessLoading = true;

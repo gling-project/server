@@ -172,6 +172,28 @@ public class SuperAdminRestController extends AbstractRestController {
     }
 
     @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result confirmClaim(Long id) {
+
+        Business business = businessService.findById(id);
+
+        ClaimBusiness claimBusiness = claimBusinessService.findByBusiness(business);
+
+        if(claimBusiness==null){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_CLAIMED);
+        }
+        if(!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)){
+            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED);
+        }
+
+        business.setAccount(claimBusiness.getAccount());
+
+        businessService.saveOrUpdate(business);
+
+        return ok(new ResultDTO());
+    }
+
+    @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
     public Result getClaimBusiness() {
         List<ClaimBusiness> all = claimBusinessService.findAll();
@@ -308,10 +330,10 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
-    public Result getAll() {
+    public Result getAllBusinesses() {
         List<Business> all = businessService.findAll();
 
-        List<BusinessDTO> map = new ArrayList<>();
+        List<BusinessForAdminDTO> map = new ArrayList<>();
 
         for (Business business : all) {
 
@@ -323,6 +345,9 @@ public class SuperAdminRestController extends AbstractRestController {
             //add publication nb
             businessDTO.setNbPublication(publicationService.countByBusiness(business));
             businessDTO.setNbPublicationActive(publicationService.countActiveByBusiness(business));
+
+            //add claim
+            businessDTO.setClaimBusiness(dozerService.map(claimBusinessService.findByBusiness(business),ClaimBusinessDTO.class));
 
         }
 

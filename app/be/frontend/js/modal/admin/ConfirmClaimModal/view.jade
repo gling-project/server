@@ -1,0 +1,27 @@
+//- header
+.modal-header
+    button.btn.glyphicon.glyphicon-remove(style='float:right', ng-click='close()')
+    h4.modal-title {{'--.business.registrationModal.title' | translateText}}
+
+//- body
+.modal-body.modal-login.business-registration
+
+    table
+        tr
+            td nom
+            td claimBusiness.account.firstname  claimBusiness.account.lastname
+        tr
+            td email
+            td claimBusiness.account.email
+        tr
+            td téléphone
+            td claimBusiness.phone
+        tr
+            td tva
+            td claimBusiness.tva
+
+//footer
+.modal-footer
+    button.btn.gling-button-dark(ng-disabled='loading', type='button', ng-click='confirm()')
+        | Confirmer
+    img(src='/assets/images/modal-loading.gif', ng-show='loading')

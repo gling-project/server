@@ -649,3 +649,6 @@ day_abrv_sunday=Di
 --.welcome.newsfeed=Actualités
 --.welcome.about=A propos de Gling
 --.welcome.welcome=Accueil
+--.error.confirmClaim.notClaimed=Ce commerce n''a pas été revendiqué
+--.error.confirmClaim.businessNotPublished=Seuls les commerces publiés peuvent être confirmé
+--.admin.business.confirmClaim=Confimer la revendication

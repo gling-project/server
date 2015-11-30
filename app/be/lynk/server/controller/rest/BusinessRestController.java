@@ -70,6 +70,8 @@ public class BusinessRestController extends AbstractController {
         return ok(new ListDTO<>(businessesDtos));
     }
 
+
+
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result getFollowed() {

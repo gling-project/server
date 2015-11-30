@@ -18,6 +18,7 @@ public class BusinessForAdminDTO extends BusinessDTO {
     private Long nbPublication;
 
     private Long nbPublicationActive;
+    private ClaimBusinessDTO claimBusiness;
 
     public Long getNbPublication() {
         return nbPublication;
@@ -33,5 +34,13 @@ public class BusinessForAdminDTO extends BusinessDTO {
 
     public void setNbPublicationActive(Long nbPublicationActive) {
         this.nbPublicationActive = nbPublicationActive;
+    }
+
+    public void setClaimBusiness(ClaimBusinessDTO claimBusiness) {
+        this.claimBusiness = claimBusiness;
+    }
+
+    public ClaimBusinessDTO getClaimBusiness() {
+        return claimBusiness;
     }
 }

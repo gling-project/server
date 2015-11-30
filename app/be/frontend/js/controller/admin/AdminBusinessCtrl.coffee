@@ -106,6 +106,11 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
                 #callback success : change the status
                 business.businessStatus = 'PUBLISHED'
 
+    $scope.confirmClaim = (business)->
+        superAdminService.confirmClaim business.id, ->
+            $flash.success 'Le commerçant est maintenant propriétaire de son commerce'
+            business.hasOwner = true
+
     #import business data from a facebook page
     $scope.importBusinessStart = ->
         $scope.importBusinessLoading = true

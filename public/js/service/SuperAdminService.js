@@ -21,6 +21,26 @@ myApp.service("superAdminService", function ($http, $flash) {
 
     };
 
+    this.confirmClaim = function (businessId, callbackSuccess, callbackError) {
+
+        $http({
+            'method': "GET",
+            'url': "/rest/superadmin/confirmClaim/" + businessId,
+            'headers': "Content-Type:application/json;charset=utf-8"
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+
     this.importTranslation = function (callbackSuccess, callbackError) {
         $http({
             'method': "POST",

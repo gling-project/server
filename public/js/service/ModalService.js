@@ -375,4 +375,21 @@ myApp.service("modalService", function ($modal) {
             resolve: resolve
         });
     };
+
+    this.ConfirmClaimModalCtrl = function(claimBusiness,callback){
+        var resolve = {
+            claimBusiness: function () {
+                return claimBusiness;
+            },
+            callback:function(){
+                return callback;
+            }
+        };
+        $modal.open({
+            templateUrl: "/assets/js/modal/admin/ConfirmClaimModal/view.html",
+            controller: "ConfirmClaimModalCtrl",
+            size: "l",
+            resolve: resolve
+        });
+    }
 });
