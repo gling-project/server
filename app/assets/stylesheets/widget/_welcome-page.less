@@ -80,6 +80,30 @@
         font-size: 16px;
     }
 
+    .map-container{
+        width: 380px;
+        height: 380px;
+        position: relative;
+        .map-next-btn{
+            position: absolute;
+            top: ~'calc(50% - 50px)';
+            height: 50px;
+            width: 30px;
+            right: 0;
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .map-previous-btn{
+            position: absolute;
+            top: ~'calc(50% - 50px)';
+            height: 50px;
+            width: 30px;
+            left: 0;
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.5);
+        }
+    }
+
     .event-block {
 
         padding: 5px 15px 15px;
@@ -103,7 +127,7 @@
             border-radius: 20px;
             border: 1px solid @color-grey;
             margin-right: 10px;
-
+            float: left;
         }
         & > .event_el {
             display: inline-block;

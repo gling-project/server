@@ -12,10 +12,12 @@ import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
+import be.lynk.server.service.impl.NotificationServiceImpl;
 import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.EmailMessageEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import be.lynk.server.util.message.NotificationMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.db.jpa.Transactional;
@@ -43,6 +45,8 @@ public class PromotionRestController extends AbstractRestController {
     private EmailService            emailService;
     @Autowired
     private FileService             fileService;
+    @Autowired
+    private NotificationService     notificationService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -105,6 +109,11 @@ public class PromotionRestController extends AbstractRestController {
         publicationDTO.setBusinessName(promotion.getBusiness().getName());
         publicationDTO.setBusinessIllustration(dozerService.map(promotion.getBusiness().getIllustration(), StoredFileDTO.class));
         publicationDTO.setBusinessId(promotion.getBusiness().getId());
+
+        //send a notification
+        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, promotion.getBusiness().getName());
+        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
+        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(promotion.getBusiness()));
 
 
         return ok(publicationDTO);

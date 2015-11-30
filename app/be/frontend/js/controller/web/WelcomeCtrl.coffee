@@ -1,12 +1,31 @@
-myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService,searchService,$timeout) ->
+myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout) ->
 
-    #params
+#params
     $scope.LAST_BUSINESS_NB = 5
-    $scope.MAX_PUBLICATION=4
+    $scope.MAX_PUBLICATION = 4
     $scope.descriptionLimitBase = 120
     $scope.publicationListCtrl =
-        data:[]
-    $scope.lastChange=null
+        data: []
+    $scope.lastChange = null
+
+    #map list
+    $scope.maps = [
+        src: "/assets/images/map/1160.png"
+        position:
+            x: 50.815060
+            y: 4.425933
+    ,
+        src: "/assets/images/map/tongres.png"
+        position:
+            x: 50.840479
+            y: 4.401033
+    ]
+
+    #open map
+    $scope.openMap = (map)->
+        console.log map
+        $scope.goTo('/map',map.position)
+
 
     $scope.getInterestClass = (interest) ->
         return 'gling-icon-' + interest.name
@@ -15,8 +34,7 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
     $scope.navigateTo = (publication) ->
         $location.path '/business/' + publication.businessId + '/publication/' + publication.id
 
-    $scope.goTo = (url,params) ->
-
+    $scope.goTo = (url, params) ->
         $location.path(url).search(params)
 
     $scope.getBackgroundClass = (publication) ->
@@ -42,7 +60,7 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
     #initialization
     $timeout ->
         FB.XFBML.parse();
-    ,1
+    , 1
 
     $(window).scrollTop 0
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'

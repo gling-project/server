@@ -214,7 +214,8 @@ var myApp = angular.module('app', [
         'ngRoute',
         'ngTable',
         'geolocation',
-        'timer'
+        'timer',
+        'angular-flexslider'
     ]
 );
 
@@ -230,14 +231,14 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
 
     var original = $location.path;
     $location.path = function (path, reload) {
-            if (reload === false) {
-                var lastRoute = $route.current;
-                var un = $rootScope.$on('$locationChangeSuccess', function () {
-                    $route.current = lastRoute;
-                    un();
-                });
-            }
-            return original.apply($location, [path]);
+        if (reload === false) {
+            var lastRoute = $route.current;
+            var un = $rootScope.$on('$locationChangeSuccess', function () {
+                $route.current = lastRoute;
+                un();
+            });
+        }
+        return original.apply($location, [path]);
     };
 }]);
 myApp.controller('LoginModalCtrl', ['$scope', '$flash', '$filter', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function($scope, $flash, $filter, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams, helpMessage) {
@@ -2344,6 +2345,25 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
     data: []
   };
   $scope.lastChange = null;
+  $scope.maps = [
+    {
+      src: "/assets/images/map/1160.png",
+      position: {
+        x: 50.815060,
+        y: 4.425933
+      }
+    }, {
+      src: "/assets/images/map/tongres.png",
+      position: {
+        x: 50.840479,
+        y: 4.401033
+      }
+    }
+  ];
+  $scope.openMap = function(map) {
+    console.log(map);
+    return $scope.goTo('/map', map.position);
+  };
   $scope.getInterestClass = function(interest) {
     return 'gling-icon-' + interest.name;
   };

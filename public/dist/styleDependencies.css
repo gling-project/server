@@ -2965,13 +2965,23 @@ ul.messenger .messenger-spinner {
 .navigation-bar .navigation-bar-menu {
   height: 30px;
   background-color: #f4f4f4;
-  border-bottom: 1px solid #2c265c;
   padding: 5px;
   width: 1000px;
   margin: 1px auto auto;
 }
 .navigation-bar .navigation-bar-menu > * {
-  margin: 0 15px;
+  padding: 0 20px;
+  text-transform: uppercase;
+  border-right: 1px solid #cccccc;
+  color: #2c265c;
+}
+.navigation-bar .navigation-bar-menu > *:last-child {
+  border-right: 0px;
+}
+.navigation-bar .navigation-bar-menu > *:hover {
+  color: #f4f4f4;
+  background-color: #00b49b;
+  text-decoration: none;
 }
 .navigation-bar .navigation-bar-menu .navigation-bar-menu-el {
   position: relative;
@@ -3422,6 +3432,29 @@ ul.messenger .messenger-spinner {
 
   font-size: 16px;
 }
+.welcome-page .map-container {
+  width: 380px;
+  height: 380px;
+  position: relative;
+}
+.welcome-page .map-container .map-next-btn {
+  position: absolute;
+  top: calc(50% - 50px);
+  height: 50px;
+  width: 30px;
+  right: 0;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.welcome-page .map-container .map-previous-btn {
+  position: absolute;
+  top: calc(50% - 50px);
+  height: 50px;
+  width: 30px;
+  left: 0;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .welcome-page .event-block {
   padding: 5px 15px 15px;
   position: relative;
@@ -3443,6 +3476,7 @@ ul.messenger .messenger-spinner {
   border-radius: 20px;
   border: 1px solid #cccccc;
   margin-right: 10px;
+  float: left;
 }
 .welcome-page .event-block > .event_el {
   display: inline-block;

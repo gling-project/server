@@ -11,10 +11,12 @@ import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.service.*;
+import be.lynk.server.service.impl.NotificationServiceImpl;
 import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.EmailMessageEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import be.lynk.server.util.message.NotificationMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.db.jpa.Transactional;
@@ -33,17 +35,17 @@ import java.util.Map;
 public class BusinessNotificationRestController extends AbstractRestController {
 
     @Autowired
-    private PublicationService      publicationService;
+    private PublicationService publicationService;
     @Autowired
-    private StoredFileService       storedFileService;
+    private StoredFileService storedFileService;
     @Autowired
     private CustomerInterestService customerInterestService;
     @Autowired
-    private EmailService            emailService;
+    private EmailService emailService;
     @Autowired
-    private FileService             fileService;
+    private FileService fileService;
     @Autowired
-    private NotificationService     notificationService;
+    private NotificationService notificationService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -107,7 +109,9 @@ public class BusinessNotificationRestController extends AbstractRestController {
         publicationDTO.setBusinessId(businessNotification.getBusiness().getId());
 
         //send a notification
-        notificationService.sendNotification(businessNotification.getBusiness().getName() + " a publié dans Gling", publicationDTO.getTitle(), followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
+        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_BUSINESS_NOTIFICATION, businessNotification.getBusiness().getName());
+        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
+        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
 
 
         return ok(publicationDTO);
@@ -135,7 +139,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         String oldName = businessNotificationToEdit.getTitle();
 
-        if(businessNotificationToEdit.getInterest()!=null) {
+        if (businessNotificationToEdit.getInterest() != null) {
             businessNotificationToEdit.setInterest(customerInterestService.findByName(businessNotification.getInterest().getName()));
         }
         businessNotificationToEdit.setTitle(businessNotification.getTitle());

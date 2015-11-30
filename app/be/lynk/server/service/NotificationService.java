@@ -1,6 +1,8 @@
 package be.lynk.server.service;
 
 import be.lynk.server.model.entities.Account;
+import be.lynk.server.service.impl.NotificationServiceImpl;
+import be.lynk.server.util.message.NotificationMessageEnum;
 
 import java.util.List;
 
@@ -9,5 +11,5 @@ import java.util.List;
  */
 public interface NotificationService {
 
-    public void sendNotification(String title,String content, List<Account> accounts);
+    void sendNotification(NotificationServiceImpl.NotificationMessage title, NotificationServiceImpl.NotificationMessage content, List<Account> accounts) ;
 }

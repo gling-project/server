@@ -6,6 +6,25 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService,
     data: []
   };
   $scope.lastChange = null;
+  $scope.maps = [
+    {
+      src: "/assets/images/map/1160.png",
+      position: {
+        x: 50.815060,
+        y: 4.425933
+      }
+    }, {
+      src: "/assets/images/map/tongres.png",
+      position: {
+        x: 50.840479,
+        y: 4.401033
+      }
+    }
+  ];
+  $scope.openMap = function(map) {
+    console.log(map);
+    return $scope.goTo('/map', map.position);
+  };
   $scope.getInterestClass = function(interest) {
     return 'gling-icon-' + interest.name;
   };

@@ -58,13 +58,24 @@
 
         height: 30px;
         background-color: @color-white;
-        border-bottom: 1px solid @color-blue-dark;
         padding: 5px;
         width: 1000px;
         margin: 1px auto auto;
 
         & > *{
-            margin: 0 15px;
+
+            padding: 0 20px;
+            text-transform: uppercase;
+            border-right: 1px solid @color-grey;
+            color: @color-blue-dark;
+            &:last-child{
+                border-right: 0px;
+            }
+            &:hover{
+                color: @color-white;
+                background-color: @color-green-dark;
+                text-decoration: none;
+            }
         }
 
         .navigation-bar-menu-el{

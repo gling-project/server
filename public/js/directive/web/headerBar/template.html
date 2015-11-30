@@ -99,33 +99,33 @@
                     </div>
                 </div>
             </div>
+            <!-- navigation bar -->
+            <div class="navigation-bar-menu">
 
-        </div>
-        <!-- navigation bar -->
-        <div class="navigation-bar-menu">
+                <a href="/test">
+                    {{'--.welcome.welcome' | translateText}}
+                </a>
 
-            <a href="/test">
-                {{'--.welcome.welcome' | translateText}}
-            </a>
+                <a href="/">
+                    {{'--.welcome.newsfeed' | translateText}}
+                </a>
 
-            <a href="/">
-                {{'--.welcome.newsfeed' | translateText}}
-            </a>
+                <a href="/map">
+                    {{'--.welcome.map' | translateText}}
+                </a>
+                <a ng-show="accountService.getMyself()!=null"
+                   href="/my-businesses">
+                    {{'--.welcome.myBusinesses' | translateText}}
+                </a>
+                <a ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'"
+                   href="/business/{{accountService.getMyself().businessId}}">
+                    {{'--.welcome.myBusiness' | translateText}}
+                </a>
+                <a style="float: right" href="/welcome/">
+                    {{'--.welcome.about' | translateText}}
+                </a>
+            </div>
 
-            <a href="/map">
-                {{'--.welcome.map' | translateText}}
-            </a>
-            <a ng-show="accountService.getMyself()!=null"
-               href="/my-businesses">
-                {{'--.welcome.myBusinesses' | translateText}}
-            </a>
-            <a ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'"
-               href="/business/{{accountService.getMyself().businessId}}">
-                {{'--.welcome.myBusiness' | translateText}}
-            </a>
-            <a style="float: right" href="/welcome/">
-                {{'--.welcome.about' | translateText}}
-            </a>
         </div>
     </div>
 </div>

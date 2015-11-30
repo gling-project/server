@@ -6,7 +6,7 @@
     .left-column
 
         //- event block
-        .block-title.block-title-left.block-title-first Cette semaine près de chez vous !
+        .block-title.block-title-left.block-title-first Cette semaine sur Gling !
         .event-block
             img(src="/assets/images/event/sn.jpg")
             span.event-title Saint Nicolas a aussi ses commerces de proximité favoris!
@@ -32,7 +32,10 @@
         //map
         .block-title Les quartiers actifs
             .see-more.link(ng-click="goTo('/map/')") Voir plus...
-        img.map-img(src="/assets/images/map/1160.png",ng-click="goTo('/map',{x:50.815060,y:4.425933})")
+        .map-container
+            flex-slider(flex-slide="map in maps track by $index ",animation="slide",pauseOnHover="true")
+                li
+                    img(style="cursor:pointer",ng-src="{{map.src}}",ng-click="openMap(map)")
 
 
         //- last business

@@ -1,17 +1,11 @@
 package be.lynk.server.service.impl;
 
-import be.lynk.server.dto.externalDTO.ParseNotificationDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.NotificationService;
-import be.lynk.server.util.httpRequest.HttpRequest;
-import be.lynk.server.util.httpRequest.HttpRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
+import be.lynk.server.util.message.NotificationMessageEnum;
 import org.springframework.stereotype.Service;
-import play.libs.F;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by florian on 13/11/15.
@@ -19,12 +13,15 @@ import java.util.Map;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
+
     private static final String PARSE_PUSH_PATH = "https://api.parse.com/1/push";
 
     @Override
-    public void sendNotification(String title, String content, List<Account> accounts) {
-
+    public void sendNotification(NotificationMessage title, NotificationMessage content, List<Account> accounts) {
+/*
         F.Promise.promise(() -> {
+
+            tra
 
             Map<String, String> headers = new HashMap<>();
             headers.put("X-Parse-Application-Id", "qUEDet4Q24JkiXhWTELqJFHeZ6bbvEcLw6WfXy5p");
@@ -48,5 +45,25 @@ public class NotificationServiceImpl implements NotificationService {
             }
             return null;
         });
+        */
     }
+
+    public static final class NotificationMessage{
+
+        private String message;
+
+        private NotificationMessageEnum notificationMessage;
+
+        private Object[] objects;
+
+        public NotificationMessage(String message) {
+            this.message = message;
+        }
+
+        public NotificationMessage(NotificationMessageEnum notificationMessage, Object... objects) {
+            this.notificationMessage = notificationMessage;
+            this.objects = objects;
+        }
+    }
+
 }
