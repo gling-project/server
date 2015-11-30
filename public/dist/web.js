@@ -96,6 +96,470 @@ Sn[X]=Sn[H]=Sn[Q]=Sn[nn]=Sn[tn]=Sn[rn]=Sn[en]=Sn[un]=Sn[on]=true,Sn[B]=Sn[D]=Sn[
 "\xfd":"y","\xff":"y","\xc6":"Ae","\xe6":"ae","\xde":"Th","\xfe":"th","\xdf":"ss"},Tn={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","`":"&#96;"},Ln={"&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'","&#96;":"`"},zn={"function":true,object:true},Bn={0:"x30",1:"x31",2:"x32",3:"x33",4:"x34",5:"x35",6:"x36",7:"x37",8:"x38",9:"x39",A:"x41",B:"x42",C:"x43",D:"x44",E:"x45",F:"x46",a:"x61",b:"x62",c:"x63",d:"x64",e:"x65",f:"x66",n:"x6e",r:"x72",t:"x74",u:"x75",v:"x76",x:"x78"},Dn={"\\":"\\",
 "'":"'","\n":"n","\r":"r","\u2028":"u2028","\u2029":"u2029"},Mn=zn[typeof exports]&&exports&&!exports.nodeType&&exports,qn=zn[typeof module]&&module&&!module.nodeType&&module,Pn=zn[typeof self]&&self&&self.Object&&self,Kn=zn[typeof window]&&window&&window.Object&&window,Vn=qn&&qn.exports===Mn&&Mn,Zn=Mn&&qn&&typeof global=="object"&&global&&global.Object&&global||Kn!==(this&&this.window)&&Kn||Pn||this,Yn=m();typeof define=="function"&&typeof define.amd=="object"&&define.amd?(Zn._=Yn, define(function(){
 return Yn})):Mn&&qn?Vn?(qn.exports=Yn)._=Yn:Mn._=Yn:Zn._=Yn}).call(this);
+/*
+ * jQuery FlexSlider v2.6.0
+ * http://www.woothemes.com/flexslider/
+ *
+ * Copyright 2012 WooThemes
+ * Free to use under the GPLv2 and later license.
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Contributing author: Tyler Smith (@mbmufffin)
+ *
+ */
+/* ====================================================================================================================
+ * FONT-FACE
+ * ====================================================================================================================*/
+@font-face {
+  font-family: 'flexslider-icon';
+  src: url('fonts/flexslider-icon.eot');
+  src: url('fonts/flexslider-icon.eot?#iefix') format('embedded-opentype'), url('fonts/flexslider-icon.woff') format('woff'), url('fonts/flexslider-icon.ttf') format('truetype'), url('fonts/flexslider-icon.svg#flexslider-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* ====================================================================================================================
+ * RESETS
+ * ====================================================================================================================*/
+.flex-container a:hover,
+.flex-slider a:hover {
+  outline: none;
+}
+.slides,
+.slides > li,
+.flex-control-nav,
+.flex-direction-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.flex-pauseplay span {
+  text-transform: capitalize;
+}
+/* ====================================================================================================================
+ * BASE STYLES
+ * ====================================================================================================================*/
+.flexslider {
+  margin: 0;
+  padding: 0;
+}
+.flexslider .slides > li {
+  display: none;
+  -webkit-backface-visibility: hidden;
+}
+.flexslider .slides img {
+  width: 100%;
+  display: block;
+}
+.flexslider .slides:after {
+  content: "\0020";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+html[xmlns] .flexslider .slides {
+  display: block;
+}
+* html .flexslider .slides {
+  height: 1%;
+}
+.no-js .flexslider .slides > li:first-child {
+  display: block;
+}
+/* ====================================================================================================================
+ * DEFAULT THEME
+ * ====================================================================================================================*/
+.flexslider {
+  margin: 0 0 60px;
+  background: #ffffff;
+  border: 4px solid #ffffff;
+  position: relative;
+  zoom: 1;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.flexslider .slides {
+  zoom: 1;
+}
+.flexslider .slides img {
+  height: auto;
+  -moz-user-select: none;
+}
+.flex-viewport {
+  max-height: 2000px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.loading .flex-viewport {
+  max-height: 300px;
+}
+.carousel li {
+  margin-right: 5px;
+}
+.flex-direction-nav {
+  *height: 0;
+}
+.flex-direction-nav a {
+  text-decoration: none;
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0;
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  overflow: hidden;
+  opacity: 0;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.flex-direction-nav a:before {
+  font-family: "flexslider-icon";
+  font-size: 40px;
+  display: inline-block;
+  content: '\f001';
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+.flex-direction-nav a.flex-next:before {
+  content: '\f002';
+}
+.flex-direction-nav .flex-prev {
+  left: -50px;
+}
+.flex-direction-nav .flex-next {
+  right: -50px;
+  text-align: right;
+}
+.flexslider:hover .flex-direction-nav .flex-prev {
+  opacity: 0.7;
+  left: 10px;
+}
+.flexslider:hover .flex-direction-nav .flex-prev:hover {
+  opacity: 1;
+}
+.flexslider:hover .flex-direction-nav .flex-next {
+  opacity: 0.7;
+  right: 10px;
+}
+.flexslider:hover .flex-direction-nav .flex-next:hover {
+  opacity: 1;
+}
+.flex-direction-nav .flex-disabled {
+  opacity: 0!important;
+  filter: alpha(opacity=0);
+  cursor: default;
+  z-index: -1;
+}
+.flex-pauseplay a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  opacity: 0.8;
+  z-index: 10;
+  overflow: hidden;
+  cursor: pointer;
+  color: #000;
+}
+.flex-pauseplay a:before {
+  font-family: "flexslider-icon";
+  font-size: 20px;
+  display: inline-block;
+  content: '\f004';
+}
+.flex-pauseplay a:hover {
+  opacity: 1;
+}
+.flex-pauseplay a.flex-play:before {
+  content: '\f003';
+}
+.flex-control-nav {
+  width: 100%;
+  position: absolute;
+  bottom: -40px;
+  text-align: center;
+}
+.flex-control-nav li {
+  margin: 0 6px;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+.flex-control-paging li a {
+  width: 11px;
+  height: 11px;
+  display: block;
+  background: #666;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  text-indent: -9999px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -o-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.flex-control-paging li a:hover {
+  background: #333;
+  background: rgba(0, 0, 0, 0.7);
+}
+.flex-control-paging li a.flex-active {
+  background: #000;
+  background: rgba(0, 0, 0, 0.9);
+  cursor: default;
+}
+.flex-control-thumbs {
+  margin: 5px 0 0;
+  position: static;
+  overflow: hidden;
+}
+.flex-control-thumbs li {
+  width: 25%;
+  float: left;
+  margin: 0;
+}
+.flex-control-thumbs img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: .7;
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.flex-control-thumbs img:hover {
+  opacity: 1;
+}
+.flex-control-thumbs .flex-active {
+  opacity: 1;
+  cursor: default;
+}
+/* ====================================================================================================================
+ * RESPONSIVE
+ * ====================================================================================================================*/
+@media screen and (max-width: 860px) {
+  .flex-direction-nav .flex-prev {
+    opacity: 1;
+    left: 10px;
+  }
+  .flex-direction-nav .flex-next {
+    opacity: 1;
+    right: 10px;
+  }
+}
+
+// Generated by CoffeeScript 1.8.0
+(function() {
+  'use strict';
+  angular.module('angular-flexslider', []).directive('flexSlider', [
+    '$parse', '$timeout', function($parse, $timeout) {
+      return {
+        restrict: 'AE',
+        scope: false,
+        replace: true,
+        transclude: true,
+        template: '<div class="flexslider-container"></div>',
+        compile: function(element, attr, linker) {
+          return function($scope, $element) {
+            var addSlide, collectionString, flexsliderDiv, getTrackFromItem, indexString, match, removeSlide, slidesItems, trackBy;
+            match = (attr.slide || attr.flexSlide).match(/^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/);
+            indexString = match[1];
+            collectionString = match[2];
+            trackBy = angular.isDefined(match[3]) ? $parse(match[3]) : $parse("" + indexString);
+            flexsliderDiv = null;
+            slidesItems = {};
+            getTrackFromItem = function(collectionItem, index) {
+              var locals;
+              locals = {};
+              locals[indexString] = collectionItem;
+              locals['$index'] = index;
+              return trackBy($scope, locals);
+            };
+            addSlide = function(collectionItem, index, callback) {
+              var childScope, track;
+              track = getTrackFromItem(collectionItem, index);
+              if (slidesItems[track] != null) {
+                throw "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys.";
+              }
+              childScope = $scope.$new();
+              childScope[indexString] = collectionItem;
+              childScope['$index'] = index;
+              return linker(childScope, function(clone) {
+                var slideItem;
+                slideItem = {
+                  collectionItem: collectionItem,
+                  childScope: childScope,
+                  element: clone
+                };
+                slidesItems[track] = slideItem;
+                return typeof callback === "function" ? callback(slideItem) : void 0;
+              });
+            };
+            removeSlide = function(collectionItem, index) {
+              var slideItem, track;
+              track = getTrackFromItem(collectionItem, index);
+              slideItem = slidesItems[track];
+              if (slideItem == null) {
+                return;
+              }
+              delete slidesItems[track];
+              slideItem.childScope.$destroy();
+              return slideItem;
+            };
+            return $scope.$watchCollection(collectionString, function(collection, oldCollection) {
+              var attrKey, attrVal, c, currentSlidesLength, e, i, idx, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
+              if (!(collection != null ? collection.length : void 0) && !(oldCollection != null ? oldCollection.length : void 0)) {
+                return;
+              }
+              if (flexsliderDiv != null) {
+                slider = flexsliderDiv.data('flexslider');
+                currentSlidesLength = Object.keys(slidesItems).length;
+                if (collection == null) {
+                  collection = [];
+                }
+                trackCollection = {};
+                for (i = _i = 0, _len = collection.length; _i < _len; i = ++_i) {
+                  c = collection[i];
+                  trackCollection[getTrackFromItem(c, i)] = c;
+                }
+                toAdd = (function() {
+                  var _j, _len1, _results;
+                  _results = [];
+                  for (i = _j = 0, _len1 = collection.length; _j < _len1; i = ++_j) {
+                    c = collection[i];
+                    if (slidesItems[getTrackFromItem(c, i)] == null) {
+                      _results.push({
+                        value: c,
+                        index: i
+                      });
+                    }
+                  }
+                  return _results;
+                })();
+                toRemove = (function() {
+                  var _results;
+                  _results = [];
+                  for (t in slidesItems) {
+                    i = slidesItems[t];
+                    if (trackCollection[t] == null) {
+                      _results.push(i.collectionItem);
+                    }
+                  }
+                  return _results;
+                })();
+                if ((toAdd.length === 1 && toRemove.length === 0) || toAdd.length === 0) {
+                  for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
+                    e = toRemove[_j];
+                    e = removeSlide(e, collection.indexOf(e));
+                    slider.removeSlide(e.element);
+                  }
+                  for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
+                    e = toAdd[_k];
+                    idx = e.index;
+                    addSlide(e.value, idx, function(item) {
+                      if (idx === currentSlidesLength) {
+                        idx = void 0;
+                      }
+                      return $scope.$evalAsync(function() {
+                        return slider.addSlide(item.element, idx);
+                      });
+                    });
+                  }
+                  return;
+                }
+              }
+              slidesItems = {};
+              if (flexsliderDiv != null) {
+                flexsliderDiv.remove();
+              }
+              slides = angular.element('<ul class="slides"></ul>');
+              flexsliderDiv = angular.element('<div class="flexslider"></div>');
+              flexsliderDiv.append(slides);
+              $element.append(flexsliderDiv);
+              for (i = _l = 0, _len3 = collection.length; _l < _len3; i = ++_l) {
+                c = collection[i];
+                addSlide(c, i, function(item) {
+                  return slides.append(item.element);
+                });
+              }
+              options = {};
+              for (attrKey in attr) {
+                attrVal = attr[attrKey];
+                if (attrKey.indexOf('$') === 0) {
+                  continue;
+                }
+                if (!isNaN(n = parseInt(attrVal))) {
+                  options[attrKey] = n;
+                  continue;
+                }
+                if (attrVal === 'false' || attrVal === 'true') {
+                  options[attrKey] = attrVal === 'true';
+                  continue;
+                }
+                if (attrKey === 'start' || attrKey === 'before' || attrKey === 'after' || attrKey === 'end' || attrKey === 'added' || attrKey === 'removed') {
+                  options[attrKey] = (function(attrVal) {
+                    var f;
+                    f = $parse(attrVal);
+                    return function(slider) {
+                      return $scope.$apply(function() {
+                        return f($scope, {
+                          '$slider': {
+                            element: slider
+                          }
+                        });
+                      });
+                    };
+                  })(attrVal);
+                  continue;
+                }
+                if (attrKey === 'startAt') {
+                  options[attrKey] = $parse(attrVal)($scope);
+                  continue;
+                }
+                options[attrKey] = attrVal;
+              }
+              if (!options.sliderId && attr.id) {
+                options.sliderId = "" + attr.id + "-slider";
+              }
+              if (options.sliderId) {
+                flexsliderDiv.attr('id', options.sliderId);
+              }
+              return $timeout((function() {
+                return flexsliderDiv.flexslider(options);
+              }), 0);
+            });
+          };
+        }
+      };
+    }
+  ]);
+
+}).call(this);
+
 var test = function (accountService) {
     var myself = accountService.getMyself();
     if (myself == null) {
@@ -109,92 +573,92 @@ var test = function (accountService) {
 
 var initializeCommonRoutes = function () {
     myApp
-        .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+        .config(function ($routeProvider, $locationProvider) {
             $routeProvider.when('/home/:param*?', {
                 templateUrl: '/assets/js/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
-                    a: ['accountService', '$rootScope', function (accountService, $rootScope) {
+                    a: function (accountService, $rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         var status = test(accountService);
-                    }]
+                    }
                 }
             }).when('/profile', {
                 templateUrl: '/assets/js/view/web/profile.html',
                 controller: 'ProfileCtrl',
                 resolve: {
-                    a: ['accountService', '$location', '$rootScope', function (accountService, $location, $rootScope) {
+                    a: function (accountService, $location, $rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                         if (test(accountService) == 'NOT_CONNECTED') {
                             $location.path('/');
                         }
-                    }]
+                    }
                 }
             }).when('/search/:param?', {
                 templateUrl: '/assets/js/view/web/search_page.html',
                 controller: 'SearchPageCtrl',
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
-                    }]
+                    }
                 }
             }).when('/my-businesses', {
                 templateUrl: '/assets/js/view/web/followed_business_page.html',
                 controller: 'FollowedBusinessPageCtrl',
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
-                    }]
+                    }
                 }
             }).when('/map', {
                 templateUrl: '/assets/js/view/web/map.html',
                 controller: 'MapCtrl',
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
-                    }]
+                    }
                 }
             }).when('/business/:businessId', {
                 templateUrl: '/assets/js/view/web/business.html',
                 controller: 'BusinessCtrl',
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
-                    }]
+                    }
                 }
             }).when('/business/:businessId/publication/:publicationId', {
                 templateUrl: '/assets/js/view/web/business.html',
                 controller: 'BusinessCtrl',
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
-                    }]
+                    }
                 }
             }).when('/test', {
                 templateUrl: '/assets/js/view/web/welcome.html',
                 controller: 'WelcomeCtrl',
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
-                    }]
+                    }
                 }
             }).when('/welcome/', {
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         window.location.replace('/welcome/');
-                    }]
+                    }
                 }
             }).when('/legal/', {
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         window.location.replace('/legal/');
-                    }]
+                    }
                 }
             }).when('/help/', {
                 resolve: {
-                    a: ['$rootScope', function ($rootScope) {
+                    a: function ($rootScope) {
                         window.location.replace('/help/');
-                    }]
+                    }
                 }
             }).otherwise({
                 redirectTo: '/home/'
@@ -203,7 +667,7 @@ var initializeCommonRoutes = function () {
 
             // use the HTML5 History API
             $locationProvider.html5Mode(true);
-        }]);
+        });
 };
 var myApp = angular.module('app', [
         'ngAnimate',
@@ -241,7 +705,7 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
         return original.apply($location, [path]);
     };
 }]);
-myApp.controller('LoginModalCtrl', ['$scope', '$flash', '$filter', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function($scope, $flash, $filter, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams, helpMessage) {
+myApp.controller('LoginModalCtrl', function($scope, $flash, $filter, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams, helpMessage) {
   $scope.fctToExecute = fctToExecute;
   $scope.helpMessage = helpMessage;
   $scope.loginFormParam = {
@@ -290,8 +754,8 @@ myApp.controller('LoginModalCtrl', ['$scope', '$flash', '$filter', 'facebookServ
     $scope.close();
     return modalService.openCustomerRegistrationModal(fctToExecute, fctToExecuteParams);
   };
-}]);
-myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance', 'accountService', '$timeout', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
+});
+myApp.controller('ChangePasswordModalCtrl', function ($scope,  $flash, $modalInstance,accountService,$timeout) {
 
     $scope.loading=false;
 
@@ -395,8 +859,8 @@ myApp.controller('ChangePasswordModalCtrl', ['$scope', '$flash', '$modalInstance
         }
     };
 
-}]);
-myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$modalInstance', '$filter', 'email', 'accountService', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
+});
+myApp.controller('ForgotPasswordModalCtrl', function ($scope, $http, $flash, $modalInstance, $filter, email, accountService) {
 
     $scope.loading = false;
 
@@ -472,8 +936,8 @@ myApp.controller('ForgotPasswordModalCtrl', ['$scope', '$http', '$flash', '$moda
         }
     };
 
-}]);
-myApp.controller('HelpModalCtrl', ['$scope', '$modalInstance', 'message', function ($scope, $modalInstance,message) {
+});
+myApp.controller('HelpModalCtrl', function ($scope, $modalInstance,message) {
 
     $scope.message=message;
 
@@ -481,8 +945,8 @@ myApp.controller('HelpModalCtrl', ['$scope', '$modalInstance', 'message', functi
         $modalInstance.close();
     };
 
-}]);
-myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance', function ($scope, $flash, $modalInstance) {
+});
+myApp.controller('DownloadFieldModalCtrl', function ($scope, $flash, $modalInstance) {
 
     $scope.loading=false;
 
@@ -543,8 +1007,8 @@ myApp.controller('DownloadFieldModalCtrl', ['$scope', '$flash', '$modalInstance'
     }
 
 
-}]);
-myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', 'fctToExecute', 'fctToExecuteParams', function($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, fctToExecute, fctToExecuteParams) {
+});
+myApp.controller('CustomerRegistrationModalCtrl', function($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService, fctToExecute, fctToExecuteParams) {
   $scope.accountParam = {};
   $scope.close = function() {
     return $modalInstance.close();
@@ -588,8 +1052,8 @@ myApp.controller('CustomerRegistrationModalCtrl', ['$scope', '$flash', '$modal',
       });
     }
   };
-}]);
-myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'businessService', '$location', function($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, $location) {
+});
+myApp.controller('BusinessRegistrationModalCtrl', function($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, $location) {
   $scope.badgeSelected = 1;
   $scope.accountParam = {};
   $scope.account = null;
@@ -690,8 +1154,8 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
       });
     }
   };
-}]);
-myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'addName', 'dto', 'isBusiness', 'callback', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, addName, dto, isBusiness, callback) {
+});
+myApp.controller('AddressModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, addName, dto, isBusiness, callback) {
 
     $scope.loading = false;
 
@@ -743,8 +1207,8 @@ myApp.controller('AddressModalCtrl', ['$scope', '$flash', '$modalInstance', 'bus
     }
 
 
-}]);
-myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'modalService', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
+});
+myApp.controller('EditCustomerInterestModalCtrl', function ($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, modalService) {
 
 
     $scope.customerInterestParam = {
@@ -768,8 +1232,8 @@ myApp.controller('EditCustomerInterestModalCtrl', ['$scope', '$flash', '$modal',
             });
     }
 
-}]);
-myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'promotionService', 'callback', 'facebookService', 'business', 'modalService', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business,modalService) {
+});
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business,modalService) {
 
     $scope.loading = false;
 
@@ -843,8 +1307,8 @@ myApp.controller('PromotionModalCtrl', ['$scope', '$flash', '$modalInstance', 't
     }
 
 
-}]);
-myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalInstance', 'translationService', 'dto', 'businessNotificationService', 'callback', 'facebookService', 'business', 'modalService', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business,modalService) {
+});
+myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business,modalService) {
 
     $scope.loading = false;
 
@@ -911,8 +1375,8 @@ myApp.controller('BusinessNotificationModalCtrl', ['$scope', '$flash', '$modalIn
     }
 
 
-}]);
-myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'field', 'callback', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
+});
+myApp.controller('OneFieldModalCtrl', function ($scope, $flash, facebookService, translationService, $modal, $modalInstance, accountService, $location, field,callback) {
 
     var value = {
         data: null
@@ -943,9 +1407,9 @@ myApp.controller('OneFieldModalCtrl', ['$scope', '$flash', 'facebookService', 't
         }
     };
 
-}])
+})
 ;
-myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'param', '$compile', 'directiveName', 'save', '$timeout', 'title', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
+myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
 
     $scope.title = title;
 
@@ -987,8 +1451,8 @@ myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'busin
     }
 
 
-}]);
-myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$compile', 'title', 'message', 'save', function ($scope, $flash, $modalInstance,  $compile, title,message, save) {
+});
+myApp.controller('MessageModalCtrl', function ($scope, $flash, $modalInstance,  $compile, title,message, save) {
 
     $scope.message = message;
 
@@ -1010,8 +1474,8 @@ myApp.controller('MessageModalCtrl', ['$scope', '$flash', '$modalInstance', '$co
     }
 
 
-}]);
-myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'images', function ($scope, $modalInstance, image, images) {
+});
+myApp.controller('GalleryModalCtrl', function ($scope, $modalInstance, image, images) {
 
 
     $scope.image = image;
@@ -1061,8 +1525,8 @@ myApp.controller('GalleryModalCtrl', ['$scope', '$modalInstance', 'image', 'imag
         }
     };
 
-}]);
-myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'title', 'url', function ($scope, $flash, $modalInstance,title,url) {
+});
+myApp.controller('iframeModalCtrl', function ($scope, $flash, $modalInstance,title,url) {
 
 
     $scope.title=title;
@@ -1072,8 +1536,8 @@ myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'titl
         $modalInstance.close();
     };
 
-}]);
-myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', '$location', '$route', '$routeParams', function($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route, $routeParams) {
+});
+myApp.controller('HomeCtrl', function($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route, $routeParams) {
   var createNewAddress, original, path, successLoadingBusiness, successLoadingPublications;
   $scope.param = $routeParams.param;
   original = $location.path;
@@ -1301,8 +1765,8 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
     return $scope.interestDisplayed2 = $scope.customerInterests.slice($scope.interestDisplayMax, $scope.customerInterests.length);
   });
   return $scope.search();
-}]);
-myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$rootScope', '$window', 'businessService', 'facebookService', 'translationService', '$flash', function($scope, modalService, accountService, $rootScope, $window, businessService, facebookService, translationService, $flash) {
+});
+myApp.controller('ProfileCtrl', function($scope, modalService, accountService, $rootScope, $window, businessService, facebookService, translationService, $flash) {
   $scope.model = accountService.model;
   $scope.accountParam = {
     updateMode: true,
@@ -1365,8 +1829,8 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
   $(window).scrollTop(0);
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
-}]);
-myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', 'constantService', function($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, constantService) {
+});
+myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, constantService) {
   if ($routeParams.publicationId !== null) {
     $scope.publicationIdToGo = $routeParams.publicationId;
   }
@@ -1765,8 +2229,8 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
   });
   $(window).scrollTop(0);
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
-}]);
-myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
+});
+myApp.controller('SearchPageCtrl', function($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
   var param;
   param = $routeParams.param;
   searchBarService.setCurrentSearch(param);
@@ -1977,8 +2441,8 @@ myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$r
   return $scope.$on('POSITION_CHANGED', function() {
     return $scope.init();
   });
-}]);
-myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessService', 'ngTableParams', '$filter', 'followService', function($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
+});
+myApp.controller('FollowedBusinessPageCtrl', function($rootScope, $scope, businessService, ngTableParams, $filter, followService) {
   $scope.businessListParams = {
     loading: true
   };
@@ -2035,8 +2499,8 @@ myApp.controller('FollowedBusinessPageCtrl', ['$rootScope', '$scope', 'businessS
   });
   $(window).scrollTop(0);
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
-}]);
-myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInterestService', '$compile', '$timeout', 'geolocationService', '$location', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService, $location) {
+});
+myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInterestService, $compile, $timeout, geolocationService, $location) {
   var addListener, getBusiness, getIcon, getMarker, testInterests, urlParam;
   $scope.mapDataBusinesses = null;
   $scope.map = null;
@@ -2336,8 +2800,8 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
     $scope.generateMapMarkers();
     return $scope.centerToPosition();
   }, 1);
-}]);
-myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '$location', 'businessService', 'constantService', 'customerInterestService', 'searchService', '$timeout', function($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout) {
+});
+myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout) {
   $scope.LAST_BUSINESS_NB = 5;
   $scope.MAX_PUBLICATION = 4;
   $scope.descriptionLimitBase = 120;
@@ -2406,8 +2870,8 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
   return $scope.loadBusiness();
-}]);
-myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
+});
+myApp.directive('publicationListCtrl', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -2448,8 +2912,8 @@ myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geoloc
       };
     }
   };
-}]);
-myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
+});
+myApp.directive('publicationWidgetCtrl', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -2499,8 +2963,8 @@ myApp.directive('publicationWidgetCtrl', ['$rootScope', 'businessService', 'geol
       };
     }
   };
-}]);
-myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'directiveService', 'searchService', '$timeout', 'publicationService', 'modalService', function($rootScope, directiveService, searchService, $timeout, publicationService, modalService) {
+});
+myApp.directive('publicationListForBusinessCtrl', function($rootScope, directiveService, searchService, $timeout, publicationService, modalService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -2642,8 +3106,8 @@ myApp.directive('publicationListForBusinessCtrl', ['$rootScope', 'directiveServi
       };
     }
   };
-}]);
-myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', function($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
+});
+myApp.directive('businessListCtrl', function($rootScope, businessService, geolocationService, directiveService, searchService, $location) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -2672,8 +3136,8 @@ myApp.directive('businessListCtrl', ['$rootScope', 'businessService', 'geolocati
       };
     }
   };
-}]);
-myApp.directive('categoryLineCtrl', ['$rootScope', 'directiveService', '$location', function($rootScope, directiveService, $location) {
+});
+myApp.directive('categoryLineCtrl', function($rootScope, directiveService, $location) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -2693,8 +3157,8 @@ myApp.directive('categoryLineCtrl', ['$rootScope', 'directiveService', '$locatio
       };
     }
   };
-}]);
-myApp.directive('businessForMapCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$location', function($rootScope, businessService, geolocationService, directiveService, $location) {
+});
+myApp.directive('businessForMapCtrl', function($rootScope, businessService, geolocationService, directiveService, $location) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -2720,8 +3184,8 @@ myApp.directive('businessForMapCtrl', ['$rootScope', 'businessService', 'geoloca
       };
     }
   };
-}]);
-myApp.directive('publicationForMapCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, $timeout) {
+});
+myApp.directive('publicationForMapCtrl', function($rootScope, businessService, geolocationService, directiveService, $timeout) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -2739,8 +3203,8 @@ myApp.directive('publicationForMapCtrl', ['$rootScope', 'businessService', 'geol
       };
     }
   };
-}]);
-myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageService', '$location', 'accountService', 'facebookService', 'modalService', '$timeout', 'geolocationService', 'addressService', function (addressService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
+});
+myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageService, $location, accountService, facebookService, modalService, $timeout, geolocationService, addressService) {
     return {
         restrict: "E",
         scope: {},
@@ -2922,9 +3386,9 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
             }
         }
     }
-}]);
+});
 
-myApp.directive("footerBarCtrl", ['modalService', 'contactService', '$flash', '$filter', function (modalService,contactService,$flash,$filter) {
+myApp.directive("footerBarCtrl", function (modalService,contactService,$flash,$filter) {
     return {
         restrict: "E",
         scope: {},
@@ -2954,9 +3418,9 @@ myApp.directive("footerBarCtrl", ['modalService', 'contactService', '$flash', '$
             }
         }
     }
-}]);
+});
 
-myApp.directive('toTopCtrl', ['$window', function($window) {
+myApp.directive('toTopCtrl', function($window) {
   return {
     restrict: 'E',
     scope: {},
@@ -2978,8 +3442,8 @@ myApp.directive('toTopCtrl', ['$window', function($window) {
       };
     }
   };
-}]);
-myApp.service("$flash", ['$filter', function($filter) {
+});
+myApp.service("$flash", function($filter) {
 
     Messenger.options = {
         extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right cr-messenger',
@@ -3019,4 +3483,4 @@ myApp.service("$flash", ['$filter', function($filter) {
         };
         return;
     }
-}]);
+});

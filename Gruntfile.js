@@ -92,6 +92,7 @@ module.exports = function (grunt) {
                             'public/components/ng-table/ng-table.min.css',
                             'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
+                            'public/components/flexslider/flexslider.css',
                             'target/scala-2.10/resource_managed/main/public/stylesheets/main.css',
                             'target/scala-2.10/resource_managed/main/public/stylesheets/web.css']
                     },
@@ -213,6 +214,10 @@ module.exports = function (grunt) {
                     ]
                     , 'public/dist/web.js': [
                         'public/components/lodash/lodash.min.js',
+
+                        <!-- component -->
+                        'public/components/flexslider/flexslider.css',
+                        'public/components/angular-flexslider/angular-flexslider.js',
 
                         <!-- routes -->
                         'public/js/routes/web-routes.js',
