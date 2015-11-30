@@ -22,7 +22,7 @@ git commit -m "pre-deploy"
 
 mv ./-package.json ./package.json
 
-rm -r public/dist/*
+find public/dist -maxdepth 1 -type f -exec rm {} \;
 
 
 echo ""
