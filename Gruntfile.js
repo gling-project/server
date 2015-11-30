@@ -213,10 +213,10 @@ module.exports = function (grunt) {
                         'public/js/modal/ConfirmAndShareModal/ConfirmAndShareModal.js'
                     ]
                     , 'public/dist/web.js': [
-                        'public/components/lodash/lodash.min.js',
 
                         <!-- component -->
-                        'public/components/flexslider/flexslider.css',
+                        'public/components/lodash/lodash.min.js',
+                        'public/components/flexslider/jquery.flexslider.js',
                         'public/components/angular-flexslider/angular-flexslider.js',
 
                         <!-- routes -->
