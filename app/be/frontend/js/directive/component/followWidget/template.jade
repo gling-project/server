@@ -5,11 +5,13 @@
     .follow-widget-icon(ng-hide="getInfo().displayText===true",ng-click="follow()")
 
         button
-            span.gling-icon.gling-icon.gling-icon-bell.selected(ng-show="getInfo().business.following")
-            span.gling-icon.gling-icon.gling-icon-bell2(ng-hide="getInfo().business.following")
+            span.gling-icon.gling-icon-bell.selected(ng-show="getInfo().business.following")
+            span.gling-icon.gling-icon-bell2(ng-hide="getInfo().business.following")
 
     .follow-text(ng-show="getInfo().displayText===true")
-        .link(ng-hide="getInfo().business.following",ng-click="follow()")
-            | {{'--.followWidget.followBusiness' | translateText}}
-        .link(ng-show="getInfo().business.following",ng-click="follow()")
-            | {{'--.followWidget.stopFollowBusiness' | translateText}}
+        div(ng-hide="getInfo().business.following",ng-click="follow()")
+            i.gling-icon.gling-icon-bell2
+            span {{'--.followWidget.followBusiness' | translateText}}
+        div(ng-show="getInfo().business.following",ng-click="follow()")
+            i.gling-icon.gling-icon-bell.selected
+            span {{'--.followWidget.stopFollowBusiness' | translateText}}

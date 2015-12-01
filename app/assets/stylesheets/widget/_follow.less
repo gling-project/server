@@ -16,15 +16,39 @@
         button {
             font-size: 48px;
             color: @color-blue-dark;
-            .selected {
-                color: @color-green-light !important;
-            }
         }
 
         button {
             background: none;
             border: none;
             outline: none;
+        }
+    }
+    .selected {
+        color: @color-green-light !important;
+    }
+
+    .follow-text{
+        border: 1px solid @color-blue-dark;
+        border-radius: 10px;
+        padding: 2px 5px;
+        text-decoration: none;
+        span{
+            color: @color-blue-dark;
+        }
+        cursor: pointer;
+        &:hover{
+            background-color: @color-green-light;
+            i.selected{
+                color: white !important;
+            }
+        }
+        i{
+            color: @color-blue-dark;
+            font-size: 16px;
+            padding-top: 3px;
+            float: left;
+            margin-right: 5px;
         }
     }
 }

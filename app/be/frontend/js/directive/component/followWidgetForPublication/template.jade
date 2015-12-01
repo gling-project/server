@@ -8,7 +8,9 @@
             span.gling-icon.gling-icon-bell.selected(ng-show="getInfo().publication.following")
             span.gling-icon.gling-icon-bell2"(ng-hide="getInfo().publication.following")
     .follow-text(ng-show="getInfo().displayText===true")
-        .link(ng-hide="getInfo().publication.following",ng-click="follow()")
-            | {{'--.followWidget.followBusiness' | translateText}}
-        .link(ng-show="getInfo().publication.following",ng-click="follow()")
-            | {{'--.followWidget.stopFollowBusiness' | translateText}}
+        div(ng-hide="getInfo().publication.following",ng-click="follow()")
+            i.gling-icon.gling-icon-bell2
+            span {{'--.followWidget.followBusiness' | translateText}}
+        div(ng-show="getInfo().publication.following",ng-click="follow()")
+            i.gling-icon.gling-icon-bell.selected
+            span {{'--.followWidget.stopFollowBusiness' | translateText}}
