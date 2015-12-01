@@ -13,9 +13,15 @@ public interface ClaimBusinessService extends CrudService<ClaimBusiness> {
 
     ClaimBusiness findByAccount(Account account);
 
-    ClaimBusiness findByBusiness(Business business);
+    List<ClaimBusiness> findByBusiness(Business business);
 
     List<ClaimBusiness> findAll();
 
     Long findBusinessIdByAccount(Account account);
+
+    ClaimBusiness findByBusinessAndAccount(Business business, Account account);
+
+    Boolean isClaimed(Business business);
+
+    void removeByBusiness(Business business);
 }

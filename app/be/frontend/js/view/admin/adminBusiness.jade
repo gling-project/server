@@ -45,7 +45,7 @@ super-admin-menu-ctrl
                     | {{'--.admin.business.toBusiness' | translateText}}
                 button(name='admin-business-btn-confirm-publication', ng-click='confirmPublication(business)', ng-show="business.businessStatus == 'WAITING_CONFIRMATION' ")
                     | {{'--.admin.business.confirmPublication' | translateText}}
-                button(name='admin-business-btn-confirm-claim', ng-click='confirmClaim(business)', ng-show="business.businessStatus == 'PUBLISHED' && business.claimBusiness != null")
+                button(name='admin-business-btn-confirm-claim', ng-click='confirmClaim(business)', ng-show="business.businessStatus == 'PUBLISHED' && business.isClaimed ==true")
                     | {{'--.admin.business.confirmClaim' | translateText}}
 
     //map panel

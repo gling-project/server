@@ -124,7 +124,8 @@ POST          /rest/superadmin/emailToBusinesses                                
 GET           /rest/superadmin/accountDetails                                                                        @be.lynk.server.controller.rest.SuperAdminRestController.getUserDetails()
 GET           /rest/superadmin/customerPosition                                                                      @be.lynk.server.controller.rest.SuperAdminRestController.getCustomerPositions()
 GET           /rest/superadmin/importBusiness/:name                                                                  @be.lynk.server.controller.rest.SuperAdminRestController.importBusiness(name:String)
-GET           /rest/superadmin/confirmClaim/$id<[0-9]+>                                                              @be.lynk.server.controller.rest.SuperAdminRestController.confirmClaim(id:Long)
+POST          /rest/superadmin/confirmClaim/$businessId<[0-9]+>/$accountId<[0-9]+>                                   @be.lynk.server.controller.rest.SuperAdminRestController.confirmClaim(businessId:Long,accountId:Long)
+GET           /rest/superadmin/getClaims/$businessId<[0-9]+>                                                      @be.lynk.server.controller.rest.SuperAdminRestController.getClaimsByBusiness(businessId:Long)
 
 
 ## town

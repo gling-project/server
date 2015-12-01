@@ -5,14 +5,10 @@ import be.lynk.server.controller.technical.security.annotation.SecurityAnnotatio
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.admin.*;
-import be.lynk.server.dto.externalDTO.FacebookPageDataDTO;
-import be.lynk.server.dto.externalDTO.FacebookImageDTO;
-import be.lynk.server.dto.externalDTO.FacebookPhotoDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.importer.CategoryImporter;
 import be.lynk.server.importer.DemoImporter;
-import be.lynk.server.model.AttendanceEnum;
 import be.lynk.server.model.email.EmailMessage;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.mongoService.MongoSearchService;
@@ -20,26 +16,15 @@ import be.lynk.server.service.*;
 import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.ContactTargetEnum;
-import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.Logger;
 import play.db.jpa.Transactional;
-import play.libs.F;
 import play.mvc.Result;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by florian on 5/07/15.
@@ -173,11 +158,12 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result confirmClaim(Long id) {
+    public Result confirmClaim(Long businessId,Long accountId) {
 
-        Business business = businessService.findById(id);
+        Business business = businessService.findById(businessId);
+        Account account = accountService.findById(accountId);
 
-        ClaimBusiness claimBusiness = claimBusinessService.findByBusiness(business);
+        ClaimBusiness claimBusiness = claimBusinessService.findByBusinessAndAccount(business,account);
 
         if(claimBusiness==null){
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_CLAIMED);
@@ -186,8 +172,6 @@ public class SuperAdminRestController extends AbstractRestController {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED);
         }
 
-        Account account = claimBusiness.getAccount();
-
         business.setAccount(account);
 
         account.setRole(RoleEnum.BUSINESS);
@@ -195,7 +179,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         accountService.saveOrUpdate(account);
 
-        claimBusinessService.remove(claimBusiness);
+        claimBusinessService.removeByBusiness(business);
 
         return ok(new ResultDTO());
     }
@@ -353,8 +337,8 @@ public class SuperAdminRestController extends AbstractRestController {
             businessDTO.setNbPublication(publicationService.countByBusiness(business));
             businessDTO.setNbPublicationActive(publicationService.countActiveByBusiness(business));
 
-            //add claim
-            businessDTO.setClaimBusiness(dozerService.map(claimBusinessService.findByBusiness(business),ClaimBusinessDTO.class));
+            //is claimed
+            businessDTO.setIsClaimed(claimBusinessService.isClaimed(business));
 
             //have owner
             businessDTO.setHasOwner(business.getAccount()!=null);
@@ -363,6 +347,17 @@ public class SuperAdminRestController extends AbstractRestController {
 
 
         return ok(new ListDTO<>(map));
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
+    public Result getClaimsByBusiness(long businessId) {
+
+        Business byId = businessService.findById(businessId);
+
+        List<ClaimBusiness> byBusiness = claimBusinessService.findByBusiness(byId);
+
+        return ok(new ListDTO<>(dozerService.map(byBusiness,ClaimBusinessDTO.class)));
     }
 
     private UserDetailsBoxDTO getUserDetails(LocalDateTime from) {

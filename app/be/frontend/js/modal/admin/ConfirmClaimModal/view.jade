@@ -6,23 +6,26 @@
 //- body
 .modal-body.modal-login.business-registration
 
-    | information sur la personne réclamant le commerce
-    table.table-basic
-        tr
-            td nom
-            td {{business.claimBusiness.account.firstname}} {{business.claimBusiness.account.lastname}}
-        tr
-            td email
-            td {{business.claimBusiness.account.email}}
-        tr
-            td téléphone
-            td {{business.claimBusiness.phone}}
-        tr
-            td tva
-            td {{business.claimBusiness.vta}}
-
-//footer
-.modal-footer
-    button.btn.gling-button-dark(ng-disabled='loading', type='button', ng-click='confirm()')
-        | {{'--.generic.confirm' | translateText}}
-    img(src='/assets/images/modal-loading.gif', ng-show='loading')
+    | Listes des personnes réclamant le commerce
+    tabset
+        tab(ng-repeat="claim in claims",active='claim.active')
+            tab-heading
+                | {{claim.account.firstname}} ({{claim.account.lastname}})
+            table.table-basic
+                tr
+                    td nom
+                    td {{claim.account.firstname}} {{claim.account.lastname}}
+                tr
+                    td email
+                    td {{claim.account.email}}
+                tr
+                    td téléphone
+                    td {{claim.phone}}
+                tr
+                    td tva
+                    td {{claim.vta}}
+                tr
+                    td(colspan=2)
+                        button.btn.gling-button-dark(ng-disabled='loading', type='button', ng-click='confirm(claim)')
+                            | {{'--.generic.confirm' | translateText}}
+                        img(src='/assets/images/modal-loading.gif', ng-show='loading')

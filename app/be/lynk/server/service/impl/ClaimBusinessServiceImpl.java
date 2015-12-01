@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 /**
  * Created by florian on 19/11/15.
@@ -28,13 +30,13 @@ public class ClaimBusinessServiceImpl extends CrudServiceImpl<ClaimBusiness> imp
     }
 
     @Override
-    public ClaimBusiness findByBusiness(Business business) {
+    public List<ClaimBusiness> findByBusiness(Business business) {
         CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
         CriteriaQuery<ClaimBusiness> cq = cb.createQuery(ClaimBusiness.class);
         Root<ClaimBusiness> from = cq.from(ClaimBusiness.class);
         cq.select(from);
         cq.where(cb.equal(from.get("business"), business));
-        return getSingleResultOrNull(cq);
+        return JPA.em().createQuery(cq).getResultList();
     }
 
     @Override
@@ -50,5 +52,35 @@ public class ClaimBusinessServiceImpl extends CrudServiceImpl<ClaimBusiness> imp
             return singleResultOrNull.getBusiness().getId();
         }
         return null;
+    }
+
+    @Override
+    public ClaimBusiness findByBusinessAndAccount(Business business, Account account) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<ClaimBusiness> cq = cb.createQuery(ClaimBusiness.class);
+        Root<ClaimBusiness> from = cq.from(ClaimBusiness.class);
+        cq.select(from);
+        cq.where(cb.equal(from.get("account"), account),
+                cb.equal(from.get("business"), business));
+        return getSingleResultOrNull(cq);
+    }
+
+    @Override
+    public Boolean isClaimed(Business business) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<ClaimBusiness> from = cq.from(ClaimBusiness.class);
+        cq.select(cb.count(from));
+        cq.where(cb.equal(from.get("business"), business));
+        return JPA.em().createQuery(cq).getSingleResult()>0;
+    }
+
+    @Override
+    public void removeByBusiness(Business business) {
+        CriteriaBuilder cb = JPA.em().getCriteriaBuilder();
+        CriteriaDelete<ClaimBusiness> cq = cb.createCriteriaDelete(ClaimBusiness.class);
+        Root<ClaimBusiness> from = cq.from(ClaimBusiness.class);
+        cq.where(cb.equal(from.get("business"), business));
+        JPA.em().createQuery(cq).executeUpdate();
     }
 }

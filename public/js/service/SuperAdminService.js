@@ -21,12 +21,33 @@ myApp.service("superAdminService", function ($http, $flash) {
 
     };
 
-    this.confirmClaim = function (businessId, callbackSuccess, callbackError) {
+    this.getClaims = function (businessId, callbackSuccess, callbackError) {
 
         $http({
             'method': "GET",
-            'url': "/rest/superadmin/confirmClaim/" + businessId,
-            'headers': "Content-Type:application/json;charset=utf-8"
+            'url': "/rest/superadmin/getClaims/" + businessId,
+            'headers': "Content-Type:application/json;charset=utf-8",
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.list);
+                }
+            })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    }
+
+    this.confirmClaim = function (businessId,accountId, callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/rest/superadmin/confirmClaim/" + businessId+"/"+accountId,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data:{}
         }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data);

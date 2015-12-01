@@ -10,11 +10,20 @@ public class BusinessForAdminDTO extends BusinessDTO {
     private Long nbPublication;
 
     private Long nbPublicationActive;
-    private ClaimBusinessDTO claimBusiness;
 
     private Boolean hasOwner;
 
+    private Boolean isClaimed;
+
     public BusinessForAdminDTO() {
+    }
+
+    public Boolean getIsClaimed() {
+        return isClaimed;
+    }
+
+    public void setIsClaimed(Boolean claimed) {
+        isClaimed = claimed;
     }
 
     public Boolean getHasOwner() {
@@ -41,11 +50,5 @@ public class BusinessForAdminDTO extends BusinessDTO {
         this.nbPublicationActive = nbPublicationActive;
     }
 
-    public void setClaimBusiness(ClaimBusinessDTO claimBusiness) {
-        this.claimBusiness = claimBusiness;
-    }
 
-    public ClaimBusinessDTO getClaimBusiness() {
-        return claimBusiness;
-    }
 }
