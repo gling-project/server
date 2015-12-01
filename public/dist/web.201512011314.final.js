@@ -1625,6 +1625,80 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
         return original.apply($location, [path]);
     };
 }]);
+myApp.directive('businessCreationFormCtrl', ['$flash', 'facebookService', 'translationService', 'directiveService', '$timeout', 'accountService', 'businessService', function($flash, facebookService, translationService, directiveService, $timeout, accountService, businessService) {
+  return {
+    restrict: 'E',
+    scope: directiveService.autoScope({
+      ngInfo: '='
+    }),
+    templateUrl: '/assets/js/directive/form/businessCreationForm/template.html',
+    replace: true,
+    transclude: true,
+    compile: function() {
+      return {
+        post: function(scope) {
+          directiveService.autoScopeImpl(scope);
+          scope.business = {};
+          scope.businessNameField = {
+            name: 'name',
+            fieldTitle: "--.generic.name",
+            validationRegex: "^.{2,50}$",
+            validationMessage: ['--.generic.validation.size', '2', '250'],
+            field: scope.business,
+            disabled: function() {
+              return scope.loading;
+            },
+            fieldName: 'name'
+          };
+          scope.importFromFacebookParam = {
+            name: 'facebookUrl',
+            validationRegex: "^($|https://www.facebook\.com/.*$)",
+            validationMessage: '--.generic.validation.facebook',
+            fieldTitle: "Facebook",
+            field: scope.business,
+            disabled: function() {
+              return scope.loading;
+            },
+            fieldName: 'facebookUrl'
+          };
+          scope.setLoading = function(b) {
+            return scope.loading = b;
+          };
+          scope.save = function() {
+            if (!scope.businessNameField.isValid) {
+              scope.businessNameField.displayErrorMessage = true;
+              return $flash.error(translationService.get('--.generic.error.complete.fields'));
+            } else {
+              scope.setLoading(true);
+              return businessService.createBusiness(accountService.getMyself().id, scope.business.name, function(data) {
+                return scope.getInfo().callbackSuccess(data);
+              }, function() {
+                scope.loading = false;
+                return scope.getInfo().callbackFail();
+              });
+            }
+          };
+          return scope.importBusinessFromFacebook = function() {
+            var urlEncoded;
+            if (!scope.importFromFacebookParam.isValid) {
+              scope.importFromFacebookParam.displayErrorMessage = true;
+              return $flash.error($filter('translateText')('--.generic.error.complete.fields'));
+            } else {
+              scope.setLoading(true);
+              urlEncoded = encodeURIComponent(scope.business.facebookUrl);
+              return businessService.importBusinessFormFacebook(urlEncoded, function(data) {
+                return scope.getInfo().callbackSuccess(data);
+              }, function() {
+                scope.setLoading(false);
+                return scope.getInfo().callbackFail();
+              });
+            }
+          };
+        }
+      };
+    }
+  };
+}]);
 myApp.controller('LoginModalCtrl', ['$scope', '$flash', '$filter', 'facebookService', 'translationService', '$modal', '$modalInstance', 'accountService', '$location', 'modalService', 'fctToExecute', 'fctToExecuteParams', 'helpMessage', function($scope, $flash, $filter, facebookService, translationService, $modal, $modalInstance, accountService, $location, modalService, fctToExecute, fctToExecuteParams, helpMessage) {
   $scope.fctToExecute = fctToExecute;
   $scope.helpMessage = helpMessage;
@@ -1977,36 +2051,23 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
   $scope.badgeSelected = 1;
   $scope.accountParam = {};
   $scope.account = null;
-  $scope.business = {};
-  $scope.businessNameField = {
-    name: 'name',
-    fieldTitle: "--.generic.name",
-    validationRegex: "^.{2,50}$",
-    validationMessage: ['--.generic.validation.size', '2', '250'],
-    field: $scope.business,
-    disabled: function() {
-      return $scope.loading;
+  $scope.businessRegistrationParams = {
+    callbackSuccess: function(data) {
+      accountService.setMyself(data);
+      $location.path('/business/' + accountService.getMyself().businessId);
+      $scope.close();
+      return $scope.setLoading(false);
     },
-    fieldName: 'name'
-  };
-  $scope.importFromFacebookParam = {
-    name: 'facebookUrl',
-    validationRegex: "^($|https://www.facebook\.com/.*$)",
-    validationMessage: '--.generic.validation.facebook',
-    fieldTitle: "Facebook",
-    field: $scope.business,
-    disabled: function() {
-      return $scope.loading;
-    },
-    fieldName: 'facebookUrl'
+    callbackFail: function() {
+      return;
+    }
   };
   $scope.setLoading = function(b) {
     $scope.loading = b;
     return $scope.accountParam.disabled = b;
   };
   $scope.close = function() {
-    $modalInstance.close();
-    return;
+    return $modalInstance.close();
   };
   $scope.toBusinessStep = function() {
     if (accountService.getMyself().type === 'BUSINESS') {
@@ -2014,25 +2075,6 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
       return $scope.close();
     } else {
       return $scope.badgeSelected = 2;
-    }
-  };
-  $scope.saveSuccess = function(data) {
-    accountService.setMyself(data);
-    $location.path('/business/' + accountService.getMyself().businessId);
-    $scope.close();
-    return $scope.setLoading(false);
-  };
-  $scope.save = function() {
-    if (!$scope.businessNameField.isValid) {
-      $scope.businessNameField.displayErrorMessage = true;
-      return $flash.error(translationService.get('--.generic.error.complete.fields'));
-    } else {
-      $scope.setLoading(true);
-      return businessService.createBusiness(accountService.getMyself().id, $scope.business.name, function(data) {
-        return $scope.saveSuccess(data);
-      }, function() {
-        return $scope.loading = false;
-      });
     }
   };
   $scope.fb_login = function() {
@@ -2045,7 +2087,7 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
       return $flash.error(data.message);
     });
   };
-  $scope.createAccount = function() {
+  return $scope.createAccount = function() {
     if (!$scope.accountParam.isValid) {
       $scope.accountParam.displayErrorMessage = true;
       return $flash.error($filter('translateText')('--.generic.error.complete.fields'));
@@ -2055,21 +2097,6 @@ myApp.controller('BusinessRegistrationModalCtrl', ['$scope', '$flash', '$modal',
         $scope.setLoading(false);
         return $scope.toBusinessStep();
       }), function() {
-        return $scope.setLoading(false);
-      });
-    }
-  };
-  return $scope.importBusinessFromFacebook = function() {
-    var urlEncoded;
-    if (!$scope.importFromFacebookParam.isValid) {
-      $scope.importFromFacebookParam.displayErrorMessage = true;
-      return $flash.error($filter('translateText')('--.generic.error.complete.fields'));
-    } else {
-      $scope.setLoading(true);
-      urlEncoded = encodeURIComponent($scope.business.facebookUrl);
-      return businessService.importBusinessFormFacebook(urlEncoded, function(data) {
-        return $scope.saveSuccess(data);
-      }, function() {
         return $scope.setLoading(false);
       });
     }
@@ -2457,6 +2484,21 @@ myApp.controller('iframeModalCtrl', ['$scope', '$flash', '$modalInstance', 'titl
     };
 
 }]);
+myApp.controller('BusinessCreationModalCtrl', ['$scope', '$flash', '$modal', '$modalInstance', 'translationService', 'accountService', 'facebookService', 'businessService', '$location', function($scope, $flash, $modal, $modalInstance, translationService, accountService, facebookService, businessService, $location) {
+  $scope.businessRegistrationParams = {
+    callbackSuccess: function(data) {
+      accountService.setMyself(data);
+      $location.path('/business/' + accountService.getMyself().businessId);
+      return $scope.close();
+    },
+    callbackFail: function() {
+      return;
+    }
+  };
+  return $scope.close = function() {
+    return $modalInstance.close();
+  };
+}]);
 myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService', 'searchService', '$rootScope', 'geolocationService', 'accountService', '$timeout', 'addressService', '$location', '$route', '$routeParams', function($scope, modalService, customerInterestService, searchService, $rootScope, geolocationService, accountService, $timeout, addressService, $location, $route, $routeParams) {
   var createNewAddress, original, path, successLoadingBusiness, successLoadingPublications;
   $scope.param = $routeParams.param;
@@ -2728,9 +2770,7 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
     return accountService.deleteAddress(address);
   };
   $scope.createBusiness = function() {
-    return businessService.createBusiness(accountService.getMyself().id, $scope.businessName, function(data) {
-      return accountService.setMyself(data);
-    });
+    return modalService.openCreationBusiness();
   };
   $scope.facebookSuccess = function(data) {
     accountService.setMyself(data);

@@ -223,7 +223,7 @@
 
 ##  view/profile.html
 --.customer.profile.myAddresses=Adresses
---.customer.profile.personalInformation=Moi
+--.customer.profile.personalInformation=Informations personnelles
 --.customer.profile.interest=Intérêts
 --.customer.profile.create=Créer
 
@@ -654,3 +654,22 @@ day_abrv_sunday=Di
 --.admin.business.confirmClaim=Confimer la revendication
 --.business.page.noOwner.alreadyBusiness=Vous posédez déjà un commerce
 --notification.message.newPublication={0} a publié dans Gling
+--.businessForMap.seeMore=Voir plus...
+--.generic.confirm=Confirmer
+--.map.filters=Filtres
+--.map.businessList=Liste des commerces
+--.map.filters.onlyFollowinfBusinesses=Uniquement les commerces suivi
+--.map.filters.onlyCurrentlyOpen=Uniquement les commerces actuellement ouverts
+--.generic.selectAll=Tout sélectionner
+--.generic.unselectAll=Rien sélectionner
+--.map.noResultInThisArea=Pas de commerce dans cette zone
+--.generic.businesses=Commerces
+--.welcome.thisWeek=Cette semaine sur Gling !
+--.welcome.lastPublications=Les dernières actualités de vos commerces
+--.welcome.seeMore=Voir plus...
+--.welcome.morePublications=Découvrez plus d'actualités...
+--.welcome.joinOnFacebook=Participez sur Facebook!
+--.welcome.neighborhood=Les quartiers actifs
+--.welcome.lastBusinesses=Connaissez-vous ?
+--.welcome.event.saintNicolas.title=Saint Nicolas a aussi ses commerces de proximité favoris!
+--.welcome.event.saintNicolas.content=Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling.<br/>Et… N’oubliez pas de rester sage!

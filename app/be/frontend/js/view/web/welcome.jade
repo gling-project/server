@@ -6,32 +6,31 @@
     .left-column
 
         //- event block
-        .block-title.block-title-left.block-title-first Cette semaine sur Gling !
+        .block-title.block-title-left.block-title-first
+            | {{'--.welcome.thisWeek' | translateText}}
         .event-block
             img(src="/assets/images/event/sn.jpg")
-            span.event-title Saint Nicolas a aussi ses commerces de proximité favoris!
+            span.event-title {{'--.welcome.event.saintNicolas.title' | translateText}}
             br
-            | Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!
             br
-            | Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling.
-            br
-            | Et… N’oubliez pas de rester sage!
+            span(ng-bind-html="'--.welcome.event.saintNicolas.content' | translateText | text")
 
         //publication
-        .block-title.block-title-left Les dernières actualités de vos commerces
-            .see-more.link(ng-click="goTo('/')") Voir plus...
+        .block-title.block-title-left
+            | {{'--.welcome.lastPublications' | translateText}}
+            .see-more.link(ng-click="goTo('/')") {{'--.welcome.seeMore' | translateText}}
         publication-list-ctrl(ng-info='publicationListCtrl')
-        .link.center(ng-click="goTo('/')") Découvrez plus d'actualités...
+        .link.center(ng-click="goTo('/')") {{'--.welcome.morePublications' | translateText}}
 
     .right-column
 
         //- facebook campaign
-        .block-title.block-title-first Participez sur Facebook!
+        .block-title.block-title-first {{'--.welcome.joinOnFacebook' | translateText}}
         .fb-post(data-href="https://www.facebook.com/gling.be/posts/1695721087310165",data-width="380")
 
         //map
-        .block-title Les quartiers actifs
-            .see-more.link(ng-click="goTo('/map/')") Voir plus...
+        .block-title {{'--.welcome.neighborhood' | translateText}}
+            .see-more.link(ng-click="goTo('/map/')") {{'--.welcome.seeMore' | translateText}}
         .map-container
             flex-slider(flex-slide="map in maps track by $index ",animation="slide",pauseOnHover="true")
                 li
@@ -39,7 +38,7 @@
 
 
         //- last business
-        .block-title Connaissez-vous ?
+        .block-title {{'--.welcome.lastBusinesses' | translateText}}
         .welcome-business-list
             .welcome-business-list-el(ng-repeat="business in businesses")
                 table

@@ -6,5 +6,6 @@
         | {{getInfo().business.address.street}},
         | {{getInfo().business.address.zip}}
         | {{getInfo().business.address.city}}<br/>
-    follow-widget-ctrl(ng-info="{displayText:true,business:getInfo().business}")<br/>
-    span.link.see-more(ng-click="goTo('/business/'+getInfo().business.id)") Voir plus...
+    follow-widget-ctrl(ng-info="{displayText:true,business:getInfo().business}")
+    br
+    span.link.see-more(ng-click="goTo('/business/'+getInfo().business.id)") {{'--.businessForMap.seeMore' | translateText}}

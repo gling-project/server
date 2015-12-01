@@ -72,9 +72,12 @@
                 span +{{getInfo().publication.pictures.length - 2}}
 
         //- picture 1
-        .publication-gallery(ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}",ng-show="getInfo().publication.pictures.length > 0 ",ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)")
+        .publication-gallery(ng-class="{'publication-body-two':descriptionIsEmpty(getInfo().publication) !== true,'publication-body-two-right':descriptionIsEmpty(getInfo().publication) !== true}"
+        ,ng-show="getInfo().publication.pictures.length > 0 "
+        ,ng-click="openGallery(getInfo().publication.pictures[0],getInfo().publication)")
 
-            img(ng-src="{{getInfo().publication.pictures[0] | image}}",ng-class="getIllustrationClass(getInfo().publication.pictures[0])")
+            img(ng-src="{{getInfo().publication.pictures[0] | image}}"
+            ,ng-class="getIllustrationClass(getInfo().publication.pictures[0])")
 
             .publication-illustration-plus-icon(ng-show="getInfo().publication.pictures.length > 1 && descriptionIsEmpty(getInfo().publication) !== true")
                 span +{{getInfo().publication.pictures.length - 1}}

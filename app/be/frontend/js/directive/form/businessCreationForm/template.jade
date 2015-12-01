@@ -1,0 +1,29 @@
+div
+    //- description
+    .modal-description {{'--.business.registrationModal.business.desc' | translateText}}
+    br
+
+    //- facebook import
+    .modal-description {{'--.business.registration.importFromFacebook.desc' | translateText}}
+    dir-field-text(ng-info='importFromFacebookParam')
+    img(src='/assets/images/modal-loading.gif', ng-show='loading',style="float:right")
+    button.btn.gling-button-dark(ng-disabled='loading', style='float: right;', type='button', ng-click='importBusinessFromFacebook()')
+        | {{'--.business.registration.importFromFacebook' | translateText}}
+
+    //- 'or'
+    table.horizontal-split
+        tr
+            td
+                div
+            td {{'--.generic.or' | translateText}}
+            td
+                div
+
+    // business name field
+    .modal-description {{'--.business.registration.data.desc' | translateText}}
+    dir-field-text(ng-info='businessNameField')
+
+    //- save button
+    img(src='/assets/images/modal-loading.gif', ng-show='loading',style="float:right")
+    button#business-registration-btn-save.btn.gling-button-dark(ng-disabled='loading', type='button', ng-click='save()')
+        | {{'--.generic.save' | translateText}}

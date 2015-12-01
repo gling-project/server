@@ -40,8 +40,7 @@ myApp.controller 'ProfileCtrl', ($scope, modalService, accountService, $rootScop
         accountService.deleteAddress address
 
     $scope.createBusiness = ->
-        businessService.createBusiness accountService.getMyself().id, $scope.businessName, (data) ->
-            accountService.setMyself(data)
+        modalService.openCreationBusiness()
 
     #facebook link success
     $scope.facebookSuccess = (data)->

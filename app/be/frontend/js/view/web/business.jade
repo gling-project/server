@@ -155,7 +155,7 @@
             .business-page-body-center
                 // publication
                 div
-                    select(ng-model='publicationListParam.type', ng-options='option.key as option.value | translateText for option in publicationOptions')
+                    select(ng-show='myBusiness === true',ng-model='publicationListParam.type', ng-options='option.key as option.value | translateText for option in publicationOptions')
                     publication-list-for-business-ctrl(ng-info='publicationListParam')
             .business-page-body-right
                 // gallery

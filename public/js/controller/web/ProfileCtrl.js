@@ -40,9 +40,7 @@ myApp.controller('ProfileCtrl', function($scope, modalService, accountService, $
     return accountService.deleteAddress(address);
   };
   $scope.createBusiness = function() {
-    return businessService.createBusiness(accountService.getMyself().id, $scope.businessName, function(data) {
-      return accountService.setMyself(data);
-    });
+    return modalService.openCreationBusiness();
   };
   $scope.facebookSuccess = function(data) {
     accountService.setMyself(data);

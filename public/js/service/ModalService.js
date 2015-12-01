@@ -391,5 +391,16 @@ myApp.service("modalService", function ($modal) {
             size: "l",
             resolve: resolve
         });
+    };
+
+
+
+    this.openCreationBusiness = function(){
+
+        $modal.open({
+            templateUrl: "/assets/js/modal/BusinessCreationModal/view.html",
+            controller: "BusinessCreationModalCtrl",
+            size: "l"
+        });
     }
 });

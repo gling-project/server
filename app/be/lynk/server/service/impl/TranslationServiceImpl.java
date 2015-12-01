@@ -6,6 +6,7 @@ import be.lynk.server.model.entities.TranslationValue;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.message.EmailMessageEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import be.lynk.server.util.message.NotificationMessageEnum;
 import org.springframework.stereotype.Repository;
 import play.Logger;
 import play.api.Play;
@@ -63,6 +64,11 @@ public class TranslationServiceImpl implements TranslationService {
         Logger.info("TRANSLATION LOADING TIME : " + (new Date().getTime() - t));
 
         return new TranslationsDTO(m);
+    }
+
+    @Override
+    public String getTranslation(NotificationMessageEnum notificationMessageEnum, Lang language, Object... params) {
+        return translate(notificationMessageEnum.getKey(), language, params);
     }
 
     @Override

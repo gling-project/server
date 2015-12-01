@@ -2,10 +2,10 @@
     .map-content
         // filtre open
         .option-panel.option-panel-left(ng-hide='displayFilters===true')
-            button(ng-click='displayFilters=!displayFilters') Filtre
+            button(ng-click='displayFilters=!displayFilters') {{'--.map.filters' | translateText}}
         // list open
         .option-panel.option-panel-right(ng-hide='displayList===true')
-            button(ng-click='displayList=!displayList') Liste des commerces
+            button(ng-click='displayList=!displayList') {{'--.map.businessList' | translateText}}
         // map
         #map(style='height:{{height}}px !important')
         // filter panel
@@ -16,14 +16,16 @@
                 .list-container-scroll
                     // folloing
                     input(type='checkbox', ng-model='filters.following')
-                    | Uniquement les commerces suivi
+                    | {{'--.map.filters.onlyFollowinfBusinesses' | translateText}}
                     br
                     input(type='checkbox', ng-model='filters.open')
-                    | Uniquement les commerces actuellement ouverts
+                    | {{'--.map.filters.onlyCurrentlyOpen' | translateText}}
                     h3 Intérêts
-                    span.link(ng-click='selectAllInterest(true)') Tout sélectionner
+                    span.link(ng-click='selectAllInterest(true)')
+                        | {{'--.generic.selectAll' | translateText}}
                     |  /
-                    span.link(ng-click='selectAllInterest(false)') Rien sélectionner
+                    span.link(ng-click='selectAllInterest(false)')
+                        | {{'--.generic.unselectAll' | translateText}}
                     div(ng-repeat='interest in interests')
                         input(type='checkbox', ng-model='interest.selected')
                         span(ng-class="'gling-icon gling-icon-' + interest.name")
@@ -31,9 +33,10 @@
         // displayed business panel
         .displayed-business-panel(ng-show='displayList')
             span.filter-panel-close.glyphicon.glyphicon-remove(ng-click='displayList=false')
-            h3 Commerces
+            h3 {{'--.generic.businesses' | translateText}}
             .list-container
                 .list-container-scroll
-                    div(ng-show='listDisplayedBusiness.length == 0') Pas de commerce dans cette zone
+                    div(ng-show='listDisplayedBusiness.length == 0')
+                        | {{'--.map.noResultInThisArea' | translateText}}
                     .list-element(ng-repeat='business in listDisplayedBusiness', ng-mouseover='startAnimation(business,true)', ng-mouseleave='startAnimation(business,false)')
                         business-for-map-ctrl(ng-info='{business:business}')

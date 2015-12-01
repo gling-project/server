@@ -225,6 +225,9 @@ module.exports = function (grunt) {
                         <!-- init -->
                         'public/js/Init.js',
 
+                        <!-- form -->
+                        'public/js/directive/form/businessCreationForm/BusinessCreationFormCtrl.js',
+
                         <!-- modals -->
                         'public/js/modal/LoginModal/LoginModal.js',
                         'public/js/modal/ChangePassword/ChangePasswordModal.js',
@@ -242,6 +245,7 @@ module.exports = function (grunt) {
                         'public/js/modal/MessageModal/MessageModal.js',
                         'public/js/modal/GalleryModal/GalleryModal.js',
                         'public/js/modal/IframeModal/IframeModal.js',
+                        'public/js/modal/BusinessCreationModal/BusinessCreationModal.js',
 
                         <!-- controllers -->
                         'public/js/controller/web/HomeCtrl.js',

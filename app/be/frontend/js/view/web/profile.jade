@@ -11,12 +11,11 @@
                     | {{'--.generic.save' | translateText}}
                 button#profile-personal-btn-cancel.btn.gling-button-dark(ng-hide='accountParam.disabled', ng-click='personalCancel()')
                     | {{'--.generic.cancel' | translateText}}
-                .col-md-3(ng-show='model.myself.loginAccount==true')
                 // edit password
                 button#profile-personal-btn-edit-password.btn.gling-button-dark(type='button', ng-show='model.myself.loginAccount===true', ng-click='editPassword()')
                     | {{'--.changePasswordModal.title' | translateText}}
                 // associate social network to account
-                table.profile-social-network-table
+                table.profile-table
                     tr
                         th(colspan='2') Lien avec vos réseaux sociaux
                     tr
@@ -28,6 +27,13 @@
                             div(ng-show='model.myself.facebookAccount===true')
                                 | Lié au compte facebook {{model.myself.facebookCredential.firstname}}
                                 | {{model.myself.facebookCredential.lastname}}
+                table.profile-table.profile-action-table
+                    tr(ng-show="model.myself.type != 'BUSINESS'")
+                        td Vous êtes un commerçant ?
+                        td
+                            span(ng-show="model.myself.claimedBusinessId!=null") Vous avez déjà revendiqué un commerce. Vous ne pouvez posséder qu'un seul commerce par compte
+                            button.gling-button-dark(ng-show="model.myself.claimedBusinessId==null",type="button",ng-click="createBusiness()") Créez votre page commerce
+
         // address panel
         .panel.panel-gling.main-panel
             .panel-heading {{'--.customer.profile.myAddresses' | translateText}}

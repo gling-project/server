@@ -47,34 +47,10 @@
     //- panel business data
     div(ng-show='badgeSelected==2')
 
-        //- description
-        .modal-description {{'--.business.registrationModal.business.desc' | translateText}}
-        br
-
-        //- facebook import
-        .modal-description {{'--.business.registration.importFromFacebook.desc' | translateText}}
-        dir-field-text(ng-info='importFromFacebookParam')
-        button.btn.gling-button-dark(ng-show='badgeSelected==2', ng-disabled='loading', style='float: right;', type='button', ng-click='importBusinessFromFacebook()')
-            | {{'--.business.registration.importFromFacebook' | translateText}}
-        img(src='/assets/images/modal-loading.gif', ng-show='loading',style="float:right")
-
-        //- 'or'
-        table.horizontal-split
-            tr
-                td
-                    div
-                td {{'--.generic.or' | translateText}}
-                td
-                    div
-
-        // business name field
-        .modal-description {{'--.business.registration.data.desc' | translateText}}
-        dir-field-text(ng-info='businessNameField')
+        business-creation-form-ctrl(ng-info="businessRegistrationParams")
 
 //footer
-.modal-footer
+.modal-footer(ng-show='badgeSelected==1')
     button#business-registration-btn-next.btn.gling-button-dark(ng-show='badgeSelected==1', ng-disabled='loading', type='button', ng-click='createAccount()')
         | {{'--.businessRegistration.createAccount' | translateText}}
-    button#business-registration-btn-save.btn.gling-button-dark(ng-show='badgeSelected==2', ng-disabled='loading', type='button', ng-click='save()')
-        | {{'--.generic.save' | translateText}}
     img(src='/assets/images/modal-loading.gif', ng-show='loading')

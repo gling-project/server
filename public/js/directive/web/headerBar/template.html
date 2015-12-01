@@ -102,26 +102,30 @@
             <!-- navigation bar -->
             <div class="navigation-bar-menu">
 
-                <a href="/test">
+                <a href="/test" class="gling-button-dark">
                     {{'--.welcome.welcome' | translateText}}
                 </a>
 
-                <a href="/">
+                <a href="/" class="gling-button-dark">
                     {{'--.welcome.newsfeed' | translateText}}
                 </a>
 
-                <a href="/map">
+                <a href="/map" class="gling-button-dark">
                     {{'--.welcome.map' | translateText}}
                 </a>
                 <a ng-show="accountService.getMyself()!=null"
+                   class="gling-button-dark"
                    href="/my-businesses">
                     {{'--.welcome.myBusinesses' | translateText}}
                 </a>
                 <a ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'"
+                   class="gling-button-dark"
                    href="/business/{{accountService.getMyself().businessId}}">
                     {{'--.welcome.myBusiness' | translateText}}
                 </a>
-                <a style="float: right" href="/welcome/">
+                <a style="float: right"
+                   href="/welcome/"
+                   class="gling-button-dark">
                     {{'--.welcome.about' | translateText}}
                 </a>
             </div>

@@ -1,0 +1,9 @@
+//- header
+.modal-header
+    button.btn.glyphicon.glyphicon-remove(style='float:right', ng-click='close()')
+    h4.modal-title {{'--.business.registrationModal.title' | translateText}}
+
+//- body
+.modal-body.modal-login.business-registration
+
+    business-creation-form-ctrl(ng-info="businessRegistrationParams")

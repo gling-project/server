@@ -3150,16 +3150,23 @@ html[xmlns] .flexslider .slides {
 .profile-page .category-box {
   margin: 5px;
 }
-.profile-page .profile-social-network-table {
+.profile-page .profile-table {
+  border-top: 1px solid #cccccc;
   margin-top: 15px;
+  width: 100%;
 }
-.profile-page .profile-social-network-table th {
-  text-align: center;
-  padding-bottom: 5px;
-}
-.profile-page .profile-social-network-table tr td:first-child {
+.profile-page .profile-table tbody tr td:first-child {
   text-align: center;
   width: 100px;
+}
+.profile-page .profile-table th {
+  text-align: left;
+  text-align: center;
+  padding-bottom: 5px;
+  font-size: 20px;
+}
+.profile-page .profile-action-table tbody tr td:first-child {
+  width: 50%;
 }
 .progressBar {
   top: 0;
@@ -3700,6 +3707,9 @@ html[xmlns] .flexslider .slides {
 }
 .welcome-page .block-title.block-title-first {
   margin-top: 10px !important;
+}
+.welcome-page .flex-direction-nav a {
+  height: 50px !important;
 }
 .welcome-page .see-more {
   float: right;
