@@ -19,6 +19,7 @@ import play.i18n.Lang;
 import play.mvc.Http;
 import play.mvc.Result;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -50,6 +51,10 @@ public class MainController extends AbstractController {
     private LocalizationService localizationService;
     @Autowired
     private CustomerInterestService customerInterestService;
+
+    public Result getFont(String path,String file) {
+        return ok(new File(path+file));
+    }
 
 
     public Result comingSoon() {
