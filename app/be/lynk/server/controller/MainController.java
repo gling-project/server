@@ -34,20 +34,20 @@ public class MainController extends AbstractController {
     private static final String APP_PACKAGE_NAME = "be.gling.android";
 
     //    private String AWSBuckect     =
-    private String fileBucketUrl       = Configuration.root().getString("aws.accesFile.url");
+    private String fileBucketUrl = Configuration.root().getString("aws.accesFile.url");
     //"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
     //"https://s3.amazonaws.com/" + AWSBuckect; (gling-prod)
-    private String urlBase             = Configuration.root().getString("site.url.base");
-    private String mobileDisabled      = Configuration.root().getString("site.mobile.disabled");
-    private String lastVersion         = Configuration.root().getString("project.lastVersion");
-    private String appStatus           = Configuration.root().getString("app.status");
+    private String urlBase = Configuration.root().getString("site.url.base");
+    private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
+    private String lastVersion = Configuration.root().getString("project.lastVersion");
+    private String appStatus = Configuration.root().getString("app.status");
     private String eventPublicationIds = Configuration.root().getString("event.publicationIds");
 
 
     @Autowired
-    private PublicationService      publicationService;
+    private PublicationService publicationService;
     @Autowired
-    private LocalizationService     localizationService;
+    private LocalizationService localizationService;
     @Autowired
     private CustomerInterestService customerInterestService;
 
@@ -83,12 +83,9 @@ public class MainController extends AbstractController {
     }
 
     @Transactional
-    public Result toWelcomePage(String lang) {
+    public Result toAboutPage(String lang) {
         changeLang(lang);
-        if (ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null) {
-            addAlreadyVisitedCookie();
-        }
-        return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(), dozerService.map(lang(), LangDTO.class)));
+        return ok(be.lynk.server.views.html.about_page.render(getAvaiableLanguage(), dozerService.map(lang(), LangDTO.class)));
     }
 
 
@@ -100,37 +97,31 @@ public class MainController extends AbstractController {
 
         boolean isMobile = (isMobileDevice() || forceMobile) && mobileDisabled == null;
 
-        if (!isMobileDevice() && !forceMobile && ctx().request().cookie(CommonSecurityController.COOKIE_ALREADY_VISITED) == null && (url == null || url == "")) {
-            addAlreadyVisitedCookie();
-            return ok(be.lynk.server.views.html.welcome_page.render(getAvaiableLanguage(), dozerService.map(lang(), LangDTO.class)));
-        } else {
+
+        InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(isMobile);
 
 
-            InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(isMobile);
+        AbstractPublicationDTO publicationDTO = null;
+        if (url != null && url.contains("publication/")) {
+            Pattern p = Pattern.compile("publication/([0-9]+)");
+            Matcher matcher = p.matcher(url);
+            if (matcher.find()) {
+                AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
+                publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
 
-
-            AbstractPublicationDTO publicationDTO = null;
-            if (url != null && url.contains("publication/")) {
-                Pattern p = Pattern.compile("publication/([0-9]+)");
-                Matcher matcher = p.matcher(url);
-                if (matcher.find()) {
-                    AbstractPublication publication = publicationService.findById(Long.parseLong(matcher.group(1)));
-                    publicationDTO = dozerService.map(publication, AbstractPublicationDTO.class);
-
-                    publicationDTO.setBusinessName(publication.getBusiness().getName());
-                    publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
-                    publicationDTO.setBusinessId(publication.getBusiness().getId());
-                }
+                publicationDTO.setBusinessName(publication.getBusiness().getName());
+                publicationDTO.setBusinessIllustration(dozerService.map(publication.getBusiness().getIllustration(), StoredFileDTO.class));
+                publicationDTO.setBusinessId(publication.getBusiness().getId());
             }
-
-            //try with param
-            if (isMobile) {
-                return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
-            } else {
-                return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, publicationDTO));
-            }
-
         }
+
+        //try with param
+        if (isMobile) {
+            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+        } else {
+            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, publicationDTO));
+        }
+
 
     }
 
@@ -157,11 +148,6 @@ public class MainController extends AbstractController {
         }
 
         return finalList;
-    }
-
-
-    private void addAlreadyVisitedCookie() {
-        ctx().response().setCookie(CommonSecurityController.COOKIE_ALREADY_VISITED, "true", 2592000);
     }
 
     private InterfaceDataDTO generateInterfaceDTO(boolean isMobile) {

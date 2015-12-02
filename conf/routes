@@ -125,7 +125,7 @@ GET           /rest/superadmin/accountDetails                                   
 GET           /rest/superadmin/customerPosition                                                                      @be.lynk.server.controller.rest.SuperAdminRestController.getCustomerPositions()
 GET           /rest/superadmin/importBusiness/:name                                                                  @be.lynk.server.controller.rest.SuperAdminRestController.importBusiness(name:String)
 POST          /rest/superadmin/confirmClaim/$businessId<[0-9]+>/$accountId<[0-9]+>                                   @be.lynk.server.controller.rest.SuperAdminRestController.confirmClaim(businessId:Long,accountId:Long)
-GET           /rest/superadmin/getClaims/$businessId<[0-9]+>                                                      @be.lynk.server.controller.rest.SuperAdminRestController.getClaimsByBusiness(businessId:Long)
+GET           /rest/superadmin/getClaims/$businessId<[0-9]+>                                                         @be.lynk.server.controller.rest.SuperAdminRestController.getClaimsByBusiness(businessId:Long)
 
 
 ## town
@@ -147,8 +147,8 @@ POST          /rest/import_category_translation                                 
 ##welcome
 GET           /town/                                                                                                 @be.lynk.server.controller.MainController.toTown()
 GET           /coming_soon/                                                                                          @be.lynk.server.controller.MainController.comingSoon()
-GET           /welcome/                                                                                              @be.lynk.server.controller.MainController.toWelcomePage(lang=null)
-GET           /welcome/*lang                                                                                         @be.lynk.server.controller.MainController.toWelcomePage(lang:String)
+GET           /about/                                                                                                @be.lynk.server.controller.MainController.toAboutPage(lang=null)
+GET           /about/*lang                                                                                           @be.lynk.server.controller.MainController.toAboutPage(lang:String)
 GET           /admin/                                                                                                @be.lynk.server.controller.MainController.admin(url=null)
 GET           /admin/*url                                                                                            @be.lynk.server.controller.MainController.admin(url)
 GET           /mobile/                                                                                               @be.lynk.server.controller.MainController.mobile()

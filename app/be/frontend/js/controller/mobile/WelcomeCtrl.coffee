@@ -14,7 +14,7 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, $location, accountService, 
         dto: {}
         mobileVersion: true
         facebookSuccess: (data) ->
-            $location.url '/home'
+            $location.url '/news'
 
     # loading
     $scope.login = ->
@@ -24,7 +24,7 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, $location, accountService, 
                 $timeout (->
                     $scope.setLoading false
                     $flash.success translationService.get('--.login.flash.success')
-                    $location.url '/home'
+                    $location.url '/welcome'
                 ), 1
             ), ->
                 $scope.setLoading false

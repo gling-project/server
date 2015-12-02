@@ -1494,7 +1494,8 @@ var test = function (accountService) {
 var initializeCommonRoutes = function () {
     myApp
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-            $routeProvider.when('/home/:param*?', {
+            $routeProvider
+            .when('/home/:param*?', {
                 templateUrl: '/assets/js/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
@@ -1554,7 +1555,7 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }]
                 }
-            }).when('/test', {
+            }).when('/welcome', {
                 templateUrl: '/assets/js/view/web/welcome.html',
                 controller: 'WelcomeCtrl',
                 resolve: {
@@ -1562,10 +1563,10 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }]
                 }
-            }).when('/welcome/', {
+            }).when('/about/', {
                 resolve: {
                     a: ['$rootScope', function ($rootScope) {
-                        window.location.replace('/welcome/');
+                        window.location.replace('/about/');
                     }]
                 }
             }).when('/legal/', {
@@ -1581,7 +1582,7 @@ var initializeCommonRoutes = function () {
                     }]
                 }
             }).otherwise({
-                redirectTo: '/home/'
+                redirectTo: '/welcome/'
             });
 
 
@@ -4176,6 +4177,9 @@ myApp.directive("headerBarCtrl", ['addressService', '$rootScope', 'languageServi
 
                     scope.currentLang = languageService.currentLang;
 
+                    scope.testPath = function(url){
+                        return $location.path().indexOf(url) > -1;
+                    };
 
                     //use the model
                     scope.myself = accountService.getMyself();

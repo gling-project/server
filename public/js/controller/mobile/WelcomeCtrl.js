@@ -9,7 +9,7 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, $location, accountS
     dto: {},
     mobileVersion: true,
     facebookSuccess: function(data) {
-      return $location.url('/home');
+      return $location.url('/news');
     }
   };
   $scope.login = function() {
@@ -19,7 +19,7 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, $location, accountS
         return $timeout((function() {
           $scope.setLoading(false);
           $flash.success(translationService.get('--.login.flash.success'));
-          return $location.url('/home');
+          return $location.url('/welcome');
         }), 1);
       }), function() {
         return $scope.setLoading(false);

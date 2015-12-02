@@ -12,7 +12,8 @@ var test = function (accountService) {
 var initializeCommonRoutes = function () {
     myApp
         .config(function ($routeProvider, $locationProvider) {
-            $routeProvider.when('/home/:param*?', {
+            $routeProvider
+            .when('/home/:param*?', {
                 templateUrl: '/assets/js/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
@@ -72,7 +73,7 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }
                 }
-            }).when('/test', {
+            }).when('/welcome', {
                 templateUrl: '/assets/js/view/web/welcome.html',
                 controller: 'WelcomeCtrl',
                 resolve: {
@@ -80,10 +81,10 @@ var initializeCommonRoutes = function () {
                         $rootScope.$broadcast('PROGRESS_BAR_START');
                     }
                 }
-            }).when('/welcome/', {
+            }).when('/about/', {
                 resolve: {
                     a: function ($rootScope) {
-                        window.location.replace('/welcome/');
+                        window.location.replace('/about/');
                     }
                 }
             }).when('/legal/', {
@@ -99,7 +100,7 @@ var initializeCommonRoutes = function () {
                     }
                 }
             }).otherwise({
-                redirectTo: '/home/'
+                redirectTo: '/welcome/'
             });
 
 

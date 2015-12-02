@@ -10,6 +10,9 @@ myApp.directive("headerBarCtrl", function (addressService, $rootScope, languageS
 
                     scope.currentLang = languageService.currentLang;
 
+                    scope.testPath = function(url){
+                        return $location.path().indexOf(url) > -1;
+                    };
 
                     //use the model
                     scope.myself = accountService.getMyself();

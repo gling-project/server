@@ -72,6 +72,10 @@ public class LocalizationServiceImpl implements LocalizationService {
     @Override
     public Long distanceBetweenAddress(Position origin, Address destination) {
 
+        if(destination==null){
+            return 0L;
+        }
+
         String destinationsString = addressToString(destination);
 
         GeoApiContext geoApiContext = new GeoApiContext();
@@ -148,6 +152,9 @@ public class LocalizationServiceImpl implements LocalizationService {
     }
 
     private String addressToString(Address address) {
+        if(address==null){
+            return "";
+        }
         return address.getStreet() + "," + address.getZip() + "," + address.getCity() + "," + address.getCountry();
     }
 

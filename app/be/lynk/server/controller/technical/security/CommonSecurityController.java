@@ -30,8 +30,6 @@ public class CommonSecurityController extends Security.Authenticator {
     public static final String SESSION_IDENTIFIER_STORE                 = "email";
     //name of the cookie for the automatic reconnection
     public static final String COOKIE_KEEP_SESSION_OPEN                 = "session_key";
-    //not first visit cookie
-    public static final String COOKIE_ALREADY_VISITED                   = "ALREADY_VISITED";
     //recover the session key into the http request
     public static final String REQUEST_HEADER_AUTHENTICATION_KEY        = "authenticationKey";
     //recover the session key into the http request
