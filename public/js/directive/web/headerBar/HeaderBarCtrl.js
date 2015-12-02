@@ -15,6 +15,9 @@ myApp.directive('headerBarCtrl', function(addressService, $rootScope, languageSe
           scope.testPath = function(url) {
             return $location.path().indexOf(url) > -1;
           };
+          scope.goTo = function(url) {
+            return $location.path(url);
+          };
           scope.goToHome = function() {
             $(window).scrollTop(0);
             return scope.navigateTo('/home');

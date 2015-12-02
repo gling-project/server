@@ -16,6 +16,9 @@ myApp.directive 'headerBarCtrl', (addressService, $rootScope, languageService, $
             scope.testPath = (url) ->
                 $location.path().indexOf(url) > -1
 
+            scope.goTo = (url) ->
+                $location.path url
+
             scope.goToHome = ->
                 $(window).scrollTop 0
                 scope.navigateTo '/home'

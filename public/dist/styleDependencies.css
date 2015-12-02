@@ -3500,23 +3500,38 @@ html[xmlns] .flexslider .slides {
   height: 380px;
   position: relative;
 }
-.welcome-page .map-container .map-next-btn {
+.welcome-page .map-container .flex-direction-nav {
+  top: 50%;
   position: absolute;
-  top: calc(50% - 50px);
-  height: 50px;
-  width: 30px;
-  right: 0;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.welcome-page .map-container .map-previous-btn {
-  position: absolute;
-  top: calc(50% - 50px);
-  height: 50px;
-  width: 30px;
   left: 0;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+}
+.welcome-page .map-container .flex-direction-nav a:before {
+  color: #1ad2aa;
+}
+.welcome-page .map-container li {
+  position: relative;
+}
+.welcome-page .map-container li .map-slider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.welcome-page .map-container li .map-slider > div {
+  position: absolute;
+  padding: 15px;
+  left: 0;
+  right: 0;
+  background-color: rgba(44, 38, 92, 0.7);
+  color: #1ad2aa;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 100%;
+  top: calc(50% - 25px);
 }
 .welcome-page .event-block {
   padding: 5px 15px 15px;
@@ -3671,6 +3686,23 @@ html[xmlns] .flexslider .slides {
   height: 100%;
   background-color: #1ad2aa;
 }
+.business-for-map .business-header {
+  cursor: pointer;
+}
+.business-for-map .business-header .title {
+  font-weight: bold;
+}
+.business-for-map .business-header .currently-open {
+  color: #1ad2aa;
+  float: right;
+}
+.business-for-map .see-more {
+  margin-left: 5px;
+}
+.business-for-map .business-illustration {
+  height: 20px;
+  width: 20px;
+}
 h1 {
   margin: 0;
 }
@@ -3689,6 +3721,7 @@ body {
   background-image: url('/assets/images/home-bg.png');
   width: 1000px;
   margin: 94px auto auto;
+  margin-bottom: 50px;
   position: relative;
 }
 .header-with-advanced-search {
@@ -3851,16 +3884,6 @@ iframe {
   height: 700px;
 }
 
-.business-for-map .title {
-  font-weight: bold;
-}
-.business-for-map .see-more {
-  margin-left: 5px;
-}
-.business-for-map .business-illustration {
-  height: 20px;
-  width: 20px;
-}
 body {
   min-width: 1000px;
 }

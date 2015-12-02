@@ -163,7 +163,6 @@ public class StoredFile extends AbstractEntity {
                 "originalName='" + originalName + '\'' +
                 ", storedName='" + storedName + '\'' +
                 ", size=" + size +
-                ", account=" + account +
                 '}';
     }
 }

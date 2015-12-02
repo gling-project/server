@@ -140,14 +140,7 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
         this.pictures = pictures;
     }
 
-    @Override
-    public String toString() {
-        return "AbstractPublication{" +
-                ", description='" + description + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
-    }
+
 
     @Override
     public int compareTo(AbstractPublication o) {

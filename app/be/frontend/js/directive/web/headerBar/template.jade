@@ -41,13 +41,13 @@ div
         // navigation bar
         .navigation-bar-menu
             div
-                a.gling-button-dark(href='/test', ng-class="{'selected':testPath('/welcome')}")
+                button.gling-button-dark(ng-click="goTo('/welcome')", ng-class="{'selected':testPath('/welcome')}")
                     | {{'--.welcome.welcome' | translateText}}
-                a.gling-button-dark(href='/home/', ng-class="{'selected':testPath('/home')}")
+                button.gling-button-dark(ng-click="goTo('/home/')", ng-class="{'selected':testPath('/home')}")
                     | {{'--.welcome.newsfeed' | translateText}}
-                a.gling-button-dark(href='/map', ng-class="{'selected':testPath('/map')}")
+                button.gling-button-dark(ng-click="goTo('/map')", ng-class="{'selected':testPath('/map')}")
                     | {{'--.welcome.map' | translateText}}
-                a.gling-button-dark(ng-show='accountService.getMyself()!=null', ng-class="{'selected':testPath('/my-business')}", href='/my-businesses')
+                button.gling-button-dark(ng-click="goTo('/my-businesses')",ng-show='accountService.getMyself()!=null', ng-class="{'selected':testPath('/my-business')}")
                     | {{'--.welcome.myBusinesses' | translateText}}
-                a.gling-button-dark(ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'", ng-class="{'selected':testPath('/business')}", href='/business/{{accountService.getMyself().businessId}}')
+                button.gling-button-dark(ng-click="goTo('/business/'+accountService.getMyself().businessId)",ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'", ng-class="{'selected':testPath('/business')}")
                     | {{'--.welcome.myBusiness' | translateText}}

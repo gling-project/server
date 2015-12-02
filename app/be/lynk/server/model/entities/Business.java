@@ -253,14 +253,11 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     @Override
     public String toString() {
         return "Business{" +
-                "account=" + account +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address=" + address +
-                ", businessCategories=" + businessCategories +
                 ", illustration=" + illustration +
-                ", publications=" + publications +
                 '}';
     }
 

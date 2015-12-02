@@ -986,11 +986,16 @@ ul.messenger .messenger-spinner {
 .modal-login .login-action {
   width: 100%;
 }
+.modal-login .login-action .glyphicon {
+  padding-right: 4px;
+  color: #1ad2aa;
+  font-size: 18px;
+}
 .modal-login .login-action tr td:first-child {
   vertical-align: top;
   padding: 2px 10px 15px;
   font-weight: bold;
-  width: 40%;
+  width: 50%;
 }
 .modal-login .modal-login-help {
   font-weight: bold;

@@ -223,8 +223,6 @@ public class Account extends AbstractEntity {
                 ", lang=" + lang +
                 ", authenticationKey='" + authenticationKey + '\'' +
                 ", role=" + role +
-                ", loginCredential=" + loginCredential +
-                ", facebookCredential=" + facebookCredential +
                 ", type=" + type +
                 ", sendNotificationByDefault=" + sendNotificationByDefault +
                 "} " + super.toString();

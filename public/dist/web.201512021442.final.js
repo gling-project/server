@@ -3772,12 +3772,14 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
   $scope.lastChange = null;
   $scope.maps = [
     {
+      name: 'Chaussée de Wavre',
       src: "/assets/images/map/1160.png",
       position: {
         x: 50.815060,
         y: 4.425933
       }
     }, {
+      name: 'Rue des Tongres',
       src: "/assets/images/map/tongres.png",
       position: {
         x: 50.840479,
@@ -4181,6 +4183,9 @@ myApp.directive('headerBarCtrl', ['addressService', '$rootScope', 'languageServi
           scope.accountService = accountService;
           scope.testPath = function(url) {
             return $location.path().indexOf(url) > -1;
+          };
+          scope.goTo = function(url) {
+            return $location.path(url);
           };
           scope.goToHome = function() {
             $(window).scrollTop(0);

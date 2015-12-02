@@ -10,11 +10,13 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
 
     #map list
     $scope.maps = [
+        name:'Chaussée de Wavre'
         src: "/assets/images/map/1160.png"
         position:
             x: 50.815060
             y: 4.425933
     ,
+        name:'Rue des Tongres'
         src: "/assets/images/map/tongres.png"
         position:
             x: 50.840479

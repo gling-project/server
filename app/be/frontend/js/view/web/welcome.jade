@@ -34,6 +34,8 @@
         .map-container
             flex-slider(flex-slide="map in maps track by $index ",animation="slide",pauseOnHover="true")
                 li
+                    .map-slider
+                        div {{map.name}}
                     img(style="cursor:pointer",ng-src="{{map.src}}",ng-click="openMap(map)")
 
 
