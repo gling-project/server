@@ -1,11 +1,12 @@
-# Angular bootstrap date & time picker version: 0.3.13
-================================
+# Angular bootstrap date & time picker version: 0.4.0
 
 Native AngularJS datetime picker directive styled by Twitter Bootstrap 3
 
 [![MIT License][license-image]][license-url]
 [![Build Status](https://travis-ci.org/dalelotts/angular-bootstrap-datetimepicker.png?branch=master)](https://travis-ci.org/dalelotts/angular-bootstrap-datetimepicker)
+[![Dependency Status](https://david-dm.org/dalelotts/angular-bootstrap-datetimepicker.svg)](https://david-dm.org/dalelotts/angular-bootstrap-datetimepicker)
 [![devDependency Status](https://david-dm.org/dalelotts/angular-bootstrap-datetimepicker/dev-status.png)](https://david-dm.org/dalelotts/angular-bootstrap-datetimepicker#info=devDependencies)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![PayPal donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F3FX5W6S2U4BW&lc=US&item_name=Dale%20Lotts&item_number=angular%2dbootstrap%2ddatetimepicker&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted "Donate one-time to this project using Paypal")
 <a href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fabout.twitter.com%2Fresources%2Fbuttons&amp;text=Check%20out%20this%20%23AngularJS%20directive%20that%20makes%20it%20dead%20simple%20for%20users%20to%20select%20dates%20%26%20times&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fgithub.com%2Fdalelotts%2Fangular-bootstrap-datetimepicker&amp;via=dalelotts" target="_blank">
   <img src="http://jpillora.com/github-twitter-button/img/tweet.png"></img>
@@ -14,32 +15,11 @@ Native AngularJS datetime picker directive styled by Twitter Bootstrap 3
 
 [Home / demo page](http://dalelotts.github.io/angular-bootstrap-datetimepicker/)
 
-# Upgrading to 0.3.x
-
-<code>weekStart</code> has been removed. This directive uses the locale aware 
-[moment.js day of week](http://momentjs.com/docs/#/get-set/weekday/) to
-determine which day is the first day of the week. If you would like a first 
-day of week that is not standard for the locale you can create a 
-[custom locale](http://momentjs.com/docs/#/customization/) 
-
-## Easier to control width
-
-The width of the entire control is set in css, which you can easily override.
-
-## Better localization support
-
-This directive uses localized date formats when available. One exception is the title
-of the month view - moment does not (yet) have a localized format for month and year.
-
-# (Almost) Complete re-write
-
-This project started as an AngularJS specific re-write of the [bootstrap-datetimepicker project](https://github.com/smalot/bootstrap-datetimepicker).
-Only the CSS file from the bootstrap-datetimepicker project was re-used.
 
 #Dependencies
 
 Requires:
- * AngularJS 1.2.26 or higher (1.0.x will not work)
+ * AngularJS 1.4.x or higher (1.0.x will not work)
  * moment.js 2.8.3 or higher for date parsing and formatting
  * bootstrap's glyphicons for arrows (Can be overridden in css)
  
@@ -47,9 +27,11 @@ optional:
  * bootstrap's dropdown component (`dropdowns.less`)
 
 #Testing
+This directive was written using TDD and all enhancements and changes have related tests.
+
 We use karma and jshint to ensure the quality of the code. The easiest way to run these checks is to use gulp:
 
-```
+```shell
 npm install
 npm test
 ```
@@ -58,18 +40,10 @@ The karma task will try to open Chrome as a browser in which to run the tests.
 Make sure Chrome is available or change the browsers setting in karma.config.js
 
 #Usage
-We use bower for dependency management. Add
+We use npm for dependency management, run
 
-```json
-dependencies: {
-    "angular-bootstrap-datetimepicker": "latest"
-}
-```
-
-To your bower.json file. Then run
-
-```html
-bower install
+```shell
+npm install --save angular-bootstrap-datetimepicker
 ```
 
 This will copy the angular-bootstrap-datetimepicker files into your components folder, along with its dependencies.
@@ -77,16 +51,16 @@ This will copy the angular-bootstrap-datetimepicker files into your components f
 Add the css:
 
 ```html
-<link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css">
-<link rel="stylesheet" href="components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
 ```
 
 Load the script files in your application:
 ```html
-<script type="text/javascript" src="components/moment/moment.js"></script>
-<script type="text/javascript" src="components/bootstrap/dist/js/bootstrap.js"></script>
-<script type="text/javascript" src="components/angular/angular.js"></script>
-<script type="text/javascript" src="components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+<script type="text/javascript" src="node_modules/moment/moment.js"></script>
+<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="node_modules/angular/angular.js"></script>
+<script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
 ```
 
 Add the date module as a dependency to your application module:
@@ -164,6 +138,12 @@ data-on-set-time="onTimeSet"    <-- **This will NOT work, the ()'s are required*
 
 
 ## Configuration Options
+***NOTE*** The configuration optionss are not attributes on the element but rather members of the configuration object,
+which is specified in the data-datetimepicker-config attribute.
+
+```html
+<datetimepicker data-ng-model="data.date" data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle' }"></datetimepicker>
+```
 
 ### startView
 
@@ -183,11 +163,31 @@ String. 'minute'
 
 The lowest view that the datetimepicker should show.
 
+Accepts the same values as startView.
+
 ### minuteStep
 
 Number.  Default: 5
 
 The increment used to build the hour view. A button is created for each <code>minuteStep</code> minutes.
+
+### configureOn
+
+String. Default: null
+
+Causes the date/time picker to re-read its configuration when the specified event is received.
+
+For example, perhaps the startView option in the configuration has changed and you would like the 
+new configuration to be used. You can $broadcast the event to cause this directive to use the new configuration. 
+
+### renderOn
+
+String. Default: null
+
+Causes the date/time picker to re-render its view when the specified event is received.
+
+For example, if you want to disable any dates or times that are in the past. 
+You can $broadcast the event at an interval to disable times in the past (or any other time valid dates change).
 
 ### dropdownSelector
 
@@ -262,10 +262,18 @@ In this example, the drop-down functionality is controlled by Twitter Bootstrap.
 The <code>dropdownSelector</code> tells the datetimepicker which element is bound to the Twitter Bootstrap drop-down so
 the drop-down is toggled closed after the user selectes a date/time.
 
-## I18N
+
+## I18N / l10n support
 
 All internationalization is handled by Moment.js, see Moment's documentation for details.
 In most cases, all that is needed is a call to ```moment.locale(String)```
+
+One exception is the title of the month view - moment does not (yet) have a localized format for month and year.
+
+```JavaScript
+moment.locale('en');        // English
+moment.locale('zh-cn');     // Simplified chinese
+```
 
 # Screenshots
 
@@ -305,9 +313,39 @@ This view allows the user to select a specific time of day, in the selected hour
 By default, the time is displayed in 5 minute increments. The <code>minuteStep</code> property controls the increments of time displayed.
 If the minute view is the minView, which is is by default, the date will be set to the beginning of the hour on the day selected.
 
+##Contributing
+
+
 ## License
 
-angular-bootstrap-datetimepicker is freely distributable under the terms of the [MIT license](LICENSE).
+angular-bootstrap-datetimepicker is released under the MIT license and is copyright 2015 Knight Rider Consulting, Inc.. Boiled down to smaller chunks, it can be described with the following conditions.
+
+## It requires you to:
+
+* Keep the license and copyright notice included in angular-bootstrap-datetimepicker's CSS and JavaScript files when you use them in your works
+
+## It permits you to:
+
+* Freely download and use angular-bootstrap-datetimepicker, in whole or in part, for personal, private, company internal, or commercial purposes
+* Use angular-bootstrap-datetimepicker in packages or distributions that you create
+* Modify the source code
+* Grant a sublicense to modify and distribute angular-bootstrap-datetimepicker to third parties not included in the license
+
+## It forbids you to:
+
+* Hold the authors and license owners liable for damages as angular-bootstrap-datetimepicker is provided without warranty
+* Hold the creators or copyright holders of angular-bootstrap-datetimepicker liable
+* Redistribute any piece of angular-bootstrap-datetimepicker without proper attribution
+* Use any marks owned by Knight Rider Consulting, Inc. in any way that might state or imply that Knight Rider Consulting, Inc. endorses your distribution
+* Use any marks owned by Knight Rider Consulting, Inc. in any way that might state or imply that you created the Knight Rider Consulting, Inc. software in question
+
+## It does not require you to:
+
+* Include the source of angular-bootstrap-datetimepicker itself, or of any modifications you may have made to it, in any redistribution you may assemble that includes it
+* Submit changes that you make to angular-bootstrap-datetimepicker back to the angular-bootstrap-datetimepicker project (though such feedback is encouraged)
+
+The full angular-bootstrap-datetimepicker license is located [in the project repository](https://github.com/dalelotts/angular-bootstrap-datetimepicker/blob/master/LICENSE) for more information.
+
 
 ## Donating
 Support this project and other work by Dale Lotts via [gittip][gittip-dalelotts].

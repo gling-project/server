@@ -157,9 +157,7 @@ angular.module('djds4rce.angular-socialshare', [])
 							picture: attr.picture,
 							name: attr.name,
 							caption: attr.caption,
-							description: attr.description,
-							properties: attr.properties,
-							actions: attr.actions
+							description: attr.description
 						});
 						e.preventDefault();
 					});

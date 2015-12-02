@@ -101,7 +101,7 @@
 
 ##  be/flo/project/views/template.scala.html (load data )
 --.welcome.myProfile=Mon profil
---.welcome.signIn=Enregistrement
+--.welcome.signIn=Inscription
 --.welcome.login=Connexion
 
 ##  directive/dirFieldDocument/template.html
@@ -147,13 +147,13 @@
 --.customer.registrationModal.personal.desc=Créez un compte
 --.customer.registrationModal.personal.address=Adresse
 --.customer.registrationModal.personal.title=Personnelle
---.registrationModal.facebook.btn=Enregistrez-vous avec Facebook.
+--.registrationModal.facebook.btn=Inscrivez-vous avec Facebook.
 --.registrationModal.toBusinessRegistration=Vous êtes commerçant? Cliquez ici!
 
 ##  view/home.html
 
 ##  modal/CustomerRegistrationModal/CustomerRegistrationModal.js (//control email)
---.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà enregistré. Vous êtes maintenant connecté!
+--.customer.registrationModal.alredyRegistred.success=Ce compte Facebook est déjà inscrit. Vous êtes maintenant connecté!
 --.registration.facebook.someDataEmpty=Certaines données sont manquantes. Merci de les compléter avant de passer à l''étape suivante.
 
 ##  modal/EditProfileModal/view.html (edit your personal information )
@@ -164,7 +164,7 @@
 
 ##  be/lynk/server/util/message/ErrorMessageEnum.java
 --.error.facebookFusion.differentAccountType=-
---.error.facebook.notAccountFound=Ce compte Facebook n''est pas enregistré. Pour vous enregistrer, suivez un des deux liens ci-dessous.
+--.error.facebook.notAccountFound=Ce compte Facebook n''est pas inscrit. Pour vous inscrire, suivez un des deux liens ci-dessous.
 --.error.account.withoutLoginCredential=Ce compte utilise le système de connexion de Facebook et n''utilise aucun mot de passe.
 --.error.account.emailUnknown=Cette adresse email est inconnue.
 --.error.googleMap=Google Map a rencontré une erreur.
@@ -210,8 +210,8 @@
 
 
 ##  modal/LoginModal/view.html
---.loginModal.toBusinessRegistration=Je suis un commerçant.
---.loginModal.toCustomerRegistration=Créez-vous un compte en quelques cliques!
+--.loginModal.toBusinessRegistration=Inscrivez votre commerce en quelques cliques!
+--.loginModal.toCustomerRegistration=Rejoingnez-nous!
 --.loginModal.notRegisterYet=Pas encore de compte?
 
 
@@ -338,7 +338,7 @@ day_abrv_sunday=Di
 
 
 ##  modal/BusinessRegistrationModal/BusinessRegistrationModal.js (//control email)
---.registration.business.flash.success=Votre commerce est maintenant enregistré! Vous pouvez complèter votre page commerce avant de la rendre publique et visible auprès des utilisateurs de Gling !
+--.registration.business.flash.success=Votre commerce est maintenant inscrit! Vous pouvez complèter votre page commerce avant de la rendre publique et visible auprès des utilisateurs de Gling !
 
 ##  controller/admin/AdminBusinessCtrl.js (// show first page)
 --.admin.business.confirmPublication.modal.message=Confirmer la publication de ce commerce?
@@ -508,9 +508,9 @@ day_abrv_sunday=Di
 --.schedule.light=Ouvert
 --.schedule.moderate=Ouvert (Affluence moyenne)
 --.schedule.heavy=Ouvert (Affluence forte)
---.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous enregister.
---.loginModal.help.follow=Pour suivre un commerce, vous devez vous enregister.
---.loginModal.help.address=Pour ajouter une adresse, vous devez vous enregister.
+--.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous inscrire.
+--.loginModal.help.follow=Pour suivre un commerce, vous devez vous inscrire.
+--.loginModal.help.address=Pour ajouter une adresse, vous devez vous inscrire.
 --.business.page.management.help.title=Un petit coup de pouce ?
 --.business.page.management.contact.btn=Contactez-nous!
 --.error.promotion.duration.tooLong=La durée maximum d''une promotion est de {0} jours
@@ -545,10 +545,10 @@ day_abrv_sunday=Di
 --.business.vta=Numéro de TVA
 --.validation.dto.vta=Numéro de TVA invalide
 --.error.business.hiddenAndNotMine=Ce commerce n''est actuellement pas visible. Si ce commerce est le vôtre, veuillez vous connecter pour poursuivre votre navigation
---.customer.registrationModal.help.business=Vous êtes commerçant? Utilisez notre site web www.gling.be pour enregistrer votre commerce (indisponible sur smartphone ou tablette)
+--.customer.registrationModal.help.business=Vous êtes commerçant? Utilisez notre site web www.gling.be pour inscrire votre commerce (indisponible sur smartphone ou tablette)
 --.registration.facebook.validSLAMessage=Veuillez accepter les termes et conditions pour terminer votre inscription
 --.generic.loading=Veuillez patienter
---.generic.registration=S''enregistrer
+--.generic.registration=S''inscricre
 --.page.legal.title=Mentions légales
 --.error.business.notYours=Vous n''avez pas les droits pour éditer ce commerce.
 
@@ -570,7 +570,7 @@ day_abrv_sunday=Di
 --.welcome.business.content2=Faites découvrir votre commerce grâce à la géolocalisation ou au réseau de vos clients.
 --.welcome.business.subTitle3=OUTIL QUOTIDIEN
 --.welcome.business.content3=Organisez et communiquez plus facilement vos actions spéciales.
---.welcome.registration=Enregistrez-vous
+--.welcome.registration=Inscrivez-vous
 --.welcome.business.title=Vous êtes un commerce ?
 --.generic.site=Site
 --.interest.selection.window.nothing=Aucun
@@ -633,7 +633,7 @@ day_abrv_sunday=Di
 --.error.business.claim.alreadyHaveClaims=Vous avez déjà revendiqué la parent du commerce {0}. Vous ne pouvez revendiquer qu''un seul commerce pour ce compte.
 --.business.claim.form.desc=Veuillez communiquer votre numéro de téléphone, ainsi que le numéro de TVA de votre commerce. Un membre de l''équipe GLing vous contactera dans les meilleurs délais pour valider votre inscription.<br/>Vous pourrez alors prendre possession de votre compte de commerce et profiter de l''ensemble des fonctionnalités de Gling!<br/>En revanche, si vous désirez que votre commerce n'apparaisse plus sur Gling, il vous suffit de nous envoyer un e-mail à l'adresse hello@gling.be en mentionnant le nom et l'adresse de votre commerce.
 --.business.claim.modal.title=Revendiquer un commerce
---.business.claim.modal.success=Votre demande de propriété pour ce commerce a bien été enregistrée. Un membre de l''équipe Gling vous contactera sous peu
+--.business.claim.modal.success=Votre demande de propriété pour ce commerce a bien été inscrit. Un membre de l''équipe Gling vous contactera sous peu
 --.loginModal.help.claimBusiness=Pour revendiquer un commerce, vous devez avant tout posséder un compte Gling.
 --.business.page.noOwner=Ce commerce n''a pas de propriétaire
 --.business.page.claims=Revendiquer ce commerce
@@ -673,3 +673,4 @@ day_abrv_sunday=Di
 --.welcome.lastBusinesses=Connaissez-vous ?
 --.welcome.event.saintNicolas.title=Saint Nicolas a aussi ses commerces de proximité favoris!
 --.welcome.event.saintNicolas.content=Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling.<br/>Et… N’oubliez pas de rester sage!
+--.loginModal.youAreBusiness=Vous êtes commerceçant et vous voulez rejoindre Gling?

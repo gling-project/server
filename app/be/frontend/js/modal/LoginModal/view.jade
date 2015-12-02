@@ -16,15 +16,23 @@
 
     table.login-action
         tr
-            td {{'--.login.form.button.forgotPassword' | translateText}}
+            td
+                i.glyphicon.glyphicon-question-sign
+                |  {{'--.login.form.button.forgotPassword' | translateText}}
             td
                 a.link(ng-click='toForgotPassword()') {{'--.login.form.button.forgotPassword.action' | translateText}}
         tr
-            td {{'--.loginModal.notRegisterYet' | translateText}}
+            td
+                i.glyphicon.glyphicon-question-sign
+                {{'--.loginModal.notRegisterYet' | translateText}}
             td
                 span.modal-login-link.link(ng-click='toCustomerRegistration()')
                     | {{'--.loginModal.toCustomerRegistration' | translateText}}
-                br
+        tr(ng-show='helpMessage==null')
+            td
+                i.glyphicon.glyphicon-question-sign
+                | {{'--.loginModal.youAreBusiness' | translateText}}
+            td
                 span.modal-login-link.link(ng-click='toBusinessRegistration()')
                     | {{'--.loginModal.toBusinessRegistration' | translateText}}
 

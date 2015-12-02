@@ -1,0 +1,53 @@
+div
+    .navigation-bar(ng-class="{'header-with-advanced-search':advancedSearch}")
+        .container.header-option-container
+            h1#welcome-btn-welcome.gling-icon.gling-icon-logoapp.button-with-label(style='cursor : pointer', ng-click='goToHome()')
+                p {{'--.headerBar.logo.label'}}
+            // BETA
+            img(style='margin-top: -10px;', src='/assets/images/beta.png')
+            // seach bar
+            search-bar-ctrl(ng-info='{mobile:false}')
+            // position choice
+            select.gling-button-light(ng-model='currentPosition', ng-options='position.key as position.translation | translateText for position in positions', style='display: inline-block;width: 150px')
+            // not connected menu
+            .profile-buttons-container(ng-show='accountService.getMyself()==null')
+                // lang
+                select.gling-button-light(ng-model='languageService.currentLanguage', ng-options='lang.code as lang.language for lang in languageService.languages')
+                button#welcome-btn-login.gling-button(type='button', ng-click='login()')
+                    | {{'--.welcome.login' | translateText}}
+                span
+                    | {{'--.generic.or' | translateText}}
+                button#welcome-btn-registration.gling-button(type='button', ng-click='registration()')
+                    | {{'--.welcome.signIn' | translateText}}
+            // connected menu
+            .profile-buttons-container(ng-show='accountService.getMyself()!=null', style='display : inline-block')
+                .dropdown(ng-show='accountService.getMyself()!=null', style='display : inline-block')
+                    // connection button
+                    .menu-connection-button-container
+                        .menu-connection-name
+                            | {{accountService.getMyself().firstname}}
+                        #dropdownMenu1.gling-icon.gling-icon-profil.menu-connection-icon(data-toggle='dropdown', aria-expanded='true')
+                            span
+                        // connected menu
+                        ul.dropdown-menu.dropdown-menu-right(role='menu', aria-labelledby='dropdownMenu1')
+                            li(role='presentation')
+                                a#welcome-btn-profile(role='menuitem', tabindex='-1', href='', ng-click="navigateTo('/profile')")
+                                    | {{'--.welcome.myProfile' | translateText}}
+                            li(role='presentation')
+                                a#welcome-btn-logout(role='menuitem', tabindex='-1', href='', ng-click='logout()')
+                                    | {{'--.generic.logout' | translateText}}
+                            li
+                                ul
+        // navigation bar
+        .navigation-bar-menu
+            div
+                a.gling-button-dark(href='/test', ng-class="{'selected':testPath('/welcome')}")
+                    | {{'--.welcome.welcome' | translateText}}
+                a.gling-button-dark(href='/home/', ng-class="{'selected':testPath('/home')}")
+                    | {{'--.welcome.newsfeed' | translateText}}
+                a.gling-button-dark(href='/map', ng-class="{'selected':testPath('/map')}")
+                    | {{'--.welcome.map' | translateText}}
+                a.gling-button-dark(ng-show='accountService.getMyself()!=null', ng-class="{'selected':testPath('/my-business')}", href='/my-businesses')
+                    | {{'--.welcome.myBusinesses' | translateText}}
+                a.gling-button-dark(ng-show="accountService.getMyself()!=null && accountService.getMyself().type == 'BUSINESS'", ng-class="{'selected':testPath('/business')}", href='/business/{{accountService.getMyself().businessId}}')
+                    | {{'--.welcome.myBusiness' | translateText}}
