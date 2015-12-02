@@ -52,7 +52,18 @@ public class MainController extends AbstractController {
     @Autowired
     private CustomerInterestService customerInterestService;
 
-    public Result getFont(String path,String file) {
+    /**
+     * access to resource from external
+     * @param path
+     * @param file
+     * @return
+     */
+    public Result externalPath(String path, String file) {
+        response().setHeader("Access-Control-Allow-Origin", "*");
+        response().setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+        response().setHeader("Access-Control-Max-Age", "3600");
+        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
+        response().setHeader("Access-Control-Allow-Credentials", "true");
         return ok(new File(path+file));
     }
 

@@ -3,7 +3,7 @@
 # ~~~~
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/fonts/*file                                                                                    @be.lynk.server.controller.MainController.getFont(path="/public/fonts/",file)
+GET           /assets/external/*file                                                                                 @be.lynk.server.controller.MainController.externalPath(path="/public/external", file)
 GET           /assets/*file                                                                                          controllers.Assets.at(path="/public", file)
 
 #
