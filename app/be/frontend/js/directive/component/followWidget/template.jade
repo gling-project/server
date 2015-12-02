@@ -1,5 +1,5 @@
 .follow-widget
-    .follow-text(ng-hide="getInfo().displayText===true")
+    .icon-text(ng-hide="getInfo().displayText===true")
         div  {{'--.followWidget.follow' | translateText:null:true}}
 
     .follow-widget-icon(ng-hide="getInfo().displayText===true",ng-click="follow()")
@@ -8,10 +8,12 @@
             span.gling-icon.gling-icon-bell.selected(ng-show="getInfo().business.following")
             span.gling-icon.gling-icon-bell2(ng-hide="getInfo().business.following")
 
-    .follow-text(ng-show="getInfo().displayText===true")
+
+
+    button.gling-button-dark.gling-button-dark-little.follow-text(ng-show="getInfo().displayText===true")
         div(ng-hide="getInfo().business.following",ng-click="follow()")
             i.gling-icon.gling-icon-bell2
-            span {{'--.followWidget.followBusiness' | translateText}}
+            span {{'--.followWidget.follow' | translateText}}
         div(ng-show="getInfo().business.following",ng-click="follow()")
-            i.gling-icon.gling-icon-bell.selected
-            span {{'--.followWidget.stopFollowBusiness' | translateText}}
+            i.gling-icon.gling-icon-bell
+            span {{'--.followWidget.stopFollow' | translateText}}

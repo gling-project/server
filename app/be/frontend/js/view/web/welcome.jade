@@ -53,4 +53,5 @@
                         td
                             .address {{business.address.street}}, {{business.address.zip}} {{business.address.city}} - {{business.distance / 1000 | number:2}} km<br/>
                 category-line-ctrl(ng-info="{categories:business.categories,level1:false}")
-                follow-widget-ctrl(ng-info="{displayText:true,business:business}")
+                .welcome-business-action
+                    follow-widget-ctrl(ng-info="{displayText:true,business:business}")

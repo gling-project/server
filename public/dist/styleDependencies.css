@@ -1222,6 +1222,12 @@ html[xmlns] .flexslider .slides {
 .gling-button-dark:disabled {
   color: rgba(255, 255, 255, 0.65);
 }
+.gling-button-dark.gling-button-dark-little {
+  font-size: 14px;
+  padding: 3px 10px;
+  font-weight: bold;
+  margin: 0;
+}
 .facebookShare {
   height: auto;
 }
@@ -2802,38 +2808,18 @@ html[xmlns] .flexslider .slides {
 .follow-widget .selected {
   color: #1ad2aa !important;
 }
-.follow-widget .follow-text {
-  border: 1px solid #2c265c;
-  border-radius: 10px;
-  padding: 2px 5px;
-  text-decoration: none;
-  cursor: pointer;
-}
-.follow-widget .follow-text span {
-  color: #2c265c;
-}
-.follow-widget .follow-text:hover {
-  background-color: #1ad2aa;
-}
-.follow-widget .follow-text:hover i.selected {
-  color: white !important;
-}
 .follow-widget .follow-text i {
-  color: #2c265c;
-  font-size: 16px;
-  padding-top: 3px;
-  float: left;
   margin-right: 5px;
 }
-.follow-text > * {
+.icon-text > * {
   display: inline-block;
   margin-left: 5px;
   margin-bottom: 3px;
 }
-.follow-text span {
+.icon-text span {
   color: #2c265c;
 }
-.follow-text span.selected {
+.icon-text span.selected {
   color: #1ad2aa !important;
 }
 .category-line-tree .transition {
@@ -3665,6 +3651,13 @@ html[xmlns] .flexslider .slides {
 }
 .welcome-page .welcome-business-list .welcome-business-list-el table tr:first-child td:first-child {
   width: 65px;
+}
+.welcome-page .welcome-business-list .welcome-business-list-el .welcome-business-action {
+  border-top: 1px solid #cccccc;
+  margin-top: 5px;
+  padding-top: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .welcome-page .publication-interest-list {
   text-align: left;
