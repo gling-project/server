@@ -17,7 +17,7 @@
                 // associate social network to account
                 table.profile-table
                     tr
-                        th(colspan='2') Lien avec vos réseaux sociaux
+                        th(colspan='2') {{'--.profile.socialNetworkList' |translateText}}
                     tr
                         td
                             img(src='assets/images/social_network/facebook.png')
@@ -25,14 +25,14 @@
                             .link(ng-click='fb_login();', ng-hide='model.myself.facebookAccount===true')
                                 | {{'--.profile.facebook.btn' |translateText}}
                             div(ng-show='model.myself.facebookAccount===true')
-                                | Lié au compte facebook {{model.myself.facebookCredential.firstname}}
+                                | {{'--.profile.socialNetworkList.facebook' |translateText}} {{model.myself.facebookCredential.firstname}}
                                 | {{model.myself.facebookCredential.lastname}}
                 table.profile-table.profile-action-table
                     tr(ng-show="model.myself.type != 'BUSINESS'")
-                        td Vous êtes un commerçant ?
+                        td {{'--.profile.businessCreation.ask' |translateText}}
                         td
-                            span(ng-show="model.myself.claimedBusinessId!=null") Vous avez déjà revendiqué un commerce. Vous ne pouvez posséder qu'un seul commerce par compte
-                            button.gling-button-dark(ng-show="model.myself.claimedBusinessId==null",type="button",ng-click="createBusiness()") Créez votre page commerce
+                            span(ng-show="model.myself.claimedBusinessId!=null") {{'--.profile.businessCreation.alreadyClaim' |translateText}}
+                            button.gling-button-dark(ng-show="model.myself.claimedBusinessId==null",type="button",ng-click="createBusiness()") {{'--.profile.businessCreation.action' |translateText}}
 
         // address panel
         .panel.panel-gling.main-panel
@@ -70,6 +70,6 @@
                 div
                     .category-box(ng-repeat='interest in model.myself.customerInterests')
                         span(ng-class="'gling-icon gling-icon-' + interest.name")
-                        |                         {{interest.translationName |translateText}}
+                        | {{interest.translationName |translateText}}
                     button#profile-interest-btn-edit.btn.gling-button-dark(ng-click='interestEdit()')
                         | {{'--.generic.edit' | translateText}}

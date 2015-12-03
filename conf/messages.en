@@ -224,7 +224,7 @@
 ##  view/profile.html
 --.customer.profile.myAddresses=Adress
 --.customer.profile.personalInformation=Me
---.customer.profile.interest=Interestets
+--.customer.profile.interest=Interests
 --.customer.profile.create=Create
 
 ##  modal/EditCustomerInterestModal/view.html

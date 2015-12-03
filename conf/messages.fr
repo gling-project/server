@@ -675,3 +675,9 @@ day_abrv_sunday=Di
 --.welcome.event.saintNicolas.content=Magasins de jeux et jouets, marchand de spéculoos et même légumier pour ses carottes… Saint Nicolas aime consommer local!<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling.<br/>Et… N’oubliez pas de rester sage!
 --.loginModal.youAreBusiness=Vous êtes commerçant et vous voulez rejoindre Gling?
 --.business.noOwner.info=Le contenu de cette page provient des informations publiques disponibles sur internet.
+
+--.profile.socialNetworkList=Lien avec vos réseaux sociaux
+--.profile.socialNetworkList.facebook=Lié au compte Facebook
+--.profile.businessCreation.alreadyClaim=Vous avez déjà revendiqué un commerce. Vous ne pouvez posséder qu'un seul commerce par compte
+--.profile.businessCreation.ask=Vous êtes un commerçant ?
+--.profile.businessCreation.action=Créez votre page commerce
