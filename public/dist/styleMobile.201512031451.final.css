@@ -2355,7 +2355,8 @@ ul.messenger .messenger-spinner {
   display: inline-block;
 }
 .publication-box-mobile .publication-footer {
-  borer-top: 1px solid #cccccc;
+  height: 32px;
+  border-top: 1px solid #cccccc;
   padding-top: 4px;
   font-size: 14px;
   margin-top: 5px;
