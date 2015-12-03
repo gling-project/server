@@ -53,9 +53,15 @@ public class BusinessNotificationRestController extends AbstractRestController {
     public Result create() {
         BusinessNotificationDTO dto = initialization(BusinessNotificationDTO.class);
 
+        return create(dto,securityController.getCurrentUser().getBusiness());
+    }
+
+    public Result create(BusinessNotificationDTO dto,Business business) {
+
+
         BusinessNotification businessNotification = dozerService.map(dto, BusinessNotification.class);
 
-        businessNotification.setBusiness(securityController.getCurrentUser().getBusiness());
+        businessNotification.setBusiness(business);
         if (businessNotification.getInterest() != null) {
             businessNotification.setInterest(customerInterestService.findById(businessNotification.getInterest().getId()));
         }
@@ -197,7 +203,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         //send email if user is superadmin
-        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
+        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)  && dto.getEditionReason()!=null && dto.getEditionReason().length()>0) {
 
             Lang lang = business.getAccount().getLang();
             EmailMessage.Recipient target = new EmailMessage.Recipient(business.getAccount());

@@ -91,6 +91,16 @@ myApp.controller('AdminBusinessCtrl', function($scope, superAdminService, ngTabl
       return business.hasOwner = true;
     });
   };
+  $scope.createPromotion = function(business) {
+    return modalService.openPromotionModal(null, business, function() {
+      return $flash.success('La promotion a bien été créée');
+    });
+  };
+  $scope.createNotification = function(business) {
+    return modalService.openBusinessNotificationModal(null, business, function() {
+      return $flash.success('La notification a bien été créée');
+    });
+  };
   $scope.importBusinessStart = function() {
     var urlEncoded;
     $scope.importBusinessLoading = true;

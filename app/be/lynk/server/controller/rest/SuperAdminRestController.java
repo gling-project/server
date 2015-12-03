@@ -1,5 +1,6 @@
 package be.lynk.server.controller.rest;
 
+import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
@@ -62,6 +63,10 @@ public class SuperAdminRestController extends AbstractRestController {
     private FileService                 fileService;
     @Autowired
     private ClaimBusinessService        claimBusinessService;
+    @Autowired
+    private BusinessNotificationRestController businessNotificationRestController;
+    @Autowired
+    private PromotionRestController promotionRestController;
 
 
     @Transactional
@@ -478,5 +483,24 @@ public class SuperAdminRestController extends AbstractRestController {
         facebookRequest.createBusinessFromFacebook(securityController.getCurrentUser(), facebookUrl, false);
 
         return ok();
+    }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result createBusinessNotification(Long businessId) {
+        BusinessNotificationDTO dto = initialization(BusinessNotificationDTO.class);
+
+        Business business = businessService.findById(businessId);
+
+        return businessNotificationRestController.create(dto,business);
+    }
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result createPromotion(Long businessId) {
+        PromotionDTO dto = initialization(PromotionDTO.class);
+
+        Business business = businessService.findById(businessId);
+
+        return promotionRestController.create(dto,business);
     }
 }

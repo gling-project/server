@@ -167,8 +167,8 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         },
                         editionReason: {
                             fieldTitle: "--.publication.editionJustification",
-                            validationRegex: /^[\s\S]{1,1000}$/gi,
-                            validationMessage: ['--.generic.validation.size', '1', '1000'],
+                            validationRegex: /^[\s\S]{0,1000}$/gi,
+                            validationMessage: ['--.generic.validation.size', '0', '1000'],
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },

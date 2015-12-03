@@ -19,6 +19,9 @@
     transform: translate(0, 0);
 }
 
+.gling-icon-menu:before {
+    content: "\e902";
+}
 .gling-icon-info:before {
     content: "\e900";
 }

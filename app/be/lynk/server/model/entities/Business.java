@@ -86,13 +86,15 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     private Set<StoredFile> galleryPictures = new HashSet<>();
 
     public Business() {
+        lastStatusChange = LocalDateTime.now();
     }
 
     public Business(Account account, String name) {
         this.account = account;
         this.name = name;
         this.searchableName = normalize(name);
-        businessStatus=BusinessStatusEnum.NOT_PUBLISHED;
+        businessStatus = BusinessStatusEnum.NOT_PUBLISHED;
+        lastStatusChange = LocalDateTime.now();
     }
 
     public LocalDateTime getLastStatusChange() {

@@ -71,7 +71,6 @@ module.exports = function (grunt) {
                             'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
                             'public/components/messenger/build/css/messenger.css',
                             'public/components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
-                            'public/components/font-awesome/css/font-awesome.min.css',
 
                             'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
@@ -88,7 +87,6 @@ module.exports = function (grunt) {
                             'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
                             'public/components/messenger/build/css/messenger.css',
                             'public/components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
-                            'public/components/font-awesome/css/font-awesome.min.css',
                             'public/components/ng-table/ng-table.min.css',
                             'public/components/angular-socialshare/angular-socialshare.css',
                             'public/css/glingicon.css',
@@ -103,7 +101,6 @@ module.exports = function (grunt) {
                             'public/components/bootstrap/dist/css/bootstrap.min.css',
                             'public/components/bootstrap/dist/css/bootstrap-theme.min.css',
                             'public/components/messenger/build/css/messenger.css',
-                            'public/components/font-awesome/css/font-awesome.min.css',
                             'target/scala-2.10/resource_managed/main/public/stylesheets/town.css']
                     }
                 ]
@@ -178,6 +175,7 @@ module.exports = function (grunt) {
 
 
                         <!-- services -->
+                        'public/js/service/SuperAdminService.js',
                         'public/js/service/DirectiveService.js',
                         'public/js/service/GenerateIdService.js',
                         'public/js/service/TranslationService.js',

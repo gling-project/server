@@ -1,4 +1,4 @@
-myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business,modalService) {
+myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, promotionService, callback,facebookService,business,modalService,superAdminService,accountService) {
 
     $scope.loading = false;
 
@@ -59,13 +59,25 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                         });
                 }
                 else {
-                    promotionService.add($scope.promotionParam.dto, function (data) {
-                            $scope.success(data);
-                            modalService.successAndShare($scope.promotionParam.business.id, data.id);
-                        },
-                        function () {
-                            $scope.loading = false;
-                        });
+                    if(accountService.getMyself().role == 'SUPERADMIN'){
+
+                        superAdminService.createPromotion(business.id,$scope.promotionParam.dto, function (data) {
+                                $scope.success(data);
+                                modalService.successAndShare($scope.promotionParam.business.id, data.id);
+                            },
+                            function () {
+                                $scope.loading = false;
+                            });
+                    }
+                    else{
+                        promotionService.add($scope.promotionParam.dto, function (data) {
+                                $scope.success(data);
+                                modalService.successAndShare($scope.promotionParam.business.id, data.id);
+                            },
+                            function () {
+                                $scope.loading = false;
+                            });
+                    }
                 }
             }
         }

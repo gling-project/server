@@ -16,6 +16,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/BasicModal/view.html",
             controller: "BasicModalCtrl",
             size: "lg",
@@ -59,6 +60,7 @@ myApp.service("modalService", function ($modal) {
             windowClass: 'loading-modal'
         });
     };
+
     this.closeLoadingModal = function () {
         if (this.loadingModal != undefined && this.loadingModal != null) {
             this.loadingModal.close();
@@ -95,6 +97,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/CustomerRegistrationModal/view.html",
             controller: "CustomerRegistrationModalCtrl",
             size: "lg",
@@ -104,6 +107,7 @@ myApp.service("modalService", function ($modal) {
 
     this.openBusinessRegistrationModal = function () {
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/BusinessRegistrationModal/view.html",
             controller: "BusinessRegistrationModalCtrl",
             size: "lg"
@@ -112,6 +116,7 @@ myApp.service("modalService", function ($modal) {
 
     this.openEditProfileModal = function () {
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/EditProfileModal/view.html",
             controller: "EditProfileModalCtrl",
             size: "l"
@@ -131,6 +136,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/LoginModal/view.html",
             controller: "LoginModalCtrl",
             size: "l",
@@ -171,6 +177,7 @@ myApp.service("modalService", function ($modal) {
 
     this.openEditPasswordModal = function () {
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/ChangePassword/view.html",
             controller: "ChangePasswordModalCtrl",
             size: "l"
@@ -179,6 +186,7 @@ myApp.service("modalService", function ($modal) {
 
     this.openEditCustomerInterest = function () {
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/EditCustomerInterestModal/view.html",
             controller: "EditCustomerInterestModalCtrl",
             size: "lg"
@@ -201,6 +209,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/AddressModal/view.html",
             controller: "AddressModalCtrl",
             size: "l",
@@ -215,6 +224,8 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
+            backdrop:'static',
             templateUrl: "/assets/js/modal/ForgotPasswordModal/view.html",
             controller: "ForgotPasswordModalCtrl",
             size: "l",
@@ -236,6 +247,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/PromotionModal/view.html",
             controller: "PromotionModalCtrl",
             size: "lg",
@@ -257,6 +269,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/BusinessNotificationModal/view.html",
             controller: "BusinessNotificationModalCtrl",
             size: "lg",
@@ -275,6 +288,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/OneFieldModal/view.html",
             controller: "OneFieldModalCtrl",
             size: "l",
@@ -310,6 +324,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/mobile/InterestSelectionModal/view.html",
             controller: "InterestSelectionModalCtrl",
             size: "l",
@@ -369,6 +384,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/ResizeImageMobileModal/view.html",
             controller: "ResizeImageMobileModalCtrl",
             size: "l",
@@ -386,6 +402,7 @@ myApp.service("modalService", function ($modal) {
             }
         };
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/admin/ConfirmClaimModal/view.html",
             controller: "ConfirmClaimModalCtrl",
             size: "l",
@@ -398,6 +415,7 @@ myApp.service("modalService", function ($modal) {
     this.openCreationBusiness = function(){
 
         $modal.open({
+            backdrop:'static',
             templateUrl: "/assets/js/modal/BusinessCreationModal/view.html",
             controller: "BusinessCreationModalCtrl",
             size: "l"

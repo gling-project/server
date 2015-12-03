@@ -272,7 +272,7 @@
 --.email.default.footer=email.default.footer
 --.email.registration.business.body=Bienvenue sur Gling {0}!<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
 --.email.registration.business.subject=Bienvenue sur Gling !
---.email.registration.customer.body=Bienvenue !<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces favoris selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.customer.body=Bienvenue !<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces suivis selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
 --.email.registration.customer.subject=Bienvenue sur Gling !
 
 ##  view/mobile/welcome.html
@@ -406,7 +406,7 @@ day_abrv_sunday=Di
 --.business.socialNetwork.other=Autre
 --.gallery.modal.next=Suivant
 --.gallery.modal.previous=Précédent
---.welcome.myBusinesses=Mes commerces favoris
+--.welcome.myBusinesses=Mes commerces suivis
 
 ##  controller/web/WelcomeCtrl.js (//use the model)
 --.position.current=Ma position
@@ -449,12 +449,12 @@ day_abrv_sunday=Di
 --.followed-business.uncheckAll=Déselectionner
 
 
---.home.interest-switch.help=Triez selon votre position ou vos commerces favoris.
+--.home.interest-switch.help=Triez selon votre position ou vos commerces suivis.
 --.home.interest.help=Triez selon vos envies.
 --.home.localisation.help=Triez selon votre position.
---.home.followning.help=Triez selon vos commerces favoris.
---.home.emptyResult.followed=Aucun de vos commerces favoris ne semble avoir publié de nouveautés ou de promotions. Les commerces ci-dessous pourront peut-être vous satisfaire!
---.home.emptyResult.followedWithInterest=Aucune publication de vos commerces favoris ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.followning.help=Triez selon vos commerces suivis.
+--.home.emptyResult.followed=Aucun de vos commerces suivis ne semble avoir publié de nouveautés ou de promotions. Les commerces ci-dessous pourront peut-être vous satisfaire!
+--.home.emptyResult.followedWithInterest=Aucune publication de vos commerces suivis ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
 --.home.emptyResult.newsFeed=Aucun commerce ne semble avoir publié de nouveautés ou de promotions.. Les commerces ci-dessous pourront peut-être vous satisfaire!
 --.home.emptyResult.newsFeedWithInterest=Aucune publication ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
 
@@ -498,17 +498,17 @@ day_abrv_sunday=Di
 --.business.manager.progress.help=Suiver le guide
 --.business.manager.progress.createPublicationTitle=Créer une publication
 --.business.manager.createPublication.disabled.desc=Vous ne pouvez pas encore créer de publication pour l''instant car votre page n''est pas encore publique. Pour rendre votre page publique, cliquez sur le bouton ''Publier ma page!'' et attendez qu''un membre de notre équipe valide votre demande.
---.followWidget.message.remove=Ce commerce a bien été supprimer de vos favoris.
---.followWidget.message.add=Ce commerce a bien été ajouté à vos favoris!
---.followWidget.stopFollow=Retirer de mes favoris
---.followWidget.follow=Ajouter à mes favoris
+--.followWidget.message.remove=Vous ne suivez plus ce commerce!
+--.followWidget.message.add=Vous suivez désormais ce commerce!
+--.followWidget.stopFollow=Ne plus suivre
+--.followWidget.follow=Suivre
 --.business.page.management.status=Statut de votre page :
 
 --.schedule.closed=Fermé
 --.schedule.light=Ouvert
 --.schedule.moderate=Ouvert (Affluence moyenne)
 --.schedule.heavy=Ouvert (Affluence forte)
---.loginModal.help.followMode=Pour sélectionner vos commerces favoris et consulter leurs actualités, vous devez vous inscrire.
+--.loginModal.help.followMode=Pour suivre un commerce, vous devez vous inscrire.
 --.loginModal.help.follow=Pour suivre un commerce, vous devez vous inscrire.
 --.loginModal.help.address=Pour ajouter une adresse, vous devez vous inscrire.
 --.business.page.management.help.title=Un petit coup de pouce ?
@@ -620,7 +620,7 @@ day_abrv_sunday=Di
 --.businessRegistration.alreadyBusiness=Un commerce est déjà lié à ce compte et vous ne pouvez avoir qu''un seul commerce par compte
 --.error.login.facebookLink.alreadyUsed=Ce compte Facebook est déjà lié à un autre compte Gling
 --.error.login.facebookLink.alreadyLinked=Un autre compte Facebook est déjà lié à ce compte Gling
---.profile.linkFacebook.success=Votre compte Facebook est désormais lié à votre compte Gling. Découvrez les commerces favoris de vos amis!
+--.profile.linkFacebook.success=Votre compte Facebook est désormais lié à votre compte Gling. Découvrez les commerces suivis par vos amis!
 --.error.facebook.import.notOfficialPage=Ceci n''est pas une page officielle et ne peut être importée.
 --.error.facebook.import.wrongUrl=Cette adresse (url) ne correspond pas à une page Facebook.
 --.business.registration.importFromFacebook.desc=Vous pouvez importer les informations depuis votre page de commerce. d''un des réseaux sociales suivant. Copier l''adresse (url) de votre page Facebook dans le champs ci-dessous et cliquez sur importer. Attention, cette opération peut prendre jusqu'à 30 secondes.
@@ -639,8 +639,8 @@ day_abrv_sunday=Di
 --.business.page.claims=Revendiquer ce commerce
 --.business.page.noOwner.alreadyClaimed=Vous avez déjà revendiqué ce commerce
 --.business.page.noOwner.alreadyClaimedOther=Vous avez déjà revendiqué un autre commerce
---.followWidget.stopFollowBusiness=Retirer ce commerce de mes favoris
---.followWidget.followBusiness=Ajouter ce commerce à mes favoris
+--.followWidget.stopFollowBusiness=Ne plus suivre ce commerce
+--.followWidget.followBusiness=Suivre ce commerce
 --.generic.error.complete.fields=Veuillez remplir tous les champs requis
 --.login.form.button.forgotPassword.action=Récupérez un nouveau mot de passe
 --.error.registration.import.facebook=Cette page Facebook n''a pas pu être importé. Seuls les pages Facebook authentifiées peuvent être importées, pas les groupes ni les profiles.

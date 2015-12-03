@@ -5,6 +5,8 @@ myApp.controller 'PromotionCtrl', ($rootScope, $scope, accountService, $flash, t
     #load business
     businessService.getBusiness accountService.getMyself().businessId, (business) ->
 
+        $scope.business = business
+
         #param
         $scope.publicationFormParam =
             dto: null
@@ -37,4 +39,3 @@ myApp.controller 'PromotionCtrl', ($rootScope, $scope, accountService, $flash, t
 
         #initalization
         modalService.closeLoadingModal()
-        $scope.business = business

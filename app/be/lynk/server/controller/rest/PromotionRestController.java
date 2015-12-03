@@ -52,12 +52,18 @@ public class PromotionRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @BusinessStatusAnnotation(status = {BusinessStatusEnum.PUBLISHED})
     public Result create() {
-        PromotionDTO dto = initialization(PromotionDTO.class);
 
-        Promotion promotion = dozerService.map(dto, Promotion.class);
+        PromotionDTO dto = initialization(PromotionDTO.class);
 
         Account account = securityController.getCurrentUser();
         Business business = account.getBusiness();
+
+        return create(dto,business);
+    }
+
+    public Result create(PromotionDTO dto,Business business){
+
+        Promotion promotion = dozerService.map(dto, Promotion.class);
 
         //control start date
         if (promotion.getStartDate().compareTo(LocalDateTime.now().minusHours(1)) == -1) {
@@ -208,7 +214,7 @@ public class PromotionRestController extends AbstractRestController {
         }
 
         //send email if user is superadmin
-        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
+        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) && dto.getEditionReason()!=null && dto.getEditionReason().length()>0) {
 
             Lang lang = business.getAccount().getLang();
             EmailMessage.Recipient target = new EmailMessage.Recipient(business.getAccount());

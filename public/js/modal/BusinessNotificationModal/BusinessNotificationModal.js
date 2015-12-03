@@ -1,4 +1,4 @@
-myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business,modalService) {
+myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $modalInstance, translationService, dto, businessNotificationService, callback, facebookService, business,modalService,superAdminService,accountService) {
 
     $scope.loading = false;
 
@@ -52,13 +52,25 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
                     });
             }
             else {
-                businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
-                        $scope.success(data);
-                        modalService.successAndShare($scope.businessNotificationParam.business.id,data.id);
-                    },
-                    function () {
-                        $scope.loading = false;
-                    });
+                if(accountService.getMyself().role == 'SUPERADMIN'){
+
+                    superAdminService.createBusinessNotification(business.id,$scope.businessNotificationParam.dto, function (data) {
+                            $scope.success(data);
+                            modalService.successAndShare($scope.businessNotificationParam.business.id,data.id);
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
+                else{
+                    businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
+                            $scope.success(data);
+                            modalService.successAndShare($scope.businessNotificationParam.business.id,data.id);
+                        },
+                        function () {
+                            $scope.loading = false;
+                        });
+                }
             }
 
         }

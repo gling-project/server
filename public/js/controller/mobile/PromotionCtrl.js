@@ -1,6 +1,7 @@
 myApp.controller('PromotionCtrl', function($rootScope, $scope, accountService, $flash, translationService, facebookService, modalService, promotionService, businessService, $compile) {
   return businessService.getBusiness(accountService.getMyself().businessId, function(business) {
     var directive;
+    $scope.business = business;
     $scope.publicationFormParam = {
       dto: null,
       business: $scope.business
@@ -23,7 +24,6 @@ myApp.controller('PromotionCtrl', function($rootScope, $scope, accountService, $
         });
       }
     };
-    modalService.closeLoadingModal();
-    return $scope.business = business;
+    return modalService.closeLoadingModal();
   });
 });

@@ -127,6 +127,8 @@ GET           /rest/superadmin/customerPosition                                 
 GET           /rest/superadmin/importBusiness/:name                                                                  @be.lynk.server.controller.rest.SuperAdminRestController.importBusiness(name:String)
 POST          /rest/superadmin/confirmClaim/$businessId<[0-9]+>/$accountId<[0-9]+>                                   @be.lynk.server.controller.rest.SuperAdminRestController.confirmClaim(businessId:Long,accountId:Long)
 GET           /rest/superadmin/getClaims/$businessId<[0-9]+>                                                         @be.lynk.server.controller.rest.SuperAdminRestController.getClaimsByBusiness(businessId:Long)
+POST          /rest/superadmin/createPromotion/$businessId<[0-9]+>                                                   @be.lynk.server.controller.rest.SuperAdminRestController.createPromotion(businessId:Long)
+POST          /rest/superadmin/createBusinessNotification/$businessId<[0-9]+>                                        @be.lynk.server.controller.rest.SuperAdminRestController.createBusinessNotification(businessId:Long)
 
 
 ## town

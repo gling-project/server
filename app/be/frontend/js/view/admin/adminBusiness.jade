@@ -32,6 +32,8 @@ super-admin-menu-ctrl
                 | {{business.businessStatus}}
             td(data-title="'Création'", sortable="'creationDate'")
                 | {{business.creationDate | date}}
+            td(data-title="'dernier changement'", sortable="'lastStatusChange'")
+                | {{business.lastStatusChange | date}}
             td(data-title="'Followers'", sortable="'totalFollowers'")
                 | {{business.totalFollowers}}
             td(data-title="'Email'", sortable="'email'")
@@ -47,6 +49,10 @@ super-admin-menu-ctrl
                     | {{'--.admin.business.confirmPublication' | translateText}}
                 button(name='admin-business-btn-confirm-claim', ng-click='confirmClaim(business)', ng-show="business.businessStatus == 'PUBLISHED' && business.isClaimed ==true")
                     | {{'--.admin.business.confirmClaim' | translateText}}
+                button(ng-click="createPromotion(business)", ng-show="business.businessStatus == 'PUBLISHED'")
+                    | créer une promotion
+                button(ng-click="createNotification(business)", ng-show="business.businessStatus == 'PUBLISHED'")
+                    | créer une notification
 
     //map panel
     .map-panel(ng-show='displayMap === true')

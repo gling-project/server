@@ -3,6 +3,9 @@ package be.lynk.server.dto.admin;
 import be.lynk.server.dto.BusinessDTO;
 import be.lynk.server.dto.ClaimBusinessDTO;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  */
 public class BusinessForAdminDTO extends BusinessDTO {
@@ -15,7 +18,17 @@ public class BusinessForAdminDTO extends BusinessDTO {
 
     private Boolean isClaimed;
 
+    private Date lastStatusChange;
+
     public BusinessForAdminDTO() {
+    }
+
+    public Date getLastStatusChange() {
+        return lastStatusChange;
+    }
+
+    public void setLastStatusChange(Date lastStatusChange) {
+        this.lastStatusChange = lastStatusChange;
     }
 
     public Boolean getIsClaimed() {

@@ -110,6 +110,14 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
             $flash.success 'Le commerçant est maintenant propriétaire de son commerce'
             business.hasOwner = true
 
+    $scope.createPromotion = (business) ->
+        modalService.openPromotionModal null,business,->
+            $flash.success 'La promotion a bien été créée'
+
+    $scope.createNotification = (business) ->
+        modalService.openBusinessNotificationModal null,business,->
+            $flash.success 'La notification a bien été créée'
+
     #import business data from a facebook page
     $scope.importBusinessStart = ->
         $scope.importBusinessLoading = true

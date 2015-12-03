@@ -290,4 +290,47 @@ myApp.service("superAdminService", function ($http, $flash) {
     };
 
 
+    this.createPromotion = function (businessId,promotion,callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/rest/superadmin/createPromotion/"+businessId,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data:promotion
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+
+
+    this.createBusinessNotification = function (businessId,businessNotification,callbackSuccess, callbackError) {
+
+        $http({
+            'method': "POST",
+            'url': "/rest/superadmin/createBusinessNotification/"+businessId,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            data:businessNotification
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
+            .error(function (data, status) {
+                $flash.error(data.message);
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+
 });
