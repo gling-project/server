@@ -2106,8 +2106,7 @@ html[xmlns] .flexslider .slides {
 .publication-box .publication-footer {
   font-size: 14px;
   padding-bottom: 10px;
-  borer-top: 1px solid #cccccc;
-  padding-top: 4px;
+  height: 35px;
 }
 .publication-box .publication-footer .publication-footer-facebook {
   float: right;
