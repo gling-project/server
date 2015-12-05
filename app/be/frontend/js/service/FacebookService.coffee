@@ -37,6 +37,9 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
         access_token = authResponse.accessToken
         user_id = authResponse.userID
 
+        console.log "response"
+        console.log access_token+'/'+user_id
+
         $http(
             'method': 'GET'
             'url': '/rest/login/facebook/' + access_token + '/' + user_id
@@ -118,6 +121,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
         else
             # else, log to facebook
             FB.login (response) ->
+
                 if response.status == 'connected'
 
                     #... and log to server

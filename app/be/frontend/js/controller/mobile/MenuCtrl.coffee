@@ -1,7 +1,7 @@
 #mobile controller
 #menu
 #manage the menu content
-myApp.controller 'MenuCtrl', ($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService) ->
+myApp.controller 'MenuCtrl', ($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService,$window) ->
 
     #params
     $scope.showmenu = false
@@ -58,8 +58,7 @@ myApp.controller 'MenuCtrl', ($rootScope, $scope, facebookService, accountServic
         $scope.$broadcast 'LOGOUT'
         #call service
         accountService.logout ->
-            $location.path '/'
-            $scope.closeMenu()
+            $window.location.reload()
 
     #
     # POSITION

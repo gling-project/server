@@ -155,11 +155,10 @@ public class CommonSecurityController extends Security.Authenticator {
 
     public void logout(Http.Context ctx) {
 
-        if (isAuthenticated(ctx) && getCurrentUser() != null && getCurrentUser().getLoginCredential() != null) {
-
-            Account currentAccount = getCurrentUser();
-            ctx.response().discardCookie(COOKIE_KEEP_SESSION_OPEN);
-        }
+//        if (isAuthenticated(ctx) && getCurrentUser() != null && getCurrentUser().getLoginCredential() != null) {
+//            Account currentAccount = getCurrentUser();
+//        }
+        ctx.response().discardCookie(COOKIE_KEEP_SESSION_OPEN);
         ctx.session().clear();
     }
 

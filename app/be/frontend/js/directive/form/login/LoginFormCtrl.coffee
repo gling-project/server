@@ -95,6 +95,7 @@ myApp.directive 'loginFormCtrl', ($flash, facebookService, translationService, d
             scope.fb_login = ->
 
                 success = (data) ->
+
                     scope.facebookSuccess data
                     scope.setLoading false
 

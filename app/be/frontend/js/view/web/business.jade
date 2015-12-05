@@ -177,7 +177,7 @@
                                 br
                                 |  {{business.address.zip}}, {{business.address.city}}
                             div {{business.distance / 1000 | number:2}} Km
-                        button#business-btn-address-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show="edit && business.businessStatus === 'NOT_PUBLISHED'", ng-click='editAddress()')
+                        button#business-btn-address-edit.btn.gling-button-dark.btn-xs.glyphicon.glyphicon-edit(ng-show="edit && business.businessStatus !== 'PUBLISHED'", ng-click='editAddress()')
                 // contact
                 .panel.panel-gling
                     .panel-heading

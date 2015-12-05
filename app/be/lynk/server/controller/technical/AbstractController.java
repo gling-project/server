@@ -5,6 +5,7 @@ import be.lynk.server.dto.*;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.Position;
+import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.FollowLink;
@@ -12,10 +13,14 @@ import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.module.mongo.MongoDBOperator;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
+import be.lynk.server.util.AppUtil;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Configuration;
+import play.i18n.Lang;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -31,6 +36,20 @@ import java.util.*;
  * Created by florian on 10/11/14.
  */
 public abstract class AbstractController extends Controller {
+
+
+
+    protected static final String APP_PACKAGE_NAME = "be.gling.android";
+
+    //    protected String AWSBuckect     =
+    protected String fileBucketUrl = Configuration.root().getString("aws.accesFile.url");
+    //"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
+    //"https://s3.amazonaws.com/" + AWSBuckect; (gling-prod)
+    protected String urlBase = Configuration.root().getString("site.url.base");
+    protected String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
+    protected String lastVersion = Configuration.root().getString("project.lastVersion");
+    protected String appStatus = Configuration.root().getString("app.status");
+    protected String eventPublicationIds = Configuration.root().getString("event.publicationIds");
 
     //controllers
     @Autowired
@@ -50,6 +69,8 @@ public abstract class AbstractController extends Controller {
     protected BusinessService          businessService;
     @Autowired
     private   ClaimBusinessService     claimBusinessService;
+    @Autowired
+    private CustomerInterestService customerInterestService;
 
     protected void initialization() {
         initialization(ResultDTO.class, false);
@@ -306,4 +327,64 @@ public abstract class AbstractController extends Controller {
 
     }
 
+
+
+    protected InterfaceDataDTO generateInterfaceDTO(boolean isMobile) {
+
+
+        String facebookAppId = AppUtil.getFacebookAppId();
+        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
+        interfaceDataDTO.setLangId(lang().code());
+        interfaceDataDTO.setCustomerInterests(dozerService.map(customerInterestService.findAll(), CustomerInterestDTO.class));
+        interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
+        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
+        interfaceDataDTO.setAppId(facebookAppId);
+        interfaceDataDTO.setAddStatus(appStatus);
+        interfaceDataDTO.setUrlBase(urlBase);
+        interfaceDataDTO.setProjectLastVersion(lastVersion);
+        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
+        interfaceDataDTO.setIsMobile(isMobile);
+
+        //constant
+        interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_HEIGHT", Constant.PUBLICATION_PICTURE_HEIGHT + "");
+        interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_WIDTH", Constant.PUBLICATION_PICTURE_WIDTH + "");
+        interfaceDataDTO.getConstants().put("eventPublicationIds", eventPublicationIds);
+
+        if (securityController.isAuthenticated(ctx())) {
+            Account currentUser = securityController.getCurrentUser();
+
+            if (!currentUser.getLang().code().equals(interfaceDataDTO.getLangId())) {
+                changeLang(currentUser.getLang().code());
+                interfaceDataDTO.setLangId(currentUser.getLang().code());
+            }
+
+            MyselfDTO accountDTO = accountToMyself(currentUser);
+            interfaceDataDTO.setMySelf(accountDTO);
+
+        }
+        return interfaceDataDTO;
+    }
+
+
+    private List<SearchCriteriaDTO> getSearchCriteria() {
+        List<SearchCriteriaDTO> finalList = new ArrayList<>();
+        for (SearchCriteriaEnum searchCriteriaEnum : SearchCriteriaEnum.values()) {
+            finalList.add(dozerService.map(searchCriteriaEnum, SearchCriteriaDTO.class));
+        }
+
+        return finalList;
+    }
+
+
+    protected ListDTO<LangDTO> getAvaiableLanguage() {
+
+        //compute list lang
+        ListDTO<LangDTO> langDTOListDTO = new ListDTO<>();
+        for (Lang lang : Lang.availables()) {
+            LangDTO langDTO = dozerService.map(lang, LangDTO.class);
+            langDTOListDTO.addElement(langDTO);
+        }
+        return langDTOListDTO;
+    }
+    
 }

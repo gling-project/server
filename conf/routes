@@ -148,6 +148,7 @@ POST          /rest/import_category_translation                                 
 
 
 ##welcome
+GET           /login/facebook/:access_token/:user_id                                                                 @be.lynk.server.controller.rest.LoginRestController.loginFacebook2(access_token:String,user_id:String)
 GET           /town/                                                                                                 @be.lynk.server.controller.MainController.toTown()
 GET           /coming_soon/                                                                                          @be.lynk.server.controller.MainController.comingSoon()
 GET           /about/                                                                                                @be.lynk.server.controller.MainController.toAboutPage(lang=null)

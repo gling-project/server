@@ -61,6 +61,23 @@ public class LoginRestController extends AbstractRestController {
     @Autowired
     private FacebookRequest           facebookRequest;
 
+    @Transactional
+    public Result loginFacebook2(String access_token, String user_id) {
+        loginFacebook(access_token,user_id);
+
+        boolean isMobile = isMobileDevice();
+        InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(isMobile);
+
+        //try with param
+        if (isMobile) {
+            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+        } else {
+            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, null));
+        }
+    }
+
+
+
     /* ////////////////////////////////////////////////////
      * CREATE FUNCTION
      /////////////////////////////////////////////////// */

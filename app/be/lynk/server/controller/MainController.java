@@ -32,18 +32,6 @@ import java.util.regex.Pattern;
 @org.springframework.stereotype.Controller
 public class MainController extends AbstractController {
 
-    private static final String APP_PACKAGE_NAME = "be.gling.android";
-
-    //    private String AWSBuckect     =
-    private String fileBucketUrl = Configuration.root().getString("aws.accesFile.url");
-    //"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
-    //"https://s3.amazonaws.com/" + AWSBuckect; (gling-prod)
-    private String urlBase = Configuration.root().getString("site.url.base");
-    private String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
-    private String lastVersion = Configuration.root().getString("project.lastVersion");
-    private String appStatus = Configuration.root().getString("app.status");
-    private String eventPublicationIds = Configuration.root().getString("event.publicationIds");
-
 
     @Autowired
     private PublicationService publicationService;
@@ -131,6 +119,8 @@ public class MainController extends AbstractController {
             }
         }
 
+
+
         //try with param
         if (isMobile) {
             return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
@@ -145,61 +135,4 @@ public class MainController extends AbstractController {
     public Result mobile() {
         return generateDefaultPage(null, true);
     }
-
-    private ListDTO<LangDTO> getAvaiableLanguage() {
-
-        //compute list lang
-        ListDTO<LangDTO> langDTOListDTO = new ListDTO<>();
-        for (Lang lang : Lang.availables()) {
-            LangDTO langDTO = dozerService.map(lang, LangDTO.class);
-            langDTOListDTO.addElement(langDTO);
-        }
-        return langDTOListDTO;
-    }
-
-    private List<SearchCriteriaDTO> getSearchCriteria() {
-        List<SearchCriteriaDTO> finalList = new ArrayList<>();
-        for (SearchCriteriaEnum searchCriteriaEnum : SearchCriteriaEnum.values()) {
-            finalList.add(dozerService.map(searchCriteriaEnum, SearchCriteriaDTO.class));
-        }
-
-        return finalList;
-    }
-
-    private InterfaceDataDTO generateInterfaceDTO(boolean isMobile) {
-
-
-        String facebookAppId = AppUtil.getFacebookAppId();
-        InterfaceDataDTO interfaceDataDTO = new InterfaceDataDTO();
-        interfaceDataDTO.setLangId(lang().code());
-        interfaceDataDTO.setCustomerInterests(dozerService.map(customerInterestService.findAll(), CustomerInterestDTO.class));
-        interfaceDataDTO.setFileBucketUrl(fileBucketUrl);
-        interfaceDataDTO.setTranslations(translationService.getTranslations(lang()));
-        interfaceDataDTO.setAppId(facebookAppId);
-        interfaceDataDTO.setAddStatus(appStatus);
-        interfaceDataDTO.setUrlBase(urlBase);
-        interfaceDataDTO.setProjectLastVersion(lastVersion);
-        interfaceDataDTO.setSearchCriterias(getSearchCriteria());
-        interfaceDataDTO.setIsMobile(isMobile);
-
-        //constant
-        interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_HEIGHT", Constant.PUBLICATION_PICTURE_HEIGHT + "");
-        interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_WIDTH", Constant.PUBLICATION_PICTURE_WIDTH + "");
-        interfaceDataDTO.getConstants().put("eventPublicationIds", eventPublicationIds);
-
-        if (securityController.isAuthenticated(ctx())) {
-            Account currentUser = securityController.getCurrentUser();
-
-            if (!currentUser.getLang().code().equals(interfaceDataDTO.getLangId())) {
-                changeLang(currentUser.getLang().code());
-                interfaceDataDTO.setLangId(currentUser.getLang().code());
-            }
-
-            MyselfDTO accountDTO = accountToMyself(currentUser);
-            interfaceDataDTO.setMySelf(accountDTO);
-
-        }
-        return interfaceDataDTO;
-    }
-
 }

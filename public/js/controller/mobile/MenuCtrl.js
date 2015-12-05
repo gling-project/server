@@ -1,4 +1,4 @@
-myApp.controller('MenuCtrl', function($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService) {
+myApp.controller('MenuCtrl', function($rootScope, $scope, facebookService, accountService, $location, $timeout, geolocationService, modalService, addressService, $window) {
   var completePositions;
   $scope.showmenu = false;
   $scope.myBusiness = null;
@@ -41,8 +41,7 @@ myApp.controller('MenuCtrl', function($rootScope, $scope, facebookService, accou
   $scope.logout = function() {
     $scope.$broadcast('LOGOUT');
     return accountService.logout(function() {
-      $location.path('/');
-      return $scope.closeMenu();
+      return $window.location.reload();
     });
   };
   $rootScope.$on('CHANGE_ADDRESS_SELECTED', function() {

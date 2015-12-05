@@ -32,6 +32,8 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
     var access_token, user_id;
     access_token = authResponse.accessToken;
     user_id = authResponse.userID;
+    console.log("response");
+    console.log(access_token + '/' + user_id);
     return $http({
       'method': 'GET',
       'url': '/rest/login/facebook/' + access_token + '/' + user_id,
