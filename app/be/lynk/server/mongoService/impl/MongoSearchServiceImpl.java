@@ -28,6 +28,8 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
     private final static Long[] ACCOUNT_ID_EXCLUDE_LIST = {1L, 2L, 3L, 51L, 90L,104L, 128L,229L};
 
+    private final static String[] SITE_ACCESS = {"be.lynk.server.controller.MainController.loginFacebook","be.lynk.server.controller.MainController.mainPage"};
+
 
     private final static String SEARCH_BY_DEFAULT  = "be.lynk.server.controller.rest.SearchRestController.getByDefault";
     private final static String SEARCH_BY_INTEREST = "be.lynk.server.controller.rest.SearchRestController.getByInterest";
@@ -212,13 +214,27 @@ public class MongoSearchServiceImpl implements MongoSearchService {
 
         Date from = dozerService.map(localDateTime, Date.class);
 
-        DBCursor cursor = mongoDBOperator.getDB().getCollection(SEARCH_BY_DEFAULT)
+        DBCursor cursor = mongoDBOperator.getDB().getCollection(SITE_ACCESS[0])
                 .find(new BasicDBObject("$and",
-                                new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
-                                        , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
+                        new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
+                                , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
+                );
+
+        DBCursor cursor2 = mongoDBOperator.getDB().getCollection(SITE_ACCESS[1])
+                .find(new BasicDBObject("$and",
+                        new BasicDBObject[]{new BasicDBObject("_id", new BasicDBObject("$gt", from))
+                                , new BasicDBObject("currentAccountId", new BasicDBObject("$nin", ACCOUNT_ID_EXCLUDE_LIST))})
                 );
 
         List<Session> sessions = new ArrayList<>();
+
+        generateSession(cursor,sessions);
+        generateSession(cursor2,sessions);
+
+
+        return sessions;
+    }
+    private void generateSession(DBCursor cursor,List<Session> sessions){
 
         while (cursor.hasNext()) {
             DBObject next = cursor.next();
@@ -252,8 +268,6 @@ public class MongoSearchServiceImpl implements MongoSearchService {
                 sessions.add(session);
             }
         }
-
-        return sessions;
     }
 
     private class Session {

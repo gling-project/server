@@ -61,22 +61,6 @@ public class LoginRestController extends AbstractRestController {
     @Autowired
     private FacebookRequest           facebookRequest;
 
-    @Transactional
-    public Result loginFacebook2(String access_token, String user_id) {
-        loginFacebook(access_token,user_id);
-
-        boolean isMobile = isMobileDevice();
-        InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(isMobile);
-
-        //try with param
-        if (isMobile) {
-            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
-        } else {
-            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, null));
-        }
-    }
-
-
 
     /* ////////////////////////////////////////////////////
      * CREATE FUNCTION
@@ -97,6 +81,13 @@ public class LoginRestController extends AbstractRestController {
     public Result loginFacebook(String facebookToken, String userId) {
 
         initialization();
+
+        loginToFacebook(facebookToken,userId);
+
+        return ok(finalizeConnection(securityController.getCurrentUser()));
+    }
+
+    public void loginToFacebook(String facebookToken, String userId) {
 
         //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookToken);
@@ -178,8 +169,6 @@ public class LoginRestController extends AbstractRestController {
             }
 
         }
-
-        return ok(finalizeConnection(account));
     }
 
     /**
@@ -434,7 +423,7 @@ public class LoginRestController extends AbstractRestController {
 //        forBusinessApplication=true;
 
 
-        sessionService.saveOrUpdate(new Session(account, securityController.getSource(ctx())));
+        sessionService.saveOrUpdate(new Session(account, getDevice()));
 
         MyselfDTO myselfDTO = accountToMyself(account);
 

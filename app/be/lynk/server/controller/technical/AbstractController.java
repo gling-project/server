@@ -1,6 +1,7 @@
 package be.lynk.server.controller.technical;
 
 import be.lynk.server.controller.technical.security.CommonSecurityController;
+import be.lynk.server.controller.technical.security.source.SourceEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.technical.DTO;
 import be.lynk.server.dto.technical.ResultDTO;
@@ -166,6 +167,8 @@ public abstract class AbstractController extends Controller {
         }
 
         dto.setRequestParams(params);
+
+        dto.setDevice(getDevice());
 
         String uuid = session("uuid");
         if (uuid == null) {
@@ -385,6 +388,22 @@ public abstract class AbstractController extends Controller {
             langDTOListDTO.addElement(langDTO);
         }
         return langDTOListDTO;
+    }
+
+    public SourceEnum getDevice() {
+
+        Http.Request request = ctx().request();
+
+        if(request.getHeader("User-Agent").contains("iPhone") ||
+                ctx().request().getHeader("User-Agent").contains("iPod")){
+            return SourceEnum.IPHONE;
+        }
+        else if(request.getHeader("User-Agent").contains("android")){
+            return SourceEnum.ANDROID;
+        }
+        else{
+            return SourceEnum.WEBSITE;
+        }
     }
     
 }

@@ -1,5 +1,6 @@
 package be.lynk.server.controller;
 
+import be.lynk.server.controller.rest.LoginRestController;
 import be.lynk.server.controller.technical.AbstractController;
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.dto.*;
@@ -39,6 +40,8 @@ public class MainController extends AbstractController {
     private LocalizationService localizationService;
     @Autowired
     private CustomerInterestService customerInterestService;
+    @Autowired
+    private LoginRestController loginRestController;
 
     /**
      * access to resource from external
@@ -67,6 +70,22 @@ public class MainController extends AbstractController {
 
     public Result toTown() {
         return ok(be.lynk.server.views.html.town.render(lastVersion));
+    }
+
+    @Transactional
+    public Result loginFacebook(String access_token, String user_id) {
+
+        loginRestController.loginToFacebook(access_token,user_id);
+
+        boolean isMobile = isMobileDevice();
+        InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(isMobile);
+
+        //try with param
+        if (isMobile) {
+            return ok(be.lynk.server.views.html.template_mobile.render(getAvaiableLanguage(), interfaceDataDTO));
+        } else {
+            return ok(be.lynk.server.views.html.template.render(getAvaiableLanguage(), interfaceDataDTO, null));
+        }
     }
 
     @Transactional
@@ -119,6 +138,8 @@ public class MainController extends AbstractController {
             }
         }
 
+
+        initialization();
 
 
         //try with param

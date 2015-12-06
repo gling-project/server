@@ -5,25 +5,9 @@ package be.lynk.server.controller.technical.security.source;
  */
 public enum SourceEnum {
 
-    WEBSITE("???"),
-    ANDROID("???");
+    WEBSITE,
+    ANDROID,
+    IPHONE
 
-    private final String key;
 
-    SourceEnum(String key) {
-        this.key = key;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public static SourceEnum getByKey(String key) {
-        for (SourceEnum sourceEnum : SourceEnum.values()) {
-            if (sourceEnum.key.equals(key)) {
-                return sourceEnum;
-            }
-        }
-        return WEBSITE;
-    }
 }

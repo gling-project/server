@@ -16,8 +16,6 @@ import play.mvc.Results;
 import play.mvc.Security;
 import play.mvc.SimpleResult;
 
-import java.util.logging.Logger;
-
 /**
  * Created by florian on 10/11/14.
  */
@@ -73,9 +71,6 @@ public class CommonSecurityController extends Security.Authenticator {
         }
     }
 
-    public SourceEnum getSource(Http.Context ctx) {
-        return SourceEnum.ANDROID;//SourceEnum.getByKey(ctx.request().getHeader(REQUEST_HEADER_SOURCE));
-    }
 
     /**
      * return the current user if the user is authenticated
@@ -126,9 +121,6 @@ public class CommonSecurityController extends Security.Authenticator {
 
     @Override
     public SimpleResult onUnauthorized(Http.Context ctx) {
-        if (getSource(ctx) == SourceEnum.WEBSITE) {
-            //TODO return ok(be.flo.project.views.html.home.render(getAvaiableLanguage(),interfaceDataDTO));
-        }
         if (ctx.args.get(FAILED_AUTHENTICATION_CAUSE) == FAILED_AUTHENTICATION_CAUSE_WRONG_RIGHTS) {
             return Results.unauthorized(new ExceptionDTO(Messages.get(Lang.defaultLang(), ErrorMessageEnum.WRONG_AUTHORIZATION.name())));
         }

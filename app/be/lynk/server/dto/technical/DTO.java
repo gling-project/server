@@ -1,5 +1,7 @@
 package be.lynk.server.dto.technical;
 
+import be.lynk.server.controller.technical.AbstractController;
+import be.lynk.server.controller.technical.security.source.SourceEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,6 +13,8 @@ import play.Logger;
 
 import play.mvc.Content;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,6 +35,10 @@ public class DTO implements Content{
 
     @JsonIgnoreProperties
     protected String sessionId;
+
+    @JsonIgnoreProperties
+    @Enumerated(value = EnumType.STRING)
+    private SourceEnum device;
 
     protected Long currentAccountId;
 
@@ -120,5 +128,13 @@ public class DTO implements Content{
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public void setDevice(SourceEnum device) {
+        this.device = device;
+    }
+
+    public SourceEnum getDevice() {
+        return device;
     }
 }
