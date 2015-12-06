@@ -1,7 +1,9 @@
+echo "DEPLOYMENT START AT  ""$(date +"%H:%M:%S")"
 echo "Run grunt"
 grunt
-
 NOW=$(date +"%Y%m%d%H%M")
+
+
 sed -i 's/project.lastVersion=".*"/project.lastVersion="'$NOW'"/g' conf/application.conf
 
 for old in public/dist/*.final.js; do
@@ -26,7 +28,9 @@ find public/dist -maxdepth 1 -type f -exec rm {} \;
 
 
 echo ""
-echo "Deploy"
+echo "DEPLOY"
 git push heroku master
+echo ""
+echo "DEPLOYMENT FINISHED AT  ""$(date +"%H:%M:%S")"
 
 

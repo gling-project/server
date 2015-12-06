@@ -2,6 +2,8 @@ echo ""
 echo "!!! THIS IS PROD VERSION !!! ARE YOU SURE TO CONTINUE ???"
 read dummyVar
 
+echo "DEPLOYMENT START AT  ""$(date +"%H:%M:%S")"
+
 echo "Run grunt"
 grunt
 
@@ -33,5 +35,5 @@ find public/dist -maxdepth 1 -type f -exec rm {} \;
 echo ""
 echo "Deploy"
 git push heroku-prod master
-
+echo "DEPLOYMENT FINISHED AT  ""$(date +"%H:%M:%S")"
 
