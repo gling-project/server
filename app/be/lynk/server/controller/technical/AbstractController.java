@@ -19,6 +19,7 @@ import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
 import play.Logger;
@@ -220,17 +221,6 @@ public abstract class AbstractController extends Controller {
         return false;
     }
 
-    protected boolean isAndroid() {
-
-        String userAgent = ctx().request().getHeader("User-Agent");
-        boolean mobile = false;
-        if (userAgent.indexOf("Android") != -1) {
-            return true;
-        }
-        return false;
-    }
-
-
     protected boolean isAppleDevice() {
 
         String userAgent = ctx().request().getHeader("User-Agent");
@@ -401,7 +391,7 @@ public abstract class AbstractController extends Controller {
                 ctx().request().getHeader("User-Agent").contains("iPod")){
             return SourceEnum.IPHONE;
         }
-        else if(request.getHeader("User-Agent").contains("android")){
+        else if(StringUtils.containsIgnoreCase(request.getHeader("User-Agent"),"android")){
             return SourceEnum.ANDROID;
         }
         else{
