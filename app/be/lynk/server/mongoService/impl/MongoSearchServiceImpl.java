@@ -250,9 +250,7 @@ public class MongoSearchServiceImpl implements MongoSearchService {
             if (next.get("x") != null) {
                 position = new PositionDTO(((double) next.get("x")), ((double) next.get("y")));
             }
-            else {
-                continue;
-            }
+
             Session session = new Session((Long) next.get("currentAccountId"), (String) next.get("sessionId"), (Date) next.get("_id"));
             session.setPosition(position);
             boolean founded = false;

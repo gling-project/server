@@ -21,6 +21,7 @@ import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
@@ -228,12 +229,16 @@ public class SuperAdminRestController extends AbstractRestController {
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN_READER)
     public Result getStats() {
 
+        long t = new Date().getTime();
+
         AdminStatDTO adminStatDTO = new AdminStatDTO();
 
         Long nbCustomer = accountService.countByType(AccountTypeEnum.CUSTOMER);
         Long nbBusiness = businessService.countAll();
         Long nbTotalPublication = publicationService.countAll();
         int nbSessions = mongoSearchService.numberSessionsFrom(LocalDateTime.of(2015, 10, 10, 00, 00, 00));
+
+        Logger.info("COMPUTE STAT 1 : "+(new Date().getTime() - t));
 
 
         //utilisateur
@@ -244,6 +249,8 @@ public class SuperAdminRestController extends AbstractRestController {
         adminStatDTO.getStats().put("Nouveaux consommateurs 7 jours", AdminStatDTO.Data.createPercent(accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(7)).doubleValue(), nbCustomer.doubleValue()));
 
         adminStatDTO.getStats().put("Nouveaux consommateurs 28 jours", AdminStatDTO.Data.createPercent(accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(28)).doubleValue(), nbCustomer.doubleValue()));
+
+        Logger.info("COMPUTE STAT 2 : "+(new Date().getTime() - t));
 
         //commerce
         adminStatDTO.getStats().put("Nombre de commerces", new AdminStatDTO.Data(nbBusiness));
@@ -258,6 +265,8 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nombre de commerces ayant publié au moins une fois depuis ces 28 derniers jours", AdminStatDTO.Data.createPercent(businessService.countAtLeastOnePublicationFrom(LocalDateTime.now().minusDays(28)), nbBusiness));
 
+        Logger.info("COMPUTE STAT 3 : "+(new Date().getTime() - t));
+
         //publication
         adminStatDTO.getStats().put("Nombre total de publications", new AdminStatDTO.Data(nbTotalPublication));
 
@@ -269,6 +278,8 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nouvelles publications depuis 28 jour", AdminStatDTO.Data.createPercent(publicationService.countActiveFrom(LocalDateTime.now().minusDays(28)), nbTotalPublication));
 
+        Logger.info("COMPUTE STAT 4 : "+(new Date().getTime() - t));
+
         adminStatDTO.getStats().put("Nombre de session total", new AdminStatDTO.Data(nbSessions));
 
         adminStatDTO.getStats().put("Nombre de session depuis 1 jour", AdminStatDTO.Data.createPercent(mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(1)), nbSessions));
@@ -277,6 +288,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nombre de session depuis 28 jour", AdminStatDTO.Data.createPercent(mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(28)), nbSessions));
 
+        Logger.info("COMPUTE STAT 5 : "+(new Date().getTime() - t));
 
         return ok(adminStatDTO);
     }

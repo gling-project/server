@@ -18,6 +18,7 @@ myApp.directive('donutChartCtrl', function(directiveService, $timeout, generateI
             var dataToDisplay, key;
             dataToDisplay = void 0;
             if ((scope.getInfo() != null) && (scope.getInfo().data != null)) {
+              console.log('compute data!!!!');
               scope.data = [];
               for (key in scope.getInfo().data) {
                 scope.data.push({
@@ -25,6 +26,7 @@ myApp.directive('donutChartCtrl', function(directiveService, $timeout, generateI
                   y: scope.getInfo().data[key]
                 });
               }
+              console.log(scope.data);
               return $('#' + scope.id).highcharts({
                 chart: {
                   plotBackgroundColor: null,
@@ -33,27 +35,27 @@ myApp.directive('donutChartCtrl', function(directiveService, $timeout, generateI
                   type: 'pie'
                 },
                 title: {
-                  text: scope.getInfo().title,
-                  plotOptions: {
-                    pie: {
-                      allowPointSelect: true,
-                      cursor: 'pointer',
-                      dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y})',
-                        style: {
-                          color: Highcharts.theme && Highcharts.theme.contrastTextColor || 'black'
-                        }
+                  text: scope.getInfo().title
+                },
+                plotOptions: {
+                  pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                      enabled: true,
+                      format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y})',
+                      style: {
+                        color: Highcharts.theme && Highcharts.theme.contrastTextColor || 'black'
                       }
-                    },
-                    series: [
-                      {
-                        name: 'name',
-                        data: scope.data
-                      }
-                    ]
+                    }
                   }
-                }
+                },
+                series: [
+                  {
+                    name: 'name',
+                    data: scope.data
+                  }
+                ]
               });
             }
           });

@@ -29,14 +29,16 @@ myApp.directive 'donutChartCtrl', (directiveService, $timeout, generateId) ->
                             plotBorderWidth: null
                             plotShadow: false
                             type: 'pie'
-                        title: text: scope.getInfo().title
-                        plotOptions: pie:
-                            allowPointSelect: true
-                            cursor: 'pointer'
-                            dataLabels:
-                                enabled: true
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y})'
-                                style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+                        title:
+                            text: scope.getInfo().title
+                        plotOptions:
+                            pie:
+                                allowPointSelect: true
+                                cursor: 'pointer'
+                                dataLabels:
+                                    enabled: true
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y})'
+                                    style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
                         series: [ {
                             name: 'name'
                             data: scope.data
