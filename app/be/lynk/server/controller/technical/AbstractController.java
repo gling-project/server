@@ -21,6 +21,7 @@ import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
+import play.Logger;
 import play.i18n.Lang;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -393,6 +394,8 @@ public abstract class AbstractController extends Controller {
     public SourceEnum getDevice() {
 
         Http.Request request = ctx().request();
+
+        Logger.info("User-Agent:"+request.getHeader("User-Agent"));
 
         if(request.getHeader("User-Agent").contains("iPhone") ||
                 ctx().request().getHeader("User-Agent").contains("iPod")){
