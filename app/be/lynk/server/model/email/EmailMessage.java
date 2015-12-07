@@ -93,6 +93,11 @@ public class EmailMessage {
             this.name = account.getFirstname() + " " + account.getLastname();
             type = RecipientTypeEnum.TO;
         }
+        public Recipient(Account account,RecipientTypeEnum recipientTypeEnum) {
+            this.email = account.getEmail();
+            this.name = account.getFirstname() + " " + account.getLastname();
+            type = recipientTypeEnum;
+        }
 
         public Recipient(String email) {
             this.email = email;

@@ -208,9 +208,6 @@ myApp.service("superAdminService", function ($http, $flash) {
 
     this.getEmailToBusinesses = function (dto, callbackSuccess, callbackError) {
 
-        console.log("dto");
-        console.log(dto);
-
         $http({
             'method': "POST",
             'url': "/rest/superadmin/emailToBusinesses",

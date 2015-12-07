@@ -477,14 +477,16 @@ public class SuperAdminRestController extends AbstractRestController {
         emails.add(new EmailMessage.Recipient(ContactTargetEnum.NO_REPLY.getEmail(), ContactTargetEnum.NO_REPLY.name()));
 
         for (Business business : businessService.findAll()) {
-            emails.add(new EmailMessage.Recipient(business.getEmail(), business.getName(), EmailMessage.RecipientTypeEnum.BCC));
+            if(business.getAccount()!=null) {
+                emails.add(new EmailMessage.Recipient(business.getAccount(), EmailMessage.RecipientTypeEnum.BCC));
+            }
         }
 
         EmailMessage emailMessage = new EmailMessage(ContactTargetEnum.HELP.getEmail(), emails, emailDTO.getSubject(), emailDTO.getMessage());
 
         //TODO temp change lang
-        emailService.sendEmail(emailMessage, lang());
-
+//        emailService.sendEmail(emailMessage, lang());
+//
         return ok();
     }
 
