@@ -675,5 +675,12 @@ day_abrv_sunday=Zon
 --.welcome.event.saintNicolas.content=Winkels van spelen en speelgoed, handelaar van gekruid koekje en zelfs groente voor zijn wortelen … St Niklaas houd van locale winkels!Br/> Geeft u plezier in jouw nabijheid winkels en blijft op de hoogte van het nieuws dankzij Gling.br/> En… Vergeet niet te blijven wijzen!
 --.loginModal.youAreBusiness=U bent een handelaar en u wilt Gling gebruiken?
 --.business.noOwner.info=De inhoud van deze pagina komt van de beschikbare publieke informatie op het Internet.
+--.profile.socialNetworkList=Lien avec vos réseaux sociaux
+--.profile.socialNetworkList.facebook=Lié au compte Facebook
+--.profile.businessCreation.alreadyClaim=Vous avez déjà revendiqué un commerce. Vous ne pouvez posséder qu'un seul commerce par compte
+--.profile.businessCreation.ask=Vous êtes un commerçant ?
+--.profile.businessCreation.action=Créez votre page commerce
 
+--.welcome.event.chrismas.title=Père Noël a aussi ses commerces de proximité favoris!
+--.welcome.event.chrismas.content=Magasins de jeux et jouets, barbier du coin et même marchand de carottes pour ses rennes… Père Noël aime consommer local.<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling!
 

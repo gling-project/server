@@ -270,9 +270,9 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Bienvenue sur Gling {0}!<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.business.body=Bienvenue sur Gling {0}!<br/><br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Votre établissement fait partie désormais de la communauté des Glinger!<br/><br/>Vous avez la possibilité de publier toutes vos actualités et promotions pour que vos consommateurs ne ratent plus aucune de vos actions.<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/><br/>L’équipe Gling
 --.email.registration.business.subject=Bienvenue sur Gling !
---.email.registration.customer.body=Bienvenue !<br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces suivis selon vos envies et besoins !<br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/>L’équipe Gling
+--.email.registration.customer.body=Bienvenue !<br/><br/>Nous sommes ravis de pouvoir vous accueillir sur Gling. Vous êtes désormais un Glinger unique et avez la possibilité de suivre vos commerces suivis selon vos envies et besoins !<br/><br/>Nous sommes à votre disposition pour toutes éventuelles questions ou remarques au sujet de Gling via notre adresse hello@gling.be.<br/>Au plaisir de vous retrouver sur Gling !<br/><br/>L’équipe Gling
 --.email.registration.customer.subject=Bienvenue sur Gling !
 
 ##  view/mobile/welcome.html
@@ -681,3 +681,6 @@ day_abrv_sunday=Di
 --.profile.businessCreation.alreadyClaim=Vous avez déjà revendiqué un commerce. Vous ne pouvez posséder qu'un seul commerce par compte
 --.profile.businessCreation.ask=Vous êtes un commerçant ?
 --.profile.businessCreation.action=Créez votre page commerce
+
+--.welcome.event.christmas.title=Père Noël a aussi ses commerces de proximité favoris!
+--.welcome.event.christmas.content=Magasins de jeux et jouets, barbier du coin et même marchand de carottes pour ses rennes… Père Noël aime consommer local.<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling!

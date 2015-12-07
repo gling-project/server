@@ -38,11 +38,10 @@ echo "Deploy"
 git push heroku-prod master
 echo "DEPLOYMENT FINISHED AT  ""$(date +"%H:%M:%S")"
 
-TAGNAME="prod_deployment_""$(date +"%y-%m-%d_%H:%M:%S")"
+TAGNAME="prod_deployment_""$(date +"%y-%m-%d_%H-%M-%S")"
 echo "create tag $TAGNAME"
 
-git add -A
-git commit -m "tag_$TAGNAME"
+git push
 git tag "$TAGNAME"
 git push origin --tags
 

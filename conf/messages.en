@@ -270,7 +270,7 @@
 
 ##  be/lynk/server/util/message/EmailMessageEnum.java
 --.email.default.footer=email.default.footer
---.email.registration.business.body=Welcome on Gling {0}!<br/>We are delighted to welcome you to Gling. Your Store is now part of the Glinger community!<br/>From now on, you can publish all your news and promotions so that your consumers will not miss any of your actions. <br/> We are at your disposal for any questions or comments you should have on hello@gling.be.<br/>forward to seeing you on Gling !<br/>Team Gling
+--.email.registration.business.body=Welcome on Gling {0}!<br/><br/>We are delighted to welcome you to Gling. Your Store is now part of the Glinger community!<br/><br/>From now on, you can publish all your news and promotions so that your consumers will not miss any of your actions. <br/><br/>We are at your disposal for any questions or comments you should have on hello@gling.be.<br/>forward to seeing you on Gling !<br/><br/>Team Gling
 --.email.registration.business.subject=Welcome on Gling !
 --.email.registration.customer.body=Welcome!<br/><br/>We are delighted to welcome you on Gling. You are now a single Glinger and have the ability to follow your favorite stores according to your desires and needs!<br/><br/>We are at your disposal for any questions or comments you should have on hello@gling.be<br/><br/>forward to seeing you on Gling !<br/><br/>Gling team
 --.email.registration.customer.subject=Welcome on Gling
@@ -675,3 +675,11 @@ day_abrv_sunday=Su
 --.welcome.event.saintNicolas.content=Shops of games and toys, trader of spiced biscuit and even vegetable for its carrots… St Nicholas likes local consuming!Br/> Then you too, make yourself pleasure in your convenience shops and remain informed of their news thanks to Gling.br/> And… Do not forget to remain wise!
 --.loginModal.youAreBusiness=You are a storekeeper and you want to join Gling?
 --.business.noOwner.info=The contents of this page comes from available public information on the Internet.
+--.profile.socialNetworkList=Lien avec vos réseaux sociaux
+--.profile.socialNetworkList.facebook=Lié au compte Facebook
+--.profile.businessCreation.alreadyClaim=Vous avez déjà revendiqué un commerce. Vous ne pouvez posséder qu'un seul commerce par compte
+--.profile.businessCreation.ask=Vous êtes un commerçant ?
+--.profile.businessCreation.action=Créez votre page commerce
+
+--.welcome.event.chrismas.title=Père Noël a aussi ses commerces de proximité favoris!
+--.welcome.event.chrismas.content=Magasins de jeux et jouets, barbier du coin et même marchand de carottes pour ses rennes… Père Noël aime consommer local.<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling!

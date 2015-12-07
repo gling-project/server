@@ -1,23 +1,23 @@
 <!DOCTYPE html><!--\"Multipart/Alternative MIME\" format-->
 <header>
-
 </header>
-<body>
+<body style="width:600px">
 
-<!-- header -->
-<div>
-</div>
+    <!-- header -->
+    <div style="background-color:#2c265c;height:100px;vertical-align:middle;color:#1AD2AA;font-size:40px;font-weight: bold;text-align: center;">
+        <img src="https://lynk-test.herokuapp.com/assets/images/external/email/email-header.png" style="margin-top: 20px;display: inline-block;"/>
+    </div>
 
-<!-- body -->
-<div style="min-height: 100px;padding:10px;">
+    <!-- body -->
+    <div style="min-height: 100px;padding: 15px 30px;background-color:#f4f4f4;color:#555555;font-size: 14px;">
 
-    $content
+        $content
 
-</div>
+    </div>
 
-<!-- footer -->
-<div>
-    <a href="$projectUrl">$projectName</a>
-</div>
+    <!-- footer -->
+    <div  style="background-color:#2c265c;height:60px;vertical-align:middle;text-align: center;">
+        <a style="display:inline-block;cursor:pointer;background-color:#1AD2AA;color:#f4f4f4;padding:5px 10px;border-radius:10px;margin-top:14px;font-size: 18px;text-decoration:none" href="$projectUrl">$projectName</a>
+    </div>
 
 </body>
