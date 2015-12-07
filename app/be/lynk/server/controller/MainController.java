@@ -6,10 +6,12 @@ import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.dto.*;
 import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
+import be.lynk.server.model.entities.Session;
 import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.service.PublicationService;
+import be.lynk.server.service.SessionService;
 import be.lynk.server.util.AppUtil;
 import be.lynk.server.util.constants.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,8 @@ public class MainController extends AbstractController {
     private CustomerInterestService customerInterestService;
     @Autowired
     private LoginRestController loginRestController;
+    @Autowired
+    private SessionService sessionService;
 
     /**
      * access to resource from external
@@ -75,7 +79,16 @@ public class MainController extends AbstractController {
     @Transactional
     public Result loginFacebook(String access_token, String user_id) {
 
-        loginRestController.loginToFacebook(access_token,user_id);
+        Account account = loginRestController.loginToFacebook(access_token, user_id);
+
+        sessionService.saveOrUpdate(new Session(account, getDevice()));
+
+        MyselfDTO myselfDTO = accountToMyself(account);
+
+
+        //storage
+        securityController.storeAccount(ctx(), account);
+
 
         boolean isMobile = isMobileDevice();
         InterfaceDataDTO interfaceDataDTO = generateInterfaceDTO(isMobile);

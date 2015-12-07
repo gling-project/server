@@ -18,7 +18,6 @@ myApp.directive('donutChartCtrl', function(directiveService, $timeout, generateI
             var dataToDisplay, key;
             dataToDisplay = void 0;
             if ((scope.getInfo() != null) && (scope.getInfo().data != null)) {
-              console.log('compute data!!!!');
               scope.data = [];
               for (key in scope.getInfo().data) {
                 scope.data.push({
@@ -26,7 +25,6 @@ myApp.directive('donutChartCtrl', function(directiveService, $timeout, generateI
                   y: scope.getInfo().data[key]
                 });
               }
-              console.log(scope.data);
               return $('#' + scope.id).highcharts({
                 chart: {
                   plotBackgroundColor: null,

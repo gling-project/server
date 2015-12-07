@@ -82,12 +82,12 @@ public class LoginRestController extends AbstractRestController {
 
         initialization();
 
-        loginToFacebook(facebookToken,userId);
+        Account account = loginToFacebook(facebookToken, userId);
 
-        return ok(finalizeConnection(securityController.getCurrentUser()));
+        return ok(finalizeConnection(account));
     }
 
-    public void loginToFacebook(String facebookToken, String userId) {
+    public Account loginToFacebook(String facebookToken, String userId) {
 
         //authentication
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookCredentialService.controlFacebookAccess(facebookToken);
@@ -166,9 +166,12 @@ public class LoginRestController extends AbstractRestController {
                 emailController.sendApplicationRegistrationCustomerEmail(account);
 
                 accountService.saveOrUpdate(account);
+
+
             }
 
         }
+        return account;
     }
 
     /**
