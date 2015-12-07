@@ -33,6 +33,8 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -158,14 +160,40 @@ public abstract class AbstractController extends Controller {
         String url = (String) ctx().args.get("ROUTE_PATTERN");
         Map<String, String> params = new HashMap<>();
         String[] urlEls = url.split("/");
-        String[] pathEls = ctx().request().path().split("/");
-        for (int i = 0; i < pathEls.length; i++) {
+        String path = ctx().request().path();
+
+
+        String p = "";
+
+        Pattern urlPattern = Pattern.compile(".*<(.*)>.*");
+
+        for (int i = 0; i < urlEls.length; i++) {
             String param = urlEls[i];
-            String value = pathEls[i];
-            if (param.contains("$") || param.contains(":")) {
-                //it's a param !!
+            Matcher matcher = urlPattern.matcher(param);
+            if(matcher.find()){
+                p+="("+matcher.group(1)+")";
+            }
+            else{
+                p+=param;
+            }
+            if(i!=urlEls.length-1){
+                p+="/";
+            }
+        }
+
+        Pattern pattern = Pattern.compile(p);
+
+        Matcher matcher = pattern.matcher(path);
+
+        if (matcher.find()){
+
+            int t = matcher.groupCount();
+
+            for (int i = 1; i < matcher.groupCount()+1; i++) {
+                String value = matcher.group(i);
                 params.put("param" + i, value);
             }
+
         }
 
         dto.setRequestParams(params);
