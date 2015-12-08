@@ -4997,11 +4997,16 @@ myApp.service("businessCategoryService", ['$sce', '$http', '$flash', function ($
 }]);
 myApp.service('businessService', ['$flash', '$http', 'accountService', 'geolocationService', function($flash, $http, accountService, geolocationService) {
   this.loadLastBusiness = function(businessNb, callbackSuccess, callbackError) {
+    var a;
+    a = geolocationService.getPositionWithoutNull();
+    console.log('1-----------------------------------------------------');
+    console.log(a);
+    console.log('2-----------------------------------------------------');
     return $http({
       'method': 'POST',
       'url': '/rest/business/last/' + businessNb,
       'headers': 'Content-Type:application/json;charset=utf-8',
-      'data': geolocationService.getPositionWithoutNull()
+      'data': a
     }).success(function(data, status) {
       if (callbackSuccess != null) {
         return callbackSuccess(data.list);
