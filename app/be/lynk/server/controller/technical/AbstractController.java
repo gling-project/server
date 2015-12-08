@@ -114,13 +114,9 @@ public abstract class AbstractController extends Controller {
 
     protected <T extends DTO> T initialization(Class<T> dtoClass, boolean nullable, boolean saveIntoMongo) {
 
-        Logger.info("-------------------- initialization 1");
-
         T dto;
 
         if (dtoClass != ResultDTO.class) {
-
-            Logger.info("-------------------- initialization 1.1");
 
             //extract the json node
             Http.RequestBody body = request().body();
@@ -136,28 +132,21 @@ public abstract class AbstractController extends Controller {
 
             validation(dto);
         } else {
-            Logger.info("-------------------- initialization 1.2");
             //create DTO for mongo
             dto = (T) new ResultDTO();
         }
-
-        Logger.info("-------------------- initialization 1.3");
 
         //add user id
         if (securityController.isAuthenticated(ctx())) {
             dto.setCurrentAccountId(securityController.getCurrentUser().getId());
         }
 
-        Logger.info("-------------------- initialization 1.4");
         //write
 
         //build params list
         if (saveIntoMongo) {
             saveInMongo(dto, dtoClass);
         }
-
-        Logger.info("-------------------- initialization 1.5");
-
 
         return dto;
     }
@@ -221,8 +210,6 @@ public abstract class AbstractController extends Controller {
 
         mongoDBOperator.write(route + "." + action, dto, dtoClass);
 
-
-        play.Logger.info(request().uri() + ",dto:" + dto);
     }
 
     private <T extends DTO> void validation(T dto) {
@@ -423,8 +410,6 @@ public abstract class AbstractController extends Controller {
     public SourceEnum getDevice() {
 
         Http.Request request = ctx().request();
-
-        Logger.info("User-Agent:"+request.getHeader("User-Agent"));
 
         if(request.getHeader("User-Agent").contains("iPhone") ||
                 ctx().request().getHeader("User-Agent").contains("iPod")){

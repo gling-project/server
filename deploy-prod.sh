@@ -41,9 +41,9 @@ echo "DEPLOYMENT FINISHED AT  ""$(date +"%H:%M:%S")"
 TAGNAME="prod_deployment_""$(date +"%y-%m-%d_%H-%M-%S")"
 echo "create tag $TAGNAME"
 
-#git push
-#git tag "$TAGNAME"
-#git push origin --tags
+git push
+git tag "$TAGNAME"
+git push origin --tags
 
 
 

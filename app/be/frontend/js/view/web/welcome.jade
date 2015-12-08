@@ -18,9 +18,9 @@
         //publication
         .block-title.block-title-left
             | {{'--.welcome.lastPublications' | translateText}}
-            .see-more.link(ng-click="goTo('/')") {{'--.welcome.seeMore' | translateText}}
+            .see-more.link(ng-click="goTo('/home/')") {{'--.welcome.seeMore' | translateText}}
         publication-list-ctrl(ng-info='publicationListCtrl')
-        .link.center(ng-click="goTo('/')") {{'--.welcome.morePublications' | translateText}}
+        .link.center(ng-click="goTo('/home/')") {{'--.welcome.morePublications' | translateText}}
 
     .right-column
 

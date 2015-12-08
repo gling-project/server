@@ -88,9 +88,6 @@ public class DTO implements Content {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(this);
         } catch (Exception e) {
-            Logger.info("/// 1 --------------------------------------------------------------------------------/////");
-            Logger.info(this.toString());
-            Logger.info("/// 2 --------------------------------------------------------------------------------/////");
             e.printStackTrace();
             throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR, e.getMessage());
         }
