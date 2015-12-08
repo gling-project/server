@@ -4,7 +4,9 @@ myApp.service 'businessService', ($flash, $http, accountService,geolocationServi
 
         a = geolocationService.getPositionWithoutNull()
 
+        console.log '1-----------------------------------------------------'
         console.log a
+        console.log '2-----------------------------------------------------'
 
         $http
             'method': 'POST'
