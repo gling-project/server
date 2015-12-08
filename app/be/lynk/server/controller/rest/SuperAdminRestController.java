@@ -485,7 +485,7 @@ public class SuperAdminRestController extends AbstractRestController {
         EmailMessage emailMessage = new EmailMessage(ContactTargetEnum.HELP.getEmail(), emails, emailDTO.getSubject(), emailDTO.getMessage());
 
         //TODO temp change lang
-//        emailService.sendEmail(emailMessage, lang());
+        emailService.sendEmail(emailMessage, lang());
 //
         return ok();
     }

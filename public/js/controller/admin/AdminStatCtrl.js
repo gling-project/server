@@ -1,4 +1,4 @@
-myApp.controller('AdminStatCtrl', function($scope, superAdminService, $timeout) {
+myApp.controller('AdminStatCtrl', function($scope, superAdminService) {
   $scope.tab = 'main';
   $scope.setTab = function(tab) {
     $scope.tab = tab;

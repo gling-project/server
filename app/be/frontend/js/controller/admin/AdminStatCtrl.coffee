@@ -1,6 +1,6 @@
 #admin controller
 #statistic about application usage
-myApp.controller 'AdminStatCtrl', ($scope, superAdminService, $timeout) ->
+myApp.controller 'AdminStatCtrl', ($scope, superAdminService) ->
 
     #param
     $scope.tab = 'main'

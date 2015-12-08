@@ -23,8 +23,8 @@ import java.util.Map;
 /**
  * Created by florian on 10/11/14.
  */
-@JsonIgnoreProperties(ignoreUnknown = true,value = {"parsingDate"})
-public class DTO implements Content{
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"parsingDate"})
+public class DTO implements Content {
 
     @javax.persistence.Id
     @JsonIgnoreProperties
@@ -84,10 +84,10 @@ public class DTO implements Content{
 
     @Override
     public String body() {
-        ObjectMapper mapper = new ObjectMapper();
         try {
+            ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR, e.getMessage());
         }
     }
