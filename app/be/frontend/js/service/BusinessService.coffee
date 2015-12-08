@@ -1,11 +1,16 @@
 myApp.service 'businessService', ($flash, $http, accountService,geolocationService) ->
 
     @loadLastBusiness = (businessNb, callbackSuccess, callbackError) ->
+
+        a = geolocationService.getPositionWithoutNull()
+
+        console.log a
+
         $http
             'method': 'POST'
             'url': '/rest/business/last/'+businessNb
             'headers': 'Content-Type:application/json;charset=utf-8'
-            'data': geolocationService.getPositionWithoutNull()
+            'data': a
         .success (data, status) ->
             if callbackSuccess?
                 callbackSuccess data.list
