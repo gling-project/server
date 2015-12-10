@@ -406,7 +406,7 @@ day_abrv_sunday=Zon
 --.business.socialNetwork.other=Ander
 --.gallery.modal.next=Volgende
 --.gallery.modal.previous=Vorig
---.welcome.myBusinesses=Mijn favoriete winkels
+--.welcome.myBusinesses=Mijn gevolgde winkels
 
 ##  controller/web/WelcomeCtrl.js (//use the model)
 --.position.current=Mijn locatie
@@ -449,12 +449,12 @@ day_abrv_sunday=Zon
 --.followed-business.uncheckAll=Deselecteren
 
 
---.home.interest-switch.help=Sorteer volgens uw locatie of uw favoriete winkelen.
+--.home.interest-switch.help=Sorteer volgens uw locatie of uw gevolgde winkelen.
 --.home.interest.help=Sorteer volgens uw wensen.
 --.home.localisation.help=Sorteer volgens uw locatie.
---.home.followning.help=Sorteer volgens uw favoriete winkelen.
---.home.emptyResult.followed=Geen van uw favoriete handelszaken heeft een nieuwtje of promotie gepubliceerd. De handelszaken hieronder hebben gelijkaardige nieuwtjes of promoties !
---.home.emptyResult.followedWithInterest=Momenteel blijkt er geen publicatie te zijn van uw favoriete handelszaken te zijn. De handelszaken hieronder zullen u misschien kunnen interesseren !
+--.home.followning.help=Sorteer volgens uw gevolgde winkelen.
+--.home.emptyResult.followed=Geen van uw gevolgde handelszaken heeft een nieuwtje of promotie gepubliceerd. De handelszaken hieronder hebben gelijkaardige nieuwtjes of promoties !
+--.home.emptyResult.followedWithInterest=Momenteel blijkt er geen publicatie te zijn van uw gevolgd handelszaken te zijn. De handelszaken hieronder zullen u misschien kunnen interesseren !
 --.home.emptyResult.newsFeed=Geen handelszaak lijkt nieuws of promoties te hebben gepubliceerd. De handelszaken hieronder interesseren u misschien !
 --.home.emptyResult.newsFeedWithInterest=Momenteel blijkt er geen reclame van uw favoriete handelzaken te zijn. De handelszaken hieronder zullen u misschien interesseren !
 
@@ -498,17 +498,17 @@ day_abrv_sunday=Zon
 --.business.manager.progress.help=Volg de gids
 --.business.manager.progress.createPublicationTitle=Maak een publicatie
 --.business.manager.createPublication.disabled.desc=U kan momenteel nog geen publicatie maken omdat uw pagina nog niet toegankelijk is voor het publiek. Om uw pagina toegankelijk te maken voor het publiek druk op ''Mijn pagina publiceren'' en wacht op de bevestiging van ons team.
---.followWidget.message.remove=Deze winkel werd uit uw favoriete winkels geschrapt.
---.followWidget.message.add=Deze winkel is bij uw favoriete winkels toegevoegd.
+--.followWidget.message.remove=Deze winkel werd uit uw gevolgde winkels geschrapt.
+--.followWidget.message.add=Deze winkel is bij uw gevolgde winkels toegevoegd.
 --.followWidget.stopFollow=Uit mijn favorieten halen
---.followWidget.follow=Bij mijn favorieten toevoegen
+--.followWidget.follow=Bij mijn gevolgde winkels toevoegen
 --.business.page.management.status=Status van mijn pagina
 
 --.schedule.closed=Gesloten
 --.schedule.light=Open
 --.schedule.moderate=Open (matige drukke uren)
 --.schedule.heavy=Open (drukke uren)
---.loginModal.help.followMode=Om u favoriete winkels en hun nieuws  te kunnen volgen, moet u geregistreerd zijn.
+--.loginModal.help.followMode=Om u gevolgde winkels en hun nieuws  te kunnen volgen, moet u geregistreerd zijn.
 --.loginModal.help.follow=Om deze winkel te kunnen volgen moet u geregistreerd zijn.
 --.loginModal.help.address=Om een adres te kunnen invoegen, moet u geregistreerd zijn.
 --.business.page.management.help.title=Een beetje hulp nodig?
@@ -620,7 +620,7 @@ day_abrv_sunday=Zon
 --.businessRegistration.alreadyBusiness=Een Winkel is reeds gebonden met deze account en u kunt alleen een winkel per account verbinden.
 --.error.login.facebookLink.alreadyUsed=Deze Facebook account is al gebruikt door een ander Gling account.
 --.error.login.facebookLink.alreadyLinked=Een ander Facebook account is al gebonden met deze account Gling.
---.profile.linkFacebook.success=Uw Facebook account is vanaf nu met uw Gling account gebonden. Ontdek de favoriete winkelen van jouw vrienden!
+--.profile.linkFacebook.success=Uw Facebook account is vanaf nu met uw Gling account gebonden. Ontdek de gevolgde winkelen van jouw vrienden!
 --.error.facebook.import.notOfficialPage= Dit is geen officiële pagina en kan dan niet geïmporteerd worden.
 --.error.facebook.import.wrongUrl=Dit adres (url) komt niet overeen met een pagina op Facebook.
 --.business.registration.importFromFacebook.desc=U kunt de informaties vanaf uw winkel pagina op één van de volgende sociale network importeren. Kopieer uw adres (url) van uw Facebook pagina in de onderstaande velden in en klik op importeren. Opgelet, dit kan ingesteld tot 30 seconden nemen.
@@ -639,8 +639,8 @@ day_abrv_sunday=Zon
 --.business.page.claims=Deze winkel eisen.
 --.business.page.noOwner.alreadyClaimed=U heeft al deze winkel geeist.
 --.business.page.noOwner.alreadyClaimedOther=U heeft al een andere winkel geeist.
---.followWidget.stopFollowBusiness=Deze winkel van mijn favoriten winkels verwijzen.
---.followWidget.followBusiness=Deze winkel bij mijn favoriten winkelen invoegen.
+--.followWidget.stopFollowBusiness=Deze winkel van mijn gevolgde winkels verwijzen.
+--.followWidget.followBusiness=Deze winkel bij mijn gevolgde winkels invoegen.
 --.generic.error.complete.fields=Gelieve de vereiste velden invoegen a.u.b.
 --.login.form.button.forgotPassword.action=Een nieuwe passwoord krijgen.
 --.error.registration.import.facebook=Deze Facebook-pagina kon niet ingevoerd worden. Alleen geverifieerde Facebook-pagina's kunnen worden geïmporteerd, niet de groeperingen noch profiel.
