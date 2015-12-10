@@ -1,7 +1,9 @@
 package be.lynk.server.service.impl;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
+import be.lynk.server.model.MapDataBusiness;
 import be.lynk.server.model.Position;
+import be.lynk.server.model.SearchResult;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Address;
 import be.lynk.server.model.entities.Business;
@@ -12,7 +14,9 @@ import be.lynk.server.util.AccountTypeEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,6 +40,42 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
                 cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
         return JPA.em().createQuery(cq).getResultList();
 
+    }
+
+
+    @Override
+    public List<MapDataBusiness> findForMap(Account account) {
+
+        LocalDateTime now = LocalDateTime.now();
+
+
+//        //b.id,b.name, a.posx,a.posy,a.street, a.zip, f.storedName, sp.attendance,l,bc "+
+//        String request = "SELECT NEW be.lynk.server.model.MapDataBusiness(b.businessCategories) " +
+//                "FROM Business b "
+//                ;
+
+//        //b.id,b.name, a.posx,a.posy,a.street, a.zip, f.storedName, sp.attendance,l,bc "+
+        String request = "SELECT NEW be.lynk.server.model.MapDataBusiness(b.id,b.name, b.address.posx,b.address.posy,b.address.street, b.address.zip, b.illustration.storedName,sp.attendance) " +
+                "FROM Business b " +
+                "LEFT JOIN b.schedules s WITH s.dayOfWeek = :day " +
+                "LEFT JOIN s.parts sp WITH  sp.from < :minutes and sp.to > :minutes " +
+//        "LEFT JOIN business_category b_c ON b.id = b_c.business "+
+//        "LEFT JOIN businesscategory bc ON b_c.category = bc.id "+
+
+                "WHERE b.businessStatus=:businessStatus ";
+
+
+        DayOfWeek dayOfWeek = now.getDayOfWeek();
+        int minutes = now.getMinute() + now.getHour() * 60;
+
+        TypedQuery<MapDataBusiness> query = JPA.em().createQuery(request, MapDataBusiness.class)
+                .setParameter("businessStatus", BusinessStatusEnum.PUBLISHED)
+               .setParameter("day", dayOfWeek)
+                .setParameter("minutes", minutes)
+;
+
+        List<MapDataBusiness> resultList = query.getResultList();
+        return resultList;
     }
 
     @Override
@@ -300,7 +340,7 @@ public class BusinessServiceImpl extends CrudServiceImpl<Business> implements Bu
         Root<Business> from = cq.from(Business.class);
         cq.select(from);
         cq.where(cb.equal(from.get("businessStatus"), BusinessStatusEnum.PUBLISHED));
-        cq.orderBy(cb.desc(from.get("lastStatusChange")),cb.desc(from.get("creationDate")));
+        cq.orderBy(cb.desc(from.get("lastStatusChange")), cb.desc(from.get("creationDate")));
         return JPA.em().createQuery(cq)
                 .setMaxResults(nb)
                 .getResultList();

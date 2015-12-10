@@ -1,12 +1,8 @@
 package be.lynk.server.dto.map;
 
-import be.lynk.server.dto.AddressDTO;
 import be.lynk.server.dto.BusinessCategoryLittleDTO;
 import be.lynk.server.dto.CustomerInterestDTO;
-import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.model.AttendanceEnum;
-import be.lynk.server.model.entities.CustomerInterest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +17,19 @@ public class MapDataBusinessDTO extends DTO {
 
     private String name;
 
-    private StoredFileDTO illustration;
+    private String illustrationName;
 
-    private AddressDTO address;
+    private String street;
+
+    private String zip;
+
+    private Double posx;
+
+    private Double posy;
 
     private Boolean following;
 
-    private AttendanceEnum attendance;
+    private Boolean isOpen;
 
     private List<CustomerInterestDTO> interests;
 
@@ -36,20 +38,52 @@ public class MapDataBusinessDTO extends DTO {
     public MapDataBusinessDTO() {
     }
 
+    public String getIllustrationName() {
+        return illustrationName;
+    }
+
+    public void setIllustrationName(String illustrationName) {
+        this.illustrationName = illustrationName;
+    }
+
+    public Double getPosx() {
+        return posx;
+    }
+
+    public void setPosx(Double posx) {
+        this.posx = posx;
+    }
+
+    public Double getPosy() {
+        return posy;
+    }
+
+    public void setPosy(Double posy) {
+        this.posy = posy;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
     public Map<String, Map<String, List<BusinessCategoryLittleDTO>>> getCategories() {
         return categories;
     }
 
     public void setCategories(Map<String, Map<String, List<BusinessCategoryLittleDTO>>> categories) {
         this.categories = categories;
-    }
-
-    public StoredFileDTO getIllustration() {
-        return illustration;
-    }
-
-    public void setIllustration(StoredFileDTO illustration) {
-        this.illustration = illustration;
     }
 
     public Long getId() {
@@ -68,14 +102,6 @@ public class MapDataBusinessDTO extends DTO {
         this.name = name;
     }
 
-    public AddressDTO getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressDTO address) {
-        this.address = address;
-    }
-
     public Boolean getFollowing() {
         return following;
     }
@@ -84,12 +110,12 @@ public class MapDataBusinessDTO extends DTO {
         this.following = following;
     }
 
-    public AttendanceEnum getAttendance() {
-        return attendance;
+    public Boolean getIsOpen() {
+        return isOpen;
     }
 
-    public void setAttendance(AttendanceEnum attendance) {
-        this.attendance = attendance;
+    public void setIsOpen(Boolean open) {
+        isOpen = open;
     }
 
     public List<CustomerInterestDTO> getInterests() {

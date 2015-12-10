@@ -70,7 +70,7 @@
 
     <!-- dataMapBusiness -->
     <mapping>
-        <class-a>be.lynk.server.model.entities.Business</class-a>
+        <class-a>be.lynk.server.model.MapDataBusiness</class-a>
         <class-b>be.lynk.server.dto.map.MapDataBusinessDTO</class-b>
         <field custom-converter=
                        "be.lynk.server.dozerConverter.BusinessCategoryMapConverter">

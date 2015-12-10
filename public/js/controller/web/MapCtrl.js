@@ -144,17 +144,15 @@ myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInt
     if (($scope.map != null) && ($scope.mapDataBusinesses != null)) {
       for (key in $scope.mapDataBusinesses) {
         mapDataBusiness = $scope.mapDataBusinesses[key];
-        if (mapDataBusiness.address != null) {
-          marker = new google.maps.Marker({});
-          marker.id = mapDataBusiness.id;
-          marker.setPosition(new google.maps.LatLng(mapDataBusiness.address.posx, mapDataBusiness.address.posy));
-          marker.setTitle(mapDataBusiness.name);
-          marker.setIcon(getIcon(mapDataBusiness));
-          marker.setMap($scope.map);
-          $scope.markers.push(marker);
-          mapDataBusiness.visible = true;
-          addListener(marker, mapDataBusiness);
-        }
+        marker = new google.maps.Marker({});
+        marker.id = mapDataBusiness.id;
+        marker.setPosition(new google.maps.LatLng(mapDataBusiness.posx, mapDataBusiness.posy));
+        marker.setTitle(mapDataBusiness.name);
+        marker.setIcon(getIcon(mapDataBusiness));
+        marker.setMap($scope.map);
+        $scope.markers.push(marker);
+        mapDataBusiness.visible = true;
+        addListener(marker, mapDataBusiness);
       }
     }
     return $scope.computeList();
@@ -165,7 +163,7 @@ myApp.controller('MapCtrl', function($scope, $rootScope, mapService, customerInt
     if (business.following) {
       name += 'bell_';
     }
-    if (business.attendance === 'LIGHT' || business.attendance === 'MODERATE' || business.attendance === 'IMPORTANT') {
+    if (business.isOpen) {
       name += 'green_light.png';
     } else {
       name += 'black.png';

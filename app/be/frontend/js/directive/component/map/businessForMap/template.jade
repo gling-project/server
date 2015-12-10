@@ -1,13 +1,12 @@
 .business-for-map
     .business-header(ng-click="goTo('/business/'+getInfo().business.id)")
-        img.business-illustration(ng-src="{{getInfo().business.illustration | image}}")
+        img.business-illustration(ng-src="{{getInfo().business.illustrationName | image}}")
         i.gling-icon.gling-icon-bell(ng-show="getInfo().business.following === true")
         span.title {{getInfo().business.name}}
-        span.currently-open(ng-show="getInfo().business.attendance == 'LIGHT' || getInfo().business.attendance == 'MODERATE' || getInfo().business.attendance == 'IMPORTANT'")
+        span.currently-open(ng-show="getInfo().business.isOpen")
             | {{'--.schedule.isOpenNow' | translateText}}
     category-line-ctrl(ng-info="{categories:getInfo().business.categories}")
-        | {{getInfo().business.address.street}},
-        | {{getInfo().business.address.zip}}
-        | {{getInfo().business.address.city}}<br/>
+    | {{getInfo().business.street}},
+    | {{getInfo().business.zip}}<br/>
     br
     follow-widget-ctrl(ng-info="{displayText:true,business:getInfo().business}")

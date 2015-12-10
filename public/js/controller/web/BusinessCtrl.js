@@ -1,5 +1,4 @@
 myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, constantService) {
-  var autoScroll, loadAutoScroll, scrollAutoScroll;
   if ($routeParams.publicationId !== null) {
     $scope.publicationIdToGo = $routeParams.publicationId;
   }
@@ -396,38 +395,6 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
     $scope.loading = false;
     return $scope.displayError = true;
   });
-  $timeout(function() {
-    console.log('--------------------' + $('body').scrollTop());
-    $('body').scrollTop(0);
-    return console.log('2--------------------' + $('body').scrollTop());
-  }, 1);
-  window.onload = function() {
-    return window.scrollTo(0, 0);
-  };
-  autoScroll = function() {
-    var div, top;
-    div = $('body');
-    div.style.display = '';
-    top = div.offsetTop;
-    if (window.scrollTop !== top) {
-      return window.scrollTo(0, top);
-    }
-  };
-  return;
-  loadAutoScroll = function() {
-    autoScroll();
-    window.onload = null;
-    return false;
-  };
-  scrollAutoScroll = function() {
-    autoScroll();
-    window.setTimeout((function() {
-      window.onscroll = null;
-      return;
-    }), 100);
-    return false;
-  };
-  window.onload = loadAutoScroll;
-  window.onscroll = scrollAutoScroll;
+  $(window).scrollTop(0);
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
 });

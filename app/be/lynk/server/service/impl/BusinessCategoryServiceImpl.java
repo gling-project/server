@@ -52,8 +52,8 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
         String s = "select c from BusinessCategory c, Translation t, TranslationValue v where c.translationName = t and v.translation=t and v.lang=:lang and v.searchableContent like :criteria";
 
         Query query = JPA.em().createQuery(s)
-                         .setParameter("lang", lang)
-                         .setParameter("criteria", criteria);
+                .setParameter("lang", lang)
+                .setParameter("criteria", criteria);
 
         if (resultByPage != null) {
             query.setMaxResults(resultByPage);
@@ -61,4 +61,5 @@ public class BusinessCategoryServiceImpl extends CrudServiceImpl<BusinessCategor
 
         return query.getResultList();
     }
+
 }

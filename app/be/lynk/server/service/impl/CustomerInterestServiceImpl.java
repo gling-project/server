@@ -43,18 +43,29 @@ public class CustomerInterestServiceImpl extends CrudServiceImpl<CustomerInteres
     public List<CustomerInterest> findInterestsByBusiness(Business business) {
 
         if (business.getBusinessCategories() != null && business.getBusinessCategories().size() > 0) {
-            return findInterestByBusinessCategories(business.getBusinessCategories());
+            return findInterestByBusiness(business);
+            //return findInterestByBusinessCategories(business.getBusinessCategories());
         }
         return new ArrayList<>();
     }
 
-    @Override
-    public List<CustomerInterest> findInterestByBusinessCategories(List<BusinessCategory> businessCategories) {
 
-        String request = "select c from CustomerInterest c, CategoryInterestLink l where l.customerInterest = c and l.businessCategory in :categories";
+    @Override
+    public List<CustomerInterest> findInterestByBusinessId(Long businessId) {
+
+        String request = "select c from CustomerInterest c, CategoryInterestLink l, Business b where l.businessCategory member of b.businessCategories and l.customerInterest = c and b.id = :businessId";
 
         return JPA.em().createQuery(request, CustomerInterest.class)
-                .setParameter("categories", businessCategories)
+                .setParameter("businessId", businessId)
+                .getResultList();
+    }
+
+    public List<CustomerInterest> findInterestByBusiness(Business business) {
+
+        String request = "select c from CustomerInterest c, CategoryInterestLink l, Business b where l.businessCategory member of b.businessCategories and l.customerInterest = c and b = :business";
+
+        return JPA.em().createQuery(request, CustomerInterest.class)
+                .setParameter("business", business)
                 .getResultList();
     }
 }

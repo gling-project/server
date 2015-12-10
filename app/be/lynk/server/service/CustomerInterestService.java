@@ -16,5 +16,5 @@ public interface CustomerInterestService extends CrudService<CustomerInterest>{
 
     List<CustomerInterest> findInterestsByBusiness(Business business);
 
-    List<CustomerInterest> findInterestByBusinessCategories(List<BusinessCategory> businessCategories);
+    List<CustomerInterest> findInterestByBusinessId(Long businessId);
 }

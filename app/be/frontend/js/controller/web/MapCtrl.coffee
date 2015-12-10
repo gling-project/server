@@ -134,20 +134,20 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
             #called when the ngMap is initialized AND the positions are loaded
             for key of $scope.mapDataBusinesses
                 mapDataBusiness = $scope.mapDataBusinesses[key]
-                if mapDataBusiness.address?
-                    marker = new (google.maps.Marker)({})
-                    marker.id = mapDataBusiness.id
-                    marker.setPosition new (google.maps.LatLng)(mapDataBusiness.address.posx,
-                        mapDataBusiness.address.posy)
-                    marker.setTitle mapDataBusiness.name
 
-                    marker.setIcon getIcon mapDataBusiness
+                marker = new (google.maps.Marker)({})
+                marker.id = mapDataBusiness.id
+                marker.setPosition new (google.maps.LatLng)(mapDataBusiness.posx,
+                    mapDataBusiness.posy)
+                marker.setTitle mapDataBusiness.name
 
-                    marker.setMap $scope.map
-                    $scope.markers.push marker
-                    mapDataBusiness.visible = true
+                marker.setIcon getIcon mapDataBusiness
 
-                    addListener marker, mapDataBusiness
+                marker.setMap $scope.map
+                $scope.markers.push marker
+                mapDataBusiness.visible = true
+
+                addListener marker, mapDataBusiness
         $scope.computeList()
 
     getIcon = (business) ->
@@ -155,7 +155,7 @@ myApp.controller 'MapCtrl', ($scope, $rootScope, mapService, customerInterestSer
         if business.following
             name += 'bell_'
 
-        if business.attendance == 'LIGHT' or business.attendance == 'MODERATE' or business.attendance == 'IMPORTANT'
+        if business.isOpen
             name += 'green_light.png'
         else
             name += 'black.png'

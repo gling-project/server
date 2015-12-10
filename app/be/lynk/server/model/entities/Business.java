@@ -85,6 +85,9 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     @OneToMany(mappedBy = "businessGalleryPicture", cascade = CascadeType.ALL)
     private Set<StoredFile> galleryPictures = new HashSet<>();
 
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<FollowLink> followLinks;
+
     public Business() {
         lastStatusChange = LocalDateTime.now();
     }
@@ -95,6 +98,14 @@ public class Business extends AbstractEntity implements Comparable<Business> {
         this.searchableName = normalize(name);
         businessStatus = BusinessStatusEnum.NOT_PUBLISHED;
         lastStatusChange = LocalDateTime.now();
+    }
+
+    public Set<FollowLink> getFollowLinks() {
+        return followLinks;
+    }
+
+    public void setFollowLinks(Set<FollowLink> followLinks) {
+        this.followLinks = followLinks;
     }
 
     public LocalDateTime getLastStatusChange() {

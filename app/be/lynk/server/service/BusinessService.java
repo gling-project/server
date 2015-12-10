@@ -1,6 +1,7 @@
 package be.lynk.server.service;
 
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
+import be.lynk.server.model.MapDataBusiness;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
@@ -16,6 +17,8 @@ import java.util.Set;
  */
 public interface BusinessService extends CrudService<Business> {
     List<Business> findByName(String businessName);
+
+    List<MapDataBusiness> findForMap(Account account);
 
     List<Business> search(String text, int page, int max);
 

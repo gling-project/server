@@ -2816,7 +2816,6 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
 }]);
 myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', 'constantService', function($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, constantService) {
-  var autoScroll, loadAutoScroll, scrollAutoScroll;
   if ($routeParams.publicationId !== null) {
     $scope.publicationIdToGo = $routeParams.publicationId;
   }
@@ -3213,39 +3212,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
     $scope.loading = false;
     return $scope.displayError = true;
   });
-  $timeout(function() {
-    console.log('--------------------' + $('body').scrollTop());
-    $('body').scrollTop(0);
-    return console.log('2--------------------' + $('body').scrollTop());
-  }, 1);
-  window.onload = function() {
-    return window.scrollTo(0, 0);
-  };
-  autoScroll = function() {
-    var div, top;
-    div = $('body');
-    div.style.display = '';
-    top = div.offsetTop;
-    if (window.scrollTop !== top) {
-      return window.scrollTo(0, top);
-    }
-  };
-  return;
-  loadAutoScroll = function() {
-    autoScroll();
-    window.onload = null;
-    return false;
-  };
-  scrollAutoScroll = function() {
-    autoScroll();
-    window.setTimeout((function() {
-      window.onscroll = null;
-      return;
-    }), 100);
-    return false;
-  };
-  window.onload = loadAutoScroll;
-  window.onscroll = scrollAutoScroll;
+  $(window).scrollTop(0);
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
 }]);
 myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
@@ -3664,17 +3631,15 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
     if (($scope.map != null) && ($scope.mapDataBusinesses != null)) {
       for (key in $scope.mapDataBusinesses) {
         mapDataBusiness = $scope.mapDataBusinesses[key];
-        if (mapDataBusiness.address != null) {
-          marker = new google.maps.Marker({});
-          marker.id = mapDataBusiness.id;
-          marker.setPosition(new google.maps.LatLng(mapDataBusiness.address.posx, mapDataBusiness.address.posy));
-          marker.setTitle(mapDataBusiness.name);
-          marker.setIcon(getIcon(mapDataBusiness));
-          marker.setMap($scope.map);
-          $scope.markers.push(marker);
-          mapDataBusiness.visible = true;
-          addListener(marker, mapDataBusiness);
-        }
+        marker = new google.maps.Marker({});
+        marker.id = mapDataBusiness.id;
+        marker.setPosition(new google.maps.LatLng(mapDataBusiness.posx, mapDataBusiness.posy));
+        marker.setTitle(mapDataBusiness.name);
+        marker.setIcon(getIcon(mapDataBusiness));
+        marker.setMap($scope.map);
+        $scope.markers.push(marker);
+        mapDataBusiness.visible = true;
+        addListener(marker, mapDataBusiness);
       }
     }
     return $scope.computeList();
@@ -3685,7 +3650,7 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
     if (business.following) {
       name += 'bell_';
     }
-    if (business.attendance === 'LIGHT' || business.attendance === 'MODERATE' || business.attendance === 'IMPORTANT') {
+    if (business.isOpen) {
       name += 'green_light.png';
     } else {
       name += 'black.png';
