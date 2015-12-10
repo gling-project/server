@@ -211,13 +211,13 @@
 
 ##  modal/LoginModal/view.html
 --.loginModal.toBusinessRegistration=Ik ben handelaar
---.loginModal.toCustomerRegistration=Zich registreren !
+--.loginModal.toCustomerRegistration=Zich registreren in een paar klikken ! Join ons !
 --.loginModal.notRegisterYet=Nog niet geregistreerd?
 
 
 ##  be/lynk/server/views/template.scala.html (javascript library )
 --.welcome.myBusiness=Mijn winkel
---.welcome.search=Wat zoekt U
+--.welcome.search=Wat zoekt U ?
 --.site.name=Gling
 --.welcome.serach.advanced.criteria=Criteria
 
@@ -516,7 +516,7 @@ day_abrv_sunday=Zon
 --.error.promotion.duration.tooLong=De maximale duur van een promotie is {0} dagen
 --.error.notification.duration.tooLong=De maximale duur van een nieuws is {0} dagen
 --.error.promotion.TooMuchToday=U heeft al {0} berichten gepubliceerd voor deze week. Mogen wij U vriendelijk vragen even geduld te hebben tot morgen om opnieuw te kunnen publiceren a.u.b.
---.error.publication.startDateBeforeNow=La publication doit commencer au plus tard maintenant
+--.error.publication.startDateBeforeNow=De publicatie moet ten laatste nu beginnen.
 
 ##  directive/form/account/AccountFormCtrl.js (//)
 --.registration.form.acceptSla=Ik aanvaard de algemene voorwaarden.
@@ -672,15 +672,15 @@ day_abrv_sunday=Zon
 --.welcome.neighborhood=De actieve wijken.
 --.welcome.lastBusinesses=Kent U?
 --.welcome.event.saintNicolas.title=St Nicholaas heeft ook zijn favoriet winkels!
---.welcome.event.saintNicolas.content=Winkels van spelen en speelgoed, handelaar van gekruid koekje en zelfs groente voor zijn wortelen … St Niklaas houd van locale winkels!Br/> Geeft u plezier in jouw nabijheid winkels en blijft op de hoogte van het nieuws dankzij Gling.br/> En… Vergeet niet te blijven wijzen!
+--.welcome.event.saintNicolas.content=Winkels van spelen en speelgoed, handelaar van gekruid koekje en zelfs groente voor zijn wortelen … St Niklaas houd van locale winkels!Br/> Geeft u plezier in uw nabijheid winkels en blijft op de hoogte van het nieuws dankzij Gling.br/> En… Vergeet niet te blijven wijzen!
 --.loginModal.youAreBusiness=U bent een handelaar en u wilt Gling gebruiken?
 --.business.noOwner.info=De inhoud van deze pagina komt van de beschikbare publieke informatie op het Internet.
---.profile.socialNetworkList=Lien avec vos réseaux sociaux
---.profile.socialNetworkList.facebook=Lié au compte Facebook
---.profile.businessCreation.alreadyClaim=Vous avez déjà revendiqué un commerce. Vous ne pouvez posséder qu'un seul commerce par compte
---.profile.businessCreation.ask=Vous êtes un commerçant ?
---.profile.businessCreation.action=Créez votre page commerce
+--.profile.socialNetworkList=Links met jouw social networks
+--.profile.socialNetworkList.facebook=Met Facebook linken
+--.profile.businessCreation.alreadyClaim=U heeft al eeen winkel vereist. U mag alleen één winkel per account linken.
+--.profile.businessCreation.ask=Bent U handelaar?
+--.profile.businessCreation.action=Uw Winkel pagina invullen.
 
---.welcome.event.chrismas.title=Père Noël a aussi ses commerces de proximité favoris!
---.welcome.event.chrismas.content=Magasins de jeux et jouets, barbier du coin et même marchand de carottes pour ses rennes… Père Noël aime consommer local.<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling!
+--.welcome.event.chrismas.title=De Kerstman heeft ook zijn favoriete lokale winkels !
+--.welcome.event.chrismas.content=Winkels van spelen en speelgoed, handelaar van gekruid koekje en zelfs groente voor zijn rendieren… De Kerstman houd ook van locale winkels!Br/> Geeft u plezier in uw nabijheid winkels en blijft op de hoogte van het nieuws dankzij Gling.
 
