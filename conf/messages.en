@@ -406,7 +406,7 @@ day_abrv_sunday=Su
 --.business.socialNetwork.other=Other
 --.gallery.modal.next=Next
 --.gallery.modal.previous=Previous
---.welcome.myBusinesses=My favorite stores
+--.welcome.myBusinesses=My followed stores
 
 ##  controller/web/WelcomeCtrl.js (//use the model)
 --.position.current=My position
@@ -449,12 +449,12 @@ day_abrv_sunday=Su
 --.followed-business.uncheckAll=Deselect
 
 
---.home.interest-switch.help=Sort according to your position or your favorite stores.
+--.home.interest-switch.help=Sort according to your position or your followed stores.
 --.home.interest.help=Sort according to your desires.
 --.home.localisation.help=Sort according to your position.
---.home.followning.help=Sort according to your favorite stores.
---.home.emptyResult.followed=None of your favorite stores appears to have published a news or a promotions. Don''t worry, the stores below may be able to satisfy you! have a look!
---.home.emptyResult.followedWithInterest=None of the posts of your favorite store currently seems to respond to your envy. Don''t worry, the stores below may be able to satisfy you! have a look
+--.home.followning.help=Sort according to your followed stores.
+--.home.emptyResult.followed=None of your followed stores appears to have published a news or a promotions. Don''t worry, the stores below may be able to satisfy you! have a look!
+--.home.emptyResult.followedWithInterest=None of the posts of your followed store currently seems to respond to your envy. Don''t worry, the stores below may be able to satisfy you! have a look
 --.home.emptyResult.newsFeed=None of the stores appears to have issued news or promotions... Don''t worry, the stores below may be able to satisfy you ! have a look
 --.home.emptyResult.newsFeedWithInterest=None of the current publication  seems to respond only to your envy. Don''t worry, the shops below may be able to satisfy you! have a look
 
@@ -498,17 +498,17 @@ day_abrv_sunday=Su
 --.business.manager.progress.help=Follow the guide!
 --.business.manager.progress.createPublicationTitle=Create a publication
 --.business.manager.createPublication.disabled.desc=You can not create a publication for the moment because your page is not public yet. To make your public page, click on the"Publish my page!" button and wait untill a member of our team validates your request.
---.followWidget.message.remove=This store has been deleted from your favorites.
---.followWidget.message.add=This store has been added to your favorites!
+--.followWidget.message.remove=This store has been deleted from your followed.
+--.followWidget.message.add=This store has been added to your followed!
 --.followWidget.stopFollow=Remove from my favorites
---.followWidget.follow=Add to my favorites
+--.followWidget.follow=Add to my followed
 --.business.page.management.status=Status of your page :
 
 --.schedule.closed=Closed
 --.schedule.light=Open
 --.schedule.moderate=Open (middle Affluence)
 --.schedule.heavy=Ouvert (high Affluence)
---.loginModal.help.followMode=To select your favorite stores and check their updates, you must be registered or login.
+--.loginModal.help.followMode=To select your followed stores and check their updates, you must be registered or login.
 --.loginModal.help.follow=To follow a store, you have to be registered or logged in.
 --.loginModal.help.address=To add an address, you have to be registered or logged in.
 --.business.page.management.help.title=Need a little help ?
@@ -620,7 +620,7 @@ day_abrv_sunday=Su
 --.businessRegistration.alreadyBusiness=A Shop is already bound to this account and you can only have one shop for one account.
 --.error.login.facebookLink.alreadyUsed= This account Facebook is already bound to another Gling account Gling.
 --.error.login.facebookLink.alreadyLinked=An other account Facebook is already bound to this Gling account.
---.profile.linkFacebook.success=Your account Facebook is bound from now on to your account Gling. Discover the favourite shops of your friends! 
+--.profile.linkFacebook.success=Your account Facebook is bound from now on to your account Gling. Discover the followed shops of your friends! 
 --.error.facebook.import.notOfficialPage=This is not an official page and cannot be imported.
 --.error.facebook.import.wrongUrl=This address (url) does not correspond to a Facebook page.
 --.business.registration.importFromFacebook.desc=You can import the information from your shop page on one of the following social networks. Copy the address (url) of your Facebook page in the fields below and click to import. Watch out, this operation can take until 30 seconds.
@@ -639,8 +639,8 @@ day_abrv_sunday=Su
 --.business.page.claims=Request for this shop.
 --.business.page.noOwner.alreadyClaimed=You have already claim for this shop.
 --.business.page.noOwner.alreadyClaimedOther=You have already claim another shop.
---.followWidget.stopFollowBusiness=Remove this shop from my favorite shops.
---.followWidget.followBusiness=Add this shop to my favorite shops.
+--.followWidget.stopFollowBusiness=Remove this shop from my followed shops.
+--.followWidget.followBusiness=Add this shop to my followed shops.
 --.generic.error.complete.fields=Please fill all the required fields in.
 --.login.form.button.forgotPassword.action=Get a new password.
 --.error.registration.import.facebook=This Facebook page was not able to be imported. Only authenticated Facebook pages can be imported, not the groups nor profile page.
