@@ -32,6 +32,7 @@ pg_dump \
 -w \
 > $dump_file
 
+export PGPASSWORD='florian'
 DB_CONNECTION="psql -h localhost -p 5433 -U florian -d lynk -w"
 
 echo "[DROP SCHEMA]"

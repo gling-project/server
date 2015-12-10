@@ -1,12 +1,14 @@
-myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout) ->
+myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout,accountService) ->
 
-#params
+    #params
     $scope.LAST_BUSINESS_NB = 5
     $scope.MAX_PUBLICATION = 4
     $scope.descriptionLimitBase = 120
     $scope.publicationListCtrl =
         data: []
     $scope.lastChange = null
+
+    $scope.myself  = accountService.getMyself()
 
     #map list
     $scope.maps = [

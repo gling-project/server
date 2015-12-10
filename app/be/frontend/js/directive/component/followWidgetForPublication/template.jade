@@ -6,11 +6,12 @@
     .follow-widget-icon(ng-hide="getInfo().displayText===true",ng-click="follow()")
         button
             span.gling-icon.gling-icon-bell.selected(ng-show="getInfo().publication.following")
-            span.gling-icon.gling-icon-bell2"(ng-hide="getInfo().publication.following")
-    button.gling-button-dark.gling-button-dark-little.follow-text(ng-show="getInfo().displayText===true")
-        div(ng-hide="getInfo().publication.following",ng-click="follow()")
+            span.gling-icon.gling-icon-bell2(ng-hide="getInfo().publication.following")
+
+    button.gling-button-dark.gling-button-dark-little.follow-text(ng-show="getInfo().displayText===true",ng-click="follow()")
+        div(ng-hide="getInfo().publication.following")
             i.gling-icon.gling-icon-bell2
             span {{'--.followWidget.followBusiness' | translateText}}
-        div(ng-show="getInfo().publication.following",ng-click="follow()")
+        div(ng-show="getInfo().publication.following")
             i.gling-icon.gling-icon-bell
             span {{'--.followWidget.stopFollowBusiness' | translateText}}

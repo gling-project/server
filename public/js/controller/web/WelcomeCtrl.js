@@ -1,4 +1,4 @@
-myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout) {
+myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout, accountService) {
   $scope.LAST_BUSINESS_NB = 5;
   $scope.MAX_PUBLICATION = 4;
   $scope.descriptionLimitBase = 120;
@@ -6,6 +6,7 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService,
     data: []
   };
   $scope.lastChange = null;
+  $scope.myself = accountService.getMyself();
   $scope.maps = [
     {
       name: 'Chaussée de Wavre',

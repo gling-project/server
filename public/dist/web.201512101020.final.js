@@ -2816,6 +2816,7 @@ myApp.controller('ProfileCtrl', ['$scope', 'modalService', 'accountService', '$r
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
 }]);
 myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'businessService', '$routeParams', 'accountService', '$window', 'addressService', 'geolocationService', 'translationService', '$flash', '$timeout', 'contactService', '$filter', 'constantService', function($rootScope, $scope, modalService, businessService, $routeParams, accountService, $window, addressService, geolocationService, translationService, $flash, $timeout, contactService, $filter, constantService) {
+  var autoScroll, loadAutoScroll, scrollAutoScroll;
   if ($routeParams.publicationId !== null) {
     $scope.publicationIdToGo = $routeParams.publicationId;
   }
@@ -3212,7 +3213,39 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
     $scope.loading = false;
     return $scope.displayError = true;
   });
-  $(window).scrollTop(0);
+  $timeout(function() {
+    console.log('--------------------' + $('body').scrollTop());
+    $('body').scrollTop(0);
+    return console.log('2--------------------' + $('body').scrollTop());
+  }, 1);
+  window.onload = function() {
+    return window.scrollTo(0, 0);
+  };
+  autoScroll = function() {
+    var div, top;
+    div = $('body');
+    div.style.display = '';
+    top = div.offsetTop;
+    if (window.scrollTop !== top) {
+      return window.scrollTo(0, top);
+    }
+  };
+  return;
+  loadAutoScroll = function() {
+    autoScroll();
+    window.onload = null;
+    return false;
+  };
+  scrollAutoScroll = function() {
+    autoScroll();
+    window.setTimeout((function() {
+      window.onscroll = null;
+      return;
+    }), 100);
+    return false;
+  };
+  window.onload = loadAutoScroll;
+  window.onscroll = scrollAutoScroll;
   return $rootScope.$broadcast('PROGRESS_BAR_STOP');
 }]);
 myApp.controller('SearchPageCtrl', ['$rootScope', '$scope', 'searchService', '$routeParams', 'searchBarService', 'geolocationService', function($rootScope, $scope, searchService, $routeParams, searchBarService, geolocationService) {
@@ -3786,7 +3819,7 @@ myApp.controller('MapCtrl', ['$scope', '$rootScope', 'mapService', 'customerInte
     return $scope.centerToPosition();
   }, 1);
 }]);
-myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '$location', 'businessService', 'constantService', 'customerInterestService', 'searchService', '$timeout', function($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout) {
+myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '$location', 'businessService', 'constantService', 'customerInterestService', 'searchService', '$timeout', 'accountService', function($rootScope, $scope, publicationService, $location, businessService, constantService, customerInterestService, searchService, $timeout, accountService) {
   $scope.LAST_BUSINESS_NB = 5;
   $scope.MAX_PUBLICATION = 4;
   $scope.descriptionLimitBase = 120;
@@ -3794,6 +3827,7 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
     data: []
   };
   $scope.lastChange = null;
+  $scope.myself = accountService.getMyself();
   $scope.maps = [
     {
       name: 'Chaussée de Wavre',

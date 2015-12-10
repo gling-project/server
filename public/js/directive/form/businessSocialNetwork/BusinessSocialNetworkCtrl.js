@@ -24,7 +24,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                             name:'facebook',
                             fieldTitle: "--.generic.facebook",
                             fieldImage:'assets/social_network/facebook.png',
-                            validationRegex: "^($|https://www.facebook\.com/.*$)",
+                            validationRegex: "^($|https://(www\\.)?facebook\\.com/.*$)",
                             validationMessage: '--.generic.validation.facebook',
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -40,7 +40,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                             name:'twitter',
                             fieldTitle: "--.generic.twitter",
                             fieldImage:'assets/social_network/twitter.png',
-                            validationRegex: "^($|^https://twitter\.com/.*$)",
+                            validationRegex: "^($|^https://(www\\.)?twitter\\.com/.*$)",
                             validationMessage: '--.generic.validation.twitter',
                             disabled: function () {
                                 return scope.getInfo().disabled;
@@ -56,7 +56,7 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                             name:'instagram',
                             fieldTitle: "--.generic.instagram",
                             fieldImage:'assets/social_network/instagram.png',
-                            validationRegex: "^($|^https://instagram\.com/.*$)",
+                            validationRegex: "^($|^https://(www\\.)?instagram\\.com/.*$)",
                             validationMessage: '--.generic.validation.instagram',
                             disabled: function () {
                                 return scope.getInfo().disabled;
