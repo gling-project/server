@@ -3,6 +3,7 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 
 
+import javax.persistence.Basic;
 import java.util.Date;
 
 /**
@@ -28,6 +29,29 @@ public class BusinessSocialNetworkDTO extends DTO  {
 
 
     private String ecommerceLink;
+
+    private String pinterestLink;
+
+    private String googlePlusLink;
+
+    public BusinessSocialNetworkDTO() {
+    }
+
+    public String getGooglePlusLink() {
+        return googlePlusLink;
+    }
+
+    public void setGooglePlusLink(String googlePlusLink) {
+        this.googlePlusLink = googlePlusLink;
+    }
+
+    public String getPinterestLink() {
+        return pinterestLink;
+    }
+
+    public void setPinterestLink(String pinterestLink) {
+        this.pinterestLink = pinterestLink;
+    }
 
     public String getFacebookLink() {
         return facebookLink;

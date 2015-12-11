@@ -192,5 +192,11 @@
             <!-- footer bar -->
         <footer-bar-ctrl></footer-bar-ctrl>
 
+        <!-- plugin advertisment -->
+        <div class="cookie-advertisment" ng-show="displayCoockieAdvertisment">
+            {{'--.coockie.advertisment' | translateText}}
+            <button class="gling-button-dark" ng-click="acceptCookie()">{{'--.generic.agree' | translateText}}</button>
+        </div>
+
     </body>
 </html>

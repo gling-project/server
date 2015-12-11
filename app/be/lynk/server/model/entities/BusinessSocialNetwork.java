@@ -19,6 +19,12 @@ public class BusinessSocialNetwork {
     private String instagramLink;
 
     @Basic
+    private String pinterestLink;
+
+    @Basic
+    private String googlePlusLink;
+
+    @Basic
     private String deliveryLink;
 
     @Basic
@@ -29,6 +35,25 @@ public class BusinessSocialNetwork {
 
     @Basic
     private String ecommerceLink;
+
+    public BusinessSocialNetwork() {
+    }
+
+    public String getGooglePlusLink() {
+        return googlePlusLink;
+    }
+
+    public void setGooglePlusLink(String googlePlus) {
+        this.googlePlusLink = googlePlus;
+    }
+
+    public String getPinterestLink() {
+        return pinterestLink;
+    }
+
+    public void setPinterestLink(String pinterestLink) {
+        this.pinterestLink = pinterestLink;
+    }
 
     public String getFacebookLink() {
         return facebookLink;

@@ -37,18 +37,19 @@ public class MainController extends AbstractController {
 
 
     @Autowired
-    private PublicationService publicationService;
+    private PublicationService      publicationService;
     @Autowired
-    private LocalizationService localizationService;
+    private LocalizationService     localizationService;
     @Autowired
     private CustomerInterestService customerInterestService;
     @Autowired
-    private LoginRestController loginRestController;
+    private LoginRestController     loginRestController;
     @Autowired
-    private SessionService sessionService;
+    private SessionService          sessionService;
 
     /**
      * access to resource from external
+     *
      * @param path
      * @param file
      * @return
@@ -59,7 +60,7 @@ public class MainController extends AbstractController {
         response().setHeader("Access-Control-Max-Age", "3600");
         response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
         response().setHeader("Access-Control-Allow-Credentials", "true");
-        return ok(new File(path+file));
+        return ok(new File(path + file));
     }
 
 

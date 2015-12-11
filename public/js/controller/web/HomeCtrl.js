@@ -18,7 +18,7 @@ myApp.controller('HomeCtrl', function($scope, modalService, customerInterestServ
   $scope.emptyMessage = null;
   path = function() {
     var i, path;
-    path = '/home';
+    path = '/shopnews';
     if ($scope.followingMode) {
       path += '/following';
     }

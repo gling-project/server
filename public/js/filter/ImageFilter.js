@@ -11,7 +11,7 @@ myApp.filter("image", function (constantService) {
                 }
             }
             else {
-                return input;
+                return constantService.fileBucketUrl + '/' + input;
             }
         }
         return null;

@@ -282,7 +282,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
             s = $scope.business.socialNetwork
             if !s?
                 return false
-            return s.facebookLink? or s.twitterLink? or s.instagramLink? or s.deliveryLink? or s.opinionLink? or s.reservationLink?
+            return s.facebookLink? or s.twitterLink? or s.instagramLink? or s.deliveryLink? or s.opinionLink? or s.reservationLink? or s.pinterestLink? or s.googlePlusLink?
 
         $scope.computeProgression = ->
             total = 0

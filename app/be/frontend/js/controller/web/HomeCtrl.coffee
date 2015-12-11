@@ -21,7 +21,7 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
     #write path by interests and follow
     path = ->
         #build path
-        path = '/home'
+        path = '/shopnews'
         if $scope.followingMode
             path += '/following'
         for i of $scope.customerInterests

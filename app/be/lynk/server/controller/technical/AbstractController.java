@@ -43,7 +43,6 @@ import java.util.regex.Pattern;
 public abstract class AbstractController extends Controller {
 
 
-
     protected static final String APP_PACKAGE_NAME = "be.gling.android";
 
     //    protected String AWSBuckect     =
@@ -369,6 +368,7 @@ public abstract class AbstractController extends Controller {
         interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_HEIGHT", Constant.PUBLICATION_PICTURE_HEIGHT + "");
         interfaceDataDTO.getConstants().put("PUBLICATION_PICTURE_WIDTH", Constant.PUBLICATION_PICTURE_WIDTH + "");
         interfaceDataDTO.getConstants().put("eventPublicationIds", eventPublicationIds);
+
 
         if (securityController.isAuthenticated(ctx())) {
             Account currentUser = securityController.getCurrentUser();

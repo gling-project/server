@@ -260,6 +260,14 @@ myApp.service("accountService", function ($flash, $http,translationService) {
             });
     };
 
+    this.acceptCookie = function(){
+        $http({
+            'method': "GET",
+            'url': "/rest/acceptCookie",
+            'headers': "Content-Type:application/json;charset=utf-8"
+        });
+    };
+
     this.getMyself = function () {
         return this.model.myself;
     };

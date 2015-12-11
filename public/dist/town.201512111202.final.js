@@ -759,7 +759,7 @@ myApp.filter("image", ['constantService', function (constantService) {
                 }
             }
             else {
-                return input;
+                return constantService.fileBucketUrl + '/' + input;
             }
         }
         return null;

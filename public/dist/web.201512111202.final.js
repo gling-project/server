@@ -1495,7 +1495,7 @@ var initializeCommonRoutes = function () {
     myApp
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
             $routeProvider
-            .when('/home/:param*?', {
+            .when('/shopnews/:param*?', {
                 templateUrl: '/assets/js/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {
@@ -2544,7 +2544,7 @@ myApp.controller('HomeCtrl', ['$scope', 'modalService', 'customerInterestService
   $scope.emptyMessage = null;
   path = function() {
     var i, path;
-    path = '/home';
+    path = '/shopnews';
     if ($scope.followingMode) {
       path += '/following';
     }
@@ -3133,7 +3133,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
       if (!(s != null)) {
         return false;
       }
-      return (s.facebookLink != null) || (s.twitterLink != null) || (s.instagramLink != null) || (s.deliveryLink != null) || (s.opinionLink != null) || (s.reservationLink != null);
+      return (s.facebookLink != null) || (s.twitterLink != null) || (s.instagramLink != null) || (s.deliveryLink != null) || (s.opinionLink != null) || (s.reservationLink != null) || (s.pinterestLink != null) || (s.googlePlusLink != null);
     };
     $scope.computeProgression = function() {
       var total;
@@ -3808,6 +3808,13 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
         x: 50.840479,
         y: 4.401033
       }
+    }, {
+      name: 'Place Flagey',
+      src: "/assets/images/map/flagey.png",
+      position: {
+        x: 50.827821,
+        y: 4.372452
+      }
     }
   ];
   $scope.openMap = function(map) {
@@ -4212,7 +4219,7 @@ myApp.directive('headerBarCtrl', ['addressService', '$rootScope', 'languageServi
           };
           scope.goToHome = function() {
             $(window).scrollTop(0);
-            return scope.navigateTo('/home');
+            return scope.navigateTo('/shopnews');
           };
           scope.navigateTo = function(target) {
             return $location.path(target);

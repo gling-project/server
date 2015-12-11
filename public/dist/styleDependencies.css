@@ -3343,6 +3343,14 @@ html[xmlns] .flexslider .slides {
   top: 10px;
   z-index: 1;
 }
+.map-page .option-panel-left-bottom {
+  left: 10px;
+  bottom: 10px;
+  top: auto;
+}
+.map-page .legend img {
+  height: 30px;
+}
 .map-page .option-panel-right {
   right: 10px;
 }
@@ -3694,6 +3702,15 @@ html[xmlns] .flexslider .slides {
 .business-for-map .business-illustration {
   height: 20px;
   width: 20px;
+}
+.cookie-advertisment {
+  position: fixed;
+  bottom: 20px;
+  right: 0;
+  left: 0;
+  padding: 10px;
+  background-color: #ff9900;
+  font-size: 14px;
 }
 h1 {
   margin: 0;

@@ -13,7 +13,7 @@ var initializeCommonRoutes = function () {
     myApp
         .config(function ($routeProvider, $locationProvider) {
             $routeProvider
-            .when('/home/:param*?', {
+            .when('/shopnews/:param*?', {
                 templateUrl: '/assets/js/view/web/home.html',
                 controller: 'HomeCtrl',
                 resolve: {

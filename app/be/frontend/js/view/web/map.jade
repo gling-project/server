@@ -6,6 +6,17 @@
         // list open
         .option-panel.option-panel-right(ng-hide='displayList===true')
             button(ng-click='displayList=!displayList') {{'--.map.businessList' | translateText}}
+        //legend
+        .option-panel.option-panel-left-bottom.legend
+            img(src="/assets/images/google-map-marker/marker_black.png")
+            | {{'--.map.legend.close' | translateText}}
+            br
+            img(src="/assets/images/google-map-marker/marker_green_light.png")
+            | {{'--.map.legend.open' | translateText}}
+            br
+            img(src="/assets/images/google-map-marker/marker_bell_black.png")
+            | {{'--.map.legend.followed' | translateText}}
+            br
         // map
         #map(style='height:{{height}}px !important')
         // filter panel

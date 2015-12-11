@@ -47,12 +47,19 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     facebookService.ini();
 
     //catch url
-    if ($location.url().indexOf("customerRegistration") != -1 && accountService.getMyself()==null) {
+    if ($location.url().indexOf("customerRegistration") != -1 && accountService.getMyself() == null) {
         modalService.openCustomerRegistrationModal();
     }
-    else if ($location.url().indexOf("businessRegistration") != -1 && accountService.getMyself()==null) {
+    else if ($location.url().indexOf("businessRegistration") != -1 && accountService.getMyself() == null) {
         modalService.openBusinessRegistrationModal();
     }
+
+    $scope.displayCoockieAdvertisment = document.cookie.indexOf("cookieAccepted=true")==-1;
+
+    $scope.acceptCookie = function () {
+        document.cookie="cookieAccepted=true";
+        $scope.displayCoockieAdvertisment=false;
+    };
 
 
     //

@@ -21,7 +21,7 @@ myApp.directive 'headerBarCtrl', (addressService, $rootScope, languageService, $
 
             scope.goToHome = ->
                 $(window).scrollTop 0
-                scope.navigateTo '/home'
+                scope.navigateTo '/shopnews'
 
             scope.navigateTo = (target) ->
                 $location.path target

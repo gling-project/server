@@ -5,7 +5,7 @@
         span.title {{getInfo().business.name}}
         span.currently-open(ng-show="getInfo().business.isOpen")
             | {{'--.schedule.isOpenNow' | translateText}}
-    category-line-ctrl(ng-info="{categories:getInfo().business.categories}")
+    category-line-ctrl(ng-info="{categories:getInfo().business.categories,level1:false}")
     | {{getInfo().business.street}},
     | {{getInfo().business.zip}}<br/>
     br

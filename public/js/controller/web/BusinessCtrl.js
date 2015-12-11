@@ -316,7 +316,7 @@ myApp.controller('BusinessCtrl', function($rootScope, $scope, modalService, busi
       if (!(s != null)) {
         return false;
       }
-      return (s.facebookLink != null) || (s.twitterLink != null) || (s.instagramLink != null) || (s.deliveryLink != null) || (s.opinionLink != null) || (s.reservationLink != null);
+      return (s.facebookLink != null) || (s.twitterLink != null) || (s.instagramLink != null) || (s.deliveryLink != null) || (s.opinionLink != null) || (s.reservationLink != null) || (s.pinterestLink != null) || (s.googlePlusLink != null);
     };
     $scope.computeProgression = function() {
       var total;

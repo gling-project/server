@@ -22,6 +22,13 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService,
         x: 50.840479,
         y: 4.401033
       }
+    }, {
+      name: 'Place Flagey',
+      src: "/assets/images/map/flagey.png",
+      position: {
+        x: 50.827821,
+        y: 4.372452
+      }
     }
   ];
   $scope.openMap = function(map) {

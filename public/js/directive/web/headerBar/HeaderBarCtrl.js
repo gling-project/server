@@ -20,7 +20,7 @@ myApp.directive('headerBarCtrl', function(addressService, $rootScope, languageSe
           };
           scope.goToHome = function() {
             $(window).scrollTop(0);
-            return scope.navigateTo('/home');
+            return scope.navigateTo('/shopnews');
           };
           scope.navigateTo = function(target) {
             return $location.path(target);

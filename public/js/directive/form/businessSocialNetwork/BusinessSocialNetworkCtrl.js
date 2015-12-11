@@ -68,6 +68,38 @@ myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService
                             fieldName: 'instagramLink',
                             placeholder:'https://instagram.com/'
                         },
+                        pinterest: {
+                            name:'pinterest',
+                            fieldTitle: "--.generic.pinterest",
+                            fieldImage:'assets/social_network/pinterest.png',
+                            validationRegex: "^($|^https://(www\\.)?([a-z]{2,3}\\.)?pinterest\\.com/.*$)",
+                            validationMessage: '--.generic.validation.pinterest',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            focus: function () {
+                                return true;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'pinterestLink',
+                            placeholder:'https://pinterest.com/'
+                        },
+                        googlePlus: {
+                            name:'googlePlus',
+                            fieldTitle: "--.generic.googlePlus",
+                            fieldImage:'assets/social_network/googlePlus.png',
+                            validationRegex: "^($|^https://(www\\.)?plus\\.google\\.com/.*$)",
+                            validationMessage: '--.generic.validation.googlePlus',
+                            disabled: function () {
+                                return scope.getInfo().disabled;
+                            },
+                            focus: function () {
+                                return true;
+                            },
+                            field: scope.getInfo().dto,
+                            fieldName: 'googlePlusLink',
+                            placeholder:'https://plus.google.com/'
+                        },
                         delivery: {
                             name:'delivery',
                             details:'--.business.social.edit.modal.delivery.desc',
