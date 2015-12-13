@@ -20,17 +20,20 @@ import play.*;
 import play.api.mvc.EssentialFilter;
 import play.filters.gzip.GzipFilter;
 import play.i18n.Lang;
+import play.libs.Akka;
 import play.libs.F;
 import play.libs.F.Promise;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Results;
 import play.mvc.SimpleResult;
+import scala.concurrent.duration.Duration;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by florian on 10/11/14.
@@ -55,6 +58,12 @@ public class Global extends GlobalSettings {
         //final String configLocation = Play.application().configuration().getString("spring.context.location");
         ctx = new ClassPathXmlApplicationContext("components.xml");//new AnnotationConfigApplicationContext(AppConfig.class, DataConfig.class);//
         play.Logger.info("Spring Startup @" + new Date(ctx.getStartupDate()));
+
+//        Akka.system().scheduler().schedule(
+//                Duration.create(0, TimeUnit.MILLISECONDS),
+//                Duration.create(30, TimeUnit.MINUTES),
+//                (Runnable)null,
+//                this.ctx);
 
     }
 

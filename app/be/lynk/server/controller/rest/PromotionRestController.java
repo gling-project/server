@@ -117,9 +117,9 @@ public class PromotionRestController extends AbstractRestController {
         publicationDTO.setBusinessId(promotion.getBusiness().getId());
 
         //send a notification
-        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, promotion.getBusiness().getName());
-        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
-        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(promotion.getBusiness()));
+//        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, promotion.getBusiness().getName());
+//        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
+//        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(promotion.getBusiness()));
 
 
         return ok(publicationDTO);

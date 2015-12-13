@@ -114,10 +114,10 @@ public class BusinessNotificationRestController extends AbstractRestController {
         publicationDTO.setBusinessIllustration(dozerService.map(businessNotification.getBusiness().getIllustration(), StoredFileDTO.class));
         publicationDTO.setBusinessId(businessNotification.getBusiness().getId());
 
-        //send a notification
-        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_BUSINESS_NOTIFICATION, businessNotification.getBusiness().getName());
-        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
-        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
+//        //send a notification
+//        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_BUSINESS_NOTIFICATION, businessNotification.getBusiness().getName());
+//        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
+//        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
 
 
         return ok(publicationDTO);
