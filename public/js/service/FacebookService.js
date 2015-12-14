@@ -6,18 +6,27 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
   authResponse = null;
   _this = this;
   this.ini = function() {
-    FB.init({
-      appId: this.facebookAppId,
-      cookie: true,
-      xfbml: true,
-      version: 'v2.3'
-    });
-    return FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        isConnected = true;
-        return authResponse = response.authResponse;
+    window.fbAsyncInit = function() {
+      return FB.init({
+        appId: _this.facebookAppId,
+        cookie: true,
+        xfbml: true,
+        version: 'v2.5'
+      });
+    };
+    return (function(d, s, id) {
+      var fjs, js;
+      js = void 0;
+      fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
       }
-    });
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+      return;
+    })(document, 'script', 'facebook-jssdk');
   };
   this.sharePublication = function(businessId, publicationId) {
     var obj, url;
@@ -69,12 +78,12 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
       }
     });
   };
-  this.linkToAccount = function(accessToken, callbackSuccess, callbackError) {
+  this.linkToAccount = function(callbackSuccess, callbackError) {
     var linkFct;
-    linkFct = function(accessTokenToLink) {
+    linkFct = function(accessTokenToLink, facebookId) {
       return $http({
         'method': 'GET',
-        'url': '/rest/facebook/link/' + accessTokenToLink + '/null',
+        'url': '/rest/login/facebook/' + accessTokenToLink + '/' + facebookId,
         'headers': 'Content-Type:application/json;charset=utf-8'
       }).success(function(data) {
         if ((data != null) !== '') {
@@ -89,36 +98,30 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
         }
       });
     };
-    if (accessToken != null) {
-      authResponse = {
-        accessToken: accessToken
-      };
-      isConnected = true;
-      return linkFct(authResponse.accessToken);
+    if (isConnected) {
+      return linkFct(authResponse.accessToken, authResponse.userID);
     } else {
-      if (isConnected) {
-        return linkFct(authResponse.accessToken);
-      } else {
-        return FB.login(function(response) {
-          if (response.status === 'connected') {
-            authResponse = response.authResponse;
-            isConnected = true;
-            return linkFct(authResponse.accessToken);
-          } else {
-            if (callbackError != null) {
-              return callbackError();
-            }
+      return FB.login(function(response) {
+        if (response.status === 'connected') {
+          authResponse = response.authResponse;
+          isConnected = true;
+          return linkFct(authResponse.accessToken, authResponse.userID);
+        } else {
+          if (callbackError != null) {
+            return callbackError();
           }
-        }, {
-          scope: this.facebookAuthorization
-        });
-      }
+        }
+      }, {
+        scope: this.facebookAuthorization
+      });
     }
   };
   this.login = function(successCallback, callbackError) {
     if (isConnected) {
       return this.loginToServer(successCallback, callbackError);
     } else {
+      console.log('LOOOGIN');
+      console.log(FB);
       return FB.login(function(response) {
         if (response.status === 'connected') {
           authResponse = response.authResponse;

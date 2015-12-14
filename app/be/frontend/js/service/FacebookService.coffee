@@ -9,19 +9,25 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
     # initialization
     #
     @ini = ->
+        window.fbAsyncInit = ->
+            FB.init(
+                appId: _this.facebookAppId
+                cookie: true
+                xfbml: true
+                version: 'v2.5'
+            )
 
-        #initialize facebook api
-        FB.init
-            appId: @facebookAppId
-            cookie: true
-            xfbml: true
-            version: 'v2.3'
-
-        #recover the status
-        FB.getLoginStatus (response) ->
-            if response.status == 'connected'
-                isConnected = true
-                authResponse = response.authResponse
+        ((d, s, id) ->
+            js = undefined
+            fjs = d.getElementsByTagName(s)[0]
+            if d.getElementById(id)
+                return
+            js = d.createElement(s)
+            js.id = id
+            js.src = 'https://connect.facebook.net/en_US/sdk.js'
+            fjs.parentNode.insertBefore js, fjs
+            return
+        ) document, 'script', 'facebook-jssdk'
 
     #share a publication
     #this function doesn't need a facebook loggin
@@ -38,7 +44,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
         user_id = authResponse.userID
 
         console.log "response"
-        console.log access_token+'/'+user_id
+        console.log access_token + '/' + user_id
 
         $http(
             'method': 'GET'
@@ -67,11 +73,11 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
             if callbackError?
                 callbackError data, status
 
-    @linkToAccount = (accessToken, callbackSuccess, callbackError) ->
-        linkFct = (accessTokenToLink) ->
+    @linkToAccount = (callbackSuccess, callbackError) ->
+        linkFct = (accessTokenToLink, facebookId) ->
             $http(
                 'method': 'GET'
-                'url': '/rest/facebook/link/' + accessTokenToLink + '/null'
+                'url': '/rest/login/facebook/' + accessTokenToLink + '/' + facebookId
                 'headers': 'Content-Type:application/json;charset=utf-8')
             .success (data) ->
                 if data? != ''
@@ -82,31 +88,23 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
                 if callbackError?
                     callbackError data, status
 
-        if accessToken?
-            authResponse =
-                accessToken:accessToken
-            isConnected = true
-
-            #connection
-            linkFct authResponse.accessToken
+        #is facebook is connected, call the server with authResponse
+        if isConnected
+            linkFct authResponse.accessToken, authResponse.userID
         else
-            #is facebook is connected, call the server with authResponse
-            if isConnected
-                linkFct authResponse.accessToken
-            else
-                # else, log to facebook
-                FB.login (response) ->
-                    if response.status == 'connected'
+            # else, log to facebook
+            FB.login (response) ->
+                if response.status == 'connected'
 
-                        #... and log to server
-                        authResponse = response.authResponse
-                        isConnected = true
-                        #... and log
-                        linkFct authResponse.accessToken
-                    else
-                        if callbackError?
-                            callbackError()
-                , {scope: @facebookAuthorization}
+                    #... and log to server
+                    authResponse = response.authResponse
+                    isConnected = true
+                    #... and log
+                    linkFct authResponse.accessToken, authResponse.userID
+                else
+                    if callbackError?
+                        callbackError()
+            , {scope: @facebookAuthorization}
 
 
     #
@@ -120,8 +118,9 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
             @loginToServer successCallback, callbackError
         else
             # else, log to facebook
+            console.log 'LOOOGIN'
+            console.log FB
             FB.login (response) ->
-
                 if response.status == 'connected'
 
                     #... and log to server
