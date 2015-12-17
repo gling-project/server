@@ -57,7 +57,10 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
     $scope.displayCoockieAdvertisment = document.cookie.indexOf("cookieAccepted=true")==-1;
 
     $scope.acceptCookie = function () {
-        document.cookie="cookieAccepted=true";
+        var date = new Date();
+        date.setTime(date.getTime()+(365*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+        document.cookie="cookieAccepted=true"+expires;
         $scope.displayCoockieAdvertisment=false;
     };
 

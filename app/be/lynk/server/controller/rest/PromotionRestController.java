@@ -13,6 +13,7 @@ import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.Promotion;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.NotificationServiceImpl;
+import be.lynk.server.util.ApplicationNotificationTypeEnum;
 import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.EmailMessageEnum;
@@ -58,10 +59,10 @@ public class PromotionRestController extends AbstractRestController {
         Account account = securityController.getCurrentUser();
         Business business = account.getBusiness();
 
-        return create(dto,business);
+        return create(dto, business);
     }
 
-    public Result create(PromotionDTO dto,Business business){
+    public Result create(PromotionDTO dto, Business business) {
 
         Promotion promotion = dozerService.map(dto, Promotion.class);
 
@@ -117,9 +118,9 @@ public class PromotionRestController extends AbstractRestController {
         publicationDTO.setBusinessId(promotion.getBusiness().getId());
 
         //send a notification
-//        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, promotion.getBusiness().getName());
-//        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
-//        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(promotion.getBusiness()));
+        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, promotion.getBusiness().getName());
+        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
+        notificationService.createNotification(ApplicationNotificationTypeEnum.NEW_PUBLICATION,business.getId()+"",promotion.getStartDate(), title, content);
 
 
         return ok(publicationDTO);
@@ -149,7 +150,7 @@ public class PromotionRestController extends AbstractRestController {
 
         String oldName = promotionToEdit.getTitle();
 
-        if(promotion.getInterest()!=null) {
+        if (promotion.getInterest() != null) {
             promotionToEdit.setInterest(customerInterestService.findByName(promotion.getInterest().getName()));
         }
         promotionToEdit.setTitle(promotion.getTitle());
@@ -214,7 +215,7 @@ public class PromotionRestController extends AbstractRestController {
         }
 
         //send email if user is superadmin
-        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) && dto.getEditionReason()!=null && dto.getEditionReason().length()>0) {
+        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) && dto.getEditionReason() != null && dto.getEditionReason().length() > 0) {
 
             Lang lang = business.getAccount().getLang();
             EmailMessage.Recipient target = new EmailMessage.Recipient(business.getAccount());

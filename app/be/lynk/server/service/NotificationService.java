@@ -2,8 +2,10 @@ package be.lynk.server.service;
 
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.impl.NotificationServiceImpl;
+import be.lynk.server.util.ApplicationNotificationTypeEnum;
 import be.lynk.server.util.message.NotificationMessageEnum;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -11,5 +13,7 @@ import java.util.List;
  */
 public interface NotificationService {
 
-    void sendNotification(NotificationServiceImpl.NotificationMessage title, NotificationServiceImpl.NotificationMessage content, List<Account> accounts) ;
+    void createNotification(ApplicationNotificationTypeEnum type, String targetData,LocalDateTime localDateTime, NotificationServiceImpl.NotificationMessage title, NotificationServiceImpl.NotificationMessage content);
+
+    void sendNotification();
 }

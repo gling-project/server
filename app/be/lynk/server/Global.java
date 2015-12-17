@@ -1,15 +1,13 @@
 package be.lynk.server;
 
+import akka.actor.Cancellable;
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.dto.technical.ExceptionDTO;
-import be.lynk.server.model.entities.Account;
-import be.lynk.server.module.mongo.MongoDBOperator;
+import be.lynk.server.service.NotificationService;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.service.impl.TranslationServiceImpl;
 import be.lynk.server.util.exception.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -30,9 +28,7 @@ import play.mvc.SimpleResult;
 import scala.concurrent.duration.Duration;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,6 +37,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class Global extends GlobalSettings {
 
+    @Autowired
+    private NotificationService notificationService;
 
     //services
     private TranslationService translationService = new TranslationServiceImpl();
@@ -59,11 +57,6 @@ public class Global extends GlobalSettings {
         ctx = new ClassPathXmlApplicationContext("components.xml");//new AnnotationConfigApplicationContext(AppConfig.class, DataConfig.class);//
         play.Logger.info("Spring Startup @" + new Date(ctx.getStartupDate()));
 
-//        Akka.system().scheduler().schedule(
-//                Duration.create(0, TimeUnit.MILLISECONDS),
-//                Duration.create(30, TimeUnit.MINUTES),
-//                (Runnable)null,
-//                this.ctx);
 
     }
 
@@ -122,8 +115,6 @@ public class Global extends GlobalSettings {
     }
 
 
-
-
     @Override
     public Action onRequest(Http.Request request, Method actionMethod) {
 
@@ -156,7 +147,7 @@ public class Global extends GlobalSettings {
 
         //AnalyticsUtil.end(analytics);
         if (action == null) {
-            action= super.onRequest(request, actionMethod);
+            action = super.onRequest(request, actionMethod);
         }
 
         return action;
@@ -167,6 +158,6 @@ public class Global extends GlobalSettings {
         // heroku passes header on
         return request.getHeader(SSL_HEADER) != null
                 && request.getHeader(SSL_HEADER)
-                          .contains("https");
+                .contains("https");
     }
 }

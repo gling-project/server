@@ -12,6 +12,7 @@ import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.BusinessNotification;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.NotificationServiceImpl;
+import be.lynk.server.util.ApplicationNotificationTypeEnum;
 import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.message.EmailMessageEnum;
@@ -114,10 +115,10 @@ public class BusinessNotificationRestController extends AbstractRestController {
         publicationDTO.setBusinessIllustration(dozerService.map(businessNotification.getBusiness().getIllustration(), StoredFileDTO.class));
         publicationDTO.setBusinessId(businessNotification.getBusiness().getId());
 
-//        //send a notification
-//        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_BUSINESS_NOTIFICATION, businessNotification.getBusiness().getName());
-//        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
-//        notificationService.sendNotification(title, content, followLinkService.findAccountByBusiness(businessNotification.getBusiness()));
+        //send a notification
+        NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, businessNotification.getBusiness().getName());
+        NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
+        notificationService.createNotification(ApplicationNotificationTypeEnum.NEW_PUBLICATION,business.getId()+"",businessNotification.getStartDate(), title, content);
 
 
         return ok(publicationDTO);

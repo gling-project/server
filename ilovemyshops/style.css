@@ -1,0 +1,52 @@
+@font-face {
+    font-family: myFont;
+    src: url('fonts/Brandon_bld.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: myFont;
+    src: url('fonts/brandon_re.ttf');
+}
+
+
+body {
+    font-family: "myFont";
+    font-size: 20px;
+    color: rgb(84, 84, 84);
+    margin: auto;
+    max-width: 1200px;
+}
+
+.img_big {
+    max-width: 100%;
+    opacity: 0.7;
+}
+
+.text_spacer {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.text_spacer_col {
+    vertical-align: top;
+    display: inline-block;
+    width: 49%;
+}
+
+.text_spacer_col_container{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.text_red {
+    color: #cc0033;
+}
+
+.text_green {
+    color: #00B49B;
+}
+
+.text_blue {
+    color: #2c265c;
+}

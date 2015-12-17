@@ -2,6 +2,7 @@ package be.lynk.server.dto.externalDTO;
 
 import be.lynk.server.dto.technical.DTO;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
