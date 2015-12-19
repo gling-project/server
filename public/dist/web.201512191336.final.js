@@ -3873,9 +3873,13 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
   $scope.loadBusiness();
-  return publicationService.loadByIds(constantService.eventPublicationIds, function(data) {
+  console.log(constantService.eventPublicationIds);
+  publicationService.loadByIds(constantService.eventPublicationIds, function(data) {
+    console.log('------------------------------------------');
+    console.log(data);
     return $scope.eventPublications = data;
   });
+  return;
 }]);
 myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
   return {

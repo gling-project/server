@@ -3425,6 +3425,7 @@ html[xmlns] .flexslider .slides {
   width: 150px;
 }
 .welcome-page .event-publications .event-publication img {
+  cursor: pointer;
   height: 150px;
 }
 .welcome-page .event-publications .link {

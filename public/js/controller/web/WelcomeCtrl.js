@@ -87,7 +87,11 @@ myApp.controller('WelcomeCtrl', function($rootScope, $scope, publicationService,
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
   $scope.loadBusiness();
-  return publicationService.loadByIds(constantService.eventPublicationIds, function(data) {
+  console.log(constantService.eventPublicationIds);
+  publicationService.loadByIds(constantService.eventPublicationIds, function(data) {
+    console.log('------------------------------------------');
+    console.log(data);
     return $scope.eventPublications = data;
   });
+  return;
 });

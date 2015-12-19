@@ -41,7 +41,7 @@ public class PublicationRestController extends AbstractRestController {
 
         List<Long> ids = new ArrayList<>();
 
-        for (String s : idsString.split("\\|")) {
+        for (String s : idsString.split(",")) {
             ids.add(Long.parseLong(s));
         }
 

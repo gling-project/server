@@ -87,5 +87,10 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
 
     $scope.loadBusiness()
 
+    console.log constantService.eventPublicationIds
     publicationService.loadByIds constantService.eventPublicationIds, (data)->
+        console.log '------------------------------------------'
+        console.log data
         $scope.eventPublications = data
+
+    return
