@@ -14,6 +14,13 @@
             br
             br
             span(ng-bind-html="'--.welcome.event.christmas.content' | translateText | text")
+            .event-publications
+                .event-title {{'--.welcome.event.christmas.publication.content' | translateText}}
+                .event-publication(ng-repeat="p in eventPublications")
+                    img(ng-src="{{p.pictures[0] | image}}",ng-click="goToPublication(p)")
+                    .title {{p.title}}
+                    div By
+                        span.link(ng-click="goTo('/business/'+p.businessId)") {{p.businessName}}
 
         //publication
         .block-title.block-title-left

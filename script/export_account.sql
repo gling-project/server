@@ -1,0 +1,1 @@
+select b.name, a.email,b.email,ad.street,ad.zip,ad.city, b.facebooklink from business b, account a, address ad where b.account_id = a.id and b.address_id = ad.id order by b.id;

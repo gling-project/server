@@ -53,7 +53,7 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
     public void createNotification(ApplicationNotificationTypeEnum type, String targetData, LocalDateTime localDateTime, NotificationMessage title, NotificationMessage content) {
 
 
-        if (appStatus.equals("TEST")) {
+        if (appStatus.equals("PROD")) {
 
             F.Promise.promise(() -> {
 

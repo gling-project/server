@@ -29,6 +29,12 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
         position:
             x: 50.827821
             y: 4.372452
+    ,
+        name:'Bailly & Châtelain'
+        src: "/assets/images/map/bailly.png"
+        position:
+            x: 50.824614
+            y: 4.358858
     ]
 
     #open map
@@ -67,6 +73,10 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
         $scope.publicationListCtrl.loading = false
         $scope.publicationListCtrl.data = data
 
+    #go to publication
+    $scope.goToPublication = (publication) ->
+        $scope.goTo '/business/'+publication.businessId+'/publication/'+publication.id
+
     #initialization
     $timeout ->
         FB.XFBML.parse();
@@ -76,3 +86,6 @@ myApp.controller 'WelcomeCtrl', ($rootScope, $scope, publicationService, $locati
     $rootScope.$broadcast 'PROGRESS_BAR_STOP'
 
     $scope.loadBusiness()
+
+    publicationService.loadByIds constantService.eventPublicationIds, (data)->
+        $scope.eventPublications = data

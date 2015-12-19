@@ -3815,6 +3815,13 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
         x: 50.827821,
         y: 4.372452
       }
+    }, {
+      name: 'Bailly & Châtelain',
+      src: "/assets/images/map/bailly.png",
+      position: {
+        x: 50.824614,
+        y: 4.358858
+      }
     }
   ];
   $scope.openMap = function(map) {
@@ -3857,12 +3864,18 @@ myApp.controller('WelcomeCtrl', ['$rootScope', '$scope', 'publicationService', '
     $scope.publicationListCtrl.loading = false;
     return $scope.publicationListCtrl.data = data;
   });
+  $scope.goToPublication = function(publication) {
+    return $scope.goTo('/business/' + publication.businessId + '/publication/' + publication.id);
+  };
   $timeout(function() {
     return FB.XFBML.parse();
   }, 1);
   $(window).scrollTop(0);
   $rootScope.$broadcast('PROGRESS_BAR_STOP');
-  return $scope.loadBusiness();
+  $scope.loadBusiness();
+  return publicationService.loadByIds(constantService.eventPublicationIds, function(data) {
+    return $scope.eventPublications = data;
+  });
 }]);
 myApp.directive('publicationListCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, $location, modalService) {
   return {

@@ -3418,6 +3418,18 @@ html[xmlns] .flexslider .slides {
   margin: 89px auto 50px;
   position: relative;
 }
+.welcome-page .event-publications .event-publication {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px;
+  width: 150px;
+}
+.welcome-page .event-publications .event-publication img {
+  height: 150px;
+}
+.welcome-page .event-publications .link {
+  margin-left: 3px;
+}
 .welcome-page .welcome-header {
   border: 1px solid #cccccc;
   height: 320px;
@@ -3543,6 +3555,7 @@ html[xmlns] .flexslider .slides {
   margin-top: 10px;
 }
 .welcome-page .event-block img {
+  overflow: hidden;
   width: 150px;
   border-radius: 20px;
   border: 1px solid #cccccc;

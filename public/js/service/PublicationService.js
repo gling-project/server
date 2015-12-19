@@ -22,8 +22,6 @@ myApp.service('publicationService', function($http, $flash, geolocationService) 
       'headers': 'Content-Type:application/json;charset=utf-8',
       'data': geolocationService.getPositionWithoutNull()
     }).success(function(data, status) {
-      console.log('SUCCESS');
-      console.log(data);
       if (callbackSuccess != null) {
         return callbackSuccess(data.list);
       }

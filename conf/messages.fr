@@ -694,3 +694,4 @@ day_abrv_sunday=Di
 --.generic.validation.pinterest=L''adresse indiquée n''est pas une adresse Pinterest valide! (elle doit commencer par https://pinterest.com/)
 --.generic.googlePlus=Google+
 --.generic.validation.googlePlus=L''adresse indiquée n''est pas une adresse Google+ valide! (elle doit commencer par https://plus.google.com/)
+--.welcome.event.christmas.publication.content=Découvrez les offres spéciales Noël de vos commerçants!

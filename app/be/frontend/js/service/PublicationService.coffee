@@ -20,8 +20,6 @@ myApp.service 'publicationService', ($http, $flash,geolocationService) ->
             'headers': 'Content-Type:application/json;charset=utf-8'
             'data': geolocationService.getPositionWithoutNull()
         .success (data, status) ->
-            console.log 'SUCCESS'
-            console.log data
             if callbackSuccess?
                 callbackSuccess data.list
         .error (data, status) ->
