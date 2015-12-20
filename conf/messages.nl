@@ -684,8 +684,8 @@ day_abrv_sunday=Zon
 --.welcome.event.chrismas.title=De Kerstman heeft ook zijn favoriete lokale winkels !
 --.welcome.event.chrismas.content=Winkels van spelen en speelgoed, handelaar van gekruid koekje en zelfs groente voor zijn rendieren… De Kerstman houd ook van locale winkels!Br/> Geeft u plezier in uw nabijheid winkels en blijft op de hoogte van het nieuws dankzij Gling.
 
---.map.legend.close=Actuellement fermé
---.map.legend.open=Actuellement ouvert
---.map.legend.followed=Vous suivez ce commerce
---.coockie.advertisment= Le terme « cookies » est utilisé pour désigner l’ensemble des fichiers de texte qui sont susceptibles de s’installer sur votre ordinateur lors de vos visites sur le site Gling. Ces fichiers comportent des informations telles que les préférences linguistiques, la géolocalisation, vos intérêts, de manière à ce que ces derniers ne doivent plus être renseignés lors de vos visites ultérieures. Ainsi, les cookies facilitent votre visite et votre navigabilité sur le site Gling et nous permettent par la même occasion de sauvegarder vos préférences et de suivre l’évolution des modes d’utilisation du site. En poursuivant votre navigation sur le site Gling vous reconnaissez avoir lu nos conditions d'utilisations et notre politique relative aux cookies.
---.generic.agree=J'accepte
+--.map.legend.close= Momenteel gesloten
+--.map.legend.open=Momenteel open
+--.map.legend.followed=U volgt deze winkel
+--.coockie.advertisment= De term "cookie " wordt gebruikt om te verwijzen naar alle tekstbestanden die kunnen worden geïnstalleerd op uw computer wanneer u de site Gling bezoeken. Deze bestanden bevatten informatie zoals taal voorkeuren, geolocatie, uw belangen, zodat deze niet tijdens latere bezoeken moeten worden opnieuw ingevuld. Zo cookies vergemakkelijken uw bezoek en uw luchtwaardigheid op Gling website en laat ons hetzelfde moment om uw voorkeur en de monitor gebruik van de site patronen op te slaan. Voortzetting van uw website navigatie Gling verzoeken wij u onze gebruiksvoorwaarden en onze cookies beleid ten opzichte van lezen.
+--.generic.agree=Ik aanvaard
