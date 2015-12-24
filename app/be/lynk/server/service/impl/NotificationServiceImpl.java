@@ -53,55 +53,55 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
     public void createNotification(ApplicationNotificationTypeEnum type, String targetData, LocalDateTime localDateTime, NotificationMessage title, NotificationMessage content) {
 
 
-//        if (appStatus.equals("PROD")) {
+        if (appStatus.equals("PROD")) {
 
-                //sort account by language
-                for (Lang lang : Lang.availables()) {
+            //sort account by language
+            for (Lang lang : Lang.availables()) {
 
-                    ApplicationNotification applicationNotification = new ApplicationNotification();
-                    applicationNotification.setWasSent(false);
-                    applicationNotification.setType(type);
-                    applicationNotification.setTargetData(targetData);
-                    applicationNotification.setLang(lang);
-                    applicationNotification.setDate(localDateTime);
+                ApplicationNotification applicationNotification = new ApplicationNotification();
+                applicationNotification.setWasSent(false);
+                applicationNotification.setType(type);
+                applicationNotification.setTargetData(targetData);
+                applicationNotification.setLang(lang);
+                applicationNotification.setDate(localDateTime);
 
-                    //load translation for key
-                    String titleS, contentS;
-                    if (title.notificationMessage != null) {
-                        titleS = translationService.getTranslation(title.notificationMessage, lang, title.objects);
-                    } else {
-                        titleS = title.message;
-                    }
-                    if (content.notificationMessage != null) {
-                        contentS = translationService.getTranslation(content.notificationMessage, lang, content.objects);
-                    } else {
-                        contentS = content.message;
-                    }
-                    applicationNotification.setAlert(contentS);
-                    applicationNotification.setTitle(titleS);
-
-                    if (localDateTime.compareTo(LocalDateTime.now()) < 0) {
-                        //send immediately
-                        sendNotification(applicationNotification);
-                    } else {
-                        //send later
-                        super.saveOrUpdate(applicationNotification);
-                    }
+                //load translation for key
+                String titleS, contentS;
+                if (title.notificationMessage != null) {
+                    titleS = translationService.getTranslation(title.notificationMessage, lang, title.objects);
+                } else {
+                    titleS = title.message;
                 }
+                if (content.notificationMessage != null) {
+                    contentS = translationService.getTranslation(content.notificationMessage, lang, content.objects);
+                } else {
+                    contentS = content.message;
+                }
+                applicationNotification.setAlert(contentS);
+                applicationNotification.setTitle(titleS);
 
-        if (schedule == null) {
-            //active akka
-            schedule = Akka.system().scheduler().schedule(
-                    Duration.create(0, TimeUnit.MILLISECONDS),
-                    Duration.create(1, TimeUnit.HOURS),
-                    () -> {
-                        Logger.info("je suis un CRON : " + LocalDateTime.now().toString());
-                        sendNotification();
-                    },
-                    Akka.system().dispatchers().defaultGlobalDispatcher()
-            );
+                if (localDateTime.compareTo(LocalDateTime.now()) < 0) {
+                    //send immediately
+                    sendNotification(applicationNotification);
+                } else {
+                    //send later
+                    super.saveOrUpdate(applicationNotification);
+                }
+            }
+
+            if (schedule == null) {
+                //active akka
+                schedule = Akka.system().scheduler().schedule(
+                        Duration.create(0, TimeUnit.MILLISECONDS),
+                        Duration.create(1, TimeUnit.HOURS),
+                        () -> {
+                            Logger.info("je suis un CRON : " + LocalDateTime.now().toString());
+                            sendNotification();
+                        },
+                        Akka.system().dispatchers().defaultGlobalDispatcher()
+                );
+            }
         }
-//        }
 
 
     }
@@ -119,7 +119,7 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
             List<ApplicationNotification> ns = JPA.em().createQuery(request, ApplicationNotification.class)
                     .setParameter("date1", now.minusMinutes(60))
                     .setParameter("date2", now)
-                    .setParameter("wasSent",false)
+                    .setParameter("wasSent", false)
                     .getResultList();
 
 
@@ -162,14 +162,14 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
             parseNotificationDTO.getData().setTitle(n.getTitle());
         }
 
-//        HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.POST, PARSE_PUSH_PATH);
-//        httpRequest.setDto(parseNotificationDTO);
-//        httpRequest.setHeader(headers);
-//        try {
-//            httpRequest.sendRequest();
-//        } catch (HttpRequestException e) {
-//            e.printStackTrace();
-//        }
+        HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.POST, PARSE_PUSH_PATH);
+        httpRequest.setDto(parseNotificationDTO);
+        httpRequest.setHeader(headers);
+        try {
+            httpRequest.sendRequest();
+        } catch (HttpRequestException e) {
+            e.printStackTrace();
+        }
     }
 
 
