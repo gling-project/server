@@ -339,7 +339,11 @@ public abstract class AbstractController extends Controller {
         myselfDTO.setAuthenticationKey(account.getAuthenticationKey());
         myselfDTO.setClaimedBusinessId(claimBusinessService.findBusinessIdByAccount(account));
         if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
-            myselfDTO.setBusinessId(businessService.findByAccount(account).getId());
+            Business business = businessService.findByAccount(account);
+            myselfDTO.setBusinessId(business.getId());
+            if(business.getSocialNetwork()!=null) {
+                myselfDTO.setFacebookPageToPublish(business.getSocialNetwork().getFacebookLink());
+            }
         }
 
         return myselfDTO;

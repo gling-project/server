@@ -1,4 +1,4 @@
-myApp.service('facebookService', function($http, accountService, $locale, languageService, constantService, $flash) {
+myApp.service('facebookService', function($http, accountService, $locale, languageService, constantService, $flash, $filter) {
   var authResponse, isConnected, _this;
   this.facebookAppId;
   this.facebookAuthorization = 'public_profile,email';
@@ -7,11 +7,19 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
   _this = this;
   this.ini = function() {
     window.fbAsyncInit = function() {
-      return FB.init({
+      FB.init({
         appId: _this.facebookAppId,
         cookie: true,
         xfbml: true,
         version: 'v2.5'
+      });
+      console.log('FB1');
+      return FB.getLoginStatus(function(response) {
+        console.log('FB2');
+        if (response.status === 'connected') {
+          console.log('FB3');
+          return isConnected = true;
+        }
       });
     };
     return (function(d, s, id) {
@@ -136,6 +144,9 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
         scope: this.facebookAuthorization
       });
     }
+  };
+  this.publish = function(publication, successCallback, callbackError) {
+    return this.sharePublication(publication.businessId, publication.id);
   };
   this.isConnected = function() {
     return isConnected;

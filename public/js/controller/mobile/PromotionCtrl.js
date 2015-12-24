@@ -18,7 +18,7 @@ myApp.controller('PromotionCtrl', function($rootScope, $scope, accountService, $
         return promotionService.add($scope.publicationFormParam.dto, (function(data) {
           modalService.closeLoadingModal();
           $scope.navigateTo('/business/' + $scope.business.id);
-          return modalService.successAndShare($scope.publicationFormParam.business.id, data.id);
+          return modalService.successAndShare(data);
         }), function() {
           return modalService.closeLoadingModal();
         });

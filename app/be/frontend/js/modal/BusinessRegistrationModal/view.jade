@@ -51,6 +51,7 @@
 
 //footer
 .modal-footer(ng-show='badgeSelected==1')
+    a.btn.gling-button-dark(href='/assets/document/registration_help.pdf', target='_blank') {{'--.business_registration.downloadRegistrationHelp' | translateText}}
     button#business-registration-btn-next.btn.gling-button-dark(ng-show='badgeSelected==1', ng-disabled='loading', type='button', ng-click='createAccount()')
         | {{'--.businessRegistration.createAccount' | translateText}}
     img(src='/assets/images/modal-loading.gif', ng-show='loading')

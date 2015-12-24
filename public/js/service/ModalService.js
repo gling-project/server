@@ -351,13 +351,10 @@ myApp.service("modalService", function ($modal) {
 
 
 
-    this.successAndShare = function (businessId, publicationId) {
+    this.successAndShare = function (publication) {
         var resolve = {
-            businessId: function () {
-                return businessId;
-            },
-            publicationId: function () {
-                return publicationId;
+            publication: function () {
+                return publication;
             }
         };
         $modal.open({

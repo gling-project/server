@@ -33,7 +33,7 @@ myApp.controller 'PromotionCtrl', ($rootScope, $scope, accountService, $flash, t
                     modalService.closeLoadingModal()
                     #go to business
                     $scope.navigateTo '/business/' + $scope.business.id
-                    modalService.successAndShare $scope.publicationFormParam.business.id, data.id
+                    modalService.successAndShare data
                 ), ->
                     modalService.closeLoadingModal()
 

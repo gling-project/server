@@ -1,6 +1,6 @@
-myApp.service 'facebookService', ($http, accountService, $locale, languageService, constantService, $flash) ->
+myApp.service 'facebookService', ($http, accountService, $locale, languageService, constantService, $flash,$filter) ->
     @facebookAppId
-    @facebookAuthorization = 'public_profile,email'
+    @facebookAuthorization = 'public_profile,email'#,manage_pages,publish_pages'
     isConnected = false
     authResponse = null
     _this = this
@@ -16,6 +16,13 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
                 xfbml: true
                 version: 'v2.5'
             )
+
+            console.log 'FB1'
+            FB.getLoginStatus (response) ->
+                console.log 'FB2'
+                if response.status == 'connected'
+                    console.log 'FB3'
+                    isConnected=true
 
         ((d, s, id) ->
             js = undefined
@@ -132,6 +139,43 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
                     if callbackError?
                         callbackError()
             , {scope: @facebookAuthorization}
+
+    @publish = (publication,successCallback, callbackError) ->
+
+        @sharePublication(publication.businessId,publication.id)
+
+#        data =
+#            message: publication.title
+#
+#        if publication.pictures.length > 0
+#            data.picture =  $filter('image')(publication.pictures[0])
+#
+#        console.log data
+#
+#        myself = accountService.model.myself
+#
+#        if myself.type == 'BUSINESS' && myself.facebookPageToPublish? && isConnected
+#
+#            # catch id of the page
+#            FB.api '/'+myself.facebookPageToPublish, 'get',{},(response) ->
+#                pageId = response.id
+#
+#                # first : looking for page token
+#                FB.api '/me/accounts', 'get', {}, (response) ->
+#                    for a in response.data
+#                        if a.id == pageId
+#                            token = a.access_token
+#
+#                            FB.api '/me/feed?access_token='+token, 'get', 'post', data, (response) ->
+#                                console.log response
+
+
+#        FB.api '/1635544633340811/feed', 'post', { message: 'je suis un message' }, (response) ->
+#            if !response or response.error
+#                alert 'Error occured'
+#                console.log response
+#            else
+#                console.log response
 
     #getter
     @isConnected = ->

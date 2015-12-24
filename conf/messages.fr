@@ -682,8 +682,8 @@ day_abrv_sunday=Di
 --.profile.businessCreation.ask=Vous êtes un commerçant ?
 --.profile.businessCreation.action=Créez votre page commerce
 
---.welcome.event.christmas.title=Père Noël a aussi ses commerces de proximité favoris!
---.welcome.event.christmas.content=Magasins de jeux et jouets, barbier du coin et même marchand de carottes pour ses rennes… Père Noël aime consommer local.<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling!
+--.welcome.event.christmas.title=Père Noël aime aussi ses commerces de proximité!
+--.welcome.event.christmas.content=Magasins de jeux et jouets, barbier du coin et même marchand de carottes pour ses rennes… Père Noël aime consommer local.<br/>Alors vous aussi, faites vous plaisir dans vos commerces de proximité et restez au courant de leurs actualités grâce à Gling!<br/>Plus d'infos sur la campagne #ilovemyshops? Bienvenue sur <a href="http://www.ilovemyshops.be">www.ilovemyshops.be</a> !
 
 --.map.legend.close=Actuellement fermé
 --.map.legend.open=Actuellement ouvert
@@ -695,3 +695,5 @@ day_abrv_sunday=Di
 --.generic.googlePlus=Google+
 --.generic.validation.googlePlus=L''adresse indiquée n''est pas une adresse Google+ valide! (elle doit commencer par https://plus.google.com/)
 --.welcome.event.christmas.publication.content=Découvrez les offres spéciales Noël de vos commerçants!
+--.business_registration.downloadRegistrationHelp=Téléchargez le guide d''utilisation
+--.welcome.more_gift=Plus d'idées cadeaux

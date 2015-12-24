@@ -1,5 +1,6 @@
 myApp.controller 'ProfileCtrl', ($scope, modalService, accountService, $rootScope, $window, businessService,facebookService,translationService,$flash) ->
 
+
     #params
     $scope.model = accountService.model
     $scope.accountParam =

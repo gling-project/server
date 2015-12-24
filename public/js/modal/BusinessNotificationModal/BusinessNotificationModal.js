@@ -56,7 +56,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
 
                     superAdminService.createBusinessNotification(business.id,$scope.businessNotificationParam.dto, function (data) {
                             $scope.success(data);
-                            modalService.successAndShare($scope.businessNotificationParam.business.id,data.id);
+                            modalService.successAndShare(data);
                         },
                         function () {
                             $scope.loading = false;
@@ -65,7 +65,7 @@ myApp.controller('BusinessNotificationModalCtrl', function ($scope, $flash, $mod
                 else{
                     businessNotificationService.add($scope.businessNotificationParam.dto, function (data) {
                             $scope.success(data);
-                            modalService.successAndShare($scope.businessNotificationParam.business.id,data.id);
+                            modalService.successAndShare(data);
                         },
                         function () {
                             $scope.loading = false;

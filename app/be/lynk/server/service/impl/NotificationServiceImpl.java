@@ -53,9 +53,7 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
     public void createNotification(ApplicationNotificationTypeEnum type, String targetData, LocalDateTime localDateTime, NotificationMessage title, NotificationMessage content) {
 
 
-        if (appStatus.equals("PROD")) {
-
-            F.Promise.promise(() -> {
+//        if (appStatus.equals("PROD")) {
 
                 //sort account by language
                 for (Lang lang : Lang.availables()) {
@@ -82,7 +80,7 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
                     applicationNotification.setAlert(contentS);
                     applicationNotification.setTitle(titleS);
 
-                    if (localDateTime.compareTo(LocalDateTime.now().plusMinutes(30)) < 0) {
+                    if (localDateTime.compareTo(LocalDateTime.now()) < 0) {
                         //send immediately
                         sendNotification(applicationNotification);
                     } else {
@@ -90,10 +88,6 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
                         super.saveOrUpdate(applicationNotification);
                     }
                 }
-
-                return null;
-            });
-        }
 
         if (schedule == null) {
             //active akka
@@ -107,6 +101,8 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
                     Akka.system().dispatchers().defaultGlobalDispatcher()
             );
         }
+//        }
+
 
     }
 
@@ -117,12 +113,12 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
 
             LocalDateTime now = LocalDateTime.now();
 
-            String request = "SELECT ap from ApplicationNotification ap where ap.date > :date1 and ap.date < :date2 and ap.wasSent = :wasSent";
+            String request = "SELECT ap from ApplicationNotification ap,  where ap.date > :date1 and ap.date < :date2 and ap.wasSent = :wasSent";
 
 
             List<ApplicationNotification> ns = JPA.em().createQuery(request, ApplicationNotification.class)
-                    .setParameter("date1", now.minusMinutes(30))
-                    .setParameter("date2", now.plusMinutes(30))
+                    .setParameter("date1", now.minusMinutes(60))
+                    .setParameter("date2", now)
                     .setParameter("wasSent",false)
                     .getResultList();
 
@@ -166,14 +162,14 @@ public class NotificationServiceImpl extends CrudServiceImpl<ApplicationNotifica
             parseNotificationDTO.getData().setTitle(n.getTitle());
         }
 
-        HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.POST, PARSE_PUSH_PATH);
-        httpRequest.setDto(parseNotificationDTO);
-        httpRequest.setHeader(headers);
-        try {
-            httpRequest.sendRequest();
-        } catch (HttpRequestException e) {
-            e.printStackTrace();
-        }
+//        HttpRequest httpRequest = new HttpRequest(HttpRequest.RequestMethod.POST, PARSE_PUSH_PATH);
+//        httpRequest.setDto(parseNotificationDTO);
+//        httpRequest.setHeader(headers);
+//        try {
+//            httpRequest.sendRequest();
+//        } catch (HttpRequestException e) {
+//            e.printStackTrace();
+//        }
     }
 
 

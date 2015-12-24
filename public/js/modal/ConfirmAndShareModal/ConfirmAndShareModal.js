@@ -1,7 +1,7 @@
-myApp.controller('ConfirmAndShareModalCtrl', function ($scope, facebookService, businessId, publicationId,$modalInstance) {
+myApp.controller('ConfirmAndShareModalCtrl', function ($scope, facebookService, publication,$modalInstance) {
 
     $scope.share = function () {
-        facebookService.sharePublication(businessId, publicationId);
+        facebookService.publish(publication);
         $scope.close();
     };
 

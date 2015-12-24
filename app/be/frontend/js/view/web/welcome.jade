@@ -14,6 +14,7 @@
             br
             br
             span(ng-bind-html="'--.welcome.event.christmas.content' | translateText | text")
+        .event-block
             .event-publications
                 .event-title {{'--.welcome.event.christmas.publication.content' | translateText}}
                 .event-publication(ng-repeat="p in eventPublications")
@@ -21,6 +22,7 @@
                     .title {{p.title}}
                     div By
                         span.link(ng-click="goTo('/business/'+p.businessId)") {{p.businessName}}
+            button.gling-button-dark(ng-click="goTo('/shopnews/shopping)") {{'--.welcome.more_gift' | translateText}}
 
         //publication
         .block-title.block-title-left

@@ -35,6 +35,6 @@ myApp.controller 'BusinessNotificationCtrl', ($rootScope, $scope, accountService
                     #navigate to business page
                     $scope.navigateTo '/business/' + $scope.business.id
                     #display success modal
-                    modalService.successAndShare $scope.businessNotificationFormParam.business.id, data.id
+                    modalService.successAndShare data
                 ), ->
                     modalService.closeLoadingModal()

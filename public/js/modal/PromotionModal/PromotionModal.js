@@ -63,7 +63,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
 
                         superAdminService.createPromotion(business.id,$scope.promotionParam.dto, function (data) {
                                 $scope.success(data);
-                                modalService.successAndShare($scope.promotionParam.business.id, data.id);
+                                modalService.successAndShare(data);
                             },
                             function () {
                                 $scope.loading = false;
@@ -72,7 +72,7 @@ myApp.controller('PromotionModalCtrl', function ($scope, $flash, $modalInstance,
                     else{
                         promotionService.add($scope.promotionParam.dto, function (data) {
                                 $scope.success(data);
-                                modalService.successAndShare($scope.promotionParam.business.id, data.id);
+                                modalService.successAndShare(data);
                             },
                             function () {
                                 $scope.loading = false;

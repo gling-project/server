@@ -17,7 +17,7 @@ myApp.controller('BusinessNotificationCtrl', function($rootScope, $scope, accoun
         return businessNotificationService.add($scope.businessNotificationFormParam.dto, (function(data) {
           modalService.closeLoadingModal();
           $scope.navigateTo('/business/' + $scope.business.id);
-          return modalService.successAndShare($scope.businessNotificationFormParam.business.id, data.id);
+          return modalService.successAndShare(data);
         }), function() {
           return modalService.closeLoadingModal();
         });

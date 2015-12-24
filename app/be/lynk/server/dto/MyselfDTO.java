@@ -27,7 +27,17 @@ public class MyselfDTO extends AccountDTO {
 
     private Long claimedBusinessId;
 
+    private String facebookPageToPublish;
+
     public MyselfDTO() {
+    }
+
+    public String getFacebookPageToPublish() {
+        return facebookPageToPublish;
+    }
+
+    public void setFacebookPageToPublish(String facebookPageToPublish) {
+        this.facebookPageToPublish = facebookPageToPublish;
     }
 
     public Long getClaimedBusinessId() {
