@@ -29,6 +29,7 @@ myApp.controller('AdminStatCtrl', function($scope, superAdminService) {
     return $scope.details.push({
       title: title,
       total: data.total,
+      accounts: data.list,
       nbSessionChartParam: {
         title: 'Nombre de session par utilisateur',
         data: data.nbSessions

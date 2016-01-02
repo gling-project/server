@@ -18,6 +18,7 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
     private long    nbFollow;
     private long    nbAddresses;
     private boolean sharePosition = false;
+    private String email;
 
     public UserHistoryDTO() {
     }
@@ -81,5 +82,13 @@ public class UserHistoryDTO extends DTO implements Comparable<UserHistoryDTO> {
 
     public boolean getSharePosition() {
         return sharePosition;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

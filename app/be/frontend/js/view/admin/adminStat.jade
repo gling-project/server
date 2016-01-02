@@ -23,6 +23,7 @@ div(ng-show="tab == 'users'")
     table
         tr(ng-repeat='detail in details')
             td {{detail.title}} ({{detail.total}})
+                div(ng-repeat="a in detail.accounts") {{a.email}}
             td(style='vertical-align: top')
                 donut-chart-ctrl(style='width: 300px;height: 300px;display: inline-block;', ng-info='detail.nbSessionChartParam')
             td
