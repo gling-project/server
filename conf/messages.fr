@@ -697,3 +697,6 @@ day_abrv_sunday=Di
 --.welcome.event.christmas.publication.content=Découvrez les offres spéciales Noël de vos commerçants!
 --.business_registration.downloadRegistrationHelp=Téléchargez le guide d''utilisation
 --.welcome.more_gift=Plus d'idées cadeaux
+--.welcome.event.soldes.title=Pensez aussi à vos commerces de proximité durant les soldes!
+--.welcome.event.soldes.content=Se rhabiller pour l'hiver qui arrive enfin, remplacer la déco du salon en jetant le sapin, craquer pour l'électro-ménager de vos rêves tout-en-un...<br/>Vos commerçants du bout de la rue regorgent de surprises à prix cassés, mais sans oublier la qualité!</br></br>Vous désirez continuer à participer à l'action #ilovemyshops? Bienvenue sur <a href="http://www.ilovemyshops.be">www.ilovemyshops.be</a> !
+--.welcome.event.soldes.publication.content=Découvrez les actions de vos commerçants pour les soldes!
