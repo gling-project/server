@@ -147,7 +147,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
 #        @sharePublication(publication.businessId,publication.id)
 
         data =
-            message: publication.title
+            message: publication.title+"\n\n"+publication.description
 
         if publication.pictures.length > 0
             data.pictureLink =  $filter('image')(publication.pictures[0])
