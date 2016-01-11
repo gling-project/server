@@ -174,6 +174,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
                 FB.api '/me/accounts', 'get', {}, (response) ->
                     console.log 'share 3'
                     for a in response.data
+                        console.log 'share 3.5:'+a.id+'/'+pageId
                         if a.id == pageId
                             console.log 'share 4:'+a.access_token
                             token = a.access_token
