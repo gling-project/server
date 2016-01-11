@@ -11,7 +11,7 @@ myApp.directive("dirEnter", function() {
     };
 });
 
-myApp.directive("dirFieldDate", ['directiveService', '$filter', 'generateId', function (directiveService, $filter, generateId) {
+myApp.directive("dirFieldDate", function (directiveService, $filter, generateId) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -107,9 +107,9 @@ myApp.directive("dirFieldDate", ['directiveService', '$filter', 'generateId', fu
             };
         }
     };
-}]);
+});
 
-myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateId', '$filter', function (directiveService, $filter, generateId, $filter) {
+myApp.directive("dirFieldDateSimple", function (directiveService, $filter, generateId, $filter) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -266,9 +266,9 @@ myApp.directive("dirFieldDateSimple", ['directiveService', '$filter', 'generateI
             };
         }
     };
-}]);
+});
 
-myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService', function (directiveService, $timeout, modalService) {
+myApp.directive("dirFieldSelect", function (directiveService, $timeout, modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -360,9 +360,9 @@ myApp.directive("dirFieldSelect", ['directiveService', '$timeout', 'modalService
             };
         }
     };
-}]);
+});
 
-myApp.directive("dirFieldText", ['directiveService', '$timeout', 'modalService', function (directiveService, $timeout, modalService) {
+myApp.directive("dirFieldText", function (directiveService, $timeout, modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -466,9 +466,9 @@ myApp.directive("dirFieldText", ['directiveService', '$timeout', 'modalService',
             };
         }
     };
-}]);
+});
 
-myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalService', '$timeout', function (directiveService, $timeout,modalService,$timeout) {
+myApp.directive("dirFieldTextArea", function (directiveService, $timeout,modalService,$timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -572,7 +572,7 @@ myApp.directive("dirFieldTextArea", ['directiveService', '$timeout', 'modalServi
             };
         }
     };
-}]);
+});
 
 myApp.directive("dirFocusMe", function() {
     return {
@@ -590,7 +590,7 @@ myApp.directive("dirFocusMe", function() {
     };
 });
 
-myApp.directive("numbersOnly", ['$filter', 'translationService', '$locale', function($filter, translationService, $locale) {
+myApp.directive("numbersOnly", function($filter, translationService, $locale) {
     return {
         restrict: 'A',
         require: "ngModel",
@@ -719,9 +719,9 @@ myApp.directive("numbersOnly", ['$filter', 'translationService', '$locale', func
             });
         }
     };
-}]);
+});
 
-myApp.directive("dirFieldCheck", ['directiveService', '$timeout', function (directiveService, $timeout) {
+myApp.directive("dirFieldCheck", function (directiveService, $timeout) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -790,9 +790,9 @@ myApp.directive("dirFieldCheck", ['directiveService', '$timeout', function (dire
             };
         }
     };
-}]);
+});
 
-myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$filter', 'generateId', '$window', function (directiveService, $upload, $flash, $filter, generateId, $window) {
+myApp.directive("dirFieldDocument", function (directiveService, $upload, $flash, $filter, generateId, $window) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -889,8 +889,8 @@ myApp.directive("dirFieldDocument", ['directiveService', '$upload', '$flash', '$
             };
         }
     };
-}]);
-myApp.directive("dirFieldImageMutiple", ['directiveService', '$upload', '$flash', '$filter', 'generateId', '$window', function (directiveService, $upload, $flash, $filter, generateId, $window) {
+});
+myApp.directive("dirFieldImageMutiple", function (directiveService, $upload, $flash, $filter, generateId, $window) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -1017,8 +1017,8 @@ myApp.directive("dirFieldImageMutiple", ['directiveService', '$upload', '$flash'
             };
         }
     };
-}]);
-myApp.directive("dirFieldImageMultipleResizable", ['$rootScope', 'directiveService', '$upload', '$flash', '$filter', 'generateId', 'imageService', 'modalService', 'constantService', function ($rootScope,directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
+});
+myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -1210,8 +1210,8 @@ myApp.directive("dirFieldImageMultipleResizable", ['$rootScope', 'directiveServi
             };
         }
     };
-}]);
-myApp.directive("compile", ['$compile', '$filter', function ($compile, $filter) {
+});
+myApp.directive("compile", function ($compile, $filter) {
     return function (scope, element, attrs) {
         scope.$watch(
             function (scope) {
@@ -1224,8 +1224,8 @@ myApp.directive("compile", ['$compile', '$filter', function ($compile, $filter) 
             }
         )
     };
-}]);
-myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationService', 'directiveService', '$timeout', 'accountService', '$location', 'modalService', function($flash, facebookService, translationService, directiveService, $timeout, accountService, $location, modalService) {
+});
+myApp.directive('loginFormCtrl', function($flash, facebookService, translationService, directiveService, $timeout, accountService, $location, modalService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -1378,8 +1378,8 @@ myApp.directive('loginFormCtrl', ['$flash', 'facebookService', 'translationServi
       };
     }
   };
-}]);
-myApp.directive('addressFormCtrl', ['$flash', 'directiveService', '$timeout', '$filter', 'translationService', 'modalService', function ($flash, directiveService, $timeout, $filter, translationService,modalService) {
+});
+myApp.directive('addressFormCtrl', function ($flash, directiveService, $timeout, $filter, translationService,modalService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -1530,8 +1530,8 @@ myApp.directive('addressFormCtrl', ['$flash', 'directiveService', '$timeout', '$
             }
         }
     }
-}]);
-myApp.directive('customerInterestFormCtrl', ['$flash', 'directiveService', 'customerInterestService', '$timeout', function ($flash, directiveService, customerInterestService, $timeout) {
+});
+myApp.directive('customerInterestFormCtrl', function ($flash, directiveService, customerInterestService, $timeout) {
         return {
             restrict: "E",
             scope: directiveService.autoScope({
@@ -1587,10 +1587,10 @@ myApp.directive('customerInterestFormCtrl', ['$flash', 'directiveService', 'cust
                 }
             }
         }
-    }]
+    }
 )
 ;
-myApp.directive('accountFormCtrl', ['$flash', 'directiveService', 'languageService', 'modalService', function ($flash, directiveService, languageService,modalService) {
+myApp.directive('accountFormCtrl', function ($flash, directiveService, languageService,modalService) {
 
     return {
         restrict: "E",
@@ -1769,9 +1769,9 @@ myApp.directive('accountFormCtrl', ['$flash', 'directiveService', 'languageServi
     }
 
 
-}])
+})
 ;
-myApp.directive('businessFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
+myApp.directive('businessFormCtrl', function ($flash, directiveService) {
 
     return {
         restrict: "E",
@@ -1900,8 +1900,8 @@ myApp.directive('businessFormCtrl', ['$flash', 'directiveService', function ($fl
     }
 
 
-}]);
-myApp.directive('businessCategoryFormCtrl', ['$flash', 'directiveService', 'businessCategoryService', '$timeout', function ($flash, directiveService, businessCategoryService, $timeout) {
+});
+myApp.directive('businessCategoryFormCtrl', function ($flash, directiveService, businessCategoryService, $timeout) {
 
     return {
         restrict: "E",
@@ -2043,9 +2043,9 @@ myApp.directive('businessCategoryFormCtrl', ['$flash', 'directiveService', 'busi
     }
 
 
-}])
+})
 ;
-myApp.directive('downloadFormCtrl', ['$flash', 'directiveService', '$timeout', function ($flash, directiveService, $timeout) {
+myApp.directive('downloadFormCtrl', function ($flash, directiveService, $timeout) {
 
     return {
         restrict: "E",
@@ -2105,8 +2105,8 @@ myApp.directive('downloadFormCtrl', ['$flash', 'directiveService', '$timeout', f
             }
         }
     }
-}]);
-myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 'businessService', 'accountService', function ($flash, directiveService, $timeout, businessService, accountService) {
+});
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout, businessService, accountService) {
 
     return {
         restrict: "E",
@@ -2234,7 +2234,7 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
                             field: scope.getInfo().dto,
                             startDate: startDate,
                             fieldName: 'endDate',
-                            maxDay: 14
+                            maxDay: 28
 
                         },
                         illustration: {
@@ -2416,9 +2416,9 @@ myApp.directive('promotionFormCtrl', ['$flash', 'directiveService', '$timeout', 
     }
 
 
-}])
+})
 ;
-myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', 'businessService', 'accountService', 'constantService', function ($flash, directiveService, businessService, accountService,constantService) {
+myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService, accountService,constantService) {
 
     return {
         restrict: "E",
@@ -2635,9 +2635,9 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
     }
 
 
-}])
+})
 ;
-myApp.directive('scheduleFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
+myApp.directive('scheduleFormCtrl', function ($flash, directiveService) {
 
     return {
         restrict: "E",
@@ -2875,9 +2875,9 @@ myApp.directive('scheduleFormCtrl', ['$flash', 'directiveService', function ($fl
             }
         }
     }
-}])
+})
 ;
-myApp.directive('imageFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
+myApp.directive('imageFormCtrl', function ($flash, directiveService) {
 
     return {
         restrict: "E",
@@ -2910,9 +2910,9 @@ myApp.directive('imageFormCtrl', ['$flash', 'directiveService', function ($flash
     }
 
 
-}])
+})
 ;
-myApp.directive('businessSocialNetworkCtrl', ['$flash', 'directiveService', 'languageService', function ( $flash, directiveService,languageService) {
+myApp.directive('businessSocialNetworkCtrl', function ( $flash, directiveService,languageService) {
 
     return {
         restrict: "E",
@@ -3115,8 +3115,8 @@ myApp.directive('businessSocialNetworkCtrl', ['$flash', 'directiveService', 'lan
     }
 
 
-}]);
-myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountService', function ($flash, directiveService,accountService) {
+});
+myApp.directive('contactFormCtrl', function ($flash, directiveService,accountService) {
 
     return {
         restrict: "E",
@@ -3206,9 +3206,9 @@ myApp.directive('contactFormCtrl', ['$flash', 'directiveService', 'accountServic
     }
 
 
-}])
+})
 ;
-myApp.directive('claimBusinessCtrl', ['$flash', 'facebookService', 'translationService', 'directiveService', '$timeout', 'accountService', '$location', 'modalService', function($flash, facebookService, translationService, directiveService, $timeout, accountService, $location, modalService) {
+myApp.directive('claimBusinessCtrl', function($flash, facebookService, translationService, directiveService, $timeout, accountService, $location, modalService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3281,8 +3281,8 @@ myApp.directive('claimBusinessCtrl', ['$flash', 'facebookService', 'translationS
       };
     }
   };
-}]);
-myApp.directive('scheduleCtrl', ['directiveService', function(directiveService) {
+});
+myApp.directive('scheduleCtrl', function(directiveService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3415,8 +3415,8 @@ myApp.directive('scheduleCtrl', ['directiveService', function(directiveService) 
       };
     }
   };
-}]);
-myApp.directive('galleryCtrl', ['$rootScope', 'directiveService', 'modalService', function($rootScope, directiveService, modalService) {
+});
+myApp.directive('galleryCtrl', function($rootScope, directiveService, modalService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3436,8 +3436,8 @@ myApp.directive('galleryCtrl', ['$rootScope', 'directiveService', 'modalService'
       };
     }
   };
-}]);
-myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$timeout', function($rootScope, businessService, geolocationService, directiveService, $timeout) {
+});
+myApp.directive('googleMapWidgetCtrl', function($rootScope, businessService, geolocationService, directiveService, $timeout) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3508,8 +3508,8 @@ myApp.directive('googleMapWidgetCtrl', ['$rootScope', 'businessService', 'geoloc
       };
     }
   };
-}]);
-myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBarService', function(directiveService, $location, searchBarService) {
+});
+myApp.directive('searchResultCtrl', function(directiveService, $location, searchBarService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3672,8 +3672,8 @@ myApp.directive('searchResultCtrl', ['directiveService', '$location', 'searchBar
       };
     }
   };
-}]);
-myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'searchService', 'searchBarService', '$timeout', '$location', 'modalService', function($rootScope, businessService, geolocationService, directiveService, searchService, searchBarService, $timeout, $location, modalService) {
+});
+myApp.directive('searchBarCtrl', function($rootScope, businessService, geolocationService, directiveService, searchService, searchBarService, $timeout, $location, modalService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3728,8 +3728,8 @@ myApp.directive('searchBarCtrl', ['$rootScope', 'businessService', 'geolocationS
       };
     }
   };
-}]);
-myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followService', 'directiveService', '$filter', '$flash', function(accountService, modalService, followService, directiveService, $filter, $flash) {
+});
+myApp.directive('followWidgetCtrl', function(accountService, modalService, followService, directiveService, $filter, $flash) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3765,8 +3765,8 @@ myApp.directive('followWidgetCtrl', ['accountService', 'modalService', 'followSe
       };
     }
   };
-}]);
-myApp.directive('followWidgetForPublicationCtrl', ['accountService', 'modalService', 'followService', 'directiveService', '$filter', '$flash', function(accountService, modalService, followService, directiveService, $filter, $flash) {
+});
+myApp.directive('followWidgetForPublicationCtrl', function(accountService, modalService, followService, directiveService, $filter, $flash) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3802,8 +3802,8 @@ myApp.directive('followWidgetForPublicationCtrl', ['accountService', 'modalServi
       };
     }
   };
-}]);
-myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', 'facebookService', function($rootScope, businessService, geolocationService, directiveService, facebookService) {
+});
+myApp.directive('facebookSharePublicationCtrl', function($rootScope, businessService, geolocationService, directiveService, facebookService) {
   return {
     restrict: 'E',
     scope: directiveService.autoScope({
@@ -3823,8 +3823,8 @@ myApp.directive('facebookSharePublicationCtrl', ['$rootScope', 'businessService'
       };
     }
   };
-}]);
-myApp.filter("translateText", ['$sce', 'translationService', function ($sce, translationService) {
+});
+myApp.filter("translateText", function ($sce, translationService) {
     return function (input, params,toUpperCase) {
         var text;
 
@@ -3859,9 +3859,9 @@ myApp.filter("translateText", ['$sce', 'translationService', function ($sce, tra
         }
         return input;
     };
-}]);
+});
 
-myApp.filter("text", ['$sce', '$filter', function ($sce,$filter) {
+myApp.filter("text", function ($sce,$filter) {
     return function (input,limit) {
         if(input!=undefined || input!=null) {
             if(limit!=undefined && input.length > limit){
@@ -3874,9 +3874,9 @@ myApp.filter("text", ['$sce', '$filter', function ($sce,$filter) {
         }
         return $sce.trustAsHtml(input);
     };
-}]);
+});
 
-myApp.filter("zeropad", ['$sce', 'translationService', function ($sce, translationService) {
+myApp.filter("zeropad", function ($sce, translationService) {
     return function (n) {
         var len = 2;
         var num = parseInt(n, 10);
@@ -3890,9 +3890,9 @@ myApp.filter("zeropad", ['$sce', 'translationService', function ($sce, translati
         }
         return num;
     };
-}]);
+});
 
-myApp.filter("image", ['constantService', function (constantService) {
+myApp.filter("image", function (constantService) {
     return function (input, orginal) {
         if (input != null && input != undefined) {
             if (input.storedName != null && input.storedName != undefined) {
@@ -3910,7 +3910,7 @@ myApp.filter("image", ['constantService', function (constantService) {
         }
         return null;
     };
-}]);
+});
 
 //
 // initialization external modules
@@ -3925,7 +3925,7 @@ initializeCommonRoutes();
 //
 // main ctrl
 //
-myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationService', '$window', 'facebookService', 'languageService', '$location', 'modalService', 'accountService', '$timeout', 'constantService', 'customerInterestService', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout, constantService, customerInterestService) {
+myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationService, $window, facebookService, languageService, $location, modalService, accountService, $timeout, constantService, customerInterestService) {
 
 
     $scope.navigateTo = function (target) {
@@ -4041,12 +4041,12 @@ myApp.controller('MainCtrl', ['$rootScope', '$scope', '$locale', 'translationSer
     });
 
 
-}]);
-myApp.controller('LegalCtrl', ['$scope', function ($scope) {
+});
+myApp.controller('LegalCtrl', function ($scope) {
 
 
-}]);
-myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) {
+});
+myApp.service("superAdminService", function ($http, $flash) {
 
 
     this.confirmPublication = function (businessId, callbackSuccess, callbackError) {
@@ -4397,8 +4397,8 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
     };
 
 
-}]);
-myApp.service("directiveService", ['$sce', function($sce) {
+});
+myApp.service("directiveService", function($sce) {
     this.autoScope = function(s) {
         var k, res, v;
         res = {};
@@ -4449,9 +4449,9 @@ myApp.service("directiveService", ['$sce', function($sce) {
             return $sce.trustAsHtml(v);
         };
     };
-}]);
+});
 
-myApp.service("generateId", ['$rootScope', function($rootScope) {
+myApp.service("generateId", function($rootScope) {
     this.generate = function() {
         var i, possible, text;
         text = "";
@@ -4463,9 +4463,9 @@ myApp.service("generateId", ['$rootScope', function($rootScope) {
         }
         return text;
     };
-}]);
+});
 
-myApp.service("translationService", ['$rootScope', '$filter', '$http', '$locale', function ($rootScope, $filter, $http,$locale) {
+myApp.service("translationService", function ($rootScope, $filter, $http,$locale) {
     var svc;
     svc = this;
     svc.elements = null;
@@ -4491,9 +4491,9 @@ myApp.service("translationService", ['$rootScope', '$filter', '$http', '$locale'
             return exception.message;
         }
     };
-}]);
+});
 
-myApp.service("modelService", ['$rootScope', function($rootScope) {
+myApp.service("modelService", function($rootScope) {
 
     this.MY_SELF="MYSELF";
     this.APP_ID="APP_ID";
@@ -4511,8 +4511,8 @@ myApp.service("modelService", ['$rootScope', function($rootScope) {
     this.remove = function(key){
         delete this.model[key];
     };
-}]);
-myApp.service('facebookService', ['$http', 'accountService', '$locale', 'languageService', 'constantService', '$flash', '$filter', function($http, accountService, $locale, languageService, constantService, $flash, $filter) {
+});
+myApp.service('facebookService', function($http, accountService, $locale, languageService, constantService, $flash, $filter) {
   var authResponse, isConnected, _this;
   this.facebookAppId;
   this.facebookAuthorization = 'public_profile,email';
@@ -4666,8 +4666,8 @@ myApp.service('facebookService', ['$http', 'accountService', '$locale', 'languag
     return isConnected;
   };
   return;
-}]);
-myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', function ($flash, $window, $http, $rootScope) {
+});
+myApp.service("languageService", function ($flash, $window, $http, $rootScope) {
 
     this.languages;
     this.languagesStructured = [];
@@ -4714,9 +4714,9 @@ myApp.service("languageService", ['$flash', '$window', '$http', '$rootScope', fu
     this.getLanguages = function () {
         return angular.copy(this.languages);
     };
-}]);
+});
 
-myApp.service("customerInterestService", ['$sce', '$http', '$flash', function ($sce, $http, $flash) {
+myApp.service("customerInterestService", function ($sce, $http, $flash) {
 
 
     var customerInterests = null;
@@ -4755,8 +4755,8 @@ myApp.service("customerInterestService", ['$sce', '$http', '$flash', function ($
 
     }
 
-}]);
-myApp.service("accountService", ['$flash', '$http', 'translationService', function ($flash, $http,translationService) {
+});
+myApp.service("accountService", function ($flash, $http,translationService) {
 
     var self = this;
 
@@ -5041,8 +5041,8 @@ myApp.service("accountService", ['$flash', '$http', 'translationService', functi
     this.setMyBusiness = function (dto) {
         this.model.myBusiness = dto;
     };
-}]);
-myApp.service("businessCategoryService", ['$sce', '$http', '$flash', function ($sce,$http,$flash) {
+});
+myApp.service("businessCategoryService", function ($sce,$http,$flash) {
 
 
     var businessCategory = null;
@@ -5077,8 +5077,8 @@ myApp.service("businessCategoryService", ['$sce', '$http', '$flash', function ($
 
     }
 
-}]);
-myApp.service('businessService', ['$flash', '$http', 'accountService', 'geolocationService', function($flash, $http, accountService, geolocationService) {
+});
+myApp.service('businessService', function($flash, $http, accountService, geolocationService) {
   this.loadLastBusiness = function(businessNb, callbackSuccess, callbackError) {
     var a;
     a = geolocationService.getPositionWithoutNull();
@@ -5397,8 +5397,8 @@ myApp.service('businessService', ['$flash', '$http', 'accountService', 'geolocat
     });
   };
   return;
-}]);
-myApp.service("modalService", ['$modal', function ($modal) {
+});
+myApp.service("modalService", function ($modal) {
 
     this.basicModal = function (title, directiveName, param, save) {
         var resolve = {
@@ -5818,8 +5818,8 @@ myApp.service("modalService", ['$modal', function ($modal) {
             size: "l"
         });
     }
-}]);
-myApp.service("promotionService", ['$http', '$flash', '$rootScope', function ($http, $flash, $rootScope) {
+});
+myApp.service("promotionService", function ($http, $flash, $rootScope) {
 
     this.add = function (dto, callbackSuccess, callbackError) {
 
@@ -5863,8 +5863,8 @@ myApp.service("promotionService", ['$http', '$flash', '$rootScope', function ($h
 
     };
 
-}]);
-myApp.service("geolocationService", ['$rootScope', 'geolocation', '$http', 'accountService', '$timeout', '$window', function ($rootScope, geolocation, $http, accountService, $timeout, $window) {
+});
+myApp.service("geolocationService", function ($rootScope, geolocation, $http, accountService, $timeout, $window) {
 
 
         this.position = null;
@@ -5957,11 +5957,11 @@ myApp.service("geolocationService", ['$rootScope', 'geolocation', '$http', 'acco
                 return accountService.getMyself().selectedAddress.name;
             }
         };
-    }]
+    }
 )
 ;
 
-myApp.service("businessNotificationService", ['$http', '$flash', '$rootScope', function ($http, $flash, $rootScope) {
+myApp.service("businessNotificationService", function ($http, $flash, $rootScope) {
 
     this.REFRESH_BUSINESS_NOTIFICAITON = "REFRESH_BUSINESS_NOTIFICAITON";
 
@@ -6010,8 +6010,8 @@ myApp.service("businessNotificationService", ['$http', '$flash', '$rootScope', f
             });
 
     };
-}]);
-myApp.service("addressService", ['$flash', '$http', 'geolocationService', function ($flash, $http, geolocationService) {
+});
+myApp.service("addressService", function ($flash, $http, geolocationService) {
 
 
     this.testAddress = function (dto, callbackSuccess, callbackError) {
@@ -6075,8 +6075,8 @@ myApp.service("addressService", ['$flash', '$http', 'geolocationService', functi
             });
     };
 
-}]);
-myApp.service("followService", ['$flash', '$http', function ($flash, $http) {
+});
+myApp.service("followService", function ($flash, $http) {
 
     var self = this;
 
@@ -6151,8 +6151,8 @@ myApp.service("followService", ['$flash', '$http', function ($flash, $http) {
                 }
             });
     };
-}]);
-myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationService', '$q', function ($http, $flash, $rootScope, geolocationService, $q) {
+});
+myApp.service("searchService", function ($http, $flash, $rootScope, geolocationService, $q) {
 
 
     this.currentSearch = "";
@@ -6529,8 +6529,8 @@ myApp.service("searchService", ['$http', '$flash', '$rootScope', 'geolocationSer
             });
 
     };
-}]);
-myApp.service("searchBarService", ['$timeout', '$rootScope', function ($timeout, $rootScope) {
+});
+myApp.service("searchBarService", function ($timeout, $rootScope) {
 
     this.currentSearch = "";
     this.searchCriteria = data.searchCriterias;
@@ -6606,8 +6606,8 @@ myApp.service("searchBarService", ['$timeout', '$rootScope', function ($timeout,
         }
     });
 
-}]);
-myApp.service('publicationService', ['$http', '$flash', 'geolocationService', function($http, $flash, geolocationService) {
+});
+myApp.service('publicationService', function($http, $flash, geolocationService) {
   this["delete"] = function(dto, callbackSuccess, callbackError) {
     return $http({
       'method': 'DELETE',
@@ -6643,7 +6643,7 @@ myApp.service('publicationService', ['$http', '$flash', 'geolocationService', fu
     });
   };
   return;
-}]);
+});
 myApp.service("constantService", function () {
 
     this.compareNumber = function (a, b) {
@@ -6651,7 +6651,7 @@ myApp.service("constantService", function () {
     }
 
 });
-myApp.service("contactService", ['$flash', '$http', function ($flash, $http) {
+myApp.service("contactService", function ($flash, $http) {
 
     this.contact= function (contactFrom, callbackSuccess, callbackError) {
         $http({
@@ -6671,8 +6671,8 @@ myApp.service("contactService", ['$flash', '$http', function ($flash, $http) {
                 }
             });
     };
-}]);
-myApp.service("fileService", ['$flash', '$http', function ($flash, $http) {
+});
+myApp.service("fileService", function ($flash, $http) {
 
     this.uploadFile64 = function (name, img, callbackSuccess, callbackError) {
 
@@ -6697,7 +6697,7 @@ myApp.service("fileService", ['$flash', '$http', function ($flash, $http) {
     };
 
 
-}]);
+});
 myApp.service("imageService", function () {
 
     this.resizeImage = function (img, width, height) {
@@ -6736,7 +6736,7 @@ myApp.service("imageService", function () {
 
 
 });
-myApp.service('mapService', ['$http', '$flash', function($http, $flash) {
+myApp.service('mapService', function($http, $flash) {
   this.loadMapDataBusiness = function(callbackSuccess, callbackError) {
     return $http({
       'method': "GET",
@@ -6754,7 +6754,7 @@ myApp.service('mapService', ['$http', '$flash', function($http, $flash) {
     });
   };
   return;
-}]);
+});
 angular.module('app').run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("js/directive/admin/donutChart/template.html",
@@ -7051,14 +7051,14 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("js/view/web/map.html",
     "<div class=\"content-block map-page\" style=\"margin-top: 100px;height:{{height}}px\"><div class=map-content><div class=\"option-panel option-panel-left\" ng-hide=\"displayFilters===true\"><button ng-click=\"displayFilters=!displayFilters\">{{'--.map.filters' | translateText}}</button></div><div class=\"option-panel option-panel-right\" ng-hide=\"displayList===true\"><button ng-click=\"displayList=!displayList\">{{'--.map.businessList' | translateText}}</button></div><div class=\"option-panel option-panel-left-bottom legend\"><img src=/assets/images/google-map-marker/marker_black.png>{{'--.map.legend.close' | translateText}}<br><img src=/assets/images/google-map-marker/marker_green_light.png>{{'--.map.legend.open' | translateText}}<br><img src=/assets/images/google-map-marker/marker_bell_black.png>{{'--.map.legend.followed' | translateText}}<br></div><div id=map style=\"height:{{height}}px !important\"></div><div class=filter-panel ng-show=displayFilters><span class=\"filter-panel-close glyphicon glyphicon-remove\" ng-click=\"displayFilters=false\"></span><h3>Filters</h3><div class=list-container><div class=list-container-scroll><input ng-model=filters.following type=checkbox>{{'--.map.filters.onlyFollowinfBusinesses' | translateText}}<br><input ng-model=filters.open type=checkbox>{{'--.map.filters.onlyCurrentlyOpen' | translateText}}<h3>Intérêts</h3><span class=link ng-click=selectAllInterest(true)>{{'--.generic.selectAll' | translateText}}</span> /<span class=link ng-click=selectAllInterest(false)>{{'--.generic.unselectAll' | translateText}}</span><div ng-repeat=\"interest in interests\"><input ng-model=interest.selected type=checkbox><span ng-class=\"'gling-icon gling-icon-' + interest.name\"></span> {{interest.translationName}}</div></div></div></div><div class=displayed-business-panel ng-show=displayList><span class=\"filter-panel-close glyphicon glyphicon-remove\" ng-click=\"displayList=false\"></span><h3>{{'--.generic.businesses' | translateText}}</h3><div class=list-container><div class=list-container-scroll><div ng-show=\"listDisplayedBusiness.length == 0\">{{'--.map.noResultInThisArea' | translateText}}</div><div class=list-element ng-mouseover=startAnimation(business,true) ng-repeat=\"business in listDisplayedBusiness\" ng-mouseleave=startAnimation(business,false)><business-for-map-ctrl ng-info={business:business}></business-for-map-ctrl></div></div></div></div></div></div>");
   $templateCache.put("js/view/web/profile.html",
-    "<div class=container-content><div class=profile-page><div class=\"panel panel-gling main-panel panel-personal-information\"><div class=panel-heading>{{'--.customer.profile.personalInformation' | translateText}}</div><div class=panel-body><account-form-ctrl ng-info=accountParam></account-form-ctrl><button id=profile-personal-btn-edit class=\"btn gling-button-dark\" ng-show=accountParam.disabled ng-click=personalEdit()>{{'--.generic.edit' |translateText}}</button><button id=profile-personal-btn-save class=\"btn gling-button-dark\" ng-click=personalSave() ng-hide=accountParam.disabled>{{'--.generic.save' | translateText}}</button><button id=profile-personal-btn-cancel class=\"btn gling-button-dark\" ng-click=personalCancel() ng-hide=accountParam.disabled>{{'--.generic.cancel' | translateText}}</button><button id=profile-personal-btn-edit-password class=\"btn gling-button-dark\" ng-show=\"model.myself.loginAccount===true\" ng-click=editPassword() type=button>{{'--.changePasswordModal.title' | translateText}}</button><table class=profile-table><tr><th colspan=2>{{'--.profile.socialNetworkList' |translateText}}</th></tr><tr><td><img src=assets/images/social_network/facebook.png></td><td><div class=link ng-click=fb_login(); ng-hide=\"model.myself.facebookAccount===true\">{{'--.profile.facebook.btn' |translateText}}</div><div ng-show=\"model.myself.facebookAccount===true\">{{'--.profile.socialNetworkList.facebook' |translateText}} {{model.myself.facebookCredential.firstname}}{{model.myself.facebookCredential.lastname}}</div></td></tr></table><table class=\"profile-table profile-action-table\"><tr ng-show=\"model.myself.type != 'BUSINESS'\"><td>{{'--.profile.businessCreation.ask' |translateText}}</td><td><span ng-show=\"model.myself.claimedBusinessId!=null\">{{'--.profile.businessCreation.alreadyClaim' |translateText}}</span><button class=gling-button-dark ng-show=\"model.myself.claimedBusinessId==null\" ng-click=createBusiness() type=button>{{'--.profile.businessCreation.action' |translateText}}</button></td></tr></table></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.myAddresses' | translateText}}</div><div class=panel-body><div><accordion><accordion-group class=address-container is-open=address.isOpen ng-repeat=\"address in model.myself.addresses\"><accordion-heading>{{address.name}}<i class=\"pull-right glyphicon\" ng-class=\"{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}\"></i></accordion-heading><div class=address-box><div><span>{{'--.generic.street' | translateText}}</span><span>{{address.street}}</span></div><div><span>{{'--.generic.zip' | translateText}}</span><span>{{address.zip}}</span></div><div><span>{{'--.generic.city' | translateText}}</span><span>{{address.city}}</span></div><div><span>{{'--.generic.country' | translateText}}</span><span>{{address.country}}</span></div></div><button class=\"btn gling-button-dark\" ng-click=editAddress(address)>{{'--.generic.edit' | translateText}}</button><button class=\"btn gling-button-dark glyphicon glyphicon-remove\" ng-click=deleteAddress(address)>{{'--.generic.remove' |translateText}}</button></accordion-group></accordion><button id=profile-btn-address-add class=\"btn gling-button-dark\" ng-click=addAddress()>{{'--.customer.profile.create' | translateText}}</button></div></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.interest' | translateText}}</div><div class=\"panel-body category-list\"><div><div class=category-box ng-repeat=\"interest in model.myself.customerInterests\"><span ng-class=\"'gling-icon gling-icon-' + interest.name\"></span>{{interest.translationName |translateText}}</div><button id=profile-interest-btn-edit class=\"btn gling-button-dark\" ng-click=interestEdit()>{{'--.generic.edit' | translateText}}</button></div></div></div></div></div>");
+    "<div class=container-content><div class=profile-page><div class=\"panel panel-gling main-panel panel-personal-information\"><div class=panel-heading>{{'--.customer.profile.personalInformation' | translateText}}</div><div class=panel-body><account-form-ctrl ng-info=accountParam></account-form-ctrl><button id=profile-personal-btn-edit class=\"btn gling-button-dark\" ng-show=accountParam.disabled ng-click=personalEdit()>{{'--.generic.edit' |translateText}}</button><button id=profile-personal-btn-save class=\"btn gling-button-dark\" ng-click=personalSave() ng-hide=accountParam.disabled>{{'--.generic.save' | translateText}}</button><button id=profile-personal-btn-cancel class=\"btn gling-button-dark\" ng-click=personalCancel() ng-hide=accountParam.disabled>{{'--.generic.cancel' | translateText}}</button><button id=profile-personal-btn-edit-password class=\"btn gling-button-dark\" ng-show=\"model.myself.loginAccount===true\" ng-click=editPassword() type=button>{{'--.changePasswordModal.title' | translateText}}</button><table class=profile-table><tr><th colspan=2>{{'--.profile.socialNetworkList' |translateText}}</th></tr><tr><td><img src=assets/images/social_network/facebook.png></td><td><div class=link ng-click=fb_login(); ng-hide=\"model.myself.facebookAccount===true\">{{'--.profile.facebook.btn' |translateText}}</div><div ng-show=\"model.myself.facebookAccount===true\">{{'--.profile.socialNetworkList.facebook' |translateText}} {{model.myself.facebookCredential.firstname}}{{model.myself.facebookCredential.lastname}}</div></td></tr></table><table class=\"profile-table profile-action-table\"><tr ng-show=\"model.myself.type != 'BUSINESS'\"><td>{{'--.profile.businessCreation.ask' |translateText}}</td><td><span ng-show=\"model.myself.claimedBusinessId!=null\">{{'--.profile.businessCreation.alreadyClaim' |translateText}}</span><button class=gling-button-dark ng-show=\"model.myself.claimedBusinessId==null\" ng-click=createBusiness() type=button>{{'--.profile.businessCreation.action' |translateText}}</button></td></tr><tr><td></td><td><a class=\"btn gling-button-dark\" href=/assets/document/registration_help.pdf target=_blank>{{'--.business_registration.downloadRegistrationHelp' | translateText}}</a></td></tr></table></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.myAddresses' | translateText}}</div><div class=panel-body><div><accordion><accordion-group class=address-container is-open=address.isOpen ng-repeat=\"address in model.myself.addresses\"><accordion-heading>{{address.name}}<i class=\"pull-right glyphicon\" ng-class=\"{'glyphicon-chevron-down': address.isOpen, 'glyphicon-chevron-right': !address.isOpen}\"></i></accordion-heading><div class=address-box><div><span>{{'--.generic.street' | translateText}}</span><span>{{address.street}}</span></div><div><span>{{'--.generic.zip' | translateText}}</span><span>{{address.zip}}</span></div><div><span>{{'--.generic.city' | translateText}}</span><span>{{address.city}}</span></div><div><span>{{'--.generic.country' | translateText}}</span><span>{{address.country}}</span></div></div><button class=\"btn gling-button-dark\" ng-click=editAddress(address)>{{'--.generic.edit' | translateText}}</button><button class=\"btn gling-button-dark glyphicon glyphicon-remove\" ng-click=deleteAddress(address)>{{'--.generic.remove' |translateText}}</button></accordion-group></accordion><button id=profile-btn-address-add class=\"btn gling-button-dark\" ng-click=addAddress()>{{'--.customer.profile.create' | translateText}}</button></div></div></div><div class=\"panel panel-gling main-panel\"><div class=panel-heading>{{'--.customer.profile.interest' | translateText}}</div><div class=\"panel-body category-list\"><div><div class=category-box ng-repeat=\"interest in model.myself.customerInterests\"><span ng-class=\"'gling-icon gling-icon-' + interest.name\"></span>{{interest.translationName |translateText}}</div><button id=profile-interest-btn-edit class=\"btn gling-button-dark\" ng-click=interestEdit()>{{'--.generic.edit' | translateText}}</button></div></div></div></div></div>");
   $templateCache.put("js/view/web/search_page.html",
     "<div class=container-content><to-top-ctrl></to-top-ctrl><div class=search-page><div class=loading ng-show=\"results == null\"><img src=/assets/images/big_loading.gif></div><div ng-hide=\"results==null\"><tabset><tab ng-show=businessTab.display active=businessTab.active><tab-heading>{{'--.generic.business' | translateText}} ({{businessTab.totalToDisplay}})</tab-heading><business-list-ctrl ng-info={data:businessTab.data}></business-list-ctrl></tab><tab ng-show=publicationTab.display active=publicationTab.active><tab-heading>{{'--.generic.publication' | translateText}} ({{publicationTab.totalToDisplay}})</tab-heading><publication-list-ctrl ng-info={data:publicationTab.data}></publication-list-ctrl></tab><tab ng-show=categoryTab.display active=categoryTab.active><tab-heading>{{'--.generic.category' | translateText}} ({{categoryTab.totalToDisplay}})</tab-heading><div ng-show=\"categoryTab == 0\">{{'--.list.nothing' | translateText}}</div><div ng-repeat=\"(cat,value) in categoryTab.data\"><div class=\"search-category link search-category-lev1\" ng-click=\"navigateTo('/search/category:'+cat)\">{{cat | translateText}}</div><div ng-repeat=\"(sCat,value2) in value\"><div class=\"search-category link search-category-lev2\" ng-click=\"navigateTo('/search/category:'+sCat)\">{{sCat | translateText}}</div><div ng-repeat=\"(ssCat,value3) in value2\"><div class=\"search-category link search-category-lev3\" ng-click=\"navigateTo('/search/category:'+ssCat)\">{{ssCat | translateText}}</div><business-list-ctrl ng-info={data:value3,loading:false}></business-list-ctrl></div></div></div></tab></tabset></div></div></div>");
   $templateCache.put("js/view/web/welcome.html",
-    "<div class=welcome-page><div class=welcome-header><div class=\"gling-icon gling-icon-logoapp logo\"></div><p>What's up in my shops</p></div><div class=left-column><div class=\"block-title block-title-left block-title-first\">{{'--.welcome.thisWeek' | translateText}}</div><div class=event-block><img src=/assets/images/event/soldes.jpg><span class=event-title>{{'--.welcome.event.soldes.title' | translateText}}</span><br><br><span ng-bind-html=\"'--.welcome.event.soldes.content' | translateText | text\"></span></div><div class=event-block><div class=event-publications><div class=event-title>{{'--.welcome.event.soldes.publication.content' | translateText}}</div><div class=event-publication ng-repeat=\"p in eventPublications\"><img ng-src=\"{{p.pictures[0] | image}}\" ng-click=goToPublication(p)><div class=title>{{p.title}}</div><div>By<span class=link ng-click=\"goTo('/business/'+p.businessId)\">{{p.businessName}}</span></div></div></div><button class=gling-button-dark ng-click=\"goTo('/shopnews/shopping)\">{{'--.welcome.more_gift' | translateText}}</button></div><div class=\"block-title block-title-left\">{{'--.welcome.lastPublications' | translateText}}<div class=\"see-more link\" ng-click=\"goTo('/shopnews/')\">{{'--.welcome.seeMore' | translateText}}</div></div><publication-list-ctrl ng-info=publicationListCtrl></publication-list-ctrl><div class=\"link center\" ng-click=\"goTo('/shopnews/')\">{{'--.welcome.morePublications' | translateText}}</div></div><div class=right-column><div class=\"block-title block-title-first\">{{'--.welcome.joinOnFacebook' | translateText}}</div><div class=fb-post data-width=380 data-href=https://www.facebook.com/gling.be/posts/1699063293642611:0></div><div class=block-title>{{'--.welcome.neighborhood' | translateText}}<div class=\"see-more link\" ng-click=\"goTo('/map/')\">{{'--.welcome.seeMore' | translateText}}</div></div><div class=map-container><flex-slider pauseonhover=true flex-slide=\"map in maps track by $index \" animation=slide><li><div class=map-slider ng-click=openMap(map) style=cursor:pointer><div>{{map.name}}</div></div><img ng-src={{map.src}} ng-click=openMap(map) style=cursor:pointer></li></flex-slider></div><div class=block-title>{{'--.welcome.lastBusinesses' | translateText}}</div><div class=welcome-business-list><div class=welcome-business-list-el ng-repeat=\"business in businesses\"><table><tr><td ng-click=\"goTo('/business/'+business.id)\" rowspan=2><img class=illustration ng-src=\"{{business.illustration | image}}\"></td><td ng-click=\"goTo('/business/'+business.id)\"><div class=title>{{business.name}}</div></td></tr><tr><td><div class=address>{{business.address.street}}, {{business.address.zip}} {{business.address.city}} - {{business.distance / 1000 | number:2}} km<br></div></td></tr></table><category-line-ctrl ng-info={categories:business.categories,level1:false}></category-line-ctrl><div class=welcome-business-action><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div></div></div></div>");
+    "<div class=welcome-page><div class=welcome-header><div class=\"gling-icon gling-icon-logoapp logo\"></div><p>What's up in my shops</p></div><div class=left-column><div class=\"block-title block-title-left block-title-first\">{{'--.welcome.thisWeek' | translateText}}</div><div class=event-block><img src=/assets/images/event/soldes.jpg><span class=event-title>{{'--.welcome.event.soldes.title' | translateText}}</span><br><br><span ng-bind-html=\"'--.welcome.event.soldes.content' | translateText | text\"></span></div><div class=event-block><div class=event-publications><div class=event-title>{{'--.welcome.event.soldes.publication.content' | translateText}}</div><div class=event-publication ng-repeat=\"p in eventPublications\"><img ng-src=\"{{p.pictures[0] | image}}\" ng-click=goToPublication(p)><div class=title>{{p.title}}</div><div>By<span class=link ng-click=\"goTo('/business/'+p.businessId)\">{{p.businessName}}</span></div></div></div><button class=gling-button-dark ng-click=\"goTo('/shopnews/)\">{{'--.welcome.more_soldes' | translateText}}</button></div><div class=\"block-title block-title-left\">{{'--.welcome.lastPublications' | translateText}}<div class=\"see-more link\" ng-click=\"goTo('/shopnews/')\">{{'--.welcome.seeMore' | translateText}}</div></div><publication-list-ctrl ng-info=publicationListCtrl></publication-list-ctrl><div class=\"link center\" ng-click=\"goTo('/shopnews/')\">{{'--.welcome.morePublications' | translateText}}</div></div><div class=right-column><div class=\"block-title block-title-first\">{{'--.welcome.joinOnFacebook' | translateText}}</div><div class=fb-post data-width=380 data-href=\"https://www.facebook.com/gling.be/videos/1701356473413293/\"></div><div class=block-title>{{'--.welcome.neighborhood' | translateText}}<div class=\"see-more link\" ng-click=\"goTo('/map/')\">{{'--.welcome.seeMore' | translateText}}</div></div><div class=map-container><flex-slider pauseonhover=true flex-slide=\"map in maps track by $index \" animation=slide><li><div class=map-slider ng-click=openMap(map) style=cursor:pointer><div>{{map.name}}</div></div><img ng-src={{map.src}} ng-click=openMap(map) style=cursor:pointer></li></flex-slider></div><div class=block-title>{{'--.welcome.lastBusinesses' | translateText}}</div><div class=welcome-business-list><div class=welcome-business-list-el ng-repeat=\"business in businesses\"><table><tr><td ng-click=\"goTo('/business/'+business.id)\" rowspan=2><img class=illustration ng-src=\"{{business.illustration | image}}\"></td><td ng-click=\"goTo('/business/'+business.id)\"><div class=title>{{business.name}}</div></td></tr><tr><td><div class=address>{{business.address.street}}, {{business.address.zip}} {{business.address.city}} - {{business.distance / 1000 | number:2}} km<br></div></td></tr></table><category-line-ctrl ng-info={categories:business.categories,level1:false}></category-line-ctrl><div class=welcome-business-action><follow-widget-ctrl ng-info={displayText:true,business:business}></follow-widget-ctrl></div></div></div></div></div>");
 }]);
 
-myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'businessService', 'accountService', 'translationService', 'param', '$compile', 'directiveName', 'save', '$timeout', 'title', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
+myApp.controller('BasicModalCtrl', function ($scope, $flash, $modalInstance, businessService, accountService, translationService, param, $compile, directiveName, save, $timeout, title) {
 
     $scope.title = title;
 
@@ -7100,8 +7100,8 @@ myApp.controller('BasicModalCtrl', ['$scope', '$flash', '$modalInstance', 'busin
     }
 
 
-}]);
-myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationService', 'directiveService', '$timeout', 'fileService', '$filter', '$flash', function ($rootScope, businessService, geolocationService, directiveService, $timeout, fileService, $filter, $flash) {
+});
+myApp.directive('imageToolCtrl', function ($rootScope, businessService, geolocationService, directiveService, $timeout, fileService, $filter, $flash) {
 
         return {
             restrict: "E",
@@ -7444,10 +7444,10 @@ myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationS
                 }
             }
         }
-    }]
+    }
 )
 ;
-myApp.controller('ConfirmAndShareModalCtrl', ['$scope', 'facebookService', 'publication', '$modalInstance', function ($scope, facebookService, publication,$modalInstance) {
+myApp.controller('ConfirmAndShareModalCtrl', function ($scope, facebookService, publication,$modalInstance) {
 
     $scope.share = function () {
         facebookService.publish(publication);
@@ -7458,4 +7458,4 @@ myApp.controller('ConfirmAndShareModalCtrl', ['$scope', 'facebookService', 'publ
         $modalInstance.close();
     };
 
-}]);
+});

@@ -73,7 +73,9 @@ public class PromotionRestController extends AbstractRestController {
 
         //control date
         Duration duration = Duration.between(promotion.getStartDate(), promotion.getEndDate());
-        if (duration.getSeconds() > Constant.PROMOTION_PERIOD_MAX_DAY * 24 * 60 * 60) {
+        long l=duration.getSeconds();
+        long l2 = Constant.PROMOTION_PERIOD_MAX_DAY * 24 * 60 * 60;
+        if (l > l2) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PROMOTION_DURATION_TOO_LONG, Constant.PROMOTION_PERIOD_MAX_DAY + "");
         }
 
@@ -120,7 +122,7 @@ public class PromotionRestController extends AbstractRestController {
         //send a notification
         NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, promotion.getBusiness().getName());
         NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
-        notificationService.createNotification(ApplicationNotificationTypeEnum.NEW_PUBLICATION,business.getId()+"",promotion.getStartDate(), title, content);
+        notificationService.createNotification(ApplicationNotificationTypeEnum.NEW_PUBLICATION, business.getId() + "", promotion.getStartDate(), title, content);
 
 
         return ok(publicationDTO);

@@ -126,7 +126,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             field: scope.getInfo().dto,
                             startDate: startDate,
                             fieldName: 'endDate',
-                            maxDay: 14
+                            maxDay: 28
 
                         },
                         illustration: {

@@ -34,6 +34,10 @@
                         td
                             span(ng-show="model.myself.claimedBusinessId!=null") {{'--.profile.businessCreation.alreadyClaim' |translateText}}
                             button.gling-button-dark(ng-show="model.myself.claimedBusinessId==null",type="button",ng-click="createBusiness()") {{'--.profile.businessCreation.action' |translateText}}
+                    tr
+                        td
+                        td
+                            a.btn.gling-button-dark(href='/assets/document/registration_help.pdf', target='_blank') {{'--.business_registration.downloadRegistrationHelp' | translateText}}
 
         // address panel
         .panel.panel-gling.main-panel
