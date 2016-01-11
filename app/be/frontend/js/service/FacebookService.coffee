@@ -1,6 +1,6 @@
 myApp.service 'facebookService', ($http, accountService, $locale, languageService, constantService, $flash,$filter) ->
     @facebookAppId
-    @facebookAuthorization = 'public_profile,email'#,manage_pages,publish_pages'
+    @facebookAuthorization = 'public_profile,email,manage_pages,publish_pages'
     isConnected = false
     authResponse = null
     _this = this
@@ -21,8 +21,10 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
             FB.getLoginStatus (response) ->
                 console.log 'FB2'
                 if response.status == 'connected'
-                    console.log 'FB3'
+                    authResponse = response.authResponse
                     isConnected=true
+                    console.log 'FB3:'+isConnected
+                    return
 
         ((d, s, id) ->
             js = undefined
@@ -142,34 +144,52 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
 
     @publish = (publication,successCallback, callbackError) ->
 
-        @sharePublication(publication.businessId,publication.id)
+#        @sharePublication(publication.businessId,publication.id)
 
-#        data =
-#            message: publication.title
-#
-#        if publication.pictures.length > 0
-#            data.picture =  $filter('image')(publication.pictures[0])
-#
-#        console.log data
-#
-#        myself = accountService.model.myself
-#
-#        if myself.type == 'BUSINESS' && myself.facebookPageToPublish? && isConnected
-#
-#            # catch id of the page
-#            FB.api '/'+myself.facebookPageToPublish, 'get',{},(response) ->
-#                pageId = response.id
-#
-#                # first : looking for page token
-#                FB.api '/me/accounts', 'get', {}, (response) ->
-#                    for a in response.data
-#                        if a.id == pageId
-#                            token = a.access_token
-#
+        data =
+            message: publication.title
+
+        if publication.pictures.length > 0
+            data.pictureLink =  $filter('image')(publication.pictures[0])
+
+
+
+        myself = accountService.model.myself
+
+        console.log data
+
+        console.log 'share 0 : '+(myself.type == 'BUSINESS')+'/'+(myself.facebookPageToPublish?)+'/'+(isConnected)
+        console.log 'share 0 : '+isConnected
+
+        if myself.type == 'BUSINESS' && myself.facebookPageToPublish? && isConnected
+
+            console.log 'share 1'
+
+            # catch id of the page
+            FB.api '/'+myself.facebookPageToPublish, 'get',{},(response) ->
+                console.log 'share 2'
+                pageId = response.id
+
+                # first : looking for page token
+                FB.api '/me/accounts', 'get', {}, (response) ->
+                    console.log 'share 3'
+                    for a in response.data
+                        if a.id == pageId
+                            console.log 'share 4:'+a.access_token
+                            token = a.access_token
+
 #                            FB.api '/me/feed?access_token='+token, 'get', 'post', data, (response) ->
+#                                console.log 'share 5'
 #                                console.log response
 
+                            FB.api "/me/photos","POST",
+                                url: data.pictureLink
+                                caption:data.message
+                            ,(response) ->
+                                console.log 'share 5'
+                                console.log response
 
+#        console.log 'share !! '
 #        FB.api '/1635544633340811/feed', 'post', { message: 'je suis un message' }, (response) ->
 #            if !response or response.error
 #                alert 'Error occured'

@@ -1,7 +1,7 @@
 myApp.service('facebookService', function($http, accountService, $locale, languageService, constantService, $flash, $filter) {
   var authResponse, isConnected, _this;
   this.facebookAppId;
-  this.facebookAuthorization = 'public_profile,email';
+  this.facebookAuthorization = 'public_profile,email,manage_pages,publish_pages';
   isConnected = false;
   authResponse = null;
   _this = this;
@@ -17,8 +17,10 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
       return FB.getLoginStatus(function(response) {
         console.log('FB2');
         if (response.status === 'connected') {
-          console.log('FB3');
-          return isConnected = true;
+          authResponse = response.authResponse;
+          isConnected = true;
+          console.log('FB3:' + isConnected);
+          return;
         }
       });
     };
@@ -146,7 +148,42 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
     }
   };
   this.publish = function(publication, successCallback, callbackError) {
-    return this.sharePublication(publication.businessId, publication.id);
+    var data, myself;
+    data = {
+      message: publication.title
+    };
+    if (publication.pictures.length > 0) {
+      data.picture = $filter('image')(publication.pictures[0]);
+    }
+    myself = accountService.model.myself;
+    console.log(data);
+    console.log('share 0 : ' + (myself.type === 'BUSINESS') + '/' + (myself.facebookPageToPublish != null) + '/' + isConnected);
+    console.log('share 0 : ' + isConnected);
+    if (myself.type === 'BUSINESS' && (myself.facebookPageToPublish != null) && isConnected) {
+      console.log('share 1');
+      return FB.api('/' + myself.facebookPageToPublish, 'get', {}, function(response) {
+        var pageId;
+        console.log('share 2');
+        pageId = response.id;
+        return FB.api('/me/accounts', 'get', {}, function(response) {
+          var a, token, _i, _len, _ref, _results;
+          console.log('share 3');
+          _ref = response.data;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            a = _ref[_i];
+            _results.push(a.id === pageId ? (console.log('share 4:' + a.access_token), token = a.access_token, FB.api("/me/photos", "POST", {
+              url: "https://www.gling.be/assets/images/event/soldes.jpg",
+              caption: data.message
+            }, function(response) {
+              console.log('share 5');
+              return console.log(response);
+            })) : void 0);
+          }
+          return _results;
+        });
+      });
+    }
   };
   this.isConnected = function() {
     return isConnected;
