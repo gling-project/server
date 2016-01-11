@@ -153,7 +153,7 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
       message: publication.title
     };
     if (publication.pictures.length > 0) {
-      data.picture = $filter('image')(publication.pictures[0]);
+      data.pictureLink = $filter('image')(publication.pictures[0]);
     }
     myself = accountService.model.myself;
     console.log(data);
@@ -172,8 +172,9 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
           _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             a = _ref[_i];
-            _results.push(a.id === pageId ? (console.log('share 4:' + a.access_token), token = a.access_token, FB.api("/me/photos", "POST", {
-              url: "https://www.gling.be/assets/images/event/soldes.jpg",
+            console.log('share 3.5:' + a.id + '/' + pageId);
+            _results.push(a.id === pageId ? (console.log('share 4 !!!!! :' + a.access_token), token = a.access_token, FB.api("/me/photos?access_token=" + token, "POST", {
+              url: data.pictureLink,
               caption: data.message
             }, function(response) {
               console.log('share 5');
