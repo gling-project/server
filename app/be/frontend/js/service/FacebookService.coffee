@@ -183,7 +183,7 @@ myApp.service 'facebookService', ($http, accountService, $locale, languageServic
 #                                console.log 'share 5'
 #                                console.log response
 
-                            FB.api "/me/photos","POST",
+                            FB.api "/me/photos?access_token="+token,"POST",
                                 url: data.pictureLink
                                 caption:data.message
                             ,(response) ->
