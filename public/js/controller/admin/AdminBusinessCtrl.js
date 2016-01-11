@@ -23,6 +23,8 @@ myApp.controller('AdminBusinessCtrl', function($scope, superAdminService, ngTabl
         total: $scope.businesses.length,
         getData: function($defer, params) {
           var orderedData;
+          console.log('params');
+          console.log(params.$params.page);
           orderedData = params.sorting() ? $filter('orderBy')($scope.businesses, params.orderBy()) : $scope.businesses;
           return $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }

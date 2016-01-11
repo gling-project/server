@@ -37,6 +37,8 @@ myApp.controller 'AdminBusinessCtrl', ($scope, superAdminService, ngTableParams,
 
             #this function is used to sorting
                 getData: ($defer, params) ->
+                    console.log 'params'
+                    console.log params.$params.page
                     # use build-in angular filter
                     orderedData = if params.sorting() then $filter('orderBy')($scope.businesses,params.orderBy()) else $scope.businesses
                     $defer.resolve orderedData.slice((params.page() - 1) * params.count(),

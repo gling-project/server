@@ -369,7 +369,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
             //add publication nb
             businessDTO.setNbPublication(publicationService.countByBusiness(business));
-            businessDTO.setNbPublicationActive(publicationService.countActiveByBusiness(business));
+//            businessDTO.setNbPublicationActive(publicationService.countActiveByBusiness(business));
 
             //is claimed
             businessDTO.setIsClaimed(claimBusinessService.isClaimed(business));

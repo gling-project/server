@@ -38,8 +38,8 @@ super-admin-menu-ctrl
                 | {{business.totalFollowers}}
             td(data-title="'Email'", sortable="'email'")
                 | {{business.email}}
-            td(data-title="'Publication active/total'", sortable="'nbPublicationActive'")
-                | {{business.nbPublicationActive}} / {{business.nbPublication}}
+            td(data-title="'Publication total'", sortable="'nbPublication'")
+                | {{business.nbPublication}}
             td(data-title="'a un propriétaire'", sortable="'hasOwner'")
                 | {{business.hasOwner?'oui':'non'}}
             td(data-title="'--.generic.action' | translateText", sortable="'businessStatus'")

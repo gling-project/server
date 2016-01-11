@@ -4056,10 +4056,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/business/confirmPublication/" + businessId,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4089,13 +4089,13 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
 
     }
 
-    this.confirmClaim = function (businessId,accountId, callbackSuccess, callbackError) {
+    this.confirmClaim = function (businessId, accountId, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/superadmin/confirmClaim/" + businessId+"/"+accountId,
+            'url': "/rest/superadmin/confirmClaim/" + businessId + "/" + accountId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:{}
+            data: {}
         }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data);
@@ -4115,12 +4115,12 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'method': "POST",
             'url': "/rest/import_category_translation",
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:{}
+            data: {}
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4137,10 +4137,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/business/all",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4150,6 +4150,26 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
 
     };
 
+    //this.getBusinessesByPage = function (page, sortBy, callbackSuccess, callbackError) {
+    //
+    //    $http({
+    //        'method': "GET",
+    //        'url': "/rest/business/" + page + "/" + sortBy,
+    //        'headers': "Content-Type:application/json;charset=utf-8"
+    //    }).success(function (data, status) {
+    //            if (callbackSuccess != null) {
+    //                callbackSuccess(data);
+    //            }
+    //        })
+    //        .error(function (data, status) {
+    //            $flash.error(data.message);
+    //            if (callbackError != null) {
+    //                callbackError(data, status);
+    //            }
+    //        });
+    //
+    //};
+
 
     this.getUserDetails = function (callbackSuccess, callbackError) {
 
@@ -4158,10 +4178,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/accountDetails",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4179,10 +4199,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/accountDetailsForToday",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4199,10 +4219,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/categories_interests",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4219,10 +4239,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/category_interest_link/" + categoryName + "/" + interestName + "/" + newValue,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4240,10 +4260,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/stats",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.stats);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.stats);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4262,10 +4282,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4283,10 +4303,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/customerPosition",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.list);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4303,10 +4323,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/importBusiness/" + name,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4322,10 +4342,10 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
             'url': "/rest/superadmin/interestStats",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -4335,13 +4355,13 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
     };
 
 
-    this.createPromotion = function (businessId,promotion,callbackSuccess, callbackError) {
+    this.createPromotion = function (businessId, promotion, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/superadmin/createPromotion/"+businessId,
+            'url': "/rest/superadmin/createPromotion/" + businessId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:promotion
+            data: promotion
         }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data);
@@ -4356,14 +4376,13 @@ myApp.service("superAdminService", ['$http', '$flash', function ($http, $flash) 
     };
 
 
-
-    this.createBusinessNotification = function (businessId,businessNotification,callbackSuccess, callbackError) {
+    this.createBusinessNotification = function (businessId, businessNotification, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/superadmin/createBusinessNotification/"+businessId,
+            'url': "/rest/superadmin/createBusinessNotification/" + businessId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:businessNotification
+            data: businessNotification
         }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data);
@@ -6962,7 +6981,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("js/view/admin/_adminStat.html",
     "<super-admin-menu-ctrl></super-admin-menu-ctrl><div class=my-tabs><div ng-click=\"setTab('main')\" ng-class=\"{'selected':tab == 'main'}\">Statistiques</div><div ng-click=\"setTab('users')\" ng-class=\"{'selected':tab == 'users'}\">Détails utilisateurs</div><div ng-click=\"setTab('interest')\" ng-class=\"{'selected':tab == 'interest'}\">Intérêts</div></div><div ng-show=\"tab == 'main'\"><h1>Stats</h1><table class=admin_stat><tr ng-repeat=\"(title, val) in stats\"><td>{{title}}</td><td>{{val.value1}}</td><td>{{val.value2 * 100 | number:2}} %</td></tr></table><button ng-click=refreshStat()>Refrech</button></div><div ng-show=\"tab == 'users'\"><h1>User Details</h1><table><tr ng-repeat=\"detail in details\"><td>{{detail.title}} ({{detail.total}})</td><td style=\"vertical-align: top\"><donut-chart-ctrl style=\"width: 300px;height: 300px;display: inline-block\" ng-info=detail.nbSessionChartParam></donut-chart-ctrl></td><td><donut-chart-ctrl style=\"width: 300px;height: 300px;display: inline-block\" ng-info=detail.nbFollowChartParam></donut-chart-ctrl></td><td><donut-chart-ctrl style=\"width: 300px;height: 300px;display: inline-block\" ng-info=detail.nbAddressChartParam></donut-chart-ctrl></td><td><donut-chart-ctrl style=\"width: 300px;height: 300px;display: inline-block\" ng-info=detail.sharePositionChartParam></donut-chart-ctrl></td></tr><tr collapse=2><button ng-click=refreshDetails()>Refrech</button></tr></table></div><div ng-show=\"tab == 'interest'\"><h1>Intérêts</h1><donut-chart-ctrl style=\"width: 600px;height: 600px;display: inline-block\" ng-info=interestGraph1></donut-chart-ctrl><donut-chart-ctrl style=\"width: 600px;height: 600px;display: inline-block\" ng-info=interestGraph7></donut-chart-ctrl><donut-chart-ctrl style=\"width: 600px;height: 600px;display: inline-block\" ng-info=interestGraph14></donut-chart-ctrl><donut-chart-ctrl style=\"width: 600px;height: 600px;display: inline-block\" ng-info=interestGraph28></donut-chart-ctrl><button ng-click=refreshInterest()>Refrech</button></div>");
   $templateCache.put("js/view/admin/adminBusiness.html",
-    "<super-admin-menu-ctrl></super-admin-menu-ctrl><div class=admin-business-page><h1>Commerces</h1><h2>Nouveaux commerces</h2><table class=import-table><tr><td>Importer un nouveau commerce depuis une page facebook</td><td><input ng-model=importBusinessInput placeholder=\"Url de la page &agrave; importer\" ng-disabled=\"importBusinessLoading === true\"></td><td><button ng-click=importBusinessStart() ng-disabled=\"importBusinessLoading === true\">Importer !</button><img ng-show=\"importBusinessLoading === true\" src=/assets/images/modal-loading.gif></td></tr></table><h2>Listes des commerces Total : {{businesses.length}})</h2><img ng-show=\"businessListLoading === true\" src=/assets/images/modal-loading.gif><button ng-click=displayMapFct(!displayMap)>Afficher la carte</button><table class=\"table business-list-param\" ng-show=\"businessListLoading===false\" ng-table=tableParams><tr ng-mouseover=startAnimation(business,true) ng-repeat=\"business in $data\" ng-mouseleave=startAnimation(business,false)><td data-title=\"'--.generic.name' | translateText\" sortable>{{business.name}}</td><td data-title=\"'--.generic.status' | translateText\" sortable>{{business.businessStatus}}</td><td data-title=\"'Cr&eacute;ation'\" sortable>{{business.creationDate | date}}</td><td data-title=\"'dernier changement'\" sortable>{{business.lastStatusChange | date}}</td><td data-title=\"'Followers'\" sortable>{{business.totalFollowers}}</td><td data-title=\"'Email'\" sortable>{{business.email}}</td><td data-title=\"'Publication active/total'\" sortable>{{business.nbPublicationActive}} / {{business.nbPublication}}</td><td data-title=\"'a un propri&eacute;taire'\" sortable>{{business.hasOwner?'oui':'non'}}</td><td data-title=\"'--.generic.action' | translateText\" sortable><button ng-click=toBusiness(business.id)>{{'--.admin.business.toBusiness' | translateText}}</button><button ng-show=\"business.businessStatus == 'WAITING_CONFIRMATION' \" ng-click=confirmPublication(business) name=admin-business-btn-confirm-publication>{{'--.admin.business.confirmPublication' | translateText}}</button><button ng-show=\"business.businessStatus == 'PUBLISHED' &amp;&amp; business.isClaimed ==true\" ng-click=confirmClaim(business) name=admin-business-btn-confirm-claim>{{'--.admin.business.confirmClaim' | translateText}}</button><button ng-show=\"business.businessStatus == 'PUBLISHED'\" ng-click=createPromotion(business)>créer une promotion</button><button ng-show=\"business.businessStatus == 'PUBLISHED'\" ng-click=createNotification(business)>créer une notification</button></td></tr></table><div class=map-panel ng-show=\"displayMap === true\"><button ng-click=\"displayMap = !displayMap\">Masquer la carte</button><div><map center=\"{{mapData.center.latitude}}, {{mapData.center.longitude}}\" zoom={{mapData.zoom}}></map></div></div></div>");
+    "<super-admin-menu-ctrl></super-admin-menu-ctrl><div class=admin-business-page><h1>Commerces</h1><h2>Nouveaux commerces</h2><table class=import-table><tr><td>Importer un nouveau commerce depuis une page facebook</td><td><input ng-model=importBusinessInput placeholder=\"Url de la page &agrave; importer\" ng-disabled=\"importBusinessLoading === true\"></td><td><button ng-click=importBusinessStart() ng-disabled=\"importBusinessLoading === true\">Importer !</button><img ng-show=\"importBusinessLoading === true\" src=/assets/images/modal-loading.gif></td></tr></table><h2>Listes des commerces Total : {{businesses.length}})</h2><img ng-show=\"businessListLoading === true\" src=/assets/images/modal-loading.gif><button ng-click=displayMapFct(!displayMap)>Afficher la carte</button><table class=\"table business-list-param\" ng-show=\"businessListLoading===false\" ng-table=tableParams><tr ng-mouseover=startAnimation(business,true) ng-repeat=\"business in $data\" ng-mouseleave=startAnimation(business,false)><td data-title=\"'--.generic.name' | translateText\" sortable>{{business.name}}</td><td data-title=\"'--.generic.status' | translateText\" sortable>{{business.businessStatus}}</td><td data-title=\"'Cr&eacute;ation'\" sortable>{{business.creationDate | date}}</td><td data-title=\"'dernier changement'\" sortable>{{business.lastStatusChange | date}}</td><td data-title=\"'Followers'\" sortable>{{business.totalFollowers}}</td><td data-title=\"'Email'\" sortable>{{business.email}}</td><td data-title=\"'Publication total'\" sortable>{{business.nbPublication}}</td><td data-title=\"'a un propri&eacute;taire'\" sortable>{{business.hasOwner?'oui':'non'}}</td><td data-title=\"'--.generic.action' | translateText\" sortable><button ng-click=toBusiness(business.id)>{{'--.admin.business.toBusiness' | translateText}}</button><button ng-show=\"business.businessStatus == 'WAITING_CONFIRMATION' \" ng-click=confirmPublication(business) name=admin-business-btn-confirm-publication>{{'--.admin.business.confirmPublication' | translateText}}</button><button ng-show=\"business.businessStatus == 'PUBLISHED' &amp;&amp; business.isClaimed ==true\" ng-click=confirmClaim(business) name=admin-business-btn-confirm-claim>{{'--.admin.business.confirmClaim' | translateText}}</button><button ng-show=\"business.businessStatus == 'PUBLISHED'\" ng-click=createPromotion(business)>créer une promotion</button><button ng-show=\"business.businessStatus == 'PUBLISHED'\" ng-click=createNotification(business)>créer une notification</button></td></tr></table><div class=map-panel ng-show=\"displayMap === true\"><button ng-click=\"displayMap = !displayMap\">Masquer la carte</button><div><map center=\"{{mapData.center.latitude}}, {{mapData.center.longitude}}\" zoom={{mapData.zoom}}></map></div></div></div>");
   $templateCache.put("js/view/admin/adminContact.html",
     "<super-admin-menu-ctrl></super-admin-menu-ctrl><h1>contacter les commerçants</h1>Sujet<br><input ng-model=dto.subject style=width:800px><br><br>Message<br><textarea ng-model=dto.message style=width:800px;height:600px></textarea><br><br><button ng-click=send()>Envoyer</button>");
   $templateCache.put("js/view/admin/adminMap.html",

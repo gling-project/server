@@ -8,10 +8,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/business/confirmPublication/" + businessId,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -41,13 +41,13 @@ myApp.service("superAdminService", function ($http, $flash) {
 
     }
 
-    this.confirmClaim = function (businessId,accountId, callbackSuccess, callbackError) {
+    this.confirmClaim = function (businessId, accountId, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/superadmin/confirmClaim/" + businessId+"/"+accountId,
+            'url': "/rest/superadmin/confirmClaim/" + businessId + "/" + accountId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:{}
+            data: {}
         }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data);
@@ -67,12 +67,12 @@ myApp.service("superAdminService", function ($http, $flash) {
             'method': "POST",
             'url': "/rest/import_category_translation",
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:{}
+            data: {}
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -89,10 +89,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/business/all",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -102,6 +102,26 @@ myApp.service("superAdminService", function ($http, $flash) {
 
     };
 
+    //this.getBusinessesByPage = function (page, sortBy, callbackSuccess, callbackError) {
+    //
+    //    $http({
+    //        'method': "GET",
+    //        'url': "/rest/business/" + page + "/" + sortBy,
+    //        'headers': "Content-Type:application/json;charset=utf-8"
+    //    }).success(function (data, status) {
+    //            if (callbackSuccess != null) {
+    //                callbackSuccess(data);
+    //            }
+    //        })
+    //        .error(function (data, status) {
+    //            $flash.error(data.message);
+    //            if (callbackError != null) {
+    //                callbackError(data, status);
+    //            }
+    //        });
+    //
+    //};
+
 
     this.getUserDetails = function (callbackSuccess, callbackError) {
 
@@ -110,10 +130,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/accountDetails",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -131,10 +151,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/accountDetailsForToday",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -151,10 +171,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/categories_interests",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -171,10 +191,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/category_interest_link/" + categoryName + "/" + interestName + "/" + newValue,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -192,10 +212,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/stats",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.stats);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.stats);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -214,10 +234,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'headers': "Content-Type:application/json;charset=utf-8",
             'data': dto
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -235,10 +255,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/customerPosition",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.list);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -255,10 +275,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/importBusiness/" + name,
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -274,10 +294,10 @@ myApp.service("superAdminService", function ($http, $flash) {
             'url': "/rest/superadmin/interestStats",
             'headers': "Content-Type:application/json;charset=utf-8"
         }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data);
-            }
-        })
+                if (callbackSuccess != null) {
+                    callbackSuccess(data);
+                }
+            })
             .error(function (data, status) {
                 $flash.error(data.message);
                 if (callbackError != null) {
@@ -287,13 +307,13 @@ myApp.service("superAdminService", function ($http, $flash) {
     };
 
 
-    this.createPromotion = function (businessId,promotion,callbackSuccess, callbackError) {
+    this.createPromotion = function (businessId, promotion, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/superadmin/createPromotion/"+businessId,
+            'url': "/rest/superadmin/createPromotion/" + businessId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:promotion
+            data: promotion
         }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data);
@@ -308,14 +328,13 @@ myApp.service("superAdminService", function ($http, $flash) {
     };
 
 
-
-    this.createBusinessNotification = function (businessId,businessNotification,callbackSuccess, callbackError) {
+    this.createBusinessNotification = function (businessId, businessNotification, callbackSuccess, callbackError) {
 
         $http({
             'method': "POST",
-            'url': "/rest/superadmin/createBusinessNotification/"+businessId,
+            'url': "/rest/superadmin/createBusinessNotification/" + businessId,
             'headers': "Content-Type:application/json;charset=utf-8",
-            data:businessNotification
+            data: businessNotification
         }).success(function (data, status) {
                 if (callbackSuccess != null) {
                     callbackSuccess(data);
