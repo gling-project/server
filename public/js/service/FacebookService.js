@@ -1,7 +1,8 @@
 myApp.service('facebookService', function($http, accountService, $locale, languageService, constantService, $flash, $filter) {
   var authResponse, isConnected, _this;
   this.facebookAppId;
-  this.facebookAuthorization = 'public_profile,email,manage_pages,publish_pages';
+  this.facebookAuthorization = 'public_profile,email';
+  this.facebookAuthorizationForPublishing = 'manage_pages,publish_pages';
   isConnected = false;
   authResponse = null;
   _this = this;
@@ -16,6 +17,7 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
       console.log('FB1');
       return FB.getLoginStatus(function(response) {
         console.log('FB2');
+        console.log(response);
         if (response.status === 'connected') {
           authResponse = response.authResponse;
           isConnected = true;
@@ -122,7 +124,8 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
           }
         }
       }, {
-        scope: this.facebookAuthorization
+        scope: this.facebookAuthorization,
+        auth_type: 'rerequest'
       });
     }
   };
@@ -143,7 +146,8 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
           }
         }
       }, {
-        scope: this.facebookAuthorization
+        scope: this.facebookAuthorization,
+        auth_type: 'rerequest'
       });
     }
   };
@@ -165,23 +169,29 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
         var pageId;
         console.log('share 2');
         pageId = response.id;
-        return FB.api('/me/accounts', 'get', {}, function(response) {
-          var a, token, _i, _len, _ref, _results;
-          console.log('share 3');
-          _ref = response.data;
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            a = _ref[_i];
-            console.log('share 3.5:' + a.id + '/' + pageId);
-            _results.push(a.id === pageId ? (console.log('share 4 !!!!! :' + a.access_token), token = a.access_token, FB.api("/me/photos?access_token=" + token, "POST", {
-              url: data.pictureLink,
-              caption: data.message
-            }, function(response) {
-              console.log('share 5');
-              return console.log(response);
-            })) : void 0);
-          }
-          return _results;
+        return FB.login(function(response) {
+          console.log('share 4.1');
+          console.log(response);
+          return FB.api('/me/accounts', 'get', {}, function(response) {
+            var a, token, _i, _len, _ref, _results;
+            console.log('share 3');
+            _ref = response.data;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              a = _ref[_i];
+              console.log('share 3.5:' + a.id + '/' + pageId);
+              _results.push(a.id === pageId ? (console.log('share 4 !!!!! :' + a.access_token), token = a.access_token, data.pictureLink != null ? FB.api("/me/photos?access_token=" + token, "POST", {
+                url: data.pictureLink,
+                caption: data.message
+              }, function(response) {
+                console.log('share 5');
+                return console.log(response);
+              }) : (FB.api('/me/feed?access_token=' + token, 'get', 'post', data, function(response) {}), console.log('share 5'), console.log(response))) : void 0);
+            }
+            return _results;
+          });
+        }, {
+          scope: 'manage_pages,publish_pages'
         });
       });
     }
