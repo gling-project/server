@@ -31,6 +31,9 @@
             .home-interest-box-background.home-interest-box-background-second
                 button.gling-button.home-interest.button-with-label(class="{{'gling-icon gling-icon-' + interest.name}}", ng-repeat='interest in interestDisplayed2', ng-show='interest.iconName!=null', ng-click='searchByInterest(interest)', ng-class="{'selected':interest.selected === true}")
                     p {{interest.translationName}}
+        //sort by
+        div(style="text-align:center") {{'--.home.sortBy' | translateText}}
+            select(ng-options="choice.key as choice.translation | translateText for choice in sortChoices",ng-model="sortChoose")
         // publication list
         publication-list-ctrl(ng-info='publicationListCtrl')
         // empty result help

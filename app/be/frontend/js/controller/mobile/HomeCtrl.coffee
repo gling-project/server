@@ -2,14 +2,25 @@
 # home controller
 myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, customerInterestService, $timeout, accountService, $rootScope, followService, modalService) ->
 
-    #param
+#param
     $scope.publicationListCtrl = {}
     $scope.businessInfoParam = {}
-    $scope.businessListParam = data: []
+    $scope.businessListParam =
+        data: []
     $scope.currentPage = 0
     $scope.allLoaded = false
     $scope.loadSemaphore = false
     $scope.emptyMessage = null
+
+    #sort
+    $scope.sortChoices = [
+        key: 'distance'
+        translation: '--.home.sort.distance'
+    ,
+        key: 'date'
+        translation: '--.home.sort.date'
+    ]
+    $scope.sortChoose = 'date';
 
     #get the selected interest
     $scope.getSelectedInterest = ->
@@ -61,13 +72,12 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
 
     #loadPublication by interest
     $scope.loadPublicationByInterest = (selectedInterest) ->
-
         if selectedInterest == null
-            #dis-select all interests
+#dis-select all interests
             for interest in $scope.customerInterests
                 interest.selected = false
         else
-            #select interest
+#select interest
             if selectedInterest.selected == true
                 selectedInterest.selected = false
             else
@@ -95,6 +105,11 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
             console.log 'LOAD PUBLICATION AFTER followingMode'
             $scope.loadPublication()
 
+    #sort option watcher
+    $scope.$watch 'sortChoose', (n, o) ->
+        if n != o
+            $scope.loadPublication()
+
     #load publication
     $scope.loadPublication = ->
         interestSelected = $scope.getSelectedInterest()
@@ -106,14 +121,14 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
         #load by criteria
         if $scope.followingMode
             if interestSelected?
-                searchService.byFollowedAndInterest $scope.currentPage, interestSelected.id, (data) ->
+                searchService.byFollowedAndInterest $scope.currentPage, $scope.sortChoose, interestSelected.id, (data) ->
                     loadingPublicationSuccess data, ->
                         $scope.emptyMessage = 'followedWithInterest'
                         $scope.businessListParam.loading = true
                         searchService.nearBusinessByInterest interestSelected.id, (data) ->
                             loadingBusinessSuccess data
             else
-                searchService.byFollowed $scope.currentPage, (data) ->
+                searchService.byFollowed $scope.currentPage, $scope.sortChoose, (data) ->
                     loadingPublicationSuccess data, ->
                         $scope.emptyMessage = 'followed'
                         $scope.businessListParam.loading = true
@@ -121,14 +136,14 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
                             loadingBusinessSuccess data
         else
             if interestSelected?
-                searchService.byInterest $scope.currentPage, interestSelected.id, (data) ->
+                searchService.byInterest $scope.currentPage, $scope.sortChoose, interestSelected.id, (data) ->
                     loadingPublicationSuccess data, ->
                         $scope.emptyMessage = 'newsFeedWithInterest'
                         $scope.businessListParam.loading = true
                         searchService.nearBusinessByInterest interestSelected.id, (data) ->
                             loadingBusinessSuccess data
             else
-                searchService.default $scope.currentPage, (data) ->
+                searchService.default $scope.currentPage, $scope.sortChoose, (data) ->
                     loadingPublicationSuccess data, ->
                         $scope.emptyMessage = 'newsFeed'
                         $scope.businessListParam.loading = true
@@ -137,7 +152,7 @@ myApp.controller 'HomeCtrl', ($scope, geolocationService, searchService, custome
 
     #set following mode
     $scope.setFollowingMode = (n) ->
-        # if there a no value, just use the opposite the following mode
+# if there a no value, just use the opposite the following mode
         if n == null
             n = !$scope.followingMode
         else

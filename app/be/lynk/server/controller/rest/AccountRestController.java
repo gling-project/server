@@ -49,7 +49,7 @@ public class
     @SecurityAnnotation(role = RoleEnum.USER)
     public Result mySession() {
         List<Session> sessions = sessionService.findByAccount(securityController.getCurrentUser());
-        Collection<SessionDTO> map = dozerService.map(sessions, SessionDTO.class);
+        List<SessionDTO> map = dozerService.map(sessions, SessionDTO.class);
 
         return ok(new ListDTO<>(map));
     }

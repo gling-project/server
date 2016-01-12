@@ -3424,9 +3424,14 @@ html[xmlns] .flexslider .slides {
   margin: 0 10px;
   width: 150px;
 }
-.welcome-page .event-publications .event-publication img {
-  cursor: pointer;
+.welcome-page .event-publications .event-publication .image-container {
+  width: 150px;
+  overflow: hidden;
   height: 150px;
+}
+.welcome-page .event-publications .event-publication .image-container img {
+  cursor: pointer;
+  width: 100%;
 }
 .welcome-page .event-publications .link {
   margin-left: 3px;

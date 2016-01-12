@@ -85,17 +85,18 @@ GET           /rest/session                                                     
 
 #search
 POST          /rest/search/publication/lastOnes/$nb<[0-9]+>                                                          @be.lynk.server.controller.rest.SearchRestController.getLastOnes(nb:Integer)
-POST          /rest/search/publication/default/$page<[0-9]+>                                                         @be.lynk.server.controller.rest.SearchRestController.getByDefault(page:Integer)
 GET           /rest/search/publication/business/archive/$id<[0-9]+>/$page<[0-9]+>                                    @be.lynk.server.controller.rest.SearchRestController.getBusinessArchive(page:Integer,id:Long)
 GET           /rest/search/publication/business/previsualization/$id<[0-9]+>/$page<[0-9]+>                           @be.lynk.server.controller.rest.SearchRestController.getBusinessPrevisualization(page:Integer,id:Long)
 GET           /rest/search/publication/business/$id<[0-9]+>/$page<[0-9]+>                                            @be.lynk.server.controller.rest.SearchRestController.getBusiness(page:Integer,id:Long)
-POST          /rest/search/publication/interest/$id<[0-9]+>/$page<[0-9]+>                                            @be.lynk.server.controller.rest.SearchRestController.getByInterest(page:Integer,id:Long)
-POST          /rest/search/publication/followed/$page<[0-9]+>                                                        @be.lynk.server.controller.rest.SearchRestController.getByFollowed(page:Integer)
-POST          /rest/search/publication/followed/interest/$id<[0-9]+>/$page<[0-9]+>                                   @be.lynk.server.controller.rest.SearchRestController.getByInterestAndFollowed(page:Integer,id:Long)
 POST          /rest/search/text/little                                                                               @be.lynk.server.controller.rest.SearchRestController.getByStringLittle()
 POST          /rest/search/text                                                                                      @be.lynk.server.controller.rest.SearchRestController.getByString()
 POST          /rest/search/business/near                                                                             @be.lynk.server.controller.rest.SearchRestController.getNearBusiness()
 POST          /rest/search/business/near/interest/$interestId<[0-9]+>                                                @be.lynk.server.controller.rest.SearchRestController.getNearBusinessByInterest(interestId:Long)
+
+POST          /rest/search/publication/default/$page<[0-9]+>/:sort                                                   @be.lynk.server.controller.rest.SearchRestController.getByDefault(page:Integer,sort:String)
+POST          /rest/search/publication/followed/$page<[0-9]+>/:sort                                                  @be.lynk.server.controller.rest.SearchRestController.getByFollowed(page:Integer,sort:String)
+POST          /rest/search/publication/followed/interest/$id<[0-9]+>/$page<[0-9]+>/:sort                             @be.lynk.server.controller.rest.SearchRestController.getByInterestAndFollowed(page:Integer,id:Long,sort:String)
+POST          /rest/search/publication/interest/$id<[0-9]+>/$page<[0-9]+>/:sort                                      @be.lynk.server.controller.rest.SearchRestController.getByInterest(page:Integer,id:Long,sort:String)
 
 #map
 GET           /rest/map/business                                                                                     @be.lynk.server.controller.rest.MapRestController.getMapDataBusinesses()

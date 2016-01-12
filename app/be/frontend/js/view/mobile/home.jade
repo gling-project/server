@@ -11,6 +11,9 @@ header-search-ctrl
                             span.gling-button
                                 | {{'--.home.mobile.selectInterest' | translateText}}
                             i.home-interest.gling-icon.selected(ng-show='getSelectedInterest()!=null', class="{{'gling-icon-' + getSelectedInterest().name}}")
+                    //sort by
+                    div(style="text-align:center") {{'--.home.sortBy' | translateText}}
+                        select(ng-options="choice.key as choice.translation | translateText for choice in sortChoices",ng-model="sortChoose")
                     // publication list
                     publication-list-mobile-ctrl(ng-info='publicationListCtrl')
                     // empty result help

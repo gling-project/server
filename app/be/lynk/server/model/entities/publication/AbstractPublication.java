@@ -17,7 +17,7 @@ import java.util.List;
  * Created by florian on 5/06/15.
  */
 @Entity
-public abstract class AbstractPublication extends AbstractEntity implements Comparable<AbstractPublication> {
+public abstract class AbstractPublication extends AbstractEntity {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false, fetch = FetchType.LAZY)
     private Business business;
@@ -141,9 +141,4 @@ public abstract class AbstractPublication extends AbstractEntity implements Comp
     }
 
 
-
-    @Override
-    public int compareTo(AbstractPublication o) {
-        return 0;
-    }
 }

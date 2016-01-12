@@ -18,15 +18,25 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
     $scope.loadSemaphore = false
     $scope.emptyMessage = null
 
+
+    $scope.sortChoices = [
+        key: 'distance'
+        translation: '--.home.sort.distance'
+    ,
+        key: 'date'
+        translation: '--.home.sort.date'
+    ]
+    $scope.sortChoose = 'date';
+
     #write path by interests and follow
     path = ->
         #build path
-        path = '/shopnews'
+        path = '/shopnews/'
         if $scope.followingMode
-            path += '/following'
+            path += 'following/'
         for i of $scope.customerInterests
             if $scope.customerInterests[i].selected == true
-                path += '/' + $scope.customerInterests[i].name
+                path += $scope.customerInterests[i].name
         #navigate
         $location.path path, false
         $rootScope.$broadcast 'PROGRESS_BAR_STOP'
@@ -124,6 +134,11 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
         $scope.businessListParam.data = data
         $scope.businessListParam.loading = false
 
+    #sort option watcher
+    $scope.$watch 'sortChoose', (n,o) ->
+        if n!=o
+            $scope.search()
+
     #search function
     $scope.search = ->
         if $scope.allLoaded == false
@@ -140,14 +155,14 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
                 $scope.businessListParam.data = []
             if $scope.followingMode
                 if interestSelected?
-                    searchService.byFollowedAndInterest $scope.currentPage, interestSelected.id, (data) ->
+                    searchService.byFollowedAndInterest $scope.currentPage, $scope.sortChoose,interestSelected.id, (data) ->
                         successLoadingPublications data, ->
                             $scope.emptyMessage = 'followedWithInterest'
                             $scope.businessListParam.loading = true
                             searchService.nearBusinessByInterest interestSelected.id, (data) ->
                                 successLoadingBusiness data
                 else
-                    searchService.byFollowed $scope.currentPage, (data) ->
+                    searchService.byFollowed $scope.currentPage, $scope.sortChoose, (data) ->
                         successLoadingPublications data, ->
                             $scope.emptyMessage = 'followed'
                             $scope.businessListParam.loading = true
@@ -155,14 +170,14 @@ myApp.controller 'HomeCtrl', ($scope, modalService, customerInterestService, sea
                                 successLoadingBusiness data
             else
                 if interestSelected?
-                    searchService.byInterest $scope.currentPage, interestSelected.id, (data) ->
+                    searchService.byInterest $scope.currentPage, $scope.sortChoose,interestSelected.id, (data) ->
                         successLoadingPublications data, ->
                             $scope.emptyMessage = 'newsFeedWithInterest'
                             $scope.businessListParam.loading = true
                             searchService.nearBusinessByInterest interestSelected.id, (data) ->
                                 successLoadingBusiness data
                 else
-                    searchService.default $scope.currentPage, (data) ->
+                    searchService.default $scope.currentPage, $scope.sortChoose,(data) ->
                         successLoadingPublications data, ->
                             $scope.emptyMessage = 'newsFeed'
                             $scope.businessListParam.loading = true

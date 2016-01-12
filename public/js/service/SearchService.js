@@ -5,36 +5,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
 
     this.canceler = null;
 
-    this.default = function (page,callbackSuccess, callbackError) {
-
-        console.log("search default : "+page);
-
-        if (this.canceler != null) {$
-            this.canceler.resolve();
-        }
-        this.canceler = $q.defer();
-
-        $http({
-            'method': "POST",
-            'url': "/rest/search/publication/default/"+page,
-            'headers': "Content-Type:application/json; charset=utf-8",
-            'dataType':"json",
-            'data': geolocationService.getPositionWithoutNull(),
-            timeout: this.canceler.promise
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                if(data!=null) {
-                    $flash.error(data.message);
-                }
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
 
     this.searchByStringLittle = function (searchText, callbackSuccess, callbackError) {
 
@@ -91,66 +61,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
         }).success(function (data, status) {
             if (callbackSuccess != null) {
                 callbackSuccess(data);
-            }
-        })
-            .error(function (data, status) {
-                if(data!=null) {
-                    $flash.error(data.message);
-                }
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.byFollowed = function (page,callbackSuccess, callbackError) {
-
-        console.log("search by follow : "+page);
-
-        if (this.canceler != null) {
-            this.canceler.resolve();
-        }
-        this.canceler = $q.defer();
-
-        $http({
-            'method': "POST",
-            'url': "/rest/search/publication/followed/"+page,
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.getPositionWithoutNull(),
-            timeout: this.canceler.promise
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                if(data!=null) {
-                    $flash.error(data.message);
-                }
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-    };
-
-    this.byFollowedAndInterest = function (page,interestId,callbackSuccess, callbackError) {
-
-        console.log("search by follow and interest : "+page+"/"+interestId);
-
-        if (this.canceler != null) {
-            this.canceler.resolve();
-        }
-        this.canceler = $q.defer();
-
-        $http({
-            'method': "POST",
-            'url': "/rest/search/publication/followed/interest/"+interestId+"/"+page,
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.getPositionWithoutNull(),
-            timeout: this.canceler.promise
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
             }
         })
             .error(function (data, status) {
@@ -255,38 +165,6 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
     };
 
-    this.byInterest = function (page,interestId, callbackSuccess, callbackError) {
-
-        console.log("search by interst : "+page+"/"+interestId);
-
-        if (this.canceler != null) {
-            this.canceler.resolve();
-        }
-
-        this.canceler = $q.defer();
-
-        $http({
-            'method': "POST",
-            'url': "/rest/search/publication/interest/" + interestId+"/"+page,
-            'headers': "Content-Type:application/json;charset=utf-8",
-            'data': geolocationService.getPositionWithoutNull(),
-            timeout: this.canceler.promise
-        }).success(function (data, status) {
-            if (callbackSuccess != null) {
-                callbackSuccess(data.list);
-            }
-        })
-            .error(function (data, status) {
-                if(data!=null) {
-                    $flash.error(data.message);
-                }
-                if (callbackError != null) {
-                    callbackError(data, status);
-                }
-            });
-
-    };
-
     this.nearBusiness = function (callbackSuccess, callbackError) {
 
         console.log("search near business");
@@ -375,4 +253,134 @@ myApp.service("searchService", function ($http, $flash, $rootScope, geolocationS
             });
 
     };
+
+
+
+
+
+
+
+    this.byFollowedAndInterest = function (page,sortBy,interestId,callbackSuccess, callbackError) {
+
+        console.log("search by follow and interest : "+page+"/"+interestId+"/"+sortBy);
+
+        if (this.canceler != null) {
+            this.canceler.resolve();
+        }
+        this.canceler = $q.defer();
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/publication/followed/interest/"+interestId+"/"+page+"/"+sortBy,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': geolocationService.getPositionWithoutNull(),
+            timeout: this.canceler.promise
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.list);
+                }
+            })
+            .error(function (data, status) {
+                if(data!=null) {
+                    $flash.error(data.message);
+                }
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+
+    this.byFollowed = function (page,sortBy,callbackSuccess, callbackError) {
+
+        console.log("search by follow : "+page+"/"+sortBy);
+
+        if (this.canceler != null) {
+            this.canceler.resolve();
+        }
+        this.canceler = $q.defer();
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/publication/followed/"+page+"/"+sortBy,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': geolocationService.getPositionWithoutNull(),
+            timeout: this.canceler.promise
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.list);
+                }
+            })
+            .error(function (data, status) {
+                if(data!=null) {
+                    $flash.error(data.message);
+                }
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
+    this.byInterest = function (page,sortBy,interestId, callbackSuccess, callbackError) {
+
+        console.log("search by interst : "+page+"/"+interestId+"/"+sortBy);
+
+        if (this.canceler != null) {
+            this.canceler.resolve();
+        }
+
+        this.canceler = $q.defer();
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/publication/interest/" + interestId+"/"+page+"/"+sortBy,
+            'headers': "Content-Type:application/json;charset=utf-8",
+            'data': geolocationService.getPositionWithoutNull(),
+            timeout: this.canceler.promise
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.list);
+                }
+            })
+            .error(function (data, status) {
+                if(data!=null) {
+                    $flash.error(data.message);
+                }
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+
+    };
+    this.default = function (page,sortBy,callbackSuccess, callbackError) {
+
+        console.log("search default : "+page+"/"+sortBy);
+
+        if (this.canceler != null) {$
+            this.canceler.resolve();
+        }
+        this.canceler = $q.defer();
+
+        $http({
+            'method': "POST",
+            'url': "/rest/search/publication/default/"+page+"/"+sortBy,
+            'headers': "Content-Type:application/json; charset=utf-8",
+            'dataType':"json",
+            'data': geolocationService.getPositionWithoutNull(),
+            timeout: this.canceler.promise
+        }).success(function (data, status) {
+                if (callbackSuccess != null) {
+                    callbackSuccess(data.list);
+                }
+            })
+            .error(function (data, status) {
+                if(data!=null) {
+                    $flash.error(data.message);
+                }
+                if (callbackError != null) {
+                    callbackError(data, status);
+                }
+            });
+    };
+
 });

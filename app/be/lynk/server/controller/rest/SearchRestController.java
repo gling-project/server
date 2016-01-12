@@ -21,6 +21,7 @@ import play.mvc.Result;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Created by florian on 23/05/15.
@@ -53,7 +54,7 @@ public class SearchRestController extends AbstractRestController {
 
 
         List<AbstractPublication> publications = publicationService.findLastActive(nb);
-        return ok(new ListDTO<>(finalize(position, publications)));
+        return ok(new ListDTO<>(finalize(position, publications,SortEnum.DATE)));
     }
 
     @Transactional
@@ -138,7 +139,7 @@ public class SearchRestController extends AbstractRestController {
     }
 
     @Transactional
-    public Result getByDefault(Integer page) {
+    public Result getByDefault(Integer page, String sort) {
 
         //already initialized by extractPosition
 
@@ -150,12 +151,12 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> searchResults = publicationService.findActivePublication(position, MAX_DISTANCE);
 
-        return selectByPageAndAlgorithme(t, page, searchResults, position);
+        return selectByPageAndAlgorithme(t, page, searchResults, position, SortEnum.byName(sort));
     }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
-    public Result getByFollowed(Integer page) {
+    public Result getByFollowed(Integer page, String sort) {
 
         //already initialized by extractPosition
 
@@ -170,11 +171,11 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> finalList = publicationService.findActivePublicationByBusinesses(position, MAX_DISTANCE, businesses);
 
-        return selectByPageAndAlgorithme(t, page, finalList, position);
+        return selectByPageAndAlgorithme(t, page, finalList, position, SortEnum.byName(sort));
     }
 
     @Transactional
-    public Result getByInterest(Integer page, long id) {
+    public Result getByInterest(Integer page, long id, String sort) {
 
         //already initialized by extractPosition
 
@@ -187,12 +188,12 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByInterest(position, MAX_DISTANCE, interest);
 
-        return selectByPageAndAlgorithme(t, page, publications, position);
+        return selectByPageAndAlgorithme(t, page, publications, position, SortEnum.byName(sort));
     }
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.USER)
-    public Result getByInterestAndFollowed(Integer page, long id) {
+    public Result getByInterestAndFollowed(Integer page, long id, String sort) {
 
         initialization();
 
@@ -207,7 +208,7 @@ public class SearchRestController extends AbstractRestController {
 
         List<SearchResult> publications = publicationService.findActivePublicationByBusinessesAndInterest(position, MAX_DISTANCE, businesses, interest);
 
-        Result result = selectByPageAndAlgorithme(t, page, publications, position);
+        Result result = selectByPageAndAlgorithme(t, page, publications, position, SortEnum.byName(sort));
 
         return result;
     }
@@ -249,7 +250,7 @@ public class SearchRestController extends AbstractRestController {
                         searchResultDTO.setBusinesses(finalizeBusiness(position, businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME));
                         break;
                     case PUBLICATION:
-                        searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max)));
+                        searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max),SortEnum.DATE));
                         break;
                 }
             }
@@ -261,7 +262,7 @@ public class SearchRestController extends AbstractRestController {
             }
             List<BusinessToDisplayDTO> businessToDisplayDTOs = finalizeBusiness(position, businessService.search(searchElement.getText(), searchDTO.getPage(), max), OrderType.NAME);
             searchResultDTO.setBusinesses(businessToDisplayDTOs);
-            searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max)));
+            searchResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), searchDTO.getPage(), max),SortEnum.DATE));
         }
         return ok(searchResultDTO);
     }
@@ -298,14 +299,14 @@ public class SearchRestController extends AbstractRestController {
                         searchLittleResultDTO.setBusinesses(finalizeBusiness(position, businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
                         break;
                     case PUBLICATION:
-                        searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max)));
+                        searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max),SortEnum.DATE));
                         break;
                 }
             }
         } else {
             searchLittleResultDTO.setCategories(dozerService.map(businessCategoryService.search(searchElement.getText(), lang(), max), BusinessCategoryFlatDTO.class));
             searchLittleResultDTO.setBusinesses(finalizeBusiness(position, businessService.search(searchElement.getText(), 0, max), OrderType.NAME));
-            searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max)));
+            searchLittleResultDTO.setPublications(finalize(position, publicationService.search(searchElement.getText(), 0, max),SortEnum.DATE));
         }
 
         return ok(searchLittleResultDTO);
@@ -377,8 +378,8 @@ public class SearchRestController extends AbstractRestController {
 
     }
 
-    private List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications) {
-        return convertPublicationToDTO(position, publications);
+    private List<AbstractPublicationDTO> finalize(Position position, List<AbstractPublication> publications,SortEnum sort) {
+        return convertPublicationToDTO(position, publications,sort);
     }
 
 
@@ -558,12 +559,17 @@ public class SearchRestController extends AbstractRestController {
 
         List<AbstractPublicationDTO> publication = dozerService.map(publications, AbstractPublicationDTO.class);
 
-        Collections.sort(publication);
+        Collections.sort(publication, new Comparator<AbstractPublicationDTO>() {
+            @Override
+            public int compare(AbstractPublicationDTO o1, AbstractPublicationDTO o2) {
+                return o2.getStartDate().compareTo(o1.getStartDate());
+            }
+        });
 
         return ok(new ListDTO<>(publication));
     }
 
-    private Result selectByPageAndAlgorithme(long t, Integer page, List<SearchResult> searchResults, Position position) {
+    private Result selectByPageAndAlgorithme(long t, Integer page, List<SearchResult> searchResults, Position position, SortEnum sort) {
 
 
         String s = "";
@@ -581,7 +587,19 @@ public class SearchRestController extends AbstractRestController {
         s += "================== DISTANCE : " + (new Date().getTime() - t) + "\n";
 
         //sort
-        Collections.sort(searchResults);
+        Collections.sort(searchResults, new Comparator<SearchResult>() {
+            @Override
+            public int compare(SearchResult o1, SearchResult o2) {
+                switch (sort) {
+                    case DISTANCE:
+                        return o1.getDistance().compareTo(o2.getDistance());
+                    case DATE:
+                        return o2.getStartDate().compareTo(o1.getStartDate());
+                    default:
+                        return o2.getStartDate().compareTo(o1.getStartDate());
+                }
+            }
+        });
 
         s += "================== SORT : " + (new Date().getTime() - t) + "\n";
 
@@ -604,12 +622,34 @@ public class SearchRestController extends AbstractRestController {
         s += "================== LOAD : " + (new Date().getTime() - t) + "\n";
 
 
-        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(convertPublicationToDTO(position, publications));
+        ListDTO<AbstractPublicationDTO> abstractPublicationDTOListDTO = new ListDTO<>(convertPublicationToDTO(position, publications,sort));
+
+
 
         s += "================== Finalize : " + (new Date().getTime() - t) + "\n";
 
         Logger.info(s);
 
         return ok(abstractPublicationDTOListDTO);
+    }
+
+    public enum SortEnum {
+        DISTANCE("distance"),
+        DATE("date");
+
+        private String name;
+
+        SortEnum(String name) {
+            this.name = name;
+        }
+
+        public static SortEnum byName(String sort) {
+            for (SortEnum sortEnum : values()) {
+                if (sort.equals(sortEnum.name)) {
+                    return sortEnum;
+                }
+            }
+            return null;
+        }
     }
 }

@@ -47,7 +47,7 @@ public class PublicationRestController extends AbstractRestController {
 
         List<AbstractPublication> abstractPublications = publicationService.findActiveByIds(ids);
 
-        List<AbstractPublicationDTO> publicationDTOs = convertPublicationToDTO(position, abstractPublications);
+        List<AbstractPublicationDTO> publicationDTOs = convertPublicationToDTO(position, abstractPublications, SearchRestController.SortEnum.DATE);
 
         return ok(new ListDTO<>(publicationDTOs));
     }

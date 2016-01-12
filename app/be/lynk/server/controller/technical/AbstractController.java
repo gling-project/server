@@ -1,5 +1,6 @@
 package be.lynk.server.controller.technical;
 
+import be.lynk.server.controller.rest.SearchRestController;
 import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.controller.technical.security.source.SourceEnum;
 import be.lynk.server.dto.*;
@@ -281,7 +282,7 @@ public abstract class AbstractController extends Controller {
         return businessToDisplayDTO;
     }
 
-    protected List<AbstractPublicationDTO> convertPublicationToDTO(Position position, List<AbstractPublication> publications) {
+    protected List<AbstractPublicationDTO> convertPublicationToDTO(Position position, List<AbstractPublication> publications, SearchRestController.SortEnum sort) {
 
         //compute distance
         List<Business> addresses = new ArrayList<>();
@@ -324,8 +325,19 @@ public abstract class AbstractController extends Controller {
                 }
             }
         }
-
-        Collections.sort(l);
+        Collections.sort(l, new Comparator<AbstractPublicationDTO>() {
+            @Override
+            public int compare(AbstractPublicationDTO o1, AbstractPublicationDTO o2) {
+                switch (sort) {
+                    case DISTANCE:
+                        return o1.getDistance().compareTo(o2.getDistance());
+                    case DATE:
+                        return o2.getStartDate().compareTo(o1.getStartDate());
+                    default:
+                        return o2.getStartDate().compareTo(o1.getStartDate());
+                }
+            }
+        });
 
         return l;//
     }

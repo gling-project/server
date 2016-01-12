@@ -449,10 +449,10 @@ day_abrv_sunday=Di
 --.followed-business.uncheckAll=Déselectionner
 
 
---.home.interest-switch.help=Triez selon votre position ou vos commerces suivis.
---.home.interest.help=Triez selon vos envies.
---.home.localisation.help=Triez selon votre position.
---.home.followning.help=Triez selon vos commerces suivis.
+--.home.interest-switch.help=Filtrez selon votre position ou vos commerces suivis.
+--.home.interest.help=Filtrez selon vos envies.
+--.home.localisation.help=Filtrez selon votre position.
+--.home.followning.help=Filtrez selon vos commerces suivis.
 --.home.emptyResult.followed=Aucun de vos commerces suivis ne semble avoir publié de nouveautés ou de promotions. Les commerces ci-dessous pourront peut-être vous satisfaire!
 --.home.emptyResult.followedWithInterest=Aucune publication de vos commerces suivis ne semble répondre actuellement à votre envie. Les commerces ci-dessous pourront peut-être vous satisfaire!
 --.home.emptyResult.newsFeed=Aucun commerce ne semble avoir publié de nouveautés ou de promotions.. Les commerces ci-dessous pourront peut-être vous satisfaire!
@@ -701,3 +701,6 @@ day_abrv_sunday=Di
 --.welcome.event.soldes.content=Se rhabiller pour l'hiver qui arrive enfin, remplacer la déco du salon en jetant le sapin, craquer pour l'électro-ménager de vos rêves tout-en-un...<br/>Vos commerçants du bout de la rue regorgent de surprises à prix cassés, mais sans oublier la qualité!</br></br>Vous désirez continuer à participer à l'action #ilovemyshops? Bienvenue sur <a href="http://www.ilovemyshops.be">www.ilovemyshops.be</a> !
 --.welcome.event.soldes.publication.content=Découvrez les actions de vos commerçants pour les soldes!
 --.welcome.more_soldes=Plus de soldes
+--.home.sortBy=Trier par
+--.home.sort.distance=Distance
+--.home.sort.date=Date de publication

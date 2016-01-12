@@ -18,11 +18,12 @@
             .event-publications
                 .event-title {{'--.welcome.event.soldes.publication.content' | translateText}}
                 .event-publication(ng-repeat="p in eventPublications")
-                    img(ng-src="{{p.pictures[0] | image}}",ng-click="goToPublication(p)")
+                    .image-container
+                        img(ng-src="{{p.pictures[0] | image}}",ng-click="goToPublication(p)")
                     .title {{p.title}}
                     div By
                         span.link(ng-click="goTo('/business/'+p.businessId)") {{p.businessName}}
-            button.gling-button-dark(ng-click="goTo('/shopnews/)") {{'--.welcome.more_soldes' | translateText}}
+            button.gling-button-dark(ng-click="goTo('/shopnews/')") {{'--.welcome.more_soldes' | translateText}}
 
         //publication
         .block-title.block-title-left

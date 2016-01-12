@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by florian on 5/06/15.
  */
-public abstract class AbstractPublicationDTO extends DTO implements Comparable<AbstractPublicationDTO> {
+public abstract class AbstractPublicationDTO extends DTO{
 
     protected Long id;
 
@@ -166,14 +166,6 @@ public abstract class AbstractPublicationDTO extends DTO implements Comparable<A
         this.following = following;
     }
 
-
-    @Override
-    public int compareTo(AbstractPublicationDTO o) {
-//        if (this.getDistance() == null || this.getDistance().compareTo(o.getDistance()) == 0) {
-        return o.startDate.compareTo(this.startDate);
-//        }
-//        return this.getDistance().compareTo(o.getDistance());
-    }
 
     @Override
     public String toString() {

@@ -3,29 +3,27 @@ package be.lynk.server.dto;
 import be.lynk.server.dto.technical.DTO;
 
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Created by florian on 11/11/14.
  */
 public class ListDTO<T extends DTO> extends DTO  {
 
-    private Collection<T> list = new HashSet<>();
+    private List<T> list = new ArrayList<>();
 
     public ListDTO() {
     }
 
-    public ListDTO(Collection<T> list) {
+    public ListDTO(List<T> list) {
         this.list = list;
     }
 
-    public Collection<T> getList() {
+    public List<T> getList() {
         return list;
     }
 
-    public void setList(Collection<T> list) {
+    public void setList(List<T> list) {
         this.list = list;
     }
 

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 /**
  * Created by florian on 1/09/15.
  */
-public class SearchResult implements Comparable<SearchResult>{
+public class SearchResult{
 
     private Long publicationId;
 
@@ -88,9 +88,4 @@ public class SearchResult implements Comparable<SearchResult>{
         this.distance = distance;
     }
 
-    @Override
-    public int compareTo(SearchResult o) {
-        return o.startDate.compareTo(this.startDate);
-//        return this.distance.compareTo(o.distance);
-    }
 }

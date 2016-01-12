@@ -9,6 +9,16 @@ myApp.controller('HomeCtrl', function($scope, geolocationService, searchService,
   $scope.allLoaded = false;
   $scope.loadSemaphore = false;
   $scope.emptyMessage = null;
+  $scope.sortChoices = [
+    {
+      key: 'distance',
+      translation: '--.home.sort.distance'
+    }, {
+      key: 'date',
+      translation: '--.home.sort.date'
+    }
+  ];
+  $scope.sortChoose = 'date';
   $scope.getSelectedInterest = function() {
     var interest, _i, _len, _ref;
     if (!($scope.customerInterests != null)) {
@@ -104,6 +114,11 @@ myApp.controller('HomeCtrl', function($scope, geolocationService, searchService,
       return $scope.loadPublication();
     }
   });
+  $scope.$watch('sortChoose', function(n, o) {
+    if (n !== o) {
+      return $scope.loadPublication();
+    }
+  });
   $scope.loadPublication = function() {
     var interestSelected;
     interestSelected = $scope.getSelectedInterest();
@@ -113,7 +128,7 @@ myApp.controller('HomeCtrl', function($scope, geolocationService, searchService,
     }
     if ($scope.followingMode) {
       if (interestSelected != null) {
-        return searchService.byFollowedAndInterest($scope.currentPage, interestSelected.id, function(data) {
+        return searchService.byFollowedAndInterest($scope.currentPage, $scope.sortChoose, interestSelected.id, function(data) {
           return loadingPublicationSuccess(data, function() {
             $scope.emptyMessage = 'followedWithInterest';
             $scope.businessListParam.loading = true;
@@ -123,7 +138,7 @@ myApp.controller('HomeCtrl', function($scope, geolocationService, searchService,
           });
         });
       } else {
-        return searchService.byFollowed($scope.currentPage, function(data) {
+        return searchService.byFollowed($scope.currentPage, $scope.sortChoose, function(data) {
           return loadingPublicationSuccess(data, function() {
             $scope.emptyMessage = 'followed';
             $scope.businessListParam.loading = true;
@@ -135,7 +150,7 @@ myApp.controller('HomeCtrl', function($scope, geolocationService, searchService,
       }
     } else {
       if (interestSelected != null) {
-        return searchService.byInterest($scope.currentPage, interestSelected.id, function(data) {
+        return searchService.byInterest($scope.currentPage, $scope.sortChoose, interestSelected.id, function(data) {
           return loadingPublicationSuccess(data, function() {
             $scope.emptyMessage = 'newsFeedWithInterest';
             $scope.businessListParam.loading = true;
@@ -145,7 +160,7 @@ myApp.controller('HomeCtrl', function($scope, geolocationService, searchService,
           });
         });
       } else {
-        return searchService["default"]($scope.currentPage, function(data) {
+        return searchService["default"]($scope.currentPage, $scope.sortChoose, function(data) {
           return loadingPublicationSuccess(data, function() {
             $scope.emptyMessage = 'newsFeed';
             $scope.businessListParam.loading = true;
