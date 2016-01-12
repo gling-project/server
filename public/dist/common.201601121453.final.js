@@ -6985,7 +6985,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put("js/modal/ChangePassword/view.html",
     "<div class=modal-header><button class=\"gling-button-dark glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{'--.changePasswordModal.title' | translateText}}</h4></div><div class=\"modal-body form\"><dir-field-text ng-info=fields.oldPassword></dir-field-text><dir-field-text ng-info=fields.newPassword></dir-field-text><dir-field-text ng-info=fields.repeatPassword></dir-field-text></div><div class=modal-footer><button ng-disabled=loading type=button id=change-password-btn-save class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.save' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
   $templateCache.put("js/modal/ConfirmAndShareModal/view.html",
-    "<div class=modal-body>{{'--.publication.success.message' | translateText}}<br><button class=gling-button-dark ng-click=share()><img style=\"width: 18px\" src=\"/assets/images/facebook/login_icon_white.png\"> {{'--.publication.success.shareOnFacebook' | translateText}}</button> <button ng-click=close() class=gling-button-dark>{{'--.generic.close' | translateText}}</button></div>");
+    "<div class=modal-body>{{'--.publication.success.message' | translateText}}<br><button class=gling-button-dark ng-click=share() ng-show=shareIsActive()><img style=\"width: 18px\" src=\"/assets/images/facebook/login_icon_white.png\"> {{'--.publication.success.shareOnFacebook' | translateText}}</button> <button ng-click=close() class=gling-button-dark>{{'--.generic.close' | translateText}}</button></div>");
   $templateCache.put("js/modal/CustomerRegistrationModal/_view.html",
     "<div class=modal-header><button class=\"gling-button-dark glyphicon glyphicon-remove\" style=float:right ng-click=close()></button><h4 class=modal-title>{{'--.customer.registrationModal.title' | translateText}}</h4></div><div class=\"modal-body modal-login customer-registration\"><div class=modal-description>{{'--.customer.registrationModal.personal.desc' | translateText}}<br><span class=\"modal-login-link link\" ng-click=toBusinessRegistration()>{{'--.registrationModal.toBusinessRegistration' | translateText}}</span></div><div class=facebook-login-btn-container><button ng-click=fb_login(); class=\"facebook-login-btn btn gling-button-dark\" ng-disabled=loading><img src=\"/assets/images/facebook/login_icon.png\"> <span>{{'--.registrationModal.facebook.btn' |translateText}}</span></button></div><table class=horizontal-split><tr><td><div></div></td><td>{{'--.generic.or' | translateText}}</td><td><div></div></td></tr></table><account-form-ctrl ng-info=accountParam></account-form-ctrl></div><div class=modal-footer><button id=customer-registration-modal-btn-save ng-disabled=loading type=button class=\"btn gling-button-dark\" ng-click=save()>{{'--.generic.save' | translateText}}</button> <img src=/assets/images/modal-loading.gif ng-show=\"loading\"></div>");
   $templateCache.put("js/modal/CustomerRegistrationModal/view.html",
@@ -7503,11 +7503,15 @@ myApp.directive('imageToolCtrl', ['$rootScope', 'businessService', 'geolocationS
     }]
 )
 ;
-myApp.controller('ConfirmAndShareModalCtrl', ['$scope', 'facebookService', 'publication', '$modalInstance', function ($scope, facebookService, publication,$modalInstance) {
+myApp.controller('ConfirmAndShareModalCtrl', ['$scope', 'facebookService', 'publication', '$modalInstance', 'accountService', function ($scope, facebookService, publication,$modalInstance,accountService) {
 
     $scope.share = function () {
         facebookService.publish(publication);
         $scope.close();
+    };
+
+    $scope.shareIsActive = function(){
+        return facebookService.isConnected()===true && accountService.getMyself().type === 'BUSINESS' && accountService.getMyself().facebookPageToPublish!=null;
     };
 
     $scope.close = function () {

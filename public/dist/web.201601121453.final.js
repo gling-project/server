@@ -3096,6 +3096,7 @@ myApp.controller('BusinessCtrl', ['$rootScope', '$scope', 'modalService', 'busin
       }, function(close, setLoading) {
         return businessService.editSocialNetwork($scope.business.id, socialNetwork, function(data) {
           $scope.business.socialNetwork = socialNetwork;
+          accountService.getMyself().facebookPageToPublish = $scope.business.socialNetwork.facebookLink;
           return close();
         }, function() {
           return setLoading(false);

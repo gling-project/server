@@ -239,6 +239,7 @@ myApp.controller 'BusinessCtrl', ($rootScope, $scope, modalService, businessServ
                 #scope.business
                 businessService.editSocialNetwork $scope.business.id, socialNetwork, (data) ->
                     $scope.business.socialNetwork = socialNetwork
+                    accountService.getMyself().facebookPageToPublish=$scope.business.socialNetwork.facebookLink
                     close()
                 , ->
                     setLoading false

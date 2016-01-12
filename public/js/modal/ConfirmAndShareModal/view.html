@@ -1,7 +1,7 @@
 <div class="modal-body">
 
     {{'--.publication.success.message' | translateText}}<br/>
-    <button class="gling-button-dark" ng-click="share()">
+    <button class="gling-button-dark" ng-click="share()" ng-show="shareIsActive()">
         <img style="width: 18px;"
              src="/assets/images/facebook/login_icon_white.png"/>
         {{'--.publication.success.shareOnFacebook' | translateText}}

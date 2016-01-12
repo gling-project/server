@@ -157,15 +157,17 @@ public class MainController extends AbstractController {
 
         Pattern p = Pattern.compile("from=([a-zA-Z]*?)(&|$)");
 
-        Account myself = securityController.getCurrentUser();
+        if (securityController.isAuthenticated(ctx())) {
+            Account myself = securityController.getCurrentUser();
 
-        String path = request().uri();
+            String path = request().uri();
 
-        if (myself != null && path != null && path.contains("from=")) {
-            Matcher matcher = p.matcher(path);
-            if (matcher.find()) {
-                myself.getAccess().add(matcher.group(1));
-                accountService.saveOrUpdate(myself);
+            if (myself != null && path != null && path.contains("from=")) {
+                Matcher matcher = p.matcher(path);
+                if (matcher.find()) {
+                    myself.getAccess().add(matcher.group(1));
+                    accountService.saveOrUpdate(myself);
+                }
             }
         }
 
