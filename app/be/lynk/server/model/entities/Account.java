@@ -7,10 +7,13 @@ import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.Encrypter;
 import be.lynk.server.util.KeyGenerator;
+import org.hibernate.validator.internal.metadata.aggregated.BeanMetaDataImpl;
 import play.i18n.Lang;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,10 +44,10 @@ public class Account extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     protected RoleEnum role;
 
-    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected LoginCredential loginCredential;
 
-    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "account", optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected FacebookCredential facebookCredential;
 
     @Enumerated(value = EnumType.STRING)
@@ -68,6 +71,9 @@ public class Account extends AbstractEntity {
             mappedBy = "account",
             fetch = FetchType.LAZY)
     private Business business;
+
+    @ElementCollection
+    private List<String> access = new ArrayList<>();
 
 
     public Account() {
@@ -240,5 +246,13 @@ public class Account extends AbstractEntity {
         else if (authenticationKey == null) {
             authenticationKey = Encrypter.generateEncryptingPassword(KeyGenerator.generateRandomKey(40));
         }
+    }
+
+    public List<String> getAccess() {
+        return access;
+    }
+
+    public void setAccess(List<String> access) {
+        this.access = access;
     }
 }

@@ -8,10 +8,7 @@ import be.lynk.server.model.SearchCriteriaEnum;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Session;
 import be.lynk.server.model.entities.publication.AbstractPublication;
-import be.lynk.server.service.CustomerInterestService;
-import be.lynk.server.service.LocalizationService;
-import be.lynk.server.service.PublicationService;
-import be.lynk.server.service.SessionService;
+import be.lynk.server.service.*;
 import be.lynk.server.util.AppUtil;
 import be.lynk.server.util.constants.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +43,8 @@ public class MainController extends AbstractController {
     private LoginRestController     loginRestController;
     @Autowired
     private SessionService          sessionService;
+    @Autowired
+    private AccountService          accountService;
 
     /**
      * access to resource from external
@@ -128,6 +127,7 @@ public class MainController extends AbstractController {
 
     public Result generateDefaultPage(String url, boolean forceMobile) {
 
+
         if (url != null && url.equals("app")) {
             return redirect("market://details?id=" + APP_PACKAGE_NAME);
         }
@@ -155,6 +155,19 @@ public class MainController extends AbstractController {
 
         initialization();
 
+        Pattern p = Pattern.compile("from=([a-zA-Z]*?)(&|$)");
+
+        Account myself = securityController.getCurrentUser();
+
+        String path = request().uri();
+
+        if (myself != null && path != null && path.contains("from=")) {
+            Matcher matcher = p.matcher(path);
+            if (matcher.find()) {
+                myself.getAccess().add(matcher.group(1));
+                accountService.saveOrUpdate(myself);
+            }
+        }
 
         //try with param
         if (isMobile) {
