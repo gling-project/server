@@ -449,10 +449,10 @@ day_abrv_sunday=Zon
 --.followed-business.uncheckAll=Deselecteren
 
 
---.home.interest-switch.help=Sorteer volgens uw locatie of uw gevolgde winkelen.
---.home.interest.help=Sorteer volgens uw wensen.
---.home.localisation.help=Sorteer volgens uw locatie.
---.home.followning.help=Sorteer volgens uw gevolgde winkelen.
+--.home.interest-switch.help=Filter volgens uw locatie of uw gevolgde winkelen.
+--.home.interest.help=Filter volgens uw wensen.
+--.home.localisation.help=Filter volgens uw locatie.
+--.home.followning.help=Filter volgens uw gevolgde winkelen.
 --.home.emptyResult.followed=Geen van uw gevolgde handelszaken heeft een nieuwtje of promotie gepubliceerd. De handelszaken hieronder hebben gelijkaardige nieuwtjes of promoties !
 --.home.emptyResult.followedWithInterest=Momenteel blijkt er geen publicatie te zijn van uw gevolgd handelszaken te zijn. De handelszaken hieronder zullen u misschien kunnen interesseren !
 --.home.emptyResult.newsFeed=Geen handelszaak lijkt nieuws of promoties te hebben gepubliceerd. De handelszaken hieronder interesseren u misschien !
