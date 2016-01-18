@@ -449,10 +449,10 @@ day_abrv_sunday=Su
 --.followed-business.uncheckAll=Deselect
 
 
---.home.interest-switch.help=Sort according to your position or your followed stores.
---.home.interest.help=Sort according to your desires.
---.home.localisation.help=Sort according to your position.
---.home.followning.help=Sort according to your followed stores.
+--.home.interest-switch.help= Filter according to your position or your followed stores.
+--.home.interest.help=Filter according to your desires.
+--.home.localisation.help=Filter according to your position.
+--.home.followning.help=Filter according to your followed stores.
 --.home.emptyResult.followed=None of your followed stores appears to have published a news or a promotions. Don''t worry, the stores below may be able to satisfy you! have a look!
 --.home.emptyResult.followedWithInterest=None of the posts of your followed store currently seems to respond to your envy. Don''t worry, the stores below may be able to satisfy you! have a look
 --.home.emptyResult.newsFeed=None of the stores appears to have issued news or promotions... Don''t worry, the stores below may be able to satisfy you ! have a look
