@@ -109,7 +109,7 @@ POST          /rest/file/publication_picture                                    
 POST          /rest/file/galley_picture                                                                              @be.lynk.server.controller.rest.FilesController.uploadForGalleryPicture()
 GET           /rest/file/:storedFileId                                                                               @be.lynk.server.controller.rest.FilesController.download(storedFileId: Long)
 POST          /rest/file                                                                                             @be.lynk.server.controller.rest.FilesController.upload()
-POST          /rest/file64                                                                                           @be.lynk.server.controller.rest.FilesController.download64()
+#POST          /rest/file64                                                                                           @be.lynk.server.controller.rest.FilesController.download64()
 
 #contact
 POST          /rest/contact                                                                                          @be.lynk.server.controller.rest.ContactRestController.contact()
@@ -130,6 +130,7 @@ POST          /rest/superadmin/confirmClaim/$businessId<[0-9]+>/$accountId<[0-9]
 GET           /rest/superadmin/getClaims/$businessId<[0-9]+>                                                         @be.lynk.server.controller.rest.SuperAdminRestController.getClaimsByBusiness(businessId:Long)
 POST          /rest/superadmin/createPromotion/$businessId<[0-9]+>                                                   @be.lynk.server.controller.rest.SuperAdminRestController.createPromotion(businessId:Long)
 POST          /rest/superadmin/createBusinessNotification/$businessId<[0-9]+>                                        @be.lynk.server.controller.rest.SuperAdminRestController.createBusinessNotification(businessId:Long)
+GET           /rest/superadmin/sendNewsletter/:name                                                                  @be.lynk.server.controller.rest.SuperAdminRestController.sendNewsLetters(name:String)
 
 
 ## town

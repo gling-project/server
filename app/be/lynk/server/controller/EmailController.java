@@ -75,7 +75,7 @@ public class EmailController extends AbstractController {
         EmailMessage.Recipient recipient = new EmailMessage.Recipient(account.getEmail(), account.getFirstname() + " " + account.getLastname());
         EmailMessage emailMessage = new EmailMessage(recipient, title, body);
 
-        emailService.sendEmail(emailMessage, account.getLang());
+        emailService.sendEmailWithoutBody(emailMessage, account.getLang());
     }
 
     @Transactional
@@ -92,5 +92,13 @@ public class EmailController extends AbstractController {
         EmailMessage emailMessage = new EmailMessage(recipient, title, body);
 
         emailService.sendEmail(emailMessage, Lang.forCode("fr"));
+    }
+
+    public void sendNewsLetters(String email, String title, String body) {
+
+        EmailMessage.Recipient recipient = new EmailMessage.Recipient(email);
+        EmailMessage emailMessage = new EmailMessage(recipient, title, body);
+
+        emailService.sendEmailWithoutBody(emailMessage, Lang.forCode("fr"));
     }
 }

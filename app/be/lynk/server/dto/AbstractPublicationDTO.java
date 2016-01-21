@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by florian on 5/06/15.
  */
-public abstract class AbstractPublicationDTO extends DTO{
+public abstract class AbstractPublicationDTO extends DTO {
 
     protected Long id;
 
@@ -38,12 +38,22 @@ public abstract class AbstractPublicationDTO extends DTO{
     protected PublicationTypeEnum type;
 
     private List<StoredFileDTO> pictures = new ArrayList<>();
+    private List<Image64DTO> pictures64;
+
 
     private CustomerInterestDTO interest;
 
     private String editionReason;
 
     public AbstractPublicationDTO() {
+    }
+
+    public List<Image64DTO> getPictures64() {
+        return pictures64;
+    }
+
+    public void setPictures64(List<Image64DTO> pictures64) {
+        this.pictures64 = pictures64;
     }
 
     public String getEditionReason() {

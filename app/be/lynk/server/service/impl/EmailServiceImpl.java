@@ -39,12 +39,27 @@ public class EmailServiceImpl implements EmailService {
             values.put("projectName", translationService.getTranslation("--.site.name", lang));
             values.put("projectUrl", emailProperties.getUrl());
             emailMessage.setSubject(emailMessage.getSubject());
-            emailMessage.setContent(emailMessage.getContent());
             values.put("content", emailMessage.getContent());
 
             //use the default email template
             String content = velocityGeneratorService.generate("basicEmailStructure.vm", values);
             emailMessage.setContent(content);
+
+
+            emailSenderService.send(emailMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void sendEmailWithoutBody(EmailMessage emailMessage, Lang lang) {
+        try {
+
+
+            emailMessage.setSubject(emailMessage.getSubject());
+            emailMessage.setContent(emailMessage.getContent());
 
 
             emailSenderService.send(emailMessage);

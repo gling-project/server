@@ -1,4 +1,4 @@
-myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService, accountService,constantService) {
+myApp.directive('businessNotificationFormCtrl', function ($flash, directiveService, businessService, accountService,constantService,$compile) {
 
     return {
         restrict: "E",
@@ -75,6 +75,16 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         }
                     });
 
+                    if (constantService.isMobile === true) {
+                        var directive = $compile("<dir-field-image-mutiple ng-info=\"fields.illustration\"></dir-field-image-mutiple>")(scope);
+                        $('.inject_illustration_field').append(directive)
+
+                    }
+                    else {
+                        var directive = $compile("<dir-field-image-multiple-resizable ng-info=\"fields.illustration\"></dir-field-image-multiple-resizable>")(scope);
+                        $('.inject_illustration_field').append(directive)
+                    }
+
 
                     scope.fields = {
                         title: {
@@ -132,8 +142,8 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             validationMessage: '--.error.validation.image',
                             details: '--promotion.illustration.maximumImage',
                             target: 'publication_picture',
-                            maxHeight: constantService.PUBLICATION_PICTURE_HEIGHT,
                             maxWidth: constantService.PUBLICATION_PICTURE_WIDTH,
+                            maxHeight: constantService.PUBLICATION_PICTURE_HEIGHT,
                             optional: function () {
                                 return true;
                             },
@@ -143,7 +153,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                             },
                             field: scope.getInfo().dto,
                             multiple: true,
-                            fieldName: 'pictures'
+                            fieldName: constantService.isMobile === true?'pictures':'pictures64'
                         },
                         interests: {
                             fieldTitle: "--.promotion.interest",

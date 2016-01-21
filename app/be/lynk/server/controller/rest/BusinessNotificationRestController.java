@@ -5,8 +5,10 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotati
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.BusinessNotificationDTO;
+import be.lynk.server.dto.Image64DTO;
 import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.email.EmailMessage;
+import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.model.entities.publication.BusinessNotification;
@@ -36,17 +38,17 @@ import java.util.Map;
 public class BusinessNotificationRestController extends AbstractRestController {
 
     @Autowired
-    private PublicationService publicationService;
+    private PublicationService      publicationService;
     @Autowired
-    private StoredFileService storedFileService;
+    private StoredFileService       storedFileService;
     @Autowired
     private CustomerInterestService customerInterestService;
     @Autowired
-    private EmailService emailService;
+    private EmailService            emailService;
     @Autowired
-    private FileService fileService;
+    private FileService             fileService;
     @Autowired
-    private NotificationService notificationService;
+    private NotificationService     notificationService;
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
@@ -54,17 +56,32 @@ public class BusinessNotificationRestController extends AbstractRestController {
     public Result create() {
         BusinessNotificationDTO dto = initialization(BusinessNotificationDTO.class);
 
-        return create(dto,securityController.getCurrentUser().getBusiness());
+        return create(dto, securityController.getCurrentUser().getBusiness());
     }
 
-    public Result create(BusinessNotificationDTO dto,Business business) {
+    public Result create(BusinessNotificationDTO dto, Business business) {
 
+
+        Account myself = securityController.getCurrentUser();
 
         BusinessNotification businessNotification = dozerService.map(dto, BusinessNotification.class);
+
+        int weekPublication = publicationService.countPublicationForWeek(businessNotification.getStartDate(), myself.getBusiness());
 
         businessNotification.setBusiness(business);
         if (businessNotification.getInterest() != null) {
             businessNotification.setInterest(customerInterestService.findById(businessNotification.getInterest().getId()));
+        }
+
+        //image64
+        if (dto.getPictures64() != null && dto.getPictures64().size() > 0) {
+            for (Image64DTO image64DTO : dto.getPictures64()) {
+                StoredFile storedFile = fileService.updateBase64(image64DTO.getImage64(), image64DTO.getOriginalName(), myself);
+                storedFile.setComment(image64DTO.getComment());
+                businessNotification.getPictures().add(storedFile);
+                storedFile.setPublication(businessNotification);
+            }
+
         }
 
         //control start date
@@ -83,7 +100,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         //control number by day
-        if (publicationService.countPublicationForWeek(businessNotification.getStartDate(), securityController.getBusiness()) >= Constant.PUBLICATION_MAX_BY_WEEK) {
+        if (weekPublication >= Constant.PUBLICATION_MAX_BY_WEEK) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_WEEK);
         }
 
@@ -95,7 +112,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
             StoredFile storedFile;
             if (storedFileDTO.getImage64() != null) {
-                storedFile = fileService.updateBase64(storedFileDTO.getImage64(), storedFileDTO.getOriginalName(), securityController.getCurrentUser());
+                storedFile = fileService.updateBase64(storedFileDTO.getImage64(), storedFileDTO.getOriginalName(), myself);
             } else {
                 storedFile = storedFileService.findByStoredName(storedFileDTO.getStoredName());
             }
@@ -118,7 +135,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         //send a notification
         NotificationServiceImpl.NotificationMessage title = new NotificationServiceImpl.NotificationMessage(NotificationMessageEnum.NEW_PROMOTION, businessNotification.getBusiness().getName());
         NotificationServiceImpl.NotificationMessage content = new NotificationServiceImpl.NotificationMessage(publicationDTO.getTitle());
-        notificationService.createNotification(ApplicationNotificationTypeEnum.NEW_PUBLICATION,business.getId()+"",businessNotification.getStartDate(), title, content);
+        notificationService.createNotification(ApplicationNotificationTypeEnum.NEW_PUBLICATION, business.getId() + "", businessNotification.getStartDate(), title, content);
 
 
         return ok(publicationDTO);
@@ -204,7 +221,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
         }
 
         //send email if user is superadmin
-        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)  && dto.getEditionReason()!=null && dto.getEditionReason().length()>0) {
+        if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) && dto.getEditionReason() != null && dto.getEditionReason().length() > 0) {
 
             Lang lang = business.getAccount().getLang();
             EmailMessage.Recipient target = new EmailMessage.Recipient(business.getAccount());

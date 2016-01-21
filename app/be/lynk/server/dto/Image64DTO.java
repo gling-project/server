@@ -7,22 +7,31 @@ import be.lynk.server.dto.technical.DTO;
  */
 public class Image64DTO extends DTO {
 
-    private String image;
-    private String name;
+    private String image64;
+    private String originalName;
+    private String comment;
 
-    public String getImage() {
-        return image;
+    public String getComment() {
+        return comment;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getName() {
-        return name;
+    public String getImage64() {
+        return image64;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setImage64(String image64) {
+        this.image64 = image64;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 }

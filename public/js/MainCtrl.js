@@ -32,7 +32,7 @@ myApp.controller('MainCtrl', function ($rootScope, $scope, $locale, translationS
         for (var key in data.constants) {
             constantService[key] = data.constants[key];
         }
-        constantService.isMobile = data.isMobile;
+        constantService.isMobile = data.mobile;
     }
 
     //import data

@@ -1,4 +1,4 @@
-myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout, businessService, accountService) {
+myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeout, businessService, accountService, constantService,$compile) {
 
     return {
         restrict: "E",
@@ -74,6 +74,17 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             scope.getInfo().dto.interest = scope.interests[0];
                         }
                     });
+;
+
+                    if (constantService.isMobile === true) {
+                        var directive = $compile("<dir-field-image-mutiple ng-info=\"fields.illustration\"></dir-field-image-mutiple>")(scope);
+                        $('.inject_illustration_field').append(directive)
+
+                    }
+                    else {
+                        var directive = $compile("<dir-field-image-multiple-resizable ng-info=\"fields.illustration\"></dir-field-image-multiple-resizable>")(scope);
+                        $('.inject_illustration_field').append(directive)
+                    }
 
                     //build field + dto binding
                     scope.fields = {
@@ -135,8 +146,8 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             details: '--promotion.illustration.maximumImage',
                             validationMessage: '--.error.validation.image',
                             target: 'publication_picture',
-                            //sizex: constantService.PUBLICATION_ILLUSTRATION_X,
-                            //sizey: constantService.PUBLICATION_ILLUSTRATION_Y,
+                            maxWidth: constantService.PUBLICATION_PICTURE_WIDTH,
+                            maxHeight: constantService.PUBLICATION_PICTURE_HEIGHT,
                             disabled: function () {
                                 return scope.getInfo().disabled;
                             },
@@ -146,7 +157,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             },
                             field: scope.getInfo().dto,
                             multiple: true,
-                            fieldName: 'pictures'
+                            fieldName: constantService.isMobile === true ? 'pictures' : 'pictures64'
                         },
                         originalPrice: {
                             name: 'originalPrice',

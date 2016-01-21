@@ -1,4 +1,4 @@
-myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directiveService, $upload, $flash, $filter, generateId, imageService, modalService,constantService) {
+myApp.directive("dirFieldImageMultipleResizable", function ($rootScope, directiveService, $upload, $flash, $filter, generateId, imageService, modalService, constantService) {
     return {
         restrict: "E",
         scope: directiveService.autoScope({
@@ -65,14 +65,14 @@ myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directive
                             maxWidth: scope.getInfo().maxWidth,
                             maxHeight: scope.getInfo().maxHeight
                         };
-                        if(constantService.isMobile) {
+                        if (constantService.isMobile) {
                             modalService.resizeImageMobileModal(dto
                                 , function (close) {
                                     close();
                                     imageContainer.image = dto.result;
                                 });
                         }
-                        else{
+                        else {
                             modalService.basicModal('--.field.imageMultipleResize.resizeModal.title', 'image-tool-ctrl', dto
                                 , function (close) {
                                     close();
@@ -96,6 +96,7 @@ myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directive
 
                     //resize the image by default
                     scope.defaultResize = function (img) {
+                        console.log('resize : ' + scope.getInfo().maxWidth + '/' + scope.getInfo().maxHeight);
                         return imageService.resizeImage(img, scope.getInfo().maxWidth, scope.getInfo().maxHeight);
                     };
 
@@ -108,17 +109,18 @@ myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directive
                         imgHtml.setAttribute('src', img);
                         var src = imgHtml, success = true;
 
-
                         if (scope.getInfo().maxHeight != null && scope.getInfo().maxHeight > src.height) {
-                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalHeight', [scope.getInfo().maxHeight,src.height]));
+                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalHeight', [scope.getInfo().maxHeight, src.height]));
                             success = false;
                         }
+
                         if (scope.getInfo().maxWidth != null && scope.getInfo().maxWidth > src.width) {
-                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalWidth', [scope.getInfo().maxWidth,src.width] ));
+                            $flash.error($filter('translateText')('--.field.imageMultipleResize.minimalWidth', [scope.getInfo().maxWidth, src.width]));
                             success = false;
                         }
 
                         if (success) {
+
                             scope.images.push({
                                 originalName: fileName,
                                 originalImage: img,
@@ -134,16 +136,17 @@ myApp.directive("dirFieldImageMultipleResizable", function ($rootScope,directive
                         for (var key in scope.images) {
                             images.push(scope.images[key].image);
                         }
-                        if(constantService.isMobile === true) {
+                        if (constantService.isMobile === true) {
                             modalService.galleryModal(image, images);
                         }
-                        else{
-                            $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY',{list:images,first:image});
+                        else {
+                            $rootScope.$broadcast('DISPLAY_PICTURE_IN_GALLERY', {list: images, first: image});
                         }
                     };
 
                     //read file and convert to base64
                     scope.readURL = function (input) {
+
 
                         if (input.files && input.files[0]) {
                             var reader = new FileReader();

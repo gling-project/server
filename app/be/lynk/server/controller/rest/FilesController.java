@@ -33,19 +33,29 @@ public class FilesController extends AbstractRestController {
     @Autowired
     private StoredFileService storedFileService;
 
-    @Transactional(readOnly = false)
-    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
-    public Result download64() {
+//    @Transactional(readOnly = false)
+//    @SecurityAnnotation(role = RoleEnum.CUSTOMER)
+//    public Result download64() {
+//
+//        Image64DTO dto = initialization(Image64DTO.class);
+//
+//        StoredFile storedFile1 = fileService.updateBase64(dto.getImage(), dto.getName(), securityController.getCurrentUser());
+//
+//        StoredFileDTO filesUploadedDTO = dozerService.map(storedFile1, StoredFileDTO.class);
+//
+//        return Results.ok(filesUploadedDTO);
+//
+//    }
 
-        Image64DTO dto = initialization(Image64DTO.class);
-
-        StoredFile storedFile1 = fileService.updateBase64(dto.getImage(), dto.getName(), securityController.getCurrentUser());
-
-        StoredFileDTO filesUploadedDTO = dozerService.map(storedFile1, StoredFileDTO.class);
-
-        return Results.ok(filesUploadedDTO);
-
-    }
+//    public StoredFile storedFileFromImage64(Image64DTO image64DTO) {
+//
+//        StoredFile storedFile1 = fileService.updateBase64(image64DTO.getImage64(), image64DTO.getOriginalName(), securityController.getCurrentUser());
+//
+//        storedFile1.setComment(image64DTO.getComment());
+//
+//        return storedFile1;
+//
+//    }
 
 
     @Transactional(readOnly = false)

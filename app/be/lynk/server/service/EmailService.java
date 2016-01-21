@@ -8,5 +8,7 @@ import play.i18n.Lang;
  */
 public interface EmailService {
 
-    public void sendEmail(EmailMessage emailMessage,Lang lang);
+    void sendEmail(EmailMessage emailMessage,Lang lang);
+
+    void sendEmailWithoutBody(EmailMessage emailMessage, Lang lang);
 }

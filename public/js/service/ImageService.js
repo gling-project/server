@@ -28,7 +28,7 @@ myApp.service("imageService", function () {
         var right, top;
         right = ((src.width * scale) - canvas.width) * 0.5;
         top = ((src.height * scale) - canvas.height) * 0.5;
-        canvas.getContext("2d").drawImage(src, - (right / scale), -(top / scale));
+        canvas.getContext("2d").drawImage(src, -(right / scale), -(top / scale));
         var image64 = canvas.toDataURL();
 
         return image64;

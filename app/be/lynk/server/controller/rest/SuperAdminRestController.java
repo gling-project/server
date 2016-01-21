@@ -1,5 +1,6 @@
 package be.lynk.server.controller.rest;
 
+import be.lynk.server.controller.EmailController;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
@@ -20,11 +21,18 @@ import be.lynk.server.util.ContactTargetEnum;
 import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -35,39 +43,41 @@ import java.util.*;
 public class SuperAdminRestController extends AbstractRestController {
 
     @Autowired
-    private BusinessService             businessService;
+    private BusinessService                    businessService;
     @Autowired
-    private AccountService              accountService;
+    private AccountService                     accountService;
     @Autowired
-    private LoginCredentialService      loginCredentialService;
+    private LoginCredentialService             loginCredentialService;
     @Autowired
-    private CategoryImporter            categoryImporter;
+    private CategoryImporter                   categoryImporter;
     @Autowired
-    private DemoImporter                demoImporter;
+    private DemoImporter                       demoImporter;
     @Autowired
-    private CustomerInterestServiceImpl customerInterestService;
+    private CustomerInterestServiceImpl        customerInterestService;
     @Autowired
-    private BusinessCategoryService     businessCategoryService;
+    private BusinessCategoryService            businessCategoryService;
     @Autowired
-    private CategoryInterestLinkService categoryInterestLinkService;
+    private CategoryInterestLinkService        categoryInterestLinkService;
     @Autowired
-    private PublicationService          publicationService;
+    private PublicationService                 publicationService;
     @Autowired
-    private MongoSearchService          mongoSearchService;
+    private MongoSearchService                 mongoSearchService;
     @Autowired
-    private EmailService                emailService;
+    private EmailService                       emailService;
     @Autowired
-    private FacebookRequest             facebookRequest;
+    private FacebookRequest                    facebookRequest;
     @Autowired
-    private LocalizationService         localizationService;
+    private LocalizationService                localizationService;
     @Autowired
-    private FileService                 fileService;
+    private FileService                        fileService;
     @Autowired
-    private ClaimBusinessService        claimBusinessService;
+    private ClaimBusinessService               claimBusinessService;
     @Autowired
     private BusinessNotificationRestController businessNotificationRestController;
     @Autowired
-    private PromotionRestController promotionRestController;
+    private PromotionRestController            promotionRestController;
+    @Autowired
+    private EmailController                    emailController;
 
 
     @Transactional
@@ -181,17 +191,17 @@ public class SuperAdminRestController extends AbstractRestController {
 
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
-    public Result confirmClaim(Long businessId,Long accountId) {
+    public Result confirmClaim(Long businessId, Long accountId) {
 
         Business business = businessService.findById(businessId);
         Account account = accountService.findById(accountId);
 
-        ClaimBusiness claimBusiness = claimBusinessService.findByBusinessAndAccount(business,account);
+        ClaimBusiness claimBusiness = claimBusinessService.findByBusinessAndAccount(business, account);
 
-        if(claimBusiness==null){
+        if (claimBusiness == null) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_CLAIMED);
         }
-        if(!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)){
+        if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)) {
             throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED);
         }
 
@@ -255,7 +265,7 @@ public class SuperAdminRestController extends AbstractRestController {
         Long nbTotalPublication = publicationService.countAll();
         int nbSessions = mongoSearchService.numberSessionsFrom(LocalDateTime.of(2015, 10, 10, 00, 00, 00));
 
-        Logger.info("COMPUTE STAT 1 : "+(new Date().getTime() - t));
+        Logger.info("COMPUTE STAT 1 : " + (new Date().getTime() - t));
 
 
         //utilisateur
@@ -267,7 +277,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nouveaux consommateurs 28 jours", AdminStatDTO.Data.createPercent(accountService.countByTypeFrom(AccountTypeEnum.CUSTOMER, LocalDateTime.now().minusDays(28)).doubleValue(), nbCustomer.doubleValue()));
 
-        Logger.info("COMPUTE STAT 2 : "+(new Date().getTime() - t));
+        Logger.info("COMPUTE STAT 2 : " + (new Date().getTime() - t));
 
         //commerce
         adminStatDTO.getStats().put("Nombre de commerces", new AdminStatDTO.Data(nbBusiness));
@@ -282,7 +292,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nombre de commerces ayant publié au moins une fois depuis ces 28 derniers jours", AdminStatDTO.Data.createPercent(businessService.countAtLeastOnePublicationFrom(LocalDateTime.now().minusDays(28)), nbBusiness));
 
-        Logger.info("COMPUTE STAT 3 : "+(new Date().getTime() - t));
+        Logger.info("COMPUTE STAT 3 : " + (new Date().getTime() - t));
 
         //publication
         adminStatDTO.getStats().put("Nombre total de publications", new AdminStatDTO.Data(nbTotalPublication));
@@ -295,7 +305,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nouvelles publications depuis 28 jour", AdminStatDTO.Data.createPercent(publicationService.countActiveFrom(LocalDateTime.now().minusDays(28)), nbTotalPublication));
 
-        Logger.info("COMPUTE STAT 4 : "+(new Date().getTime() - t));
+        Logger.info("COMPUTE STAT 4 : " + (new Date().getTime() - t));
 
         adminStatDTO.getStats().put("Nombre de session total", new AdminStatDTO.Data(nbSessions));
 
@@ -305,7 +315,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         adminStatDTO.getStats().put("Nombre de session depuis 28 jour", AdminStatDTO.Data.createPercent(mongoSearchService.numberSessionsFrom(LocalDateTime.now().minusDays(28)), nbSessions));
 
-        Logger.info("COMPUTE STAT 5 : "+(new Date().getTime() - t));
+        Logger.info("COMPUTE STAT 5 : " + (new Date().getTime() - t));
 
         return ok(adminStatDTO);
     }
@@ -375,7 +385,7 @@ public class SuperAdminRestController extends AbstractRestController {
             businessDTO.setIsClaimed(claimBusinessService.isClaimed(business));
 
             //have owner
-            businessDTO.setHasOwner(business.getAccount()!=null);
+            businessDTO.setHasOwner(business.getAccount() != null);
 
         }
 
@@ -391,7 +401,7 @@ public class SuperAdminRestController extends AbstractRestController {
 
         List<ClaimBusiness> byBusiness = claimBusinessService.findByBusiness(byId);
 
-        return ok(new ListDTO<>(dozerService.map(byBusiness,ClaimBusinessDTO.class)));
+        return ok(new ListDTO<>(dozerService.map(byBusiness, ClaimBusinessDTO.class)));
     }
 
     private UserDetailsBoxDTO getUserDetails(LocalDateTime from) {
@@ -494,7 +504,7 @@ public class SuperAdminRestController extends AbstractRestController {
         emails.add(new EmailMessage.Recipient(ContactTargetEnum.NO_REPLY.getEmail(), ContactTargetEnum.NO_REPLY.name()));
 
         for (Business business : businessService.findAll()) {
-            if(business.getAccount()!=null) {
+            if (business.getAccount() != null) {
                 emails.add(new EmailMessage.Recipient(business.getAccount(), EmailMessage.RecipientTypeEnum.BCC));
             }
         }
@@ -523,8 +533,9 @@ public class SuperAdminRestController extends AbstractRestController {
 
         Business business = businessService.findById(businessId);
 
-        return businessNotificationRestController.create(dto,business);
+        return businessNotificationRestController.create(dto, business);
     }
+
     @Transactional
     @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
     public Result createPromotion(Long businessId) {
@@ -532,6 +543,36 @@ public class SuperAdminRestController extends AbstractRestController {
 
         Business business = businessService.findById(businessId);
 
-        return promotionRestController.create(dto,business);
+        return promotionRestController.create(dto, business);
     }
+
+    @Transactional
+    @SecurityAnnotation(role = RoleEnum.SUPERADMIN)
+    public Result sendNewsLetters(String name) {
+        File file = new File("file/newsletter/" + name + ".html");
+
+        if (file == null) {
+            throw new MyRuntimeException("file not found");
+        }
+
+        byte[] encoded = new byte[0];
+        try {
+
+            FileInputStream fisTargetFile = new FileInputStream(file);
+
+            String body = IOUtils.toString(fisTargetFile, "UTF-8");
+
+            emailController.sendNewsLetters("florian@gling.be", "Les soldes à proximité de Gling!", body);
+
+//            for (Account account : accountService.findAll()) {
+//                emailController.sendNewsLetters(account.getEmail(), "Les soldes à proximité de Gling!", body);
+//            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ok(new ResultDTO());
+
+    }
+
+
 }

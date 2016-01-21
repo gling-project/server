@@ -98,14 +98,15 @@ public class FileServiceImpl implements FileService {
             Logger.info("..>T2 : " + (new Date().getTime() - t));
 
             //Treatment
+            int sizexPicture = originalImage.getWidth(),
+                    sizeyPicture = originalImage.getHeight();
+
             if (sizex != null || sizey != null) {
 
                 //start to save the original file
 //                storedFile.setStoredNameOriginalSize(generateStorageKey());
 //                FileUtil.save(file, storedFile.getStoredNameOriginalSize());
 
-                int sizexPicture = originalImage.getWidth(),
-                        sizeyPicture = originalImage.getHeight();
 
                 //1) sizeX and sizeY are the minimal size :
                 if (!continueIfTooLittle && ((sizex != null && sizexPicture < sizex) || (sizey != null && sizeyPicture < sizey))) {
@@ -186,6 +187,8 @@ public class FileServiceImpl implements FileService {
                 ImageIO.write(originalImage, type, resizeFile);
 
                 Logger.info("..>T4 : " + (new Date().getTime() - t));
+            } else {
+                ImageIO.write(originalImage, type, resizeFile);
             }
 
             //save new size
@@ -223,7 +226,9 @@ public class FileServiceImpl implements FileService {
 
 
         try {
-            File f = File.createTempFile("temp", ".png");
+//            File f = File.createTempFile("temp", ".png");
+
+            File f = new File("/home/flo/tmp/t.png");
 
 
             FileOutputStream outputStream = new FileOutputStream(f);
