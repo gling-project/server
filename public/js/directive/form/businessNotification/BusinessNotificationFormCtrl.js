@@ -223,7 +223,5 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
             }
         }
     }
-
-
 })
 ;

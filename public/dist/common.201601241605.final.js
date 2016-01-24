@@ -2657,8 +2657,6 @@ myApp.directive('businessNotificationFormCtrl', ['$flash', 'directiveService', '
             }
         }
     }
-
-
 }])
 ;
 myApp.directive('scheduleFormCtrl', ['$flash', 'directiveService', function ($flash, directiveService) {
