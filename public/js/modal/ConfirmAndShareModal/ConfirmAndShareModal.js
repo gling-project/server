@@ -5,15 +5,7 @@ myApp.controller('ConfirmAndShareModalCtrl', function ($scope, facebookService, 
         $scope.close();
     };
 
-
-    console.log('je uis ConfirmAndShareModalCtrl');
-    console.log(facebookService.isConnected());
-    console.log(accountService.getMyself().facebookPageToPublish);
-
     $scope.shareIsActive = function(){
-        console.log('je uis shareIsActive');
-        console.log(facebookService.isConnected());
-        console.log(accountService.getMyself().facebookPageToPublish);
         return facebookService.isConnected()===true && accountService.getMyself().type === 'BUSINESS' && accountService.getMyself().facebookPageToPublish!=null;
     };
 
