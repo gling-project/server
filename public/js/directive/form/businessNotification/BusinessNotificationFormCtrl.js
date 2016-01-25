@@ -75,7 +75,7 @@ myApp.directive('businessNotificationFormCtrl', function ($flash, directiveServi
                         }
                     });
 
-                    if (constantService.isMobile === true) {
+                    if (true){//constantService.isMobile === true) {
                         var directive = $compile("<dir-field-image-mutiple ng-info=\"fields.illustration\"></dir-field-image-mutiple>")(scope);
                         $('.inject_illustration_field').append(directive)
 

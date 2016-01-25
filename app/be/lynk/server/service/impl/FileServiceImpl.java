@@ -245,6 +245,7 @@ public class FileServiceImpl implements FileService {
             return storedFile;
 
         } catch (IOException e) {
+            e.printStackTrace();
             throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
         }
     }

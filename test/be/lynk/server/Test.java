@@ -1,5 +1,8 @@
 package be.lynk.server;
 
+import be.lynk.server.util.Encrypter;
+import be.lynk.server.util.KeyGenerator;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +12,7 @@ import java.util.regex.Pattern;
 public class Test {
 
 
-    @org.junit.Test
+//    @org.junit.Test
     public void test(){
 
         String s[] = {"aa:bb","a|b|c:d","ccc"};
@@ -36,9 +39,5 @@ public class Test {
                 System.out.println("-3:"+matcher.group(3));
             }
         }
-
-
-
-
     }
 }
