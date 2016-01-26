@@ -76,13 +76,13 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                     });
 ;
 
-                    if (true){//constantService.isMobile === true) {
-                        var directive = $compile("<dir-field-image-mutiple ng-info=\"fields.illustration\"></dir-field-image-mutiple>")(scope);
+                    var base64 = false;//constantService.isMobile !== true
+                    if (base64) {
+                        var directive = $compile("<dir-field-image-multiple-resizable ng-info=\"fields.illustration\"></dir-field-image-multiple-resizable>")(scope);
                         $('.inject_illustration_field').append(directive)
-
                     }
                     else {
-                        var directive = $compile("<dir-field-image-multiple-resizable ng-info=\"fields.illustration\"></dir-field-image-multiple-resizable>")(scope);
+                        var directive = $compile("<dir-field-image-mutiple ng-info=\"fields.illustration\"></dir-field-image-mutiple>")(scope);
                         $('.inject_illustration_field').append(directive)
                     }
 
@@ -157,7 +157,7 @@ myApp.directive('promotionFormCtrl', function ($flash, directiveService, $timeou
                             },
                             field: scope.getInfo().dto,
                             multiple: true,
-                            fieldName: constantService.isMobile === true ? 'pictures' : 'pictures64'
+                            fieldName: base64 === true ? 'pictures64' : 'pictures'
                         },
                         originalPrice: {
                             name: 'originalPrice',
