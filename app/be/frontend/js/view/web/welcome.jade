@@ -6,24 +6,24 @@
     .left-column
 
         //- event block
-        .block-title.block-title-left.block-title-first
-            | {{'--.welcome.thisWeek' | translateText}}
-        .event-block
-            img(src="/assets/images/event/soldes.jpg")
-            span.event-title {{'--.welcome.event.soldes.title' | translateText}}
-            br
-            br
-            span(ng-bind-html="'--.welcome.event.soldes.content' | translateText | text")
-        .event-block
-            .event-publications
-                .event-title {{'--.welcome.event.soldes.publication.content' | translateText}}
-                .event-publication(ng-repeat="p in eventPublications")
-                    .image-container
-                        img(ng-src="{{p.pictures[0] | image}}",ng-click="goToPublication(p)")
-                    .title {{p.title}}
-                    div By
-                        span.link(ng-click="goTo('/business/'+p.businessId)") {{p.businessName}}
-            button.gling-button-dark(ng-click="goTo('/shopnews/')") {{'--.welcome.more_soldes' | translateText}}
+            .block-title.block-title-left.block-title-first
+                | {{'--.welcome.thisWeek' | translateText}}
+            .event-block
+                img(src="/assets/images/event/soldes.jpg")
+                span.event-title {{'--.welcome.event.soldes.title' | translateText}}
+                br
+                br
+                span(ng-bind-html="'--.welcome.event.soldes.content' | translateText | text")
+            .event-block
+                .event-publications
+                    .event-title {{'--.welcome.event.soldes.publication.content' | translateText}}
+                    .event-publication(ng-repeat="p in eventPublications")
+                        .image-container
+                            img(ng-src="{{p.pictures[0] | image}}",ng-click="goToPublication(p)")
+                        .title {{p.title}}
+                        div By
+                            span.link(ng-click="goTo('/business/'+p.businessId)") {{p.businessName}}
+                button.gling-button-dark(ng-click="goTo('/shopnews/')") {{'--.welcome.more_soldes' | translateText}}
 
         //publication
         .block-title.block-title-left
