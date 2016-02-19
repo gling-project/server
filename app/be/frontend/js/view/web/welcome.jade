@@ -26,7 +26,7 @@
                 button.gling-button-dark(ng-click="goTo('/shopnews/')") {{'--.welcome.more_soldes' | translateText}}
 
         //publication
-        .block-title.block-title-left
+        .block-title.block-title-left(style="margin-top:10px")
             | {{'--.welcome.lastPublications' | translateText}}
             .see-more.link(ng-click="goTo('/shopnews/')") {{'--.welcome.seeMore' | translateText}}
         publication-list-ctrl(ng-info='publicationListCtrl')
