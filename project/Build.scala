@@ -47,7 +47,7 @@ object ApplicationBuild extends Build {
       ExclusionRule(organization = "com.sun.jmx"),
       ExclusionRule(organization = "javax.jms")),
     "org.mongodb" % "mongodb-driver" % "3.0.4",
-    "org.mongojack" % "mongojack" % "2.1.0",
+    "org.mongojack" % "mongojack" % "2.1.0" exclude("javax.persistence", "persistence-api"),
     "org.jsoup" % "jsoup" % "1.8.3",
     "net.coobird" % "thumbnailator" % "0.4.8",
     "net.imagej" % "ij" % "1.50a",
