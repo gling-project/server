@@ -28,6 +28,8 @@ public class CommonSecurityController extends Security.Authenticator {
     public static final String SESSION_IDENTIFIER_STORE                 = "email";
     //name of the cookie for the automatic reconnection
     public static final String COOKIE_KEEP_SESSION_OPEN                 = "session_key";
+    //name of the cookie for the automatic reconnection
+    public static final String ACCOUNT_IDENTIFIER                       = "account_identifier";
     //recover the session key into the http request
     public static final String REQUEST_HEADER_AUTHENTICATION_KEY        = "authenticationKey";
     //recover the session key into the http request
@@ -82,22 +84,26 @@ public class CommonSecurityController extends Security.Authenticator {
         //by session
         if (Http.Context.current().session().get(SESSION_IDENTIFIER_STORE) != null) {
 
-            Account byEmail = USER_SERVICE.findByEmail(Http.Context.current().session().get(SESSION_IDENTIFIER_STORE));
-            return byEmail;
+            Account account = USER_SERVICE.findByEmail(Http.Context.current().session().get(SESSION_IDENTIFIER_STORE));
+            if (!Http.Context.current().session().containsKey(ACCOUNT_IDENTIFIER)) {
+                Http.Context.current().session().put(ACCOUNT_IDENTIFIER, account.getId() + "-" + account.getEmail());
+            }
+            return account;
         }
 
         //by request
-        play.Logger.info("CONTENT authenticationKey ???? ");
         if (Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY) != null) {
 
-            String authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
-            play.Logger.info("HAVE  authenticationKy : " + authentication);
-            Account byAuthenticationKey = USER_SERVICE.findByAuthenticationKey(authentication);
-            if(byAuthenticationKey==null){
+            String  authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
+            Account account        = USER_SERVICE.findByAuthenticationKey(authentication);
+            if (account == null) {
                 throw new MyRuntimeException(ErrorMessageEnum.NOT_CONNECTED);
             }
-            storeAccount(Http.Context.current(), byAuthenticationKey);
-            return byAuthenticationKey;
+            storeAccount(Http.Context.current(), account);
+            if (!Http.Context.current().session().containsKey(ACCOUNT_IDENTIFIER)) {
+                Http.Context.current().session().put(ACCOUNT_IDENTIFIER, account.getId() + "-" + account.getEmail());
+            }
+            return account;
         }
 
         //by coockie
@@ -111,6 +117,10 @@ public class CommonSecurityController extends Security.Authenticator {
             if (account != null && USER_SERVICE.controlAuthenticationKey(keyElements[1], account)) {
                 //connection
                 storeAccount(Http.Context.current(), account);
+
+                if (!Http.Context.current().session().containsKey(ACCOUNT_IDENTIFIER)) {
+                    Http.Context.current().session().put(ACCOUNT_IDENTIFIER, account.getId() + "-" + account.getEmail());
+                }
                 return account;
             }
 

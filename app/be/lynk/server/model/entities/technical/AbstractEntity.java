@@ -1,8 +1,8 @@
 package be.lynk.server.model.entities.technical;
 
+import be.lynk.server.controller.technical.security.CommonSecurityController;
 import be.lynk.server.model.entities.converter.LocalDateTimePersistenceConverter;
 import org.apache.commons.lang3.StringUtils;
-import play.Play;
 import play.mvc.Http;
 
 import javax.persistence.*;
@@ -41,10 +41,6 @@ public abstract class AbstractEntity implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        String currentUser = getCurrentUser();
-        if (StringUtils.isBlank(currentUser)) {
-            currentUser = "TECHNICAL";
-        }
         creationDate = LocalDateTime.now();
         creationUser = getCurrentUser();
         lastUpdate = LocalDateTime.now();
@@ -53,26 +49,33 @@ public abstract class AbstractEntity implements Serializable {
 
     @PreUpdate
     public void preUpdate() {
-        if(id==null){
+        if (id == null) {
             prePersist();
-        }
-        else{
+        } else {
             lastUpdate = LocalDateTime.now();
             lastUpdateUser = getCurrentUser();
         }
     }
 
     private static String getCurrentUser() {
-        if (Play.application().isTest()) {
-            return TEST_USER;
-        }
 
         if (Http.Context.current.get() == null) {
             return "TECHNICAL";
         }
 
-        Http.Session session = Http.Context.current().session();
-        return session.get("identifier");
+        Http.Session session     = Http.Context.current().session();
+        String       currentUser = session.get(CommonSecurityController.ACCOUNT_IDENTIFIER);
+        if (currentUser == null) {
+            currentUser = session.get(CommonSecurityController.SESSION_IDENTIFIER_STORE);
+        }
+        if (currentUser == null) {
+            currentUser = session.get(CommonSecurityController.REQUEST_HEADER_AUTHENTICATION_KEY);
+        }
+
+        if (currentUser == null || StringUtils.isBlank(currentUser)) {
+            currentUser = "TECHNICAL";
+        }
+        return currentUser;
     }
 
     public Long getVersion() {
@@ -125,15 +128,13 @@ public abstract class AbstractEntity implements Serializable {
     }
 
 
-    protected String normalize(String s){
-        s=s.toLowerCase();
-        s= Normalizer.normalize(s, Normalizer.Form.NFD);
+    protected String normalize(String s) {
+        s = s.toLowerCase();
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
         s = s.replaceAll("[^\\p{ASCII}]", "");
         s = s.replaceAll("\\p{M}", "");
         return s;
     }
-
-
 
 }
 
