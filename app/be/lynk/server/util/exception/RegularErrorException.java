@@ -7,20 +7,20 @@ import java.util.Arrays;
 /**
  * Created by florian on 10/11/14.
  */
-public class MyRuntimeException  extends RuntimeException{
+public class RegularErrorException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
     private ErrorMessageEnum errorMessage=null;
     private Object[] params;
 
-    public MyRuntimeException(ErrorMessageEnum errorMessage, Object... params) {
+    public RegularErrorException(ErrorMessageEnum errorMessage, Object... params) {
         super();
 
         this.errorMessage = errorMessage;
         this.params = params;
     }
 
-    public MyRuntimeException(String message) {
+    public RegularErrorException(String message) {
         super(message);
     }
 
@@ -45,7 +45,7 @@ public class MyRuntimeException  extends RuntimeException{
 
     @Override
     public String toString() {
-        return "MyRuntimeException{" +super.toString()+","+
+        return "RegularErrorException{" +super.toString()+","+
                 "errorMessage=" + errorMessage +
                 ", params=" + Arrays.toString(params) +
                 '}';

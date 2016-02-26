@@ -1,12 +1,11 @@
 package be.lynk.server.controller.technical.security;
 
-import be.lynk.server.controller.technical.security.source.SourceEnum;
 import be.lynk.server.dto.technical.ExceptionDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.service.AccountService;
 import be.lynk.server.service.impl.AccountServiceImpl;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.api.i18n.Lang;
@@ -97,7 +96,7 @@ public class CommonSecurityController extends Security.Authenticator {
             String  authentication = Http.Context.current().request().getHeader(REQUEST_HEADER_AUTHENTICATION_KEY);
             Account account        = USER_SERVICE.findByAuthenticationKey(authentication);
             if (account == null) {
-                throw new MyRuntimeException(ErrorMessageEnum.NOT_CONNECTED);
+                throw new RegularErrorException(ErrorMessageEnum.NOT_CONNECTED);
             }
             storeAccount(Http.Context.current(), account);
             if (!Http.Context.current().session().containsKey(ACCOUNT_IDENTIFIER)) {
@@ -126,7 +125,7 @@ public class CommonSecurityController extends Security.Authenticator {
 
         }
 
-        throw new MyRuntimeException(ErrorMessageEnum.NOT_CONNECTED);
+        throw new RegularErrorException(ErrorMessageEnum.NOT_CONNECTED);
     }
 
     @Override
@@ -150,7 +149,7 @@ public class CommonSecurityController extends Security.Authenticator {
                 return true;
             }
             return false;
-        } catch (MyRuntimeException e) {
+        } catch (RegularErrorException e) {
             return false;
         }
     }

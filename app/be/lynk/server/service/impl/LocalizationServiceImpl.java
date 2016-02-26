@@ -4,10 +4,9 @@ import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.Address;
 import be.lynk.server.model.entities.Business;
 import be.lynk.server.service.LocalizationService;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.geocode.GeocodeUtil;
 import be.lynk.server.util.message.ErrorMessageEnum;
-import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -56,7 +55,7 @@ public class LocalizationServiceImpl implements LocalizationService {
             address.setPosy(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue());
         } catch (IOException e) {
             e.printStackTrace();
-            throw new MyRuntimeException("fatal error : " + e.getMessage());
+            throw new RegularErrorException("fatal error : " + e.getMessage());
         }
     }
 
@@ -92,7 +91,7 @@ public class LocalizationServiceImpl implements LocalizationService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(ErrorMessageEnum.GOOGLE_MAP_ERROR);
+            throw new RegularErrorException(ErrorMessageEnum.GOOGLE_MAP_ERROR);
         }
     }
 
@@ -147,7 +146,7 @@ public class LocalizationServiceImpl implements LocalizationService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(ErrorMessageEnum.GOOGLE_MAP_ERROR);
+            throw new RegularErrorException(ErrorMessageEnum.GOOGLE_MAP_ERROR);
         }
     }
 

@@ -12,13 +12,12 @@ import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.LocalizationService;
 import be.lynk.server.util.constants.Constant;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.Configuration;
 import play.Logger;
-import play.libs.F;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,7 +72,7 @@ public class FacebookRequest {
             return (FacebookTokenAccessControlDTO) httpRequest.sendRequest();
         } catch (HttpRequestException e) {
             e.printStackTrace();
-            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
+            throw new RegularErrorException(ErrorMessageEnum.FATAL_ERROR);
         }
     }
 
@@ -81,7 +80,7 @@ public class FacebookRequest {
 
         if (facebookUrl.contains("/pages/")) {
             //this is not an official page
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_FACEBOOK_IMPORT_NOT_OFFICIAL_PAGE);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_FACEBOOK_IMPORT_NOT_OFFICIAL_PAGE);
         }
 
 
@@ -128,7 +127,7 @@ public class FacebookRequest {
                 localizationService.validAddress(address);
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new MyRuntimeException(e.getMessage());
+                throw new RegularErrorException(e.getMessage());
             }
             business.setAddress(address);
         }
@@ -194,7 +193,7 @@ public class FacebookRequest {
             return (FacebookPageDataDTO) httpRequest.sendRequest();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
+            throw new RegularErrorException(e.getMessage());
         }
     }
 
@@ -217,7 +216,7 @@ public class FacebookRequest {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
+            throw new RegularErrorException(e.getMessage());
         }
     }
 
@@ -240,7 +239,7 @@ public class FacebookRequest {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
+            throw new RegularErrorException(e.getMessage());
         }
     }
 
@@ -263,7 +262,7 @@ public class FacebookRequest {
             return token;
         } catch (HttpRequestException e) {
             e.printStackTrace();
-            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
+            throw new RegularErrorException(ErrorMessageEnum.FATAL_ERROR);
         }
     }
 
@@ -419,7 +418,7 @@ public class FacebookRequest {
             return file;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
+            throw new RegularErrorException(e.getMessage());
         }
     }
 

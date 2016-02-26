@@ -2,10 +2,7 @@ package be.lynk.server.service.impl;
 
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.Address;
-import be.lynk.server.model.entities.FollowLink;
 import be.lynk.server.service.AddressService;
-import be.lynk.server.util.exception.MyRuntimeException;
-import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.stereotype.Service;
 import play.db.jpa.JPA;
 

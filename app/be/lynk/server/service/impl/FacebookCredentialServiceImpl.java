@@ -3,7 +3,7 @@ package be.lynk.server.service.impl;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.model.entities.FacebookCredential;
 import be.lynk.server.service.FacebookCredentialService;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class FacebookCredentialServiceImpl extends CrudServiceImpl<FacebookCrede
         FacebookTokenAccessControlDTO facebookTokenAccessControlDTO = facebookRequest.meRequest(accessToken);
 
         if (!facebookTokenAccessControlDTO.getId().equals(expectedId)) {
-            throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
+            throw new RegularErrorException(ErrorMessageEnum.FACEBOOK_AUTHENTICATION_FAIL);
         }
 
         return facebookTokenAccessControlDTO;

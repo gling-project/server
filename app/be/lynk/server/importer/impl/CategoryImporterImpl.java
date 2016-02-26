@@ -7,7 +7,6 @@ import be.lynk.server.service.CategoryInterestLinkService;
 import be.lynk.server.service.CustomerInterestService;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.StringUtil;
-import be.lynk.server.util.exception.MyRuntimeException;
 import jxl.Cell;
 import jxl.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +125,7 @@ public class CategoryImporterImpl extends AbstractImporter implements CategoryIm
 
                 if (businessCategory == null) {
                     Logger.warn("cannot found category " + name);
-//                    throw new MyRuntimeException("cannot found category "+name);
+//                    throw new RegularErrorException("cannot found category "+name);
                 } else {
 
                     businessCategory.getTranslationName().getTranslationValues().clear();

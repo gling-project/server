@@ -2,7 +2,7 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.EmailController;
 import be.lynk.server.dto.ContactFormDTO;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
@@ -27,7 +27,7 @@ public class ContactRestController extends AbstractRestController {
         if (securityController.isAuthenticated(ctx())) {
             email = securityController.getCurrentUser().getEmail();
         } else if (contactFormDTO.getEmail() == null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONTACT_NO_EMAIL);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_CONTACT_NO_EMAIL);
         } else {
             email = contactFormDTO.getEmail().toLowerCase();
         }

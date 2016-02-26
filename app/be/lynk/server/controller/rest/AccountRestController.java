@@ -12,14 +12,13 @@ import be.lynk.server.model.entities.Session;
 import be.lynk.server.service.*;
 import be.lynk.server.service.impl.LocalizationServiceImpl;
 import be.lynk.server.util.constants.Constant;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
         }
 
         Account account = securityController.getCurrentUser();
@@ -108,7 +107,7 @@ public class
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
         }
 
         Account account = securityController.getCurrentUser();
@@ -130,7 +129,7 @@ public class
 
         //contorl it's myself'
         if (!securityController.getCurrentUser().getId().equals(id)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION, id);
         }
 
         ChangePasswordDTO changePasswordDTO = initialization(ChangePasswordDTO.class);
@@ -139,7 +138,7 @@ public class
 
         //control last password
         if (account.getLoginCredential() == null || !loginCredentialService.controlPassword(changePasswordDTO.getOldPassword(), account.getLoginCredential())) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_OLD_PASSWORD);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_OLD_PASSWORD);
         }
 
         account.getLoginCredential().setPassword(changePasswordDTO.getNewPassword());
@@ -166,7 +165,7 @@ public class
         try {
             localizationService.validAddress(address);
         } catch (Exception e) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
 
@@ -174,11 +173,11 @@ public class
 
         //control name
         if (addressService.findByNameAndAccount(address.getName(), currentUser) != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME_ALREADY_USED);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_ADDRESS_NAME_ALREADY_USED);
         }
         if (address.getName().equals("createNewAddress") ||
                 address.getName().equals("currentPosition")) {
-            throw new MyRuntimeException(ErrorMessageEnum.ADDRESS_WRONG_NAME_TECHNICAL_NAME);
+            throw new RegularErrorException(ErrorMessageEnum.ADDRESS_WRONG_NAME_TECHNICAL_NAME);
         }
 
         address.setAccount(currentUser);
@@ -206,7 +205,7 @@ public class
         }
 
         if (!founded) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
 
@@ -223,7 +222,7 @@ public class
         try {
             localizationService.validAddress(address);
         } catch (Exception e) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
         addressService.saveOrUpdate(address);
@@ -251,7 +250,7 @@ public class
                 break;
             }
             if (!founded) {
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
             }
         }
 
@@ -301,7 +300,7 @@ public class
         } else {
             Address address = addressService.findByNameAndAccount(newAddressDTO.getAddressName(), currentUser);
             if (address == null) {
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS_NAME);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_ADDRESS_NAME);
             }
             currentUser.setSelectedAddress(address);
             address.setSelectedByAccount(currentUser);

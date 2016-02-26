@@ -4,7 +4,7 @@
 2015-11-22T14:21:11.204514+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBAFXA2XDS5JfrBnK2Xi8k0ZBEUwnhFJTIsLx9S0ZBS6h6h9wBoSg4haIshSvICMCg4DID8WxTdiF26BTPMp2cuFFJEciXJi2MqmgnKGbYCT6abso8Mv3Vw3jJ30T83XzNLRIoo29zgwLYa6dVTgV9xRJIOzFB0bLVky9njCI1xTmmg68ZCEfxRj1bQ3DMZAzN4ZA0XZA9RtlEZB5sx53iFqIRoqj0QyURAZDZD
 2015-11-22T14:21:11.693197+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAAXdfshuDskBAFXA2XDS5JfrBnK2Xi8k0ZBEUwnhFJTIsLx9S0ZBS6h6h9wBoSg4haIshSvICMCg4DID8WxTdiF26BTPMp2cuFFJEciXJi2MqmgnKGbYCT6abso8Mv3Vw3jJ30T83XzNLRIoo29zgwLYa6dVTgV9xRJIOzFB0bLVky9njCI1xTmmg68ZCEfxRj1bQ3DMZAzN4ZA0XZA9RtlEZB5sx53iFqIRoqj0QyURAZDZD/110633445970797" host=lynk-test.herokuapp.com request_id=0c3ad423-da09-4f34-9392-1954c5bfdaed fwd="91.182.252.21" dyno=web.1 connect=1ms service=558ms status=400 bytes=339
 2015-11-22T14:21:11.584554+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='110633445970797', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Nancy Alajgbdbeghje Huisen', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@3bd3b66f
-2015-11-22T14:21:11.689386+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:21:11.689386+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:21:11.586958+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T14:21:11.690542+00:00 app[web.1]: 
 2015-11-22T14:21:11.690540+00:00 app[web.1]: [[31merror[0m] application - 
@@ -17,7 +17,7 @@
 2015-11-22T14:21:11.690548+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:21:11.690549+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:21:11.690548+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
-2015-11-22T14:21:11.690550+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:21:11.690550+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:21:11.690567+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:21:11.690568+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:21:11.690569+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -254,7 +254,7 @@ ionalAction returning null to Play instance controller
 2015-11-22T14:36:58.766655+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBABvRgginZAzdRIJErZAoGl96iZCSoFeZAdJgcLfnkEIUsMHKY5YML4QoMU5lepyq9AVu6JHcBDzOj0BABBJmZATJazOcPnBactL8hJWzJcNSSqywzXk2USRLFTrN1wouZC6i5ELZCrbSexuJqbVLoSrpWcXJj9BgqzAcZBEUQyb6ZB13GEcy8mH5kA6BfsFW5UI4IZBT04bf8Qh9OSuShIlZAIXxzp7ZAlpilgZDZD
 2015-11-22T14:36:59.389015+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAAXdfshuDskBABvRgginZAzdRIJErZAoGl96iZCSoFeZAdJgcLfnkEIUsMHKY5YML4QoMU5lepyq9AVu6JHcBDzOj0BABBJmZATJazOcPnBactL8hJWzJcNSSqywzXk2USRLFTrN1wouZC6i5ELZCrbSexuJqbVLoSrpWcXJj9BgqzAcZBEUQyb6ZB13GEcy8mH5kA6BfsFW5UI4IZBT04bf8Qh9OSuShIlZAIXxzp7ZAlpilgZDZD/10153806479916803" host=lynk-test.herokuapp.com request_id=e1d8fd49-2311-44cf-a0ff-0ef99939828c fwd="91.182.252.21" dyno=web.1 connect=1ms service=695ms status=400 bytes=339
 2015-11-22T14:36:59.184331+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='10153806479916803', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Ugo Biloba', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@78bc2f46
-2015-11-22T14:36:59.377518+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:36:59.377518+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:36:59.186442+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T14:36:59.379506+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T14:36:59.379510+00:00 app[web.1]: 
@@ -267,7 +267,7 @@ ionalAction returning null to Play instance controller
 2015-11-22T14:36:59.379517+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:36:59.379517+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T14:36:59.379519+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T14:36:59.379520+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:36:59.379520+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:36:59.379521+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:36:59.379522+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:36:59.379523+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -294,7 +294,7 @@ ionalAction returning null to Play instance controller
 2015-11-22T14:38:56.753674+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:38:56.753675+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T14:38:56.753676+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T14:38:56.753676+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:38:56.753676+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:38:56.753677+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:38:56.753678+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:38:56.753679+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -302,7 +302,7 @@ ionalAction returning null to Play instance controller
 2015-11-22T14:38:56.753681+00:00 app[web.1]: 	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:38:56.753682+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:56) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:38:56.748912+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@2ede1b04
-2015-11-22T14:38:56.752445+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:38:56.752445+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:42:39.497869+00:00 app[web.1]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 13:52:09 UTC 2015 for class play.db.jpa.TransactionalAction
 2015-11-22T14:42:39.497979+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz>class play.db.jpa.TransactionalAction returning null to Play instance controller
 2015-11-22T14:42:39.498746+00:00 app[web.1]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 13:52:09 UTC 2015 for class be.lynk.server.controller.rest.LoginRestController
@@ -313,7 +313,7 @@ ionalAction returning null to Play instance controller
 2015-11-22T14:42:39.955012+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAAXdfshuDskBAFFtZByPpYIee9ZC4NzgE8w2Bdmh1bgjKy8f4d3ZC8Wj78SZC9NsghnVGHqEZAztzvupLMWNUCe0no0R08gm2s4ruZB88kZBzR1asU1bgDAOv14LpufkQZA4WdyVUHq6zZA3yeJs0hx0fIUB9aTY4Gw98ywPxxArAC1UZC93rLFZBI0M5tYS76zQKaQ025
 ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.herokuapp.com request_id=47b81747-c63d-45d9-8297-5af92455243a fwd="91.182.252.21" dyno=web.1 connect=2ms service=461ms status=400 bytes=339
 2015-11-22T14:42:39.925211+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@7dc35b7e
-2015-11-22T14:42:39.947419+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:42:39.947419+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:42:39.945569+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T14:42:39.951091+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T14:42:39.951094+00:00 app[web.1]: 
@@ -324,7 +324,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:42:39.951099+00:00 app[web.1]: 	at play.api.DefaultApplication.handleError(Application.scala:399) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:42:39.951100+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:42:39.951101+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T14:42:39.951103+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:42:39.951103+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:42:39.951101+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T14:42:39.951102+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:42:39.951104+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
@@ -342,7 +342,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:43:06.097844+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBAEBFznScLSXj2GwQZAUASbONSectWkmE2lUaaZCX6yDiDKlrWHx0fDARqUTamZCFjtNCdobHZBdJdfLbZCwlqoJTPFfkitFBU9nOZBl2vrWtL34hWHysmPwP4GO03ZBPcs9UIWsAC4PcEDdoUPrJk4ylFpRdWaWAGd5resxReEYsPL8k9c4cZB53Wbj6SLf7qxMroZAZAxyNRweRxtAPwAZBkyKDLuTVLzkfgZDZD
 2015-11-22T14:43:06.488752+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@6981fe44
 2015-11-22T14:43:06.508864+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
-2015-11-22T14:43:06.508871+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:43:06.508871+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:43:06.508872+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T14:43:06.508873+00:00 app[web.1]: 
 2015-11-22T14:43:06.508874+00:00 app[web.1]: ! @6o80dg9o8 - Internal server error, for (GET) [/rest/login/facebook/CAAXdfshuDskBAEBFznScLSXj2GwQZAUASbONSectWkmE2lUaaZCX6yDiDKlrWHx0fDARqUTamZCFjtNCdobHZBdJdfLbZCwlqoJTPFfkitFBU9nOZBl2vrWtL34hWHysmPwP4GO03ZBPcs9UIWsAC4PcEDdoUPrJk4ylFpRdWaWAGd5resxReEYsPL8k9c4cZB53Wbj6SLf7qxMroZAZAxyNRweRxtAPwAZBkyKDLuTVLzkfgZDZD/420433414809230] ->
@@ -354,7 +354,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:43:06.508878+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:43:06.508879+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:43:06.508879+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
-2015-11-22T14:43:06.508880+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:43:06.508880+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:43:06.508881+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:43:06.508882+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:43:06.508883+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -381,7 +381,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:44:43.137066+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:44:43.137067+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T14:44:43.137068+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T14:44:43.137077+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FATAL_ERROR
+2015-11-22T14:44:43.137077+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FATAL_ERROR
 2015-11-22T14:44:43.137078+00:00 app[web.1]: 	at be.lynk.server.util.httpRequest.FacebookRequest.meRequest(FacebookRequest.java:75) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:44:43.137079+00:00 app[web.1]: 	at be.lynk.server.service.impl.FacebookCredentialServiceImpl.controlFacebookAccess(FacebookCredentialServiceImpl.java:52) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:44:43.137080+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:85) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
@@ -424,7 +424,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:44:43.134287+00:00 app[web.1]: 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:254)
 2015-11-22T14:44:43.134368+00:00 app[web.1]: 	... 27 more
 2015-11-22T14:44:43.134302+00:00 app[web.1]: 	at be.lynk.server.util.httpRequest.HttpRequest.sendRequest(HttpRequest.java:127)
-2015-11-22T14:44:43.134853+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FATAL_ERROR,errorMessage=FATAL_ERROR, params=[]}
+2015-11-22T14:44:43.134853+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FATAL_ERROR,errorMessage=FATAL_ERROR, params=[]}
 2015-11-22T14:45:05.591314+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz>class play.db.jpa.TransactionalAction returning null to Play instance controller
 2015-11-22T14:45:05.595009+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz> class be.lynk.server.controller.rest.LoginRestController getBean : be.lynk.server.controller.rest.LoginRestController@44d76395
 2015-11-22T14:45:05.605906+00:00 app[web.1]: [[37minfo[0m] application - /rest/login/facebook/CAAXdfshuDskBAEij8mKNs8hG0BBuN85XR4czgfJXQZBZAEUu3Q4PqpNRokjHa65aDo2ZAX1HVZAKQ1ZClQ0rAdtASdnMtdiH4SWVTZAZChiuA5Js0WCyKrTPYx32uO5mE7WyuiZBhK0EhUpwN4TOfqozJAs59pfqTf1HtEzxPJMg7qA8zDx6b20X2qm6WX29JvGDrqZB50kuZALhHsMrQu2EbOaZACd4vkvWGHbpwsmBRZB4cQZDZD/420433414809230,dto:be.lynk.server.dto.technical.ResultDTO@1e74b804
@@ -434,7 +434,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:45:05.607127+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBAEij8mKNs8hG0BBuN85XR4czgfJXQZBZAEUu3Q4PqpNRokjHa65aDo2ZAX1HVZAKQ1ZClQ0rAdtASdnMtdiH4SWVTZAZChiuA5Js0WCyKrTPYx32uO5mE7WyuiZBhK0EhUpwN4TOfqozJAs59pfqTf1HtEzxPJMg7qA8zDx6b20X2qm6WX29JvGDrqZB50kuZALhHsMrQu2EbOaZACd4vkvWGHbpwsmBRZB4cQZDZD
 2015-11-22T14:45:06.092174+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAAXdfshuDskBAEij8mKNs8hG0BBuN85XR4czgfJXQZBZAEUu3Q4PqpNRokjHa65aDo2ZAX1HVZAKQ1ZClQ0rAdtASdnMtdiH4SWVTZAZChiuA5Js0WCyKrTPYx32uO5mE7WyuiZBhK0EhUpwN4TOfqozJAs59pfqTf1HtEzxPJMg7qA8zDx6b20X2qm6WX29JvGDrqZB50kuZALhHsMrQu2EbOaZACd4vkvWGHbpwsmBRZB4cQZDZD/420433414809230" host=lynk-test.herokuapp.com request_id=7c2f2a49-552c-47a9-8119-5d82e266edb1 fwd="91.182.252.21" dyno=web.1 connect=1ms service=517ms status=400 bytes=339
 2015-11-22T14:45:06.081186+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@6a81792c
-2015-11-22T14:45:06.085367+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:45:06.085367+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:45:06.083397+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T14:45:06.086825+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T14:45:06.086828+00:00 app[web.1]: 
@@ -448,7 +448,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:45:06.086836+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:45:06.086838+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:45:06.086840+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
-2015-11-22T14:45:06.086839+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:45:06.086839+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:45:06.086841+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:45:06.086842+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:45:06.086844+00:00 app[web.1]: 	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
@@ -474,7 +474,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:46:41.037028+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:46:41.037028+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T14:46:41.037030+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T14:46:41.037031+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:46:41.037031+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:46:41.037031+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:46:41.037033+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:46:41.037033+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -482,7 +482,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:46:41.037035+00:00 app[web.1]: 	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:46:41.037036+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:56) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:46:41.032493+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@50d0d847
-2015-11-22T14:46:41.035859+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:46:41.035859+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:48:44.882938+00:00 app[web.1
 ]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 13:52:09 UTC 2015 for class play.db.jpa.TransactionalAction
 2015-11-22T14:48:44.883075+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz>class play.db.jpa.TransactionalAction returning null to Play instance controller
@@ -493,7 +493,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:48:44.884800+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBALRnUobZBMSxIyZB89DntL9JhKjKdYVOWDCTnsnYH68WGMR8ZB9EpeGjBu5woAiIT4AZBfMSzxyPzicy4dPy09d7p3PAJFnEyjLiP536smz5JWnSjAOyZC9jZAw9IeSibFJToT6GwFjZCRXnZCrORNbQ1TpZCYP1m9qIZCZCidlhbDgaR8vD0gtrq97geZC1dMPjSMsE9M9fYE8ZAEJ73dkTdI6D3L6xLDuVm4QZDZD
 2015-11-22T14:48:45.383875+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAAXdfshuDskBALRnUobZBMSxIyZB89DntL9JhKjKdYVOWDCTnsnYH68WGMR8ZB9EpeGjBu5woAiIT4AZBfMSzxyPzicy4dPy09d7p3PAJFnEyjLiP536smz5JWnSjAOyZC9jZAw9IeSibFJToT6GwFjZCRXnZCrORNbQ1TpZCYP1m9qIZCZCidlhbDgaR8vD0gtrq97geZC1dMPjSMsE9M9fYE8ZAEJ73dkTdI6D3L6xLDuVm4QZDZD/420433414809230" host=lynk-test.herokuapp.com request_id=275febde-6da5-4f04-9425-3373f8340d5b fwd="91.182.252.21" dyno=web.1 connect=2ms service=495ms status=400 bytes=339
 2015-11-22T14:48:45.356945+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@483db499
-2015-11-22T14:48:45.370306+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:48:45.370306+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:48:45.363042+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T14:48:45.371854+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T14:48:45.371856+00:00 app[web.1]: 
@@ -506,7 +506,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:48:45.371863+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:48:45.371864+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T14:48:45.371865+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T14:48:45.371866+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:48:45.371866+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:48:45.371867+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:48:45.371878+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:48:45.371879+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -522,7 +522,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:50:42.211246+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBALRnUobZBMSxIyZB89DntL9JhKjKdYVOWDCTnsnYH68WGMR8ZB9EpeGjBu5woAiIT4AZBfMSzxyPzicy4dPy09d7p3PAJFnEyjLiP536smz5JWnSjAOyZC9jZAw9IeSibFJToT6GwFjZCRXnZCrORNbQ1TpZCYP1m9qIZCZCidlhbDgaR8vD0gtrq97geZC1dMPjSMsE9M9fYE8ZAEJ73dkTdI6D3L6xLDuVm4QZDZD
 2015-11-22T14:50:42.603720+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAAXdfshuDskBALRnUobZBMSxIyZB89DntL9JhKjKdYVOWDCTnsnYH68WGMR8ZB9EpeGjBu5woAiIT4AZBfMSzxyPzicy4dPy09d7p3PAJFnEyjLiP536smz5JWnSjAOyZC9jZAw9IeSibFJToT6GwFjZCRXnZCrORNbQ1TpZCYP1m9qIZCZCidlhbDgaR8vD0gtrq97geZC1dMPjSMsE9M9fYE8ZAEJ73dkTdI6D3L6xLDuVm4QZDZD/420433414809230" host=lynk-test.herokuapp.com request_id=613e188e-da65-4e31-bfbe-c3de4047adba fwd="91.182.252.21" dyno=web.1 connect=1ms service=402ms status=400 bytes=339
 2015-11-22T14:50:42.589579+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@2f6d8c68
-2015-11-22T14:50:42.593023+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T14:50:42.593023+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T14:50:42.591601+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T14:50:42.594301+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T14:50:42.594302+00:00 app[web.1]: 
@@ -535,7 +535,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T14:50:42.594308+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T14:50:42.594309+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T14:50:42.594310+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T14:50:42.594310+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T14:50:42.594310+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T14:50:42.594311+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T14:50:42.594312+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T14:50:42.594312+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -662,7 +662,7 @@ ZA8WBjhRZBdSl0unQecty725BHsFyyr95WRn2gVsAZDZD/420433414809230" host=lynk-test.he
 2015-11-22T15:01:52.792177+00:00 app[web.1]: [[37minfo[0m] application - /rest/log
 in/facebook/CAACSQ2juiPQBAP1VPmCKN0JZAY1l8x9ntgQOqoZAjOGCh8c9wP9qAE1j27tzxYQVgiD1qds6IpaNBY3VnCwl5D4Mro3FaxC8qBniBC6MMzEZAhhVbLWEZBwuBtpLLqHPrNH34QoeqV1p0W0t5NgzL9jrwHm6QLLwZCVTZAyZCXmMYsp8UF89lNtuWaf1aMXZA8G6Su6FYE7AJ5KMwZBzld2rp/108977679470075,dto:be.lynk.server.dto.technical.ResultDTO@2bfcce6
 2015-11-22T15:01:53.272372+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='108977679470075', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Mo Ha', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@6d7d0f23
-2015-11-22T15:01:53.280642+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:01:53.280642+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:01:53.277550+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T15:01:53.281733+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T15:01:53.281736+00:00 app[web.1]: 
@@ -675,7 +675,7 @@ in/facebook/CAACSQ2juiPQBAP1VPmCKN0JZAY1l8x9ntgQOqoZAjOGCh8c9wP9qAE1j27tzxYQVgiD
 2015-11-22T15:01:53.281744+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:01:53.281745+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:01:53.281748+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
-2015-11-22T15:01:53.281747+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:01:53.281747+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:01:53.281750+00:00 app[web.1]: 	at play.core.Router$HandlerInvoker$$anon$7$$anon$2.invocation(Router.scala:183) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:01:53.281749+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:01:53.281746+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
@@ -692,7 +692,7 @@ in/facebook/CAACSQ2juiPQBAP1VPmCKN0JZAY1l8x9ntgQOqoZAjOGCh8c9wP9qAE1j27tzxYQVgiD
 2015-11-22T15:17:50.370606+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBADATdl188KvqEVvviSMf5CUjdvbZB2GwNF4FKZBpZBpTCEeZBVy15cEzfxLcCXUkhtx7wOiG22O9V84ZCEoNdW4okjq0BZBB7JHcEv2942L4nUOQmJ9AKoVr2bwZBzI5cpGJQUnYw0VFRZC5pcryTdZAxyxPZCLgiecdcka7i7ZAQZAEkO0mHZAJSdKlZCS0NP4Q8ZCS9iOvLxo91rvqoiIjVzlAnhmnZAT8aPVBCAZDZD
 2015-11-22T15:17:50.750009+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAAXdfshuDskBADATdl188KvqEVvviSMf5CUjdvbZB2GwNF4FKZBpZBpTCEeZBVy15cEzfxLcCXUkhtx7wOiG22O9V84ZCEoNdW4okjq0BZBB7JHcEv2942L4nUOQmJ9AKoVr2bwZBzI5cpGJQUnYw0VFRZC5pcryTdZAxyxPZCLgiecdcka7i7ZAQZAEkO0mHZAJSdKlZCS0NP4Q8ZCS9iOvLxo91rvqoiIjVzlAnhmnZAT8aPVBCAZDZD/420433414809230" host=lynk-test.herokuapp.com request_id=721a582d-a825-4c43-a338-b63008ab34f4 fwd="91.182.252.21" dyno=web.1 connect=1ms service=384ms status=400 bytes=339
 2015-11-22T15:17:50.742038+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@5cfd1a6d
-2015-11-22T15:17:50.746382+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:17:50.746382+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:17:50.744898+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T15:17:50.747548+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T15:17:50.747550+00:00 app[web.1]: 
@@ -706,7 +706,7 @@ in/facebook/CAACSQ2juiPQBAP1VPmCKN0JZAY1l8x9ntgQOqoZAjOGCh8c9wP9qAE1j27tzxYQVgiD
 2015-11-22T15:17:50.747556+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:17:50.747557+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:17:50.747561+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
-2015-11-22T15:17:50.747559+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:17:50.747559+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:17:50.747562+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:17:50.747562+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:17:50.747563+00:00 app[web.1]: 	at play.core.Router$HandlerInvoker$$anon$7$$anon$2.invocation(Router.scala:183) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
@@ -731,7 +731,7 @@ in/facebook/CAACSQ2juiPQBAP1VPmCKN0JZAY1l8x9ntgQOqoZAjOGCh8c9wP9qAE1j27tzxYQVgiD
 2015-11-22T15:18:52.592962+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:18:52.592961+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:18:52.592959+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T15:18:52.592962+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:18:52.592962+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:18:52.592960+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:18:52.592965+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:18:52.592963+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
@@ -855,7 +855,7 @@ t.herokuapp.com request_id=405c7108-4d28-45bf-97dd-f4b9d9e8527d fwd="83.134.180.
 2015-11-22T15:26:36.355703+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:26:36.355704+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:26:36.355711+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
-2015-11-22T15:26:36.355713+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:26:36.355713+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:26:36.355712+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:26:36.355714+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T15:26:36.355715+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -864,14 +864,14 @@ t.herokuapp.com request_id=405c7108-4d28-45bf-97dd-f4b9d9e8527d fwd="83.134.180.
 2015-11-22T15:26:36.355717+00:00 app[web.1]: 	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:26:36.355718+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:56) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:26:36.329100+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='108977679470075', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Mo Ha', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@244b59d3
-2015-11-22T15:26:36.341539+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:26:36.341539+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:26:38.236549+00:00 app[web.1]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 15:25:01 UTC 2015 for class play.db.jpa.TransactionalAction
 2015-11-22T15:26:38.238420+00:00 app[web.1]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 15:25:01 UTC 2015 for class be.lynk.server.controller.rest.LoginRestController
 2015-11-22T15:26:38.238427+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz> class be.lynk.server.controller.rest.LoginRestController getBean : be.lynk.server.controller.rest.LoginRestController@28f06f4e
 2015-11-22T15:26:38.238429+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T15:26:38.392056+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='108977679470075', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Mo Ha', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@7d1ec32
 2015-11-22T15:26:38.245427+00:00 app[web.1]: [[37minfo[0m] application - /rest/login/facebook/CAACSQ2juiPQBAOUkz9n9ljVVnAFWLrBJ5PuyWE3Jqzc69zgy0HyqpgsZAL1taN0V7pLmUj7VQmiVKN0XT7Um9sFwrQc1Yw7otljZBhR40Hgv4ldLrQu10s0FKb3CKZBDxJzqwgvZC7lVAqArFQHXbrSfNBu1ngf2rZAOGXcCbY4IbJS8Xp8AFhtYwRjE9YcRt872WNghmE4MbuO5xh0vx/108977679470075,dto:be.lynk.server.dto.technical.ResultDTO@405a6b7a
-2015-11-22T15:26:38.397408+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:26:38.397408+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:26:38.236876+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz>class play.db.jpa.TransactionalAction returning null to Play instance controller
 2015-11-22T15:26:38.245924+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAACSQ2juiPQBAOUkz9n9ljVVnAFWLrBJ5PuyWE3Jqzc69zgy0HyqpgsZAL1taN0V7pLmUj7VQmiVKN0XT7Um9sFwrQc1Yw7otljZBhR40Hgv4ldLrQu10s0FKb3CKZBDxJzqwgvZC7lVAqArFQHXbrSfNBu1ngf2rZAOGXcCbY4IbJS8Xp8AFhtYwRjE9YcRt872WNghmE4MbuO5xh0vx
 2015-11-22T15:26:38.394534+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
@@ -886,7 +886,7 @@ t.herokuapp.com request_id=405c7108-4d28-45bf-97dd-f4b9d9e8527d fwd="83.134.180.
 2015-11-22T15:26:38.398731+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:26:38.398732+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:26:38.398733+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T15:26:38.398734+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:26:38.398734+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:26:38.398735+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T15:26:38.398737+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:26:38.398738+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -1007,7 +1007,7 @@ r]: at=info method=GET path="/assets/fonts/glyphicons-halflings-regular.ttf" hos
 2015-11-22T15:26:48.768034+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz>class play.db.jpa.TransactionalAction returning null to Play instance controller
 2015-11-22T15:26:49.115700+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAACSQ2juiPQBAHzgZCei7lotzfbE4C8RIIZAbtj65eaWY5gxfLxnQBgp9ZBGFo7TyCf0BuYc89vdTSy7ZCidgczZA42SauOO1tMD9VXK0SRwegips6KYGpRoVrcSdBRZAhL1qP4sLtOWN7UDVhYyMYPKnKQf9Q0z9ZAU0samiuXj8wAlItZBEJsVRdZCrx9SS5oCZCxadIuvrJPhScHgBZCZCjJX/108977679470075" host=lynk-test.herokuapp.com request_id=8c4fadaf-af69-4d4e-9cc3-b76a25814467 fwd="83.134.180.137" dyno=web.1 connect=0ms service=353ms status=400 bytes=339
 2015-11-22T15:26:49.104578+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='108977679470075', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Mo Ha', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@2ed0a470
-2015-11-22T15:26:49.108957+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:26:49.108957+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:26:49.106590+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T15:26:49.110075+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T15:26:49.110078+00:00 app[web.1]: 
@@ -1021,7 +1021,7 @@ tUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHand
 2015-11-22T15:26:49.110087+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:26:49.110088+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:26:49.110089+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T15:26:49.110090+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:26:49.110090+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:26:49.110092+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T15:26:49.110093+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:26:49.110094+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -1130,7 +1130,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:32:06.280635+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz> class be.lynk.server.controller.rest.LoginRestController getBean : be.lynk.server.controller.rest.LoginRestController@661015fa
 2015-11-22T15:32:06.280749+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T15:32:06.287686+00:00 app[web.1]: [[37minfo[0m] application - /rest/login/facebook/CAACSQ2juiPQBAOfk3vfIOZCKdZCEpZCOPeL5PSKLhCflmgVMTj8XFfVwg9KS13ZBeYZAwMhECCRLO6eNDtPs6UZC6JvehMOxQE6lRkOeFgXkeNKBMzXSZC5ZC3CVzIRWLdJI3kUc36DRzLdM1cJo5PhSdHuiJjh5HySQ3CMe8euRJfq6EOxgj5j6dNpXpQC7LQ320KaxzG8vl18E2i92WfA6/108977679470075,dto:be.lynk.server.dto.technical.ResultDTO@30fb4ffd
-2015-11-22T15:32:06.789872+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:32:06.789872+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:32:06.780368+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='108977679470075', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Mo Ha', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@37dbb86d
 2015-11-22T15:32:06.786090+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T15:32:06.799920+00:00 app[web.1]: [[31merror[0m] application - 
@@ -1144,7 +1144,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:32:06.799930+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:32:06.799951+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:32:06.799952+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T15:32:06.799953+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:32:06.799953+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:32:06.799954+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T15:32:06.799955+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:32:06.799955+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -1176,7 +1176,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:32:27.122216+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:32:27.122218+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:32:27.122215+00:00 app[web.1]: 	at play.api.DefaultApplication.handleError(Application.scala:399) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T15:32:27.122219+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FATAL_ERROR
+2015-11-22T15:32:27.122219+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FATAL_ERROR
 2015-11-22T15:32:27.122217+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:32:27.122217+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:32:27.122220+00:00 app[web.1]: 	at be.lynk.server.util.httpRequest.FacebookRequest.meRequest(FacebookRequest.java:75) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
@@ -1212,7 +1212,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:32:27.119169+00:00 app[web.1]: 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:254)
 2015-11-22T15:32:27.119194+00:00 app[web.1]: 	at be.lynk.server.util.httpRequest.HttpRequest.sendRequest(HttpRequest.java:127)
 2015-11-22T15:32:27.119228+00:00 app[web.1]: 	... 27 more
-2015-11-22T15:32:27.120605+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FATAL_ERROR,errorMessage=FATAL_ERROR, params=[]}
+2015-11-22T15:32:27.120605+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FATAL_ERROR,errorMessage=FATAL_ERROR, params=[]}
 2015-11-22T15:32:27.135819+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAACSQ2juiPQBAOfk3vfIOZCKdZCEpZCOPeL5PSKLhCflmgVMTj8XFfVwg9KS13ZBeYZAwMhECCRLO6eNDtPs6UZC6JvehMOxQE6lRkOeFgXkeNKBMzXSZC5ZC3CVzIRWLdJI3kUc36DRzLdM1cJo5PhSdHuiJjh5HySQ3CMe8euRJfq6EOxgj5j6dNpXpQC7LQ320KaxzG8vl18E2i92WfA6/108977679470075" host=lynk-test.herokuapp.com request_id=9333ad72-19b6-49fd-8e67-db51df1e4ad8 fwd="83.134.180.137" dyno=web.1 connect=0ms service=353ms status=400 bytes=294
 2015-11-22T15:32:45.191211+00:00 app[web.1]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 15:31:41 UTC 2015 for class be.lynk.server.controller.MainController
 2015-11-22T15:32:45.189835+00:00 app[web.1]:
@@ -1260,7 +1260,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:36:51.170715+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:36:51.170716+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:36:51.170714+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T15:36:51.170718+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:36:51.170718+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:36:51.170717+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:36:51.170719+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T15:36:51.170720+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
@@ -1269,7 +1269,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:36:51.170722+00:00 app[web.1]: 	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:36:51.170723+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:56) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:36:51.156996+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@40742db
-2015-11-22T15:36:51.161453+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:36:51.161453+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:37:02.381364+00:00 app[web.1]: [[36mdebug[0m] application - getControllerInstance <clazz>class play.db.jpa.TransactionalAction returning null to Play instance controller
 2015-11-22T15:37:02.381113+00:00 app[web.1]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 15:31:41 UTC 2015 for class play.db.jpa.TransactionalAction
 2015-11-22T15:37:02.381932+00:00 app[web.1]: [[36mdebug[0m] application - Spring getControllerInstance called @Sun Nov 22 15:31:41 UTC 2015 for class be.lynk.server.controller.rest.LoginRestController
@@ -1278,7 +1278,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:37:02.383772+00:00 app[web.1]: [[37minfo[0m] application - /rest/login/facebook/CAAXdfshuDskBAPna0CVZAsXLyoMZCOnT5UMvt8cetMaACPg5dqbfnaUZCKTRXkZBQfw8UzNMFYIHC88RsdcX9SOlRSwQRnyAvL9Ea3ZAnBcna8nCEXq4KVNmXlMgzZA5yXnrZCSiGSaZCGmodMJ6ocXIZB4M1isL3GMJnuAJH2hb4HQBB0j3Nby8bvDZBwqTziZAS6qAAXI8JrSTpiAKMbjvv60jOh2c9eURwl0hZBKc4ttUaQZDZD/420433414809230,dto:be.lynk.server.dto.technical.ResultDTO@7381b457
 2015-11-22T15:37:02.383775+00:00 app[web.1]: [[37minfo[0m] application - EXTERNAL REQUEST URL : https://graph.facebook.com/me?&access_token=CAAXdfshuDskBAPna0CVZAsXLyoMZCOnT5UMvt8cetMaACPg5dqbfnaUZCKTRXkZBQfw8UzNMFYIHC88RsdcX9SOlRSwQRnyAvL9Ea3ZAnBcna8nCEXq4KVNmXlMgzZA5yXnrZCSiGSaZCGmodMJ6ocXIZB4M1isL3GMJnuAJH2hb4HQBB0j3Nby8bvDZBwqTziZAS6qAAXI8JrSTpiAKMbjvv60jOh2c9eURwl0hZBKc4ttUaQZDZD
 2015-11-22T15:37:02.713371+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='420433414809230', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Milandre Roussette', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@52847592
-2015-11-22T15:37:02.716205+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:37:02.716205+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:37:02.717345+00:00 app[web.1]: [[31merror[0m] application - 
 2015-11-22T15:37:02.715092+00:00 app[web.1]: [[37minfo[0m] application - CONTENT authenticationKey ???? 
 2015-11-22T15:37:02.717348+00:00 app[web.1]: 
@@ -1288,7 +1288,7 @@ e=6ms status=200 bytes=1617
 2015-11-22T15:37:02.717352+00:00 app[web.1]: 	at play.api.Application$class.handleError(Application.scala:293) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:37:02.717358+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:37:02.717354+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
-2015-11-22T15:37:02.717359+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:37:02.717359+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:37:02.717357+00:00 app[web.1]: 	at scala.Option.map(Option.scala:145) [org.scala-lang.scala-library-2.10.3.jar:na]
 2015-11-22T15:37:02.717361+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:37:02.717353+00:00 app[web.1]: 	at play.api.DefaultApplication.handleError(A
@@ -1499,7 +1499,7 @@ thod=GET path="/assets/images/big_loading.gif" host=lynk-test.herokuapp.com requ
 2015-11-22T15:42:56.461186+00:00 app[web.1]: 	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$8.apply(routes_routing.scala:462) ~[project.project-1.0-SNAPSHOT.jar:na]
 2015-11-22T15:42:56.461187+00:00 app[web.1]: 	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:42:56.461174+00:00 app[web.1]: 
-2015-11-22T15:42:56.461182+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL
+2015-11-22T15:42:56.461182+00:00 app[web.1]: Caused by: be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL
 2015-11-22T15:42:56.461184+00:00 app[web.1]: 	at be.lynk.server.controller.rest.LoginRestController.loginFacebook(LoginRestController.java:117) ~[project.project-1.0-SNAPSHOT.jar:1.0-SNAPSHOT]
 2015-11-22T15:42:56.461187+00:00 app[web.1]: 	at play.core.Router$HandlerInvoker$$anon$7$$anon$2.invocation(Router.scala:183) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:42:56.461175+00:00 app[web.1]: play.api.Application$$anon$1: Execution exception[[MyRuntimeException: FACEBOOK_NO_EMAIL]]
@@ -1512,5 +1512,5 @@ thod=GET path="/assets/images/big_loading.gif" host=lynk-test.herokuapp.com requ
 2015-11-22T15:42:56.461180+00:00 app[web.1]: 	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:264) [com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:42:56.461188+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:56) ~[com.typesafe.play.play_2.10-2.2.4.jar:2.2.4]
 2015-11-22T15:42:56.454874+00:00 app[web.1]: [[37minfo[0m] application - --FacebookTokenAccessControlDTO:FacebookTokenAccessControlDTO{id='131685583862350', email='null', first_name='null', gender='null', last_name='null', link='null', locale='null', name='Pok Pok', timezone=0, updated_time=null, verified=false} be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO@72e43169
-2015-11-22T15:42:56.459932+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.MyRuntimeException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
+2015-11-22T15:42:56.459932+00:00 app[web.1]: [[31merror[0m] play - Cannot invoke the action, eventually got an error: MyRuntimeException{be.lynk.server.util.exception.RegularErrorException: FACEBOOK_NO_EMAIL,errorMessage=FACEBOOK_NO_EMAIL, params=[]}
 2015-11-22T15:42:56.478657+00:00 heroku[router]: at=info method=GET path="/rest/login/facebook/CAACSQ2juiPQBAB1xYcTXmsiYqGaqBZCbO42WWbSgXNZAGCm2Skciq6evYokcSi4QsXytLE6FfooMX7hBN9dVNlkUehEqnFr248zelQ1H0rxzMQ4W6akzZADxnc7zsHdhpmiPWnC8idS95GcRX5sFFSXCDtVZA8McZCyosFAkCBOTpub5yFdaWSSMHEz1tx8yvcxtwAiczz4NZCYGZArhZBys/131685583862350" host=lynk-test.herokuapp.com request_id=862b290f-3ce1-43b4-9fc4-a64d0acd175e fwd="83.134.180.137" dyno=web.1 connect=1ms service=384ms status=400 bytes=339

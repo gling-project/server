@@ -17,13 +17,12 @@ import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.AppUtil;
 import be.lynk.server.util.constants.Constant;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Configuration;
-import play.Logger;
 import play.i18n.Lang;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -127,7 +126,7 @@ public abstract class AbstractController extends Controller {
                 if (nullable) {
                     return null;
                 }
-                throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR, dtoClass.getName());
+                throw new RegularErrorException(ErrorMessageEnum.JSON_CONVERSION_ERROR, dtoClass.getName());
             }
 
             validation(dto);
@@ -233,7 +232,7 @@ public abstract class AbstractController extends Controller {
                 message += messageTranslated;
             }
 
-            throw new MyRuntimeException(message);
+            throw new RegularErrorException(message);
         }
     }
 

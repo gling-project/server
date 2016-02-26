@@ -1,22 +1,18 @@
 package be.lynk.server.util.httpRequest;
 
 import be.lynk.server.dto.technical.DTO;
-import be.lynk.server.util.exception.MyRuntimeException;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.http.entity.StringEntity;
-import org.springframework.stereotype.Component;
 import play.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

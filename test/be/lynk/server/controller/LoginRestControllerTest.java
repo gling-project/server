@@ -6,7 +6,7 @@
 //import be.lynk.server.model.GenderEnum;
 //import be.lynk.server.model.entities.Address;
 //import be.lynk.server.util.AccountTypeEnum;
-//import be.lynk.server.util.exception.MyRuntimeException;
+//import be.lynk.server.util.exception.RegularErrorException;
 //import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserAccount;
 //import com.jayway.facebooktestjavaapi.testuser.FacebookTestUserStore;
 //import com.jayway.facebooktestjavaapi.testuser.impl.HttpClientFacebookTestUserStore;

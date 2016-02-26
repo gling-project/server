@@ -9,7 +9,7 @@ import be.lynk.server.model.entities.BusinessSchedule;
 import be.lynk.server.model.entities.BusinessSchedulePart;
 import be.lynk.server.service.BusinessScheduleService;
 import be.lynk.server.service.BusinessService;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +40,7 @@ public class BusinessScheduleRestController extends AbstractRestController {
 
         if(!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         BusinessScheduleContainerDTO dto = initialization(BusinessScheduleContainerDTO.class);

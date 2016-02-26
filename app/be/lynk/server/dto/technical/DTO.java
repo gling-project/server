@@ -1,12 +1,10 @@
 package be.lynk.server.dto.technical;
 
-import be.lynk.server.controller.technical.AbstractController;
 import be.lynk.server.controller.technical.security.source.SourceEnum;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import play.Logger;
@@ -56,7 +54,7 @@ public class DTO implements Content {
 
                 if (dto == null) {
                     Logger.error("ERROR into DTO convertion : DTO is null");
-                    throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
+                    throw new RegularErrorException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
                 }
 
                 //dto.validate();
@@ -65,11 +63,11 @@ public class DTO implements Content {
             } catch (IOException e) {
                 Logger.error("ERROR into DTO convertion : " + data.asText());
                 e.printStackTrace();
-                throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
+                throw new RegularErrorException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
             }
         }
         Logger.error("ERROR into DTO convertion : Data is null");
-        throw new MyRuntimeException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
+        throw new RegularErrorException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
     }
 
     public String get__type() {
@@ -78,7 +76,7 @@ public class DTO implements Content {
 
     public void set__type(String __type) {
 //        if (!get__type().equals(__type)) {
-//            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR, get__type()+" instead of "+__type);
+//            throw new RegularErrorException(ErrorMessageEnum.FATAL_ERROR, get__type()+" instead of "+__type);
 //        }
     }
 
@@ -89,7 +87,7 @@ public class DTO implements Content {
             return mapper.writeValueAsString(this);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR, e.getMessage());
+            throw new RegularErrorException(ErrorMessageEnum.FATAL_ERROR, e.getMessage());
         }
     }
 

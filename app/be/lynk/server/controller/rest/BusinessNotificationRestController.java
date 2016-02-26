@@ -16,7 +16,7 @@ import be.lynk.server.service.*;
 import be.lynk.server.service.impl.NotificationServiceImpl;
 import be.lynk.server.util.ApplicationNotificationTypeEnum;
 import be.lynk.server.util.constants.Constant;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.EmailMessageEnum;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import be.lynk.server.util.message.NotificationMessageEnum;
@@ -86,7 +86,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         //control start date
         if (businessNotification.getStartDate().compareTo(LocalDateTime.now().minusHours(1)) == -1) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_STARTDATE_BEFORE_NOW);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_PUBLICATION_STARTDATE_BEFORE_NOW);
         }
 
         //control date
@@ -96,12 +96,12 @@ public class BusinessNotificationRestController extends AbstractRestController {
         //add 1 hour
         x += 60 * 60;
         if (duration.getSeconds() > x) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOTIFICATION_DURATION_TOO_LONG, Constant.NOTIFICATION_PERIOD_MAX_DAY);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOTIFICATION_DURATION_TOO_LONG, Constant.NOTIFICATION_PERIOD_MAX_DAY);
         }
 
         //control number by day
         if (weekPublication >= Constant.PUBLICATION_MAX_BY_WEEK) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_WEEK);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_PUBLICATION_TOO_MUCH_TODAY, Constant.PUBLICATION_MAX_BY_WEEK);
         }
 
         publicationService.saveOrUpdate(businessNotification);
@@ -158,7 +158,7 @@ public class BusinessNotificationRestController extends AbstractRestController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         String oldName = businessNotificationToEdit.getTitle();

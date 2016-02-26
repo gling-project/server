@@ -11,4 +11,6 @@ public interface EmailService {
     void sendEmail(EmailMessage emailMessage,Lang lang);
 
     void sendEmailWithoutBody(EmailMessage emailMessage, Lang lang);
+
+    void sendEmailWithoutTemplate(EmailMessage emailMessage);
 }

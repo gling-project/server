@@ -68,4 +68,16 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void sendEmailWithoutTemplate(EmailMessage emailMessage) {
+        try {
+
+
+            emailSenderService.send(emailMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -8,7 +8,7 @@
 //import be.lynk.server.dto.technical.DTO;
 //import be.lynk.server.model.GenderEnum;
 //import be.lynk.server.model.entities.technical.AbstractEntity;
-//import be.lynk.server.util.exception.MyRuntimeException;
+//import be.lynk.server.util.exception.RegularErrorException;
 //import com.fasterxml.jackson.databind.JsonNode;
 //import org.junit.AfterClass;
 //import org.junit.Before;

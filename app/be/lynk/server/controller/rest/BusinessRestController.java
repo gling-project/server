@@ -6,13 +6,11 @@ import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotati
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
-import be.lynk.server.dto.post.BusinessRegistrationDTO;
 import be.lynk.server.dto.technical.ResultDTO;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
-import be.lynk.server.util.AccountTypeEnum;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -102,7 +100,7 @@ public class BusinessRestController extends AbstractController {
                 (securityController.isAuthenticated(ctx()) == false ||
                         (!currentUser.getRole().equals(RoleEnum.SUPERADMIN) &&
                                 (!currentUser.getRole().equals(RoleEnum.BUSINESS) || !business.equals(securityController.getBusiness()))))) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_HIDDEN_AND_NOT_MINE);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_BUSINESS_HIDDEN_AND_NOT_MINE);
         }
 
         //convert
@@ -161,13 +159,13 @@ public class BusinessRestController extends AbstractController {
         ClaimBusinessDTO claimBusinessDTO = initialization(ClaimBusinessDTO.class);
 
         if (securityController.getCurrentUser().getBusiness() != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_CLAIM_ALREADY_HAVE_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_BUSINESS_CLAIM_ALREADY_HAVE_BUSINESS);
         }
 
         ClaimBusiness claimBusiness = claimBusinessService.findByAccount(securityController.getCurrentUser());
 
         if (claimBusiness != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_BUSINESS_CLAIM_ALREADY_HAVE_CLAIMS, claimBusiness.getBusiness().getName());
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_BUSINESS_CLAIM_ALREADY_HAVE_CLAIMS, claimBusiness.getBusiness().getName());
         }
 
         //create claim request
@@ -192,7 +190,7 @@ public class BusinessRestController extends AbstractController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         List<StoredFile> map = dozerService.map(galleryPictures, StoredFile.class);
@@ -240,7 +238,7 @@ public class BusinessRestController extends AbstractController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
 
@@ -266,7 +264,7 @@ public class BusinessRestController extends AbstractController {
         try {
             localizationService.validAddress(address);
         } catch (Exception e) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
         addressService.saveOrUpdate(address);
@@ -286,7 +284,7 @@ public class BusinessRestController extends AbstractController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
 
@@ -298,7 +296,7 @@ public class BusinessRestController extends AbstractController {
             if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
                 storedFile.setAccount(securityController.getBusiness().getAccount());
             } else {
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
             }
         }
 
@@ -319,7 +317,7 @@ public class BusinessRestController extends AbstractController {
             if (securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN)) {
                 storedFile.setAccount(securityController.getBusiness().getAccount());
             } else {
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
             }
         }
 
@@ -328,7 +326,7 @@ public class BusinessRestController extends AbstractController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         business.setLandscape(storedFile);
@@ -346,7 +344,7 @@ public class BusinessRestController extends AbstractController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)) {
@@ -374,7 +372,7 @@ public class BusinessRestController extends AbstractController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         business.setSocialNetwork(dozerService.map(dto, BusinessSocialNetwork.class));
@@ -396,7 +394,7 @@ public class BusinessRestController extends AbstractController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         //add categories

@@ -1,13 +1,11 @@
 package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.EmailController;
-import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
 import be.lynk.server.dto.*;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.dto.post.AccountRegistrationDTO;
-import be.lynk.server.dto.post.BusinessRegistrationDTO;
 import be.lynk.server.dto.post.ForgotPasswordDTO;
 import be.lynk.server.dto.post.LoginDTO;
 import be.lynk.server.dto.technical.DTO;
@@ -17,7 +15,7 @@ import be.lynk.server.model.entities.*;
 import be.lynk.server.service.*;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.KeyGenerator;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -27,8 +25,6 @@ import play.db.jpa.Transactional;
 import play.i18n.Lang;
 import play.mvc.Result;
 import play.mvc.Results;
-
-import java.util.ArrayList;
 
 /**
  * Created by florian on 25/03/15.
@@ -122,7 +118,7 @@ public class LoginRestController extends AbstractRestController {
 
                 //test email : if the email is null, impossible to create an account
                 if (facebookTokenAccessControlDTO.getEmail() == null) {
-                    throw new MyRuntimeException(ErrorMessageEnum.FACEBOOK_NO_EMAIL);
+                    throw new RegularErrorException(ErrorMessageEnum.FACEBOOK_NO_EMAIL);
                 }
 
                 //Control email
@@ -201,7 +197,7 @@ public class LoginRestController extends AbstractRestController {
     public Result createBusiness() {
 
         if (securityController.getCurrentUser().getBusiness() != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
         }
 
         CreateBusinessDTO createBusinessDTO = initialization(CreateBusinessDTO.class);
@@ -223,7 +219,7 @@ public class LoginRestController extends AbstractRestController {
     public Result createBusinessFromFacebook(String facebookUrl) {
 
         if (securityController.getCurrentUser().getBusiness() != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_CUSTOMER_TO_BUSINESS_ALREADY_BUSINESS);
         }
 
         Account account = securityController.getCurrentUser();
@@ -231,7 +227,7 @@ public class LoginRestController extends AbstractRestController {
         try {
             facebookRequest.createBusinessFromFacebook(account, facebookUrl, true);
         }catch (Exception e){
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_REGISTRATION_IMPORT_FACEBOOK);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_REGISTRATION_IMPORT_FACEBOOK);
         }
 
         account.setRole(RoleEnum.BUSINESS);
@@ -262,10 +258,10 @@ public class LoginRestController extends AbstractRestController {
         Account byEmail = accountService.findByEmail(dto.getEmail().toLowerCase());
 
         if (byEmail == null) {
-            throw new MyRuntimeException(ErrorMessageEnum.EMAIL_UNKNOWN);
+            throw new RegularErrorException(ErrorMessageEnum.EMAIL_UNKNOWN);
         }
         if (byEmail.getLoginCredential() == null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ACCOUNT_WITHOUT_LOGIN_CREDENTIAL);
+            throw new RegularErrorException(ErrorMessageEnum.ACCOUNT_WITHOUT_LOGIN_CREDENTIAL);
         }
 
         byEmail.getLoginCredential().setPassword(KeyGenerator.generateRandomPassword());
@@ -297,7 +293,7 @@ public class LoginRestController extends AbstractRestController {
 
         if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
             //if there is no account for this email or the password doesn't the right, throw an exception
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
         }
 
         DTO result = finalizeConnection(account);
@@ -355,12 +351,12 @@ public class LoginRestController extends AbstractRestController {
         FacebookCredential facebookCredential = facebookCredentialService.findByUserId(facebookTokenAccessControlDTO.getId());
 
         if (facebookCredential != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_LOGIN_FACEBOOK_LINK_ALREADY_USED);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_LOGIN_FACEBOOK_LINK_ALREADY_USED);
         }
 
         //link
         if (securityController.getCurrentUser().getFacebookCredential() != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_LOGIN_FACEBOOK_LINK_ALREADY_LINKED);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_LOGIN_FACEBOOK_LINK_ALREADY_LINKED);
         }
 
         Account currentUser = securityController.getCurrentUser();
@@ -405,7 +401,7 @@ public class LoginRestController extends AbstractRestController {
         try {
             localizationService.validAddress(address);
         } catch (Exception e) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_ADDRESS);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_ADDRESS);
         }
 
         return ok(new ResultDTO());
@@ -474,7 +470,7 @@ public class LoginRestController extends AbstractRestController {
 
         //Control email
         if (accountService.findByEmail(accountDTO.getEmail()) != null) {
-            throw new MyRuntimeException(ErrorMessageEnum.EMAIL_ALREADY_USED);
+            throw new RegularErrorException(ErrorMessageEnum.EMAIL_ALREADY_USED);
         }
 
         //account

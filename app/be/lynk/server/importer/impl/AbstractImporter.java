@@ -1,12 +1,8 @@
 package be.lynk.server.importer.impl;
 
-import be.lynk.server.util.exception.MyRuntimeException;
 import jxl.*;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,13 +123,13 @@ public class AbstractImporter {
 
             return dest;
         } catch (Exception e) {
-            throw new MyRuntimeException(e.getMessage());
+            throw new RegularErrorException(e.getMessage());
         } finally {
             try {
                 input.close();
                 output.close();
             } catch (IOException e) {
-                throw new MyRuntimeException(e.getMessage());
+                throw new RegularErrorException(e.getMessage());
             }
         }*/
     }

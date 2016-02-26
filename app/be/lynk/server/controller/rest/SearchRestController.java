@@ -11,7 +11,7 @@ import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.*;
 import be.lynk.server.util.StringUtil;
 import be.lynk.server.util.constants.Constant;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
@@ -21,7 +21,6 @@ import play.mvc.Result;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 /**
  * Created by florian on 23/05/15.
@@ -234,7 +233,7 @@ public class SearchRestController extends AbstractRestController {
             for (String s : searchElement.getParameters()) {
                 SearchCriteriaEnum searchCriteriaEnum = SearchCriteriaEnum.findByKey(s);
                 if (searchCriteriaEnum == null) {
-                    throw new MyRuntimeException(ErrorMessageEnum.SEARCH_WRONG_CRITERIA);
+                    throw new RegularErrorException(ErrorMessageEnum.SEARCH_WRONG_CRITERIA);
                 }
 
                 switch (searchCriteriaEnum) {
@@ -288,7 +287,7 @@ public class SearchRestController extends AbstractRestController {
             for (String s : searchElement.getParameters()) {
                 SearchCriteriaEnum searchCriteriaEnum = SearchCriteriaEnum.findByKey(s);
                 if (searchCriteriaEnum == null) {
-                    throw new MyRuntimeException(ErrorMessageEnum.SEARCH_WRONG_CRITERIA);
+                    throw new RegularErrorException(ErrorMessageEnum.SEARCH_WRONG_CRITERIA);
                 }
 
                 switch (searchCriteriaEnum) {

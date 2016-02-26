@@ -2,18 +2,13 @@ package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
-import be.lynk.server.dto.Image64DTO;
 import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.constants.Constant;
-import be.lynk.server.util.exception.MyRuntimeException;
 import be.lynk.server.util.file.FileUtil;
-import be.lynk.server.util.message.ErrorMessageEnum;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import play.api.libs.Files;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
@@ -21,8 +16,6 @@ import play.mvc.Result;
 import play.mvc.Results;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 @org.springframework.stereotype.Controller
 public class FilesController extends AbstractRestController {
@@ -135,7 +128,7 @@ public class FilesController extends AbstractRestController {
 
 //        //control
 //        if (!storedFile.getAccount().equals(securityController.getCurrentUser())) {
-//            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION, storedFileId + "");
+//            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION, storedFileId + "");
 //        }
 
         //create an inputStream

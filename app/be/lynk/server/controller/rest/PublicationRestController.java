@@ -12,14 +12,13 @@ import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.PublicationService;
 import be.lynk.server.util.constants.Constant;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class PublicationRestController extends AbstractRestController {
 
         if (!securityController.getCurrentUser().getRole().equals(RoleEnum.SUPERADMIN) &&
                 !securityController.getCurrentUser().getBusiness().equals(business)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_NOT_YOUR_BUSINESS);
         }
 
         publication.setWasRemoved(true);

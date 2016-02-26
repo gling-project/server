@@ -1,12 +1,11 @@
 package be.lynk.server.service.impl;
 
-import be.lynk.server.dto.StoredFileDTO;
 import be.lynk.server.model.entities.Account;
 import be.lynk.server.model.entities.StoredFile;
 import be.lynk.server.service.FileService;
 import be.lynk.server.service.StoredFileService;
 import be.lynk.server.util.KeyGenerator;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.file.FileUtil;
 import be.lynk.server.util.message.ErrorMessageEnum;
 import ij.ImagePlus;
@@ -16,8 +15,6 @@ import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
-import play.libs.F;
-import play.mvc.Results;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -113,12 +110,12 @@ public class FileServiceImpl implements FileService {
 
                     //reject because the picrture is too little
                     if (sizey == null) {
-                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
+                        throw new RegularErrorException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_X, sizex);
                     } else if (sizex == null) {
-                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
+                        throw new RegularErrorException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE_Y, sizey);
 
                     } else {
-                        throw new MyRuntimeException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
+                        throw new RegularErrorException(ErrorMessageEnum.ERROR_PICTURE_WRONG_SIZE, sizex, sizey);
                     }
                 } else if (sizex != null && sizey != null) {
 
@@ -212,7 +209,7 @@ public class FileServiceImpl implements FileService {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
+            throw new RegularErrorException(e.getMessage());
         }
     }
 
@@ -246,7 +243,7 @@ public class FileServiceImpl implements FileService {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new MyRuntimeException(ErrorMessageEnum.FATAL_ERROR);
+            throw new RegularErrorException(ErrorMessageEnum.FATAL_ERROR);
         }
     }
 

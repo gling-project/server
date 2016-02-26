@@ -6,6 +6,9 @@ import be.lynk.server.model.Position;
  * Created by florian on 11/09/15.
  */
 public class Constant {
+
+    public static final String EMAIL_BUG_TARGET    = "florian.jeanmart@gmail.com";
+
     public static final Integer  BUSINESS_ILLUSTRATION_HEIGHT = 180;
     public static final Integer  BUSINESS_ILLUSTRATION_WIDTH  = 180;
     public static final Integer  BUSINESS_LANDSCAPE_HEIGHT    = 300;

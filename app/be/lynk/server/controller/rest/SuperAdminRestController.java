@@ -1,7 +1,6 @@
 package be.lynk.server.controller.rest;
 
 import be.lynk.server.controller.EmailController;
-import be.lynk.server.controller.technical.businessStatus.BusinessStatusAnnotation;
 import be.lynk.server.controller.technical.businessStatus.BusinessStatusEnum;
 import be.lynk.server.controller.technical.security.annotation.SecurityAnnotation;
 import be.lynk.server.controller.technical.security.role.RoleEnum;
@@ -18,10 +17,9 @@ import be.lynk.server.service.*;
 import be.lynk.server.service.impl.CustomerInterestServiceImpl;
 import be.lynk.server.util.AccountTypeEnum;
 import be.lynk.server.util.ContactTargetEnum;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import be.lynk.server.util.httpRequest.FacebookRequest;
 import be.lynk.server.util.message.ErrorMessageEnum;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.Logger;
@@ -31,8 +29,6 @@ import play.mvc.Result;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -91,13 +87,13 @@ public class SuperAdminRestController extends AbstractRestController {
 
             if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
                 //if there is no account for this email or the password doesn't the right, throw an exception
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
             }
         } else {
             account = securityController.getCurrentUser();
         }
         if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
         return ok(demoImporter.generateFakePublications());
@@ -115,13 +111,13 @@ public class SuperAdminRestController extends AbstractRestController {
 
             if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
                 //if there is no account for this email or the password doesn't the right, throw an exception
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
             }
         } else {
             account = securityController.getCurrentUser();
         }
         if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
         return ok(demoImporter.importStart(true));
@@ -139,13 +135,13 @@ public class SuperAdminRestController extends AbstractRestController {
 
             if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
                 //if there is no account for this email or the password doesn't the right, throw an exception
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
             }
         } else {
             account = securityController.getCurrentUser();
         }
         if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
         return ok(categoryImporter.importStart(true));
@@ -163,13 +159,13 @@ public class SuperAdminRestController extends AbstractRestController {
 
             if (account == null || account.getLoginCredential() == null || !loginCredentialService.controlPassword(dto.getPassword(), account.getLoginCredential())) {
                 //if there is no account for this email or the password doesn't the right, throw an exception
-                throw new MyRuntimeException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
+                throw new RegularErrorException(ErrorMessageEnum.WRONG_PASSWORD_OR_LOGIN);
             }
         } else {
             account = securityController.getCurrentUser();
         }
         if (!account.getRole().equals(RoleEnum.SUPERADMIN)) {
-            throw new MyRuntimeException(ErrorMessageEnum.WRONG_AUTHORIZATION);
+            throw new RegularErrorException(ErrorMessageEnum.WRONG_AUTHORIZATION);
         }
 
         return ok(categoryImporter.importTranslation());
@@ -199,10 +195,10 @@ public class SuperAdminRestController extends AbstractRestController {
         ClaimBusiness claimBusiness = claimBusinessService.findByBusinessAndAccount(business, account);
 
         if (claimBusiness == null) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_CLAIMED);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_CLAIMED);
         }
         if (!business.getBusinessStatus().equals(BusinessStatusEnum.PUBLISHED)) {
-            throw new MyRuntimeException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED);
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED);
         }
 
         business.setAccount(account);
@@ -462,7 +458,7 @@ public class SuperAdminRestController extends AbstractRestController {
         CustomerInterest customerInterest = customerInterestService.findByName(interestName);
 
         if (businessCategory == null || customerInterest == null) {
-            throw new MyRuntimeException("interest or category not found : " + interestName + "/" + categoryName);
+            throw new RegularErrorException("interest or category not found : " + interestName + "/" + categoryName);
         }
 
 
@@ -552,7 +548,7 @@ public class SuperAdminRestController extends AbstractRestController {
         File file = new File("file/newsletter/" + name + ".html");
 
         if (file == null) {
-            throw new MyRuntimeException("file not found");
+            throw new RegularErrorException("file not found");
         }
 
         byte[] encoded = new byte[0];

@@ -3,7 +3,7 @@ package be.lynk.server.service.impl;
 import be.lynk.server.model.Position;
 import be.lynk.server.model.entities.technical.AbstractEntity;
 import be.lynk.server.service.CrudService;
-import be.lynk.server.util.exception.MyRuntimeException;
+import be.lynk.server.util.exception.RegularErrorException;
 import play.db.jpa.JPA;
 
 import javax.persistence.NoResultException;
@@ -40,7 +40,7 @@ public abstract class CrudServiceImpl<T extends AbstractEntity> implements CrudS
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MyRuntimeException(e.getMessage());
+            throw new RegularErrorException(e.getMessage());
         }
     }
 

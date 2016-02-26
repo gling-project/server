@@ -6,10 +6,12 @@ import be.lynk.server.model.entities.Account;
 import be.lynk.server.service.EmailService;
 import be.lynk.server.service.TranslationService;
 import be.lynk.server.util.ContactTargetEnum;
+import be.lynk.server.util.constants.Constant;
 import be.lynk.server.util.message.EmailMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import play.db.jpa.Transactional;
 import play.i18n.Lang;
+import play.mvc.Http;
 
 /**
  * Created by florian on 6/12/14.
@@ -100,5 +102,37 @@ public class EmailController extends AbstractController {
         EmailMessage emailMessage = new EmailMessage(recipient, title, body);
 
         emailService.sendEmailWithoutBody(emailMessage, Lang.forCode("fr"));
+    }
+
+    /* ---------------------------
+     -- ADMIN EMAILS
+     ----------------------------- */
+
+    public void sendUnexpectedErrorReport(Throwable cause, Http.Context ctx) {
+
+        String title = "Bug report - unexpected error / " + appStatus;
+
+        String body = "This is a bug report about an unexpected error<br/><br/>";
+
+
+        body += cause.getMessage() + "<br/><br/>";
+
+        for (StackTraceElement stackTraceElement : cause.getStackTrace()) {
+            body += printErrorParent(cause);
+        }
+
+        EmailMessage.Recipient recipient    = new EmailMessage.Recipient(Constant.EMAIL_BUG_TARGET);
+        EmailMessage           emailMessage = new EmailMessage(recipient, title, body);
+
+        emailService.sendEmailWithoutTemplate(emailMessage);
+    }
+
+    private String printErrorParent(Throwable cause) {
+        String body = cause.getMessage() + "<br/><br/>";
+
+        for (StackTraceElement stackTraceElement : cause.getStackTrace()) {
+            body += stackTraceElement.toString() + "<br/>";
+        }
+        return body;
     }
 }
