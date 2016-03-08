@@ -704,3 +704,6 @@ day_abrv_sunday=Di
 --.home.sortBy=Trier par
 --.home.sort.distance=Distance
 --.home.sort.date=Date de publication
+
+--.error.business.facebookPage.notFound=Il semble que ce compte ne soit pas lié à  la page Facebook {0}
+--.error.business.facebookPage.not=Vous n''avez pas encore lié de page Facebook à ce compte

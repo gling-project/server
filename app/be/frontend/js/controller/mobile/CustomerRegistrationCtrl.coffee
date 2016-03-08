@@ -9,7 +9,6 @@ myApp.controller 'CustomerRegistrationCtrl', ($rootScope, $scope, $flash, accoun
     $scope.basic_url = location.host
 
 
-
     #return the value of the param 'name'
     $scope.getUrlParam = (name, url) ->
         if !url
@@ -60,6 +59,7 @@ myApp.controller 'CustomerRegistrationCtrl', ($rootScope, $scope, $flash, accoun
             #open an url to log the user to facebook
             url = 'https://www.facebook.com/dialog/oauth/?scope='+facebookService.facebookAuthorization+'&client_id=' + $scope.facebookAppId + '&redirect_uri=' + $scope.basic_url + '/&state=BELGIUM&$scope=' + $scope.facebookAuthorization + '&response_type=token'
             window.open url, '_self'
+
 
     # try to catch facebook connection
     if location.href.indexOf('access_token') != -1

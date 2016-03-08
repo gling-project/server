@@ -7,6 +7,7 @@ import be.lynk.server.dto.externalDTO.FacebookPhotoDTO;
 import be.lynk.server.dto.externalDTO.FacebookTokenAccessControlDTO;
 import be.lynk.server.model.AttendanceEnum;
 import be.lynk.server.model.entities.*;
+import be.lynk.server.model.entities.publication.AbstractPublication;
 import be.lynk.server.service.BusinessCategoryService;
 import be.lynk.server.service.BusinessService;
 import be.lynk.server.service.FileService;
@@ -168,6 +169,21 @@ public class FacebookRequest {
         Logger.info("T7 : " + (new Date().getTime() - t));
 
         return business;
+    }
+
+    public void shareOnFacebook(Business business, AbstractPublication abstractPublication) throws Exception{
+
+        //test business facebook page
+        if(business.getSocialNetwork()==null || business.getSocialNetwork().getFacebookLink()==null){
+            throw new Exception("there is no facebook page linked");
+        }
+        //test facebook account
+        if(business.getAccount().getFacebookCredential()==null){
+            throw new Exception("the business owner have not facebook account");
+        }
+        //access facebook token
+
+
     }
 
     public FacebookPageDataDTO getPageData(String pageName) {

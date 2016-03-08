@@ -51,7 +51,9 @@ public enum ErrorMessageEnum {
     ERROR_BUSINESS_CLAIM_ALREADY_HAVE_CLAIMS("--.error.business.claim.alreadyHaveClaims"),
     ERROR_REGISTRATION_IMPORT_FACEBOOK("--.error.registration.import.facebook"),
     ERROR_CONFIRM_CLAIM_BUSINESS_NOT_CLAIMED("--.error.confirmClaim.notClaimed"),
-    ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED("--.error.confirmClaim.businessNotPublished");
+    ERROR_CONFIRM_CLAIM_BUSINESS_NOT_PUBLISHED("--.error.confirmClaim.businessNotPublished"),
+    ERROR_BUSINESS_FACEBOOK_ACCESS_NO_FACEBOOK_PAGE("--.error.business.facebookPage.not"),
+    ERROR_BUSINESS_FACEBOOK_ACCESS_FACEBOOK_PAGE_NOT_FOUND("--.error.business.facebookPage.notFound");
 
     private final String key;
 

@@ -152,6 +152,25 @@ public class BusinessRestController extends AbstractController {
      * EDIT FUNCTION
      /////////////////////////////////////////////////// */
 
+    @SecurityAnnotation(role = RoleEnum.BUSINESS)
+    @Transactional
+    public Result facebookPageAccess() {
+        List<FacebookPageAccessDTO> facebookPageAccessDTOs = initializationList(FacebookPageAccessDTO.class);
+
+        //control facebook page
+        Business business = securityController.getBusiness();
+
+        if(business.getSocialNetwork()==null || business.getSocialNetwork().getFacebookLink()==null){
+            throw new RegularErrorException(ErrorMessageEnum.ERROR_BUSINESS_FACEBOOK_ACCESS_NO_FACEBOOK_PAGE);
+        }
+
+        //find facebook page
+        String facebookLink = business.getSocialNetwork().getFacebookLink();
+
+
+
+    }
+
     @Transactional
     @SecurityAnnotation(role = RoleEnum.CUSTOMER)
     public Result claimBusiness() {

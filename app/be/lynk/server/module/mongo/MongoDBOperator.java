@@ -1,6 +1,7 @@
 package be.lynk.server.module.mongo;
 
 import be.lynk.server.dto.technical.DTO;
+import be.lynk.server.mongoService.impl.MongoDTO;
 import com.mongodb.*;
 import com.mongodb.client.MongoDatabase;
 import org.mongojack.JacksonDBCollection;
@@ -66,8 +67,7 @@ public class MongoDBOperator {
                 MongoClientURI uri = new MongoClientURI(uriS);
 
                 mongoClient = new MongoClient(uri);
-            }
-            else{
+            } else {
                 ServerAddress serverAddress = new ServerAddress(SERVER.split(":")[0], Integer.parseInt(SERVER.split(":")[1]));
 
                 mongoClient = new MongoClient(serverAddress, mongoCredential);
@@ -90,10 +90,33 @@ public class MongoDBOperator {
 
             try {
 
-                DBCollection coll = db.getCollection(route);//name1+"."+name);
+                DBCollection coll = db.getCollection(route);
 
                 JacksonDBCollection<T, String> jColl = JacksonDBCollection.wrap(coll, clazz,
-                                                                                String.class);
+                        String.class);
+
+
+                jColl.insert(dto);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    public void write(String route, MongoDTO dto) {
+        F.Promise.promise(() -> {
+
+            if (db == null) {
+                initialization();
+            }
+
+            try {
+
+                DBCollection coll = db.getCollection(route);
+
+                JacksonDBCollection<MongoDTO, String> jColl = JacksonDBCollection.wrap(coll, MongoDTO.class,
+                        String.class);
 
 
                 jColl.insert(dto);

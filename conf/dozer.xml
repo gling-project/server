@@ -50,6 +50,11 @@
             <a>schedules</a>
             <b>schedules</b>
         </field>
+        <field custom-converter=
+                       "be.lynk.server.dozerConverter.BusinessFacebookPageAccessTokenConverter">
+            <a>facebookPageAccessToken</a>
+            <b>hasFacebookPageAccess</b>
+        </field>
     </mapping>
 
     <!-- businessToDisplay -->

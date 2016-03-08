@@ -56,10 +56,18 @@ public class BusinessDTO extends DTO  {
 
     protected Date creationDate;
 
+    private Boolean hasFacebookPageAccess;
 
     public BusinessDTO() {
     }
 
+    public Boolean getHasFacebookPageAccess() {
+        return hasFacebookPageAccess;
+    }
+
+    public void setHasFacebookPageAccess(Boolean hasFacebookPageAccess) {
+        this.hasFacebookPageAccess = hasFacebookPageAccess;
+    }
 
     public Date getCreationDate() {
         return creationDate;

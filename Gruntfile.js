@@ -56,7 +56,7 @@ module.exports = function (grunt) {
                             //'public/components/highcharts/highcharts-more.js',
                             'public/components/angular-socialshare/angular-socialshare.js',
                             //TODO ???
-                            'public/js/externalDependence/facebook_sdk.js',
+                            //'public/js/externalDependence/facebook_sdk.js',
                             'public/components/ngmap/build/scripts/ng-map.min.js'
                         ]
                     },

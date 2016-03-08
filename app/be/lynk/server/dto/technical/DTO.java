@@ -32,6 +32,9 @@ public class DTO implements Content {
     protected Map<String, String> requestParams = new HashMap<>();
 
     @JsonIgnoreProperties
+    private Map<String, String[]> headers;
+
+    @JsonIgnoreProperties
     protected String sessionId;
 
     @JsonIgnoreProperties
@@ -40,9 +43,6 @@ public class DTO implements Content {
 
     protected Long currentAccountId;
 
-
-    private String __type;
-    private String __class;
 
     public static <T extends DTO> T getDTO(JsonNode data, Class<T> type) {
 
@@ -68,16 +68,6 @@ public class DTO implements Content {
         }
         Logger.error("ERROR into DTO convertion : Data is null");
         throw new RegularErrorException(ErrorMessageEnum.JSON_CONVERSION_ERROR);
-    }
-
-    public String get__type() {
-        return this.getClass().getCanonicalName();
-    }
-
-    public void set__type(String __type) {
-//        if (!get__type().equals(__type)) {
-//            throw new RegularErrorException(ErrorMessageEnum.FATAL_ERROR, get__type()+" instead of "+__type);
-//        }
     }
 
     @Override
@@ -135,5 +125,13 @@ public class DTO implements Content {
 
     public SourceEnum getDevice() {
         return device;
+    }
+
+    public void setHeaders(Map<String, String[]> headers) {
+        this.headers = headers;
+    }
+
+    public Map<String, String[]> getHeaders() {
+        return headers;
     }
 }

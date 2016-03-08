@@ -144,7 +144,7 @@ public abstract class AbstractController extends Controller {
 
         //build params list
         if (saveIntoMongo) {
-            saveInMongo(dto, dtoClass);
+            //saveInMongo(dto, dtoClass);
         }
 
         return dto;
@@ -185,17 +185,17 @@ public abstract class AbstractController extends Controller {
         Matcher matcher = pattern.matcher(path);
 
         if (matcher.find()){
-
-            int t = matcher.groupCount();
-
             for (int i = 1; i < matcher.groupCount()+1; i++) {
                 String value = matcher.group(i);
                 params.put("param" + i, value);
             }
-
         }
 
         dto.setRequestParams(params);
+
+        Map<String, String[]> headers = ctx().request().headers();
+
+        dto.setHeaders(headers);
 
         dto.setDevice(getDevice());
 

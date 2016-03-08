@@ -53,6 +53,7 @@ PUT           /rest/business/$id<[0-9]+>/address                                
 PUT           /rest/business/$id<[0-9]+>/category                                                                    @be.lynk.server.controller.rest.BusinessRestController.editBusinessCategory(id:Long)
 PUT           /rest/business/$id<[0-9]+>/illustration                                                                @be.lynk.server.controller.rest.BusinessRestController.editIllustration(id:Long)
 PUT           /rest/business/$id<[0-9]+>/landscape                                                                   @be.lynk.server.controller.rest.BusinessRestController.editLandscape(id:Long)
+PUT           /rest/business/facebookPageAccess                                                                      @be.lynk.server.controller.rest.BusinessRestController.facebookPageAccess()
 POST          /rest/business/$id<[0-9]+>/edit/gallery                                                                @be.lynk.server.controller.rest.BusinessRestController.editGallery(id:Long)
 POST          /rest/business/ask_publication                                                                         @be.lynk.server.controller.rest.BusinessRestController.askPublication()
 POST          /rest/business/stop_publish                                                                            @be.lynk.server.controller.rest.BusinessRestController.stopPublication()

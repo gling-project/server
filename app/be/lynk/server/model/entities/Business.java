@@ -88,8 +88,20 @@ public class Business extends AbstractEntity implements Comparable<Business> {
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<FollowLink> followLinks;
 
+    @Basic
+    private String facebookPageAccessToken;
+
     public Business() {
         lastStatusChange = LocalDateTime.now();
+    }
+
+
+    public String getFacebookPageAccessToken() {
+        return facebookPageAccessToken;
+    }
+
+    public void setFacebookPageAccessToken(String facebookPageAccessToken) {
+        this.facebookPageAccessToken = facebookPageAccessToken;
     }
 
     public Business(Account account, String name) {

@@ -689,3 +689,6 @@ day_abrv_sunday=Su
 --.map.legend.followed=You are following this store
 --.coockie.advertisment= The term "cookie" is used to refer to all the text files that may be installed on your computer when you visit the site Gling. These files contain information such as language preferences, geolocation, your interests, so that the latter must not be filled during subsequent visits. Thus, cookies facilitate your visit and your airworthiness on Gling website and allow us the same time to save your preference and monitor site usage patterns. In order to continue the site navigation on Gling you have to read our terms of use and our cookies policy relative.
 --.generic.agree=I agree
+
+--.error.business.facebookPage.notFound=It seems this Faceook account is not link to the Facebook page {0}
+--.error.business.facebookPage.not=You haven''t link a Facebook page to your business page
