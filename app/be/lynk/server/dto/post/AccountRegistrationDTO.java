@@ -16,7 +16,6 @@ import java.util.Date;
  */
 public class AccountRegistrationDTO extends DTO  {
 
-    @NotNull
     private GenderEnum gender;
 
     @NotNull

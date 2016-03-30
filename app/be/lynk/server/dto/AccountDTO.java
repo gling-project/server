@@ -19,7 +19,6 @@ public class AccountDTO extends DTO  {
 
     private Long id;
 
-    @NotNull(message = "--.validation.dto.notNull")
     protected GenderEnum gender;
 
     @NotNull(message = "--.validation.dto.notNull")

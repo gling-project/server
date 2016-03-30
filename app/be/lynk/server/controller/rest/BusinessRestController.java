@@ -54,20 +54,19 @@ public class BusinessRestController extends AbstractController {
     public Result lastBusinesses(int nb) {
 
         PositionDTO positionDTO = initialization(PositionDTO.class);
-        Position position = dozerService.map(positionDTO,Position.class);
+        Position position = dozerService.map(positionDTO, Position.class);
 
         List<Business> businesses = businessService.findLastPublished(nb);
         List<BusinessToDisplayDTO> businessesDtos = new ArrayList<>();
 
         for (Business business : businesses) {
             BusinessToDisplayDTO map = dozerService.map(business, BusinessToDisplayDTO.class);
-            map.setDistance(localizationService.distanceBetweenAddress(position,business.getAddress()));
+            map.setDistance(localizationService.distanceBetweenAddress(position, business.getAddress()));
             businessesDtos.add(map);
         }
 
         return ok(new ListDTO<>(businessesDtos));
     }
-
 
 
     @Transactional
@@ -155,6 +154,7 @@ public class BusinessRestController extends AbstractController {
     @SecurityAnnotation(role = RoleEnum.BUSINESS)
     @Transactional
     public Result facebookPageAccess() {
+        /*
         List<FacebookPageAccessDTO> facebookPageAccessDTOs = initializationList(FacebookPageAccessDTO.class);
 
         //control facebook page
@@ -166,9 +166,9 @@ public class BusinessRestController extends AbstractController {
 
         //find facebook page
         String facebookLink = business.getSocialNetwork().getFacebookLink();
+*/
 
-
-
+        return ok();
     }
 
     @Transactional

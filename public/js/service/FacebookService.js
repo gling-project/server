@@ -139,8 +139,6 @@ myApp.service('facebookService', function($http, accountService, $locale, langua
       return FB.login(function(response) {
         var r;
         if (response.status === 'connected') {
-          console.log('prout ??');
-          console.log(response.authResponse);
           r = '/oauth/access_token?grant_type=fb_exchange_token&client_id=1446672245627002&client_secret=20052ab259a900cdfe062d383fc0329b&fb_exchange_token=' + response.authResponse.accessToken;
           $http({
             'method': 'GET',

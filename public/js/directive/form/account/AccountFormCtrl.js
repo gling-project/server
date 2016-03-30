@@ -32,19 +32,6 @@ myApp.directive('accountFormCtrl', function ($flash, directiveService, languageS
 
 
                     scope.fields = {
-                        gender: {
-                            name: 'gender',
-                            fieldTitle: "--.generic.gender",
-                            options: [
-                                {key: 'MALE', value: '--.generic.male'},
-                                {key: 'FEMALE', value: '--.generic.female'}
-                            ],
-                            disabled: function () {
-                                return scope.getInfo().disabled;
-                            },
-                            field: scope.getInfo().dto,
-                            fieldName: 'gender'
-                        },
                         firstname: {
                             name: 'firstname',
                             fieldTitle: "--.generic.firstname",
