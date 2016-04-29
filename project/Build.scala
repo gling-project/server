@@ -52,7 +52,10 @@ object ApplicationBuild extends Build {
     "net.coobird" % "thumbnailator" % "0.4.8",
     "net.imagej" % "ij" % "1.50a",
     "com.google.code.maven-play-plugin.com.github.yeungda.jcoffeescript" % "jcoffeescript" % "1.0",
-    "de.neuland-bfi" % "jade4j" % "0.4.0"
+    "de.neuland-bfi" % "jade4j" % "0.4.0",
+    "com.sun.jersey" % "jersey-core" % "1.19.1",
+    "com.sun.jersey" % "jersey-client" % "1.19.1",
+    "com.sun.jersey.contribs" % "jersey-multipart" % "1.19.1"
   )
 
   lazy val angularCompileTask = TaskKey[Unit]("angular-compile", "Compile angular app")
