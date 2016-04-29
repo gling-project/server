@@ -449,7 +449,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'html2js',
         'concat',
-        'ngAnnotate',
+        //'ngAnnotate',
         'uglify',
         'cssmin',
         'rename'
