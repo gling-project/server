@@ -36,7 +36,7 @@ public class MailgunSenderServiceImpl implements EmailSenderService {
 
             WebResource webResource = client.resource("https://api.mailgun.net/v3/" + MAILGUN_DOMAIN + "/messages");
             FormDataMultiPart formData = new FormDataMultiPart();
-            formData.field("from", Constant.EMAIL_BASIC_FROM + " <mailgun@" + MAILGUN_DOMAIN + ">");
+            formData.field("from", "Gling noreply <mailgun@" + MAILGUN_DOMAIN + ">");
             if (emailMessage.getReplyTo() != null) {
                 formData.field("Reply-To", emailMessage.getReplyTo());
             }
@@ -51,19 +51,19 @@ public class MailgunSenderServiceImpl implements EmailSenderService {
             //content
             formData.field("html", emailMessage.getContent());
 
-            //attachment
-            if (emailMessage.getAttachments().size() > 0) {
-                formData.field("Content-Type", "multipart/form-data");
-                for (EmailMessage.Attachment attachment : emailMessage.getAttachments()) {
-
-                    String name = attachment.getName() + "." + attachment.getType();
-
-                    FileInputStream fileInputStream = new FileInputStream(attachment.getFile());
-
-                    StreamDataBodyPart bodyPart = new StreamDataBodyPart("inline", fileInputStream, name, MediaType.APPLICATION_OCTET_STREAM_TYPE);
-                    formData.bodyPart(bodyPart);
-                }
-            }
+//            //attachment
+//            if (emailMessage.getAttachments().size() > 0) {
+//                formData.field("Content-Type", "multipart/form-data");
+//                for (EmailMessage.Attachment attachment : emailMessage.getAttachments()) {
+//
+//                    String name = attachment.getName() + "." + attachment.getType();
+//
+//                    FileInputStream fileInputStream = new FileInputStream(attachment.getFile());
+//
+//                    StreamDataBodyPart bodyPart = new StreamDataBodyPart("inline", fileInputStream, name, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+//                    formData.bodyPart(bodyPart);
+//                }
+//            }
 
 
             ClientResponse post = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).
