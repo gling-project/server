@@ -73,7 +73,7 @@ public class MailgunSenderServiceImpl implements EmailSenderService {
                 //TODO manage error
             }
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
