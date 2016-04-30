@@ -109,3 +109,149 @@ ul.messenger.messenger-fixed.messenger-on-right .messenger-actions, ul.messenger
 ul.messenger .messenger-spinner {
   display: none;
 }
+
+.town-business-list .search-box {
+  width: 400px;
+  margin: 20px;
+}
+.town-business-list .town-business-list-element {
+  background-color: #dddddd;
+  cursor: pointer;
+  display: inline-block;
+  margin: 2px;
+  padding: 2px;
+  vertical-align: top;
+  position: relative;
+}
+.town-business-list .town-business-list-element .town-business-list-element-data {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+  left: 0;
+  color: white;
+  padding: 2px 10px;
+}
+.town-business-list .town-business-list-element .town-business-list-element-data > .business-name {
+  font-size: 16px;
+}
+.town-business-list .town-business-list-element .town-business-list-element-data > .address {
+  font-size: 14px;
+}
+.town-business-list .town-business-list-element img {
+  width: 175px;
+  height: 175px;
+}
+.town-business-list .town-business-list-element:hover {
+  background-color: #AAAAAA;
+}
+.town-business-list .town-business-list-element:hover > .town-business-list-element-data {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.town-business-details {
+  margin-top: 10px;
+}
+.town-business-details .town-business-details-left {
+  display: inline-block;
+  width: 49%;
+  vertical-align: text-top;
+  padding-right: 30px;
+}
+.town-business-details .town-business-details-left .town-business-details-header > * {
+  display: inline-block;
+  vertical-align: text-top;
+}
+.town-business-details .town-business-details-left .town-business-details-header img {
+  width: 160px;
+  height: 160px;
+  border: 1px solid #dddddd;
+}
+.town-business-details .town-business-details-left .town-business-details-header > div {
+  width: 160px;
+}
+.town-business-details .town-business-details-left .town-business-details-header .business-header-name {
+  font-size: 24px;
+}
+.town-business-details .town-business-details-left .town-business-details-header .business-header-details {
+  color: #777777;
+}
+.town-business-details .town-business-details-left .business-description {
+  padding: 10px;
+}
+.town-business-details .town-business-details-right {
+  display: inline-block;
+  width: 49%;
+  vertical-align: text-top;
+}
+.town-business-publication-list .town-business-publication-list-element {
+  border-radius: 10px;
+  background-color: #bbe0cc;
+  padding: 10px 10px;
+  margin: 5px 5px;
+}
+.town-business-publication-list .town-business-publication-list-element .title {
+  font-size: 16px;
+}
+.town-business-publication-list .town-business-publication-list-element .body img {
+  width: 160px;
+  border: 1px solid #dddddd;
+  cursor: pointer;
+}
+.town-business-publication-list .publicationDate {
+  font-size: 10px;
+  text-align: right;
+  padding-top: 4px;
+}
+.news-feed-list {
+  width: 100%;
+}
+.news-feed-list img {
+  width: 40px;
+  height: 40px;
+  margin-right: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.news-feed-list table {
+  width: 100%;
+}
+.news-feed-list table tr:first-child td:first-child {
+  width: 46px;
+  max-width: 46px;
+  min-width: 46px;
+}
+.news-feed-list > div {
+  width: 49%;
+  padding: 5px;
+  display: inline-block;
+  vertical-align: top;
+}
+.news-feed-list .title {
+  font-weight: bold;
+}
+.news-feed-list .publication {
+  border: 2px solid #bbe0cc;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  display: block;
+  color: #333;
+}
+.news-feed-list .publication:hover {
+  background-color: #bbe0cc;
+}
+.news-feed-list .promotion {
+  border: 2px solid #bbe0cc;
+  background-color: #bbe0cc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  display: block;
+  color: #333;
+}
+.news-feed-list .promotion:hover {
+  background-color: #f4f4f4;
+}
