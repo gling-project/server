@@ -46,13 +46,13 @@ public abstract class AbstractController extends Controller {
     protected static final String APP_PACKAGE_NAME = "be.gling.android";
 
     //    protected String AWSBuckect     =
-    protected String fileBucketUrl = Configuration.root().getString("aws.accesFile.url");
+    protected String fileBucketUrl       = Configuration.root().getString("aws.accesFile.url");
     //"https://dcz35ar8sf5qb.cloudfront.net";//https://s3.amazonaws.com/" + AWSBuckect;
     //"https://s3.amazonaws.com/" + AWSBuckect; (gling-prod)
-    protected String urlBase = Configuration.root().getString("site.url.base");
-    protected String mobileDisabled = Configuration.root().getString("site.mobile.disabled");
-    protected String lastVersion = Configuration.root().getString("project.lastVersion");
-    protected String appStatus = Configuration.root().getString("app.status");
+    protected String urlBase             = Configuration.root().getString("site.url.base");
+    protected String mobileDisabled      = Configuration.root().getString("site.mobile.disabled");
+    protected String lastVersion         = Configuration.root().getString("project.lastVersion");
+    protected String appStatus           = Configuration.root().getString("app.status");
     protected String eventPublicationIds = Configuration.root().getString("event.publicationIds");
 
     //controllers
@@ -74,7 +74,7 @@ public abstract class AbstractController extends Controller {
     @Autowired
     private   ClaimBusinessService     claimBusinessService;
     @Autowired
-    private CustomerInterestService customerInterestService;
+    private   CustomerInterestService  customerInterestService;
 
     protected void initialization() {
         initialization(ResultDTO.class, false);
@@ -169,14 +169,13 @@ public abstract class AbstractController extends Controller {
         for (int i = 0; i < urlEls.length; i++) {
             String param = urlEls[i];
             Matcher matcher = urlPattern.matcher(param);
-            if(matcher.find()){
-                p+="("+matcher.group(1)+")";
+            if (matcher.find()) {
+                p += "(" + matcher.group(1) + ")";
+            } else {
+                p += param;
             }
-            else{
-                p+=param;
-            }
-            if(i!=urlEls.length-1){
-                p+="/";
+            if (i != urlEls.length - 1) {
+                p += "/";
             }
         }
 
@@ -184,8 +183,8 @@ public abstract class AbstractController extends Controller {
 
         Matcher matcher = pattern.matcher(path);
 
-        if (matcher.find()){
-            for (int i = 1; i < matcher.groupCount()+1; i++) {
+        if (matcher.find()) {
+            for (int i = 1; i < matcher.groupCount() + 1; i++) {
                 String value = matcher.group(i);
                 params.put("param" + i, value);
             }
@@ -240,7 +239,7 @@ public abstract class AbstractController extends Controller {
 
         String userAgent = ctx().request().getHeader("User-Agent");
         boolean mobile = false;
-        if (userAgent.indexOf("Mobile") != -1) {
+        if (userAgent != null && userAgent.indexOf("Mobile") != -1) {
             return true;
         }
         return false;
@@ -250,9 +249,9 @@ public abstract class AbstractController extends Controller {
 
         String userAgent = ctx().request().getHeader("User-Agent");
         boolean mobile = false;
-        if (userAgent.indexOf("iPhone") != -1 ||
+        if (userAgent != null && (userAgent.indexOf("iPhone") != -1 ||
                 userAgent.indexOf("iPod") != -1 ||
-                userAgent.indexOf("iPad") != -1) {
+                userAgent.indexOf("iPad") != -1)) {
             return true;
         }
         return false;
@@ -352,7 +351,7 @@ public abstract class AbstractController extends Controller {
         if (account.getType() != null && account.getType().equals(AccountTypeEnum.BUSINESS)) {
             Business business = businessService.findByAccount(account);
             myselfDTO.setBusinessId(business.getId());
-            if(business.getSocialNetwork()!=null) {
+            if (business.getSocialNetwork() != null) {
                 myselfDTO.setFacebookPageToPublish(business.getSocialNetwork().getFacebookLink());
             }
         }
@@ -360,7 +359,6 @@ public abstract class AbstractController extends Controller {
         return myselfDTO;
 
     }
-
 
 
     protected InterfaceDataDTO generateInterfaceDTO(boolean isMobile) {
@@ -426,16 +424,14 @@ public abstract class AbstractController extends Controller {
 
         Http.Request request = ctx().request();
 
-        if(request.getHeader("User-Agent").contains("iPhone") ||
-                ctx().request().getHeader("User-Agent").contains("iPod")){
+        if (request.getHeader("User-Agent").contains("iPhone") ||
+                ctx().request().getHeader("User-Agent").contains("iPod")) {
             return SourceEnum.IPHONE;
-        }
-        else if(StringUtils.containsIgnoreCase(request.getHeader("User-Agent"),"android")){
+        } else if (StringUtils.containsIgnoreCase(request.getHeader("User-Agent"), "android")) {
             return SourceEnum.ANDROID;
-        }
-        else{
+        } else {
             return SourceEnum.WEBSITE;
         }
     }
-    
+
 }
