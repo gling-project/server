@@ -1,6 +1,6 @@
 # DEV
-export PGPASSWORD='florian';
-DB_CONNECTION="heroku pg:psql --app lynk-test DATABASE"
+    export PGPASSWORD='florian';
+    DB_CONNECTION="heroku pg:psql --app lynk-test DATABASE"
 
 echo "[DROP SCHEMA]"
 echo "DROP SCHEMA public CASCADE;" | eval $DB_CONNECTION
@@ -14,7 +14,7 @@ echo "Deploy"
 ./deploy.sh
 
 echo "open in navigator"
-xdg-open http://lynk-test.herokuapp.com/
+curl http://lynk-test.herokuapp.com/
 
 echo "wait 1 minute to be sure the database is created"
 sleep 60
