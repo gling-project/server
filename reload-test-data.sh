@@ -25,7 +25,7 @@ while true; do
 
     # insert DB
     echo "[CREATE LANGUAGE]"
-    eval $DB_CONNECTION < script/basic_data.sql
+    eval $DB_CONNECTION < ~/script/basic_data.sql
 
     #import
     curl -H "Content-Type: application/json" -X POST -d  '{"email":"florian.jeanmart@gmail.com","password":"password"}' https://lynk-test.herokuapp.com/rest/import_category
