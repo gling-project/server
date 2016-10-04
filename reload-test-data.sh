@@ -1,3 +1,5 @@
+~/env-dev/email_sender.sh "[STARTSERVER] Gling demo data" "gling demo data will be reload all 24h"
+
 while true; do
 
     # DEV
